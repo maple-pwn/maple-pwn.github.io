@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="http://maple-pwn.github.io/2025/04/04/test/"/>
+    <link rel="canonical" href="http://maple-pwn.github.io/2025/04/05/pie绕过/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -23,16 +23,17 @@
         
         <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="test1">
-<meta property="og:url" content="http://maple-pwn.github.io/2025/04/04/test/index.html">
+<meta property="og:title" content="PIE绕过">
+<meta property="og:url" content="http://maple-pwn.github.io/2025/04/05/PIE%E7%BB%95%E8%BF%87/index.html">
 <meta property="og:site_name" content="Maple">
 <meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://maple-pwn.github.io/images/redefine-og.webp">
-<meta property="article:published_time" content="2025-04-03T17:41:28.000Z">
-<meta property="article:modified_time" content="2025-04-04T17:45:29.307Z">
+<meta property="article:published_time" content="2025-04-05T03:44:22.000Z">
+<meta property="article:modified_time" content="2025-04-05T03:45:59.398Z">
 <meta property="article:author" content="Maple">
-<meta property="article:tag" content="hello world">
+<meta property="article:tag" content="bypass">
+<meta property="article:tag" content="PIE">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://maple-pwn.github.io/images/redefine-og.webp">
     
@@ -46,7 +47,7 @@
     
     <title>
         
-            test1 | Maple
+            PIE绕过 | Maple
         
     </title>
 
@@ -343,7 +344,7 @@
 		<div class="article-title relative w-full">
 			
 			<div class="w-full flex items-center pt-6 justify-start">
-				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">test1</h1>
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">PIE绕过</h1>
 			</div>
 			
 		</div>
@@ -364,15 +365,15 @@
 					<div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2025-04-04 01:41:28</span>
-        <span class="mobile">2025-04-04 01:41:28</span>
+        <span class="desktop">2025-04-05 11:44:22</span>
+        <span class="mobile">2025-04-05 11:44:22</span>
         <span class="hover-info">创建</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-04-05 01:45:29</span>
-            <span class="mobile">2025-04-05 01:45:29</span>
+            <span class="desktop">2025-04-05 11:45:59</span>
+            <span class="mobile">2025-04-05 11:45:59</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -386,7 +387,7 @@
                     
                         
                         <li>
-                            <a href="/categories/hello-world/">hello world</a>&nbsp;
+                            <a href="/categories/bypass/">bypass</a>&nbsp;
                         </li>
                     
                     
@@ -400,7 +401,11 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/hello-world/">hello world</a>&nbsp;
+                        <a href="/tags/bypass/">bypass</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/PIE/">PIE</a>&nbsp;
                     </li>
                 
             </ul>
@@ -426,7 +431,30 @@
 
 
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-			<h2 id="HX1"><a href="#HX1" class="headerlink" title="HX1"></a>HX1</h2><h3 id="HX2"><a href="#HX2" class="headerlink" title="HX2"></a>HX2</h3><p>nice try</p>
+			<p>PIE保护</p>
+<p>by Maple</p>
+<h2 id="1，PIE介绍"><a href="#1，PIE介绍" class="headerlink" title="1，PIE介绍"></a>1，PIE介绍</h2><blockquote>
+<p>PIE全称是position-independent  executable，中文解释为地址无关可执行文件，该技术是一个针对代码段（.text）、数据段（.data）、未初始化全局变量段（.bss）等固定地址的一个防护技术，如果程序开启了PIE保护的话，在每次加载程序时都变换加载地址，从而不能通过ROPgadget等一些工具来帮助解题。</p>
+</blockquote>
+<p>简单来说，在开启PIE之后，你不能再查找到代码段的绝对地址了，只能看到一个地址的后四位数字。</p>
+<p>这个地址并不是程序实际运行地址，而是于程序加载基址之间的偏移量。如果没有开启pie保护，程序的加载基址默认是0x400000，现在开启了PIE之后，每次运行程序的加载基址都是不同的</p>
+<p><code>程序的实际运行地址=程序加载基址+程序偏移地址</code></p>
+<p><strong>注意</strong>：开启pie保护之后pwngdb调试的时候不能下断点，需要通过<code>b *$rebase(offset)</code>这种方式下断点，<code>offset</code>是ida中反汇编出来的程序地址偏移量</p>
+<h2 id="2-绕过方式"><a href="#2-绕过方式" class="headerlink" title="2.绕过方式"></a>2.绕过方式</h2><h3 id="2-1-格式化字符串泄露真实地址"><a href="#2-1-格式化字符串泄露真实地址" class="headerlink" title="2.1 格式化字符串泄露真实地址"></a>2.1 格式化字符串泄露真实地址</h3><blockquote>
+<p>无敌的格式化字符串又一次展现了它的神力</p>
+</blockquote>
+<p>如果一个程序中存在格式化字符串漏洞。我们就可以配合格式化字符串漏洞将程序某个函数的真实地址泄露出来</p>
+<p>直接写个exp:</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">p.sendline(<span class="string">b&#x27;aaaa%12$p&#x27;</span>)</span><br><span class="line">p.recvuntil(<span class="string">b&#x27;aaaa&#x27;</span>)</span><br><span class="line">base_addr = <span class="built_in">int</span>(p.recv(<span class="number">14</span>),<span class="number">16</span>)-offset <span class="comment"># offset为偏移地址，这个需要动态调试查看</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="2-2-partial-write"><a href="#2-2-partial-write" class="headerlink" title="2.2 partial write"></a>2.2 partial write</h3><blockquote>
+<p>partial  write(部分写入)就是一种利用了PIE技术缺陷的bypass技术。由于内存的页载入机制，PIE的随机化只能影响到单个内存页。通常来说，一个内存页大小为0x1000，这就意味着不管地址怎么变，某条指令的后12位，3个十六进制数的地址是始终不变的。因此通过覆盖EIP的后8或16位 (按字节写入，每字节8位)就可以快速爆破或者直接劫持EIP。</p>
+</blockquote>
+<p>**省流：**不管程序加载基址怎么变化，偏移量和真实地址的最后三位都是一样的</p>
+<p>假设后门函数地址为<code>0x09C5</code></p>
+<p>exp:</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x30</span> + <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x8</span> + <span class="string">b&#x27;\xC5\x09&#x27;</span> <span class="comment"># 第二字节可能\x19、\x29...尝试一下</span></span><br></pre></td></tr></table></figure></div>
+
 
 		</div>
 
@@ -434,18 +462,18 @@
 		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
 			<div class="article-copyright-info-container">
     <ul>
-        <li><strong>标题:</strong> test1</li>
+        <li><strong>标题:</strong> PIE绕过</li>
         <li><strong>作者:</strong> Maple</li>
         <li><strong>创建于
-                :</strong> 2025-04-04 01:41:28</li>
+                :</strong> 2025-04-05 11:44:22</li>
         
             <li>
                 <strong>更新于
-                    :</strong> 2025-04-05 01:45:29
+                    :</strong> 2025-04-05 11:45:59
             </li>
         
         <li>
-            <strong>链接:</strong> https://github.com/maple-pwn/maple-pwn.github.io/2025/04/04/test/
+            <strong>链接:</strong> https://github.com/maple-pwn/maple-pwn.github.io/2025/04/05/PIE绕过/
         </li>
         <li>
             <strong>
@@ -467,7 +495,11 @@
 		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
 			
 			<li class="tag-item mx-0.5">
-				<a href="/tags/hello-world/">#hello world</a>&nbsp;
+				<a href="/tags/bypass/">#bypass</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/PIE/">#PIE</a>&nbsp;
 			</li>
 			
 		</ul>
@@ -478,18 +510,18 @@
 		
 		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
 			
-			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-				<a class="prev" rel="prev" href="/2025/04/04/test2/">
-					<span class="left arrow-icon flex justify-center items-center">
-						<i class="fa-solid fa-chevron-left"></i>
-					</span>
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2025/04/05/Canary%E7%9A%84%E7%BB%95%E8%BF%87/">
 					<span class="title flex justify-center items-center">
-						<span class="post-nav-title-item">test2</span>
-						<span class="post-nav-item">上一篇</span>
+						<span class="post-nav-title-item">Canary的绕过</span>
+						<span class="post-nav-item">下一篇</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
 					</span>
 				</a>
 			</div>
-			
 			
 		</div>
 		
@@ -503,8 +535,8 @@
 		<div class="post-toc-wrap">
 	<div class="post-toc">
 		<div class="toc-title">目录</div>
-		<div class="page-title">test1</div>
-		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HX1"><span class="nav-text">HX1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HX2"><span class="nav-text">HX2</span></a></li></ol></li></ol>
+		<div class="page-title">PIE绕过</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%EF%BC%8CPIE%E4%BB%8B%E7%BB%8D"><span class="nav-text">1，PIE介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%BB%95%E8%BF%87%E6%96%B9%E5%BC%8F"><span class="nav-text">2.绕过方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B3%84%E9%9C%B2%E7%9C%9F%E5%AE%9E%E5%9C%B0%E5%9D%80"><span class="nav-text">2.1 格式化字符串泄露真实地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-partial-write"><span class="nav-text">2.2 partial write</span></a></li></ol></li></ol>
 
 	</div>
 </div>
