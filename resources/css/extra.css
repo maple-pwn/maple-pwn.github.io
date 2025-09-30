@@ -14,13 +14,13 @@ button.md-top {
 
 /* 全局行间距与字体大小 */
 .md-typeset {
-    font-size: 18px !important;
-    line-height: 1.8 !important;
+    font-size: 17px !important;
+    line-height: 1.4 !important;
 }
 
 /* 段落间距 */
 .md-typeset p {
-    margin: 0.9em 0 !important;
+    margin: 0.75em 0 !important;
 }
 
 /* 标题间距 */
