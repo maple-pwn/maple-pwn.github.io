@@ -50,7 +50,7 @@ button.md-top {
 
 /* 控制整体版心宽度 */
 .md-grid {
-  max-width: 1600px !important; /* 默认 ~976px，可以放大 */
+  max-width: 1500px !important; /* 默认 ~976px，可以放大 */
 }
 
 
