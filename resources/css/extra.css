@@ -38,6 +38,20 @@ button.md-top {
     margin: 0.5em 0 !important;
 }
 
+/* 调整左侧导航栏（目录）的宽度 */
+.md-sidebar {
+  width: 12rem !important;   /* 默认大约 15rem，可以改小 */
+}
+
+/* 调整正文宽度以填补缩窄的空间 */
+.md-content {
+  max-width: none !important; /* 取消默认限制 */
+}
+
+/* 控制整体版心宽度 */
+.md-grid {
+  max-width: 1200px !important; /* 默认 ~976px，可以放大 */
+}
 
 
 
