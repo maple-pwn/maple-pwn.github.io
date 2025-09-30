@@ -1,0 +1,1685 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="张顾峰">
+      
+      
+        <link rel="canonical" href="https://maple-pwn.github.io/study/lisan/">
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../../testpage/test/">
+      
+      
+      <link rel="icon" href="../../images/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>离散数学 - Maple's blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../resources/css/extra.css">
+    
+      <link rel="stylesheet" href="https://static.zeoseven.com/zsft/292/main/result.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Maple&#39;s blog" class="md-header__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Maple's blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              离散数学
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+    
+  
+  学习笔记
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../testpage/test/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  功能测试页
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Maple&#39;s blog" class="md-nav__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    Maple's blog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    首页
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    学习笔记
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            学习笔记
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    离散数学
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    离散数学
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、命题逻辑
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、命题逻辑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 命题符号化和联结词
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 命题公式及分类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 等值演算
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4 范式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.5 联结词全功能集
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.6 组合电路
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.7 推理理论⭐
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#18" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.8 题例分析
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#19" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.9 本章小结
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、一阶逻辑
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、一阶逻辑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 一阶逻辑基本概念（一阶逻辑的命题符号化）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 一阶逻辑合式公式及解释
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 一阶逻辑等值式与前束范式
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    功能测试页
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            功能测试页
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testpage/test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    test
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、命题逻辑
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、命题逻辑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 命题符号化和联结词
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 命题公式及分类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 等值演算
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4 范式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.5 联结词全功能集
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.6 组合电路
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.7 推理理论⭐
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#18" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.8 题例分析
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#19" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.9 本章小结
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、一阶逻辑
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、一阶逻辑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 一阶逻辑基本概念（一阶逻辑的命题符号化）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 一阶逻辑合式公式及解释
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 一阶逻辑等值式与前束范式
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>离散数学</h1>
+
+<h2 id="_1">一、命题逻辑</h2>
+<h3 id="11">1.1 命题符号化和联结词</h3>
+<p>能判断真假的  <strong>陈述句</strong>  叫做  <strong>命题</strong>  。</p>
+<ul>
+<li>称判断为正确的命题的  <strong>真值(值)</strong>  为  <strong>真</strong> </li>
+<li>称判断为错误的命题的真值为  <strong>假</strong> </li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><code>这朵花多好看呀!</code>为感叹句</p>
+<p><code>x + y &gt; 5</code>没有确定的真值，不为命题</p>
+<p><code>明年10月1日是晴天</code>为命题，真值唯一</p>
+</div>
+<p>类似于<code>明年10月1日是晴天</code>这样的简单陈述句无法再拆分，称为  <strong>简单命题</strong> / <strong>原子命题</strong> ，用<span class="arithmatex">\(p,q,r,...,p_i,q_i,r_i,...\)</span>表示,称为  <strong>命题符号化</strong> </p>
+<hr />
+<p>简单命题的真值是确定的，因而称作  <strong>命题常项</strong> / <strong>命题常元</strong> ，例如：<code>明年10月1日是晴天</code></p>
+<p>对于真值可以变化的简单陈述句，称为  <strong>命题变项/命题变元</strong> ，例如：对于<code>x + y &gt; 5</code>，当<code>x,y</code>的值确定后真值也就确定了</p>
+<p>一个符号表示命题常项还是命题变项，一般由上下文决定。额外注意，<span style="color:red"><strong>命题变项不是命题</strong></span></p>
+<hr />
+<p><strong>真值联结词/逻辑联结词：</strong> </p>
+<table>
+<thead>
+<tr>
+<th>联结词</th>
+<th>符号</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>否定联结词</td>
+<td>¬</td>
+<td><code>非</code>操作</td>
+</tr>
+<tr>
+<td>合取联结词</td>
+<td>∧</td>
+<td><code>与</code>操作</td>
+</tr>
+<tr>
+<td>析取联结词</td>
+<td>∨</td>
+<td><code>或</code>操作</td>
+</tr>
+<tr>
+<td>蕴涵联结词</td>
+<td>→</td>
+<td>前真后假时为  <strong>假</strong> ；<code>10-&gt;0</code></td>
+</tr>
+<tr>
+<td>等值联结词</td>
+<td>↔</td>
+<td>前后真值相同时为  <strong>真</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><code>李平不是不聪明，而是不用功</code></p>
+<p><span class="arithmatex">\(p\)</span>表示<code>李平聪明</code>，<span class="arithmatex">\(q\)</span>表示<code>李平用功</code>，此命题用符号表示为：<span class="arithmatex">\(¬(¬p)∧(¬q)\)</span></p>
+<hr />
+<p><code>只要天不下雨，我就骑车上班</code></p>
+<p><span class="arithmatex">\(p\)</span>表示<code>天下雨</code>，<span class="arithmatex">\(q\)</span>表示<code>骑车上班</code>，此命题用符号表示为<span class="arithmatex">\(¬p→q\)</span>，当且仅当<span class="arithmatex">\(p=0,q=0\)</span>时为  <strong>假</strong> </p>
+<hr />
+<p><code>2 + 2 = 4当且仅当 3 不是奇数</code></p>
+<p><span class="arithmatex">\(p\)</span>表示<code>2+2=4</code>，<span class="arithmatex">\(q\)</span>表示<code>3 是奇数</code>，此命题用符号表示为<span class="arithmatex">\(p↔¬q\)</span>，当<span class="arithmatex">\(p=1,q=0\)</span>时为  <strong>真</strong> </p>
+</div>
+<h3 id="12">1.2 命题公式及分类</h3>
+<p>为了更深入地研究，需要把命题常项换成命题变项，称这样的式子为  <strong>合式公式</strong> </p>
+<p>合式公式是由命题变项、联结词、圆括号组成的字符串。有如下  <strong><span style="color:red"><strong>定义</strong></span></strong> </p>
+<ol>
+<li><strong>单个命题变项</strong>  <span class="arithmatex">\(p,q,r,...,p_i,q_i,r_i...\)</span>是合式公式</li>
+<li>如果<span class="arithmatex">\(A\)</span>为合式公式，则<span class="arithmatex">\((¬A)\)</span>也为合式公式</li>
+<li>如果<span class="arithmatex">\(A、B\)</span>为合式公式，则<span class="arithmatex">\((A∧B)、(A→B)、(A↔B)、(A∨B)\)</span>都是合式公式</li>
+</ol>
+<p><strong>总而言之，“只要是由命题变项和逻辑联结词，依照形式逻辑的语法规则构成的表达式，就是合式公式。</strong> </p>
+<p>合式公式又称命题公式，简称  <strong>公式</strong> </p>
+<hr />
+<p><strong>命题公式的层次</strong> </p>
+<ol>
+<li>若 <span class="arithmatex">\(A\)</span> 是单个命题变项，则称 <span class="arithmatex">\(A\)</span> 是 0 层公式。</li>
+<li>称 <span class="arithmatex">\(A\)</span> 是 <span class="arithmatex">\(n+1\)</span> 层公式<span class="arithmatex">\((n≥0)\)</span>是指 <span class="arithmatex">\(A\)</span> 符合下列情况之一：</li>
+<li><span class="arithmatex">\(A=¬B\)</span>，<span class="arithmatex">\(B\)</span> 是 n 层公式。</li>
+<li><span class="arithmatex">\(A=B∧C\)</span>，其中 <span class="arithmatex">\(B、C\)</span> 分别为 <span class="arithmatex">\(i\)</span> 层和 <span class="arithmatex">\(j\)</span> 层公式，且 <span class="arithmatex">\(n=max⁡(i,j)\)</span></li>
+<li><span class="arithmatex">\(A=B∨C\)</span>，其中 <span class="arithmatex">\(B、C\)</span> 的层次同 <code>2.2</code>。</li>
+<li><span class="arithmatex">\(A=B→C\)</span>，其中 <span class="arithmatex">\(B、C\)</span> 的层次同 <code>2.2</code>。</li>
+<li><span class="arithmatex">\(A=B ↔ C\)</span>, 其中 <span class="arithmatex">\(B、C\)</span> 的层次同 <code>2.2</code>。</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>例如，<span class="arithmatex">\(¬p∨q，p∧q∧r，¬(¬p∧q)→(r∨s)\)</span> 分别为2层、2层、4层命题公式。</p>
+</div>
+<hr />
+<p>设 <span class="arithmatex">\(A\)</span> 为一个命题公式，<span class="arithmatex">\(p_1, p_2, …, p_n\)</span> 为出现在 <span class="arithmatex">\(A\)</span> 中的所有命题变项。给 <span class="arithmatex">\(p_1, p_2, …, p_n\)</span>指定一组真值，称为对 <span class="arithmatex">\(A\)</span> 的一个  <strong>赋值</strong>  或  <strong>解释</strong>  。</p>
+<p>若指定的一组真值使 A 的值为真，则称这组真值为 A 的  <strong>成真赋值</strong>  ；若使 A 的值为假，则称这组真值为 A 的  <strong>成假赋值</strong>  。</p>
+<p>将命题公式<span class="arithmatex">\(A\)</span>在所有赋值之下取值的情况列成表，称为<span class="arithmatex">\(A\)</span>的  <strong>真值表</strong>  </p>
+<hr />
+<p>设A为一个命题公式</p>
+<ul>
+<li>若A在所有赋值下取值均为  <strong>真</strong> ，则称为  <strong>重言式</strong> / <strong>永真式</strong> </li>
+<li>若均为  <strong>假</strong> ，则称为  <strong>矛盾式</strong> / <strong>永假式</strong> </li>
+<li>若至少存在一组成真赋值，则称为  <strong>可满足式</strong> </li>
+</ul>
+<h3 id="13">1.3 等值演算</h3>
+<p>给定<span class="arithmatex">\(n(n≥1)\)</span>个命题变项，可产生无穷多个命题公式，而那些具有相同真值表的命题公式便是等值演算讨论的问题。</p>
+<p><strong><span class="arithmatex">\(n\)</span>个命题变项只能生成<span class="arithmatex">\(2^{2^n}\)</span>个真值不同的命题公式</strong> </p>
+<hr />
+<p>若等价式<span class="arithmatex">\(A↔B\)</span>为重言式，那么称<span class="arithmatex">\(A\)</span>与<span class="arithmatex">\(B\)</span>为  <strong>等值</strong>  的，记作<span class="arithmatex">\(A⇔B\)</span></p>
+<hr />
+<p>等值演算法</p>
+<table>
+<thead>
+<tr>
+<th>定律/公式</th>
+<th>逻辑等式</th>
+<th>名称解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>双重否定律</td>
+<td><span class="arithmatex">\(¬¬A ⇔ A\)</span></td>
+<td>否定两次等于没否定</td>
+</tr>
+<tr>
+<td>幂等律</td>
+<td><span class="arithmatex">\(A ∨ A ⇔ A\)</span><br><span class="arithmatex">\(A ∧ A ⇔ A\)</span></td>
+<td>同一个命题重复并无影响</td>
+</tr>
+<tr>
+<td>交换律</td>
+<td><span class="arithmatex">\(A ∨ B ⇔ B ∨ A\)</span><br><span class="arithmatex">\(A ∧ B ⇔ B ∧ A\)</span></td>
+<td>“或、与”运算交换位置不变</td>
+</tr>
+<tr>
+<td>结合律</td>
+<td><span class="arithmatex">\((A ∨ B) ∨ C ⇔ A ∨ (B ∨ C)\)</span><br><span class="arithmatex">\((A ∧ B) ∧ C ⇔ A ∧ (B ∧ C)\)</span></td>
+<td>“或、与”运算可以任意结合</td>
+</tr>
+<tr>
+<td>分配律</td>
+<td><span class="arithmatex">\(A ∨ (B ∧ C) ⇔ (A ∨ B) ∧ (A ∨ C)\)</span><br><span class="arithmatex">\(A ∧ (B ∨ C) ⇔ (A ∧ B) ∨ (A ∧ C)\)</span></td>
+<td>与、或之间可相互分配</td>
+</tr>
+<tr>
+<td>德摩根律</td>
+<td><span class="arithmatex">\(¬(A ∨ B) ⇔ ¬A ∧ ¬B\)</span><br><span class="arithmatex">\(¬(A ∧ B) ⇔ ¬A ∨ ¬B\)</span></td>
+<td>否定分配到括号内需改变运算符</td>
+</tr>
+<tr>
+<td>吸收律</td>
+<td><span class="arithmatex">\(A ∨ (A ∧ B) ⇔ A\)</span><br><span class="arithmatex">\(A ∧ (A ∨ B) ⇔ A\)</span></td>
+<td>强的条件吸收弱的条件</td>
+</tr>
+<tr>
+<td>零律</td>
+<td><span class="arithmatex">\(A ∨ 1 ⇔ 1\)</span><br><span class="arithmatex">\(A ∧ 0 ⇔ 0\)</span></td>
+<td>与“真”或得真，与“假”且得假</td>
+</tr>
+<tr>
+<td>同一律</td>
+<td><span class="arithmatex">\(A ∨ 0 ⇔ A\)</span><br><span class="arithmatex">\(A ∧ 1 ⇔ A\)</span></td>
+<td>与“假”或无效，与“真”且无效</td>
+</tr>
+<tr>
+<td>排中律</td>
+<td><span class="arithmatex">\(A ∨ ¬A ⇔ 1\)</span></td>
+<td>命题非真即假，必有其一</td>
+</tr>
+<tr>
+<td>矛盾律</td>
+<td><span class="arithmatex">\(A ∧ ¬A ⇔ 0\)</span></td>
+<td>命题不可能既真又假</td>
+</tr>
+<tr>
+<td>蕴涵等值式</td>
+<td><span class="arithmatex">\(A → B ⇔ ¬A ∨ B\)</span></td>
+<td>“如果…那么…”等价于“非前件或后件”</td>
+</tr>
+<tr>
+<td>等价等值式</td>
+<td><span class="arithmatex">\(A ↔ B ⇔ (A → B) ∧ (B → A)\)</span></td>
+<td>等价等于双向蕴涵</td>
+</tr>
+<tr>
+<td>假言易位</td>
+<td><span class="arithmatex">\(A → B ⇔ ¬B → ¬A\)</span></td>
+<td>逆否命题与原命题等价</td>
+</tr>
+<tr>
+<td>等价否定等值式</td>
+<td><span class="arithmatex">\(A ↔ B ⇔ ¬A ↔ ¬B\)</span></td>
+<td>命题等价则其否定也等价</td>
+</tr>
+</tbody>
+</table>
+<h3 id="14">1.4 范式</h3>
+<p>仅由有限个命题变项或其否定构成的析取式称为  <strong>简单析取式</strong>  ；类似于数电的最简或式的<span class="arithmatex">\(m_i\)</span></p>
+<p>仅由有限个命题变项或其否定构成的合取式称为  <strong>简单合取式</strong>  ；类似于数电的最简和式<span class="arithmatex">\(M_i\)</span></p>
+<hr />
+<p>仅由有限个简单析取式构成的析取式称为  <strong>析取范式</strong>  </p>
+<p>仅由有限个简单合取式构成的析取式称为  <strong>合取范式</strong>  </p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<div class="arithmatex">\[
+\begin{align*}
+p \to q &amp;\Leftrightarrow \neg p \lor q \\
+p \leftrightarrow q &amp;\Leftrightarrow (\neg p \lor q) \land (p \lor \neg q) \\
+\neg \neg p &amp;\Leftrightarrow p \\
+\neg (p \land q) &amp;\Leftrightarrow \neg p \lor \neg q \\
+\neg (p \lor q) &amp;\Leftrightarrow \neg p \land \neg q
+\end{align*}
+\]</div>
+</div>
+<hr />
+<p>如果公式<span class="arithmatex">\(A\)</span>的析取范式中的简单合取式全是极小项，则称该析取范式为   <strong>主析取范式</strong> ；类似于数电的最简或式</p>
+<p><strong>主合取范式</strong>  类似，不做赘述</p>
+<h3 id="15">1.5 联结词全功能集</h3>
+<p>设S式一个联结词集合，如果任一真值函数都可以用仅含 <span class="arithmatex">\(S\)</span> 中的联结词的命题公式表示，则称 <span class="arithmatex">\(S\)</span> 为 <strong>全功能集</strong> </p>
+<p>↑称作  <strong>与非联结词</strong>  ；↓称作  <strong>或非联结词</strong> </p>
+<table>
+<thead>
+<tr>
+<th>联结词</th>
+<th>等价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(p↑q\)</span></td>
+<td><span class="arithmatex">\(¬(p∧q)\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(p↓q\)</span></td>
+<td><span class="arithmatex">\(¬(p∨q)\)</span></td>
+</tr>
+</tbody>
+</table>
+<h3 id="16">1.6 组合电路</h3>
+<p>数电已学，不加赘述</p>
+<h3 id="17">1.7 推理理论⭐</h3>
+<p><strong>推理</strong>  是从前提推出结论的思维过程；  <strong>前提</strong>  是指已知的命题公式，  <strong>结论</strong>  是指从前提触发应用推理规则推出的命题公式。</p>
+<p>定义如下：</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>定义 1.20</strong> </p>
+<p>若<span class="arithmatex">\((A_1 \land A_2 \land \cdots \land A_k)\ \to\ B\)</span>为重言式，则称 <span class="arithmatex">\((A_1, A_2, \ldots, A_k)\)</span> 推出结论 <span class="arithmatex">\(B\)</span> 的推理  <strong>正确</strong>  ；</p>
+<p><span class="arithmatex">\(B\)</span> 是<span class="arithmatex">\((A_1, A_2, \ldots, A_k)\)</span> 的  <strong>逻辑结论</strong>  或  <strong>有效结论</strong>  。</p>
+<p>称<span class="arithmatex">\((A_1 \land A_2 \land \cdots \land A_k)\ \to\ B\)</span>为由前提 <span class="arithmatex">\((A_1, A_2, \ldots, A_k)\)</span> 推出结论 <span class="arithmatex">\(B\)</span>的推理的  <strong>形式结构</strong>  。</p>
+</div>
+<p>因而，若前提<span class="arithmatex">\(A_1,A_2,\ldots,A_k\)</span>,推出结论B的推理正确，也记作
+$$
+(A_1\land A_2 \land \ldots \land A_k) \Rightarrow B
+$$
+判断推理是否正确就是 <mark>判断一个蕴含式是否是重言式</mark></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><code>如果我上街，我一定去新华书店。我没上街，所以我没去新华书店</code></p>
+<p>设<span class="arithmatex">\(p\)</span>：我上街；<span class="arithmatex">\(q\)</span>：我去新华书店</p>
+<p>前提：<span class="arithmatex">\(p \to q,\neg p\)</span></p>
+<p>结论：<span class="arithmatex">\(\neg q\)</span></p>
+<p>推理的形式结构为
+$$
+((p \to q)\land \neg p) \to \neg q
+$$
+经过一系列计算，该式等价于<span class="arithmatex">\(p\lor \lnot q\)</span>，非 <strong>重言式</strong> ，即推理不正确</p>
+</div>
+<hr />
+<p><strong>证明推理正确的证明方法——<mark>构造证明法</mark></strong> </p>
+<p>重要的 <strong>推理定律</strong> 如下：</p>
+<table>
+<thead>
+<tr>
+<th>定理</th>
+<th>名字</th>
+<th>含义解释</th>
+<th>直观理解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\((A \Rightarrow (A \lor B))\)</span></td>
+<td><strong>附加</strong></td>
+<td>如果 (A) 成立，那么“(A) 或 (B)”也一定成立。</td>
+<td>“我会去图书馆 → 我会去图书馆或看电影”。</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(((A \land B) \Rightarrow A)\)</span></td>
+<td><strong>化简</strong></td>
+<td>如果 (A) 和 (B) 同时为真，那么单独 (A) 也为真。</td>
+<td>“我去图书馆并且下雨 → 我去图书馆”。</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\((((A \to B)\land A)\Rightarrow B)\)</span></td>
+<td><strong>假言推理</strong></td>
+<td>如果“若 A 则 B”是真的，且 A 也是真的，那么可以推出 B。</td>
+<td>“如果下雨就带伞，并且现在下雨 → 我带伞”。</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\((((A \to B)\land \lnot B)\Rightarrow \lnot A)\)</span></td>
+<td><strong>拒取式</strong></td>
+<td>如果“若 A 则 B”是真的，但 B 假了，那么 A 也一定是假。</td>
+<td>“如果下雨就带伞，但我没带伞 → 没下雨”。</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\((((A\lor B)\land \lnot A) \Rightarrow B)\)</span></td>
+<td><strong>析取三段论</strong></td>
+<td>如果“要么 A 要么 B”，但 A 不成立，那么 B 必然成立。</td>
+<td>“我今天要么学习要么打游戏，我没学习 → 我打游戏”。</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\((((A \to B)\land(B\to C))\Rightarrow (A\to C))\)</span></td>
+<td><strong>假言三段论</strong></td>
+<td>A推出B，B推出C；那么 A 可以直接推出 C</td>
+<td>“如果考上研究生就能进实验室，如果进实验室就能拿项目 → 考上研究生就能拿项目”。</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\((((A \leftrightarrow B)\land(B \leftrightarrow C))\Rightarrow(A \leftrightarrow C))\)</span></td>
+<td><strong>等价三段论</strong></td>
+<td>如果 A 等价于 B，且 B 等价于 C，那么 A 也等价于 C。</td>
+<td>“A ≡ B，B ≡ C → A ≡ C”。比如“x 是偶数 ↔ x 能被 2 整除”，“x 能被 2 整除 ↔ x 的平方是偶数” → “x 是偶数 ↔ x 的平方是偶数”。</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(((A \to B)\land(C\to D)\land(A\lor C)\Rightarrow (B\lor D))\)</span></td>
+<td><strong>构造性二难</strong></td>
+<td>如果“若 A 则 B”，且“若 C 则 D”，而且我们知道“要么 A 要么 C”，那么结论就是“要么 B 要么 D”。</td>
+<td>“如果今天下雨就带伞，如果今天晴天就戴墨镜，而今天不是下雨就是晴天 → 我要么带伞要么戴墨镜”。</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>证明</strong> 是一个描述推理过程的命题公式序列。其中，对于每个命题公式，或者是已知的前提，或者是由前面的命题公式应用推理规则得到的结论</p>
+<p>常用 <mark>推理规则</mark> 如下：</p>
+<table>
+<thead>
+<tr>
+<th>规则</th>
+<th>内容说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>前提引入规则</strong></td>
+<td>在证明的任何一步，都可以引入前提。</td>
+</tr>
+<tr>
+<td><strong>结论引入规则</strong></td>
+<td>在证明的任何一步，前面已证明的结论都可作为后续证明的前提。</td>
+</tr>
+<tr>
+<td><strong>置换规则</strong></td>
+<td>在证明的任何步骤，命题公式中的任何子命题公式都可以用与之等值的命题公式置换。例如：可用 <span class="arithmatex">\((\lnot p \lor q)\)</span> 置换 <span class="arithmatex">\((p \to q)\)</span>。</td>
+</tr>
+</tbody>
+</table>
+<p>常用 <mark>推理定律</mark> 如下</p>
+<blockquote>
+<p><span class="arithmatex">\(A_1,A_2,\ldots,A_k \vdash B\)</span>表示<span class="arithmatex">\(B\)</span>是<span class="arithmatex">\(A_1,A_2,\ldots,A_k\)</span> 的逻辑结论</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>定律</th>
+<th>逻辑形式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>假言推理</strong></td>
+<td><span class="arithmatex">\((A \to B, A \vdash B)\)</span></td>
+<td>肯前推后</td>
+</tr>
+<tr>
+<td><strong>附加规则</strong></td>
+<td><span class="arithmatex">\((A \vdash A \lor B)\)</span></td>
+<td>单命题可推出“或”命题</td>
+</tr>
+<tr>
+<td><strong>化简规则</strong></td>
+<td><span class="arithmatex">\((A \land B  \vdash A)\)</span></td>
+<td>合取式可化简</td>
+</tr>
+<tr>
+<td><strong>拒取式</strong></td>
+<td><span class="arithmatex">\((A \to B, \lnot B  \vdash \lnot A)\)</span></td>
+<td>否后否前</td>
+</tr>
+<tr>
+<td><strong>假言三段论</strong></td>
+<td><span class="arithmatex">\((A \to B, B \to C  \vdash A \to C)\)</span></td>
+<td>链式推理</td>
+</tr>
+<tr>
+<td><strong>析取三段论</strong></td>
+<td><span class="arithmatex">\((A \lor B, \lnot A  \vdash B)\)</span></td>
+<td>排除法</td>
+</tr>
+<tr>
+<td><strong>构造性二难</strong></td>
+<td><span class="arithmatex">\((A \to B,  C \to D, A \lor C  \vdash B \lor D)\)</span></td>
+<td>二选一推出二选一</td>
+</tr>
+<tr>
+<td><strong>合取引入规则</strong></td>
+<td><span class="arithmatex">\((A, B \vdash A \land B)\)</span></td>
+<td>单个命题可以并合</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>构造法证明常用的两种技巧</strong> </p>
+<p><mark>附加前提证明法</mark></p>
+<p>即<span class="arithmatex">\((A_1\land A_2\land\ldots A_k)\to(A\to B)\)</span>转化为<span class="arithmatex">\((A_1\land A_2 \land \dots A_k \land A)\to B\)</span></p>
+<p>原本结论中的前件<span class="arithmatex">\(A\)</span>变为了前提，称<span class="arithmatex">\(A\)</span>为附加前提。</p>
+<p>如果可以证明后式为重言式，则前式也为重言式。</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>例1.23</strong>  用附加前提证明法证明下面推理</p>
+<p>前提：<span class="arithmatex">\(p\to(q\to r),\lnot s \lor p,q\)</span></p>
+<p>结论：<span class="arithmatex">\(s\to r\)</span></p>
+<p>证明：</p>
+<div class="arithmatex">\[
+\begin{aligned}
+①\;&amp; \lnot s \lor p \quad &amp;&amp; \text{前提引入} \\
+②\;&amp; s \quad &amp;&amp; \text{附加前提引入} \\
+③\;&amp; p \quad &amp;&amp; \text{由 ①② 析取三段论} \\
+④\;&amp; p \to (q \to r) \quad &amp;&amp; \text{前提引入} \\
+⑤\;&amp; q \to r \quad &amp;&amp; \text{由 ③④ 假言推理} \\
+⑥\;&amp; q \quad &amp;&amp; \text{前提引入} \\
+⑦\;&amp; r \quad &amp;&amp; \text{由 ⑤⑥ 假言推理} \\
+\end{aligned}
+\]</div>
+</div>
+<p><mark>归谬法</mark></p>
+<p>由于 <span class="arithmatex">\(A_1,A_2,\ldots,A_n\to B \Leftrightarrow \lnot(A_1\land A_2\land \ldots \land A_n \land \lnot B)\)</span></p>
+<p>那么若<span class="arithmatex">\(A_1,A_2,\ldots,A_n\)</span>与<span class="arithmatex">\(\lnot B\)</span>不相容，则说明<span class="arithmatex">\(B\)</span>是公式<span class="arithmatex">\(A_1,A_2,\ldots,A_n\)</span>的逻辑结论。</p>
+<p><em>回忆：矛盾式即表明该式各元素不相容</em></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>例1.24</strong>  构造下面推理的证明</p>
+<p>前提：<span class="arithmatex">\(p\to(\lnot(r\land s)\to \lnot q),p,\lnot s\)</span></p>
+<p>结论：<span class="arithmatex">\(\lnot q\)</span></p>
+<p>证明：</p>
+<div class="arithmatex">\[
+\begin{aligned}
+①\;&amp; p \to \big((\lnot(r \land s)) \to \lnot q\big) \quad &amp;&amp; \text{前提引入} \\
+②\;&amp; p \quad &amp;&amp; \text{前提引入} \\
+③\;&amp; \lnot(r \land s) \to \lnot q \quad &amp;&amp; \text{由 ①② 假言推理} \\
+④\;&amp; \lnot(\lnot q) \quad &amp;&amp; \text{否定结论引入} \\
+⑤\;&amp; q \quad &amp;&amp; \text{由 ④ 置换} \\
+⑥\;&amp; r \land s \quad &amp;&amp; \text{由 ③⑤ 拒取式} \\
+⑦\;&amp; \lnot s \quad &amp;&amp; \text{前提引入} \\
+⑧\;&amp; s \quad &amp;&amp; \text{由 ⑥ 化简} \\
+⑨\;&amp; s \land \lnot s \quad &amp;&amp; \text{由 ⑦⑧ 合取} \\
+\end{aligned}
+\]</div>
+<p>由⑨得出了矛盾，根据归谬法说明推理正确</p>
+</div>
+<h3 id="18">1.8 题例分析</h3>
+<p>此部分略</p>
+<h3 id="19">1.9 本章小结</h3>
+<p>在本章中，我们围绕 <strong>命题逻辑</strong> 展开了系统学习，主要内容可以归纳如下：</p>
+<ul>
+<li><strong>命题与真值</strong> ：理解命题的定义，区分命题常项与命题变项，并掌握命题的真值特征。  </li>
+<li><strong>逻辑联结词与命题公式</strong> ：学习否定、合取、析取、蕴涵、等值等联结词，能够构造合式公式并判定其层次。  </li>
+<li><strong>等值演算与范式</strong> ：通过等值演算，掌握常见的逻辑等值式（德摩根律、分配律等），并学习合取范式、析取范式及主范式的概念。  </li>
+<li><strong>推理理论</strong> ：明确推理的形式结构，学习常见推理定律（假言推理、拒取式、析取三段论、构造性二难等），并掌握了构造证明、归谬法等基本证明方法。  </li>
+<li><strong>推理规则与证明技巧</strong> ：熟悉前提引入、结论引入、置换规则等推理规则，能够在逻辑证明中合理运用。  </li>
+</ul>
+<h2 id="_2">二、一阶逻辑</h2>
+<blockquote>
+<p>在前一章中，我们已经系统地学习了  <strong>命题逻辑</strong> ，它通过<code>命题变项</code>与<code>逻辑联结词</code>的组合，为逻辑推理提供了形式化工具。然而，命题逻辑在表达能力上仍存在明显局限：它只能把“整体陈述”作为分析单位，却无法揭示陈述内部的对象与关系。例如，“所有学生都喜欢数学”与“张三喜欢数学”，在命题逻辑中仅能作为两个独立命题对待，二者之间的内在联系无法刻画。</p>
+<p>因此，我们必须引入更强大的逻辑体系—— <strong>一阶逻辑</strong> 。一阶逻辑通过 <strong>谓词</strong> 和 <strong>量词</strong> 的引入，能够刻画个体的性质与对象间的关系，使逻辑推理从“整体真值”扩展到“对象层面”。因此， <strong>一阶逻辑</strong> 也成为 <strong>谓词逻辑</strong> </p>
+</blockquote>
+<p>课本中提到“苏格拉底三段论”。内容如下：</p>
+<ul>
+<li>p：凡是人都是要死的</li>
+<li>q：苏格拉底是人</li>
+<li>r：所以苏格拉底是要死的</li>
+</ul>
+<p>上述推理可表示为 <span class="arithmatex">\((p\land q)\to r\)</span>。此式并非 <strong>重言式</strong> ，但在客观事实上是正确的。</p>
+<p>根本原因是，在命题逻辑中，只能把“凡是人都是要死的”作为一个简单命题，而失去了它的内在含义。</p>
+<h3 id="21">2.1 一阶逻辑基本概念（一阶逻辑的命题符号化）</h3>
+<p>依旧从<code>凡是人都要死的</code>这句话入手，它分为三个部分：</p>
+<ul>
+<li>“凡是”是所有的、每个的意思</li>
+<li>所有的什么呢？就是“人”这个特殊的对象</li>
+<li>“是要死的”是一种性质</li>
+</ul>
+<p>总结来说，这句话的意思为<code>所有的这种对象都有这种性质</code>。而为了形式化的描述这些，一阶逻辑中引入了 <strong>量词、个体词和谓词</strong> 3个概念。<em>量词暂时按下不表</em></p>
+<ul>
+<li>
+<p><strong>个体词</strong> ：是指可以独立存在的客体，可以是一个具体的事物，也可以是一个抽象的概念</p>
+<p>张三、李四、人、花、自然数、<span class="arithmatex">\(\sqrt2\)</span>、思想、定理等都可作为个体词</p>
+</li>
+<li>
+<p><strong>谓词</strong> ：刻画个体词的性质或个体词之间关系的词</p>
+<p><span class="arithmatex">\(\sqrt2\)</span><mark>是无理数</mark>；张三 <mark>是程序员</mark> ；小李 <mark>比</mark> 小赵 <mark>高2厘米</mark></p>
+<p>标注的地方就为谓词。前两个谓词表示个体词性质，后一个谓词表示两个个体词之间的关系</p>
+</li>
+</ul>
+<hr />
+<p><strong>对于 <mark>个体词</mark></strong> </p>
+<ul>
+<li>
+<p><strong>个体常项</strong> ：表示具体的、特定的个体。用小写字母 <span class="arithmatex">\(a,b,c\dots\)</span> 表示。</p>
+</li>
+<li>
+<p><strong>个体变项</strong> ：表示抽象的或泛指的个体。用小写字母 <span class="arithmatex">\(x, y, z, \dots\)</span> 表示。</p>
+</li>
+<li>
+<p><strong>个体域（论域）</strong> ：是个体变项取值的范围。</p>
+</li>
+<li>
+<p>可以是有限集合，如 <span class="arithmatex">\(\{1,2,3,4\}, \{a,b,c\}, \{计算机,2,狮子\}\)</span>。</p>
+</li>
+<li>
+<p>也可以是无限集合，如自然数集、实数集等。</p>
+</li>
+<li>
+<p><strong>全总个体域</strong> ：如果没有特别说明，个体域默认为“宇宙间的一切事物”，称为全总个体域。</p>
+</li>
+</ul>
+<hr />
+<p><strong>对于 <mark>谓词</mark></strong> </p>
+<ul>
+<li>
+<p><strong>谓词常项</strong> ：表示具体性质或关系的谓词。用大写字母 <span class="arithmatex">\(F, G, H, \dots\)</span>表示。</p>
+<p>例：<span class="arithmatex">\(F(x)\)</span> 表示“x 是无理数”。</p>
+</li>
+<li>
+<p><strong>谓词变项</strong> ：表示抽象或泛指的谓词。也用大写字母 <span class="arithmatex">\(F,G,H,…\)</span>表示，具体是常项还是变项需看上下文。</p>
+<p>个人认为，这两个其实就是具体函数和抽象函数之分</p>
+</li>
+<li>
+<p><strong>谓词的形式</strong> </p>
+</li>
+<li>
+<p><strong>单个体谓词</strong> ：一个个体变项与谓词组成，如 <span class="arithmatex">\(F(x)\)</span>。</p>
+</li>
+<li>
+<p><strong>多元谓词</strong> ：多个个体变项与谓词组成，如 <span class="arithmatex">\(L(x,y)\)</span>，表示关系。</p>
+<p>例：<span class="arithmatex">\(L(x,y)\)</span> 可表示 “x 比 y 高 2 厘米”。</p>
+</li>
+</ul>
+<p>接下来，根据 <strong>包含多少个个体词</strong> ，提出了 <strong>谓词的元数</strong> 这一概念</p>
+<ul>
+<li><strong>元谓词</strong> ：谓词中包含的个体词个数称为 <strong>元数</strong> ；含<span class="arithmatex">\(n(n≥1)\)</span>个个体词的谓词叫做 <strong><span class="arithmatex">\(n\)</span>元谓词</strong> </li>
+<li>其中<span class="arithmatex">\(n=1\)</span>时，表示某个个体的性质；<span class="arithmatex">\(n≥2\)</span>时，表示个体间的关系</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>谓词本身不是命题</strong> </p>
+<p>单独的谓词<span class="arithmatex">\(P(x_1,x_2,\ldots,x_n)\)</span>不是命题；必须<code>指定个体项</code>替代<code>个体变项</code>才能称为命题</p>
+<p><strong>0元谓词</strong> </p>
+<p>指不带<code>个体变项</code>的谓词；其实就是<code>常项命题</code>，真假值固定</p>
+</div>
+<p><mark>总结一下：谓词按元数分为 0 元（命题）、1 元（性质）、2 元及以上（关系）。只有将个体代入谓词，才能形成命题。</mark></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>例2.1</strong>  将下列命题用 0 元谓词符号化</p>
+<p>（1）2是素数且是偶数</p>
+<p>（2）如果2大于3，则2大于4</p>
+<p>（3）如果A比B高，B比C高，则A比C高</p>
+<p><strong>解</strong> </p>
+<p>(1)设<span class="arithmatex">\(F(x):x为素数\)</span>、<span class="arithmatex">\(G(x):x为偶数\)</span>、<span class="arithmatex">\(a:2\)</span></p>
+<p>​   则：<span class="arithmatex">\(F(a)\land G(a)\)</span></p>
+<p>(2)设<span class="arithmatex">\(L(x,y):x大于y\)</span>、<span class="arithmatex">\(a:2,b:3,c:4\)</span></p>
+<p>​   则：<span class="arithmatex">\(L(a,b)\to L(a,c)\)</span></p>
+<p>(3)设<span class="arithmatex">\(H(x,y):x比y高\)</span>、<span class="arithmatex">\(a:A,b:B,c:C\)</span></p>
+<p>​   则：<span class="arithmatex">\(H(a,b)\land H(b,c) \to H(a,c)\)</span></p>
+</div>
+<hr />
+<p><strong>对于 <mark>量词</mark></strong></p>
+<p><strong>全称量词</strong> ：对应日常语言中的“一切”“所有”“任意”等词语，用 <span class="arithmatex">\(\forall\)</span> 表示，<span class="arithmatex">\(\forall x\)</span> 表示对个体域里的所有个体</p>
+<blockquote>
+<p><span class="arithmatex">\(\forall x F(x)\)</span> 表示个体域里所有个体都有性质<span class="arithmatex">\(F\)</span></p>
+</blockquote>
+<p><strong>存在量词</strong> ：对应日常语言中的“有一个”“存在”“至少有一个”，用 <span class="arithmatex">\(\exists\)</span> 表示， <span class="arithmatex">\(\exists x\)</span> 表示存在个体域里的个体</p>
+<blockquote>
+<p><span class="arithmatex">\(\exists xF(x)\)</span> 表示存在个体域中的个体具有性质<span class="arithmatex">\(F\)</span></p>
+</blockquote>
+<hr />
+<p><strong>符号化</strong></p>
+<p>符号化  <strong>必须</strong>  要明确<code>个体域</code>，否则会出现指代不明的情况</p>
+<p>举个例子，如下：</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>考虑以下两个问题的符号化</p>
+<p>​   (1)所有人都是要死的</p>
+<p>​   (2)有的人活到百岁以上</p>
+<p>第一种情况，考虑个体域D为人类集合</p>
+<p>​   (1)<span class="arithmatex">\(\forall x F(x)\)</span>;其中，<span class="arithmatex">\(F(x)：x\)</span>是要死的；此命题为真命题</p>
+<p>​   (2)<span class="arithmatex">\(\exists x G(x)\)</span>;其中，<span class="arithmatex">\(G(x):x\)</span>活到百岁以上；此命题为真命题</p>
+<p>第二种情况，考虑个体域D为全总个体域</p>
+<p>​   (1)不能符号化，因为这将表明宇宙间一切事物都会死，与原命题不符</p>
+<p>​   (2)不能符号化，因为这将表明宇宙间的一切事物存在百岁以上，与原命题不符</p>
+<p>补丁怎么打呢？<mark>引入一个新的谓词，将人分离出来</mark></p>
+<p>于是在全总个体域的情况下，以上命题可以这样叙述</p>
+<p>​   (1)对所有个体而言，如果它是人，则它是要死的</p>
+<p>​   (2)存在着个体，它是人并且活百岁以上</p>
+<p>符号化如下：</p>
+<p>​   增设新谓词<span class="arithmatex">\(M(x):x是人\)</span></p>
+<p>​   (1)<span class="arithmatex">\(\forall x(M(x)\to F(x))\)</span></p>
+<p>​   (2)<span class="arithmatex">\(\exists x(M(x)\land G(x))\)</span></p>
+</div>
+<p><em>这个引入的新谓词称作  <strong>特性谓词</strong></em></p>
+<hr />
+<p><strong>使用量词时的注意事项</strong></p>
+<p>书上给出提示，在使用量词的时候，应当注意以下内容</p>
+<ul>
+<li>
+<p>在不同的个体域中，命题符号化的形式可能不一样，如上文中的例子</p>
+</li>
+<li>
+<p>如果事先没有给出个体域，都应该以 <strong>全总个体域</strong> 为个体域</p>
+</li>
+<li>
+<p>在引入特性谓词后，使用全称量词与存在量词符号化的形式是不同的，如上文例子</p>
+</li>
+<li>
+<p>个体域和谓词的含义确定后，n元谓词要转化为命题至少需要n个量词</p>
+</li>
+<li>
+<p>当个体域为有限集时，如 <span class="arithmatex">\(D=\{\ a_1, a_2,\ldots,a_n\}\)</span> 由量词的意义可以卡出，对于任意的谓词 <span class="arithmatex">\(A(x)\)</span> ，都有</p>
+</li>
+<li><span class="arithmatex">\(\forall xA(x)\Leftrightarrow A(a_1)\land A(a_2)\land \ldots \land A(a_n)\)</span></li>
+<li>
+<p>如 <span class="arithmatex">\(\exists xA(x)\Leftrightarrow A(a_1)\lor A(a_2)\lor \ldots \lor A(a_n)\)</span></p>
+</li>
+<li>
+<p>多个量词同时出现的时候，不可以随意颠倒顺序，颠倒后可能与原含义不同</p>
+<p>例如：<mark>“对任意的x，存在y，使得<span class="arithmatex">\(x+y=5\)</span>”</mark> 和 <mark>“存在y，使得任意x，都有<span class="arithmatex">\(x+y=5\)</span>”</mark> 天差地别</p>
+</li>
+</ul>
+<h3 id="22">2.2 一阶逻辑合式公式及解释</h3>
+<blockquote>
+<p>上一节介绍了一阶逻辑命题符号化，本节给出一阶逻辑中合式公式的形式定义</p>
+</blockquote>
+<p>以下定义个人认为了解即可，不必太在意</p>
+<hr />
+<p><mark><strong>定义2.1</strong></mark> 字母表：</p>
+<ol>
+<li>个体常项：<span class="arithmatex">\(a, b, c, \cdots, a_i, b_i, c_i, \cdots, i \geq 1\)</span>；</li>
+<li>个体变项：<span class="arithmatex">\(x, y, z, \cdots, x_i, y_i, z_i, \cdots, i \geq 1\)</span>；</li>
+<li>函数符号：<span class="arithmatex">\(f, g, h, \cdots, f_i, g_i, h_i, \cdots, i \geq 1\)</span>；</li>
+<li>谓词符号：<span class="arithmatex">\(F, G, H, \cdots, F_i, G_i, H_i, \cdots, i \geq 1\)</span>；</li>
+<li>量词符号：<span class="arithmatex">\(\forall, \exists\)</span>；</li>
+<li>联结词符：<span class="arithmatex">\(\lnot, \land, \lor, \rightarrow, \leftrightarrow\)</span>；</li>
+<li>圆括号和逗号：<span class="arithmatex">\(( \ ,\ ) , \ ,\)</span></li>
+</ol>
+<hr />
+<p><mark><strong>定义 2.2</strong></mark> 项的递归定义：</p>
+<ol>
+<li>个体常项和变项是项；</li>
+<li>若 <span class="arithmatex">\(\varphi(x_{1}, x_{2}, \cdots, x_{n})\)</span> 是任意 <span class="arithmatex">\(n\)</span> 元函数，<span class="arithmatex">\(t_{1}, t_{2}, \cdots, t_{n}\)</span> 是项，则 <span class="arithmatex">\(\varphi(t_{1}, t_{2}, \cdots, t_{n})\)</span> 也是项；</li>
+<li>只有有限次地使用 (1)、(2) 生成的符号串才是项。</li>
+</ol>
+<p>例如：</p>
+<ul>
+<li><span class="arithmatex">\(a, b, x, y\)</span></li>
+<li><span class="arithmatex">\(f(x,y) = x + y\)</span></li>
+<li><span class="arithmatex">\(g(x,y) = x - y\)</span></li>
+<li><span class="arithmatex">\(h(x,y) = x \cdot y\)</span></li>
+</ul>
+<p>等都是项。  </p>
+<p>又如：</p>
+<ul>
+<li><span class="arithmatex">\(f(a, g(x,y)) = a + (x-y)\)</span>  </li>
+<li><span class="arithmatex">\(g(h(x,y), f(a,b)) = x \cdot y - (a+b)\)</span>  </li>
+</ul>
+<p>等也都是项。</p>
+<hr />
+<p><strong><mark>定义 2.3</mark></strong>   设 <span class="arithmatex">\(R(x_{1}, x_{2}, \cdots, x_{n})\)</span> 是任意的 <span class="arithmatex">\(n \ (n \geq 1)\)</span> 元谓词，<span class="arithmatex">\(t_{1}, t_{2}, \cdots, t_{n}\)</span> 是项，则称 <span class="arithmatex">\(R(t_{1}, t_{2}, \cdots, t_{n})\)</span> 为  <strong>原子公式</strong> 。</p>
+<blockquote>
+<p>简单来说，就是没有经过逻辑联结词操作的公式。<span class="arithmatex">\(R(x,y)\)</span>是原子公式；<span class="arithmatex">\(\lnot R(x,y)\)</span>不是原子公式</p>
+</blockquote>
+<p>定义 2.2 和定义 2.3 中的 <span class="arithmatex">\(\varphi\)</span> 和 <span class="arithmatex">\(R\)</span> 都不是字母表中的符号，它们分别代表任意的函数和任意的谓词，这与在第 1 章中用 <span class="arithmatex">\(A, B\)</span> 等表示任意的命题公式一样。</p>
+<blockquote>
+<p>类似于抽象函数的概念</p>
+</blockquote>
+<hr />
+<p><mark><strong>定义 2.4</strong></mark> 合式公式的定义如下：</p>
+<ol>
+<li>原子公式是合式公式；</li>
+<li>若 <span class="arithmatex">\(A\)</span> 是合式公式，则 <span class="arithmatex">\((\lnot A)\)</span> 也是合式公式；</li>
+<li>若 <span class="arithmatex">\(A, B\)</span> 是合式公式，则 <span class="arithmatex">\((A \land B), (A \lor B), (A \to B), (A \leftrightarrow B)\)</span> 也是合式公式；</li>
+<li>若 <span class="arithmatex">\(A\)</span> 是合式公式，则 <span class="arithmatex">\(\forall x A, \ \exists x A\)</span> 也是合式公式；</li>
+<li>只有有限次地应用 (1)～(4) 构成的符号串才是合式公式。</li>
+</ol>
+<p>在一阶逻辑中，合式公式又称  <strong>谓词公式</strong> ，简称公式。为简单起见，合式公式的最外层圆括号可以省去。  </p>
+<hr />
+<p><mark><strong>定义 2.5</strong></mark>  在合式公式 <span class="arithmatex">\(\forall x A\)</span> 和 <span class="arithmatex">\(\exists x A\)</span> 中，称 <span class="arithmatex">\(x\)</span> 为  <strong>指导变项</strong> ，称 <span class="arithmatex">\(A\)</span> 为相应量词的  <strong>辖域</strong> 。  在辖域中，<span class="arithmatex">\(x\)</span> 的所有出现称为  <strong>约束出现</strong> （即 <span class="arithmatex">\(x\)</span> 受相应量词指导变项的约束）；  <span class="arithmatex">\(A\)</span> 中不是约束出现的其他变项的出现称为  <strong>自由出现</strong> 。</p>
+<p>总而言之：<mark>约束出现 = 被量词 <span class="arithmatex">\(\forall\)</span> 或 <span class="arithmatex">\(\exists\)</span> 控制的变量；自由出现 = 没有被量词控制的变量</mark></p>
+<blockquote>
+<p>例：公式：<span class="arithmatex">\(\forall x \ (P(x) \rightarrow Q(y))\)</span>
+其中：</p>
+<ul>
+<li><strong>约束变量</strong>  是<span class="arithmatex">\(x\)</span></li>
+<li><strong>辖域</strong>  是<span class="arithmatex">\((P(x) \rightarrow Q(y))\)</span></li>
+<li><span class="arithmatex">\(x\)</span> 在 <span class="arithmatex">\(P(x)\)</span> 中是  <strong>约束出现</strong> </li>
+<li><span class="arithmatex">\(y\)</span> 在 <span class="arithmatex">\(Q(y)\)</span> 中没有被量词约束，所以 <span class="arithmatex">\(y\)</span> 是  <strong>自由出现</strong> 。</li>
+</ul>
+</blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>⭐其中，存在一种现象：<span class="arithmatex">\(\exists x F(x) \land G(x,y)\)</span></p>
+<p>在 <span class="arithmatex">\(\exists x F(x)\)</span> 中，x是指导变项，<span class="arithmatex">\(\exists\)</span> 的辖域是 <span class="arithmatex">\(F(x)\)</span>，x是约束出现；<span class="arithmatex">\(G(x,y)\)</span> 中，<span class="arithmatex">\(x、y\)</span> 是自由出现</p>
+<p>在整个公式中，<span class="arithmatex">\(x\)</span>的第一次出现是约束出现，第二次出现是自由出现。</p>
+<hr />
+<p>很容易指导，这样子的方式会产生不必要的混淆，因此提出了  <strong>换名规则</strong> ：将指导变项及其辖域中所有约束出现替换成公式中没有出现的个体变项符号</p>
+<p>也就是把这个重复的字母，全部换一个不一样的</p>
+<hr />
+<p>比如，我们可以将上式换为：<span class="arithmatex">\(\exists z F(z) \land G(x,y)\)</span>；这样就避免了出现既是约束出现又是自由出现的个体变项</p>
+</div>
+<hr />
+<p><strong><mark>定义2.6</mark></strong>  若公式<span class="arithmatex">\(A\)</span>中无自由出现的个体变项，则称<span class="arithmatex">\(A\)</span>是  <strong>封闭的合式公式</strong>  ，简称为  <strong>闭式</strong>  </p>
+<blockquote>
+<p>例如：<span class="arithmatex">\(\forall x \ (P(x) \rightarrow Q(x,y))\)</span>是闭式；<span class="arithmatex">\(\forall x \ (P(x) \rightarrow \exists y Q(x,y))\)</span>不是闭式</p>
+</blockquote>
+<hr />
+<p>在命题逻辑中，讨论公式的恒真、恒假以及可满足性等只需要考虑公式在所有可能的赋值下的取值</p>
+<p>在一阶逻辑中为了进行类似的讨论，要给公式中出现的每个个体常项符号、函数变项符号和谓词变项符号“赋值”，这个过程叫做  <strong>解释</strong> </p>
+<p><mark><strong>定义 2.7</strong></mark>  一个解释 <span class="arithmatex">\(I\)</span> 由下面 4 部分组成：  </p>
+<ol>
+<li>非空个体域 <span class="arithmatex">\(D\)</span>；  </li>
+<li>给论及的每个个体常项符号指定一个 <span class="arithmatex">\(D\)</span> 中的元素；  </li>
+<li>给论及的每个函数变项符号指定一个 <span class="arithmatex">\(D\)</span> 上的函数；  </li>
+<li>给论及的每个谓词变项符号指定一个 <span class="arithmatex">\(D\)</span> 上的谓词。  </li>
+</ol>
+<p>在使用解释 <span class="arithmatex">\(I\)</span> 来解释公式 <span class="arithmatex">\(A\)</span> 时：  采用指定的个体域 <span class="arithmatex">\(D\)</span>；  并将 <span class="arithmatex">\(A\)</span> 中的所有个体常项符号、函数变项符号、谓词变项符号分别替换成 <span class="arithmatex">\(I\)</span> 指定的元素、函数及谓词。</p>
+<blockquote>
+<p>其实简单来说，就是把式子的每个变量都给说明清楚，就是  <strong>解释</strong> </p>
+</blockquote>
+<hr />
+<p><mark><strong>定义2.8</strong></mark> 设 <span class="arithmatex">\(A\)</span> 为一谓词公式：  </p>
+<ul>
+<li>如果 <span class="arithmatex">\(A\)</span> 在任何解释和该解释下的任何赋值下都为真，则称 <span class="arithmatex">\(A\)</span> 为  <strong>逻辑有效式</strong> （或称  <strong>永真式</strong> ）；  </li>
+</ul>
+<blockquote>
+<p><span class="arithmatex">\(\forall x , (P(x) \lor \lnot P(x))\)</span></p>
+</blockquote>
+<ul>
+<li>如果 <span class="arithmatex">\(A\)</span> 在任何解释和该解释下的任何赋值下都为假，则称 <span class="arithmatex">\(A\)</span> 为  <strong>矛盾式</strong> （或称  <strong>永假式</strong> ）；  </li>
+</ul>
+<blockquote>
+<p><span class="arithmatex">\(\exists x , (P(x) \land \lnot P(x))\)</span></p>
+</blockquote>
+<ul>
+<li>若至少存在一个解释和该解释下的一个赋值使 <span class="arithmatex">\(A\)</span> 为真，则称 <span class="arithmatex">\(A\)</span> 是  <strong>可满足式</strong> 。</li>
+</ul>
+<blockquote>
+<p><span class="arithmatex">\(\exists x , P(x)\)</span></p>
+</blockquote>
+<hr />
+<p><mark><strong>定义2.9</strong></mark></p>
+<p>设 <span class="arithmatex">\(A_{0}\)</span> 是含命题变项 <span class="arithmatex">\(p_{1}, p_{2}, \cdots, p_{n}\)</span> 的命题公式，<span class="arithmatex">\(A_{1}, A_{2}, \cdots, A_{n}\)</span> 是 <span class="arithmatex">\(n\)</span> 个谓词公式。  用 <span class="arithmatex">\(A_{i}\)</span> 替代 <span class="arithmatex">\(p_{i}\)</span>（<span class="arithmatex">\(1 \leq i \leq n\)</span>），所得公式 <span class="arithmatex">\(A\)</span> 称为 <span class="arithmatex">\(A_{0}\)</span> 的  <strong>代换实例</strong> 。  </p>
+<p>例如：  <span class="arithmatex">\(F(x) \to G(x)\)</span>，<span class="arithmatex">\(\forall x F(x) \to \exists x G(x)\)</span>  等都是 <span class="arithmatex">\(p \to q\)</span> 的代换实例。  </p>
+<p>可以证明：<br />
+- 命题公式中的重言式的代换实例都是  <strong>永真式</strong> ；<br />
+- 命题公式中的矛盾式的代换实例都是  <strong>矛盾式</strong> 。</p>
+<blockquote>
+<p>就是把命题逻辑中的命题变项 <span class="arithmatex">\(p, q, \dots\)</span> 用具体的一阶谓词公式替换掉。</p>
+</blockquote>
+<h3 id="23">2.3 一阶逻辑等值式与前束范式</h3>
+<blockquote>
+<p>和上一节差不多，也是一堆定理、定义、名词的堆砌</p>
+</blockquote>
+<hr />
+<p><mark><strong>定义 2.10</strong></mark>  设 <span class="arithmatex">\(A, B\)</span> 是一阶逻辑中的两个公式，若 <span class="arithmatex">\(A \leftrightarrow B\)</span> 为逻辑有效式，  则称 <span class="arithmatex">\(A\)</span> 与 <span class="arithmatex">\(B\)</span> 是  <strong>等值的</strong> ，记作 <span class="arithmatex">\(A \Leftrightarrow B\)</span>，称 <span class="arithmatex">\(A \Leftrightarrow B\)</span> 为  <strong>等值式</strong> 。</p>
+<blockquote>
+<p>一阶逻辑里的逻辑恒等式，无论什么情况，均等价
+使用换名规则所得公式与原公式等值</p>
+</blockquote>
+<hr />
+<p><mark><strong>一些重要等值式</strong></mark></p>
+<table>
+<thead>
+<tr>
+<th><strong>名字</strong></th>
+<th><strong>等值式</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>量词否定等值式</strong></td>
+<td>(1) <span class="arithmatex">\(\lnot \forall x A(x) \Leftrightarrow \exists x \lnot A(x)\)</span> <br> (2) <span class="arithmatex">\(\lnot \exists x A(x) \Leftrightarrow \forall x \lnot A(x)\)</span></td>
+<td>量词对偶律</td>
+</tr>
+<tr>
+<td><strong>量词辖域收缩与扩张等值式</strong></td>
+<td>(1) ① <span class="arithmatex">\(\forall x (A(x) \lor B) \Leftrightarrow \forall x A(x) \lor B\)</span> <br> ② <span class="arithmatex">\(\forall x (A(x) \land B) \Leftrightarrow \forall x A(x) \land B\)</span> <br> ③ <span class="arithmatex">\(\forall x (A(x) \to B) \Leftrightarrow \exists x A(x) \to B\)</span> <br> ④ <span class="arithmatex">\(\forall x (B \to A(x)) \Leftrightarrow B \to \forall x A(x)\)</span> <br><br> (2) ① <span class="arithmatex">\(\exists x (A(x) \lor B) \Leftrightarrow \exists x A(x) \lor B\)</span> <br> ② <span class="arithmatex">\(\exists x (A(x) \land B) \Leftrightarrow \exists x A(x) \land B\)</span> <br> ③ <span class="arithmatex">\(\exists x (A(x) \to B) \Leftrightarrow \forall x A(x) \to B\)</span> <br> ④ <span class="arithmatex">\(\exists x (B \to A(x)) \Leftrightarrow B \to \exists x A(x)\)</span></td>
+<td>将量词从辖域中移出或移入，前提：<span class="arithmatex">\(B\)</span> 中不含 <span class="arithmatex">\(x\)</span> 的自由出现</td>
+</tr>
+<tr>
+<td><strong>量词分配等值式</strong></td>
+<td>(1) <span class="arithmatex">\(\forall x (A(x) \land B(x)) \Leftrightarrow \forall x A(x) \land \forall x B(x)\)</span> <br> (2) <span class="arithmatex">\(\exists x (A(x) \lor B(x)) \Leftrightarrow \exists x A(x) \lor \exists x B(x)\)</span></td>
+<td>(1) 称为“<span class="arithmatex">\(\forall\)</span> 对 <span class="arithmatex">\(\land\)</span> 的分配” <br> (2) 称为“<span class="arithmatex">\(\exists\)</span> 对 <span class="arithmatex">\(\lor\)</span> 的分配”</td>
+</tr>
+<tr>
+<td><strong>量词交换等值式</strong></td>
+<td>(1) <span class="arithmatex">\(\forall x \forall y \, A(x,y) \Leftrightarrow \forall y \forall x \, A(x,y)\)</span> <br> (2) <span class="arithmatex">\(\exists x \exists y \, A(x,y) \Leftrightarrow \exists y \exists x \, A(x,y)\)</span></td>
+<td>量词的次序可交换（同类量词之间）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><mark><strong>定义 2.11</strong></mark>  设 <span class="arithmatex">\(A\)</span> 为一谓词公式，如果 <span class="arithmatex">\(A\)</span> 具有如下形式：  <span class="arithmatex">\(Q_{1}x_{1} Q_{2}x_{2} \cdots Q_{k}x_{k} B\)</span>则称 <span class="arithmatex">\(A\)</span> 是  <strong>前束范式</strong> ，其中 <span class="arithmatex">\(Q_{i}\)</span>（<span class="arithmatex">\(1 \leq i \leq k\)</span>）为 <span class="arithmatex">\(\forall\)</span> 或 <span class="arithmatex">\(\exists\)</span>，  <span class="arithmatex">\(B\)</span> 为不含量词的谓词公式。  </p>
+<blockquote>
+<p>例如：<span class="arithmatex">\(\forall x \exists y \, (F(x,y) \to G(x,y))\)</span>、<span class="arithmatex">\(\exists x \forall y \forall z \, (F(x,y,z) \to G(x,y,t))\)</span>  都是  <strong>前束范式</strong> 。  </p>
+<p>而<span class="arithmatex">\(\forall x F(x,y) \land \forall x G(x,y)\)</span>、<span class="arithmatex">\(\forall x (F(x) \to \forall y (G(y) \to H(x)))\)</span>  都  <strong>不是前束范式</strong> 。  </p>
+</blockquote>
+<p>此外，在一阶逻辑中， <strong>任何合式公式 <span class="arithmatex">\(A\)</span> 都存在与其等值的前束范式</strong> ，称这样的前束范式为公式 <span class="arithmatex">\(A\)</span> 的前束范式。  </p>
+<blockquote>
+<p>简单来说， <strong>前束范式</strong>  = 所有量词都移到公式最前面，剩下的部分不含量词。</p>
+</blockquote>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.select", "navigation.titles", "navigation.tabs", "navigation.indexes", "navigation.tabs.sticky"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
