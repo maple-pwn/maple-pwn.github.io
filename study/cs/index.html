@@ -1,0 +1,2239 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://maple-pwn.github.io/study/cs/">
+      
+      
+        <link rel="prev" href="../lisan/">
+      
+      
+        <link rel="next" href="../../testpage/test/">
+      
+      
+      <link rel="icon" href="../../images/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>计算机组成原理 - Maple's blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../resources/css/extra.css">
+    
+      <link rel="stylesheet" href="https://static.zeoseven.com/zsft/292/main/result.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Maple&#39;s blog" class="md-header__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Maple's blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              计算机组成原理
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  about me
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../lisan/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  校内学习相关记录
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../testpage/test/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  功能测试页
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Maple&#39;s blog" class="md-nav__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    Maple's blog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    about me
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    校内学习相关记录
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            校内学习相关记录
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lisan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    离散数学
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    计算机组成原理
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    计算机组成原理
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、计算机系统概述
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、计算机系统概述">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 计算机系统基本工作原理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1 计算机系统基本工作原理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#112" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1.2 冯诺依曼结构计算机
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1.3 程序和指令的执行过程
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 程序的开发和运行
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#121" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2.1 程序设计语言和翻译程序
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 计算机系统的层次结构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4 计算机系统性能评价
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4 计算机系统性能评价">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4.1 计算机性能的定义和测试
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      其它的评估方式
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      章节小结
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、数据的类型及机器级表示
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、数据的类型及机器级表示">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 C语言程序中的变量和常量
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 数制和编码
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 数制和编码">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      定点与浮点表示
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      原码、反码、补码
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4 浮点数表示
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 浮点数表示">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c" class="md-nav__link">
+    <span class="md-ellipsis">
+      C语言的数据转换
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.6 数据的宽度和排列存放
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      章节小结
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      三、数据的运算及运算部件
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    功能测试页
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            功能测试页
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testpage/test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    test
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、计算机系统概述
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、计算机系统概述">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 计算机系统基本工作原理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1 计算机系统基本工作原理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#112" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1.2 冯诺依曼结构计算机
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1.3 程序和指令的执行过程
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 程序的开发和运行
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#121" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2.1 程序设计语言和翻译程序
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 计算机系统的层次结构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4 计算机系统性能评价
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4 计算机系统性能评价">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4.1 计算机性能的定义和测试
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      其它的评估方式
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      章节小结
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、数据的类型及机器级表示
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、数据的类型及机器级表示">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 C语言程序中的变量和常量
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 数制和编码
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 数制和编码">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      定点与浮点表示
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      原码、反码、补码
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4 浮点数表示
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 浮点数表示">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c" class="md-nav__link">
+    <span class="md-ellipsis">
+      C语言的数据转换
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.6 数据的宽度和排列存放
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      章节小结
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      三、数据的运算及运算部件
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>计算机组成原理</h1>
+
+<h2 id="_1">一、计算机系统概述</h2>
+<h3 id="11">1.1 计算机系统基本工作原理</h3>
+<p><mark>省流版：</mark></p>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>核心内容</th>
+<th>关键部件</th>
+<th>要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>冯诺依曼结构</strong></td>
+<td>存储程序思想：程序和数据存放在主存，以二进制表示</td>
+<td>五大部件：运算器、控制器、存储器、输入设备、输出设备</td>
+<td>指令 = <strong>操作码 + 地址码</strong></td>
+</tr>
+<tr>
+<td><strong>存储器</strong></td>
+<td>存储指令和数据，程序执行前必须加载</td>
+<td><strong>MAR</strong>（主存地址寄存器）、<strong>MDR</strong>（主存数据寄存器）</td>
+<td>MAR 位数 ↔ 地址线位数；MDR 位数 ↔ 数据线位数</td>
+</tr>
+<tr>
+<td><strong>总线系统</strong></td>
+<td>CPU 与主存/外设之间的数据交换通道</td>
+<td>地址总线、数据总线、控制总线</td>
+<td>地址总线：定位；数据总线：传输；控制总线：控制读写</td>
+</tr>
+<tr>
+<td><strong>运算器（ALU）</strong></td>
+<td>执行算术和逻辑运算</td>
+<td>ALU、通用寄存器组（GPRS）、标志寄存器</td>
+<td>GPRS 存操作数和结果；标志寄存器：ZF（零）、SF（符号）</td>
+</tr>
+<tr>
+<td><strong>控制器（CU）</strong></td>
+<td>指挥协调程序执行：取指、译码、执行</td>
+<td><strong>CU、IR、PC</strong></td>
+<td>IR 存当前指令；PC 存下一条地址（自动 +1 或跳转）</td>
+</tr>
+<tr>
+<td><strong>输入/输出设备</strong></td>
+<td>完成人机交互</td>
+<td>键盘、鼠标、显示器等</td>
+<td>简称 I/O</td>
+</tr>
+</tbody>
+</table>
+<h4 id="112">1.1.2 冯诺依曼结构计算机</h4>
+<p><strong>冯诺依曼结构计算机</strong> 主要包含以下几个方面：</p>
+<ol>
+<li>采用“存储程序”工作方式</li>
+<li>计算机由运算器、控制器、存储器、输入设备和输出设备5个基本部件组成</li>
+<li>存储器不仅能存储数据，也能存储指令</li>
+<li>计算机内部以二进制形式表示指令和数据；每条指令由操作码和地址码两部分组成，操作码指出操作类型，地址指出操作数的地址；程序由一串指令组成</li>
+</ol>
+<p>通常，我们将 <strong>控制部件、运算部件和各类寄存器互连组成的电路</strong> 称为 <strong>中央处理器</strong> ，也就是CPU；将用来存放指令和数据的存储部件称为 <strong>主存储器</strong> ，简称为内存或主存</p>
+<p><img alt="image-20251001183747536" src="../../images/image-20251001183747536.png" /></p>
+<hr />
+<p><strong><mark>存储器</mark></strong></p>
+<ol>
+<li>
+<p>存储程序思想</p>
+</li>
+<li>
+<p>程序执行前：指令和数据必须先存入主存。</p>
+</li>
+<li>
+<p>主存：由多个存储单元组成，每个单元有 <strong>唯一地址</strong>。</p>
+</li>
+<li>
+<p>总线分类（三大总线）</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>总线名称</th>
+<th>主要作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>地址总线</td>
+<td>传输存储单元地址</td>
+</tr>
+<tr>
+<td>数据总线</td>
+<td>传输数据信息</td>
+</tr>
+<tr>
+<td>控制总线</td>
+<td>传输控制信号（读/写等）</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>
+<p>CPU 访问主存流程 将主存地址送入 <strong>MAR</strong>（主存地址寄存器）；地址通过 <strong>地址总线</strong> 发给主存；CPU 通过 <strong>控制总线</strong> 发出读/写命令；数据在主存和 <strong>MDR</strong>（主存数据寄存器）之间交换；数据再通过 <strong>数据总线</strong> 送入或取出</p>
+</li>
+<li>
+<p>对应关系</p>
+</li>
+<li>
+<p>MAR 位数 ↔ 地址线位数</p>
+</li>
+<li>
+<p>MDR 位数 ↔ 数据线位数</p>
+</li>
+</ol>
+<hr />
+<p><strong><mark>运算器</mark></strong></p>
+<p>在计算机中，<strong>运算器（ALU）</strong> 是执行 <strong>算术运算</strong> 和 <strong>逻辑运算</strong> 的核心部件。CPU 提供给 ALU 的操作数可以来自 <strong>主存</strong>，也可以来自 <strong>通用寄存器组（GPRS）</strong>。
+ <strong>通用寄存器</strong> 既能 <strong>暂存数据</strong>，又能 <strong>保存运算结果</strong>，因此每个寄存器都需编号（通常从 <strong>0 开始</strong>）。CPU 运算过程为：从寄存器取数 → <strong>送入 ALU 运算</strong> → <strong>结果写回寄存器</strong>。</p>
+<p>此外，ALU 运算还会产生 <strong>标志信息（重点）</strong>，例如：</p>
+<ul>
+<li><strong>ZF（零标志）</strong>：结果是否为 0</li>
+<li><strong>SF（符号标志）</strong>：结果是否为负</li>
+</ul>
+<p>这些标志会存入 <strong>标志寄存器</strong>，供程序进行 <strong>条件判断与分支控制</strong>。</p>
+<hr />
+<p><strong><mark>控制器</mark></strong></p>
+<p>在计算机中，<strong>控制器（CU，Control Unit）</strong> 负责 <strong>自动取指、译码和执行指令</strong>，是计算机能连续工作的关键部件。
+ 为了配合 CU，还需要：</p>
+<ul>
+<li><strong>指令寄存器（IR）</strong>：存放从主存取出的指令</li>
+<li><strong>程序计数器（PC）</strong>：存放下一条将要执行指令的主存地址</li>
+</ul>
+<p>执行流程：CPU 取指时，将指令存入 <strong>IR</strong>；同时，<strong>PC 自动加 1</strong>（或跳转）以得到下一条指令地址，并送回 <strong>PC 保存</strong>。</p>
+<hr />
+<p><strong><mark>输入输出设备</mark></strong></p>
+<p>也称为I/O设备，用来和用户交互</p>
+<blockquote>
+<p>键盘，鼠标，显示器等都是I/O设备</p>
+</blockquote>
+<hr />
+<h4 id="113">1.1.3 程序和指令的执行过程</h4>
+<p>在冯·诺依曼结构中，程序执行就是 <strong>执行指令</strong> 的过程。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>指令（Instruction）</strong> 用 0 和 1 表示，用来指示 CPU 完成某个基本操作。</p>
+</div>
+<p>常见指令示例：</p>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>取数指令（load）</td>
+<td>从主存单元取出数据存放到通用寄存器中</td>
+</tr>
+<tr>
+<td>存数指令（store）</td>
+<td>将通用寄存器的内容写入主存单元</td>
+</tr>
+<tr>
+<td>加法指令（add）</td>
+<td>将两个通用寄存器内容相加后送入结果所在的通用寄存器</td>
+</tr>
+<tr>
+<td>传送指令（mov）</td>
+<td>将一个通用寄存器的内容送到另一个通用寄存器</td>
+</tr>
+</tbody>
+</table>
+<p><strong>指令格式</strong> ：通常由 <strong>若干字段</strong> 组成：</p>
+<ul>
+<li><strong>操作码字段</strong>：指明操作类型（如 取数、存数、加、减、传送、跳转 等）</li>
+<li><strong>地址码字段</strong>：指出操作数的位置（如寄存器编号、主存单元地址等）</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>举个例子如下：</p>
+<p>首先假定我们的程序环境如下：</p>
+<p><strong>字长</strong>：8 位</p>
+<p><strong>通用寄存器</strong>：4 个（r0～r3，编号 00~11）</p>
+<p><strong>主存单元</strong>：16 个（地址 0000~1111，4 位地址线）</p>
+<p><strong>寄存器宽度</strong>：ALU、GPRS、IR、MDR 全 8 位</p>
+<p><strong>地址寄存器</strong>：PC、MAR 为 4 位</p>
+<hr />
+<p><strong>指令格式</strong></p>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th>字段</th>
+<th>功能说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>R 型</strong></td>
+<td><code>op(4) + rt(2) + rs(2)</code></td>
+<td><code>R[rt] ← R[rt] op R[rs]</code> 或 <code>R[rt] ← R[rs]</code></td>
+</tr>
+<tr>
+<td><strong>M 型</strong></td>
+<td><code>op(4) + addr(4)</code></td>
+<td><code>R[0] ← M[addr]</code>（取数）或 <code>M[addr] ← R[0]</code>（存数）</td>
+</tr>
+</tbody>
+</table>
+<p>其中，<mark>R型</mark> 是寄存器间的操作；<mark>M型</mark> 是主存与寄存器间的操作</p>
+<blockquote>
+<p>这里的M型比较简陋，是主存与寄存器R0间的操作，只会影响到R0</p>
+</blockquote>
+<hr />
+<p><strong>指令操作码</strong></p>
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>对应操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0001</td>
+<td>寄存器传送 <code>mov</code></td>
+</tr>
+<tr>
+<td>0010</td>
+<td>加法 <code>add</code></td>
+</tr>
+<tr>
+<td>1110</td>
+<td>取数 <code>load</code></td>
+</tr>
+<tr>
+<td>1111</td>
+<td>存数 <code>store</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>程序示例</strong> ：</p>
+<p>主存的初始内容如下：</p>
+<table>
+<thead>
+<tr>
+<th>地址</th>
+<th>内容(机器码)</th>
+<th>指令说明</th>
+<th>符号表示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>1110 0110</td>
+<td><code>I1: R[0] ← M[6]</code></td>
+<td>load r0, 6#</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0001 0100</td>
+<td><code>I2: R[1] ← R[0]</code></td>
+<td>mov r1, r0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1110 0101</td>
+<td><code>I3: R[0] ← M[5]</code></td>
+<td>load r0, 5#</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0010 0001</td>
+<td><code>I4: R[0] ← R[0]+R[1]</code></td>
+<td>add r0, r1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1111 0111</td>
+<td><code>I5: M[7] ← R[0]</code></td>
+<td>store 7#, r0</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0001 0000</td>
+<td>操作数 x = 13</td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td>0010 0001</td>
+<td>操作数 y = 33</td>
+<td></td>
+</tr>
+<tr>
+<td>7</td>
+<td>0000 0000</td>
+<td>结果 z，初值 0</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>执行过程</strong> ，以 I1 为例子：</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>操作</th>
+<th>结果</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>取指</td>
+<td><code>IR ← M[0]</code></td>
+<td>IR = 1110 0110</td>
+<td>从主存地址 0 取出指令，放入指令寄存器 IR</td>
+</tr>
+<tr>
+<td>PC+1</td>
+<td><code>PC ← PC+1</code></td>
+<td>PC = 0001</td>
+<td>程序计数器 PC 自动加 1，准备下一条指令地址</td>
+</tr>
+<tr>
+<td>译码</td>
+<td><code>op=1110, addr=0110</code></td>
+<td>op=load, addr=6</td>
+<td>控制器对指令译码：操作为取数，地址是主存单元 6</td>
+</tr>
+<tr>
+<td>访存</td>
+<td><code>MAR ← 0110</code>，读 M[6]→MDR</td>
+<td>MDR = 33</td>
+<td>将地址 6 送入 MAR，通过总线从主存读取 33 存入 MDR</td>
+</tr>
+<tr>
+<td>执行</td>
+<td><code>R[0] ← MDR</code></td>
+<td>R[0] = 33</td>
+<td>将 MDR 中的数据传送到寄存器 r0</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>执行顺序</strong></p>
+<table>
+<thead>
+<tr>
+<th>指令序号</th>
+<th>指令机器码</th>
+<th>指令功能</th>
+<th>执行结果</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>I1</td>
+<td>1110 0110</td>
+<td>load r0, 6#</td>
+<td>R[0] ← M[6] = 33</td>
+<td>从主存单元 6 取出操作数 y=33，存入寄存器 r0</td>
+</tr>
+<tr>
+<td>I2</td>
+<td>0001 0100</td>
+<td>mov r1, r0</td>
+<td>R[1] ← R[0] = 33</td>
+<td>将寄存器 r0 的内容 33 复制到寄存器 r1</td>
+</tr>
+<tr>
+<td>I3</td>
+<td>1110 0101</td>
+<td>load r0, 5#</td>
+<td>R[0] ← M[5] = 13</td>
+<td>从主存单元 5 取出操作数 x=13，覆盖到寄存器 r0</td>
+</tr>
+<tr>
+<td>I4</td>
+<td>0010 0001</td>
+<td>add r0, r1</td>
+<td>R[0] ← R[0]+R[1] = 13+33=46</td>
+<td>将 r0 与 r1 相加，结果 46 存入 r0</td>
+</tr>
+<tr>
+<td>I5</td>
+<td>1111 0111</td>
+<td>store 7#, r0</td>
+<td>M[7] ← R[0] = 46</td>
+<td>将寄存器 r0 的结果 46 写回主存单元 7，作为 z</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><mark>小总结：</mark></p>
+<p>一个程序的实现是由多个指令组成的，而每条指令的实现又是由多个步骤组成的，一般为 <strong>取指 → PC+1 → 译码 → 访存 → 执行</strong> 五步</p>
+</div>
+<h3 id="12">1.2 程序的开发和运行</h3>
+<h3 id="121">1.2.1 程序设计语言和翻译程序</h3>
+<ul>
+<li><strong>低级编程语言</strong>：包括机器语言和汇编语言，机器能直接执行机器指令，而汇编指令需转换成机器指令后才能执行</li>
+<li><strong>高级编程语言</strong>：与具体机器无关、可读性和描述能力更强，用一句语句即可实现复杂功能，大大提高了编程效率。</li>
+</ul>
+<hr />
+<p><strong>翻译程序</strong></p>
+<p>由于计算只能执行 <strong>机器语言</strong> ，所以我们需要将 <strong>高级语言程序</strong> 转化为 <strong>机器语言程序</strong> ；将这类转换的软件称为 <strong>语言处理系统</strong> 。</p>
+<p>解释两个名词：</p>
+<ul>
+<li><strong>源语言/源程序</strong>：待翻译的语言/程序</li>
+<li><strong>目标语言/目标程序</strong>：翻译得到的语言/程序</li>
+</ul>
+<p>而翻译程序有以下三类：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>名称</th>
+<th>功能</th>
+<th>典型例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>汇编程序</td>
+<td>汇编语言 → 机器语言</td>
+<td>把汇编指令翻译为机器可执行的二进制代码</td>
+<td>NASM、MASM（常见的汇编器）</td>
+</tr>
+<tr>
+<td>解释程序</td>
+<td>边翻译边执行</td>
+<td>将源程序逐条翻译成机器指令并立即执行</td>
+<td>Python 解释器（CPython）、JavaScript 引擎（Node.js / V8）</td>
+</tr>
+<tr>
+<td>编译程序</td>
+<td>整体翻译，生成目标代码</td>
+<td>把高级语言一次性翻译成汇编/机器代码</td>
+<td>GCC（C/C++ 编译器）、javac（Java 编译器）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="13">1.3 计算机系统的层次结构</h3>
+<blockquote>
+<p>传统计算机系统采用分层方式构建，即计算机系统是一个层次结构系统，通过向上层用户提供一个抽象的简洁接口而将较低层次的实现细节隐藏起来</p>
+</blockquote>
+<p>下图为计算机的系统抽象层及其转换，我们目前学习关注的点在于 <strong>ISA</strong> （指令集体系结构）</p>
+<p><img alt="image-20251001222520312" src="../../images/image-20251001222520312.png" /></p>
+<p><strong>ISA</strong> 是处理器硬件和软件之间的接口，定义了处理器支持的指令、数据类型、寄存器、寻址模式和存储模式，使得软件能够与硬件交互</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>你可以把 <strong>ISA（指令集体系结构）</strong> 想象成一份“说明书”或“翻译官”，它告诉软件：<strong>硬件会说哪些话（指令）、能认哪些数字（数据类型）、在哪存东西（寄存器和内存）、以及怎么找它们（寻址模式）</strong>。</p>
+</div>
+<h3 id="14">1.4 计算机系统性能评价</h3>
+<h4 id="141">1.4.1 计算机性能的定义和测试</h4>
+<p>吞吐率（throughput）</p>
+<ul>
+<li>定义：单位时间内系统完成的工作量</li>
+<li>类似概念：<strong>带宽（bandwidth）</strong> → 单位时间内传输的信息量</li>
+</ul>
+<p>响应时间（response time）</p>
+<ul>
+<li>定义：从 <strong>作业提交</strong> 到 <strong>作业完成</strong> 所用的时间</li>
+<li>类似概念：<strong>执行时间（execution time）、等待时间（latency）</strong></li>
+<li>用途：衡量单个任务完成的时间</li>
+</ul>
+<p>执行时间（execution time）</p>
+<ul>
+<li>含义：完成同样工作量所用的时间 → 越短越好</li>
+<li>注意：执行时间不仅包括 CPU 执行指令的时间，还包括：</li>
+<li>I/O 操作（磁盘、网络等）</li>
+<li>操作系统运行开销（调度、切换）</li>
+<li>用户感受到的执行时间 = <strong>CPU 时间 + 其他时间</strong></li>
+</ul>
+<p>CPU 时间（user CPU time）</p>
+<ul>
+<li>定义：CPU 执行程序指令的时间（真正“算”的时间）</li>
+<li>区别：与 I/O 等待、操作系统调度等时间不同</li>
+<li>用户感知执行时间 = <strong>CPU 时间 + 等待时间/其他开销</strong></li>
+</ul>
+<p>系统性能 与 CPU 性能</p>
+<ul>
+<li><strong>系统性能</strong>：整个系统完成工作的速度，受 <strong>CPU + I/O + 操作系统</strong> 等影响</li>
+<li><strong>CPU 性能</strong>：仅指 CPU 执行指令的速度</li>
+<li>二者 <strong>不等价</strong>：系统性能更综合，CPU 性能只是其中一部分</li>
+</ul>
+<p>CPU时间计算与性能指标⭐</p>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>CPU 含义</th>
+<th>工厂流水线类比</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>时钟周期</strong></td>
+<td>执行一步操作所需的基本时间</td>
+<td>传送带走 <strong>一格</strong> 的时间</td>
+<td>一格 = CPU 执行一次最小动作</td>
+</tr>
+<tr>
+<td><strong>时钟频率</strong></td>
+<td>每秒钟包含的时钟周期数（= 1/时钟周期）</td>
+<td>传送带 <strong>一秒走多少格</strong></td>
+<td>频率高 → 传送带快</td>
+</tr>
+<tr>
+<td><strong>CPI</strong></td>
+<td>执行一条指令平均需要的时钟周期数</td>
+<td><strong>做一个零件需要几格传送带</strong></td>
+<td>指令复杂 → 需要更多格</td>
+</tr>
+<tr>
+<td><strong>指令数</strong></td>
+<td>程序需要的总指令条数</td>
+<td>要生产的 <strong>零件总数</strong></td>
+<td>程序越复杂 → 零件越多</td>
+</tr>
+<tr>
+<td><strong>CPU 执行时间</strong></td>
+<td>程序完成所需总时间</td>
+<td>总生产时间 = 零件数 × 每件所需格数 × 每格时间</td>
+<td>核心公式</td>
+</tr>
+</tbody>
+</table>
+<p>定义 <span class="arithmatex">\(CPI_i\)</span>代表第 <span class="arithmatex">\(i\)</span> 种不同类型的指令；<span class="arithmatex">\(C_i\)</span> 代表第 <span class="arithmatex">\(i\)</span> 种指令的条数 
+$$
+程序总时钟周期数 = \sum_{i=1}^n CPI_i \times C_i
+$$</p>
+<blockquote>
+<p><strong>总共需要的格子数 = 每种零件总数 × 这种零件每个需要几格传送带</strong>。</p>
+</blockquote>
+<p>也就可以得到 <strong>程序的平均 <span class="arithmatex">\(CPI\)</span></strong>，这个不加赘述，上式的逆运算就行
+$$
+用户CPU时间 = CPI \times 程序总指令条数 \times 时钟周期
+$$</p>
+<blockquote>
+<p><strong>总生产时间 = 零件总数 × 每个零件需要几格传送带 × 每格传送带的时间</strong>。</p>
+</blockquote>
+<hr />
+<p><strong>性能度量</strong></p>
+<ul>
+<li>
+<p>用户 CPU 时间：程序在 CPU 上执行所需的时间</p>
+</li>
+<li>
+<p>性能 ∝ 1/CPU 时间<br />
+  $$
+  \text{性能} \propto \frac{1}{\text{CPU 时间}}
+  $$</p>
+</li>
+<li>
+<p>两台机器 <span class="arithmatex">\(M_1\)</span> 与 <span class="arithmatex">\(M_2\)</span> 性能比较：
+  $$
+  \text{加速比} = \frac{T_{M_2}}{T_{M_1}}
+  $$
+  若 <span class="arithmatex">\(= n\)</span>，说明 <span class="arithmatex">\(M_1\)</span> 的速度是 <span class="arithmatex">\(M_2\)</span> 的 <span class="arithmatex">\(n\)</span> 倍</p>
+</li>
+</ul>
+<hr />
+<p><strong>CPU 时间公式</strong>
+$$
+T = \text{指令数} \times CPI \times 时钟周期
+$$</p>
+<ul>
+<li>指令数：由程序、编译器决定  </li>
+<li>CPI：由指令集和实现方式决定  </li>
+<li>时钟周期：由硬件和工艺决定（= 1/主频）</li>
+</ul>
+<hr />
+<p><strong>三要素关系</strong></p>
+<ul>
+<li>三者互相制约：优化一个，可能导致另一个变差  </li>
+<li>减少指令数 → CPI 可能上升  </li>
+<li>降低 CPI → 可能需要增加时钟周期宽度（降低主频）  </li>
+<li>指令数最少 ≠ 执行时间最短  </li>
+<li>必须综合考虑 <strong>指令数 + CPI + 时钟周期</strong></li>
+</ul>
+<hr />
+<p><strong>小结</strong></p>
+<ul>
+<li>
+<p>性能比较用 CPU 时间倒数  </p>
+</li>
+<li>
+<p>核心公式：
+  $$
+  T = \text{指令数} \times CPI \times 时钟周期
+  $$
+  优化性能时，要综合三因素，而不是单看指令数</p>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>例 1.1</strong> 假设某个频繁使用的程序 P 在机器 M₁ 上运行需要 10 s，M₁ 的时钟频率为 2 GHz。设计人员想开发一台与 M₁ 具有相同 ISA 的新机器 M₂。某种新技术可使 M₂ 的时钟频率增加，但同时也会使 CPI 增加。假定程序 P 在 M₂ 上的时钟周期数是在 M₁ 上的 1.5 倍，则 M₂ 的时钟频率至少应达到多少，才能使程序 P 在 M₂ 上的运行时间缩短为 6 s？</p>
+<p><strong>解：</strong> </p>
+<p>程序 P 在机器 M₁ 上的时钟周期数 = 用户 CPU 时间 × 时钟频率 = 10 s × 2 GHz = 20 G。</p>
+<p>因此，程序 P 在机器 M₂ 上的时钟周期数为 1.5 × 20 G = 30 G。</p>
+<p>要求程序 P 在 M₂ 上的运行时间缩短到 6 s，则 M₂ 的时钟频率至少应为 程序总时钟周期数 ÷ 用户 CPU 时间 = 30 G / 6 s = 5 GHz。</p>
+</div>
+<h4 id="_2">其它的评估方式</h4>
+<ol>
+<li>指令执行速度进行性能评估</li>
+<li>用基准程序进行性能评估</li>
+</ol>
+<h3 id="_3">章节小结</h3>
+<p><strong>冯诺依曼核心</strong>：存储程序；指令=操作码+地址码；五大部件=运算器、控制器、存储器、输入/输出</p>
+<p><strong>存储器与总线</strong>：</p>
+<ul>
+<li>MAR 位数 ↔ 地址线位数；MDR 位数 ↔ 数据线位数</li>
+<li>三总线：地址（定位）、数据（传输）、控制（时序/读写）</li>
+</ul>
+<p><strong>CPU 三要素</strong>：指令数、CPI、时钟周期（<span class="arithmatex">\(T_{clk}=1/f\)</span>）</p>
+<ul>
+<li><span class="arithmatex">\(T_{CPU}=\text{指令数}\times \text{CPI}\times T_{clk}\)</span></li>
+<li><span class="arithmatex">\(总周期=∑_iCPI_i⋅C_i\)</span>；<span class="arithmatex">\(\text{平均CPI}=\frac{\sum_i CPI_i\cdot C_i}{\sum_i C_i}\)</span></li>
+</ul>
+<p><strong>性能比较</strong>：</p>
+<ul>
+<li><strong>Speedup</strong> = <span class="arithmatex">\(\dfrac{T_{\text{old}}}{T_{\text{new}}}\)</span>（越大越好）</li>
+<li>系统性能 ≠ 仅 CPU 性能（还受 I/O、OS 影响）</li>
+</ul>
+<p><strong>执行五步</strong>：取指 → PC+1 → 译码 → 访存 → 执行</p>
+<p><strong>标志寄存器</strong>：ZF 零、SF 符号（常用于条件分支）</p>
+<h2 id="_4">二、数据的类型及机器级表示</h2>
+<blockquote>
+<p>在上一章中，我们从整体上认识了计算机系统的基本构成与工作原理：
+ 冯·诺依曼结构确立了“存储程序”的核心思想，CPU 通过取指、译码与执行等步骤来运行程序，系统性能则取决于 <strong>指令数、CPI 和时钟周期</strong> 等因素。这些内容为我们理解计算机如何“运行一个程序”奠定了基础。</p>
+<p>然而，程序的本质是 <strong>数据的加工与处理</strong> 。无论是指令还是操作数，都需要以特定的 <strong>数据类型</strong> 表示，并在底层转化为二进制编码。不同的数据类型（整数、浮点数、字符、指针等）在机器级都有相应的存储方式和表示规则，它们直接决定了 CPU 如何解释和操作这些比特位。</p>
+<p>因此，在进入第二章时，我们将进一步聚焦于 <strong>数据的类型及其机器级表示</strong> ，探讨计算机如何在底层“看待”与“存放”信息，从而为后续的指令系统与程序设计打下基础。</p>
+</blockquote>
+<h3 id="21-c">2.1 C语言程序中的变量和常量</h3>
+<p>这一部分在程序设计课程中有所涉及，不做过多赘述，下面写两个小demo，可以自行实验尝试</p>
+<p><strong>各字段的长度</strong></p>
+<p><img alt="image-20251002174043788" src="../../images/image-20251002174043788.png" /></p>
+<p><strong>数值的表示</strong></p>
+<p><img alt="image-20251002174704285" src="../../images/image-20251002174704285.png" /></p>
+<p>可以看到，int在内存中以补码的形式存储， <code>-1</code> 是 <code>0xffffffff</code> , <code>-2</code> 是 <code>0xfffffffe</code>, <code>0.1</code> 的浮点数表示为 <code>0x3dcccccd</code></p>
+<h3 id="22">2.2 数制和编码</h3>
+<h4 id="_5">定点与浮点表示</h4>
+<p>小数点位置约定在固定位置的称为定点数，小数点位置约定为可浮动的数称为浮点数</p>
+<p><strong>定点表示</strong></p>
+<p>对于定点小数，其小数点总是固定在数的左边，一半用来表示浮点数的尾数部分</p>
+<p>对于定点整数，其小数点总是固定在数的右边，因此可以用“定点整数”来表示整数或浮点数的阶（指数）</p>
+<p><strong>浮点表示</strong></p>
+<p>任意一个实数 <span class="arithmatex">\(X\)</span> 可以表示为如下形式
+$$
+X = (-1)^S \times M \times R^E
+$$
+其中，</p>
+<ul>
+<li><span class="arithmatex">\(S\)</span>取值为 0 或 1，用来决定符号；</li>
+<li><span class="arithmatex">\(M\)</span> 是一个二进制定点小数，称为数 <span class="arithmatex">\(X\)</span> 的 <strong>尾数</strong></li>
+<li><span class="arithmatex">\(E\)</span> 是一个二进制定点整数，称为数 <span class="arithmatex">\(X\)</span> 的 <strong>阶</strong> 或者 <strong>指数</strong></li>
+<li><span class="arithmatex">\(R\)</span> 是基数，可以取值为2、4、16等</li>
+</ul>
+<p>在基数一定的情况下，尾数M的阶位反映数 <span class="arithmatex">\(X\)</span> 的有效位数，它决定了数的表示精度，有效位越多，表示精度越高；阶 <span class="arithmatex">\(E\)</span> 的位数决定数 <span class="arithmatex">\(X\)</span> 的表示范围；阶 <span class="arithmatex">\(E\)</span> 的值确定了小数点的位置</p>
+<h4 id="_6">原码、反码、补码</h4>
+<p>通常将数值数据在计算机内部编码后表示的数称为机器数，而机器数真正的值称为机器数的真值</p>
+<blockquote>
+<p><span class="arithmatex">\(-10\)</span> 用8位补码表示为 <span class="arithmatex">\(1111,0110\)</span> 说明机器数 <span class="arithmatex">\(1111,0110B\)</span> 的真值是 <span class="arithmatex">\(-10\)</span></p>
+</blockquote>
+<p><strong><mark>原码</mark></strong></p>
+<p>直接用二进制位表示数值和符号，最高位为符号位（0表示正数，1表示负数），其余位表示数值的绝对值</p>
+<blockquote>
+<p><span class="arithmatex">\(+5\)</span> 的原码为 <span class="arithmatex">\(0000,0101\)</span> ; <span class="arithmatex">\(-5\)</span> 的原码是 <span class="arithmatex">\(1000, 0101\)</span></p>
+</blockquote>
+<p>但原码不方便实现计算电路，因此提出了反码，用来简化计算机对负数的表示和运算</p>
+<p><mark><strong>反码</strong></mark></p>
+<p>正数的反码和原码相同；负数的反码是将正数的所有位按位取反（符号位除外）</p>
+<blockquote>
+<p><span class="arithmatex">\(+5\)</span> 的反码为 <span class="arithmatex">\(0000,0101\)</span> ; <span class="arithmatex">\(-5\)</span> 的反码是 <span class="arithmatex">\(1111, 1010\)</span></p>
+</blockquote>
+<p>但是 <span class="arithmatex">\(0\)</span> 就同时存在 <span class="arithmatex">\(1111,1111\)</span> 和 <span class="arithmatex">\(0000,0000\)</span> 两种表示方法，计算依旧复杂，因此提出了 补码 的概念</p>
+<p><mark><strong>补码</strong></mark></p>
+<p>正数的补码为它本身；负数的补码为 <span class="arithmatex">\(反码 + 1\)</span> 或 <span class="arithmatex">\(2^n - 负数的绝对值\)</span></p>
+<blockquote>
+<p><span class="arithmatex">\(+5\)</span> 的8位补码为 <span class="arithmatex">\(0000,0101\)</span> ; <span class="arithmatex">\(-5\)</span> 的8位补码是 <span class="arithmatex">\(1111, 1011\)</span></p>
+</blockquote>
+<h3 id="24">2.4 浮点数表示</h3>
+<p>任意一个浮点数可以用两个定点数来表示，定点小数表示浮点数的尾数，定点整数表示浮点数的阶</p>
+<p>同时，通常将阶的编码称为阶码，通常采用移码形式。至于具体的表示方法，可见下文例子</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>例2.21</strong> ：将十进制数 65798 转换位下述32位浮点数的形式</p>
+<p><img alt="image-20251002204602892" src="../../images/image-20251002204602892.png" /></p>
+<p><mark>第0位为数符 <span class="arithmatex">\(S\)</span>，第<span class="arithmatex">\(1 \sim 8\)</span> 位为 8 位移码表示的阶码 <span class="arithmatex">\(E\)</span> ( 偏置常数为127)；第 <span class="arithmatex">\(9 \sim 31\)</span> 位为尾数中的 23位二进制原码小数部分；基数是2，规范化尾数形式为 <span class="arithmatex">\(\pm 1.bb\ldots b\)</span>，其中，小数点前的 “1” 不明显表示，为隐藏位</mark></p>
+<p><strong>解</strong>：</p>
+<p>因为 <span class="arithmatex">\((65798)_{10} = (1,0000,0001,0000,0110)_2=(1.000,0000,1000,0011)_2 \times 2^{16}\)</span>，所以数符 <span class="arithmatex">\(S=0\)</span> , 阶码 <span class="arithmatex">\(E=(127+16)_{10} = (143)_{10} = (1000,1111)_2\)</span></p>
+<p>因此 <span class="arithmatex">\(65798\)</span> 用上述浮点数形式表示如下</p>
+<div class="highlight"><pre><span></span><code><span class="n">S</span><span class="w"> </span><span class="o">|</span><span class="w">     </span><span class="n">Exponent</span><span class="w">      </span><span class="o">|</span><span class="w">           </span><span class="n">Fraction</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span>
+<span class="mi">0</span><span class="w"> </span><span class="o">|</span><span class="w">    </span><span class="mi">1000</span><span class="w"> </span><span class="mi">1111</span><span class="w">      </span><span class="o">|</span><span class="w"> </span><span class="mo">0000</span><span class="w"> </span><span class="mo">0001</span><span class="w"> </span><span class="mo">0000</span><span class="w"> </span><span class="mo">0110</span><span class="w"> </span><span class="mo">0000000</span>
+</code></pre></div>
+<p>整理为16进制即为： <span class="arithmatex">\(4780,8300H\)</span></p>
+</div>
+<p>上述文本中高亮的部分即为 <strong>IEEE 754 <mark>单</mark> 精度浮点数格式</strong> 。这里对一些术语进行解释，接着把原本公式端上来
+$$
+X = (-1)^S \times M \times R^E
+$$</p>
+<ul>
+<li>
+<p><strong>符号位S</strong> 占1bit（第0位）</p>
+</li>
+<li>
+<p><strong>阶码</strong> ：占8bit，决定数值的大小范围，这里用 <strong>移码表示</strong> 法，如下式。 <span class="arithmatex">\(e\)</span> 表示实际指数，<span class="arithmatex">\(E\)</span>是存储值，有效范围是
+  $$
+  e = E - Bias
+  $$</p>
+</li>
+<li>
+<p>单精度偏置常数 Bias = 127</p>
+</li>
+<li>
+<p>双精度偏置常数 Bias = 1023</p>
+<blockquote>
+<p>这样取一个中间值，可以避免存负数指数的时候需要补码，比较大小的时候直接存储值就可以了</p>
+</blockquote>
+</li>
+<li>
+<p><strong>尾数</strong> ：占23bit，表示的是规范化浮点数的小数部分 <span class="arithmatex">\(bb\ldots b\)</span></p>
+</li>
+</ul>
+<blockquote>
+<p>真正计算的时候要加上前面的隐藏位“1”</p>
+</blockquote>
+<ul>
+<li><strong>规范化尾数</strong>： 浮点数的标注表示法如下。要保证小数点前面只有一个有效数字（这里固定为二进制的1）；同时，因为这个“1”总是存在，所以不用存储，称为 <strong>隐藏位</strong>
+  $$
+  \pm 1.bb \ldots b \times 2^e
+  $$</li>
+</ul>
+<p>那么这个公式，我们也可以很简单的计算得到 <strong>IEEE 754单精度浮点数格式</strong> 的范围</p>
+<ul>
+<li>正数最大值：<span class="arithmatex">\(1.11\ldots 1 \times 2^{11\ldots 1} = (2 - 2^{-23}) \times 2^{128}\)</span></li>
+<li>正数最小值：<span class="arithmatex">\(1.00\ldots 0 \times 2^{00\ldots 0} = 1.0 \times 2^{-127} = 2^{-127}\)</span></li>
+</ul>
+<p>因为原码是对称的，故该浮点数格式的表示范围是关于原点对称的，如下图</p>
+<p><img alt="image-20251002213844915" src="../../images/image-20251002213844915.png" /></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>根据浮点数的表示格式，<mark>只要尾数为 0，不管阶码是什么，其值都为 0</mark> ，这样的数称为 <strong>机器零</strong> 。因此机器零的表示不唯一。通常，用阶码和尾数同时为 0 来唯一表示机器零，即当结果出现尾数为 0 时，不管阶码是什么，都将阶码取为 0。机器零有 +0 和 -0 之分。</p>
+</div>
+<p>那么同样介绍一下 <strong>IEEE 754 <mark>双</mark> 精度浮点数格式</strong></p>
+<p>原理和单精度基本一致，不过阶码增加3位，尾数增加29位，如下图</p>
+<p><img alt="image-20251002214118325" src="../../images/image-20251002214118325.png" /></p>
+<hr />
+<p>不过这种表示方法因为是离散的表示，所以肯定存在一些特殊值，如下表</p>
+<table>
+<thead>
+<tr>
+<th>值的类型</th>
+<th>单精度（32 位）表示方式</th>
+<th>单精度值</th>
+<th>双精度（64 位）表示方式</th>
+<th>双精度值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>正零</strong></td>
+<td>S=0, E=0, f=0</td>
+<td>+0</td>
+<td>S=0, E=0, f=0</td>
+<td>+0</td>
+</tr>
+<tr>
+<td><strong>负零</strong></td>
+<td>S=1, E=0, f=0</td>
+<td>-0</td>
+<td>S=1, E=0, f=0</td>
+<td>-0</td>
+</tr>
+<tr>
+<td><strong>正无穷大</strong></td>
+<td>S=0, E=255(全1), f=0</td>
+<td>+∞</td>
+<td>S=0, E=2047(全1), f=0</td>
+<td>+∞</td>
+</tr>
+<tr>
+<td><strong>负无穷大</strong></td>
+<td>S=1, E=255(全1), f=0</td>
+<td>-∞</td>
+<td>S=1, E=2047(全1), f=0</td>
+<td>-∞</td>
+</tr>
+<tr>
+<td><strong>NaN（非数）</strong></td>
+<td>S=0或1, E=255(全1), f≠0</td>
+<td>NaN</td>
+<td>S=0或1, E=2047(全1), f≠0</td>
+<td>NaN</td>
+</tr>
+<tr>
+<td><strong>规格化非零正数</strong></td>
+<td>S=0, 0&lt;E&lt;255, f≠0</td>
+<td><span class="arithmatex">\(((1.f)_2 \times 2^{E-127})\)</span></td>
+<td>S=0, 0&lt;E&lt;2047, f≠0</td>
+<td><span class="arithmatex">\(((1.f)_2 \times 2^{E-1023})\)</span></td>
+</tr>
+<tr>
+<td><strong>规格化非零负数</strong></td>
+<td>S=1, 0&lt;E&lt;255, f≠0</td>
+<td><span class="arithmatex">\((-(1.f)_2 \times 2^{E-127})\)</span></td>
+<td>S=1, 0&lt;E&lt;2047, f≠0</td>
+<td><span class="arithmatex">\((-(1.f)_2 \times 2^{E-1023})\)</span></td>
+</tr>
+<tr>
+<td><strong>非规格化正数</strong></td>
+<td>S=0, E=0, f≠0</td>
+<td><span class="arithmatex">\(((0.f)_2 \times 2^{-126})\)</span></td>
+<td>S=0, E=0, f≠0</td>
+<td><span class="arithmatex">\(((0.f)_2 \times 2^{-1022})\)</span></td>
+</tr>
+<tr>
+<td><strong>非规格化负数</strong></td>
+<td>S=1, E=0, f≠0</td>
+<td><span class="arithmatex">\((-(0.f)_2 \times 2^{-126})\)</span></td>
+<td>S=1, E=0, f≠0</td>
+<td><span class="arithmatex">\((-(0.f)_2 \times 2^{-1022})\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>这里对上表解释</p>
+<ol>
+<li><strong>全0阶码 全0尾数：+0/-0</strong></li>
+</ol>
+<p>IEEE 754的0有两种表示方式。零的符号取决于数符 <span class="arithmatex">\(S\)</span>。一般情况下，两者等效</p>
+<ol>
+<li><strong>全 0 阶码非 0 尾数：非规格化数</strong></li>
+</ol>
+<p><strong>非规格化数</strong> 的特点是 <mark>阶码为全 0，尾数高位有一个或几个连续的 0，但尾数不全为 0</mark> 。因此，对于非规格化数，尾数的小数点前一位为 0。单精度和双精度浮点数的阶码分别为 -126 或 -1022，故单精度和双精度非规格化浮点数的值分别为 <span class="arithmatex">\((-1)^S \times 0.f \times 2^{-126}\)</span> 和 <span class="arithmatex">\((-1)^S \times 0.f \times 2^{-1022}\)</span></p>
+<ol>
+<li><strong>全 1 阶码全 0 尾数：+∞/-∞</strong></li>
+</ol>
+<p>引入无穷大数使得在计算过程中出现异常的情况下，程序能继续执行下去，并且可为程序提供错误检测功能。+∞ 在数值上大于所有有限数，-∞ 则小于所有有限数。无穷大数既可作为操作数，也可作为运算的结果。当操作数为无穷大时，系统可以有以下两种处理方式：
+    ① 产生不发信号的非数 NaN，如 +∞ + (−∞)，+∞ − (+∞)，∞/∞ 等。
+    ② 产生明确的结果，如 5 + (+∞) = +∞，(+∞) + (+∞) = +∞，5 − (+∞) = −∞，(−∞) − (+∞) = −∞ 等。</p>
+<ol>
+<li><strong>全 1 阶码非 0 尾数：NaN</strong></li>
+</ol>
+<p>NaN表示一个没有意义的数，称为非数。非数分为 <strong>不发信号NaN</strong> 和 <strong>发信号NaN</strong> 两种。下表给出了可能产生不发信号NaN 的计算操作。</p>
+<table>
+<thead>
+<tr>
+<th>运算类型</th>
+<th>产生不发信号 NaN 的计算操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>所有</td>
+<td>对通知 NaN 的任何计算操作</td>
+</tr>
+<tr>
+<td>加减</td>
+<td>（+∞）+（−∞），（+∞）−（+∞）等</td>
+</tr>
+<tr>
+<td>乘</td>
+<td>0 × ∞</td>
+</tr>
+<tr>
+<td>除</td>
+<td>0/0 或 ∞/∞</td>
+</tr>
+<tr>
+<td>求余</td>
+<td>x MOD 0 或 0 MOD y</td>
+</tr>
+<tr>
+<td>平方根</td>
+<td>√x 且 x &lt; 0</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li><strong>阶码非全0且非全1：规范化非0数</strong></li>
+</ol>
+<p>阶码范围为 1 ~ 254 或 1 ~ 2046的数是正常的规格化非0数。根据IEEE 754标准的定义，这种数的阶码范围应该是 -126 ~ +127 或 -1022 ~ +1023。其值的计算公式如下
+   $$
+   (-1)^S \times 1.f \times 2^{e-127} 或 (-1)^S \times 1.f \times 2^{e-1023}
+   $$</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>例2.22</strong> 将十进制数 -0.75 转换为 IEEE 754标准的单精度浮点数</p>
+<p><strong>解</strong>： $(-0.75)<em>{10} = (-0.11)_2 = (-1.1)_2 \times 2^{-1} = (-1)^S \times 1.f \times 2^{e-127} $ 所以，$s = 1,f = 0.100 \ldots 0 , e = (127-1)</em>{10} = (126)_{10} = (0111,1110)_2 $ 表示为单精度格式的浮点数 <span class="arithmatex">\(1,0111,1110,1000 \ldots 0000, 000\)</span> 十六进制表示为 <span class="arithmatex">\(BF40,0000H\)</span></p>
+<blockquote>
+<p>这里 <span class="arithmatex">\((-0.11)_2\)</span> 的小数点右移一位，使得左边出现1：
+$$
+(-0.11)_{2} \xrightarrow{\text{小数点右移一位}} (-1.1)_2
+$$
+二进制中 <span class="arithmatex">\(右移一位≡乘2^{+1}\)</span> .为了保持数值不变，要再乘回一个 <span class="arithmatex">\(2^{-1}\)</span>
+$$
+(-0.11)_2 = (-1.1)_2 \times 2^{-1}
+$$
+如果第一个不是零也没关系，以此类推往后找就是了</p>
+</blockquote>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>例2.23</strong> 求 IEEE 754标准单精度浮点数 <span class="arithmatex">\(C0A0,0000H\)</span> 的值</p>
+<p><strong>解</strong> ：将 <span class="arithmatex">\(C0A0,0000\)</span> 展开为一个32位的单精度浮点数 <span class="arithmatex">\(1100,0000,1010,0000,\ldots,0000\)</span>。那么很轻松得到 <span class="arithmatex">\(s=1,f=(0.01)_2=(0.25)_{10}，阶码e=(10000001)_2 = (129)_{10}\)</span> 因此可以得到其值为 <span class="arithmatex">\((-1)^s \times 1,f \times 2^{e-127} = (-1)^1 \times 1.25 \times 2^{129-127} = -1.25 \times 2^2 = -5.0\)</span></p>
+</div>
+<hr />
+<p>下表为 IEEE 754 标准的单精度和双精度格式的特征参数</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>单精度浮点数</th>
+<th>双精度浮点数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>字宽（位数）</td>
+<td>32</td>
+<td>64</td>
+</tr>
+<tr>
+<td>阶码宽度（位数）</td>
+<td>8</td>
+<td>11</td>
+</tr>
+<tr>
+<td>阶码偏置常数</td>
+<td>127</td>
+<td>1023</td>
+</tr>
+<tr>
+<td>最大阶</td>
+<td>127</td>
+<td>1023</td>
+</tr>
+<tr>
+<td>最小阶</td>
+<td>-126</td>
+<td>-1022</td>
+</tr>
+<tr>
+<td>尾数宽度</td>
+<td>23</td>
+<td>52</td>
+</tr>
+<tr>
+<td>阶码个数</td>
+<td>254</td>
+<td>2046</td>
+</tr>
+<tr>
+<td>尾数个数</td>
+<td><span class="arithmatex">\((2^{23})\)</span></td>
+<td><span class="arithmatex">\((2^{52})\)</span></td>
+</tr>
+<tr>
+<td>值的个数</td>
+<td><span class="arithmatex">\((1.98 \times 2^{31})\)</span></td>
+<td><span class="arithmatex">\((1.99 \times 2^{63})\)</span></td>
+</tr>
+<tr>
+<td>数的量级范围</td>
+<td><span class="arithmatex">\((10^{-38} \sim 10^{38})\)</span></td>
+<td><span class="arithmatex">\((10^{-308} \sim 10^{308})\)</span></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4 id="c">C语言的数据转换</h4>
+<p>多种类型在表达式中混用时，短的类型会被提升为长的类型，有符号被提升为无符号，整数被提升为浮点数</p>
+<p><strong>整数类型的提升</strong></p>
+<p>若类型的所有值都能用 int 表示，则仍然为 int</p>
+<p>否则提升为unsigned int ; char也会提升为 unsigned int</p>
+<div class="highlight"><pre><span></span><code><span class="cm">/* 下面的计算中，int会被转换为unsigned */</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{};</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="p">{};</span>
+
+<span class="cm">/*========*/</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"> </span><span class="c1">//二进制为0xffff,ffff</span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">?</span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{};</span><span class="w">   </span><span class="c1">//这里 a被转化为unsigned，变成一个很大的正整数0xffff,ffff</span>
+
+<span class="cm">/*=======*/</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+<span class="k">while</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">len</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">    </span><span class="c1">//原理同上</span>
+<span class="w">    </span><span class="p">...;</span>
+<span class="w">    </span><span class="o">--</span><span class="n">i</span><span class="p">;</span>
+<span class="p">}</span><span class="c1">//会无限循环</span>
+</code></pre></div>
+<p><strong>浮点数类型提升</strong></p>
+<p>int 和 float/double 计算时，int 会提升为 float/double</p>
+<p>float 和 double 计算时，float 会提升为 double</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="kt">float</span><span class="p">)</span><span class="n">i</span><span class="p">){};</span><span class="w">    </span><span class="c1">//不一定成立</span>
+<span class="cm">/*</span>
+<span class="cm"> * 例如i=16,777,217(2^24+1)</span>
+<span class="cm"> * (float)i == 16,777,216.0f(被舍入)</span>
+<span class="cm"> * (int)(float)i == 16,777,216 */</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>假定变量 i、f、d的类型分别是int、float和double,他们可以取除 +∞、-∞和NaN以外的任意值，判断下面的是否永真</p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>判断结果</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>i == (int)(float)i</code></td>
+<td>否</td>
+<td><code>int</code> 的有效位数比 <code>float</code> 多，<code>int → float</code> 可能会丢失精度，再转回 <code>int</code> 后不一定相等。</td>
+</tr>
+<tr>
+<td><code>f == (float)(int)f</code></td>
+<td>否</td>
+<td><code>float</code> 转 <code>int</code> 时小数部分会被截断，可能导致丢失精度。</td>
+</tr>
+<tr>
+<td><code>i == (int)(double)i</code></td>
+<td>是</td>
+<td><code>double</code> 的精度和范围都大于 <code>int</code>，所以 <code>int → double → int</code> 时数值不变。</td>
+</tr>
+<tr>
+<td><code>f == (float)(double)f</code></td>
+<td>是</td>
+<td><code>double</code> 比 <code>float</code> 精度和范围更大，<code>float → double → float</code> 不会丢失数值。</td>
+</tr>
+<tr>
+<td><code>d == (double)(float)d</code></td>
+<td>否</td>
+<td><code>float</code> 的精度和范围小于 <code>double</code>，当 <code>double → float</code> 时可能溢出或精度损失。</td>
+</tr>
+<tr>
+<td><code>f == -(-f)</code></td>
+<td>是</td>
+<td>浮点数取负号操作等价于符号位取反，不影响数值本身。</td>
+</tr>
+<tr>
+<td><code>(d+f)-d == f</code></td>
+<td>否</td>
+<td>例如 <code>d=1.79×10^308</code>，<code>f=1.0f</code>，由于 <code>d+f</code> 向 <code>d</code> 对齐，<code>f</code> 的有效数字被舍入为 0，结果左边为 0，右边为 <code>f</code>。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="26">2.6 数据的宽度和排列存放</h3>
+<p>首先理解一些数据相关的概念</p>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>定义</th>
+<th>常见表示</th>
+<th>关系/说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>比特 (bit)</strong></td>
+<td>二进制数据的最小单位（0 或 1）</td>
+<td>b</td>
+<td>1 bit = 一个二进制位</td>
+</tr>
+<tr>
+<td><strong>字节 (Byte)</strong></td>
+<td>存储的基本单位，1 个字节 = 8 个比特</td>
+<td>B</td>
+<td>1 B = 8 b</td>
+</tr>
+<tr>
+<td><strong>字 (Word)</strong></td>
+<td>计算机处理信息的基本单位</td>
+<td>取决于机器</td>
+<td>在 Intel x86 中，1 字 = 16 位（2 字节）</td>
+</tr>
+<tr>
+<td><strong>字长 (Word length)</strong></td>
+<td>CPU 内部整数运算器、寄存器和数据通路的宽度</td>
+<td>如 16 位、32 位、64 位</td>
+<td>决定机器一次能处理多少位数据，影响计算机性能</td>
+</tr>
+<tr>
+<td><strong>双字 (Double word)</strong></td>
+<td>字的两倍宽度</td>
+<td>例：32 位机中双字 = 32 位</td>
+<td>常用于大于一个字的运算或存储</td>
+</tr>
+<tr>
+<td><strong>容量单位</strong></td>
+<td>数据存储/传输的大小度量</td>
+<td>KB, MB, GB, TB</td>
+<td>有两种计量方式：① 按 10 的幂次：1 KB = 1000 B② 按 2 的幂次：1 KB = 1024 B</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>存储容量通常用 <strong>2 的幂次</strong>（1 KB = 1024 B），主频和带宽通常用 <strong>10 的幂次</strong>（1 kb/s = 1000 b/s）。硬盘和文件大小的表示方法因操作系统不同而异：Windows 习惯用二进制前缀，苹果在 Mac OS X 10.6 之后改用十进制前缀。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>进制</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>存储容量</td>
+<td>2ⁿ (二进制)</td>
+<td>1 MB = 2²⁰ B = 1,048,576 B</td>
+</tr>
+<tr>
+<td>带宽/主频</td>
+<td>10ⁿ (十进制)</td>
+<td>1 Mb/s = 10⁶ b/s = 1,000 kb/s</td>
+</tr>
+<tr>
+<td>硬盘/文件</td>
+<td>视系统而定</td>
+<td>Windows：1 MB = 1024 KB；Mac (10.6+)：1 MB = 1000 KB</td>
+</tr>
+</tbody>
+</table>
+<p>为了避免歧义，二进制前缀增加了一个字母i，如：<code>KB=10^3</code> 而 <code>KiB = 2^10</code></p>
+<hr />
+<p><strong>数据的存储和排列顺序</strong> （<mark><strong>大端序和小端序</strong></mark>）</p>
+<p>在一个按字节编址的计算机中，假定 int 型变量 i 的地址为 0800H，则 i 所占的4个单元i地址为 0800H ~ 0803H。若 i 的机器数为 0123,4567H。这4个字节01H、23H、45H、67H应该各有一个地址。大小端序的排法如下：</p>
+<p><img alt="image-20251002234535199" src="../../images/image-20251002234535199.png" /></p>
+<p><strong>简单来说</strong>，大端是指数字的高位在前面（和人的写法一样）；小端是数字的低位在前面</p>
+<blockquote>
+<p>x86、RISC-V是小端；ARM可以配置为大端或小端</p>
+</blockquote>
+<hr />
+<h3 id="_7">章节小结</h3>
+<p><strong>定点 vs 浮点</strong></p>
+<ul>
+<li>定点：小数点位置固定（整数/小数）。</li>
+<li>浮点：<span class="arithmatex">\(X = (-1)^S \times M \times 2^E\)</span>（符号位+尾数+阶码）。</li>
+</ul>
+<p><strong>原/反/补码</strong></p>
+<ul>
+<li>原码：最高位符号。</li>
+<li>反码：正数同原码，负数=原码取反（除符号位）。</li>
+<li>补码：正数同原码，负数=反码+1。</li>
+</ul>
+<p><strong>IEEE 754 浮点数</strong></p>
+<ul>
+<li><strong>单精度</strong>：1+8+23，Bias=127。</li>
+<li><strong>双精度</strong>：1+11+52，Bias=1023。</li>
+<li>隐藏位：默认有个“1.”不存储。</li>
+<li>特殊值：±0、非规格化数、±∞、NaN。</li>
+</ul>
+<p><strong>C语言类型提升</strong></p>
+<ul>
+<li>整数：能放下就 int，否则 unsigned。</li>
+<li>浮点：int→float/double，float→double。</li>
+</ul>
+<p><strong>数据存储</strong></p>
+<ul>
+<li>1B=8bit，1Word=机器字长。</li>
+<li>存储容量按 2ⁿ，带宽/主频按 10ⁿ。</li>
+<li>大端：高位在低地址；小端：低位在低地址（x86常用）。</li>
+</ul>
+<h2 id="_8">三、数据的运算及运算部件</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.select", "navigation.titles", "navigation.tabs", "navigation.indexes"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
