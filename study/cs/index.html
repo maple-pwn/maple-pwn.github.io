@@ -600,6 +600,66 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="三、数据的运算及运算部件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 高级语言和机器指令中的运算
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 基本运算部件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 定点运算及运算部件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4 整数乘除运算
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.5 浮点数运算部件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      章节小结
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -985,6 +1045,66 @@
       三、数据的运算及运算部件
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="三、数据的运算及运算部件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 高级语言和机器指令中的运算
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 基本运算部件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 定点运算及运算部件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4 整数乘除运算
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.5 浮点数运算部件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      章节小结
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2190,6 +2310,598 @@ $$
 <li>大端：高位在低地址；小端：低位在低地址（x86常用）。</li>
 </ul>
 <h2 id="_8">三、数据的运算及运算部件</h2>
+<blockquote>
+<p>指令中包含的各种算数逻辑运算能直接在硬件上执行，执行这些运算的硬件称为 <strong>运算硬件</strong></p>
+<p>本章分为两个部分：首先分析高级语言和机器指令中涉及的各类运算；然后介绍这些运算用到的核心部件——算术逻辑单元（ <strong>ALU</strong>）的组成和工作原理</p>
+</blockquote>
+<h3 id="31">3.1 高级语言和机器指令中的运算</h3>
+<p><strong>高级语言中的运算</strong></p>
+<p>除去加减乘除等算术运算，C语言中还包含有一下几类基本运算：</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>运算符</th>
+<th>含义/规则</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>按位运算</strong></td>
+<td><code>|</code></td>
+<td>按位或（OR）</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>&amp;</code></td>
+<td>按位与（AND）</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>~</code></td>
+<td>按位取反（NOT）</td>
+<td>一元</td>
+</tr>
+<tr>
+<td></td>
+<td><code>^</code></td>
+<td>按位异或（XOR）</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>逻辑运算</strong></td>
+<td><code>||</code></td>
+<td>逻辑或（OR），布尔值运算</td>
+<td>非位运算</td>
+</tr>
+<tr>
+<td></td>
+<td><code>&amp;&amp;</code></td>
+<td>逻辑与（AND），布尔值运算</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>!</code></td>
+<td>逻辑非（NOT）</td>
+<td>一元</td>
+</tr>
+<tr>
+<td><strong>移位运算</strong></td>
+<td><code>&lt;&lt;</code></td>
+<td>左移：低位补 0，高位丢弃；相当于乘以 2^k</td>
+<td>溢出可能</td>
+</tr>
+<tr>
+<td></td>
+<td><code>&gt;&gt;</code></td>
+<td>右移：<br>无符号 → 逻辑右移（高位补 0）<br>有符号 → 算术右移（高位补符号位）</td>
+<td>C标准未明示，编译器通常如此</td>
+</tr>
+<tr>
+<td><strong>位扩展</strong></td>
+<td>无符号数扩展</td>
+<td>高位补 0</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>有符号数扩展</td>
+<td>高位补符号位</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>位截断</strong></td>
+<td>-</td>
+<td>高位超出部分丢弃</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>关于 <strong>位扩展</strong> 有如下c语言代码</p>
+<p><img alt="image-20251003130136725" src="../../images/image-20251003130136725.png" /></p>
+<p>关于 <strong>位截断</strong> 有如下c语言代码</p>
+<p><img alt="image-20251003125636384" src="../../images/image-20251003125636384.png" /></p>
+</div>
+<hr />
+<h3 id="32">3.2 基本运算部件</h3>
+<p>计算机中通常用 算术逻辑部件 来完成基本逻辑运算、无符号整数加减运算以及带符号整数加减运算。</p>
+<p>各类定点乘除法运算和浮点数运算则可利用加法器或ALU及移位器来实现，因此计算机中的 <mark>基本运算部件</mark> 是 <strong>加法器</strong> 、<strong>ALU</strong> 和 <strong>移位器</strong> 。而ALU的核心部件则是加法器</p>
+<p><strong>全加器和加法器</strong></p>
+<p>这个部件在数字逻辑一课中详细学过，不做详细介绍了。而将 <span class="arithmatex">\(n\)</span> 个全加器连在一起就可以实现一个 <span class="arithmatex">\(n\)</span> 位加法器
+$$
+F = A \oplus B \oplus C_{in} \
+C_{out} = A \cdot B + A \cdot C_{in} + B \cdot C_{in}
+$$
+<img alt="image-20251003130800064" src="../../images/image-20251003130800064.png" /></p>
+<hr />
+<p><strong>带标志加法器</strong></p>
+<p>n 位加法器只能用于两个 n 位无符号二进制数的相加，不能进行无符号整数的减运算，也不能进行带符号整数的加减运算。为了实现这些功能，我们还需要在n位加法器的基础上增加相应的逻辑门电路</p>
+<p><img alt="image-20251003134218977" src="../../images/image-20251003134218977.png" /></p>
+<p>如上图所示，</p>
+<ul>
+<li><strong>溢出标志 OF</strong> 的逻辑表达式为 <span class="arithmatex">\(OF=C_n \oplus C_{n-1}\)</span>；当有符号数运算结果超出其表示范围时，OF被置1，用于检测有符号数的溢出情况</li>
+<li><strong>符号标志位SF</strong> 就是和的符号，即 <span class="arithmatex">\(SF=F_{n-1}\)</span>；运算结果为负数时，SF被置1，用于判断结果的符号，特别时在有符号数的比较中</li>
+<li><strong>零标志ZF</strong> : <span class="arithmatex">\(ZF=1\)</span> 当且仅当 <span class="arithmatex">\(F=0\)</span> ；当运算结果为0的时候，ZF被置为1，用于条件跳转指令中，判断结果是否为0</li>
+<li><strong>进位/借位标志CF</strong> : <span class="arithmatex">\(CF=C_{out} \oplus C_{in}\)</span> ,即当 <span class="arithmatex">\(C_{in} = 0\)</span> 时，CF 进位 <span class="arithmatex">\(C_{out}\)</span>; 当 <span class="arithmatex">\(C_{in} = 1\)</span> 时,CF 为进位 <span class="arithmatex">\(C_{out}\)</span> 取反；常用于检测无符号数的溢出</li>
+</ul>
+<hr />
+<p><strong>算数逻辑部件</strong></p>
+<p>算数逻辑部件的核心部件是带标志加法器，多采用线性进位方式实现。如下图所示</p>
+<p><img alt="image-20251003135450939" src="../../images/image-20251003135450939.png" /></p>
+<p>其中，A和B是两个 n 位操作数输入端，<span class="arithmatex">\(C_{in}\)</span> 是进位输入端， <span class="arithmatex">\(ALUop\)</span> 是操作控制端，用来决定ALU所执行的操作</p>
+<blockquote>
+<p>例如：当ALUop 为 add 操作码时，ALU 就执行加法运算，输出结果就是A加B之和</p>
+</blockquote>
+<h3 id="33">3.3 定点运算及运算部件</h3>
+<blockquote>
+<p>定点运算主要包括无符号整数的按位运算、逻辑移位运算、位扩展和截断运算以及加、减、乘、除运算；带符号整数的算术移位运算、扩展和截断运算以及加、减、乘、除运算等</p>
+</blockquote>
+<p>在计算机内部，带符号整数多采用补码表示，因此本节主要介绍无符号数运算和补码运算</p>
+<p><strong>补码加减运算</strong></p>
+<p>若两个补码表示的n位定点整数 <span class="arithmatex">\([x]_补 = X_{n-1}X_{n-2}\ldots X_0,[y]_补 = Y_{n-1}Y_{n-2}\ldots Y_0\)</span> 则 <span class="arithmatex">\([x+y]_补\)</span> 和 <span class="arithmatex">\([x-y]_补\)</span> 的运算表达式如下：</p>
+<div class="arithmatex">\[
+\begin{cases}
+[x+y]_{补} = [x]_{补} + [y]_{补} \pmod{2^n} \\
+[x-y]_{补} = [x]_{补} + [-y]_{补} \pmod{2^n}
+\end{cases}
+\]</div>
+<p>总而言之</p>
+<p><strong>补码的加法</strong> ：两个补码数相加时，直接进行二进制加法，忽略最高位的进位</p>
+<p><strong>补码的减法</strong> ：通过加上被减数的补码来实现即A-B=A+(-B)</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>例</strong> 对于以下C语言片段</p>
+<div class="highlight"><pre><span></span><code><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">134</span><span class="p">;</span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">246</span><span class="p">;</span>
+<span class="kt">signed</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="kt">signed</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">z1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">z2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="kt">signed</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">k1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+<span class="kt">signed</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">k2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</code></pre></div>
+<p>说明程序执行过程中，变量 m、n、z1、z2、k1、k2 在计算机中的机器数和真值各是什么。
+ 计算 z1、z2、k1、k2 时得到的标志 CF、SF、ZF 和 OF 各是什么。</p>
+<p><strong>解：</strong>
+ 因为 <code>x</code> 和 <code>y</code> 是 8 位无符号数，所以</p>
+<ul>
+<li><span class="arithmatex">\(x = 134 = 1000\;0110_B\)</span></li>
+<li><span class="arithmatex">\(y = 246 = 1111\;0110_B\)</span></li>
+</ul>
+<p><code>x</code> 和 <code>m</code> 的机器数相同，都是 <code>1000 0110</code>，故 <code>m</code> 的真值为<span class="arithmatex">\(-111\;1010_B = -(127-5) = -122\)</span></p>
+<p><code>y</code> 和 <code>n</code> 的机器数相同，都是 <code>1111 0110</code>，故 <code>n</code> 的真值为<span class="arithmatex">\(-000\;1010_B = -10\)</span></p>
+<hr />
+<p>因为无符号整数和带符号整数都是在同一个整数加减运算器中执行的，所以 <code>z1</code> 和 <code>k1</code> 的机器数相同，生成的标志位也相同；同理，<code>z2</code> 和 <code>k2</code> 的机器数相同，生成的标志位也相同。</p>
+<p><strong>(1) 对 <code>z1</code> 和 <code>k1</code> 的计算</strong></p>
+<p>由 <code>x - y = x + (y 按位取反 + 1)</code> 可得：<span class="arithmatex">\(1000\;0110 + 0000\;1001 + 1 = (0)\;1001\;0000\)</span></p>
+<ul>
+<li>CF = Sub ⊕ Cout = 1⊕0=1</li>
+<li>SF = 1，ZF = 0，OF = 0</li>
+</ul>
+<p>所以：</p>
+<ul>
+<li><code>z1</code> 的真值为 <span class="arithmatex">\(1001\;0000_B = 144\)</span>。由于 CF=1，说明减法有借位，本应为负数，但无符号解释时溢出 → 结果错误。</li>
+<li><code>k1</code> 的真值为 <span class="arithmatex">\(-111\;0000_B = -112\)</span>，且 OF=0，说明结果没有溢出 → 正确。</li>
+</ul>
+<p><strong>验证：</strong> 134 - 246 = -112，说明 <code>z1</code> 错误，<code>k1</code> 正确。</p>
+<hr />
+<p><strong>(2) 对 <code>z2</code> 和 <code>k2</code> 的计算</strong></p>
+<p>由 <code>x + y</code> 的机器数相加：<span class="arithmatex">\(1000\;0110 + 1111\;0110 = (1)\;0111\;1000\)</span></p>
+<ul>
+<li>CF = Sub ⊕ Cout = 0⊕1=1</li>
+<li>SF = 0，ZF = 0，OF = 1</li>
+</ul>
+<p>所以：</p>
+<ul>
+<li><code>z2</code> 的真值为 <span class="arithmatex">\(0111\;1000_B = 120\)</span>，但因 CF=1，说明有进位，结果溢出错误。</li>
+<li><code>k2</code> 的真值为 <span class="arithmatex">\(+111\;1000_B = 124\)</span>，且 OF=1，说明发生溢出。</li>
+</ul>
+<p><strong>验证：</strong> 134 + 246 = 380，大于 8 位无符号最大数 255，也大于 8 位有符号最大数 127，因此 <code>z2</code>、<code>k2</code> 的结果确实溢出。</p>
+</div>
+<hr />
+<p><strong><mark>原码乘法运算</mark></strong></p>
+<p>原码作为浮点数尾数的表示形式，需要计算机能实现原码小数的乘法运算。根据每次部分积是一位相乘得到还是两位相乘得到，有原码一位乘法和原码两位乘法。根据原码两位乘法的原理推广，可以有原码多位乘法</p>
+<p><strong>原码一位乘法</strong></p>
+<p>原理类似于“手算竖式乘法”：每次取乘数的一位，决定是否加上被乘数的部分积，再左移一位</p>
+<p>假设我们要算 <span class="arithmatex">\(X \times Y\)</span>,其中 <span class="arithmatex">\(X\)</span> 为被乘数，<span class="arithmatex">\(Y\)</span> 是乘数。两者均为原码定点小数（或整数）。步骤如下：</p>
+<ol>
+<li><strong>符号单独处理</strong>：结果的符号位 = <span class="arithmatex">\(X\)</span> 符号位 <span class="arithmatex">\(\oplus\)</span> <span class="arithmatex">\(Y\)</span> 符号位。运算时只对数值部分进行处理（也就是绝对值相乘</li>
+<li><strong>数值部分逐位相乘</strong>：从乘数 <span class="arithmatex">\(Y\)</span> 的最低位开始，每次取一位。若该位为1，则将当前被乘数加到部分积中；若该位为0，则部分积不变。每处理完一位，被乘数左移一位</li>
+<li><strong>得到最终积</strong> ：部分积累加完毕后，按符号确定结果正负</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>举个例子如下：</p>
+<p><span class="arithmatex">\([x]_原 = 0.1101\)</span> <span class="arithmatex">\([y]_原 = 0.1011\)</span>，用原码一位乘法计算 <span class="arithmatex">\([x \times y]_原\)</span></p>
+<p><img alt="image-20251003153900278" src="../../images/image-20251003153900278.png" /></p>
+<p>看 <span class="arithmatex">\(Y_i\)</span> →（加 <span class="arithmatex">\(X\)</span> 或加 0）→ 把 <span class="arithmatex">\(C,P,Y\)</span> 同时右移一位，重复 4 次，最后把 <span class="arithmatex">\(P\)</span>与 <span class="arithmatex">\(Y\)</span> 拼成结果。</p>
+</div>
+<hr />
+<p><strong>原码两位乘法</strong></p>
+<p>对于 <span class="arithmatex">\(n\)</span> 位原码一位乘法来说，需要经过 <span class="arithmatex">\(n\)</span> 次 “判断-加法-右移” 循环，运算速度较慢。于是提出了 <strong>对乘数的每两位取值情况进行判断，使每步求出对应于该两位的部分积</strong> 的原码两位乘法</p>
+<ol>
+<li>检查乘数寄存器 <span class="arithmatex">\(Y\)</span> 的低两位：</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>乘数低两位 (Y₁Y₀)</th>
+<th>运算操作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>00</code></td>
+<td>部分积保持不变</td>
+<td>等价于加 0</td>
+</tr>
+<tr>
+<td><code>01</code></td>
+<td>部分积 ← 部分积 + X</td>
+<td>加被乘数</td>
+</tr>
+<tr>
+<td><code>10</code></td>
+<td>部分积 ← 部分积 + 2X</td>
+<td>加被乘数左移一位</td>
+</tr>
+<tr>
+<td><code>11</code></td>
+<td>部分积 ← 部分积 + (X + 2X) = 3X</td>
+<td>相当于同时加 X 和 2X</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>
+<p>将 <span class="arithmatex">\((C,P,Y)\)</span> 整体右移两位</p>
+</li>
+<li>
+<p>重复直至 <span class="arithmatex">\(Y\)</span> 结束</p>
+</li>
+</ol>
+<hr />
+<p><strong><mark>补码乘法运算</mark></strong></p>
+<p><strong>补码一位乘法</strong></p>
+<p>基本思想如下：</p>
+<ul>
+<li>乘数用补码表示。</li>
+<li>每次看乘数的当前位 <span class="arithmatex">\(Y_i\)</span> <strong>和前一位 <span class="arithmatex">\(Y_{i-1}\)</span></strong>（通常初始 <span class="arithmatex">\(Y_{-1}=0\)</span>）。</li>
+<li>根据 <span class="arithmatex">\((Y_i,Y_{i-1})\)</span>的组合，决定是加上被乘数 <span class="arithmatex">\(+X\)</span>、减去被乘数 <span class="arithmatex">\(-X\)</span>，还是不变。</li>
+<li>每次完成后再整体右移一位（算术右移，保留符号位）。</li>
+</ul>
+<p>而 <span class="arithmatex">\((Y_i,Y_{i-1})\)</span>的规则表如下:</p>
+<table>
+<thead>
+<tr>
+<th>当前位 (<span class="arithmatex">\(Y_i\)</span>)</th>
+<th>前一位 (<span class="arithmatex">\(Y_{i-1}\)</span>)</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>不变</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>不变</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>部分积 = 部分积 + X</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>部分积 = 部分积 - X</td>
+</tr>
+</tbody>
+</table>
+<p>那么计算步骤如下：</p>
+<ol>
+<li>
+<p>初始：
+   $$
+   (C,P,Y,Y_{-1})
+   $$
+   其中 <span class="arithmatex">\(C\)</span> 是进位，<span class="arithmatex">\(P\)</span> 是部分积，<span class="arithmatex">\(Y\)</span> 是乘数，<span class="arithmatex">\(Y_{-1}=0\)</span></p>
+</li>
+<li>
+<p>每轮根据 <span class="arithmatex">\(Y_0,Y_{-1}\)</span> 决定是否加/减被乘数。</p>
+</li>
+<li>
+<p>整体算术右移一位（保持符号）。</p>
+</li>
+<li>
+<p>重复 <span class="arithmatex">\(n\)</span> 次（<span class="arithmatex">\(n\)</span> = 乘数位数）。</p>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>计算 <span class="arithmatex">\([x]_补=1\;101\)</span> <span class="arithmatex">\([y]_补=0\;110\)</span>，用布斯乘法计算 <span class="arithmatex">\([x \times y]_补\)</span></p>
+<p><img alt="image-20251003155229039" src="../../images/image-20251003155229039.png" /></p>
+<p>总而言之，就是根据规则表的定义，结合 <span class="arithmatex">\((Y_0,Y_{-1})\)</span>的组合决定是 【加被乘数】、【减被乘数】、【不操作】</p>
+</div>
+<hr />
+<p><strong>补码两位乘法</strong></p>
+<p>同理于原码两位乘法，将乘数分为两位一组，根据两位代码的组合决定加或减被乘数的倍数，形成的部分积每次右移两位</p>
+<p>每次取两个乘数位+前一位来决定操作</p>
+<table>
+<thead>
+<tr>
+<th>(<span class="arithmatex">\(Y_{i+1}Y_iY_{i-1}\)</span>)</th>
+<th>操作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>000</code> 或 <code>111</code></td>
+<td>0</td>
+<td>部分积不变</td>
+</tr>
+<tr>
+<td><code>001</code> 或 <code>010</code></td>
+<td>+X</td>
+<td>加被乘数</td>
+</tr>
+<tr>
+<td><code>011</code></td>
+<td>+2X</td>
+<td>加被乘数左移一位</td>
+</tr>
+<tr>
+<td><code>100</code></td>
+<td>−2X</td>
+<td>减被乘数左移一位</td>
+</tr>
+<tr>
+<td><code>101</code> 或 <code>110</code></td>
+<td>−X</td>
+<td>减被乘数</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong><mark>原码除法运算</mark></strong></p>
+<p><strong>基本思想</strong></p>
+<p>带符号数的除法运算通常分为 <strong>符号处理</strong> 和 <strong>数值计算</strong> 两部分</p>
+<ul>
+<li><strong>符号位</strong>：商的符号 = 被除数的符号 <span class="arithmatex">\(\oplus\)</span> 除数符号；余数的符号 = 被除数符号</li>
+<li><strong>数值部分</strong>：被除数、除数都按正数来做运算</li>
+<li>计算方法类似“试商”，用 <strong>加-减-移</strong> 来实现</li>
+</ul>
+<p><strong>算法规则</strong></p>
+<p>现设：<span class="arithmatex">\(X\)</span> 为被除数、<span class="arithmatex">\(Y\)</span> 为除数（均为n位）；商 <span class="arithmatex">\(Q\)</span> ;余数<span class="arithmatex">\(R\)</span></p>
+<ol>
+<li>
+<p><strong>符号处理</strong>：将被除数和除数都转为正数，符号单独记下 <span class="arithmatex">\(sign = X_s \oplus Y_s\)</span></p>
+</li>
+<li>
+<p><strong>初始化</strong>：被除数放入余数寄存器 <span class="arithmatex">\(R\)</span> ;商寄存器 <span class="arithmatex">\(Q\)</span> 置0</p>
+</li>
+<li>
+<p><strong>循环 <span class="arithmatex">\(n\)</span> 次</strong>：</p>
+</li>
+</ol>
+<p><mark>左移</mark>：余数 <span class="arithmatex">\(R\)</span> 左移一位，把被除数的下一位移入；</p>
+<p><mark>减</mark>：计算 <span class="arithmatex">\(R-Y\)</span>;</p>
+<p>​    若结果≥0，则当前商位 = 1，余数 = 减法结果</p>
+<p>​    若结果＜0，则当前商位=0，余数恢复</p>
+<ol>
+<li><strong>结束</strong>：<span class="arithmatex">\(Q\)</span> 即为商（原码），余数在 <span class="arithmatex">\(R\)</span> ;按照第一步记录的符号，给商 <span class="arithmatex">\(Q\)</span> 加上符号位</li>
+</ol>
+<p>同时，根据在减完如果小于零，是否需要恢复余数，分为了 <strong>恢复余数除法</strong> 和 <strong>不恢复余数除法</strong></p>
+<hr />
+<p><strong>恢复余数除法</strong></p>
+<p><strong>算法步骤</strong></p>
+<p>1)初始化：余数 <span class="arithmatex">\(R=0\)</span> , 被除数放入商寄存器 <span class="arithmatex">\(Q\)</span> ,除数为 <span class="arithmatex">\(Y\)</span></p>
+<p>2)循环 <span class="arithmatex">\(n\)</span> 次</p>
+<ol>
+<li>
+<p><span class="arithmatex">\((R,Q)\)</span> 左移一位</p>
+</li>
+<li>
+<p>试减 <span class="arithmatex">\(R=R-Y\)</span></p>
+</li>
+<li>
+<p>如果 <span class="arithmatex">\(R ≥ 0\)</span>,则商当前位 <span class="arithmatex">\(Q_i = 1\)</span></p>
+</li>
+</ol>
+<p>如果 <span class="arithmatex">\(R &lt; 0\)</span>,则恢复余数 <span class="arithmatex">\(R = R+Y\)</span>,并置 <span class="arithmatex">\(Q_i = 0\)</span></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>已知 <span class="arithmatex">\([x]_原 = 0.1011\)</span> <span class="arithmatex">\([y]_原 = 1.1101\)</span> 用恢复余数法计算 <span class="arithmatex">\([x/y]_原\)</span></p>
+<p><span class="arithmatex">\(X = [|x|]_补 = 0.1011\)</span>，<span class="arithmatex">\(Y = [|y|]_补=0.1101\)</span>，<span class="arithmatex">\(-Y = [-|y|]_补 = 1.0011\)</span></p>
+<p><img alt="image-20251003165815248" src="../../images/image-20251003165815248.png" /></p>
+<p><img alt="image-20251003165822579" src="../../images/image-20251003165822579.png" /></p>
+<p>每轮移位 → 试减 → 判断正负 → 确定位 → 必要时恢复</p>
+</div>
+<hr />
+<p><strong>不恢复余数除法</strong></p>
+<p><strong>算法步骤</strong></p>
+<p>1)初始化：余数 <span class="arithmatex">\(R=0\)</span>，被除数放入商寄存器 <span class="arithmatex">\(Q\)</span> ,除数为 <span class="arithmatex">\(Y\)</span></p>
+<p>2)循环n次：</p>
+<ol>
+<li>
+<p><span class="arithmatex">\((R,Q)\)</span>左移一位</p>
+</li>
+<li>
+<p>根据上一步余数符号：</p>
+</li>
+</ol>
+<p>如果 <span class="arithmatex">\(R≥0\)</span>,则试减 <span class="arithmatex">\(R = R-Y\)</span>,商位 <span class="arithmatex">\(Q_i=1\)</span></p>
+<p>如果 <span class="arithmatex">\(R &lt; 0\)</span>,则试加 <span class="arithmatex">\(R = R+Y\)</span>,商位 <span class="arithmatex">\(Q_i=0\)</span></p>
+<p>3)最后如果余数 <span class="arithmatex">\(R &lt;0\)</span>,再执行一次 <span class="arithmatex">\(R = R+Y\)</span> 做修正</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>已知 <span class="arithmatex">\([x]_原 = 0.1011\)</span> <span class="arithmatex">\([y]_原 = 1.1101\)</span> 用不恢复余数法计算 <span class="arithmatex">\([x/y]_原\)</span></p>
+<p><span class="arithmatex">\(X = [|x|]_补 = 0.1011\)</span>，<span class="arithmatex">\(Y = [|y|]_补=0.1101\)</span>，<span class="arithmatex">\(-Y = [-|y|]_补 = 1.0011\)</span></p>
+<p><img alt="image-20251003170817477" src="../../images/image-20251003170817477.png" /></p>
+<p>余数 ≥ 0 → 下一轮继续减法 → 商 = 1;余数 &lt; 0 → 下一轮用加法 → 商 = 0</p>
+</div>
+<p><strong>总而言之</strong>，两者的对比总结如下</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>每轮操作</th>
+<th>余数负时的处理</th>
+<th>运算速度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>恢复余数法</strong></td>
+<td>左移 → 减除数 → 若负恢复</td>
+<td>恢复余数，商位=0</td>
+<td>慢（多一次恢复）</td>
+</tr>
+<tr>
+<td><strong>不恢复余数法</strong></td>
+<td>左移 → 余数≥0减，余数&lt;0加</td>
+<td>不恢复，下次反向操作</td>
+<td>快（无需恢复）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="34">3.4 整数乘除运算</h3>
+<p>高级语言中两个 <span class="arithmatex">\(n\)</span> 位整数相乘得到的结果通常也是一个 <span class="arithmatex">\(n\)</span> 位整数，也即结果只取 <span class="arithmatex">\(2n\)</span> 位乘积中的低 <span class="arithmatex">\(n\)</span> 位。因此，乘除溢出的问题就十分重要了</p>
+<p>而对于 <strong>无符号数</strong> 来说，只要高于 <span class="arithmatex">\(n\)</span> 位有非0比特就算溢出</p>
+<p>对于 <strong>有符号数</strong> 来说，要求高于 <span class="arithmatex">\(n\)</span> 位必须是正确的符号扩展（全0或全1），否则就是溢出</p>
+<blockquote>
+<p>例如：</p>
+<ul>
+<li><code>-8 × 2=-16</code>,得到的机器数高4位是 <code>1111</code>，低4位是 <code>0000</code>，虽然符号位正确，但高位并非符号扩展，判定为溢出</li>
+<li><code>-3 × 2=6</code>,得到的机器数高4位是 <code>0000</code>，低4位是 <code>0110</code>，高位与低4位的符号扩展一致，无溢出</li>
+</ul>
+</blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>解释下述代码的漏洞</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">copy_array</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">array</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">count</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">myarray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">myarray</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">count</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">myarray</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">count</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>当count = <span class="arithmatex">\(2^{30}+1\)</span> 时，第三行 <code>count * sizeof(int)</code> 将发生这样的情况变化 <span class="arithmatex">\((2^{30}+1) \times 4 = 2^{32}+4\)</span> 而无符号整数型最多存储位数为32位，也就是  <span class="arithmatex">\(2^{32}\)</span> 位，那么很容易得到 <span class="arithmatex">\(2^{32}+4 = 4\)</span>，从而仅分配4字节空间，实现越界写</p>
+</div>
+<p>对于 <strong>整数除法</strong>，只有当 <span class="arithmatex">\(-2\;147\;483\;648/-1\)</span> 时会发生溢出。其它情况下，因为商的绝对值不可能比被除数的绝对值更大，所以肯定不会发生溢出</p>
+<hr />
+<p><strong>常量的乘除运算</strong></p>
+<p>由于乘除的计算过于缓慢，所以编译器常用移位和加减法代替乘除运算</p>
+<blockquote>
+<p>例如：<code>x*20</code> 可以转为 <code>(x&lt;&lt;4)+(x&gt;&gt;2)</code>，通过两次移位和一次加法来实现</p>
+</blockquote>
+<p>对于 <strong>无符号整数除法</strong> ：移位右移时，高位补0，低位舍弃。结果与直接除法一致。</p>
+<p>对于 <strong>有符号整数除法</strong>：算术右移，高位补符号位，低位舍弃。当低位移出的全为0时，结果与直接除法一致；否则结果比真实值更小，需**校正**。</p>
+<blockquote>
+<p>例如：<code>7/3=2</code> 但 <code>-7/3=-2</code></p>
+</blockquote>
+<p>校正方法也很简单：对于负数，若不能整除，则需先将被除数加上偏移量 <code>2^k - 1</code>，再移位，保证结果正确。</p>
+<blockquote>
+<p>例如：<code>-3&gt;&gt;2</code> 前，先加1得到 <code>-2</code> 再右移得到 <code>-1</code></p>
+</blockquote>
+<h3 id="35">3.5 浮点数运算部件</h3>
+<p><strong>基本特点</strong></p>
+<p>浮点数运算主要包括加、减、乘、除，但比定点数复杂，需要进行如下步骤：</p>
+<ol>
+<li>对阶（对齐指数）</li>
+<li>尾数运算（尾数加减）</li>
+<li>结果规格化</li>
+<li>舍入处理</li>
+<li>溢出/下溢判断</li>
+</ol>
+<p>与科学计数法的计算类似，但需要保证机器能够处理，并且符合 IEEE 754标准</p>
+<hr />
+<p><strong>浮点数加减步骤</strong></p>
+<ol>
+<li><strong>对阶</strong></li>
+</ol>
+<p>使两个浮点数的阶码相等。小阶向大阶对齐，将尾数右移相应位数</p>
+<p>位数右移需要考虑舍弃部分 -&gt; 保留附加位参与后续计算</p>
+<p>阶差公式：
+   $$
+   |E_x-E_y|=[E_x]_补-[E_y]_补 （mod\;256)
+   $$</p>
+<ol>
+<li><strong>尾数加减</strong></li>
+</ol>
+<p>在对阶完成后，进行尾数的二进制加减</p>
+<p>IEEE 754采用原码小数，因此尾数运算等价于有符号小数的加减</p>
+<p>尾数右移过程中要保留附加位</p>
+<ol>
+<li><strong>尾数规格化</strong></li>
+</ol>
+<p>IEEE 754规定尾数为 <span class="arithmatex">\(\pm 1.bb\ldots b\)</span>格式</p>
+<p>若结果大于等于2，则尾数右移，阶码+1</p>
+<p>若结果小于1，则尾数左移，阶码-1</p>
+<ol>
+<li><strong>尾数舍入与截断</strong></li>
+</ol>
+<p>对位数超出的低位进行处理，保证计算精度</p>
+<hr />
+<p><mark>举个例子作为理解：</mark></p>
+<p>若 <span class="arithmatex">\(x\)</span> 和 <span class="arithmatex">\(y\)</span> 为 float型变量，<span class="arithmatex">\(x=10.5\)</span>,<span class="arithmatex">\(y=-120.625\)</span>,给出 <span class="arithmatex">\(x+y\)</span> 的计算过程</p>
+<p>1）对阶</p>
+<p><span class="arithmatex">\([E_x]_移=1000\;0010,[E_y]_移=1000\;0101\)</span> 因此，<span class="arithmatex">\([E_x-E_y]_补=[E_x]_移+[-[E_y]_移]_补=1000\;0010+0111\;1011=1111\;1101\)</span> ,即 <span class="arithmatex">\(E_x-E_y = -11B=-3\)</span> ,对应x的尾数右移3位。</p>
+<p>此时x的阶码为 <span class="arithmatex">\(1000\;0101\)</span>,尾数为 <span class="arithmatex">\(0.001\;0\;1010\;0000\;0000\;0000\;0000\;00\)</span>，其中，第一个1为隐藏位，最低3个0为附加位</p>
+<p>2）尾数相加</p>
+<p><span class="arithmatex">\(0.0010\;1010\;0000\;0000\;0000\;0000\;00+(-1.1110\;0010\;1000\;0000\;0000\;000)=-1.1011\;1000\;1000\;0000\;0000\;0000\;00\)</span></p>
+<p>3）尾数规格化</p>
+<p>4）舍入</p>
+<p>根据确定的舍入方式，对小数点右边第23位后的数字进行深入，最终得到尾数部分</p>
+<p><span class="arithmatex">\(x+y\)</span> 的机器数为 <span class="arithmatex">\(1\;1000\;0101\;1011\;1000\;1000\;0000\;0000\;000\)</span></p>
+<p><span class="arithmatex">\(x+y\)</span> 的真值为 <span class="arithmatex">\(-1.1011\;1000\;1B \times 2^6=-11011\;10.001B=-110.125\)</span></p>
+<h3 id="_9"><strong>章节小结</strong></h3>
+<p><strong>运算类型</strong></p>
+<ul>
+<li>高级语言中除加减乘除外，还有按位、逻辑、移位、扩展与截断运算。</li>
+<li>无符号数 → 逻辑移位，高位补0；有符号数 → 算术移位，高位补符号位。</li>
+</ul>
+<p><strong>基本运算部件</strong></p>
+<ul>
+<li><strong>加法器</strong>：全加器级联，带标志位（CF/OF/SF/ZF）。</li>
+<li><strong>ALU</strong>：以加法器为核心，可执行算数与逻辑运算。</li>
+<li><strong>移位器</strong>：支持逻辑移位与算术移位。</li>
+</ul>
+<p><strong>定点运算</strong></p>
+<ul>
+<li><strong>补码加减</strong>：直接二进制加法，减法用加补码实现。</li>
+<li><strong>乘法</strong>：原码/补码乘法（Booth算法提高效率）。</li>
+<li><strong>除法</strong>：恢复余数法（慢，需恢复）与不恢复余数法（快）。</li>
+<li><strong>溢出</strong>：无符号看高位，有符号需正确符号扩展。</li>
+</ul>
+<p><strong>整数运算优化</strong></p>
+<ul>
+<li>编译器常用移位 + 加减代替乘除。</li>
+<li>有符号右移可能偏小 → 需校正。</li>
+</ul>
+<p><strong>浮点运算</strong>（符合 IEEE 754）</p>
+<ul>
+<li>步骤：<strong>对阶 → 尾数加减 → 规格化 → 舍入 → 溢出/下溢判断</strong>。</li>
+<li>特点：实现复杂，可能出现“大数吃小数”。</li>
+</ul>
 
 
 
