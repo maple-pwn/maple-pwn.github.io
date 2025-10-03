@@ -1,0 +1,4825 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://maple-pwn.github.io/study/eda/">
+      
+      
+        <link rel="prev" href="../cs/">
+      
+      
+        <link rel="next" href="../../testpage/test/">
+      
+      
+      <link rel="icon" href="../../images/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>数字逻辑 - Maple's blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../resources/css/extra.css">
+    
+      <link rel="stylesheet" href="https://static.zeoseven.com/zsft/292/main/result.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#11" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Maple&#39;s blog" class="md-header__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Maple's blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              数字逻辑
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  about me
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../lisan/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  校内学习相关记录
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../testpage/test/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  功能测试页
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Maple&#39;s blog" class="md-nav__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    Maple's blog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    about me
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    校内学习相关记录
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            校内学习相关记录
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lisan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    离散数学
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    计算机组成原理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    数字逻辑
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    数字逻辑
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 概述
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 数制及其转换
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 带符号的二进制数的代码表示
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3 带符号的二进制数的代码表示">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3.1 原码&amp;反码&amp;补码
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4 几种常用的编码⭐
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4 几种常用的编码⭐">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-bcd" class="md-nav__link">
+    <span class="md-ellipsis">
+      二-十进制码（BCD码）
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二-十进制码（BCD码）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#8421" class="md-nav__link">
+    <span class="md-ellipsis">
+      8421码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2421" class="md-nav__link">
+    <span class="md-ellipsis">
+      2421码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      余3码
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4.2 可靠性编码
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4.2 可靠性编码">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      格雷码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      奇偶检验码
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      逻辑代数基础
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="逻辑代数基础">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      代入规则
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      反演规则
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      对偶规则
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      最小项
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      最大项
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      集成门电路与触发器
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="集成门电路与触发器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      根据采用的半导体器件分类
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="根据采用的半导体器件分类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      双极型集成电路分类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mos" class="md-nav__link">
+    <span class="md-ellipsis">
+      MOS集成电路分类
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      根据集成规模的大小分类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      根据设计方法和功能定义分类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 半导体器件的开关特性
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 半导体器件的开关特性">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#321" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2.1 晶体二极管的开关特性
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#322" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2.2 晶体三级管的开关特性
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#332-ttl" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3.2 TTL集成逻辑门电路
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3.2 TTL集成逻辑门电路">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      两种特殊的门电路⭐
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="两种特殊的门电路⭐">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oc" class="md-nav__link">
+    <span class="md-ellipsis">
+      集电极开路与非门（OC门）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ts" class="md-nav__link">
+    <span class="md-ellipsis">
+      三态输出门（TS门）
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#333-cmos" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3.3 CMOS集成逻辑门电路
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      常用门电路符号及表达式
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4 触发器⭐
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.4 触发器⭐">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#341-r-s" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4.1 基本R-S触发器
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.4.1 基本R-S触发器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#r-s" class="md-nav__link">
+    <span class="md-ellipsis">
+      与非门构成的基本R-S触发器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#r-s_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      或非门构成的基本R-S触发器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#r-s_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      基本R-S触发器总结
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#342" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4.2 常用的时钟控制触发器⭐⭐⭐
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.4.2 常用的时钟控制触发器⭐⭐⭐">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#r-s_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      钟控R-S触发器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d" class="md-nav__link">
+    <span class="md-ellipsis">
+      钟控D触发器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#j-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      钟控J-K触发器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#t" class="md-nav__link">
+    <span class="md-ellipsis">
+      钟控T触发器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      简单结构钟控触发器总结
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      主从钟控触发器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#j-k_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      主从J-K触发器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    <span class="md-ellipsis">
+      维持-阻塞钟控触发器
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#343" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4.3 *不同类型时钟控制触发器的相互转换
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      组合逻辑电路
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="组合逻辑电路">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 组合逻辑电路分析
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 组合逻辑电路分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#411" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1.1 分析方法概述
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#412" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1.2 分析举例
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 组合逻辑电路设计
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 组合逻辑电路设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#421" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2.1 设计方法概述
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#422" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2.2 设计举例
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 组合逻辑电路的险象
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 组合逻辑电路的险象">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#431" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.1 险象的产生
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#432" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.2 险象的判断
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#433" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.3 险象的消除
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3.3 险象的消除">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 增加冗余项
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 增加惯性延时环节
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 选通法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      同步时序逻辑电路
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="同步时序逻辑电路">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 时序逻辑电路概述
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 时序逻辑电路概述">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#511" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.1 时序逻辑电路的结构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#512" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.2 时序逻辑电路的分类
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1.2 时序逻辑电路的分类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      按照电路的工作方式分类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      按照电路的输出/输入关系分类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      按输入信号的形式进行分类
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#513" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.3 同步时序逻辑电路的描述方法
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1.3 同步时序逻辑电路的描述方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      逻辑函数表达式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      状态表
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      状态图
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 同步时序逻辑电路分析
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 同步时序逻辑电路分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#522" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2.2 分析举例
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3 同步时序逻辑电路设计
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.3 同步时序逻辑电路设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      状态化简
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    <span class="md-ellipsis">
+      状态编码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    <span class="md-ellipsis">
+      确定激励函数和输出函数并画出逻辑电路图
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#534" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3.4 同步时序逻辑电路设计举例
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    <span class="md-ellipsis">
+      中规模通用集成电路及其应用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="中规模通用集成电路及其应用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    <span class="md-ellipsis">
+      二进制加法并行器
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二进制加法并行器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    <span class="md-ellipsis">
+      串行进位二进制并行加法器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    <span class="md-ellipsis">
+      超前进位二进制并行加法器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    <span class="md-ellipsis">
+      典型芯片
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    <span class="md-ellipsis">
+      应用举例
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_35" class="md-nav__link">
+    <span class="md-ellipsis">
+      译码器和编码器
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="译码器和编码器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_36" class="md-nav__link">
+    <span class="md-ellipsis">
+      译码器
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="译码器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_37" class="md-nav__link">
+    <span class="md-ellipsis">
+      二进制译码器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      二-十进制译码器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_38" class="md-nav__link">
+    <span class="md-ellipsis">
+      七段显示译码器
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_39" class="md-nav__link">
+    <span class="md-ellipsis">
+      编码器
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="编码器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      二-十进制编码器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_40" class="md-nav__link">
+    <span class="md-ellipsis">
+      优先编码器
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_41" class="md-nav__link">
+    <span class="md-ellipsis">
+      多路选择器和多路分配器
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="多路选择器和多路分配器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_42" class="md-nav__link">
+    <span class="md-ellipsis">
+      多路选择器
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="多路选择器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_43" class="md-nav__link">
+    <span class="md-ellipsis">
+      典型芯片
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_44" class="md-nav__link">
+    <span class="md-ellipsis">
+      应用举例
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_45" class="md-nav__link">
+    <span class="md-ellipsis">
+      多路分配器
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_46" class="md-nav__link">
+    <span class="md-ellipsis">
+      常用中规模时序逻辑电路
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="常用中规模时序逻辑电路">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_47" class="md-nav__link">
+    <span class="md-ellipsis">
+      集成计数器
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="集成计数器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_48" class="md-nav__link">
+    <span class="md-ellipsis">
+      集成同步计数器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_49" class="md-nav__link">
+    <span class="md-ellipsis">
+      集成异步计数器
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_50" class="md-nav__link">
+    <span class="md-ellipsis">
+      集成寄存器
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="集成寄存器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_51" class="md-nav__link">
+    <span class="md-ellipsis">
+      典型芯片
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#555" class="md-nav__link">
+    <span class="md-ellipsis">
+      常用中规模信号产生与变换电路(集成定时器555)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="常用中规模信号产生与变换电路(集成定时器555)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5g555" class="md-nav__link">
+    <span class="md-ellipsis">
+      5G555的电路结构与逻辑功能
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5G555的电路结构与逻辑功能">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_52" class="md-nav__link">
+    <span class="md-ellipsis">
+      电路结构和工作原理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_53" class="md-nav__link">
+    <span class="md-ellipsis">
+      电路功能
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    功能测试页
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            功能测试页
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testpage/test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    test
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 概述
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 数制及其转换
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 带符号的二进制数的代码表示
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3 带符号的二进制数的代码表示">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3.1 原码&amp;反码&amp;补码
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4 几种常用的编码⭐
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4 几种常用的编码⭐">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-bcd" class="md-nav__link">
+    <span class="md-ellipsis">
+      二-十进制码（BCD码）
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二-十进制码（BCD码）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#8421" class="md-nav__link">
+    <span class="md-ellipsis">
+      8421码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2421" class="md-nav__link">
+    <span class="md-ellipsis">
+      2421码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      余3码
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4.2 可靠性编码
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4.2 可靠性编码">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      格雷码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      奇偶检验码
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      逻辑代数基础
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="逻辑代数基础">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      代入规则
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      反演规则
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      对偶规则
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      最小项
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      最大项
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      集成门电路与触发器
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="集成门电路与触发器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      根据采用的半导体器件分类
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="根据采用的半导体器件分类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      双极型集成电路分类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mos" class="md-nav__link">
+    <span class="md-ellipsis">
+      MOS集成电路分类
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      根据集成规模的大小分类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      根据设计方法和功能定义分类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 半导体器件的开关特性
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 半导体器件的开关特性">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#321" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2.1 晶体二极管的开关特性
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#322" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2.2 晶体三级管的开关特性
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#332-ttl" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3.2 TTL集成逻辑门电路
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3.2 TTL集成逻辑门电路">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      两种特殊的门电路⭐
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="两种特殊的门电路⭐">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oc" class="md-nav__link">
+    <span class="md-ellipsis">
+      集电极开路与非门（OC门）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ts" class="md-nav__link">
+    <span class="md-ellipsis">
+      三态输出门（TS门）
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#333-cmos" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3.3 CMOS集成逻辑门电路
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      常用门电路符号及表达式
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4 触发器⭐
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.4 触发器⭐">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#341-r-s" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4.1 基本R-S触发器
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.4.1 基本R-S触发器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#r-s" class="md-nav__link">
+    <span class="md-ellipsis">
+      与非门构成的基本R-S触发器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#r-s_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      或非门构成的基本R-S触发器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#r-s_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      基本R-S触发器总结
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#342" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4.2 常用的时钟控制触发器⭐⭐⭐
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.4.2 常用的时钟控制触发器⭐⭐⭐">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#r-s_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      钟控R-S触发器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d" class="md-nav__link">
+    <span class="md-ellipsis">
+      钟控D触发器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#j-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      钟控J-K触发器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#t" class="md-nav__link">
+    <span class="md-ellipsis">
+      钟控T触发器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      简单结构钟控触发器总结
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      主从钟控触发器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#j-k_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      主从J-K触发器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    <span class="md-ellipsis">
+      维持-阻塞钟控触发器
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#343" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4.3 *不同类型时钟控制触发器的相互转换
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      组合逻辑电路
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="组合逻辑电路">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 组合逻辑电路分析
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 组合逻辑电路分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#411" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1.1 分析方法概述
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#412" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1.2 分析举例
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 组合逻辑电路设计
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 组合逻辑电路设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#421" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2.1 设计方法概述
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#422" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2.2 设计举例
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 组合逻辑电路的险象
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 组合逻辑电路的险象">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#431" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.1 险象的产生
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#432" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.2 险象的判断
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#433" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.3 险象的消除
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3.3 险象的消除">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 增加冗余项
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 增加惯性延时环节
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 选通法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      同步时序逻辑电路
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="同步时序逻辑电路">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 时序逻辑电路概述
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 时序逻辑电路概述">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#511" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.1 时序逻辑电路的结构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#512" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.2 时序逻辑电路的分类
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1.2 时序逻辑电路的分类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      按照电路的工作方式分类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      按照电路的输出/输入关系分类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      按输入信号的形式进行分类
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#513" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.3 同步时序逻辑电路的描述方法
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1.3 同步时序逻辑电路的描述方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      逻辑函数表达式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      状态表
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      状态图
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 同步时序逻辑电路分析
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 同步时序逻辑电路分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#522" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2.2 分析举例
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3 同步时序逻辑电路设计
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.3 同步时序逻辑电路设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      状态化简
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    <span class="md-ellipsis">
+      状态编码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    <span class="md-ellipsis">
+      确定激励函数和输出函数并画出逻辑电路图
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#534" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3.4 同步时序逻辑电路设计举例
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    <span class="md-ellipsis">
+      中规模通用集成电路及其应用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="中规模通用集成电路及其应用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    <span class="md-ellipsis">
+      二进制加法并行器
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二进制加法并行器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    <span class="md-ellipsis">
+      串行进位二进制并行加法器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    <span class="md-ellipsis">
+      超前进位二进制并行加法器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    <span class="md-ellipsis">
+      典型芯片
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    <span class="md-ellipsis">
+      应用举例
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_35" class="md-nav__link">
+    <span class="md-ellipsis">
+      译码器和编码器
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="译码器和编码器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_36" class="md-nav__link">
+    <span class="md-ellipsis">
+      译码器
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="译码器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_37" class="md-nav__link">
+    <span class="md-ellipsis">
+      二进制译码器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      二-十进制译码器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_38" class="md-nav__link">
+    <span class="md-ellipsis">
+      七段显示译码器
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_39" class="md-nav__link">
+    <span class="md-ellipsis">
+      编码器
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="编码器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      二-十进制编码器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_40" class="md-nav__link">
+    <span class="md-ellipsis">
+      优先编码器
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_41" class="md-nav__link">
+    <span class="md-ellipsis">
+      多路选择器和多路分配器
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="多路选择器和多路分配器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_42" class="md-nav__link">
+    <span class="md-ellipsis">
+      多路选择器
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="多路选择器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_43" class="md-nav__link">
+    <span class="md-ellipsis">
+      典型芯片
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_44" class="md-nav__link">
+    <span class="md-ellipsis">
+      应用举例
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_45" class="md-nav__link">
+    <span class="md-ellipsis">
+      多路分配器
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_46" class="md-nav__link">
+    <span class="md-ellipsis">
+      常用中规模时序逻辑电路
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="常用中规模时序逻辑电路">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_47" class="md-nav__link">
+    <span class="md-ellipsis">
+      集成计数器
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="集成计数器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_48" class="md-nav__link">
+    <span class="md-ellipsis">
+      集成同步计数器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_49" class="md-nav__link">
+    <span class="md-ellipsis">
+      集成异步计数器
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_50" class="md-nav__link">
+    <span class="md-ellipsis">
+      集成寄存器
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="集成寄存器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_51" class="md-nav__link">
+    <span class="md-ellipsis">
+      典型芯片
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#555" class="md-nav__link">
+    <span class="md-ellipsis">
+      常用中规模信号产生与变换电路(集成定时器555)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="常用中规模信号产生与变换电路(集成定时器555)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5g555" class="md-nav__link">
+    <span class="md-ellipsis">
+      5G555的电路结构与逻辑功能
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5G555的电路结构与逻辑功能">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_52" class="md-nav__link">
+    <span class="md-ellipsis">
+      电路结构和工作原理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_53" class="md-nav__link">
+    <span class="md-ellipsis">
+      电路功能
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<blockquote>
+<p>时间有限，内容或有诸多不足，期待斧正</p>
+</blockquote>
+<h2 id="11">1.1 概述</h2>
+<p>电子电路按 <strong>功能</strong> 分为模拟电路和数字电路</p>
+<p>用来处理数字信号的电子线路称为 <strong>数字电路</strong> </p>
+<p>按照单个芯片所集成的 <strong>逻辑门</strong> 数量将数字集成电路分为<code>小规模（SSI）</code>,<code>中规模（MSI）</code>,<code>大规模（LSI)</code>,<code>超大规模（VLSI)</code></p>
+<p><strong>数字计算机的组成</strong> </p>
+<p>数字计算机由 <strong>存储器、运算器、控制器、输入设备和适配器等</strong> 主要部分组成</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250408175916815" src="../../images/image-20250408175916815-1744553199019-1-1747833280000-1.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图1.3 数字计算机的一般结构</td>
+</tr>
+</tbody>
+</table>
+<p><strong>数字系统的层次结构</strong> </p>
+<p>​    <strong>电子元件-&gt;基本逻辑器件-&gt;逻辑功能部件-&gt;复杂逻辑功能部件-&gt;复杂数字系统</strong> </p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250408181638098" src="../../images/image-20250408181638098-1744553199019-2-1747833280000-2.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图1.2 数字系统的层次结构</td>
+</tr>
+</tbody>
+</table>
+<p>根据电路的 <strong>结构特点</strong> 和 <strong>对输出信号响应规则</strong> 的不同，可以分为 <strong>组合逻辑电路</strong> 和 <strong>时序逻辑电路</strong> </p>
+<ul>
+<li><strong>组合逻辑电路</strong> ： 一个逻辑电路在任何时刻的稳定输出仅取决于该时刻的输入，而与电路过去的输入无关</li>
+<li><strong>时序逻辑电路</strong> ： 一个逻辑电路在任何时刻的稳定输出不仅取决于该时刻的输入，而且与过去的输入相关</li>
+</ul>
+<p><strong>数字逻辑电路的研究方法</strong> 有两个主要任务：一是 <strong>分析</strong> ，二是 <strong>设计</strong> </p>
+<h2 id="12">1.2 数制及其转换</h2>
+<p>一种进位计数制包含着 <strong>基数</strong> 和 <strong>位权</strong> 两个基本要素：</p>
+<ul>
+<li>
+<p><strong>基数</strong> ： 计数制中所用到的数字符号的个数。基数为R的计数制称为R进制</p>
+</li>
+<li>
+<p><strong>位权</strong> ： 在一种进位计数制表示的数中，用来表明不同数位上数值大小的一个固定常熟</p>
+</li>
+</ul>
+<blockquote>
+<p>例如，十进制数的位权是10的整数次幂，其个位的位权是10<sup>0</sup>,十位的位权是10<sup>1</sup></p>
+</blockquote>
+<p>一个R进制数可以有下面两种表示方法</p>
+<ul>
+<li><strong>并列表示法</strong> ：又称位置计数法</li>
+<li><strong>多项式表示法</strong> ：又称按权展开法</li>
+</ul>
+<h2 id="13">1.3 带符号的二进制数的代码表示</h2>
+<p>为了区分一般书写表示的带符号二进制数和数字系统中的带符号二进制数</p>
+<ul>
+<li>
+<p>用“+”、“-”表示正、负的二进制数称为符号数的 <strong>真值</strong> ，</p>
+</li>
+<li>
+<p>把将符号和数值一起编码的二进制数称为 <strong>机器数</strong> 或 <strong>机器码</strong> ，常用的机器码有<code>原码、反码、补码</code>三种</p>
+</li>
+</ul>
+<h3 id="131">1.3.1 原码&amp;反码&amp;补码</h3>
+<p>用 <strong>原码</strong> 表示带符号二进制数时，符号位用 <strong>0表示正，1表示负</strong> ，数值位保持不变</p>
+<p>用 <strong>反码</strong> 表示带符号的二进制数时，负数反码除符号位不变，其它均取反， <strong>正数不变</strong> </p>
+<p>用 <strong>补码</strong> 表示带符号的二进制数，符号位与原码相同，负数的补码为反码+1， <strong>正数不变</strong> </p>
+<p><strong>小数</strong> </p>
+<p>X<sub>1</sub> = -0.1011 -&gt; [X<sub>1</sub>]<sub>原</sub> = 1.1011 -&gt; [X<sub>1</sub>]<sub>反</sub> = 1.0100 -&gt; [X<sub>1</sub>]<sub>补</sub> = 1.0101</p>
+<p>X<sub>2</sub> = +0.1011 -&gt; [X<sub>2</sub>]<sub>原</sub> = 0.1011 -&gt; [X<sub>2</sub>]<sub>反</sub> = 0.1011 -&gt; [X<sub>2</sub>]<sub>补</sub> = 0.1011</p>
+<p><strong>整数</strong> </p>
+<p>X<sub>1</sub> = -1101 -&gt; [X<sub>1</sub>]<sub>原</sub> = 11101 -&gt; [X<sub>1</sub>]<sub>反</sub> = 10010 -&gt; [X<sub>1</sub>]<sub>补</sub> = 10011</p>
+<p>X<sub>2</sub> = +1101 -&gt; [X<sub>2</sub>]<sub>原</sub> = 01101 -&gt; [X<sub>2</sub>]<sub>反</sub> = 01101 -&gt; [X<sub>2</sub>]<sub>补</sub> = 01101</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>这里的X<sub>1</sub>和X<sub>2</sub>是有符号二进制数，不是十进制数</p>
+<p>若本身小数X<sub>1</sub> = -1.01,则[X<sub>1</sub>]<sub>原</sub> = 11.01；[X<sub>1</sub>]<sub>反</sub> = 10.10； [X<sub>1</sub>]<sub>补</sub> = 10.11</p>
+</div>
+<h2 id="14">1.4 几种常用的编码⭐</h2>
+<h3 id="-bcd">二-十进制码（BCD码）</h3>
+<h4 id="8421">8421码</h4>
+<p>是一种 <strong>有权码</strong> ，即每个十进制数转为自己对应的4位二进制数</p>
+<blockquote>
+<p>(258)<sub>10</sub> = (0010 0101 1000)<sub>8421码</sub></p>
+</blockquote>
+<h4 id="2421">2421码</h4>
+<p>另一种 <strong>有权码</strong> ，其4位二进制码从高位至低位的权依次为2、4、2、1。若一个十进制字符X的2421码为a<sub>3</sub>a<sub>2</sub>a<sub>1</sub>a<sub>0</sub>,则该字符的值为 X = 2a<sub>3</sub>+4a<sub>2</sub>+2a<sub>1</sub>+a<sub>0</sub></p>
+<p>在2421码种，十进制字符0和9、1和8、2和7、3和6、4和5的各码位互为相反，称为 <strong>对9的自补代码</strong> </p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>2421码不具备单值性，为了与十进制字符一一对应，2421码不允许出现以下6种状态（也就是0101~1010)</p>
+<p>0101，0110，0111，1000，1001，1010</p>
+</div>
+<h4 id="3">余3码</h4>
+<p>余3码是由8421码加上0011形成的一种无权码，也是 <strong>对9的自补代码</strong> </p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>余3码不允许出现下面6种状态（0000-0010，1101-1111）</p>
+<p>0000，0001，0010，1101，1110，1111</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>两个余3码进行加减时，如果有进位，则结果加3；无进位则结果减3</p>
+</div>
+<h3 id="142">1.4.2 可靠性编码</h3>
+<h4 id="_1">格雷码</h4>
+<p>其特点是： <strong>任意两个相邻的数，其格雷码仅有一位不同</strong> </p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250408190811729" src="../../images/image-20250408190811729-1744553199019-3-1747833280000-3.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表1.4 与4为二进制码对应的典型格雷码</td>
+</tr>
+</tbody>
+</table>
+<p><em>其实就是第一位不变，后面每一位和前一位取异或</em></p>
+<h4 id="_2">奇偶检验码</h4>
+<p><strong>奇检验</strong> ： 使信息位和检验位中“1”的个数为奇数</p>
+<p><strong>偶检验</strong> ： 使信息位和检验位中“1”的个数为偶数</p>
+<blockquote>
+<p>例如，（1001101）<sub>2</sub>奇偶检验码表示时的两种编码方式为</p>
+<table>
+<thead>
+<tr>
+<th>信息位（7位）</th>
+<th>采用奇检验的检验位（1位）</th>
+<th>采用偶检验的检验位（1位）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1001101</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h1 id="_3">逻辑代数基础</h1>
+<h4 id="_4">代入规则</h4>
+<h4 id="_5">反演规则</h4>
+<p>将逻辑函数F表达式中所有的“·”和”+“互换，”0“和”1”互换，原变量和反变量互换，运算顺序不变 =&gt; 得到原函数的反函数</p>
+<p><em>除了顺序，其它全反</em></p>
+<h4 id="_6">对偶规则</h4>
+<p>将逻辑函数F表达式中所有的“·”和”+“互换，”0“和”1”互换，运算顺序不变 =&gt; 得到原函数的对偶式</p>
+<p><em>除了变量、顺序，其它全反</em></p>
+<h4 id="_7">最小项</h4>
+<p>如果一个具有n个变量的函数的 <strong>与项</strong> 包含全部n个变量，每个变量都以原变量或反变量形式出现，且仅出现一次，则该 <strong>与项</strong> 被称为 <strong>最小项</strong> ，或 <strong>标准与项</strong> </p>
+<p>性质如下：</p>
+<ul>
+<li>任意最小项，其响应变量有且仅有一种取值使这个最小项的值为1</li>
+<li>相同变量构成的两个不同最小项相与为0</li>
+<li>n个变量的全部最小项相或为1</li>
+<li>n个变量构成的最小项有n个相邻最小项（相邻最小项是指除一个变量互为相反外，其余部分均相同的最小项）</li>
+</ul>
+<h4 id="_8">最大项</h4>
+<p>略</p>
+<h1 id="_9">集成门电路与触发器</h1>
+<h2 id="_10">根据采用的半导体器件分类</h2>
+<ul>
+<li>采用双极型半导体器件作为元件的 <strong>双极型集成电路</strong> </li>
+<li>采用金属-氧化物-半导体场效应管作为元件的 <strong>单极型集成电路</strong> ，简称为MOS集成电路</li>
+<li>双极型速度快、负载能力强，但是功耗大、结构复杂；单极型结构简单、制造方便、集成度搞、功耗低</li>
+</ul>
+<h4 id="_11">双极型集成电路分类</h4>
+<ul>
+<li>TTL（三极管-三极管逻辑）电路</li>
+<li>ECL（射极耦合逻辑）电路</li>
+<li>I<sup>2</sup>L（集成注入逻辑）电路</li>
+</ul>
+<h4 id="mos">MOS集成电路分类</h4>
+<ul>
+<li>PMOS(P沟道MOS)</li>
+<li>NMOS(N沟道MOS)</li>
+<li>CMOS(互补MOS)</li>
+</ul>
+<h2 id="_12">根据集成规模的大小分类</h2>
+<ul>
+<li>小规模集成电路(SSI)</li>
+<li>中规模集成电路(MSI)</li>
+<li>大规模集成电路(LSI)</li>
+<li>超大规模集成电路(VLSI)</li>
+</ul>
+<h2 id="_13">根据设计方法和功能定义分类</h2>
+<ul>
+<li>非用户定制电路（标准集成电路）</li>
+<li>全用户定制电路（专用集成电路ASIC）</li>
+<li>半用户定制电路</li>
+</ul>
+<h2 id="32">3.2 半导体器件的开关特性</h2>
+<h3 id="321">3.2.1 晶体二极管的开关特性</h3>
+<ol>
+<li>
+<p>静态开关特性</p>
+</li>
+<li>
+<p>正向特性：外加正向电压达到阈值电压时，二极管处于 <strong>导通</strong> 状态</p>
+</li>
+<li>
+<p>反向特性：外加反向电压在一定数值范围内时，反向电阻很大，反向电流很小，二极管处于 <strong>截止</strong> 状态</p>
+</li>
+<li>
+<p>动态开关特性</p>
+</li>
+</ol>
+<p>二极管的动态特性是指二极管在 <strong>导通</strong> 与 <strong>截止</strong> 状态转换过程中的特性，它表现为两种状态之间的转换需要一定的时间</p>
+<p>通常把二极管从正向导通到反向截止所需要的时间称为 <strong>反向恢复时间</strong> ，而把二极管从反向截止到正向导通所需要的时间称为 <strong>开通时间</strong> </p>
+<h3 id="322">3.2.2 晶体三级管的开关特性</h3>
+<ol>
+<li>静态特性</li>
+</ol>
+<p>双极型晶体三极管（BJT)(简称三级管)由集电结和发射结两个PN结构成。根据两个PN结的偏置极性，三极管有 <strong>截止、放大、饱和</strong> 3种工作状态.图3.5(a)给出了一个简单的NPN三极管共发射极开关电路，输出特性曲线如图3.5(b)</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250408201853341" src="../../images/image-20250408201853341-1744553199020-5-1747833280000-4.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图3.5 三极管开关电路及其输出特性</td>
+</tr>
+</tbody>
+</table>
+<p>三极管在截止与饱和这两种稳态下的特性称为 <strong>三极管的静态开关特性</strong> </p>
+<ol>
+<li>动态特性</li>
+</ol>
+<p>三极管在饱和与截止两种状态转换过程中具有的特性称为三极管的动态特性</p>
+<h3 id="332-ttl">3.3.2 TTL集成逻辑门电路</h3>
+<p><strong>TTL与非门的主要外部特性参数</strong> </p>
+<ol>
+<li>
+<p><strong>输出逻辑电平</strong> </p>
+</li>
+<li>
+<p><strong>输出高电平V<sub>OH</sub></strong> : 典型值为3.6V;规范值V<sub>OH</sub>&gt;=2.4V</p>
+</li>
+<li>
+<p><strong>输出低电平V<sub>OL</sub></strong> : 典型值为0.3V;规范值V<sub>OL</sub>&lt;=0.4V</p>
+</li>
+<li>
+<p><strong>开门电平与关门电平</strong> </p>
+</li>
+<li>
+<p><strong>开门电平V<sub>ON</sub></strong> : 保证输出为额定低电平时所允许的最小输入高电平值，表示使与非门开通的高电平的最小值。产品规范值V<sub>ON</sub>&lt;=1.8V;典型值1.5V</p>
+</li>
+<li>
+<p><strong>关门电平V<sub>OFF</sub></strong> ：保证输出为额定高电平允许的最大输入低电平值，表示使与非门断的低电平的最大值。产品规范值V<sub>OFF</sub>&gt;=0.8V；典型值1.3V</p>
+</li>
+</ol>
+<p>V<sub>ON</sub>越小，输入高电平时的抗干扰能力越强；V<sub>OFF</sub>反之</p>
+<ol>
+<li>
+<p><strong>扇入系数和扇出系数</strong> </p>
+</li>
+<li>
+<p><strong>扇入系数N<sub>I</sub></strong> ：允许的输入端数目</p>
+</li>
+<li>
+<p><strong>扇出系数N<sub>O</sub></strong> : 输出端连接同类门的最多个数，反映了与非门的带负载能力。</p>
+</li>
+<li>
+<p>平均传输延迟时间</p>
+<p><strong>t<sub>pd</sub></strong> : <em>指一个矩形波信号从与非门输入端传到与非门输出端所延迟的时间</em></p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250411224611549" src="../../images/image-20250411224611549-1744553199020-4-1747833280000-5.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图3.14 TTL与非门的传输延迟时间</td>
+</tr>
+</tbody>
+</table>
+<p><strong><span class="arithmatex">\(t~{pd} = (t~{PHL} + t~{PLH})/2\)</span></strong> ;平均延迟时间是反应与非门开关速度的一个重要参数。典型值约为10ns,一般小于40ns</p>
+<ol>
+<li>平均功耗</li>
+</ol>
+<p>在空载条件下工作时所消耗的电功率。输出为低电平时的功耗称为P<sub>ON</sub>,输出为高电平时的功耗称为P<sub>OFF</sub>。P<sub>ON</sub>总是大于P<sub>OFF</sub></p>
+<p>平均功耗P=(P<sub>ON</sub>+P<sub>OFF</sub>)/2。一般为20mW左右</p>
+<ol>
+<li><strong>集成电路芯片用法</strong> </li>
+</ol>
+<p>V<sub>CC</sub>为电源引脚。GND为接地脚，NC为空脚</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250411225406493" src="../../images/image-20250411225406493-1744553199020-6-1747833280000-8.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图3.15 7400、7410、7420引脚图</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_14">两种特殊的门电路⭐</h4>
+<h5 id="oc">集电极开路与非门（OC门）</h5>
+<p>将两个与非门的 <strong>输出端</strong> 直接对接，实现*与*逻辑功能，如图3.21(a)。由于 <strong>这种与逻辑功能得实现并没有使用与门，而是由门电路输出引线连接实现的，故称为线与逻辑</strong> 。但是直接连接可能导致逻辑门损坏</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250411225612363" src="../../images/image-20250411225612363-1744553199020-7-1747833280000-6.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图3.21 两个TTL与非门输出端直接并接使用的情况</td>
+</tr>
+</tbody>
+</table>
+<p>为了实现 <strong>线与</strong> 功能，设计了 <strong>集电极开路门（OC门)</strong> 。电路结构和逻辑符号如下：</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250411230035607" src="../../images/image-20250411230035607-1744553199020-10-1747833280000-7.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图3.22 集电极开路与非门的电路结构和逻辑符号</td>
+</tr>
+</tbody>
+</table>
+<h5 id="ts">三态输出门（TS门）</h5>
+<p>三态门有3种输出状态： <strong>输出高电平、输出低电平和高阻状态</strong> </p>
+<p>即工作状态下输出为 <strong>逻辑“1“</strong> 或者 <strong>逻辑“0”</strong> ，禁止状态下，输出呈 <strong>高阻抗</strong> ，相当于开路</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250411230441440" src="../../images/image-20250411230441440-1744553199020-8-1747833280000-9.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图3.25 三态输出与非门电路结构和逻辑符号</td>
+</tr>
+</tbody>
+</table>
+<h3 id="333-cmos">3.3.3 CMOS集成逻辑门电路</h3>
+<p>略，自己看</p>
+<h3 id="_15">常用门电路符号及表达式</h3>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250411231041004" src="../../images/image-20250411231041004-1744553199020-9-1747833280000-11.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表3.12 常用门电路符号及表达式</td>
+</tr>
+</tbody>
+</table>
+<h2 id="34">3.4 触发器⭐</h2>
+<p>触发器具有如下特点：</p>
+<ol>
+<li>
+<p>触发器有两个互补的输出端Q和<span style="text-decoration: overline;">Q</span></p>
+</li>
+<li>
+<p>触发器有两个稳定状态.输出端Q=1、<span style="text-decoration: overline;">Q</span>=0称为“1”状态；输出端Q=0、<span style="text-decoration: overline;">Q</span>=1称为“0”状态. <strong>输入信号不发生变化时，触发器状态不变</strong> </p>
+</li>
+<li>通过信号作用从一个稳定状态转移到另一个稳定状态，把输入信号作用之前的状态称为 <strong>现态</strong> 记作Q<sup>n</sup>或<span style="text-decoration: overline;">Q</span><sup>n</sup>。作用后的状态称为 <strong>次态</strong> ，记作Q<sup>n+1</sup>或<span style="text-decoration: overline;">Q</span><sup>n+1</sup></li>
+</ol>
+<h3 id="341-r-s">3.4.1 基本R-S触发器</h3>
+<h4 id="r-s">与非门构成的基本R-S触发器</h4>
+<p>R:复位（reset),即置0</p>
+<p>S:置位（set),即置1</p>
+<p>加在逻辑符号输入端的小圆圈表示低电平或负脉冲有效，* <strong>就是说输入信号为0时这个端口工作</strong> *</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250413215624508" src="../../images/image-20250413215624508-1747833280000-10.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图3.36 与非门构成的R-S触发器</td>
+</tr>
+</tbody>
+</table>
+<p>原理略过，直接看 <strong>逻辑功能描述</strong> </p>
+<ol>
+<li><strong>功能表</strong> </li>
+</ol>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250413215802584" src="../../images/image-20250413215802584-1747833280001-12.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表3.13 与非门构成的基本R-S触发器功能表</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong><em>可以用语言分析一下，记得比较快</em></strong></p>
+<ol>
+<li>R,S均工作（都是0）=&gt;机器混乱=&gt;所以功能不定</li>
+<li>R工作，S不工作=&gt;置零端工作，置一端不工作=&gt;机器置零</li>
+<li>S工作，R不工作=&gt;置一端工作，置零端不工作=&gt;机器置一</li>
+<li>R,S均不工作=&gt;机器不工作=&gt;原状态不变</li>
+</ol>
+</div>
+<ol>
+<li><strong>状态表</strong> </li>
+</ol>
+<p>或称作状态转移表，表示现态与次态之间的转移关系</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250413220217886" src="../../images/image-20250413220217886-1747833280001-15.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表3.14 与非门构成的基本R-S触发器状态表</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>就是说，<code>某现态</code>在经过什么样的R-S信号输入之后，会变成什么样的<code>次态</code></p>
+</div>
+<ol>
+<li><strong>状态图</strong> </li>
+</ol>
+<p>反应触发器两种状态之间转移关系的有向图，或称为 <strong>状态转移图</strong> </p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250413220600877" src="../../images/image-20250413220600877-1747833280001-13.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图3.37 与非门构成的基本R-S触发器的状态图</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>圆圈</strong> 表示稳定状态； <strong>箭头</strong> 表示在输入信号作用下状态转移的方向； <strong>箭头旁的标注</strong> 表示状态转移的条件</p>
+<p><strong><em>也就是说：圆圈里的状态，经过标注所示的信号输入，可以变成箭头指向的状态</em></strong></p>
+</div>
+<ol>
+<li><strong>次态方程</strong> </li>
+</ol>
+<p>就是正常的方程，一般带有约束条件
+   $$
+   Q^{n+1}=\overline{S}+R·Q
+   $$</p>
+<p>$$
+   R + S=1
+   $$</p>
+<p>且可做出卡诺图</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250413221453402" src="../../images/image-20250413221453402-1747833280001-14.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图3.38 与非门构成的基本R-S触发器的次态卡诺图</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>
+<p><strong>激励表</strong> </p>
+</li>
+<li>
+<p><strong>就是变为了：如果我想让机器发生这样的变化，我应该怎么样输入R和S</strong> *</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250413221633384" src="../../images/image-20250413221633384-1747833280001-17.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表3.15 与非门构成的基本R-S触发器激励表</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>与非门构成的基本R-S触发器有一个特点:当输入端S连续出现多个置1信号，或者R出现多个置0信号时，仅第一个信号使触发器反转</p>
+<p>可以利用这一特性消除机械开关振动引起的尖脉冲信号</p>
+</div>
+<h4 id="r-s_1">或非门构成的基本R-S触发器</h4>
+<ul>
+<li><strong>其实和与非门一样，主要看触发器信号输入端是否有圆圈表示取负</strong> *</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250413222303966" src="../../images/image-20250413222303966-1747833280001-16.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图3.42 或非门构成的R-S触发器</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250413222327091" src="../../images/image-20250413222327091-1747833280001-19.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表3.16 或非门构成的基本R-S触发器功能表</td>
+</tr>
+</tbody>
+</table>
+<h4 id="r-s_2">基本R-S触发器总结</h4>
+<p>R端工作时Q为0，S端工作时Q为1。默认输入信号为1时工作，有圆圈则取反</p>
+<h3 id="342">3.4.2 常用的时钟控制触发器⭐⭐⭐</h3>
+<p>实际中，往往要求触发器按一定的时间节拍动作，即让输入信号的作用受到 <strong>时钟脉冲（CP）</strong> 的控制</p>
+<p>通常把时钟脉冲（CP）作用前的状态称为“现态”；作用后的状态称为“次态”</p>
+<h4 id="r-s_3">钟控R-S触发器</h4>
+<p>逻辑符号如图3.43(b)所示。该触发器由4个与非门构成，上面的两个与非门G<sub>1</sub>和G<sub>2</sub>构成基本R-S触发器，下面的两个与非门G<sub>3</sub>、G<sub>4</sub>组成控制电路，称为控制门</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250413223114085" src="../../images/image-20250413223114085-1747833280001-21.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图3.43 钟控R-S触发器</td>
+</tr>
+</tbody>
+</table>
+<p><strong>功能描述：</strong> </p>
+<ol>
+<li>CP=0的条件下，触发器始终不变</li>
+<li>CP=1的条件下， <strong>等同于基本R-S触发器</strong> </li>
+</ol>
+<h4 id="d">钟控D触发器</h4>
+<p>将基本R-S触发器的控制电路进行修改后形成的：实现了对触发器工作的定时控制，还可以将输入信号D转化为一堆互补信号送到基本R-S触发器的两个输入端</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250413223958797" src="../../images/image-20250413223958797-1747833280001-18.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图3.45 钟控D触发器</td>
+</tr>
+</tbody>
+</table>
+<p><strong>功能描述</strong> </p>
+<ol>
+<li>CP=0时触发器始终不变</li>
+<li>CP=1时，次态Q<sup>n+1</sup>=D</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250413224320658" src="../../images/image-20250413224320658-1747833280001-25.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>功能表、状态表、激励表、状态图如图</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>D触发器的输出始终和输入信号相同</p>
+</div>
+<h4 id="j-k">钟控J-K触发器</h4>
+<p>对基本R-S触发器进行了改造，S-&gt;J，R-&gt;K。</p>
+<p>解决了时钟脉冲作用期间两个输入同时为1导致触发器状态不确定的问题</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250413224614571" src="../../images/image-20250413224614571-1747833280001-20.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图3.47 钟控J-K触发器的逻辑电路和逻辑符号</td>
+</tr>
+</tbody>
+</table>
+<p><strong>功能描述：</strong> </p>
+<ol>
+<li>CP=0时触发器不变,CP=1时接受信号输入</li>
+<li>J(S)=0,K(R)=0 =&gt; R、S均不工作 =&gt; 触发器状态不变</li>
+<li>J(S)=0,K(R)=1 =&gt; R工作、S不工作 =&gt; 触发器置0</li>
+<li>J(S)=1,K(R)=0 =&gt; S工作、R不工作 =&gt; 触发器置1</li>
+<li>J(S)=1,K(R)=1 =&gt; R、S工作 =&gt; 触发器反转（0变1，1变0）</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250413225036243" src="../../images/image-20250413225036243-1747833280001-28.png" /><img alt="image-20250413225306116" src="../../images/image-20250413225306116-1747833280001-27.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CP=1时功能表、状态表、状态图、次态卡诺图、激励表</td>
+</tr>
+</tbody>
+</table>
+<p>次态方程
+$$
+Q^{n+1}=J\overline{Q}+\overline{K}Q
+$$</p>
+<h4 id="t">钟控T触发器</h4>
+<p>将钟控J-K触发器的输入端J和K连起来，用T表示，构成了钟控T触发器</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250413225428236" src="../../images/image-20250413225428236-1747833280001-22.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图3.49 钟控T触发器的逻辑电路和逻辑符号</td>
+</tr>
+</tbody>
+</table>
+<p><strong>功能描述</strong> </p>
+<ol>
+<li>CP=0时，触发器状态不变</li>
+<li>T=0时，触发器状态不变</li>
+<li>T=1时，触发器取反输出</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250413225645294" src="../../images/image-20250413225645294-1747833280001-24.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CP=1时功能表、状态表、激励表、状态图</td>
+</tr>
+</tbody>
+</table>
+<p>次态方程：
+$$
+Q^{n+1}=T⊕Q
+$$</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>钟控T触发器当T为1时，就触发状态反转，相当于一位二进制计数器，因此又称为计数触发器</p>
+</div>
+<h4 id="_16">简单结构钟控触发器总结</h4>
+<p>当CP=0时都不工作，CP=1时才接受信号并变化</p>
+<table>
+<thead>
+<tr>
+<th>触发器</th>
+<th>工作原理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>钟控R-S触发器</td>
+<td>同基本R-S触发器</td>
+</tr>
+<tr>
+<td>钟控D触发器</td>
+<td>输出和输入D相同</td>
+</tr>
+<tr>
+<td>钟控J-K触发器</td>
+<td>J=S,K=R,同基本R-S触发器(同时工作时反转)</td>
+</tr>
+<tr>
+<td>钟控T触发器</td>
+<td>T=1时反转</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>“空翻”现象：在CP=1的时候，任何输入信号的变化都会导致输出改变，引起多次翻转。会造成状态的不确定和系统工作的混乱</p>
+<p>为克服“空翻”现象，使得触发器的反转在 <strong>某一时刻完成</strong> ，引出下面两种触发器</p>
+</blockquote>
+<h4 id="_17">主从钟控触发器</h4>
+<p>两个简单结构的钟控R-S触发器组成，一个为主触发器，一个为从触发器</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250413231305898" src="../../images/image-20250413231305898-1747833280001-23.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图3.51 主从R-S触发器的逻辑电路和逻辑符号</td>
+</tr>
+</tbody>
+</table>
+<p><strong>逻辑实现</strong> </p>
+<ol>
+<li>CP=1或CP=0时，均不发生改变</li>
+<li>CP由1-&gt;0那一刻，输出根据主触发器改变（等同于基本R-S触发器）</li>
+</ol>
+<blockquote>
+<p><strong>举个例子</strong> </p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250413231942072" src="../../images/image-20250413231942072-1747833280001-26.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图3.52 主从R-S触发器的工作波形</td>
+</tr>
+</tbody>
+</table>
+<p>这里存在两段时间CP=1，正常的钟控R-S触发器可见Q<sub>主</sub>，正常分析即可</p>
+<p>而只有当CP由1-&gt;0的那一刻，真正的输出端<code>Q</code>根据Q<sub>主</sub>此时的状态发生改变</p>
+</blockquote>
+<p>由于主从R-S触发器状态的变化发生再时钟脉冲CP的下降沿（1-&gt;0)时刻，因此可以成为 <strong>下降沿触发</strong> </p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>时钟端<code>CI</code>的小圆圈就表示下降沿触发，没有的话就可以看作 <strong>上升沿触发</strong> </p>
+</div>
+<h4 id="j-k_1">主从J-K触发器</h4>
+<p>原理一致，都是变为了 <strong>上升沿触发</strong> 或 <strong>下降沿触发</strong> ，只不过考虑的变为了钟控J-K触发器</p>
+<h4 id="-">维持-阻塞钟控触发器</h4>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250413233146127" src="../../images/image-20250413233146127-1747833280001-29.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图3.56 维持-阻塞D触发器的逻辑电路和逻辑符号</td>
+</tr>
+</tbody>
+</table>
+<p><strong>逻辑实现</strong> </p>
+<ol>
+<li>CP=1或CP=0时，无论输入什么都不变</li>
+<li>CP由0-&gt;1时，根据D的输入改变输出</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>维持-阻塞D触发器逻辑功能与前述D触发器的逻辑功能完全相同。</p>
+<p>实际使用的该触发器有多个D输入端，此时各个输入之间是相与的关系。</p>
+<p>例如有3个输入端时，次态方程为
+$$
+Q^{n+1}=D_1D_2D_3
+$$</p>
+</div>
+<h3 id="343">3.4.3 *不同类型时钟控制触发器的相互转换</h3>
+<p>略</p>
+<h1 id="_18">组合逻辑电路</h1>
+<p>按照是否有记忆功能分为组合逻辑电和时序逻辑电路两大类型</p>
+<h2 id="41">4.1 组合逻辑电路分析</h2>
+<h3 id="411">4.1.1 分析方法概述</h3>
+<p>根据逻辑电路图写出输出函数表达式-&gt;化简输出函数表达式-&gt;列出输出函数真值表</p>
+<h3 id="412">4.1.2 分析举例</h3>
+<p>这部分可能出成期末试题，建议自己认真看看，就不写在文件里了</p>
+<h2 id="42">4.2 组合逻辑电路设计</h2>
+<h3 id="421">4.2.1 设计方法概述</h3>
+<p>建立给定问题的逻辑描述-&gt;求出逻辑函数的嘴贱表达式-&gt;选择逻辑门类型并进行逻辑函数变换-&gt;画出逻辑电路图</p>
+<h3 id="422">4.2.2 设计举例</h3>
+<p>略</p>
+<h2 id="43">4.3 组合逻辑电路的险象</h2>
+<p>信号经过逻辑门和导线会产生时间延迟，导致当电路所有输入达到稳定状态时，输出并不是立即达到稳定状态</p>
+<h3 id="431">4.3.1 险象的产生</h3>
+<ul>
+<li><strong>竞争现象</strong> ： 输入信号经过不同路径到达输出端的时间有先有后的现象</li>
+<li><strong>险象</strong> ： 电路中竞争现象的存在使得输入信号的变化可能引起输出信号出现非预期的错误输出</li>
+<li><strong>非临界险象</strong> ： 不产生错误输出的竞争</li>
+<li><strong>临界险象</strong> ： 产生错误输出的险象</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>通常按错误输出脉冲信号的极性将组合电路中的险象分为“0”型险象和”1“型险象</p>
+<p>错误输出信号为负脉冲，称为”0“型险象；反之称为”1”型险象</p>
+</div>
+<h3 id="432">4.3.2 险象的判断</h3>
+<p>分为代数法和卡诺图法，<strong><em>代数法不好用，就是枚举，直接卡诺图</em></strong></p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250414181223422" src="../../images/image-20250414181223422-1745717181159-1-1747833280001-30.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>卡诺图判断险象</td>
+</tr>
+</tbody>
+</table>
+<h3 id="433">4.3.3 险象的消除</h3>
+<h4 id="1">1. 增加冗余项</h4>
+<p><code>例4.17 用增加冗余项的方法消除下式的险象</code>
+$$
+F=\overline{A}C+B\overline{C}D+A\overline{B}\overline{C}
+$$</p>
+<p><strong>解</strong> :做卡诺图如图4.24</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250414181921798" src="../../images/image-20250414181921798-1745717181159-2-1747833280001-31.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图4.24 卡诺图</td>
+</tr>
+</tbody>
+</table>
+<p>这里将所有”相切“的地方圈起来,然后加上这些虚线圈的项就可以了</p>
+<h4 id="2">2. 增加惯性延时环节</h4>
+<p>在输出端增加RC电路作为惯性延时环节，过滤掉高频率的尖脉冲信号</p>
+<h4 id="3_1">3. 选通法</h4>
+<p>从消除险象变为避开险象，在时间上加以控制，避开险象脉冲</p>
+<p><em>就是加个开关，信号全都到了再开闸</em></p>
+<h1 id="_19">同步时序逻辑电路</h1>
+<h2 id="51">5.1 时序逻辑电路概述</h2>
+<h3 id="511">5.1.1 时序逻辑电路的结构</h3>
+<p>时序逻辑电路的输出不仅取决于当时的输入，而且还与电路过去的输入有关，因此，电路必须具有记忆功能，以保存过去的输入信息，所以时序逻辑电路的一般结构如图5.1所示，由 <strong>组合电路</strong> 和 <strong>存储电路</strong> 两部分组成，提供过 <strong>反馈回路</strong> 将两部分连成一个整体</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250414191238993" src="../../images/image-20250414191238993-1745717181159-6-1747833280001-35.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图5.1 时序逻辑电路的一般结构</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>x<sub>1</sub>……x<sub>n</sub>为时序逻辑电路的输入信号，又称为组合电路的外部输入信号</p>
+</li>
+<li>
+<p>Z<sub>1</sub>,……，Z<sub>m</sub>为时序逻辑电路的输出信号，又称为组合电路的外部输出信号</p>
+</li>
+<li>
+<p>y<sub>1</sub>，……，y<sub>s</sub>为时序逻辑电路的“状态”，又称其为组合电路的内部输入信号</p>
+</li>
+<li>
+<p>Y<sub>1</sub>,……，Y<sub>r</sub>为时序逻辑电路中的激励信号，又称为组合电路的内部输出信号， <strong>激励信号决定下一时刻的状态</strong> </p>
+</li>
+</ul>
+<p>时序逻辑电路的状态y<sub>1</sub>……y<sub>2</sub>是存储电路对过去输入信号记忆的结果，它随着外部信号的作用而变化</p>
+<p>“现态”y<sup>n</sup> -&gt; “次态”y<sup>n+1</sup></p>
+<p>时序逻辑电路具有如下特征;</p>
+<ol>
+<li>电路由组合顶啊路和存储电路组成，具有对过去输入进行记忆的功能</li>
+<li>电路中包含反馈电路，通过反馈使电路功能与“时序”相关</li>
+<li>电路的输出由电路当时的输入和状态共同决定</li>
+</ol>
+<h3 id="512">5.1.2 时序逻辑电路的分类</h3>
+<h4 id="_20">按照电路的工作方式分类</h4>
+<ul>
+<li>同步时序逻辑电路：各触发器状态的改变受到统一时钟信号控制</li>
+<li>异步时序逻辑电路：电路中无统一的时钟信号同步，电路输入信号的变化将直接导致电路状态的变化</li>
+</ul>
+<h4 id="_21">按照电路的输出/输入关系分类</h4>
+<ul>
+<li>Mealy型：时序逻辑电路的输出是电路输入和电路状态的函数</li>
+<li>Moore型：时序逻辑电路的输出仅仅是电路状态的函数</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Mealy型电路是将过去的输入转换成状态后与输出建立联系，当前的输入直接和输出建立联系</p>
+<p>Moore型电路则是将全部输入转换成电路状态后再输出建立联系</p>
+<p>不太理解的话可以看后面的状态表</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250414195532996" src="../../images/image-20250414195532996-1745717181159-3-1747833280001-34.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图5.3 两种模型的输出/输入关系图</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="_22">按输入信号的形式进行分类</h4>
+<p>分为 <strong>脉冲型</strong> 和 <strong>电平型</strong> </p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250414195657014" src="../../images/image-20250414195657014-1745717181159-4-1747833280001-32.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图5.5 时序逻辑电路的输入信号波形</td>
+</tr>
+</tbody>
+</table>
+<h3 id="513">5.1.3 同步时序逻辑电路的描述方法</h3>
+<h4 id="_23">逻辑函数表达式</h4>
+<p>需要用3组逻辑函数表达式</p>
+<ol>
+<li>输出函数表达式：反应输出Z与输入x和状态y之间关系的表达式</li>
+<li>激励函数表达式：反映了存储电路的输入Y与电路输入x和状态y之间的关系</li>
+<li>次态函数表达式：反映同步时序逻辑电路的次态y<sup>n+1</sup>与激励函数Y和电路现态y之间的关系</li>
+</ol>
+<h4 id="_24">状态表</h4>
+<p>直接上表</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250414201937176" src="../../images/image-20250414201937176-1745717181159-5-1747833280001-33.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mealy型和Moore型电路状态表格式</td>
+</tr>
+</tbody>
+</table>
+<p>解释一下：</p>
+<ul>
+<li>Mealy型：</li>
+<li>最左边一列是现态，也就是目前的状态</li>
+<li>右边是<code>输入x</code>的的值，写在斜杠左侧，以及<code>输出Z</code>的值写在斜杠右侧</li>
+<li>意思就是 <strong>现态y</strong> ，经过 <strong>输入x</strong> 的信息输入后，会变成 <strong>次态y<sup>n+1</sup></strong> ,同时输出 <strong>输出Z</strong> </li>
+<li>也就是跟次态关系不大，次态变化和输出是同时进行的</li>
+<li>Moore型：</li>
+<li>各名称含义一样</li>
+<li>大概就是 <strong>现态y</strong> ,经过 <strong>输入x</strong> 的信息输入后，会变成 <strong>次态y<sup>n+1</sup></strong> ,之后根据次态y输出 <strong>输出Z</strong> </li>
+<li>也就是根据状态决定输出</li>
+</ul>
+<h4 id="_25">状态图</h4>
+<p>反映同步时序逻辑电路状态转移规律及相应输入/输出取值关系的 <strong>有向图</strong> 。</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250427092547890" src="../../images/image-20250427092547890-1747833280001-40.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图5.6 Mealy型和Moore型电路的状态图形式</td>
+</tr>
+</tbody>
+</table>
+<p>解释一下图中内容：</p>
+<ul>
+<li>带圆圈的字符表示电路状态</li>
+<li>连接圆圈的有向线段表示状态的转移关系</li>
+<li>箭头的起点表示现态，箭头的终点表示次态</li>
+<li>Mealy型：</li>
+<li>如图(a)所示，在有向箭头旁标出了输入条件，以及在该输入和现态下相应的输出</li>
+<li>Moore型：</li>
+<li>如图(b)所示，将电路的输出写在了状态的右下方，其它与Mealy一样</li>
+</ul>
+<h2 id="52">5.2 同步时序逻辑电路分析</h2>
+<p>如图5.7</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250427093651575" src="../../images/image-20250427093651575-1747833280001-37.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图5.7 同步时序逻辑电路的分析过程</td>
+</tr>
+</tbody>
+</table>
+<h3 id="522">5.2.2 分析举例</h3>
+<p>单独开一章写</p>
+<h2 id="53">5.3 同步时序逻辑电路设计</h2>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250427101317023" src="../../images/image-20250427101317023-1747833280001-36.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图5.19 同步时序逻辑电路设计的一般步骤</td>
+</tr>
+</tbody>
+</table>
+<p>例题单独开一章</p>
+<h3 id="_26">状态化简</h3>
+<p>所谓状态化简，就是采用某种化简技术从原始状态表中消去多余状态，得到一个既能正确地描述给定地逻辑功能，又能使所包含地状态数目达到最少的状态表，这种状态表为最简状态表</p>
+<ol>
+<li>
+<p><strong>等效状态和等效类</strong> </p>
+</li>
+<li>
+<p>等效状态</p>
+<p><strong>定义</strong>  状态S<sub>i</sub>和S<sub>j</sub>是完全确定状态表中的两个状态，如果对于所有可能的输入序列，分别从S<sub>i</sub>和S<sub>j</sub>出发，所得到的输出相应序列完全相同，则状态S<sub>i</sub>和S<sub>j</sub>是等效的，称之为“等效对”</p>
+<p><strong>判断方法</strong>  假定S<sub>i</sub>和S<sub>j</sub>是完全确定原始状态表中的两个现态，则S<sub>i</sub>和S<sub>j</sub>等效的条件可归纳为一位输入的各种取值组合下满足如下两条。</p>
+<ol>
+<li>
+<p>输出相同</p>
+</li>
+<li>
+<p>次态属于下列情况之一：</p>
+<p>a. 次态相同</p>
+<p>b. 次态交错或称为各自的现态</p>
+<p>c. 次态循环或为等效对</p>
+</li>
+</ol>
+</li>
+<li>
+<p>等效类</p>
+<p>所谓等效类是指由若干彼此等效的状态构成的集合。在一个等效类中的任意两个状态都是等效的。</p>
+</li>
+<li>
+<p>最大等效类</p>
+<p>不被任何别的等效类所包含的等效类。 <strong>不是其它等效类的子集</strong> </p>
+</li>
+<li>
+<p><strong>利用隐含表进行状态化简</strong> </p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250427112601021" src="../../images/image-20250427112601021-1747833280001-38.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图5.25 状态化简的一般步骤</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>举个例子：例5.8 化简表5.13所示原始状态表</strong> </p>
+<p><img alt="image-20250427113142714" src="../../images/image-20250427113142714-1747833280001-39.png" /></p>
+<p>我们们可以做出隐含表如下</p>
+<p><img alt="image-20250427113114667" src="../../images/image-20250427113114667-1747833280001-50.png" /></p>
+<p>这里解释一下这个隐含表，每一种记号解释一个</p>
+<ul>
+<li>
+<p><strong>X</strong> :看状态<code>A</code>和状态<code>C</code>的状态表，两者在哪个输入条件下的输出都不相同，因此直接记为 <strong>X</strong> </p>
+</li>
+<li>
+<p><strong>√</strong> :看状态<code>F</code>和状态<code>C</code>的状态表，两者在满足一个等效对的条件(见上面等效对的判断条件)，记为 <strong>√</strong> </p>
+</li>
+<li>
+<p><strong>其它状态</strong> ：简单来说，就是两个状态之间存在次态相同，就把其它状态写进去</p>
+</li>
+</ul>
+<p>例如状态<code>A</code>和状态<code>B</code>,两者存在次态相互交叉的情况(次态互相指)，就把他们指向的其它次态给写进去</p>
+<p><code>D</code>和<code>G</code>，两者存在一个次态相同，所以就把所有的都给记录进来</p>
+<p>接下来再逐一判断 <strong>其它状态</strong> 格。</p>
+<ul>
+<li><code>A</code>和<code>B</code>状态对应的格子是CF,那么看一下<code>C</code>和<code>F</code>对应的格子，发现是√，说明<code>A</code>和<code>B</code>等效的</li>
+<li><code>A</code>和<code>E</code>对应的格子是<code>BE</code>,于是可以出现这样子 AE-&gt;BE-&gt;CF√ ，所以E也是A，B的等效对</li>
+<li>其它依次类推，得出最大等效对{A，B，E},{C,F},{D},{G}</li>
+</ul>
+<p>接下来使{A，B，E}=a , {C,F}=b , {D}=c , {G}=d , 可以作出最小化状态表</p>
+<p><img alt="image-20250428092748112" src="../../images/image-20250428092748112-1747833280001-41.png" /></p>
+</blockquote>
+<h3 id="_27">状态编码</h3>
+<p>是指给最简状态表中用字母或数字表示的状态，指定一个二进制代码，形成二进制状态表。也成为状态分配，或者状态赋值</p>
+<p>状态编码的任务是：</p>
+<ol>
+<li>确定二进制代码的位数(所需触发器个数)</li>
+<li>寻找一种最佳的或接近最佳的状态分配方案，以便使所设计的时序电路最简单</li>
+</ol>
+<blockquote>
+<p>就是把你上面得到的最简状态表用二进制表示出来</p>
+<p><strong>比如</strong> </p>
+<p><img alt="image-20250429185831604" src="../../images/image-20250429185831604-1747833280001-43.png" /></p>
+<p>经过状态编码可以得到</p>
+<p><img alt="image-20250429185845645" src="../../images/image-20250429185845645-1747833280001-42.png" /></p>
+</blockquote>
+<h3 id="_28">确定激励函数和输出函数并画出逻辑电路图</h3>
+<p>根据二进制状态表确定 <strong>触发器数目</strong> 并 <strong>选定触发器类型</strong>  -&gt; 根据 <strong>二进制状态表和触发器的激励表或者次态方程</strong> ，求出 <strong>触发器的激励函数表达式和电路的输出函数表达式</strong> </p>
+<p>列出4种时钟控制触发器的激励表⭐⭐⭐</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250429190831285" src="../../images/image-20250429190831285-1747833280001-44.png" /></th>
+<th><img alt="image-20250429190906387" src="../../images/image-20250429190906387-1747833280001-47.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表5.17 R-S触发器激励表</td>
+<td>表5.18 D触发器激励表</td>
+</tr>
+<tr>
+<td><img alt="image-20250429191523048" src="../../images/image-20250429191523048-1747833280001-46.png" /></td>
+<td><img alt="image-20250429191555703" src="../../images/image-20250429191555703-1747833280001-45.png" /></td>
+</tr>
+<tr>
+<td>表5.19 J-K触发器激励表</td>
+<td>表5.20 T触发器激励表</td>
+</tr>
+</tbody>
+</table>
+<p>求激励函数和输出函数的最简表达式一般分为两步：</p>
+<ol>
+<li>列出激励函数和输出函数真值表</li>
+<li>画出激励函数和输出函数卡诺图，化简后写出最简表达式</li>
+</ol>
+<blockquote>
+<p><strong>举个例子，例5.10 用J-K触发器和适当的逻辑门实现表5.21所示二进制状态表的功能</strong> </p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250429192322265" src="../../images/image-20250429192322265-1747833280001-48.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>表5.21</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>解:</strong> </p>
+<p>​ 根据给出的状态表和J-K触发器的激励表可以列出激励函数和输出函数的真值表</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250429192830111" src="../../images/image-20250429192830111-1747833280001-49.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表5.22 激励函数和输出函数真值表</td>
+</tr>
+</tbody>
+</table>
+<p>[!IMPORTANT]</p>
+<blockquote>
+<p>这边解释一下激励函数和输出函数真值表怎么来的</p>
+<ul>
+<li>表5.21第一行：</li>
+<li>y<sub>2</sub>y<sub>1</sub>=00,经过x=0的输入之后，变成y<sub>2</sub>y<sub>1</sub>=11，输出Z=0</li>
+<li>对应寻找表5.19。y<sub>2</sub>由0-&gt;1时，J<sub>2</sub>=1、K<sub>2</sub>=d,因此记录</li>
+<li>同理，y<sub>1</sub>由0-&gt;1时，J<sub>1</sub>=1、K<sub>2</sub>=d,再次记录</li>
+<li>其余行同理</li>
+</ul>
+</blockquote>
+<p>由真值表可作出激励函数和输出函数的卡诺图，如图5.29</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250429193905803" src="../../images/image-20250429193905803-1747833280001-53.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图5.29 激励函数和输出函数卡诺图</td>
+</tr>
+</tbody>
+</table>
+<p>得到化简后的激励函数和输出函数的最简表达式
+$$
+J_2 = \overline{xy_1}
+$$</p>
+<div class="arithmatex">\[
+J_1 = K_1 = 1
+\]</div>
+<div class="arithmatex">\[
+K_2 = \overline{x}
+\]</div>
+<div class="arithmatex">\[
+Z=y_2 y_1+xy_1=(y_2+x)y_1
+\]</div>
+<p>因此可作逻辑电路图如图5.30</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250429194341950" src="../../images/image-20250429194341950-1747833280001-58.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图5.30 逻辑电路</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h3 id="534">5.3.4 同步时序逻辑电路设计举例</h3>
+<p>单独开一章说</p>
+<h1 id="_29">中规模通用集成电路及其应用</h1>
+<p>先介绍一下 <strong>常用中规模组合逻辑电路</strong> </p>
+<p>使用最广泛的中规模组合逻辑集成电路由<code>二进制并行加法器</code>、<code>译码器</code>、<code>编码器</code>、<code>多路选择器</code>和<code>多路分配器</code></p>
+<h2 id="_30">二进制加法并行器</h2>
+<p>是一种能够并行产生两个n为二进制数“算术和”的逻辑部件。按 <strong>进位方式</strong> 不同，可以分为<code>串行进位二进制并行加法器</code>,<code>超前进位二进制并行加法器</code></p>
+<h3 id="_31">串行进位二进制并行加法器</h3>
+<p>本质上就是模拟我们计算的方式，使用全加器实现(第三章内容)</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250429200909866" src="../../images/image-20250429200909866-1747833280001-51.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图7.1 串行进位4位二进制并行加法器的结构框图</td>
+</tr>
+</tbody>
+</table>
+<p>但是这种加法器的运算速度较慢，且位数越多，速度越低。因此出现了超前进位二进制并行加法器</p>
+<h3 id="_32">超前进位二进制并行加法器</h3>
+<p>这个加法器就是跟据输入信号同时形成各位向高位“进位”的二进制并行加法器。跟据全加器的功能，可写出第i位全加器的进位输出函数表达式为
+$$
+C_i = \overline{A_i}B_iC_{i-1}+A_i\overline{B_i}C_{i-1}+A_iB_i\overline{C_{i-1}}+A_iB_iC_{i-1}=(A_i⊕B_i)C_{i-1}+A_iB_i
+$$
+由进位函数表达式可知，当第i位的被加数A<sub>i</sub>和加数B<sub>i</sub>均为1时，有A<sub>i</sub>B<sub>i</sub>=1,不论低位运算结果如何，本位必然产生进位输出(C<sub>i</sub>=1)</p>
+<ul>
+<li>
+<p>定义G<sub>i</sub>=A<sub>i</sub>B<sub>i</sub>为 <strong>进位产生函数</strong> 。A<sub>i</sub>⊕B<sub>i</sub>=1时，使C<sub>i</sub>=C<sub>i-1</sub>。</p>
+</li>
+<li>
+<p>定义P<sub>i</sub>=A<sub>i</sub>⊕B<sub>i</sub>为 <strong>进位传递函数</strong> 。</p>
+</li>
+<li>
+<p>将P<sub>i</sub>和G<sub>i</sub>代入全加器的“和”及“进位”输出表达式
+  $$
+  F_i=A_i⊕B_i⊕C_{i-1}=P_i⊕C_{i-1}
+  $$</p>
+</li>
+</ul>
+<p>$$
+  C_i=P_iC_{i-1}+G_i
+  $$</p>
+<h3 id="_33">典型芯片</h3>
+<p>常用并行加法器有 <strong><code>4位超前进位二进制并行加法器74283</code></strong> ，该器件引脚排列图和逻辑符号如图7.2。其中</p>
+<ul>
+<li>
+<p>A<sub>4</sub>、A<sub>3</sub>、A<sub>2</sub>、A<sub>1</sub>和B<sub>4</sub>、B<sub>3</sub>、B<sub>2</sub>、B<sub>1</sub>为两组4位二进制加数。</p>
+</li>
+<li>
+<p>F<sub>4</sub>、F<sub>3</sub>、F<sub>2</sub>、F<sub>1</sub>为相加产生的4位”和“</p>
+</li>
+<li>
+<p>C<sub>0</sub>为最低为的进位输入</p>
+</li>
+<li>
+<p>FC<sub>4</sub>为最高位的进位输出</p>
+</li>
+</ul>
+<blockquote>
+<p>也就是F<sub>i</sub>=A<sub>i</sub>+B<sub>i</sub></p>
+<p>C<sub>0</sub>来源于之前器件的进位</p>
+<p>FC<sub>4</sub>生成对下一个器件的进位</p>
+</blockquote>
+<h3 id="_34">应用举例</h3>
+<p>单独讲</p>
+<h2 id="_35">译码器和编码器</h2>
+<p><strong>译码器</strong> 的功能是对具有特定含义的输入代码进行“翻译”，将其转换成相应的输出信号</p>
+<p><strong>编码器</strong> 的功能是对输入信号按一定规律进行编排，使魅族输出代码具有特定含义</p>
+<h3 id="_36">译码器</h3>
+<p>有二进制译码器、二-十进制译码器、数字显示译码器</p>
+<blockquote>
+<p>其实就是在硬件上实现二进制到其它的转换</p>
+</blockquote>
+<h4 id="_37">二进制译码器</h4>
+<p>将n个输入变量变为2<sup>n</sup>个输出函数，且输出函数由输变量构成的最小项具有对应关系的一种多输出组合逻辑电路</p>
+<p>从结构上来看，有n个输入端、2<sup>n</sup>个输出端和一个使能输入端。</p>
+<blockquote>
+<p>例如，n=3时，输入端为101，则输出端只有Y<sub>5</sub>输出有效电平，（101）<sub>2</sub>=（5）<sub>10</sub></p>
+</blockquote>
+<p>常见的MSI二进制译码器有2-4线（2输入4输出）译码器、3-8线（3输入8输出）译码器和4-16线译码器</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250506192913868" src="../../images/image-20250506192913868-1747833280001-54.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>图7.7 74138译码器的引脚排列图和逻辑符号</strong></td>
+</tr>
+</tbody>
+</table>
+<p>该译码器真值表如表7.1</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250506193008076" src="../../images/image-20250506193008076-1747833280001-52.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>表7.1 74138译码器真值表</strong></td>
+</tr>
+</tbody>
+</table>
+<p>其中S<sub>1</sub>、<span style="text-decoration: overline;">S</span><sub>2</sub>,<span style="text-decoration: overline;">S</span><sub>3</sub>为使能端、作用是禁止或选通译码器</p>
+<h4 id="-_1">二-十进制译码器</h4>
+<p>将4位BCD码的10组代码翻译成10个与十进制数字符号对应的输出信号</p>
+<blockquote>
+<p>内容和上面的二进制译码器相同，这里变为了8421码、余3码这样子</p>
+</blockquote>
+<h4 id="_38">七段显示译码器</h4>
+<p>数字LED屏</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250506194945850" src="../../images/image-20250506194945850-1747833280001-55.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>图7.11 7448的引脚排列图和逻辑符号</strong></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250506195014682" src="../../images/image-20250506195014682-1747833280001-56.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表7.4 7448的功能表</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250506195114686" src="../../images/image-20250506195114686-1747833280001-57.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图7.12 七段显示译码工作原理以及笔画与字形关系</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_39">编码器</h3>
+<p>常见的有二-十进制编码器和优先编码器</p>
+<blockquote>
+<p>译码器功能反过来就是编码器</p>
+</blockquote>
+<h4 id="-_2">二-十进制编码器</h4>
+<p>将十进制的10个数字0~9分别编成4位BCD码。例如图7.13所示的是按键式8421码编码器的逻辑电路</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250506195703886" src="../../images/image-20250506195703886-1747833280001-61.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图7.13 按键式8421码编码器</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_40">优先编码器</h4>
+<p>它与上述二-十进制编码器的最大区别是：二-十进制编码器的输入信号是互斥的，即 <strong>任何时候只允许一个输入端为有效信号</strong> 。优先编码器的各个输入信号不是互斥的， <strong>允许多个输入端同时为有效信号</strong> </p>
+<p>优先编码器的每个输入具有不同的优先级别，当多个输入信号有效时吗，能识别输入信号的优先级别，并对其中优先级别最高的一个进行编码，产生相应的输出代码</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250506201224963" src="../../images/image-20250506201224963-1747833280001-59.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图7.14 74148优先编码器引脚排列和逻辑符号</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250506201300750" src="../../images/image-20250506201300750-1747833280001-62.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表7.6 74148真值表</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>下角标的号码越大，优先级越高。</li>
+</ul>
+<blockquote>
+<p>例如，<span style="text-decoration: overline;">I</span><sub>1</sub>、<span style="text-decoration: overline;">I</span><sub>4</sub>、<span style="text-decoration: overline;">I</span><sub>6</sub>为0，其余为1.输出按优先级较高的<span style="text-decoration: overline;">I</span><sub>6</sub>编码，也就是<span style="text-decoration: overline;">Q</span><sub>c</sub><span style="text-decoration: overline;">Q</span><sub>B</sub><span style="text-decoration: overline;">Q</span><sub>A</sub>=001,<em>(6)<sub>10</sub>=(110)<sub>2</sub></em></p>
+<p>当<span style="text-decoration: overline;">I</span><sub>6</sub>=1时，<span style="text-decoration: overline;">Q</span><sub>c</sub><span style="text-decoration: overline;">Q</span><sub>B</sub><span style="text-decoration: overline;">Q</span><sub>A</sub>=011，<em>(4)<sub>10</sub>=(100)<sub>2</sub></em></p>
+<p>若当<span style="text-decoration: overline;">I</span><sub>4</sub>也为1时，<span style="text-decoration: overline;">Q</span><sub>c</sub><span style="text-decoration: overline;">Q</span><sub>B</sub><span style="text-decoration: overline;">Q</span><sub>A</sub>=110,<em>(1)<sub>10</sub>=(001)<sub>2</sub></em></p>
+</blockquote>
+<ul>
+<li>
+<p><span style="text-decoration: overline;">I</span><sub>S</sub>为选通输入端，当<span style="text-decoration: overline;">I</span><sub>S</sub>=0时，编码器工作</p>
+</li>
+<li>
+<p>O<sub>S</sub>为选通输出端，当<span style="text-decoration: overline;">I</span><sub>S</sub>=0时且没有信号输入的时候，O<sub>S</sub>为0(也就是工作但是这个时候没有输入)</p>
+</li>
+<li>
+<p><span style="text-decoration: overline;">O</span><sub>EX</sub>为工作状态标志，当<span style="text-decoration: overline;">I</span><sub>S</sub>=1时  或  当<span style="text-decoration: overline;">I</span><sub>S</sub>=0但无信号输入  时，<span style="text-decoration: overline;">O</span><sub>EX</sub>=1（也就是当选通输入有效并且有信号输入的时候，<span style="text-decoration: overline;">O</span><sub>EX</sub>=0）</p>
+</li>
+</ul>
+<h2 id="_41">多路选择器和多路分配器</h2>
+<p>多路选择器和多路分配器的基本功能就是对多路数据的选择与分配，在公共传输线上实现多路数据的分时传送</p>
+<h3 id="_42">多路选择器</h3>
+<p>又称为数据选择器或多路开关，常用MUX表示，它多路输入、单路输出，逻辑功能是从多路输入中选择一路到输出端</p>
+<h4 id="_43">典型芯片</h4>
+<p><code>双四路MUX 74153</code>、<code>8路MUX 74152</code>(无使能控制端)、<code>74151</code>和<code>16路MUX 74150</code></p>
+<p><strong>双四路MUX 74153</strong> 中有两个4路MUX。其中</p>
+<ul>
+<li>G为使能控制端，低电平有效。</li>
+<li>D<sub>0</sub> ~ D<sub>3</sub>为数据输入端</li>
+<li>A<sub>1</sub>、A<sub>0</sub>为选择控制端，两个MUX共用</li>
+<li>Y为输出端</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250506205310964" src="../../images/image-20250506205310964-1747833280001-60.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图7.16 74153引脚排列图和逻辑符号</td>
+</tr>
+</tbody>
+</table>
+<p>功能表如下</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250506205425048" src="../../images/image-20250506205425048-1747833280001-63.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表7.7 4路MUX 74153的功能表</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>其实就是，A<sub>1</sub>A<sub>0</sub>对应的二进制数是几，就输出第几个输入口的数</p>
+</blockquote>
+<h4 id="_44">应用举例</h4>
+<p>单独另开</p>
+<h3 id="_45">多路分配器</h3>
+<p>又称为数据分配器，用DEMUX表示。结构与多路选择器相反，单输入、多输出的逻辑部件。 <strong>输入数据具体从哪一路输出由选择控制变量决定</strong> </p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250506210122267" src="../../images/image-20250506210122267-1747833280001-64.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图7.20 4路DEMUX的逻辑符号</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>D为数据输入端</p>
+</li>
+<li>
+<p>A<sub>1</sub>、A<sub>0</sub>为选择控制输入端</p>
+</li>
+<li>f<sub>0</sub> ~ f<sub>3</sub>为数据输出端</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250506210246818" src="../../images/image-20250506210246818-1747833280001-65.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表7.8 4路DEMUX功能表</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>其实就是，A<sub>1</sub>A<sub>0</sub>对应的二进制数是几，就将D的值从第几个口输出，其它口都输出0</p>
+</blockquote>
+<p><em>DEMUX常与MUX联用，以实现多通道数据分时传送</em>。通常在发送端由MUX将各路数据分时送至公共传输线，接收端再由DEMUX将公共线上的数据分配到相应的输出端</p>
+<h2 id="_46">常用中规模时序逻辑电路</h2>
+<h3 id="_47">集成计数器</h3>
+<p>计数器是一种能在输入信号作用下依次通过预定状态的时序逻辑电路。计数器中的“数”是用触发器的状态组合来表示的，在计数脉冲的作用下使一组触发器的状态依次转换成不同的状态组合来表示数的变化。</p>
+<p>计数器在运行时，所经历的状态是周期性的，通常将一次循环所包含的状态总数称为计数器的“模”</p>
+<p>集成计数器的种类很多，有不同的分类方法</p>
+<ul>
+<li>工作方式：同步计数器、异步计数器</li>
+<li>进位制: 二进制计数器、十进制计数器、任意进制计数器</li>
+<li>加法计数器、减法计数器、加/减可逆计数器</li>
+</ul>
+<p>集成计数器一般具有计数、保存、清除、预置等功能</p>
+<h4 id="_48">集成同步计数器</h4>
+<p>常见的集成同步计数器有 <strong>4位二进制同步加法计数器74161、单时钟4位二进制可逆计数器74191、单时钟十进制同步可逆计数器74190、双时钟4位二进制同步可逆计数器74193</strong> </p>
+<p>4位二进制同步可逆计数器74193的引脚排列图和逻辑符号如图</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250506212240956" src="../../images/image-20250506212240956-1747833280001-67.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图7.23 74193的引脚排列图和逻辑符号</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250506212334498" src="../../images/image-20250506212334498-1747833280001-66.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="image-20250506212342305" src="../../images/image-20250506212342305-1747833280001-68.png" /></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>CLR为高电平时，计数器被清0</p>
+</li>
+<li>
+<p>当<span style="text-decoration: overline;">LD</span>为低电平时，计数器被预置为A、B、C、D端输入的值</p>
+</li>
+<li>当计数脉冲由CP<sub>u</sub>端输入时，计数器进行累加计数</li>
+<li>当计数脉冲由CP<sub>D</sub>端输入时,计数器进行累减计数</li>
+</ul>
+<p>4位二进制计数器是模为16的计数器。下面举例介绍用4为二进制同步可逆计数器74193构成模为任意R计数器的方法</p>
+<ol>
+<li><strong>构成模小于16的计数器</strong> </li>
+</ol>
+<p>利用计数器的清楚、预置等功能，可以很方便欸都实现模小于16的计数器</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>例 用4位二进制同步可逆计数器74193构成模10加法计数器</strong> </p>
+<p><img alt="" src="../../images/image-20250506213113824-1747833280001-69.png" />
+<img alt="" src="../../images/image-20250506213127594-1747833280001-70.png" /></p>
+<p><img alt="" src="../../images/image-20250506213139413-1747833280001-71.png" /></p>
+<p>可以这么认为，当到达某个点的时候就触发CLR清零就好了，(1010)<sub>2</sub>对应的就是Q<sub>3</sub>=1,Q<sub>1</sub>=1的时候，给这俩 <strong>与</strong> 上</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>例 用4位二进制同步可逆计数器74193构成模12减法计数器</strong> </p>
+<p><img alt="" src="../../images/image-20250506213338905-1747833280001-73.png" /></p>
+<p><img alt="" src="../../images/image-20250506213351051-1747833280001-72.png" /></p>
+</div>
+<ol>
+<li><strong>构成模大于16的计数器</strong> </li>
+</ol>
+<p>利用计数器的进位输出或者错位输出脉冲作为计数脉冲，将多个4位计数器进行级联，构成模大于16的计数器。</p>
+<p>例如将两片74193按图所示进行连接，即为一个模为256的减法计数器</p>
+<p><img alt="" src="../../images/image-20250506213559619-1747833280001-74.png" /></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>例 用两片4位二进制同步可逆计数器74193构成模(147)<sub>10</sub>的加法计数器</strong> </p>
+<p><img alt="" src="../../images/image-20250506213747443-1747833280001-75.png" /></p>
+<p>同样的道理，记得怎么样连上两片74193就好，147的时候对应得二进制从右往左一一对应过去</p>
+</div>
+<h4 id="_49">集成异步计数器</h4>
+<p>常用得异步时序逻辑器件有 <strong>二-五-十进制加法计数器74290</strong> 、 <strong>双时钟4位二进制加法计数器74293</strong> </p>
+<p>74290内部包括</p>
+<ul>
+<li>4个主从J-K触发器</li>
+<li>触发器0组成模2计数器，计数脉冲由CP<sub>A</sub>提供、</li>
+<li>触发器1 ~ 3组成异步模5计数器，计数脉冲由CP<sub>B</sub>提供</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250506214515054" src="../../images/image-20250506214515054-1747833280001-76.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图7.28 74290的引脚排列图和逻辑符号</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250506214543681" src="../../images/image-20250506214543681-1747833280001-77.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表7.11 74290的功能表</td>
+</tr>
+</tbody>
+</table>
+<p>集成异步计数器74290有6个输入和4个输出。</p>
+<ul>
+<li>R<sub>0A</sub>、R<sub>0B</sub>为清零输入信号，高电平有效</li>
+<li>R<sub>9A</sub>、R<sub>9B</sub>为置9(1001)输入信号，高电平有效</li>
+<li>CP<sub>A</sub>、CP<sub>B</sub>为计数脉冲信号</li>
+<li>Q<sub>D</sub>、Q<sub>C</sub>、Q<sub>B</sub>、Q<sub>A</sub>为数据输出信号</li>
+</ul>
+<p>可以归纳除74290有以下功能</p>
+<ul>
+<li><strong>异步清零功能</strong> </li>
+</ul>
+<p>当R<sub>9A</sub>·R<sub>9B</sub>=0且R<sub>0A</sub>=R<sub>0B</sub>=1时，可以实现异步清零的操作，使得Q<sub>D</sub>Q<sub>C</sub>Q<sub>B</sub>Q<sub>A</sub>=0000</p>
+<ul>
+<li><strong>异步置9功能</strong> </li>
+</ul>
+<p>当R<sub>9A</sub>=R<sub>9B</sub>=1时，不论R<sub>0A</sub>、R<sub>0B</sub>以及输入脉冲为何值，均可实现异步置9操作</p>
+<ul>
+<li><strong>计数功能</strong> </li>
+</ul>
+<p>当R<sub>9A</sub>·R<sub>9B</sub>=0，且R<sub>0A</sub>·R<sub>0B</sub>=0时，电路实现如下计数功能</p>
+<ol>
+<li>
+<p><strong>模2计数器</strong> :若将计数脉冲加到CP<sub>A</sub>端，并从Q<sub>A</sub>端输出，则可以实现1位二进制加法计数</p>
+</li>
+<li>
+<p><strong>模5计数器</strong> :若将计数脉冲加到CP<sub>B</sub>端，并从Q<sub>D</sub>,Q<sub>C</sub>,Q<sub>B</sub>端输出，则可实现五进制加法计数</p>
+<p><img alt="" src="../../images/image-20250506221810631-1747833280001-78.png" /></p>
+</li>
+<li>
+<p><strong>模10计数器</strong> ：用74290构成模10计数器有两种方法：一是构成8421码十进制计数器；二是构成5421码十进制计数器。两种方式的连接图如下图</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250506222209216" src="../../images/image-20250506222209216-1747833280001-79.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图7.29 74290构成的两种模10计数器连接示意图</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>(a)中将Q<sub>A</sub>和CP<sub>B</sub>连接起来，会使得每来两个计数脉冲，Q<sub>A</sub>就会产生一个负跳变，使模五计数器增1。</p>
+<p>经过10个脉冲作用后，模5计数器循环一周，实现8421码十进制加法计数</p>
+<p><img alt="" src="../../images/image-20250506222534514-1747833280001-80.png" /></p>
+<p>(b)中，计数脉冲器加到模5计数器的CP<sub>B</sub>端，并将模5计数器的高位输出端Q<sub>D</sub>接到模2计数器的CP<sub>A</sub>端。这种情况下，每来5个计数脉冲，Q<sub>D</sub>产生一个负跳变。使模2计数器加一</p>
+<p><img alt="" src="../../images/image-20250506222729284-1747833280001-83.png" /></p>
+</blockquote>
+</li>
+</ol>
+<h3 id="_50">集成寄存器</h3>
+<p>寄存器的主要组成部分是触发器，一个触发器能存储1位二进制代码，所以要存放n位二进制代码的寄存器应包含n个触发器。</p>
+<p>中规模集成电路寄存器除了具有 <strong>接收数据</strong> 、 <strong>保存数据</strong> 和 <strong>传送数据</strong> 等基本功能外，通常还有 <strong>左、右移位</strong> ， <strong>串、并输出</strong> 以及 <strong>预置</strong> 、 <strong>清零</strong> 等多种功能</p>
+<h4 id="_51">典型芯片</h4>
+<p>下面介绍一下74194芯片，这是一种常用的4位双向移位寄存器。其管脚排列图和逻辑符号如下图</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250506224151837" src="../../images/image-20250506224151837-1747833280001-81.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图7.32 74194的管教排列图和逻辑符号</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250506224231519" src="../../images/image-20250506224231519-1747833280001-82.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>74194引线说明、控制端功能、功能表</td>
+</tr>
+</tbody>
+</table>
+<h2 id="555">常用中规模信号产生与变换电路(集成定时器555)</h2>
+<p>集成定时器555是一种将模拟电路功能与逻辑电路功能巧妙地结合在一起的中规模集成电路。常用的集成定时器555有 <strong>5G555(TTL电路)</strong> 、 <strong>CC7555（CMOS电路）</strong> </p>
+<h3 id="5g555">5G555的电路结构与逻辑功能</h3>
+<h4 id="_52">电路结构和工作原理</h4>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250506225235549" src="../../images/image-20250506225235549-1747833280002-86.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图7.37 5G555的电路结构和管脚功能</td>
+</tr>
+</tbody>
+</table>
+<p>集成定时器5G555由 <strong>电阻分压器</strong> 、 <strong>电压比较器</strong> 、 <strong>基本R-S触发器</strong> 、 <strong>放电三极管</strong> 和 <strong>输出缓冲器</strong> 5部分组成。定时器的功能主要取决于比较器C<sub>1</sub>和C<sub>2</sub>，由它们的输出直接控制基本R-S触发器的状态和放电三极管T的状态，从而决定整个电路的输出状态</p>
+<ul>
+<li><strong>电阻分压器</strong> 由3个阻值均为5kΩ的电阻串联构成分压器，为电压比较器C<sub>1</sub>和C<sub>2</sub>提供参考电压</li>
+</ul>
+<p>当电压控制端CO不外加控制电压*v<sub>CO</sub>*时，V<sub>R1</sub>=&#8532;V<sub>CC</sub> , V<sub>R2</sub>=&#8531;V<sub>CC</sub>，当外加控制电压*v<sub>co</sub>*时，比较器的参考电压将发生变化，相应电路的阈值、触发电平也将随之改变，并进而影响电路的定时参数。</p>
+<p><em>为了防止干扰，CO端一般通过一个小电容(0.01μF)接地，以防旁路高频干扰</em></p>
+<ul>
+<li><strong>电压比较器C<sub>1</sub>和C<sub>2</sub></strong> 是两个结构相同的理想运算放大器</li>
+</ul>
+<p>当运算放大器的同相输入V<sub>+</sub>大于反向输入V<sub>-</sub>时，输出为高电平1信号，反之为低电平0信号</p>
+<blockquote>
+<p>上面两个结合，就作为了这个器件的开关</p>
+<p>比较器C<sub>1</sub>的同相输入端（+端）接参考电压V<sub>R1</sub>，反相输入端（-端）与阈值输入端TH相连时，其输出R端的状态取决于与之输入信号*v<sub>TH</sub>*和V<sub>R1</sub>的比较结果。</p>
+<ul>
+<li><em>v<sub>TH</sub></em>&lt;V<sub>R1</sub>时，输出R为高电平1</li>
+<li><em>v<sub>TH</sub></em>&gt;V<sub>R1</sub>时，输出R为低电平0</li>
+</ul>
+<p>比较器C<sub>2</sub>的同相输入端（+端）与触发输入端<span style="text-decoration: overline;">TR</span>相连，反相输入端（-端）接参考电压V<sub>R2</sub>时，其输出端S的状态取决于这两个输入信号的比较结果</p>
+<ul>
+<li><em>v<sub>TR</sub></em>&lt;V<sub>R2</sub>时，输出S为低电平0</li>
+<li><em>v<sub>TR</sub></em>&gt;V<sub>R2</sub>时，输出S为高电平1</li>
+</ul>
+<p>就是这样理解：</p>
+<ul>
+<li>C1控制R-S触发器的R端，+端电压 &lt; -端电压时，R为高电平</li>
+<li>C2控制R-S触发器的S端，+端电压 &lt; -端电压时，S为低电平</li>
+</ul>
+</blockquote>
+<ul>
+<li>
+<p><strong>基本R-S触发器</strong> 。</p>
+</li>
+<li>
+<p>触发器输入信号R、S为比较器C<sub>1</sub>，C<sub>2</sub>的输出。</p>
+</li>
+<li>触发器Q的状态为电路输出端OUT的状态，触发器<span style="text-decoration: overline;">Q</span>端状态控制放电三极管T的导通与截止。</li>
+<li>
+<p>当外部复位信号<span style="text-decoration: overline;">R</span><sub>D</sub>为0时，可使*v<sub>0</sub>*=0，定时器输出直接复位。</p>
+</li>
+<li>
+<p><strong>放电三极管T</strong> 构成泄放电路，T的集电极即输出端D。如果将D端经过一个外接电阻接至电源，可以形成一个反相器:</p>
+</li>
+<li>
+<p>当Q=0时，T导通，D端输出为低电平0</p>
+</li>
+<li>当Q=1时，T截止，D端输出为高电平1</li>
+</ul>
+<blockquote>
+<p>综合来说，D端的逻辑状态与输出端OUT的状态相同</p>
+</blockquote>
+<ul>
+<li><strong>输出缓冲器</strong> .提高负载能力，并隔离负载对定时器的影响</li>
+</ul>
+<h4 id="_53">电路功能</h4>
+<p>5G555的功能表如下</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250507222056867" src="../../images/image-20250507222056867-1747833280002-85.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表7.20 5G555功能表</td>
+</tr>
+</tbody>
+</table>
+<p>当CO不外接控制电压时，功能表如下(其实差不多的，可以理解为基准电压变成了一个已知值)</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250507222344321" src="../../images/image-20250507222344321-1747833280002-84.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>表7.21 5G555不外接控制电压时的功能表</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.select", "navigation.titles", "navigation.tabs", "navigation.indexes"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
