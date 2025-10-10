@@ -47,6 +47,10 @@
     
       <link rel="stylesheet" href="../../resources/css/extra.css">
     
+      <link rel="stylesheet" href="../../resources/css/tittle.css">
+    
+      <link rel="stylesheet" href="../../resources/css/leftsidebar.css">
+    
       <link rel="stylesheet" href="https://static.zeoseven.com/zsft/292/main/result.css">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
@@ -2397,7 +2401,7 @@ $$
 <tr>
 <td><strong>移位运算</strong></td>
 <td><code>&lt;&lt;</code></td>
-<td>左移：低位补 0，高位丢弃；相当于乘以 2^k</td>
+<td>左移：低位补 0，高位丢弃；相当于乘以 <span class="arithmatex">\(2^k\)</span>；此外，如果移出的位不同于移位后的符号位，则认为发生了溢出</td>
 <td>溢出可能</td>
 </tr>
 <tr>
