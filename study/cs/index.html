@@ -675,10 +675,25 @@
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="3.5 浮点数运算部件">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      浮点数运算结果的精度和舍入
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
     <span class="md-ellipsis">
       章节小结
     </span>
@@ -1121,10 +1136,25 @@
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="3.5 浮点数运算部件">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      浮点数运算结果的精度和舍入
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
     <span class="md-ellipsis">
       章节小结
     </span>
@@ -2890,6 +2920,100 @@ $$
 </ol>
 <p>对位数超出的低位进行处理，保证计算精度</p>
 <hr />
+<h4 id="_9">浮点数运算结果的精度和舍入</h4>
+<p><strong>浮点运算中精度与舍入的两个核心问题</strong></p>
+<p>在计算机系统中，浮点数的加减法是最常用的运算之一，但由于浮点数采用 <strong>有限位数二进制表示</strong>，在运算过程中很容易产生 <strong>精度丢失和舍入误差</strong>。
+ 为了保证结果的 <strong>量纲正确性与数值精度</strong>，在浮点运算中必须考虑两个关键问题：</p>
+<ol>
+<li><strong>保留多少附加位才能保证运算精度？</strong></li>
+<li><strong>最终如何对附加位进行舍入处理？</strong></li>
+</ol>
+<p>这两者共同决定了浮点计算的“精度”和“可靠性”。</p>
+<p><strong>一、保留附加位：保证中间运算精度</strong></p>
+<p>在浮点数加减过程中，尾数往往需要 <strong>对阶、移位、相加减</strong> 等操作。如果直接将计算结果截断到机器字长范围，会造成较大精度损失。
+ 因此，在 IEEE 754 标准中要求：
+  <strong>浮点数运算的中间结果必须至少保留 2 位附加位（保护位和舍入位）</strong>，在某些高精度计算中甚至会保留 3 位或更多。</p>
+<p>而附加位的定义与作用如下：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>位置</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>保护位（guard bit）</strong></td>
+<td>尾数右移后立即下一位</td>
+<td>防止有效位被右移丢失，保留尾数的下一位信息</td>
+</tr>
+<tr>
+<td><strong>舍入位（round bit）</strong></td>
+<td>保护位之后的下一位</td>
+<td>判断是否需要对尾数进行进位（舍入）</td>
+</tr>
+<tr>
+<td><strong>粘位（sticky bit）</strong></td>
+<td>舍入位之后的所有位的“或”</td>
+<td>若舍入位后还有 1，则置 1，用于更高精度的舍入判断</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>例如，假设计算中间结果尾数需要右移，原尾数为 <span class="arithmatex">\(1.10110101\ldots\)</span></p>
+<p>若机器只能保存 4位尾数，则：</p>
+<table>
+<thead>
+<tr>
+<th>有效尾数</th>
+<th>保护位</th>
+<th>舍入位</th>
+<th>粘位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.1011</td>
+<td>0</td>
+<td>1</td>
+<td>后面如果有1就为1，否则为0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>二、舍入处理：确定最终计算结果</strong></p>
+<p>在获得带有附加位的中间结果后，下一步就是**根据舍入规则把它转化为符合浮点数表示范围的结果**。</p>
+<p>IEEE 754 标准规定了四种常用的舍入策略，适用于不同的计算场景和需求：</p>
+<p><strong>1.就近舍入</strong></p>
+<ul>
+<li>将结果舍入到**距离最近**的可表示浮点数。</li>
+<li>如果刚好在两个数中间（即“平分”情况），则**舍入到最低有效位为偶数**的那个数。</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>例如 <span class="arithmatex">\(1.2450 × 10^4 \rightarrow 1.245 × 10^4\)</span> 舍入到最低有效位为偶数的那个数</p>
+<p><span class="arithmatex">\(1.2455\times 10^4\rightarrow 1.246\times10^4\)</span></p>
+</div>
+<p><strong>2.朝 +∞ 方向舍入</strong></p>
+<ul>
+<li>不论正负数，<strong>总是向数轴正方向舍入</strong>（即“向上取整”）。</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><span class="arithmatex">\(1.2450\times 10^4\rightarrow1.25\times10^4\)</span></p>
+<p><span class="arithmatex">\(-1.2450\times10^4\rightarrow-1.245\times10^4\)</span> （比 <span class="arithmatex">\(-1.25\times10^4\)</span> 大）</p>
+</div>
+<p><strong>3.朝 -∞ 方向舍入</strong></p>
+<ul>
+<li>总是向数轴负方向舍入（即“向下取整”）</li>
+</ul>
+<p><strong>4.朝 0 方向舍入</strong></p>
+<ul>
+<li>直接舍去附加位，即 <strong>向 0 方向截断</strong> （忽略所有小数部分）</li>
+</ul>
+<hr />
 <p><mark>举个例子作为理解：</mark></p>
 <p>若 <span class="arithmatex">\(x\)</span> 和 <span class="arithmatex">\(y\)</span> 为 float型变量，<span class="arithmatex">\(x=10.5\)</span>,<span class="arithmatex">\(y=-120.625\)</span>,给出 <span class="arithmatex">\(x+y\)</span> 的计算过程</p>
 <p>1）对阶</p>
@@ -2902,7 +3026,7 @@ $$
 <p>根据确定的舍入方式，对小数点右边第23位后的数字进行深入，最终得到尾数部分</p>
 <p><span class="arithmatex">\(x+y\)</span> 的机器数为 <span class="arithmatex">\(1\;1000\;0101\;1011\;1000\;1000\;0000\;0000\;000\)</span></p>
 <p><span class="arithmatex">\(x+y\)</span> 的真值为 <span class="arithmatex">\(-1.1011\;1000\;1B \times 2^6=-11011\;10.001B=-110.125\)</span></p>
-<h3 id="_9"><strong>章节小结</strong></h3>
+<h3 id="_10"><strong>章节小结</strong></h3>
 <p><strong>运算类型</strong></p>
 <ul>
 <li>高级语言中除加减乘除外，还有按位、逻辑、移位、扩展与截断运算。</li>
