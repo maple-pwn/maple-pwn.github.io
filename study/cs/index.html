@@ -706,6 +706,81 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      第四章 指令系统及程序的机器级表示
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第四章 指令系统及程序的机器级表示">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 指令格式设计
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 指令系统设计
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 指令系统设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      操作数类型
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      寻址方式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      操作类型
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      操作码编码
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1159,6 +1234,81 @@
       章节小结
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      第四章 指令系统及程序的机器级表示
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第四章 指令系统及程序的机器级表示">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 指令格式设计
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 指令系统设计
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 指令系统设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      操作数类型
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      寻址方式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      操作类型
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      操作码编码
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -3055,6 +3205,192 @@ $$
 <li>步骤：<strong>对阶 → 尾数加减 → 规格化 → 舍入 → 溢出/下溢判断</strong>。</li>
 <li>特点：实现复杂，可能出现“大数吃小数”。</li>
 </ul>
+<h2 id="_11">第四章 指令系统及程序的机器级表示</h2>
+<blockquote>
+<p>在前面三章中，我们依次了解了计算机系统的整体结构、数据的机器级表示，以及数据在硬件中的运算过程，为理解计算机的工作机制打下了基础。接下来，本章“<strong>指令系统及程序的机器级表示</strong>”将视角从“数据”转向“指令”，深入探讨计算机如何通过指令来组织、控制和执行各种操作。我们将学习指令的格式、类型、寻址方式、编码风格，以及程序在机器级的表示方式，进一步理解软件如何通过指令与硬件交互，为后续更深入的体系结构内容做好准备。</p>
+</blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>本章的前几节都很水，了解即可</p>
+</div>
+<h3 id="41">4.1 指令格式设计</h3>
+<p><strong>指令地址码的个数</strong></p>
+<p>一条指令中必须显示或隐含地包含以下信息：</p>
+<ul>
+<li><strong>操作码</strong>：指定操作类型，如移位、加、减、乘、除、传送等</li>
+<li><strong>源操作数或其地址</strong>：指出源操作数所在的位置，可为主（虚）存地址、寄存器编号、I/O端口或直接给出的立即数</li>
+<li>结果的地址：指明运算结果存放的位置，同样可为主存地址、寄存器编号或I/O端口</li>
+<li><strong>下一条指令地址</strong>(可选)：通常由程序计数器（PC）自动提供，通过递增PC值获得下一条指令地址；若是转移指令，则由指令提供目标地址</li>
+</ul>
+<p>同时，根据显式给出的地址数不同，指令可以分为：</p>
+<ul>
+<li><strong>三地址指令</strong>：含源操作数1、源操作数2、结果地址</li>
+<li><strong>二地址指令</strong>：含源操作数和结果数</li>
+<li><strong>单地址指令</strong>：只含一个操作数地址</li>
+<li><strong>零地址指令</strong>：不显式给出地址（如栈操作指令）</li>
+</ul>
+<p>总而言之，<strong>指令=操作码+若干地址码</strong> ，其中地址码的个数决定了指令的类型和操作方式</p>
+<hr />
+<p><strong>指令格式设计原则</strong></p>
+<ol>
+<li><strong>指令应尽量短</strong>：指令越短，占用存储空间越小，程序执行效率越高。</li>
+<li><strong>操作码位数要充足</strong>：为支持未来指令类型扩展，需预留足够的操作码位。</li>
+<li><strong>操作码编码唯一</strong>：每个操作码必须有唯一、合法的解释，否则会触发“非法指令”异常。</li>
+<li><strong>指令长度为字节整数倍</strong>：便于存储和读取，提高寻址和取指效率。</li>
+<li><strong>合理选择地址码位数</strong>：地址码长度影响指令整体长度与结构，需要在空间和时间效率之间权衡。</li>
+<li><strong>指令格式应规范统一</strong>：如操作码位数是否固定、各字段位置是否一致等，统一的格式可简化硬件设计。</li>
+</ol>
+<h3 id="42">4.2 指令系统设计</h3>
+<p><strong>指令系统设计的基本原则总则</strong>：</p>
+<ol>
+<li><strong>完备性</strong>：指令类型应尽量齐全，能够编制各种程序。复杂功能可通过多条简单指令组合实现。</li>
+<li><strong>兼容性</strong>：新一代计算机的指令系统应兼容旧机型的指令，便于软件资源复用。</li>
+<li><strong>均匀性</strong>：运算指令应支持多种数据类型，包括不同位宽的整数和单、双精度浮点数。</li>
+<li><strong>可扩充性</strong>：操作码字段应预留一定编码空间，便于将来扩展新的指令功能</li>
+</ol>
+<hr />
+<p><strong>指令系统设计的基本问题总结</strong></p>
+<p>在设计指令系统时，需要考虑以下几个核心问题：</p>
+<ol>
+<li><strong>操作码的种类和复杂度</strong>：决定系统功能的丰富性与硬件实现难度，要在指令种类的完备性与实现成本之间平衡。</li>
+<li><strong>运算能力和数据类型</strong>：指令应支持多种数据类型（整数、字符、浮点数等）的操作，以适应不同应用需求。</li>
+<li><strong>指令格式选择</strong>：可选用固定长度或可变长度格式，需在硬件实现复杂度、指令灵活性和存储效率之间权衡。</li>
+<li><strong>通用寄存器的数量与功能</strong>：寄存器数量影响性能与成本，应在程序灵活性、CPU开销和指令长度之间取得平衡。</li>
+<li><strong>地址码和寻址方式设计</strong>：需确保操作数的寻址高效，并与指令格式和操作码编码方式相匹配。</li>
+<li><strong>下一条指令地址确定</strong>：通常由程序计数器（PC/IP）提供，顺序执行时自动递增，转移指令则由目标地址或寻址方式决定。</li>
+</ol>
+<p>总而言之，指令系统需要综合考虑功能性、通用性、效率与实现难度，做到性能和硬件复杂度的合理平衡</p>
+<hr />
+<h4 id="_12"><strong>操作数类型</strong></h4>
+<p>操作数是指令处理的对象，常见的基本类型包括：</p>
+<ol>
+<li><strong>指针或地址</strong>：用于表示主（虚）存地址</li>
+<li><strong>带符号数值数据</strong>：包括带符号整数和浮点数，整数常用二进制补码表示，浮点数多采用 IEEE 754 标准。</li>
+<li><strong>位、位串、字符串和字符</strong>：用于表示标志、控制和状态信息，也可表示文本和文件内容。</li>
+<li><strong>逻辑（布尔）数据</strong>：用于表示真假值。</li>
+</ol>
+<p>此外，还可包含专用类型数据，如段寄存器偏移地址、段内偏移地址等，用于特定的存储访问或硬件操作。不同类型的数据在表示、存储和运算方式上各不相同</p>
+<hr />
+<h4 id="_13"><strong>寻址方式</strong><img alt="⭐️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2b50.svg" title=":star:" /></h4>
+<p>通常将指令中给出的操作数所在存储单元的地址称为有效地址。存储单元地址可能是主存物理地址，也可能是虚拟地址。而指令给出操作数或操作数地址的方式称为寻址方式</p>
+<p>常见寻址方式有以下几种：</p>
+<ul>
+<li><strong>立即寻址</strong>：在指令中直接给出操作数本身，这种操作数称为立即数</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="no">ax</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="w">     </span><span class="c1">;将立即数 5 直接送入寄存器ax</span>
+</code></pre></div>
+<ul>
+<li><strong>直接寻址</strong>：指令中给出的地址码是操作数的有效地址，这种地址称为直接地址或者绝对地址</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="no">ax</span><span class="p">,[</span><span class="mi">1000</span><span class="no">H</span><span class="p">]</span><span class="w">    </span><span class="c1">;将内存 1000H 单元中的内容送入ax</span>
+</code></pre></div>
+<ul>
+<li><strong>间接寻址</strong>：指令中给出的地址码是存放操作数有效地址的存储单元的地址（理解为一个链表）</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="no">bx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">si</span><span class="p">]</span><span class="w">  </span><span class="c1">;si 中存放的是地址，取该地址除的数据送入 bx</span>
+</code></pre></div>
+<ul>
+<li><strong>寄存器寻址</strong>：操作数存放在CPU的寄存器中，由指令中的寄存器编号指定</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="no">ax</span><span class="p">,</span><span class="w"> </span><span class="no">bx</span><span class="w">        </span><span class="c1">;将寄存器 bx 内容送入 ax</span>
+</code></pre></div>
+<ul>
+<li><strong>寄存器间接寻址</strong>：寄存器中存放的是操作数的有效地址</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="no">ax</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">bx</span><span class="p">]</span><span class="w">  </span><span class="c1">;bx中存放地址，从该地址取数据送入ax</span>
+</code></pre></div>
+<ul>
+<li><strong>变址寻址</strong>：有效地址=基地址+变址寄存器内容</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="no">ax</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">si</span><span class="err">+</span><span class="mi">4</span><span class="p">]</span><span class="w">    </span><span class="c1">;有效地址=si+4，取该位置数据送入ax</span>
+</code></pre></div>
+<ul>
+<li><strong>相对寻址</strong>：有效地址=程序计数器(PC)+偏移量</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nf">jmp</span><span class="w"> </span><span class="err">+</span><span class="mi">8</span><span class="w">            </span><span class="c1">;程序计数器 PC+8 跳转到目标指令</span>
+</code></pre></div>
+<ul>
+<li><strong>基址寻址</strong>：有效地址=基址寄存器内容+偏移量</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="no">ax</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">bx</span><span class="err">+</span><span class="mi">20</span><span class="p">]</span><span class="w">    </span><span class="c1">;有效地址=bx+20,取该地址数据送入ax</span>
+</code></pre></div>
+<ul>
+<li><strong>其它寻址方式</strong>：操作数位置在指令中已隐含，无需显式指出</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nf">CLC</span><span class="w">               </span><span class="c1">;清除进位标志，不需要指定操作数</span>
+</code></pre></div>
+<hr />
+<h4 id="_14"><strong>操作类型</strong><img alt="⭐️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2b50.svg" title=":star:" /></h4>
+<p>在设计指令系统时，需要考虑系统必须支持的基本操作类型。根据功能不同，常见操作类型如下：</p>
+<p><strong>算数和逻辑运算指令</strong></p>
+<p>用于执行各种算数计算和逻辑运算，如下：</p>
+<ul>
+<li><strong>算数类</strong>：加（<code>add</code>）、减（<code>sub</code>）、乘（<code>mul</code>）、除（<code>div</code>）、取负（<code>neg</code>）、加 1（<code>inc</code>）、减 1（<code>dec</code>）等</li>
+<li><strong>逻辑类</strong>：与（<code>and</code>）、或（<code>or</code>）、非（<code>not</code>）、异或（<code>xor</code>）、比较（<code>cmp</code>）等</li>
+</ul>
+<p><strong>移位指令</strong></p>
+<p>用于对操作数进行算数移位、逻辑移位、循环移位和半字交换等操作</p>
+<ul>
+<li>常见指令如：<code>shl</code>（左移）、<code>shr</code>（右移）、<code>rol</code>（循环左移）、<code>ror</code>（循环右移）等。</li>
+</ul>
+<p><strong>传送指令</strong></p>
+<p>用于数据在寄存器、存储器和I/O设备之间的传送。常见操作如下：</p>
+<ul>
+<li>寄存器间传送：<code>mov ax, bx</code></li>
+<li>存储器 <span class="arithmatex">\(\rightarrow\)</span> 寄存器：<code>load</code></li>
+<li>寄存器 <span class="arithmatex">\(\rightarrow\)</span> 存储器：<code>store</code></li>
+<li>内存块之间传送：<code>movs</code> （块传送）</li>
+</ul>
+<p><strong>串指令</strong></p>
+<p>专门用于字符串操作，如传送、比较、搜索和块处理等</p>
+<ul>
+<li>常见指令如：<code>movs</code>（串传送）、<code>cmps</code>（串比较）、<code>scas</code>（扫描）等</li>
+</ul>
+<p><strong>顺序控制指令</strong></p>
+<p>用于控制程序执行流程</p>
+<ul>
+<li>条件转移：<code>branch</code></li>
+<li>无条件转移：<code>jmp</code>、<code>skip</code></li>
+<li>子程序调用与返回：<code>call</code>、<code>ret</code></li>
+</ul>
+<p><strong>CPU控制指令</strong></p>
+<p>用于管理 CPU 的运行状态、控制系统行为</p>
+<ul>
+<li>常见操作：开机、关机、开/关中断、切换处理模式、特权操作等</li>
+</ul>
+<p><strong>输入输出指令</strong></p>
+<p>用于 CPU 与外设之间的数据交换和控制</p>
+<p>常见指令：</p>
+<ul>
+<li>输入：<code>in</code>(从I/O端口读取数据)</li>
+<li>输出：<code>out</code>(从I/O端口)</li>
+</ul>
+<h4 id="_15">操作码编码</h4>
+<p>操作码编码是指令设计中的重要内容，决定了指令系统的可扩展性和实现效率。根据操作字段长度是否固定，常见的两种编码方式如下：</p>
+<p><strong>定长操作码编码</strong>：</p>
+<ul>
+<li><strong>定义</strong>：操作码字段长度固定，译码简单，执行速度快。</li>
+<li><strong>优点</strong>：硬件实现容易、译码速度快。</li>
+<li><strong>缺点</strong>：编码空间利用率低，可能浪费指令码。</li>
+<li><strong>举例</strong>：如 IBM 360/370 使用 8 位操作码，最多可表示 256 条指令。</li>
+</ul>
+<p><strong>扩展操作码编码</strong>：</p>
+<ul>
+<li><strong>定义</strong>：操作码长度可变，通常根据指令类型和地址数进行扩展。</li>
+<li><strong>优点</strong>：编码灵活，空间利用率高，适合大规模指令系统。</li>
+<li><strong>缺点</strong>：译码复杂，执行速度略慢。</li>
+<li><strong>方法</strong>：可采用等长扩展（如 4-8-12 位）或不等长扩展方式。</li>
+<li><strong>思路</strong>：先分配较短操作码给常用指令，较长操作码给复杂指令，提高利用率。</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>例题：</strong> 设某指令系统的指令字为 16 位，每个地址码为 6 位。若有二地址指令 15 条，单地址指令 34 条，则剩下的零地址指令最多有多少条？</p>
+<p><strong>解</strong>：</p>
+<p>扩展编码的基本思想就是操作码按从短到长进行扩展编码。二地址指令操作码最短，零地址指令的操作码最长，因此按照 二地址 <span class="arithmatex">\(\rightarrow\)</span> 单地址 <span class="arithmatex">\(\rightarrow\)</span> 零地址的顺序编码</p>
+<p>二地址地址指令的地址码部分占 6+6=12 位，故操作码只有 16-12=4 位，最多有 16 种编码，用 15 种编码表示15条指令，还剩一个编码未用</p>
+<p>单地址指令地址码部分占6位，所以操作码有 16-6=10 位，最高位为 1111，还剩 6 位未编码，最多可以有 <span class="arithmatex">\(2^6=64\)</span> 种编码，用其中的 <span class="arithmatex">\(32+2=34\)</span> 种编码(<span class="arithmatex">\(11110\;00000\sim 11110\;11111\)</span> 和 <span class="arithmatex">\(11111\;00000\sim 11111\;00001\)</span> ) 分别表示 34 条单地址指令，还剩30种编码可用于下一个指令</p>
+<p>剩下的零地址指令共有 16 位操作码，其中高 5 位只能是 <span class="arithmatex">\(11111\)</span> 且随后的 5 位不能是 <span class="arithmatex">\(00000\)</span> 和 <span class="arithmatex">\(00001\)</span> ，因此剩下的零地址指令的操作码编码范围为 <span class="arithmatex">\(11111(00010\sim 11111)(000000\sim 111111)\)</span>，即高 5 位固定为 11111，随后 5 位为 <span class="arithmatex">\(00010\sim 11111\)</span>,低 6 位为 <span class="arithmatex">\(000000\sim 111111\)</span>。因此零地址指令最多有 <span class="arithmatex">\(30\times2^6\)</span> 种编码可用</p>
+</div>
 
 
 
