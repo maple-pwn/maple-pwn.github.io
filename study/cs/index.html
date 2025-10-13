@@ -771,8 +771,44 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      标志信息的生成与使用
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      指令系统设计风格
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      异常和中断处理
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-risc-v" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 RISC-V 架构及程序的机器级表示
+    </span>
+  </a>
   
 </li>
         
@@ -1307,8 +1343,44 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      标志信息的生成与使用
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      指令系统设计风格
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      异常和中断处理
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-risc-v" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 RISC-V 架构及程序的机器级表示
+    </span>
+  </a>
   
 </li>
         
@@ -3391,6 +3463,265 @@ $$
 <p>单地址指令地址码部分占6位，所以操作码有 16-6=10 位，最高位为 1111，还剩 6 位未编码，最多可以有 <span class="arithmatex">\(2^6=64\)</span> 种编码，用其中的 <span class="arithmatex">\(32+2=34\)</span> 种编码(<span class="arithmatex">\(11110\;00000\sim 11110\;11111\)</span> 和 <span class="arithmatex">\(11111\;00000\sim 11111\;00001\)</span> ) 分别表示 34 条单地址指令，还剩30种编码可用于下一个指令</p>
 <p>剩下的零地址指令共有 16 位操作码，其中高 5 位只能是 <span class="arithmatex">\(11111\)</span> 且随后的 5 位不能是 <span class="arithmatex">\(00000\)</span> 和 <span class="arithmatex">\(00001\)</span> ，因此剩下的零地址指令的操作码编码范围为 <span class="arithmatex">\(11111(00010\sim 11111)(000000\sim 111111)\)</span>，即高 5 位固定为 11111，随后 5 位为 <span class="arithmatex">\(00010\sim 11111\)</span>,低 6 位为 <span class="arithmatex">\(000000\sim 111111\)</span>。因此零地址指令最多有 <span class="arithmatex">\(30\times2^6\)</span> 种编码可用</p>
 </div>
+<h4 id="_16">标志信息的生成与使用</h4>
+<p><strong>标志信息的基本概念</strong></p>
+<p>在程序执行过程中，<strong>条件转移指令(也可以叫做分支指令)</strong> 会根据 CPU 当前生成的 <strong>标志信息</strong> 决定转移条件。标志信息也常称为：</p>
+<ul>
+<li>条件码(CC)</li>
+<li>状态位(status)</li>
+</ul>
+<p>这些标志反映了上一条算数或逻辑指令的执行结果，用于判断程序下一步的执行流向</p>
+<hr />
+<p><strong>常见标志位及含义</strong></p>
+<table>
+<thead>
+<tr>
+<th>标志位</th>
+<th>英文缩写</th>
+<th>含义</th>
+<th>设置条件举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ZF</td>
+<td>Zero Flag</td>
+<td>零标志：结果为 0 时，置 1</td>
+<td>比较或减法结果为 0</td>
+</tr>
+<tr>
+<td>SF</td>
+<td>Sign Flag</td>
+<td>符号标志：结果为负数时，置 1</td>
+<td>算术结果最高位为 1</td>
+</tr>
+<tr>
+<td>CF</td>
+<td>Carry Flag</td>
+<td>进位/借位标志：有进/借位时，置 1</td>
+<td>无符号运算溢出</td>
+</tr>
+<tr>
+<td>OF</td>
+<td>Overflow Flag</td>
+<td>溢出标志：有符号溢出时，置 1</td>
+<td>有符号数加减超出范围</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>标志位的使用方式</strong></p>
+<p>一般有两种使用方式</p>
+<ol>
+<li>由条件转移指令直接读取标志位判断是否跳转</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="nf">cmp</span><span class="w"> </span><span class="no">r1</span><span class="p">,</span><span class="w"> </span><span class="no">r2</span><span class="w">       </span><span class="c1">; 比较 r2 和 r3，标志位存储在 r1 中</span>
+<span class="nf">je</span><span class="w">  </span><span class="no">label</span><span class="w">        </span><span class="c1">; 若 ZF=1（相等）则跳转</span>
+</code></pre></div>
+<ol>
+<li>利用计算并转移类指令</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="nf">bgt</span><span class="w"> </span><span class="no">r1</span><span class="p">,</span><span class="w"> </span><span class="no">r2</span><span class="p">,</span><span class="w"> </span><span class="no">label</span><span class="w">    </span><span class="c1">; 若 r1 &gt; r2 则跳转</span>
+</code></pre></div>
+<hr />
+<p><strong>IA-32常用条件转移指令</strong></p>
+<p><img alt="image-20251012195545590" src="../../images/image-20251012195545590.png" /></p>
+<hr />
+<h4 id="_17">指令系统设计风格</h4>
+<p><strong>一、按照操作数位置指定风格</strong></p>
+<p>根据操作数在指令中的位置不同，指令系统可以分为以下四种设计风格</p>
+<ol>
+<li>
+<p>累加器(AC)型指令系统：操作数隐含地包含在累加器(AC)中，运算结果也存回累加器</p>
+</li>
+<li>
+<p>栈(Stack)型指令系统：使用后入先出地存储结构，操作数在栈顶，运算时自动出栈入栈</p>
+</li>
+<li>
+<p>通用寄存器(GPR)型：操作数不在累加器或栈，而在通用寄存器或存储器中</p>
+<p>按操作数位置分为：</p>
+<ul>
+<li>RR型：两操作数均为寄存器</li>
+<li>RS型：一为寄存器，一位存储器</li>
+<li>SS型：两操作数均为存储器或立即数</li>
+</ul>
+</li>
+<li>
+<p>Load/Store 型指令系统：运算只能在寄存器之间进行，存储器只能通过Load/Store访问</p>
+</li>
+</ol>
+<p><strong>二、按指令格式的复杂度分类</strong></p>
+<p>指令系统按照复杂度还可以如下分类：</p>
+<p><strong>1) CISC(复杂指令集计算机)</strong></p>
+<p>通过丰富的复杂指令实现“高层语言-&gt;硬件”功能映射，减少程序长度和开发难度</p>
+<p>优点：</p>
+<ul>
+<li>功能强大，支持高级语言特性</li>
+<li>程序体积小，汇编简化</li>
+</ul>
+<p>缺点:</p>
+<ul>
+<li>硬件结构复杂，指令周期长</li>
+<li>编译器优化困难，20% 指令使用率占 80% 时间，效率低</li>
+</ul>
+<p>代表：x86系列，VAX等</p>
+<p><strong>2) RISC(精简指令集计算机)</strong></p>
+<p>通过简化指令集提高执行效率、优化流水线</p>
+<p>特征：</p>
+<ul>
+<li>指令数少：以简单、高频指令为主</li>
+<li>固定格式：操作码和操作数长度固定，解码快</li>
+<li>Load/Store结构：运算仅在寄存器之间进行</li>
+<li>流水线执行：简化控制逻辑，提升时钟频率</li>
+<li>大量寄存器：减少访存，提高效率</li>
+<li>硬连线控制：逻辑简单，微程序控制可省略</li>
+<li>编译优化好：便于编译器调度和重排</li>
+</ul>
+<hr />
+<h4 id="_18">异常和中断处理</h4>
+<p><strong>一、概念</strong></p>
+<p><strong>异常</strong> 和 <strong>中断</strong> 并不是指令，而是指计算机系统结构必须考虑的重要内涵。当程序正常执行过程中，CPU 可能遇到无法继续执行的事件或外部请求，这类事件主要分为两类：</p>
+<ul>
+<li>异常：由CPU内部产生的意外事件</li>
+<li>中断：由CPU外部设别产生的请求</li>
+</ul>
+<p>在 IA-32 架构中，异常和中断的说法如下：</p>
+<ul>
+<li>异常：执行某条指令是 CPU 内部检测到的同步事件</li>
+<li>中断：I/O设备等外部异步触发事件</li>
+</ul>
+<hr />
+<p><strong>二、异常</strong></p>
+<p>异常是指令执行过程中由 <strong>CPU内部</strong> 检测到的事件，如：</p>
+<ul>
+<li>除零溢出</li>
+<li>断点设置</li>
+<li>单步跟踪</li>
+<li>访问越界</li>
+<li>非法操作码</li>
+<li>栈溢出、缺页、保护错误等</li>
+</ul>
+<p>同时，根据异常产生方式和返回方式不同，内部异常分为三类</p>
+<table>
+<thead>
+<tr>
+<th>内部异常</th>
+<th>含义</th>
+<th>操作</th>
+<th>例子</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>故障</td>
+<td>在指令执行前被检测到的异常</td>
+<td>执行中止，系统将异常信息送出，并返回到引发故障的指令继续执行</td>
+<td>非法操作码、除零、缺页异常、保护错误</td>
+<td>可以通过异常处理恢复程序执行</td>
+</tr>
+<tr>
+<td>自陷</td>
+<td>类似于“断点”，是一种预先安排的异常，用于程序调试或系统调用</td>
+<td>程序执行到某条“陷阱指令”时，CPU 自动触发相应的处理程序；处理结束后返回到陷阱指令的下一条指令继续执行</td>
+<td>单步跟踪，条件断点，系统调用陷阱</td>
+<td></td>
+</tr>
+<tr>
+<td>终止</td>
+<td>表示发生了严重错误</td>
+<td>程序无法恢复，无法确定异常对应哪条指令</td>
+<td>硬件故障、访问非法内存、DRAM 出错、SRAM 校验失败</td>
+<td>程序无法继续，只能终止或重启系统</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>三、中断</strong></p>
+<p>中断是指令执行期间，由 CPU 外部设备 触发的事件，要求 CPU 暂停当前程序，转而处理外部事件。</p>
+<blockquote>
+<p>例如：I/O完成信号、定时器中断、键盘输入、外设数据传输完成</p>
+</blockquote>
+<p>工作流程如下</p>
+<ol>
+<li>程序运行时检测到外部事件，CPU 发出中断请求（INTR 或 NMI）。</li>
+<li>CPU 保存当前程序状态（如下一条指令地址等）。</li>
+<li>跳转到中断服务程序（ISR）执行。</li>
+<li>处理结束后返回原程序继续执行。</li>
+</ol>
+<hr />
+<p><strong>四、中断处理机制</strong></p>
+<p><strong>中断的触发与响应</strong></p>
+<ul>
+<li>I/O设备触发-&gt;CPU接收中断请求</li>
+<li>CPU检测中断许可位（“中断允许”/“关中断”）</li>
+<li>若允许中断，则进入中断处理流程</li>
+</ul>
+<p><strong>中断处理流程</strong></p>
+<p>中断处理流程可分为 <strong>硬件完成部分</strong> 和 <strong>软件完成部分</strong></p>
+<ul>
+<li>硬件部分：检测和响应中断；保存当前执行环境；跳转到中断入口</li>
+<li>软件部分：执行中断服务程序(ISR)；保护/恢复必要状态；根据需要重新启用中断；返回原程序继续执行</li>
+</ul>
+<blockquote>
+<p>注意：若中断发生时未保存好程序现场，将无法正确返回原程序</p>
+</blockquote>
+<hr />
+<p><strong>五、设计要求与注意事项</strong></p>
+<p>CPU 指令集结构必须对以下方面作出明确规定：</p>
+<ul>
+<li>异常/中断的分类与定义</li>
+<li>自陷指令与陷阱处理方式</li>
+<li>中断允许位的控制机制</li>
+<li>异常/中断源的识别与记录</li>
+<li>异常入口、断点信息、上下文的保存</li>
+<li>异常/中断处理过程中的软硬件协作</li>
+</ul>
+<hr />
+<p>小总结</p>
+<table>
+<thead>
+<tr>
+<th>分类</th>
+<th>来源</th>
+<th>特点</th>
+<th>返回位置</th>
+<th>常见场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>故障（Fault）</strong></td>
+<td>CPU 内部</td>
+<td>执行前检测</td>
+<td>出错指令</td>
+<td>非法操作码、除零、缺页</td>
+</tr>
+<tr>
+<td><strong>自陷（Trap）</strong></td>
+<td>程序预设</td>
+<td>执行时触发</td>
+<td>下一条指令</td>
+<td>单步调试、系统调用</td>
+</tr>
+<tr>
+<td><strong>终止（Abort）</strong></td>
+<td>严重错误</td>
+<td>无法恢复</td>
+<td>无法返回</td>
+<td>硬件损坏、内存校验失败</td>
+</tr>
+<tr>
+<td><strong>中断（Interrupt）</strong></td>
+<td>外部设备</td>
+<td>异步触发</td>
+<td>中断返回点</td>
+<td>I/O 完成、定时器、键盘输入</td>
+</tr>
+</tbody>
+</table>
+<h3 id="43-risc-v">4.3 RISC-V 架构及程序的机器级表示</h3>
+<p>本节内容的话，我的建议是打打pwn，书上写的太烂了，以至于不知道笔记怎么整理了</p>
 
 
 
