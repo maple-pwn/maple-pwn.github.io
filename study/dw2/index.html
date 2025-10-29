@@ -1,0 +1,1435 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://maple-pwn.github.io/study/dw2/">
+      
+      
+        <link rel="prev" href="../dw/">
+      
+      
+        <link rel="next" href="../lisan/">
+      
+      
+      <link rel="icon" href="../../images/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>大学物理(十四、十五章) - Maple's blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../resources/css/extra.css">
+    
+      <link rel="stylesheet" href="../../resources/css/tittle.css">
+    
+      <link rel="stylesheet" href="../../resources/css/leftsidebar.css">
+    
+      <link rel="stylesheet" href="https://static.zeoseven.com/zsft/292/main/result.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Maple&#39;s blog" class="md-header__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Maple's blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              大学物理(十四、十五章)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../dw/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  校内学习相关记录
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../testpage/test/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  功能测试页
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Maple&#39;s blog" class="md-nav__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    Maple's blog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    校内学习相关记录
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            校内学习相关记录
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    大学物理(十二、十三章)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    大学物理(十四、十五章)
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    大学物理(十四、十五章)
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      十四、电磁感应
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="十四、电磁感应">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141" class="md-nav__link">
+    <span class="md-ellipsis">
+      14.1 电磁感应的基本定律
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142" class="md-nav__link">
+    <span class="md-ellipsis">
+      14.2 动生电动势
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#143" class="md-nav__link">
+    <span class="md-ellipsis">
+      14.3 感生电动势 感生电场
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#144" class="md-nav__link">
+    <span class="md-ellipsis">
+      14.4 自感与互感
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.4 自感与互感">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      自感
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      互感
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#145" class="md-nav__link">
+    <span class="md-ellipsis">
+      14.5 磁场的能量
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      十五、电磁场与电磁波
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lisan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    离散数学
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    计算机组成原理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    数字逻辑
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../asm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    汇编速通
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    功能测试页
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            功能测试页
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testpage/test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    test
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      十四、电磁感应
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="十四、电磁感应">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141" class="md-nav__link">
+    <span class="md-ellipsis">
+      14.1 电磁感应的基本定律
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142" class="md-nav__link">
+    <span class="md-ellipsis">
+      14.2 动生电动势
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#143" class="md-nav__link">
+    <span class="md-ellipsis">
+      14.3 感生电动势 感生电场
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#144" class="md-nav__link">
+    <span class="md-ellipsis">
+      14.4 自感与互感
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.4 自感与互感">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      自感
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      互感
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#145" class="md-nav__link">
+    <span class="md-ellipsis">
+      14.5 磁场的能量
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      十五、电磁场与电磁波
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>大学物理(十四、十五章)</h1>
+
+<h2 id="_1">十四、电磁感应</h2>
+<p>本章将讨论电磁感应现象的基本规律、动生电动势和感生电动势、自感与互感现象，最后讨论磁场的能量问题</p>
+<h3 id="141">14.1 电磁感应的基本定律</h3>
+<p><mark>电磁感应现象</mark></p>
+<p>总结为一句话：<strong>当穿过闭合导体回路的磁通量发生变化时，闭合导体回路中就会出现电流</strong> 。</p>
+<p>其中，所产生的电流被称为 <strong>感应电流</strong>。在回路中出现电流，说明回路中有电动势存在，在回路中由于磁通量的变化而引起的电动势称为 <strong>感应电动势</strong></p>
+<hr />
+<p><mark>法拉第电磁感应定律</mark></p>
+<p>总结为一句话：<strong>当穿过回路所包围面积的磁通量发生变化时，回路中产生的感应电动势的大小与穿过回路的磁通量对时间的变化率成正比</strong> 。公式如下：
+$$
+\boxed{
+\varepsilon_i=-\dfrac{\mathrm{d}\Phi_m}{\mathrm{d}t}
+}
+\tag{14-1-1}
+$$
+其中负号反映了感应电动势的方向与磁通量变化之间的关系</p>
+<hr />
+<p><mark>楞次定律</mark></p>
+<blockquote>
+<p>本定律是用来判断感应电流方向的定律</p>
+</blockquote>
+<p>总结为一句话，即：<strong>闭合回路中感应电流的方向，总是使得感应电流所激发的磁场阻碍引起感应电流的磁通量的变化</strong></p>
+<p>如下图所示，我们规定与绕行方向成右手螺旋关系的磁通量为正，反之为负；</p>
+<ul>
+<li>当穿过闭合回路包围面积的磁通量增加时，感应电动势 <span class="arithmatex">\(\varepsilon_i &lt; 0\)</span>，这表明此时感应电动势的方向与L绕行方向相反</li>
+<li>当穿过闭合回路包围面积的磁通量减少时，感应电动势 <span class="arithmatex">\(\varepsilon_i &gt; 0\)</span>，这表明此时感应电动势的方向和L的绕行方向相同</li>
+</ul>
+<p><img alt="image-20251028195405326" src="../../images/image-20251028195405326.png" /></p>
+<hr />
+<p>此外，回路中感应电流只与 <strong>穿过回路的磁通量对时间的变化率</strong> 有关系，而与 <strong>穿过回路的磁通量</strong> 及 <strong>回路的材料</strong> 无关</p>
+<p>另外，由于磁通量通常是空间位置和时间的函数，因此磁通量对时间的一阶导数通常也应是空间位置和时间的函数， <mark>只有当位置和时间唯一确定后</mark>，线圈中的感应电动势才有确定的值</p>
+<p>例如，如果在闭合回路中电阻为 <span class="arithmatex">\(R\)</span> ，则回路中感应电流为</p>
+<div class="arithmatex">\[
+I_i=\dfrac{\varepsilon_i}{R}=-\dfrac{1}{R}\dfrac{\mathrm{d}\Phi_m}{\mathrm{d}t}
+\]</div>
+<p>在 <span class="arithmatex">\(t1\)</span> 到 <span class="arithmatex">\(t2\)</span> 这段时间内，通过回路任一截面的感应电量为</p>
+<div class="arithmatex">\[
+q_i=\int_{t_{1}}^{t_2}{I_i}\mathrm{d}t=-\dfrac{1}{R}\int_{\Phi_1}^{\Phi_2}\mathrm{d}\Phi_m=-\dfrac{1}{R}(\Phi_{m2}-\Phi_{m1})
+\]</div>
+<p>此式表明，在 <span class="arithmatex">\(t_1\)</span> 到 <span class="arithmatex">\(t_2\)</span> 这段时间内感应电量仅与回路中磁通量的变化量成正比，而与磁通量变化的快慢无关。</p>
+<p><mark>如果从实验中测出电阻R和通过回路界面的感应电量为 <span class="arithmatex">\(q_i\)</span> ,就可以计算出磁通量变化量</mark></p>
+<hr />
+<p>在实际情况中，线圈大多由许多匝串联而成，在这种情况下，整个线圈中产生的感应电动势应该是每匝线圈中产生的感应电动势之和</p>
+<p>我们取穿过各匝线圈的磁通量为 <span class="arithmatex">\(\Phi_{m1}，\Phi_{m2}，\cdots，\Phi_{mn}\)</span> 时，总电动势为
+$$
+\begin{align}
+\varepsilon_i&amp;=-\dfrac{\mathrm{d}}{\mathrm{d}t}(\Phi_{m1}+\Phi_{m2}+\cdots+\Phi_{mn})\
+&amp;=-\dfrac{\mathrm{d}}{\mathrm{d}t}(\sum_{i=1}^{n}\Phi_{mi})\
+&amp;=-\dfrac{\mathrm{d}\psi}{\mathrm{d}t}
+\end{align}
+$$
+其中，我们令 <span class="arithmatex">\(\psi=\sum_{i=1}^{n}\Phi_{mi}\)</span> 是穿过各匝线圈的磁通量的总和，称为 <strong>穿过线圈的全磁通</strong></p>
+<p>当穿过各匝线圈的磁通量相等时，N匝线圈中的全磁通为 <span class="arithmatex">\(\psi=N\Phi_m\)</span> ，称为 <strong>磁链</strong></p>
+<p>此时，公式变化为
+$$
+\varepsilon_i=-\dfrac{\mathrm{d}\psi}{\mathrm{d}t}=-N\dfrac{\mathrm{d}\Phi_m}{\mathrm{d}t}
+$$
+在国际单位制中， <span class="arithmatex">\(\Phi_m\)</span> 或 <span class="arithmatex">\(\psi\)</span> 的单位为韦伯(Wb)，<span class="arithmatex">\(\varepsilon_i\)</span> 的单位为伏特（V）</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>例题：设有一无铁芯的螺绕环，单位长度上匝数为每米5000匝，螺绕环的截面积 <span class="arithmatex">\(S=2\times10^{-3}\)</span>，金属导线的两端和电源及可变电阻串联称闭合电路，在环上再绕一线圈A，其匝数N=5匝，电阻为 <span class="arithmatex">\(R=2\Omega\)</span> ，调节可变电阻R使通过螺绕环的电流I每秒减少20A，求(1)线圈A中产生的感应电动势 <span class="arithmatex">\(\varepsilon_i\)</span> 及感应电流 <span class="arithmatex">\(I_i\)</span> ;(2) 2 s内通过线圈 A 的感应电荷量 <span class="arithmatex">\(q_i\)</span></p>
+<hr />
+<p>(1)螺绕环截面积很小，可认为磁场全部集中在环内，而且是均匀磁场，故有</p>
+<div class="arithmatex">\[
+B=\mu_0nI
+\]</div>
+<p>线圈A所包围的面积上只有螺绕环的截面部分有磁场，故通过线圈A的磁通量 <span class="arithmatex">\(\Phi_m\)</span> 为</p>
+<div class="arithmatex">\[
+\Phi_m=BS=\mu_0nIS
+\]</div>
+<p>线圈A中的感应电动势为</p>
+<div class="arithmatex">\[
+\varepsilon_i=-N\dfrac{\mathrm{d}\Phi_m}{\mathrm{d}t}=-\mu_0nNS\dfrac{\mathrm{d}I}{\mathrm{d}t}
+\]</div>
+<p>将数值带入，我们可以得到 <span class="arithmatex">\(\varepsilon_i=1.26\times10^{-3}\mathrm{V}\)</span></p>
+<p>线圈A中感应电流为 <span class="arithmatex">\(I_i=\dfrac{\varepsilon_i}{R}=6.3\times 10^{-4}\mathrm{A}\)</span></p>
+<hr />
+<p>(2)在2s内通过线圈A截面的感应电荷量 <span class="arithmatex">\(q_i\)</span> 为</p>
+<div class="arithmatex">\[
+\begin{align}
+q_i&amp;=\int_{t_1}^{t_2}I_i\mathrm{d}t=6.3\times10^{-4}\times2\mathrm{C} \\
+&amp;=1.26\times10^{-3}\mathrm{C}
+\end{align}
+\]</div>
+</div>
+<h3 id="142">14.2 动生电动势</h3>
+<blockquote>
+<p>可以注意到，上一个例题中，电磁感应现象的产生使因为磁场的变化引起的。那么当线圈相对于磁场做相对运动时，同样会产生电磁感应现象。</p>
+</blockquote>
+<p>我们将在恒定磁场中，由于导体回路或一段导线相对于磁场运动是产生的感应电动势称为 <strong>动生电动势</strong>，而将导体回路固定不动时，仅由于磁场的变化产生的感应电动势称为 <strong>感生电动势</strong>。我们接下来讨论的为 <strong>动生电动势</strong></p>
+<hr />
+<p><mark>动生电动势的产生原因</mark></p>
+<p>我们可以假设一段长为 L 的导体ab在均匀磁场B中平动时，导体ab中产生动生电动势的物理过程。</p>
+<p><img alt="image-20251028214424929" src="../../images/image-20251028214424929.png" /></p>
+<p>如上图所示：导体ab以速度v沿垂直于B的方向运动，导体中的自由电子将随导体以同样的速度v一起运动，每个电子受到 <strong>方向向上的洛伦兹力 <span class="arithmatex">\(\vec{F_m}\)</span></strong> 为
+$$
+\vec{F_m}=-e\vec{v}\times\vec{B}
+$$
+自由电子在该力的作用下，由于导体表面的约束，只能沿导体向上运动，结果在a端积累负电荷，在b端积累正电荷，从而在导体中产生由b指向a的静电场 <span class="arithmatex">\(\vec{E}\)</span> 。这样，每个电子还要受到 <strong>方向向下的静电场力 <span class="arithmatex">\(\vec{F_e}\)</span></strong> 的作用，即
+$$
+\vec{F_e}=-e\vec{E}
+$$
+当导体两端的电荷累积到一定程度时，<span class="arithmatex">\(\vec{F_m}\)</span> 与 <span class="arithmatex">\(\vec{F_e}\)</span> 达到平衡，导体内自由电子达到动态平衡不再有宏观定向运动，这时运动导体 ab 相当于一个电源， a端为负极，电势较低，b端为正极，电势较高</p>
+<p>作用在电子上的洛伦兹力就是一种非静电力，洛伦兹力在运动导体中克服静电力 <span class="arithmatex">\(\vec{F_e}\)</span> 做功，将正电荷由a端通过电源内部搬运到b端，则单位正电荷所受的非静电力即 <strong>非静电场强 <span class="arithmatex">\(\vec{E_K}\)</span></strong> 为</p>
+<div class="arithmatex">\[
+\vec{E_K}=\dfrac{\vec{F_m}}{-e}=\dfrac{-e(\vec{v}\times\vec{B})}{-e}=\vec{v}\times\vec{B}
+\]</div>
+<p>那么再根据电动势的定义，我们可以计算 <strong>运动导体ab上的动生电动势</strong> 为</p>
+<div class="arithmatex">\[
+\varepsilon_i=\int_{-}^{+}\vec{E_K}\cdot\mathrm{d}\vec{l}=\int_a^b(\vec{v}\times\vec{B})\cdot\mathrm{d}\vec{l}
+\]</div>
+<p>接下来，由于 <span class="arithmatex">\(\vec{v}\perp\vec{B}\)</span> ，若导体 ab 上所选取的线元 <span class="arithmatex">\(\mathrm{d}\vec{l}\)</span> 方向与 <span class="arithmatex">\(\vec{v}\times\vec{B}\)</span> 方向一致，那么上式可继续化简如下</p>
+<div class="arithmatex">\[
+\varepsilon_i=\int_a^b(\vec{v}\times\vec{B})\cdot\mathrm{d}\vec{l}=\int_0^LvB\mathrm{d}l=BLv
+\]</div>
+<blockquote>
+<p>这下看懂了</p>
+</blockquote>
+<p>在此式中，<span class="arithmatex">\(Lv\)</span> 为导体 ab 在单位时间内扫过的面积。由此可见，动生电动势也等于运动导体在单位时间内切割的磁感应线数</p>
+<hr />
+<p><mark>对于非均匀磁场中任意形状的金属导线，以及金属导线上各部分的运动速度不完全相同时的一般情况</mark></p>
+<p>我们取一段以速度 <span class="arithmatex">\(\vec{v}\)</span> 运动的导线元 <span class="arithmatex">\(\mathrm{d}\vec{l}\)</span> ，设其所在的磁场为 <span class="arithmatex">\(\vec{B}\)</span> ，根据上面的分析，我们可以首先求得导线元 <span class="arithmatex">\(\mathrm{d}\vec{l}\)</span> 上产生的动生电动势为
+$$
+\mathrm{d}\varepsilon_i=(\vec{v}\times{\vec{B}})\cdot\mathrm{d}\vec{l}
+$$
+整个导体的动生电动势积分即可</p>
+<p>那么如果导线回路是闭合的，且整个闭合回路都在磁场中运动，那么回路中各段均能产生动生电动势。此时，整个闭合回路中的动生电动势为
+$$
+\varepsilon_i=\oint\mathrm{d}\varepsilon_i=\oint(\vec{v}\times\vec{B})\cdot\mathrm{d}\vec{l}
+$$</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>按照惯例，来一道例题</p>
+<p><strong>例：</strong> 如下图所示，铜棒OA长L=0.5m，处在方向垂直纸面向内的匀强磁场B=0.01T中，沿逆时针方向绕O轴转动，角速度为 <span class="arithmatex">\(\omega=100\pi\;\mathrm{rad}\cdot\mathrm{s^{-1}}\)</span>,求铜棒中的动生电动势，若是半径为 <span class="arithmatex">\(R=0.5\mathrm{m}\)</span> 的铜盘绕O轴转动，则盘心O点和通判边缘之间的电势差为多少</p>
+<p><strong>解：</strong> 由于铜棒上各段速度大小不同，因此不能直接用 <span class="arithmatex">\(BLv\)</span> 解决。在铜棒上取一线元 <span class="arithmatex">\(\mathrm{d}\vec{l}\)</span> ，认为 <span class="arithmatex">\(\mathrm{d}\vec{l}\)</span> 上速度大小相等，为 <span class="arithmatex">\(v=\omega l\)</span>,则 <span class="arithmatex">\(\mathrm{d}\vec{l}\)</span> 上产生的动生电动势为</p>
+<div class="arithmatex">\[
+\mathrm{d}\varepsilon_i=(\vec{v}\times\vec{B})\cdot\mathrm{d}\vec{l}=vB\mathrm{d}l
+=l\omega B\mathrm{d}l
+\]</div>
+<p>其中 <span class="arithmatex">\(\mathrm{d}\vec{l}\)</span> 方向选在 <span class="arithmatex">\(\vec{v}\times\vec{B}\)</span> 的方向，则整个铜棒上产生的动生电动势可积分得</p>
+<div class="arithmatex">\[
+\varepsilon_i=\int\mathrm{d}\varepsilon_I=\int_0^Ll\omega B\mathrm{d}l=\dfrac{1}{2}L^2\omega{B}
+\]</div>
+<p>带入数值即可，O为正极，A为负极</p>
+</div>
+<h3 id="143">14.3 感生电动势  感生电场</h3>
+<p>接下来讨论感生电动势的物理规律</p>
+<p>一个静止的导体或导体回路，当它所在处的磁场发生变化时，穿过它的磁通量也会发生变化，这时导体或导体回路中也会产生感应电动势，这样产生的电动势称为感生电动势</p>
+<blockquote>
+<p>我们这里所说的磁场发生变化，其原因可能是磁场源的运动或通电导线中电流大小的变化</p>
+</blockquote>
+<hr />
+<p><mark>感生电动势产生的原因</mark></p>
+<p>上一节中，我们在讨论动生电动势时提到，产生动生电动势的非静电力时洛伦兹力。那么在导体或导体回路静止的情况下，感生电动势是怎么产生的呢？</p>
+<p>这时的感应电流是由原来静止的电荷收到非静电力作用而形成的，而静止电荷受到的力只能是电场力，因此这时的非静电力本质应该是 <strong>电场力</strong> 。而这种电场是由变化的磁场引起的，麦克斯韦将这种磁场称为 <strong>感生电场</strong>（又称为 <strong>涡旋电场</strong>）。</p>
+<p>表述如下：<strong>变化的磁场在闭合导体中激发了一种电场，这种电场称为感生电场，感生电流的产生就是这一电场作用于导体中自由电荷的结果</strong>。并加以推广：<strong>不管有无导体存在，变化的磁场总是在空间激发电场</strong></p>
+<hr />
+<p><mark>感生电场的环路定理</mark></p>
+<p>若 <span class="arithmatex">\(F_i=qE_i\)</span> 是形成回路中感生电动势的非静电力，则非静电场强 <span class="arithmatex">\(E_K=E_i\)</span></p>
+<p>我们取感生电场为 <span class="arithmatex">\(\vec{E_i}\)</span> ，一段棒元为 <span class="arithmatex">\(\mathrm{d}\vec{l}\)</span></p>
+<p>由电动势定义，由于磁场的变化，则 <strong>在导线ab上产生的感生电动势</strong> 为
+$$
+\boxed{
+\varepsilon_i=\int_a^b\vec{E_i}\cdot\mathrm{d}\vec{l}
+}
+\tag{14-3-1}
+$$
+而在 <strong>闭合导体回路L上产生的感生电动势</strong> 为 
+$$
+\boxed{\varepsilon_i=\oint_L\vec{E_i}\cdot\mathrm{d}\vec{l}}
+\tag{14-3-2}
+$$
+再由法拉第电磁感应定律推导
+$$
+\varepsilon_i=-\dfrac{\mathrm{d}\Phi_m}{\mathrm{d}t}
+=-\dfrac{\mathrm{d}}{\mathrm{d}t}\int_S\vec{B}\cdot\mathrm{d}\vec{S}
+\tag{14-3-3}
+$$
+又由于回路L是静止的，其形状和面积不随时间变化，而一般情况下磁感应强度 <span class="arithmatex">\(\vec{B}\)</span> 又是空间位置和时间 t 的函数，因此又上面两个式子可以推导如下
+$$
+\boxed{
+\varepsilon_i
+=\oint_L\vec{E_i}\cdot\mathrm{d}\vec{l}
+=-\iint_S\dfrac{\partial\vec{B}}{\partial{t}}\cdot\mathrm{d}\vec{S}
+}
+\tag{14-3-4}
+$$
+此式即为感生电场的环路定理。式子中曲面积分的区域S是以回路L为边界。当选定了面积的发现方向后，环路的绕向与面积的法向成右手螺旋关系时为正</p>
+<p>不过教材中似乎隐含了磁场分量方向，将向量的面积积分简化为标量面积积分的形式，如下
+$$
+\boxed{
+\varepsilon_i
+=\oint_LE_i\cdot\mathrm{d}l
+=-\int_S\dfrac{\partial B}{\partial{t}}\cdot\mathrm{d}S
+}
+\tag{14-3-5}
+$$</p>
+<hr />
+<p><mark>感生电场的性质</mark></p>
+<p>根据环路性质不同（是否保守），静电场和感生电场的对比如下：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>静电场 (  <span class="arithmatex">\(\vec{E}_s\)</span> )</th>
+<th>感生电场 ( <span class="arithmatex">\(\vec{E}_i\)</span> )</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>闭合回路的环路积分</td>
+<td>恒为 <strong>0</strong></td>
+<td>一般 <strong>不为 0</strong></td>
+</tr>
+<tr>
+<td>数学表达</td>
+<td>(<span class="arithmatex">\(\displaystyle \oint_L \vec{E}_s\cdot d\vec{l}=0\)</span>)</td>
+<td>(<span class="arithmatex">\(\displaystyle \oint_L \vec{E}_i\cdot d\vec{l} = -\frac{d\Phi}{dt}\neq 0\)</span>)</td>
+</tr>
+<tr>
+<td>场性质</td>
+<td><strong>保守场</strong></td>
+<td><strong>非保守场</strong>、有“旋转性”</td>
+</tr>
+<tr>
+<td>电势概念</td>
+<td>能建立全局电势函数</td>
+<td>一般不能定义电势（不可积）</td>
+</tr>
+</tbody>
+</table>
+<p>即 <em>静电场不产生净功，感生电场能够驱动电流做功</em></p>
+<p>根据场线性质不同（是否有源），对比如下：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>静电场</th>
+<th>感生电场</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>场线起终点</td>
+<td>从正电荷出发 → 终止于负电荷（有头有尾）</td>
+<td>完全闭合（无头无尾）</td>
+</tr>
+<tr>
+<td>相关方程</td>
+<td>(<span class="arithmatex">\(\displaystyle \oint_S \vec{E}_s \cdot d\vec{S} = \frac{Q}{\varepsilon_0} \neq 0\)</span>)</td>
+<td>(<span class="arithmatex">\(\displaystyle \oint_S \vec{E}_i \cdot d\vec{S} = 0\)</span>)</td>
+</tr>
+</tbody>
+</table>
+<p>即 <em>静电场有“源”——电荷；感生电场无源，场线成封闭回路</em></p>
+<p>根据产生机制，对比如下：</p>
+<table>
+<thead>
+<tr>
+<th>场类型</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>静电场</td>
+<td>静止电荷产生</td>
+</tr>
+<tr>
+<td>感生电场</td>
+<td><strong>时间变化的磁场</strong> 产生（电磁感应）</td>
+</tr>
+</tbody>
+</table>
+<p>我们在上面也注意到存在 <span class="arithmatex">\(\displaystyle \iint_S \vec{E_i}\cdot\mathrm{d}\vec{S}=0\)</span> ，我们可以将向量形式化简为标量形式，如下：
+$$
+\oint_SE_i\cdot\mathrm{d}S=0
+\tag{14-3-6}
+$$
+即 <strong>感生电场的高斯定理</strong></p>
+<hr />
+<p><mark>感生电动势的计算</mark></p>
+<p>两种基本方法：</p>
+<ol>
+<li>若磁场在空间分布具有对称性，在磁场中导体中又不构成闭合回路，可以利用式(14-3-4)求出空间 <span class="arithmatex">\(E_i\)</span> 的分布，然后再利用式 (14-3-1)求出导体上的感生电动势</li>
+<li>若导体为闭合回路，或虽然不是闭合的，但可以通过加辅助线构成闭合回路，这是可以直接用法拉第电磁感应定律式(14-1-1)进行求解</li>
+</ol>
+<p>接下来举几个例子</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>例1</strong> 如图所示，有一个局限在半径为 R 的圆柱形空间的均匀磁场，方向垂直纸面向里，磁场的变化率 <span class="arithmatex">\(\dfrac{\mathrm{d}B}{\mathrm{d}t}\)</span> 为常数且小于零，求距圆心O为r处的P点的感生电场场强</p>
+<p><img alt="image-20251029163634069" src="../../images/image-20251029163634069.png" /></p>
+<p><strong>解</strong> 根据磁场对称性可知，空间的感生电场也是对称的，即 <span class="arithmatex">\(E_i\)</span> 线应该是一系列以O为圆心的同心圆，做半径为r的圆形回路L沿顺时针方向，回路所围面积S的发现垂直纸面向里，分为以下两种情况</p>
+<p>(1) <span class="arithmatex">\(0&lt;r\leq R\)</span> 时，P点在圆柱内，则有</p>
+<div class="arithmatex">\[
+\oint_LE_i\mathrm{d}l=-\int_S\dfrac{\partial B}{\partial t}\cdot\mathrm{d}S
+\]</div>
+<p>即</p>
+<div class="arithmatex">\[
+2\pi rE_i=\pi r^2\dfrac{\mathrm{d}B}{\mathrm{d}t} \\
+E_i = \dfrac{r}{2}\dfrac{\mathrm{d}B}{\mathrm{d}t}
+\]</div>
+<p><span class="arithmatex">\(E_i\)</span> 的方向确定：由题意 <span class="arithmatex">\(\dfrac{\mathrm{d}B}{\mathrm{d}t}&lt;0\)</span>，故 <span class="arithmatex">\(\dfrac{\mathrm{d}B}{\mathrm{d}t}\)</span> 与法线方向相反，即向外</p>
+<p>(2) <span class="arithmatex">\(r＞R\)</span>，P点在圆柱外，此时注意到变化磁场的有效面积只存在于R内，即有</p>
+<div class="arithmatex">\[
+2\pi r\cdot E_i=\pi R^2\dfrac{\mathrm{d}B}{\mathrm{d}t}
+\]</div>
+<p>得</p>
+<div class="arithmatex">\[
+E_i=\dfrac{R^2}{2r}\dfrac{\mathrm{d}B}{\mathrm{d}t}
+\]</div>
+<p>同样，<span class="arithmatex">\(E_i\)</span> 线的方向也沿顺时针方向， <span class="arithmatex">\(E_i\)</span> 随 r 的变化关系如下图</p>
+<p><img alt="image-20251029170333295" src="../../images/image-20251029170333295.png" /></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>例2</strong> 在半径为 <span class="arithmatex">\(R\)</span> 的圆柱状空间内存在均匀磁场，且 <span class="arithmatex">\(\dfrac{dB}{dt}     0\)</span>，有一长为 <span class="arithmatex">\(l\)</span> 的金属棒放在磁场中，位置如图所示。求棒两端的感生电动势。</p>
+<p><img alt="image-20251029172442861" src="../../images/image-20251029172442861.png" /></p>
+<p><strong>解</strong> 取弓形 <span class="arithmatex">\(abca\)</span> 为积分回路，绕行方向为顺时针，回路所围面积 <span class="arithmatex">\(S\)</span> 的法线方向垂直纸面向里，并设 <span class="arithmatex">\(\theta\)</span> 为三角形 <span class="arithmatex">\(abO\)</span> 的顶角，则有</p>
+<div class="arithmatex">\[
+\oint_{abca} E_{\text{i}}\cdot dl
+ =\int_{ab} E_{\text{i}}\cdot dl
+ +\int_{bca} E_{\text{i}}\cdot dl,
+\]</div>
+<p>而</p>
+<div class="arithmatex">\[
+\begin{align}
+\varepsilon_{ab}
+ &amp;=\int_{ab} E_{\text{i}}\cdot dl
+ =\oint_{abca} E_{\text{i}}\cdot dl
+ -\int_{bca} E_{\text{i}}\cdot dl \\
+ &amp;=\frac{l}{2}\sqrt{R^2-\left(\frac{l}{2}\right)^2}\frac{dB}{dt}
+ \end{align}
+\]</div>
+<p>方向：从 <span class="arithmatex">\(a\rightarrow b\)</span>，其中</p>
+<div class="arithmatex">\[
+\begin{align}
+\oint_{abca} E_{\text{i}}\cdot dl
+ &amp;=\frac{d\Phi}{dt}
+ =-\int_S \frac{\partial B}{\partial t}\cdot dS
+ =-S_{abca}\frac{dB}{dt} \\
+ &amp;=-\left[
+    \dfrac{\theta}{2\pi}\pi{R^2}-\dfrac{l}{2}\sqrt{R^2-\left({\dfrac{l}{2}}\right)^2}
+    \right]
+    \dfrac{\mathrm{d}B}{\mathrm{d}t}\\
+ \oint_{bca}E_i\cdot\mathrm{d}l &amp;=-\dfrac{R}{2}\dfrac{\mathrm{d}B}{\mathrm{d}t}
+    \theta R
+    =-\dfrac{\theta R^2}{2}\dfrac{\mathrm{d}B}{\mathrm{d}t}
+ \end{align}
+\]</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>例3</strong> 如图所示，在垂直于纸面内非均匀的随时间变化的磁场 <span class="arithmatex">\(B = kx\cos \omega t\)</span> 中，有一弯成 <span class="arithmatex">\(\theta\)</span> 角的金属架 <span class="arithmatex">\(COD\)</span>，<span class="arithmatex">\(OD\)</span> 与 <span class="arithmatex">\(x\)</span> 轴重合，一导体棒 <span class="arithmatex">\(MN\)</span> 垂直于 <span class="arithmatex">\(OD\)</span>，并以恒定速度 <span class="arithmatex">\(v\)</span> 垂直于 <span class="arithmatex">\(MN\)</span> 沿 <span class="arithmatex">\(OD\)</span> 方向向右滑动，设 <span class="arithmatex">\(t = 0\)</span> 时 <span class="arithmatex">\(x = 0\)</span>（即 <span class="arithmatex">\(t = 0\)</span> 时 <span class="arithmatex">\(MN\)</span> 在 <span class="arithmatex">\(x = 0\)</span> 处），求框架内感应电动势的变化规律。</p>
+<p><img alt="image-20251029174339650" src="../../images/image-20251029174339650.png" /></p>
+<p>**解**显然，本例磁场随时间和空间同时变化，导体又运动。根据分析，感应电动势必然既有动生电动势又有感生电动势。</p>
+<p>在图中取面积元 <span class="arithmatex">\(dS\)</span>，则</p>
+<div class="arithmatex">\[
+ dS = y,dx = x\tan\theta,dx,
+\]</div>
+<p>任意时刻 <span class="arithmatex">\(t\)</span>，穿过回路 <span class="arithmatex">\(OMN\)</span> 总的磁通量为</p>
+<div class="arithmatex">\[
+ \Phi_m = \int_S \vec{B}\cdot d\vec{S} = \int_0^l kx\cos\omega t \cdot x\tan\theta,dx = \frac{1}{3}kx^3\tan\theta\cos\omega t,
+\]</div>
+<p>由法拉第电磁感应定律</p>
+<div class="arithmatex">\[
+\begin{align}
+\varepsilon_i &amp;= -\frac{d\Phi_m}{dt} 
+= -\frac{1}{3}k x^3 \tan\theta \cdot (-\omega\sin\omega t) - kx^2 \frac{dx}{dt}\tan\theta \cos\omega t \\
+&amp;= \frac{1}{3}k v t^2 \tan\theta (\omega\sin\omega t - 3\cos\omega t)
+\end{align}
+\]</div>
+<p>式中，<span class="arithmatex">\(x = vt\)</span>。从结果可以看出，金属框架上总的感应电动势包括第一项感生电动势和第二项动生电动势。</p>
+</div>
+<hr />
+<h3 id="144">14.4 自感与互感</h3>
+<p>在实际问题中，磁场的变化往往是由电流的变化引起的，所以本节内容主要讨论感生电动势与电流变化的直接关系</p>
+<p>通过自感现象和互感现象来讨论这个问题</p>
+<hr />
+<h4 id="_2">自感</h4>
+<p>当通过线圈的电流发生变化时，引起穿过线圈自身回路的磁通量发生变化，由此产生的电磁感应现象称为自感现象，对应的电动势称为自感电动势</p>
+<p>同时由于铁磁质的磁性与电流的变化存在着非线性的关系，故下面的讨论假定空间无铁磁质存在：</p>
+<hr />
+<p><mark>自感系数推导</mark></p>
+<p>由比萨定律可知，当回路的形状、大小、位置及周围磁介质不变时，回路中电流所产生的磁场与电流成正比，所以通过回路的全磁通也正比于回路中的电流，即
+$$
+\psi=LI
+\tag{14-4-1}
+$$
+式中，L为比例系数，称为 <strong>回路线圈的自感系数</strong>，其量值取决于线圈的形状、大小、位置、匝数和周围的磁介质及其分布，而与电流无关，在式（14-4-1）中，若令 <span class="arithmatex">\(I=1\)</span>,则 <span class="arithmatex">\(L=\psi\)</span> ，也就是：<strong>回路的自感系数在量值上等于回路的电流为一个单位时，通过这个回路所包围面积的全磁通</strong></p>
+<p>由法拉第电磁定律，我们可以推导出 <strong>回路中自感电动势</strong> 为
+$$
+\varepsilon_L=-\dfrac{\mathrm{d}\psi}{\mathrm{d}t}=-\dfrac{\mathrm{d}(LI)}{\mathrm{d}t}
+=
+\left(
+L\dfrac{\mathrm{d}I}{\mathrm{d}t}+
+I\dfrac{\mathrm{d}L}{\mathrm{d}t}
+\right)
+\tag{14-4-2}
+$$
+式中，第一项代表电流变化产生的自感电动势；第二项代表因回路几何形状、大小、位置和磁介质种类及分布的变化而产生的自感电动势</p>
+<p>若L不随时间变化，即 <span class="arithmatex">\(\dfrac{\mathrm{d}L}{\mathrm{d}t}=0\)</span> 则有
+$$
+\varepsilon_L=-L\dfrac{\mathrm{d}I}{\mathrm{d}t}
+\tag{14-4-3}
+$$
+此式表明：<strong>回路中的自感系数，在量值上等于回路中的电流每单位时间改变1单位时，在回路中产生的自感电动势</strong></p>
+<p>这个负号表明了 <span class="arithmatex">\(\varepsilon_L\)</span> 总是要阻碍回路本身电流的变化，而且回路的自感系数L越大，回路中的电流也就更不容易改变。因此我们可以认为自感系数 <span class="arithmatex">\(L\)</span> 是回路 <strong>电磁惯性</strong> 的量度</p>
+<hr />
+<p><mark>单位</mark></p>
+<p>在国际单位制中，自感系数的单位是 <strong>亨利</strong>，用符号H表示
+$$
+1\;\mathrm{H}=1\;\dfrac{\mathrm{Wb}}{\mathrm{A}}=1\;\dfrac{\mathrm{V}}{\mathrm{A/s}}
+$$</p>
+<hr />
+<p><mark>计算过程</mark></p>
+<p>一些简单情况下可以利用式(14-4-1)计算，步骤如下：</p>
+<ol>
+<li>设线圈中通电流 <span class="arithmatex">\(I\)</span></li>
+<li>确定电流 <span class="arithmatex">\(I\)</span> 在线圈内产生的磁场及其分布</li>
+<li>求穿过线圈的全磁通</li>
+<li>由式(14-4-1)求得 <span class="arithmatex">\(L=\dfrac{\psi}{I}\)</span></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>例</strong> 计算长直螺线管的自感系数。设螺线管长为 <span class="arithmatex">\(l\)</span>，截面积为 <span class="arithmatex">\(S\)</span>，单位长度上的匝数为 <span class="arithmatex">\(n\)</span>。管内充满磁导率为 <span class="arithmatex">\(\mu\)</span> 的均匀磁介质。</p>
+<p><strong>解</strong>　设长直螺线管内通电流 <span class="arithmatex">\(I\)</span>，并忽略边缘效应，则螺线管内的均匀磁场为</p>
+<div class="arithmatex">\[
+B = \mu n I,
+\]</div>
+<p>通过螺线管的全磁通为</p>
+<div class="arithmatex">\[
+ \psi = NBS = nl \cdot \mu n I \cdot S = \mu n^2 V I.
+\]</div>
+<p>由式（14-4-1）得</p>
+<div class="arithmatex">\[
+L = \frac{\psi}{I} = \mu n^2 V.
+\]</div>
+</div>
+<h4 id="_3">互感</h4>
+<p>两个邻近的回路 <span class="arithmatex">\(L_1\)</span> 和 <span class="arithmatex">\(L_2\)</span>，分别通有电流 <span class="arithmatex">\(I_1\)</span> 和 <span class="arithmatex">\(I_2\)</span>，如图 8-23 所示。<span class="arithmatex">\(I_1\)</span> 的磁场有一部分磁通量穿过回路 <span class="arithmatex">\(L_2\)</span>，当其他条件不变只是 <span class="arithmatex">\(I_1\)</span> 变化时，穿过回路 <span class="arithmatex">\(L_2\)</span> 的磁通量会发生变化，在回路 <span class="arithmatex">\(L_2\)</span> 中引起感生电动势。同理，回路 <span class="arithmatex">\(L_2\)</span> 中的电流 <span class="arithmatex">\(I_2\)</span> 变化时，也会在回路 <span class="arithmatex">\(L_1\)</span> 中产生感生电动势。</p>
+<p>这种 <strong>由于一个载流回路中电流变化引起邻近另一回路中产生感生电动势的现象称互感现象。所产生的电动势称互感电动势，而这两个回路，通常叫做互感耦合回路。</strong></p>
+<p><img alt="image-20251029214106968" src="../../images/image-20251029214106968.png" /></p>
+<hr />
+<p><mark>互感系数推导</mark></p>
+<p>由比萨定律可知，若回路的几何形状、相对位置、周围磁介质的磁导率分布均不变，那么电流 <span class="arithmatex">\(I_1\)</span> 的磁场穿过回路 <span class="arithmatex">\(L_2\)</span> 的全磁通 <span class="arithmatex">\(\psi_{21}\)</span> 与 <span class="arithmatex">\(I_1\)</span> 成正比。同理电流 <span class="arithmatex">\(I_2\)</span> 的磁场穿过回路 <span class="arithmatex">\(L_1\)</span> 的磁通 <span class="arithmatex">\(\psi_{12}\)</span>  成正比，即
+$$
+\psi_{21}=N_2\Phi_{m21}=M_{21}I_1\
+\psi_{12}=N_1\Phi_{m12}=M_{12}I_2
+\tag{14-4-4}
+$$
+式中，<span class="arithmatex">\(M_{21}\)</span> 和 <span class="arithmatex">\(M_{12}\)</span> 为比例系数，且 <span class="arithmatex">\(M_{21} = M_{12}\)</span>。我们可统一用 <span class="arithmatex">\(M\)</span> 表示，称为两个回路之间的 <strong>互感系数</strong>，简称 <strong>互感</strong>。</p>
+<p>从式（14-4-4）可以看出，<strong>两个回路的互感系数在量值上等于其中一个回路中电流为一个单位时，穿过另一个回路所围面积的全磁通</strong></p>
+<p>显然，<strong>互感系数与两个耦合回路的形状、大小、匝数、相对位置以及周围磁介质的磁导率有关</strong>。</p>
+<p>由法拉第电磁感应定律，有
+$$
+\varepsilon_{21}=-\dfrac{\mathrm{d}\psi_{21}}{\mathrm{d}t}=-\dfrac{\mathrm{d}(MI_1)}{\mathrm{d}t}
+=-\left(
+M\dfrac{\mathrm{d}I_1}{\mathrm{d}t}+
+I_1\dfrac{\mathrm{d}M}{\mathrm{d}t}
+\right)
+\
+\varepsilon_{12}=-\dfrac{\mathrm{d}\psi_{12}}{\mathrm{d}t}=-\dfrac{\mathrm{d}(MI_2)}{\mathrm{d}t}
+=-\left(
+M\dfrac{\mathrm{d}I_2}{\mathrm{d}t}+
+I_2\dfrac{\mathrm{d}M}{\mathrm{d}t}
+\right)
+$$
+若 <span class="arithmatex">\(M\)</span> 保持不变，即 <span class="arithmatex">\(\displaystyle \dfrac{\mathrm{d}M}{\mathrm{d}t}=0\)</span> ，则有
+$$
+\varepsilon_{21}=-M\dfrac{\mathrm{d}I_1}{\mathrm{d}t}
+\
+\varepsilon_{12}=-M\dfrac{\mathrm{d}I_2}{\mathrm{d}t}
+\tag{14-4-5}
+$$
+此式表明，<strong>互感系数的量值也等于一个回路中电流随时间的变化率为一个单位时，在另一个回路中所引起的感生电动势的绝对值</strong></p>
+<p>另外还可以看出，当一个回路中的电流随时间的变化率一定时，互感系数越大，则通过互感在另一回路中引起的互感电动势也就越大。因此可以说，<strong>互感系数 <span class="arithmatex">\(M\)</span> 是表明两耦合回路互感强弱的物理量</strong></p>
+<hr />
+<p><mark>单位</mark></p>
+<p>同自感系数，都为亨利，符号为H</p>
+<hr />
+<p><mark>计算过程</mark></p>
+<p>计算方式同自感系数</p>
+<ol>
+<li>设线圈中通电流 <span class="arithmatex">\(I\)</span></li>
+<li>确定电流 <span class="arithmatex">\(I\)</span> 在线圈内产生的磁场及其分布</li>
+<li>求穿过线圈的全磁通</li>
+<li>由式(14-4-4)求得 <span class="arithmatex">\(M=\dfrac{\psi_{21}}{I_1}\)</span></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>例</strong> 两个长度均为 <span class="arithmatex">\(l\)</span> 的共轴空心长直螺线管，如图所示。外管半径 <span class="arithmatex">\(R_1\)</span>，匝数 <span class="arithmatex">\(N_1\)</span>，自感系数 <span class="arithmatex">\(L_1\)</span>；内管半径 <span class="arithmatex">\(R_2\)</span>，匝数 <span class="arithmatex">\(N_2\)</span>，自感系数 <span class="arithmatex">\(L_2\)</span>。求它们的互感系数 <span class="arithmatex">\(M\)</span> 及与 <span class="arithmatex">\(L_1\)</span>、<span class="arithmatex">\(L_2\)</span> 的关系。</p>
+<p><img alt="image-20251029215736835" src="../../images/image-20251029215736835.png" /></p>
+<p><strong>解</strong> 设外管通有电流 <span class="arithmatex">\(I_1\)</span> ，则管内的磁感应强度 <span class="arithmatex">\(B_1\)</span> 为</p>
+<div class="arithmatex">\[
+B_1=\mu_0{n_1}{I_1}=\mu_0\dfrac{N_1I_1}{l}
+\]</div>
+<p>穿过内管的全磁通为</p>
+<div class="arithmatex">\[
+\psi_{21}=N_2B_1S_2=\dfrac{\mu_0N_1N_2I_1}{l}\pi R^2
+\]</div>
+<p>所以</p>
+<div class="arithmatex">\[
+M=M_{21}=\dfrac{\psi_{21}}{I_1}=\dfrac{\mu_0N_1N_2}{l}\pi R_2^2
+\]</div>
+<p>再由上一个例题的结果，即</p>
+<div class="arithmatex">\[
+L_1=\mu_0n_1^2V_1=\mu_0\dfrac{N_1}{l}\pi R_1^2
+\\
+L_2=\mu_0n_2^2V_2=\mu_0\dfrac{N_2}{l}\pi R_2^2
+\]</div>
+<p>消去 <span class="arithmatex">\(N_1\)</span> 和 <span class="arithmatex">\(N_2\)</span>，可得</p>
+<div class="arithmatex">\[
+M=\dfrac{R_2}{R_1}\sqrt{L_1L_2}
+\]</div>
+<p>当然，必须指出，此结果是在题设条件下的两个耦合回路得到的。而一般情况下，<span class="arithmatex">\(M=K\sqrt{L_1L_2}\)</span> ，且 <span class="arithmatex">\(K\le1\)</span>，称 <span class="arithmatex">\(K\)</span> 为耦合系数</p>
+<p>只有当 <span class="arithmatex">\(R_1=R_2\)</span> ，且每个回路的自身全磁通都通过另一个回路（或称为无漏磁）时，才有 <span class="arithmatex">\(K=1\)</span></p>
+<p>而在有漏磁的情况下，即使 <span class="arithmatex">\(R_1=R_2\)</span> 则总存在 <span class="arithmatex">\(K&lt;1\)</span> ，即 <span class="arithmatex">\(M&lt;\sqrt{L_1L_2}\)</span></p>
+</div>
+<h3 id="145">14.5 磁场的能量</h3>
+<p>静电场中我们就知道，带电系统形成的过程中，外力必须克服静电场力而做功，最后转化为带电系统或电场的能力。电容器作为存储电能的器件，电场的能量密度 <span class="arithmatex">\(\omega_e=\dfrac{1}{2}\varepsilon E^2=\dfrac{1}{2}DE\)</span>。</p>
+<p>同理，在建立电流磁场过程中，显然外力也必须克服由于电磁感应引起的反电动势而做功，从而消耗电源的电能并转化为磁场的能量而存储起来，<strong>载流线圈</strong> 便是这样一个器件</p>
+<hr />
+<p><mark>磁场能量公式</mark></p>
+<p>我们考虑具有一个线圈的简单电路，如下图所示，讨论电流在增长过程中建立其磁场的情况，从而推导出磁场能量公式。</p>
+<p><img alt="image-20251030000248492" src="../../images/image-20251030000248492.png" /></p>
+<p>当闭合S时，在具有自感 <span class="arithmatex">\(L\)</span> 的线圈种电流 <span class="arithmatex">\(i\)</span> 由 0 增长到稳定值 <span class="arithmatex">\(I\)</span> ，<strong>线圈自感电动势</strong> 为
+$$
+\varepsilon_L=-L\dfrac{\mathrm{d}i}{\mathrm{d}t}
+$$
+<span class="arithmatex">\(\mathrm{d}t\)</span> 时间内，<strong>电源电动势 <span class="arithmatex">\(\varepsilon_L\)</span> 反抗自感电动势 <span class="arithmatex">\(\varepsilon_L\)</span> 做功</strong> 为
+$$
+\mathrm{d}W=-\varepsilon_Li\mathrm{d}t=Li\mathrm{d}i
+$$
+再根据功能原理，外力做功 <span class="arithmatex">\(\mathrm{d}A\)</span> 应等于线圈种磁场能量的增量 <span class="arithmatex">\(\mathrm{d}W_m\)</span> ，当电流 <span class="arithmatex">\(i\)</span> 由 <span class="arithmatex">\(0\)</span> 增加到 <span class="arithmatex">\(I\)</span> 时，对上式积分
+$$
+W_m=\int\mathrm{d}W_m=\int\mathrm{d}W=\int_0^ILi\mathrm{d}i
+$$
+当 <span class="arithmatex">\(L\)</span> 为定值时，有
+$$
+W_m=\dfrac{1}{2}LI^2
+\tag{14-5-1}
+$$
+此式表明，具有自感L的线圈，当通以电流I时所具有的磁场能量公式</p>
+<hr />
+<p><mark>磁场能量密度</mark></p>
+<p>磁场的能量与电场能量一样也是定域在场中的，所以也可以用场量表示，并可以引入 <strong>磁场能量密度</strong></p>
+<p>下面以 <strong>长直螺线管</strong> 为特例导出磁场能量密度公式，设长直螺线管通电流 <span class="arithmatex">\(I\)</span> ，忽略边缘效应后，管内磁感应强度为 <span class="arithmatex">\(B=\mu n I\)</span>,自感为 <span class="arithmatex">\(L=\mu n^2V\)</span>，带入式(14-5-1)得
+$$
+W_m=\dfrac{1}{2}LI^2=\dfrac{1}{2}\mu n^2V\left(\dfrac{B}{\mu n}\right)^2
+=\dfrac{1}{2}\dfrac{B^2}{\mu}V
+$$
+由于长直螺线管的磁场集中于管内，管内磁场基本是均匀的，其体积就是V，所以管内的 <strong>磁场能量密度</strong> 为
+$$
+\omega_m=\dfrac{W_m}{V}=\dfrac{1}{2}\dfrac{B^2}{\mu}=\dfrac{1}{2}BH
+\tag{14-5-2}
+$$</p>
+<blockquote>
+<p>H表示磁场强度，单位为特斯拉的那一个物理量</p>
+<p>此式可适用于各类磁场的普遍公式。</p>
+</blockquote>
+<p>该式说明，在任何磁场中，某点的磁场能量密度，只与该点的磁感应强度和磁介质有关，是空间位置的点函数</p>
+<p>如果是 <strong>非均匀磁场</strong> ，那么可以将总磁场划分为无数个体积元 <span class="arithmatex">\(\mathrm{d}V\)</span> ，使得 <span class="arithmatex">\(\mathrm{d}V\)</span> 内的磁场是均匀的，则 <span class="arithmatex">\(\mathrm{d}V\)</span> 处的磁能为
+$$
+\mathrm{d}W_m=\omega_m\mathrm{d}V=\dfrac{1}{2}BH\mathrm{d}V
+\tag{14-5-3}
+$$
+对整个磁场不为零的空间积分，得到磁场的总能量
+$$
+W_m=\dfrac{1}{2}\int_VBH\mathrm{d}V
+\tag{14-5-4}
+$$</p>
+<h2 id="_4">十五、电磁场与电磁波</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.select", "navigation.titles", "navigation.tabs", "navigation.indexes"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
