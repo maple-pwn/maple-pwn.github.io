@@ -476,6 +476,39 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="十五、电磁场与电磁波">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#151" class="md-nav__link">
+    <span class="md-ellipsis">
+      15.1 位移电流
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#152" class="md-nav__link">
+    <span class="md-ellipsis">
+      15.2 麦克斯韦方程组
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#153" class="md-nav__link">
+    <span class="md-ellipsis">
+      15.3 电磁波
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -775,6 +808,39 @@
       十五、电磁场与电磁波
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="十五、电磁场与电磁波">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#151" class="md-nav__link">
+    <span class="md-ellipsis">
+      15.1 位移电流
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#152" class="md-nav__link">
+    <span class="md-ellipsis">
+      15.2 麦克斯韦方程组
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#153" class="md-nav__link">
+    <span class="md-ellipsis">
+      15.3 电磁波
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1370,6 +1436,315 @@ W_m=\dfrac{1}{2}\int_VBH\mathrm{d}V
 \tag{14-5-4}
 $$</p>
 <h2 id="_4">十五、电磁场与电磁波</h2>
+<blockquote>
+<p>上一章中，麦克斯韦为了解释产生感生电动势的原因，提出了 <strong>涡旋电场</strong>，也就是变化的磁场可以激发涡旋电场</p>
+<p>随后麦克斯韦又提出了 <strong>位移电流</strong> 的假设，提出变化的电场反过来可以激发磁场</p>
+</blockquote>
+<p>本章将学习位移电流的概念，以及全电流安培环路定理，然后介绍麦克斯韦提出的麦克斯韦方程组，最后讨论电磁波的产生、传播及其基本性质</p>
+<h3 id="151">15.1 位移电流</h3>
+<p>我们曾讨论过 <strong>恒定电流的磁场</strong> 满足安培环路定理 <span class="arithmatex">\(\displaystyle \oint_L H\cdot\mathrm{d}l=\sum I\)</span>, <span class="arithmatex">\(\displaystyle \sum I\)</span> 为穿过回路 <span class="arithmatex">\(L\)</span> 为边界的任意曲面 <span class="arithmatex">\(S\)</span> 的传导电流代数和</p>
+<p>那么在非恒定电流的情况下，这个定理是否适用？</p>
+<hr />
+<p><mark>不连续传导电流下，矛盾的安培定律</mark></p>
+<p>我们假设存在一个无分支的不含电容器的闭合电路，在这个电路中的任何时刻，通过导体上任何截面的电流总是相等的，即传导电流是连续的</p>
+<p><img alt="image-20251030123615588" src="../../images/image-20251030123615588.png" /></p>
+<p>但如果是含有电容器电路的暂态过程中，如上图所示，无论是充电或者放电，传导电流都不可以在电容器的两极板之间通过，因而对整个电路来说，传导电流其实是不连续的</p>
+<p>但在不连续的情况下，我们如果应用安培环路定理，将得到一个矛盾的结果：</p>
+<p>我们取图(a)中一个包围平板A的封闭曲线，它由曲面 <span class="arithmatex">\(S_2\)</span> 和平面 <span class="arithmatex">\(S_1\)</span> 组成，两面的共同边界是 <span class="arithmatex">\(L\)</span>，分别应用安培环路定理</p>
+<p>平面时，有传导电流I穿过 <span class="arithmatex">\(S_1\)</span> ，所以安培环路定理如下
+$$
+\oint_L H\cdot\mathrm{d}l=I
+$$
+曲面处，无传导电流穿过 <span class="arithmatex">\(S_2\)</span> ，安培环路定理如下</p>
+<p>$$
+\oint_L H\cdot\mathrm{d}l=0
+$$
+上述结果表明了，在非恒定电流的磁场中， <span class="arithmatex">\(H\)</span> 的环流与以闭合回路 <span class="arithmatex">\(L\)</span> 为边界的曲面有关，选取不同曲面，环流的值不同，出现了严重的矛盾。</p>
+<hr />
+<p><mark>位移电流</mark></p>
+<p>在上述电路中，当电容器充、放电时，对于电容器两极板外侧的电路有
+$$
+\dfrac{\mathrm{d}q}{\mathrm{d}t}=I
+$$
+而在两极板之间，有随着时间变化的电位移 <span class="arithmatex">\(D\)</span> 和电位移通量 <span class="arithmatex">\(\Phi_D\)</span> 。根据上学期所学的静电学知识，平板电容器中 <span class="arithmatex">\(D=\sigma,\Phi_D=DS=\sigma S=q\)</span> 可知：<strong>无论放电还是充电，在量值上电容器极板间电位移通量随时间的变化率均匀</strong>
+$$
+\dfrac{\mathrm{d}\Phi_D}{\mathrm{d}t}
+=\dfrac{\mathrm{d}(DS)}{\mathrm{d}t}
+=\dfrac{\mathrm{d}(\sigma S)}{\mathrm{d}t}
+=\dfrac{\mathrm{d}q}{\mathrm{d}t}
+=I
+$$
+在方向上：</p>
+<ul>
+<li>充电时电位移随时间的变化率 <span class="arithmatex">\(\displaystyle \dfrac{\mathrm{d}\vec{D}}{\mathrm{d}t}\)</span> 的方向与电场 <span class="arithmatex">\(\vec{E}\)</span> 的方向一致，同时也与导体中电流方向一致</li>
+<li>放电时电位移随时间的变化率 <span class="arithmatex">\(\displaystyle \dfrac{\mathrm{d}\vec{D}}{\mathrm{d}t}\)</span> 的方向与电场 <span class="arithmatex">\(\vec{E}\)</span> 的方向相反，同时也与导体中电流方向依旧一致(因为其实反的是电场)</li>
+</ul>
+<p>为此，提出了如下假设:</p>
+<p><strong>变化的电场从产生磁场的角度可以看作是一种电流</strong>，因此在电容器两极板之间可以认为存在着 <strong>电流和电流密度</strong> 。它们被称为 <strong>位移电流</strong> 和 <strong>位移电流密度</strong>，即
+$$
+\vec{j_d}=\dfrac{\mathrm{d}\vec{D}}{\mathrm{d}t} \
+I_d=\dfrac{\mathrm{d}\Phi_D}{\mathrm{d}t}=\int_S\dfrac{\mathrm{d}D}{\mathrm{d}t}\cdot\mathrm{d}S
+\tag{15-1-1}
+$$</p>
+<blockquote>
+<p>D=D(r,t)，其实更标准的写法应该是偏导，这里将r固定，将D变为一个关于t的函数了</p>
+<p>课本中的 <span class="arithmatex">\(\psi\)</span> 和这里的 <span class="arithmatex">\(\Phi_D\)</span> 代表一个含义，也可以直接认为是 <span class="arithmatex">\(q\)</span> （换为q似乎更好理解一些）</p>
+</blockquote>
+<p>上述定义表明：</p>
+<ul>
+<li>电场中某点的位移电流密度矢量等于该点电位移矢量对时间的变化率</li>
+<li>通过电场中某截面的位移电流等于通过该截面的电位移通量对时间的变化率</li>
+</ul>
+<hr />
+<p><mark>全电流定律</mark></p>
+<blockquote>
+<p>引入位移电流后，之前矛盾的安培环路定律即可进行修正，进而提出全电流定律</p>
+</blockquote>
+<p>麦克斯韦提出了全电流概念，即 <strong>在普遍状态下，通过空间某截面的全电流是通过这一截面的传导电流 <span class="arithmatex">\(I_c\)</span> 和位移电流 <span class="arithmatex">\(I_d\)</span> 的代数和</strong>，如下式
+$$
+I_S=I_C+I_D
+\tag{15-1-2}
+$$
+继续推广为非恒稳的情况，如下式
+$$
+I_S=\oint_L\vec{H}\cdot\mathrm{d}\vec{l}=I_C+I_D
+=\int_S\vec{j}\cdot\mathrm{d}\vec{S}+\int_S\dfrac{\partial\vec{D}}{\partial{t}}\cdot\mathrm{d}\vec{S}
+\tag{15-1-3}
+$$
+式中， <span class="arithmatex">\(S\)</span> 是以 <span class="arithmatex">\(L\)</span> 为边界的曲面</p>
+<p>至此，我们证明了电场和磁场的内在联系，反映了自然现象的对称性，即 <strong>变化的磁场能产生电场，变化的电场也能产生磁场，变化的电场和磁场永远相互联系着，形成统一的电磁场</strong></p>
+<h3 id="152">15.2 麦克斯韦方程组</h3>
+<p>从本书开始至此，我们讨论了静电场、恒定电场、恒定磁场以及变化磁场的各种规律。</p>
+<blockquote>
+<p>大一统是对的</p>
+</blockquote>
+<p>而麦克斯韦方程组便是统一描述电磁场普遍规律的方程，如下
+$$
+\oint_S\vec{D}\cdot\mathrm{d}\vec{S}=\sum q=\int_V\rho\mathrm{d}V
+\tag{15-2-1}
+$$</p>
+<div class="arithmatex">\[
+\oint_S\vec{B}\cdot\mathrm{d}\vec{S}=0
+\tag{15-2-2}
+\]</div>
+<div class="arithmatex">\[
+\oint_L\vec{E}\cdot\mathrm{d}\vec{l}=-\dfrac{\mathrm{d}\Phi}{\mathrm{d}t}=-\int_S\dfrac{\partial\vec{B}}{\partial{t}}\cdot\mathrm{d}\vec{S}
+\tag{15-2-3}
+\]</div>
+<div class="arithmatex">\[
+\oint_L\vec{H}{\cdot}{\mathrm{d}\vec{l}}=I_C+I_D=\int_S\vec{j}\cdot\mathrm{d}\vec{S}+\int_S\dfrac{\partial{D}}{\partial{t}}\cdot\mathrm{d}\vec{S}
+\tag{15-2-4}
+\]</div>
+<hr />
+<p><mark>电场中的高斯定理</mark></p>
+<p>方程(15-2-1)是电场中的高斯定理，反映了电场的性质。</p>
+<p>在一般情况下，电场包括自由电荷产生的电场（<span class="arithmatex">\(E_1, D_1\)</span>），它是 <strong>有源无旋场</strong>，电场线和电位移线均是不闭合的。<code>通过任何封闭曲面的电位移通量等于它所包围的自由电荷的代数和</code>。同时它也包括变化磁场产生的感生电场（<span class="arithmatex">\(E_2, D_2\)</span>），因为感生电场是涡旋场，其电场线和电位移线均是闭合的，通过任何封闭曲面的电位移通量为零。</p>
+<p>所以方程(15-2-1)说明：<strong>在任何电场（<span class="arithmatex">\(D = D_1 + D_2\)</span>）中，通过任何封闭曲面的电位移通量等于该封闭曲面包围的自由电荷的代数和。</strong></p>
+<hr />
+<p><mark>磁场中的高斯定理</mark></p>
+<p>方程(15-2-2)是磁场中的高斯定理，反映了磁场性质。</p>
+<p>磁场（<span class="arithmatex">\(B_1, H_1\)</span>）可以由传导电流产生，磁场（<span class="arithmatex">\(B_2, H_2\)</span>）也可以由位移电流（即变化电场）产生。所有磁场都是涡旋场，磁感应线都是闭合曲线。</p>
+<p>所以方程(15-2-2)说明：<strong>在任何磁场（<span class="arithmatex">\(B = B_1 + B_2\)</span>）中，通过任何封闭曲面的磁通量总是等于零。</strong></p>
+<hr />
+<p><mark>法拉第电磁感应定律</mark></p>
+<p>方程(15-2-3)是法拉第电磁感应定律，反映了变化磁场和电场的关系。</p>
+<p>一般情况下，由自由电荷产生的电场（<span class="arithmatex">\(E_1, D_1\)</span>）是无旋场，满足电场的场强环流定理 <span class="arithmatex">\(\oint_L E_1 \cdot dl = 0\)</span> 而由变化磁场产生的电场（<span class="arithmatex">\(E_2, D_2\)</span>）是涡旋场，满足法拉第电磁感应定律。
+所以方程(15-2-3)说明：<strong>在任何电场（<span class="arithmatex">\(E = E_1 + E_2\)</span>）中，电场强度沿任意闭合曲线的线积分等于穿过该曲线所包面积的磁通量对时间变化率的负值。</strong></p>
+<hr />
+<p><mark>全电流定律</mark></p>
+<p>方程(15-2-4)是全电流定律，反映了变化电场和磁场的关系。</p>
+<p>在一般情况下，磁场（<span class="arithmatex">\(B_1, H_1\)</span>）可以由传导电流产生，磁场（<span class="arithmatex">\(B_2, H_2\)</span>）也可以由位移电流（即变化电场）产生，然而所有磁场的环流均不为零。
+ 所以方程(15-2-4)说明：<strong>在任何磁场（<span class="arithmatex">\(H = H_1 + H_2\)</span>）中，磁场强度沿任意闭合曲线的线积分等于穿过该闭合曲线所包围面积的全电流。</strong></p>
+<hr />
+<p><mark>各场量间的关系</mark></p>
+<p>对于均匀的、各向同性的介质，各场量还有下列关系：</p>
+<div class="arithmatex">\[
+D = \varepsilon E, \quad B = \mu H, \quad j = \gamma E.
+\]</div>
+<hr />
+<p><mark>微分形式</mark></p>
+<p>设存在矢量场 <span class="arithmatex">\(\vec{A}=A_x\vec{i}+A_y\vec{j}+A_z\vec{k}\)</span> ，则利用在矢量分析中的高斯公式，可得</p>
+<div class="arithmatex">\[
+\oint_S\vec{A}\cdot\mathrm{d}\vec{S}=\int_V\mathrm{div}\vec{A}\cdot\mathrm{d}V
+\]</div>
+<p>其中 <span class="arithmatex">\(\displaystyle \mathrm{div}\vec{A}=\dfrac{\partial{A_x}}{\partial{x}}+\dfrac{\partial{A_y}}{\partial{y}}+\dfrac{\partial{A_z}}{\partial{z}}\)</span> 称为矢量场的A的 <strong>散度</strong>，那么我们将高斯公式带入到式(15-2-1)和式(15-2-2)中，有</p>
+<div class="arithmatex">\[
+\oint_S\vec{D}\cdot\mathrm{d}\vec{S}=\int_V\mathrm{div}\vec{D}\mathrm{d}V=\int_V\rho\mathrm{d}V \\
+\oint_S\vec{B}\cdot\mathrm{d}\vec{S}=\int_V\mathrm{div}{\vec{B}}\cdot\mathrm{d}V=0
+\]</div>
+<p>由此可推出</p>
+<div class="arithmatex">\[
+\mathrm{div}\vec{D}=\rho \\
+\mathrm{div}\vec{B}=0
+\]</div>
+<p>再结合斯托克斯公式</p>
+<div class="arithmatex">\[
+\oint_L\vec{A}\cdot\mathrm{d}\vec{L}=\int_S\mathrm{rot}\vec{A}\cdot\mathrm{d}\vec{S}
+\]</div>
+<p>式中 <span class="arithmatex">\(\mathrm{rot}\mathbf{A} = \begin{vmatrix} \mathbf{i} &amp; \mathbf{j} &amp; \mathbf{k} \\ \dfrac{\partial}{\partial x} &amp; \dfrac{\partial}{\partial y} &amp; \dfrac{\partial}{\partial z} \\ A_x &amp; A_y &amp; A_z \end{vmatrix}\)</span> 将斯托克斯公式应用于式(15-2-3)、式(15-2-4)，得</p>
+<div class="arithmatex">\[
+\oint_L\vec{E}\cdot\mathrm{d}\vec{L}=\int_S\mathrm{rot}\vec{E}\cdot\mathrm{d}\vec{S}=-\int_S\dfrac{\partial\vec{B}}{\partial t}\cdot\mathrm{d}\vec{S} \\
+\oint_L\vec{H}\cdot\mathrm{d}\vec{L}=\int_s\mathrm{rot}\vec{H}\cdot\mathrm{d}\vec{S}=\int_S\vec{j_c}\cdot\mathrm{d}\vec{S}+\int_S\dfrac{\partial D}{\partial t}\cdot\mathrm{d}\vec{S}
+\]</div>
+<p>进而推导出</p>
+<div class="arithmatex">\[
+\mathrm{rot}\vec{E}=-\dfrac{\partial \vec{B}}{\partial t}\\
+\mathrm{rot}\vec{H}=\vec{j_c}+\dfrac{\partial \vec{D}}{\partial t}
+\]</div>
+<h3 id="153">15.3 电磁波</h3>
+<p><mark>LC电磁振荡</mark></p>
+<p>由一个电容器C和一个自感线圈L串联而成的 <span class="arithmatex">\(LC\)</span> 振荡电路，由于电磁振荡与机械振动由类似的运动形式，产生电磁振荡的电路称为振荡电路</p>
+<p><img alt="f02831edd898a9fd" src="../../images/f02831edd898a9fd.svg" /></p>
+<p>具体过程不做过多解释，高中期间应该有所涉及，下面放个动图，可自行理解</p>
+<p><img alt="v2-856807c48c90870b7d61f6b406b9baa3_b" src="../../images/v2-856807c48c90870b7d61f6b406b9baa3_b.webp" /></p>
+<p>课本也未给出振荡电路的固有振荡频率推导，这里直接给出公式，其中 <span class="arithmatex">\(L\)</span> 是以亨利为单位的电感； <span class="arithmatex">\(C\)</span> 是以法拉为单位的电容</p>
+<div class="arithmatex">\[
+\nu=\dfrac{1}{2\pi\sqrt{LC}}
+\]</div>
+<hr />
+<p><mark>电磁波的产生与传播</mark></p>
+<p>想要让 <span class="arithmatex">\(LC\)</span> 振荡回路中的电磁能量有效发射出去，必须满足以下两个条件：</p>
+<ol>
+<li>频率要高</li>
+<li>电路要开放</li>
+</ol>
+<p>为了解决问题1，我们应尽量减小L和C，而根据 <span class="arithmatex">\(L=\mu_0n^2V\)</span> 和 <span class="arithmatex">\(C=\dfrac{\varepsilon_0 S}{d}\)</span> 可知，可以通过减小线圈的匝数n来减小L，通过减小两极板相对面积S和增加两极板距离d来减小C，那么理想情况就是将回路拉成一根直导线</p>
+<p>当高频率交变电流在天线内往复振动时，在天线的两端就会出现正负交替的等量的异号电荷，形成 <strong>振荡电偶极子</strong></p>
+<p>最简单的震荡电偶极子模型是电锯随时间按余弦或正弦规律进行变化，即</p>
+<div class="arithmatex">\[
+\vec{p}=\vec{p_0}\cos\omega t
+\]</div>
+<p>式子中 <span class="arithmatex">\(\vec{p_0}\)</span> 是电偶极子电距的振幅，<span class="arithmatex">\(\omega\)</span> 是振荡角频率</p>
+<p>而接下来是一些时刻下，电偶极子附近电场线的变化</p>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20251031180306791" src="../../images/image-20251031180306791.png" /></th>
+<th><img alt="image-20251031180314963" src="../../images/image-20251031180314963.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="image-20251031180321971" src="../../images/image-20251031180321971.png" /></td>
+<td><img alt="image-20251031180327294" src="../../images/image-20251031180327294.png" /></td>
+</tr>
+<tr>
+<td><img alt="image-20251031180333624" src="../../images/image-20251031180333624.png" /></td>
+<td><img alt="image-20251031180338355" src="../../images/image-20251031180338355.png" /></td>
+</tr>
+<tr>
+<td><img alt="image-20251031180347230" src="../../images/image-20251031180347230.png" /></td>
+<td><img alt="image-20251031180354231" src="../../images/image-20251031180354231.png" /></td>
+</tr>
+</tbody>
+</table>
+<p>若以振荡电偶极子的中心为坐标原点，以振子轴线为极轴的球坐标来描述电磁场，通过求解麦克斯韦方程组可以得到，在 <span class="arithmatex">\(r\gg \lambda\)</span> 的波长中任意一点P处的电场强度 <span class="arithmatex">\(E\)</span> 和磁场强度 <span class="arithmatex">\(H\)</span> 的数值分别为</p>
+<div class="arithmatex">\[
+E(r,t)=\dfrac{p_0\omega^2\sin\theta}{4\pi\varepsilon u^2r}\cos\omega\left(t-\dfrac{r}{u}\right)
+\\
+H(r,t)=\dfrac{p_0\omega^2\sin\theta}{4\pi ur}\cos\omega\left(t-\dfrac{r}{u}\right)
+\]</div>
+<p>式中 <span class="arithmatex">\(\omega\)</span> 为振荡电偶极子的角频率， <span class="arithmatex">\(p_0\)</span> 为振荡电偶极子的振幅，<span class="arithmatex">\(r\)</span> 为从振荡电偶极子中心到 <span class="arithmatex">\(P\)</span> 点的位矢 <span class="arithmatex">\(\vec{r}\)</span> 的大小，<span class="arithmatex">\(\theta\)</span> 为位矢 <span class="arithmatex">\(\vec{r}\)</span> 与极轴的夹角， <span class="arithmatex">\(u\)</span> 为电磁波的传播速度，<span class="arithmatex">\(\varepsilon=\varepsilon_0\varepsilon_r、\mu=\mu_0\mu_r\)</span> ，分别为介质的电容率和磁导率</p>
+<p>可以证明出来，电磁波的传播速度为</p>
+<div class="arithmatex">\[
+u=\dfrac{1}{\sqrt{\mu\varepsilon}}
+\]</div>
+<p>那么我们如果把 <span class="arithmatex">\(u\)</span> 带入上式，可以推导如下关系</p>
+<div class="arithmatex">\[
+\dfrac{E}{H}=\sqrt{\dfrac{\mu}{\varepsilon}}
+\]</div>
+<p>此外，在 <span class="arithmatex">\(r\)</span> 足够大的一个小范围内，我们可以认为 <span class="arithmatex">\(\theta\)</span> 和 <span class="arithmatex">\(r\)</span> 的变化很小，可以视为常量。这是电场强度和磁场强度的振幅 <span class="arithmatex">\(E_0\)</span> 和 <span class="arithmatex">\(H_0\)</span> 也可以视为场量。于是上述两个式子可以如下化简</p>
+<div class="arithmatex">\[
+\begin{align}
+E(r,t)&amp;=E_0\cos\omega\left(t-\dfrac{r}{u}\right)
+\\
+&amp;=E_0\cos\left(\omega{t}-\dfrac{2\pi}{\lambda}r\right)
+\\
+H(r,t)&amp;=H_0\cos\omega\left(t-\dfrac{r}{u}\right)
+\\
+&amp;=H_0\cos\left(\omega{t}-\dfrac{2\pi}{\lambda}r\right)
+\end{align}
+\]</div>
+<p>上述两式即平面电磁波的波函数</p>
+<hr />
+<p><mark>电磁波的主要性质</mark></p>
+<ol>
+<li>电磁波是横波。波场中任意一点处的电场强度 <span class="arithmatex">\(\vec{E}\)</span> 、磁场强度 <span class="arithmatex">\(\vec{H}\)</span> 都与波的传播方向垂直，并且 <span class="arithmatex">\(\vec{E}、\vec{H}和\vec{r}\)</span> 三者成右手螺旋关系，即 <span class="arithmatex">\(\vec{E}\times\vec{H}\)</span> 的方向就是 <span class="arithmatex">\(\vec{r}\)</span> 的方向</li>
+</ol>
+<p><img alt="image-20251031183117207" src="../../images/image-20251031183117207.png" /></p>
+<ol>
+<li><span class="arithmatex">\(\vec{E}\)</span> 和 <span class="arithmatex">\(\vec{H}\)</span> 同相位，且数值大小成比例。</li>
+</ol>
+<div class="arithmatex">\[
+\dfrac{E}{H}=\sqrt{\dfrac{\mu}{\varepsilon}}
+\]</div>
+<ol>
+<li>电磁波在真空中的传播速度与真空中的光速相等。</li>
+</ol>
+<hr />
+<p><mark>电磁波的能量和动量</mark></p>
+<p><strong>电磁波的能量密度</strong></p>
+<p>电场和磁场中已经得到的能量密度如下</p>
+<div class="arithmatex">\[
+w_e=\dfrac{1}{2}\varepsilon E^2,\;w_m=\dfrac{1}{2}\mu H^2
+\]</div>
+<p>于是电磁波的能量密度为</p>
+<div class="arithmatex">\[
+w=w_e+w+m=\dfrac{1}{2}\varepsilon E^2+\dfrac{1}{2}\mu H^2
+\]</div>
+<p>再带入 <span class="arithmatex">\(\dfrac{E}{H}=\sqrt{\dfrac{\mu}{\varepsilon}}\)</span> 进而得</p>
+<div class="arithmatex">\[
+w=\varepsilon E^2=\sqrt{\varepsilon\mu}EH=\dfrac{EH}{u}
+\tag{15-3-1}
+\]</div>
+<p>带入E、H，又</p>
+<div class="arithmatex">\[
+w=\varepsilon E_0^2\cos^2\left(wt-\dfrac{2\pi r}{\lambda}\right)
+\]</div>
+<p>于是得到平均能量密度</p>
+<div class="arithmatex">\[
+\overline{w}=\dfrac{1}{T}\int_t^{(t+T)}w\mathrm{d}t=\dfrac{1}{2}\varepsilon E_0^2
+=\dfrac{1}{2}\cdot\dfrac{E_0H_0}{u}
+\]</div>
+<hr />
+<p><strong>电磁波的强度</strong></p>
+<p>电磁波再单位时间内通过与波的传播方向垂直的单位截面内的电磁波的能量称为 <strong>电磁波的能流密度</strong>，并用符号 <span class="arithmatex">\(S\)</span> 表示。设电磁波沿 <span class="arithmatex">\(\vec{r}\)</span> 方向传播， <span class="arithmatex">\(\mathrm{d}\vec{A}\)</span> 是纯至于传播方向上的某一截面。若电磁波的能量密度为 <span class="arithmatex">\(w\)</span> ，则 <span class="arithmatex">\(\mathrm{d}t\)</span> 时间内通过该截面的电磁波的能量为 <span class="arithmatex">\(w\cdot{u}\mathrm{d}t\cdot\mathrm{d}\vec{A}\)</span>，则能流密度为</p>
+<div class="arithmatex">\[
+S=\dfrac{w\cdot{u}\mathrm{d}t\cdot\mathrm{d}\vec{A}}{\mathrm{d}t\cdot\mathrm{d}{A}}
+=w\cdot u
+=EH
+\]</div>
+<p>而能量的辐射方向与电磁波的传播方向一致，即与 <span class="arithmatex">\(\vec{E}\times\vec{H}\)</span> 的方向相同，又因为 <span class="arithmatex">\(\vec{E}\perp\vec{H}\)</span>，所以上式的矢量表示如下</p>
+<div class="arithmatex">\[
+\vec{S}=\vec{E}\times\vec{H}
+\]</div>
+<p>其中 <span class="arithmatex">\(\vec{S}\)</span> 是 <strong>能流密度矢量</strong></p>
+<p>得到 <strong>平均电磁波强度</strong></p>
+<div class="arithmatex">\[
+\begin{align}
+\overline{S}&amp;=\dfrac{1}{T}\int_t^{t+T}E_0H_0\cos^2\left(\omega t-\dfrac{2\pi}{\lambda}r\right)\mathrm{d}t\\
+&amp;=\dfrac{1}{2}E_0H_0=\dfrac{1}{2}u\varepsilon E_0^2
+\end{align}
+\]</div>
+<p>在波动光学中，我们把电磁波的强度称为光强，并用符号 <span class="arithmatex">\(I\)</span> 表示，即</p>
+<div class="arithmatex">\[
+I=\overline{S}=\dfrac{1}{2}E_0H_0=\dfrac{1}{2}u\varepsilon E_0^2
+\]</div>
+<p>式中，<span class="arithmatex">\(u\)</span> 为电磁波的传播速度， <span class="arithmatex">\(\varepsilon\)</span> 为介质的电容率，在真空中， <span class="arithmatex">\(u=c,\varepsilon=\varepsilon_0\)</span></p>
+<hr />
+<p><strong>电磁波的动量</strong></p>
+<p>在真空中单位体积内电磁波的动量为</p>
+<div class="arithmatex">\[
+p=\dfrac{w}{c}=\dfrac{EH}{c^2}
+\]</div>
+<p>动量的方向就是电磁波的传播方向，即与 <span class="arithmatex">\(\vec{E}\times\vec{H}\)</span> 的方向相同，所以单位体积内电磁波动量的矢量表达式为</p>
+<div class="arithmatex">\[
+\vec{p}=\dfrac{\vec{E}\times\vec{H}}{c^2}=\dfrac{\vec{S}}{c^2}
+\]</div>
+<hr />
+<p><mark>电磁波谱</mark></p>
+<p>可见光式人眼可以感知到的电磁波，波长约为380~780nm</p>
+<p><img alt="image-20251031233809068" src="../../images/image-20251031233809068.png" /></p>
 
 
 
