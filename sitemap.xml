@@ -2,34 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://maple-pwn.github.io/</loc>
-         <lastmod>2025-10-31</lastmod>
+         <lastmod>2025-11-26</lastmod>
     </url>
     <url>
          <loc>https://maple-pwn.github.io/study/asm/</loc>
-         <lastmod>2025-10-31</lastmod>
+         <lastmod>2025-11-26</lastmod>
     </url>
     <url>
          <loc>https://maple-pwn.github.io/study/cs/</loc>
-         <lastmod>2025-10-31</lastmod>
+         <lastmod>2025-11-26</lastmod>
+    </url>
+    <url>
+         <loc>https://maple-pwn.github.io/study/cs_qs/</loc>
+         <lastmod>2025-11-26</lastmod>
     </url>
     <url>
          <loc>https://maple-pwn.github.io/study/dw/</loc>
-         <lastmod>2025-10-31</lastmod>
+         <lastmod>2025-11-26</lastmod>
     </url>
     <url>
          <loc>https://maple-pwn.github.io/study/dw2/</loc>
-         <lastmod>2025-10-31</lastmod>
+         <lastmod>2025-11-26</lastmod>
     </url>
     <url>
          <loc>https://maple-pwn.github.io/study/eda/</loc>
-         <lastmod>2025-10-31</lastmod>
+         <lastmod>2025-11-26</lastmod>
     </url>
     <url>
          <loc>https://maple-pwn.github.io/study/lisan/</loc>
-         <lastmod>2025-10-31</lastmod>
+         <lastmod>2025-11-26</lastmod>
     </url>
     <url>
          <loc>https://maple-pwn.github.io/testpage/test/</loc>
-         <lastmod>2025-10-31</lastmod>
+         <lastmod>2025-11-26</lastmod>
     </url>
 </urlset>
