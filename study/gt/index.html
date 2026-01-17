@@ -1,0 +1,2119 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://maple-pwn.github.io/study/gt/">
+      
+      
+        <link rel="prev" href="../dw2/">
+      
+      
+        <link rel="next" href="../lisan/">
+      
+      
+      <link rel="icon" href="../../images/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>概率与统计 - Maple's blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../resources/css/extra.css">
+    
+      <link rel="stylesheet" href="../../resources/css/tittle.css">
+    
+      <link rel="stylesheet" href="../../resources/css/leftsidebar.css">
+    
+      <link rel="stylesheet" href="https://static.zeoseven.com/zsft/292/main/result.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Maple&#39;s blog" class="md-header__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Maple's blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              概率与统计
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../dw/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  校内学习相关笔记
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../testpage/test/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  功能测试页
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Maple&#39;s blog" class="md-nav__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    Maple's blog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    校内学习相关笔记
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            校内学习相关笔记
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    大学物理(十二、十三章)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dw2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    大学物理(十四、十五章)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    概率与统计
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    概率与统计
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      第一章 随机事件和概率
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      第二章 随机变量及其分布
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第二章 随机变量及其分布">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bnp" class="md-nav__link">
+    <span class="md-ellipsis">
+      二项分布 \(B(n,p)\)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#0-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      0-1分布
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gep" class="md-nav__link">
+    <span class="md-ellipsis">
+      几何分布 \(Ge(p)\)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plambdapilambda" class="md-nav__link">
+    <span class="md-ellipsis">
+      泊松分布 \(P(\lambda)\)/\(\pi(\lambda)\)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hnmn" class="md-nav__link">
+    <span class="md-ellipsis">
+      超几何分布 \(H(n,M,N)\)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      连续型随机变量的分布
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="连续型随机变量的分布">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uab" class="md-nav__link">
+    <span class="md-ellipsis">
+      均匀分布 \(U(a,b)\)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#elambda" class="md-nav__link">
+    <span class="md-ellipsis">
+      指数分布 \(E(\lambda)\)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nmusigma2" class="md-nav__link">
+    <span class="md-ellipsis">
+      正态分布 \(N(\mu,\sigma^2)\)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      第三章 多维随机变量及其分布
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      第四章 数字特征
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第四章 数字特征">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      切比雪夫不等式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      协方差
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      相关系数
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      第五章 大数定理和中心极限定理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第五章 大数定理和中心极限定理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#x_1x_2cdotsx_ncdots-dx_i-forall-epsilon0" class="md-nav__link">
+    <span class="md-ellipsis">
+      切比雪夫大数定律 切比雪夫不等式 设 \(X_1,X_2,\cdots,X_n,\cdots\) 是一列两两不想关的随机变量序列，期望和方差均存在，且方差 \(D(X_i)\) 一致有界，则对于 \(\forall \epsilon&gt;0\) 有
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      辛钦大数定律
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      伯努利大数定律
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      中心极限定理 中心极限定理
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      第六章 数理统计基本概念
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第六章 数理统计基本概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      三大抽样分布 ：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x_1x_2dotsx_n-xsim-nmusigma2" class="md-nav__link">
+    <span class="md-ellipsis">
+      正态总体抽样分布 一个正态总体 假设 \(X_1,X_2,\dots,X_n\) 是来自正态总体 \(X\sim N(\mu,\sigma^2)\) 的样本，样本均值与样本方差分别是
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      第七章 点估计与估计量的评价
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第七章 点估计与估计量的评价">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      矩估计法
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x-pxa_ipa_ithetaquad-i12ldotsquad-thetaintheta" class="md-nav__link">
+    <span class="md-ellipsis">
+      最大似然估计法 似然函数 ** 离散型总体 \(X\)，设 \(P\{X=a_i\}=p(a_i;\theta),\quad i=1,2,\ldots,\quad \theta\in\Theta\)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      第八章 区间估计
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21-22-ba" class="md-nav__link">
+    <span class="md-ellipsis">
+      21-22 第二学期 概统B（A卷）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      随机变量函数的分布
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="随机变量函数的分布">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      习题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      小公式
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lisan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    离散数学
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cs_final/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    计组部分笔记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cs_exam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    计组部分试卷&重点题目分析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    毛中特
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    数字逻辑
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../asm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    汇编速通
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    功能测试页
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            功能测试页
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testpage/test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    test
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      第一章 随机事件和概率
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      第二章 随机变量及其分布
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第二章 随机变量及其分布">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bnp" class="md-nav__link">
+    <span class="md-ellipsis">
+      二项分布 \(B(n,p)\)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#0-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      0-1分布
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gep" class="md-nav__link">
+    <span class="md-ellipsis">
+      几何分布 \(Ge(p)\)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plambdapilambda" class="md-nav__link">
+    <span class="md-ellipsis">
+      泊松分布 \(P(\lambda)\)/\(\pi(\lambda)\)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hnmn" class="md-nav__link">
+    <span class="md-ellipsis">
+      超几何分布 \(H(n,M,N)\)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      连续型随机变量的分布
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="连续型随机变量的分布">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uab" class="md-nav__link">
+    <span class="md-ellipsis">
+      均匀分布 \(U(a,b)\)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#elambda" class="md-nav__link">
+    <span class="md-ellipsis">
+      指数分布 \(E(\lambda)\)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nmusigma2" class="md-nav__link">
+    <span class="md-ellipsis">
+      正态分布 \(N(\mu,\sigma^2)\)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      第三章 多维随机变量及其分布
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      第四章 数字特征
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第四章 数字特征">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      切比雪夫不等式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      协方差
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      相关系数
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      第五章 大数定理和中心极限定理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第五章 大数定理和中心极限定理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#x_1x_2cdotsx_ncdots-dx_i-forall-epsilon0" class="md-nav__link">
+    <span class="md-ellipsis">
+      切比雪夫大数定律 切比雪夫不等式 设 \(X_1,X_2,\cdots,X_n,\cdots\) 是一列两两不想关的随机变量序列，期望和方差均存在，且方差 \(D(X_i)\) 一致有界，则对于 \(\forall \epsilon&gt;0\) 有
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      辛钦大数定律
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      伯努利大数定律
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      中心极限定理 中心极限定理
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      第六章 数理统计基本概念
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第六章 数理统计基本概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      三大抽样分布 ：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x_1x_2dotsx_n-xsim-nmusigma2" class="md-nav__link">
+    <span class="md-ellipsis">
+      正态总体抽样分布 一个正态总体 假设 \(X_1,X_2,\dots,X_n\) 是来自正态总体 \(X\sim N(\mu,\sigma^2)\) 的样本，样本均值与样本方差分别是
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      第七章 点估计与估计量的评价
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第七章 点估计与估计量的评价">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      矩估计法
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x-pxa_ipa_ithetaquad-i12ldotsquad-thetaintheta" class="md-nav__link">
+    <span class="md-ellipsis">
+      最大似然估计法 似然函数 ** 离散型总体 \(X\)，设 \(P\{X=a_i\}=p(a_i;\theta),\quad i=1,2,\ldots,\quad \theta\in\Theta\)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      第八章 区间估计
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21-22-ba" class="md-nav__link">
+    <span class="md-ellipsis">
+      21-22 第二学期 概统B（A卷）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      随机变量函数的分布
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="随机变量函数的分布">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      习题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      小公式
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h2 id="_1">第一章 随机事件和概率</h2>
+<p><span class="arithmatex">\(P(AB)=P(A)P(B)\)</span> 则称事件 <span class="arithmatex">\(A、B\)</span> 独立</p>
+<p><mark>全概率公式</mark> ：<span class="arithmatex">\(P(A)=\displaystyle\sum_{i=1}^{n}P(A|B_i)P(B_i)\)</span></p>
+<h2 id="_2">第二章 随机变量及其分布</h2>
+<ul>
+<li>设随机试验的样本空间，<span class="arithmatex">\(X=X(\omega)\)</span> 是定义在样本空间 <span class="arithmatex">\(\Omega\)</span> 上的实值单值函数，称 <span class="arithmatex">\(X=X(\omega)\)</span> 为 <strong>随机变量</strong> ，一般用大写字母 <span class="arithmatex">\(X,Y,Z,\cdots\)</span> 等表示随机变量，用小写字母 <span class="arithmatex">\(x,y,z,\cdots\)</span> 表示随机变量的取值</li>
+<li><strong>连续性随机变量 ** ：设 <span class="arithmatex">\(X\)</span> 是一个随机变量， <span class="arithmatex">\(x\)</span> 是任意实数，函数 <span class="arithmatex">\(F(x)=P\text\{X \le x\text\},-\infty&lt;x&lt;+\infty\)</span> 称为 ** <span class="arithmatex">\(X\)</span> 的分布函数，表示 <span class="arithmatex">\(X\)</span> 的取值落在实数 <span class="arithmatex">\(x\)</span> 左侧的概率</strong> ## 常见的离散型随机变量的分布</li>
+</ul>
+<h3 id="bnp">二项分布 <span class="arithmatex">\(B(n,p)\)</span></h3>
+<p>随机变量 <span class="arithmatex">\(X\)</span> 表示 <span class="arithmatex">\(n\)</span> 重伯努利试验中事件 <span class="arithmatex">\(A\)</span> 发生的次数，记每次试验中事件 <span class="arithmatex">\(A\)</span> 发生的概率为 <span class="arithmatex">\(p\)</span>，则 <span class="arithmatex">\(X\)</span> 的分布律为</p>
+<div class="arithmatex">\[
+P\{X=k\}=
+C_n^kp^k(1-p)^{n-k}
+\]</div>
+<h3 id="0-1">0-1分布</h3>
+<p>设随机变量 <span class="arithmatex">\(X\)</span> 只可能取 0 与 1两个值，它的分布律为</p>
+<div class="arithmatex">\[
+P\{X=k\}=
+p^k(1-p)^{1-k},
+k=0,1,(0&lt;p&lt;1)
+\]</div>
+<h3 id="gep">几何分布 <span class="arithmatex">\(Ge(p)\)</span></h3>
+<p>可列重伯努利试验中，记每次试验中事件 <span class="arithmatex">\(A\)</span> 发生的概率为 <span class="arithmatex">\(p\)</span>，随机变量 <span class="arithmatex">\(X\)</span> 表示事件 <span class="arithmatex">\(A\)</span> <strong>首次发生时的试验次数</strong> ，其分布律为</p>
+<div class="arithmatex">\[
+P\{X=k\}=
+(1-p)^{k-1}p
+\;\;\;\;(k=1,2,\cdots)
+\]</div>
+<h3 id="plambdapilambda">泊松分布 <span class="arithmatex">\(P(\lambda)\)</span>/<span class="arithmatex">\(\pi(\lambda)\)</span></h3>
+<p>设随机变量 <span class="arithmatex">\(X\)</span> 所有可能取得值为 <span class="arithmatex">\(0,1,2,\cdots\)</span>，其分布律为</p>
+<div class="arithmatex">\[
+P\{X=k\}=
+\displaystyle\dfrac{\lambda^ke^{-\lambda}}{k!}
+,(k=0,1,2,\cdots)
+\]</div>
+<p>其中 <span class="arithmatex">\(\lambda&gt;0\)</span> 是常数，则称 <span class="arithmatex">\(X\)</span> 服从参数为 <span class="arithmatex">\(\lambda\)</span> 的泊松分布 <strong>泊松定理</strong> ：设 <span class="arithmatex">\(\lambda&gt;0\)</span> 是一个常数， <span class="arithmatex">\(n\)</span> 是任意正整数，设 <span class="arithmatex">\(\lambda=np_n\)</span> ，则对于任意固定的非负整数 <span class="arithmatex">\(k\)</span> 有</p>
+<div class="arithmatex">\[
+\lim_{n\rightarrow\infty}P\{X=k\}=
+\lim_{n\rightarrow\infty}C_n^kp_n^k(1-p_n)^{n-k}=
+\dfrac{(np_n)^k}{k!}e^{-np_n}
+\;\;(k=0,1,2,\cdots)
+\]</div>
+<h3 id="hnmn">超几何分布 <span class="arithmatex">\(H(n,M,N)\)</span></h3>
+<p>随机变量 <span class="arithmatex">\(X\)</span> 的分布律为</p>
+<div class="arithmatex">\[
+P\{X=k\}=
+\displaystyle\dfrac{C_M^KC_{N-M}^{n-k}}{C_N^n}
+,k=max\{0,n-N+M\},\cdots,min\{n,M\}
+\]</div>
+<p><img alt="pasted-image-20260107215152.png" src="../../images/Pasted%20image%2020260107215152.png" /></p>
+<h2 id="_3">连续型随机变量的分布</h2>
+<h3 id="uab">均匀分布 <span class="arithmatex">\(U(a,b)\)</span></h3>
+<p>连续性随机变量 <span class="arithmatex">\(X\)</span> 的概率密度为</p>
+<div class="arithmatex">\[
+f(x)=
+\begin{cases}
+\dfrac{1}{b-a}, &amp; a&lt;x&lt;b,\\
+0, &amp; \text{其他}.
+\end{cases}
+\]</div>
+<h3 id="elambda">指数分布 <span class="arithmatex">\(E(\lambda)\)</span></h3>
+<p>连续性随机变量 <span class="arithmatex">\(X\)</span> 的概率密度为</p>
+<div class="arithmatex">\[
+f(x)=
+\begin{cases}
+\lambda e^{-\lambda x}\;\;\;,x&gt;0\\
+0\;\;\;\;\;\;\;\;\;\;,x\le 0
+\end{cases}
+\]</div>
+<p><span class="arithmatex">\(X\)</span> 的分布函数为</p>
+<div class="arithmatex">\[
+F(x)=
+\begin{cases}
+1-e^{-\lambda x}, &amp; x&gt;0,\\
+0, &amp;x\le 0
+\end{cases}
+\]</div>
+<h3 id="nmusigma2">正态分布 <span class="arithmatex">\(N(\mu,\sigma^2)\)</span></h3>
+<p>连续型随机变量 <span class="arithmatex">\(X\)</span> 的概率密度为</p>
+<div class="arithmatex">\[
+f(x)=
+\displaystyle\dfrac{1}{\sqrt{2\pi}\sigma}e^{-\dfrac{(x-\mu)^2}{2\sigma^2}},-\infty&lt;x&lt;+\infty
+\]</div>
+<ul>
+<li>性质<ul>
+<li>曲线关于 <span class="arithmatex">\(x=\mu\)</span> 对称，且当 <span class="arithmatex">\(x=\mu\)</span> 的时候，<span class="arithmatex">\(f(x)_{max}=\dfrac{1}{\sqrt{2\pi}\sigma}\)</span></li>
+<li>曲线以 <span class="arithmatex">\(Ox\)</span> 轴为水平渐进线</li>
+</ul>
+</li>
+<li>常用结论<ul>
+<li><span class="arithmatex">\(P\{X&gt;\mu\}=P\{X&lt;\mu\}=\dfrac{1}{2}\)</span></li>
+<li><span class="arithmatex">\(Y=aX+b\sim N(a\mu+b,a^2\sigma^2),a\ne 0\)</span>
+<mark>正态分布的标准化</mark>
+若 <span class="arithmatex">\(X\sim N(\mu,\sigma^2)\)</span>,则 <span class="arithmatex">\(Z=\dfrac{X-\mu}{\sigma}\sim N(0,1)\)</span></li>
+</ul>
+</li>
+</ul>
+<h2 id="_4">第三章 多维随机变量及其分布</h2>
+<h2 id="_5">第四章 数字特征</h2>
+<h3 id="_6">切比雪夫不等式</h3>
+<p>设随机变量具有数学期望 <span class="arithmatex">\(E(X)=\mu\)</span> 方差 <span class="arithmatex">\(D(X)=\sigma^2\)</span> ,则对于任意正数 <span class="arithmatex">\(\epsilon\)</span> ,有以下不等式</p>
+<div class="arithmatex">\[
+P\{|X-E(X)|\ge\epsilon\}\le\dfrac{D(X)}{\epsilon^2}
+\]</div>
+<h3 id="_7">协方差</h3>
+<p>对于二维随机变量 <span class="arithmatex">\((X,Y)\)</span>，若 <span class="arithmatex">\(E(X-E(X))(Y-E(Y))\)</span> 存在，则称它为 <span class="arithmatex">\(X\)</span> 与 <span class="arithmatex">\(Y\)</span> 的协方差，记作 <span class="arithmatex">\(Cov(X,Y)\)</span> </p>
+<div class="arithmatex">\[
+Cov(X,Y)=E(XY)-E(X)E(Y)
+\]</div>
+<p>性质
+<img alt="pasted-image-20260108140000.png" src="../../images/Pasted%20image%2020260108140000.png" /></p>
+<h3 id="_8">相关系数</h3>
+<p>对于二维随机变量 <span class="arithmatex">\((X,Y)\)</span> 若 <span class="arithmatex">\(D(X)\ne 0,D(Y)\ne 0\)</span> 则称</p>
+<div class="arithmatex">\[
+\displaystyle\rho_{XY}=\dfrac{Cov(X,Y)}{\sqrt{D(X)}\sqrt{D(Y)}}
+\]</div>
+<p>为X和Y的相关系数，表明两者线性相关的程度，绝对值越大，线性相关的程度越高</p>
+<h2 id="_9">第五章 大数定理和中心极限定理</h2>
+<p>大数定理的本质其实是频率收敛为概率</p>
+<h3 id="x_1x_2cdotsx_ncdots-dx_i-forall-epsilon0">切比雪夫大数定律 <strong>切比雪夫不等式</strong> 设 <span class="arithmatex">\(X_1,X_2,\cdots,X_n,\cdots\)</span> 是一列两两不想关的随机变量序列，期望和方差均存在，且方差 <span class="arithmatex">\(D(X_i)\)</span> 一致有界，则对于 <span class="arithmatex">\(\forall \epsilon&gt;0\)</span> 有</h3>
+<div class="arithmatex">\[
+\lim_{n \to \infty}
+P\left(
+\left|
+\frac{1}{n}\sum_{i=1}^{n} X_i
+\frac{1}{n}\sum_{i=1}^{n} E X_i
+\right|
+&lt; \varepsilon
+\right)
+= 1
+\]</div>
+<p>特别的，如果 <span class="arithmatex">\(X_1,X_2,\cdots,X_n,\cdots\)</span> 有相同的期望 <span class="arithmatex">\(\mu\)</span> 则有</p>
+<div class="arithmatex">\[
+\lim_{n \to \infty}
+P\left(
+\left|
+\frac{1}{n}\sum_{i=1}^{n} X_i
+\mu
+\right|
+&lt; \varepsilon
+\right)
+= 1
+\]</div>
+<h3 id="_10">辛钦大数定律</h3>
+<p>设 <span class="arithmatex">\(\{X_n\}\)</span> 为一独立同分布的随机变量序列，且数学期望存在， <span class="arithmatex">\(E(X_i)=\mu\)</span> ,则对任意的 <span class="arithmatex">\(\epsilon&gt;0\)</span> ，都有</p>
+<div class="arithmatex">\[
+\lim_{n \to \infty}
+P\left(
+\left|
+\frac{1}{n}\sum_{i=1}^{n} X_i
+\mu
+\right|
+&lt; \varepsilon
+\right)
+= 1
+\]</div>
+<h3 id="_11">伯努利大数定律</h3>
+<p>设 <span class="arithmatex">\(f_A\)</span> 是 <span class="arithmatex">\(n\)</span> 重伯努利试验中事件 <span class="arithmatex">\(A\)</span> 发生的次数， <span class="arithmatex">\(p\)</span> 是 <span class="arithmatex">\(A\)</span> 在每次试验中发生的概率，则对于任意的 <span class="arithmatex">\(\epsilon&gt;0\)</span> 都有</p>
+<div class="arithmatex">\[
+\lim_{n \to \infty}
+P\left(
+\left|
+\frac{f_A}{n}
+p
+\right|
+&lt; \varepsilon
+\right)
+= 1
+\]</div>
+<h3 id="_12">中心极限定理 <strong>中心极限定理</strong></h3>
+<p><strong>列维–林德伯格定理</strong> ：设 <span class="arithmatex">\(X_1,X_2,\dots,X_n,\dots\)</span> 是一列独立同分布的随机变量，且 <span class="arithmatex">\(E X_k=\mu,\; D X_k=\sigma^2&gt;0,\; k=1,2,\dots\)</span>，则对任意 <span class="arithmatex">\(x\in\mathbb{R}\)</span>，有</p>
+<div class="arithmatex">\[
+\lim_{n\to\infty}
+P\!\left(
+\frac{\sum_{k=1}^{n} X_k - n\mu}{\sqrt{n}\,\sigma}
+\le x
+\right)
+=
+\Phi(x)
+=
+\frac{1}{\sqrt{2\pi}}
+\int_{-\infty}^{x} e^{-t^2/2}\,dt
+\]</div>
+<p><strong>棣莫弗–拉普拉斯定理</strong> ：在 <span class="arithmatex">\(n\)</span> 重伯努利试验中，事件 <span class="arithmatex">\(A\)</span> 在每次试验中出现的概率为 <span class="arithmatex">\(p\,(0&lt;p&lt;1)\)</span>，<span class="arithmatex">\(X_n\)</span> 为 <span class="arithmatex">\(n\)</span> 次试验中事件 <span class="arithmatex">\(A\)</span> 发生的次数，则对任意 <span class="arithmatex">\(x\in\mathbb{R}\)</span> 有</p>
+<div class="arithmatex">\[
+\lim_{n\to\infty}
+P\!\left(
+\frac{X_n-np}{\sqrt{n p(1-p)}}
+\le x
+\right)
+=
+\Phi(x)
+=
+\frac{1}{\sqrt{2\pi}}
+\int_{-\infty}^{x} e^{-t^2/2}\,dt
+\]</div>
+<hr />
+<p>随机变量 <span class="arithmatex">\(X_1,X_2,\cdots,X_n,\cdots\)</span> 相互独立，服从同一分布，且具有数学期望和方差为 <span class="arithmatex">\(\displaystyle E(X_k)=\mu\)</span> , $D(X_k)=\sigma^2&gt;0 (k=1,2,\cdots) 则随机变量之和 <span class="arithmatex">\(\displaystyle \sum_{k=1}^nX_k\)</span> 的标准化变量为</p>
+<div class="arithmatex">\[
+\displaystyle
+Y_n=
+\dfrac{
+\displaystyle\sum_{k=1}^{n}X_k-E(\sum_{k=1}^{n}X_k)
+}{
+\sqrt{
+D(\displaystyle\sum_{k=1}^{n}X_k)
+}
+}
+=
+\dfrac{
+\displaystyle\sum_{k=1}^{n}X_k-n\mu
+}{
+\sqrt{n}\sigma
+}
+\]</div>
+<p>的分布函数 <span class="arithmatex">\(F_n(x)\)</span> 对于任意 <span class="arithmatex">\(x\)</span> 满足</p>
+<div class="arithmatex">\[
+\begin{align}
+\lim_{n\rightarrow\infty}F_n(x)=&amp;
+\lim_{n\rightarrow\infty}P\left\{
+\dfrac{
+\sum_{k=1}^{n}X_k-n\mu
+}{
+\sqrt{n}\sigma
+}
+\le
+x
+\right\}\\
+=&amp;\int_{-\infty}^{x}\dfrac{1}{\sqrt{2\pi}}e^{-t^2/2}\mathrm{d}t=\Phi(x)
+\end{align}
+\]</div>
+<h2 id="_13">第六章 数理统计基本概念</h2>
+<ul>
+<li><mark>总体</mark> ：研究对象某项数量指标的全体称为 <strong>总体 ** ，构成总体的每个成员称为 ** 个体</strong><ul>
+<li><em>例如，研究一批机器的寿命，则全部机器的寿命构成问题的总体，每一台机器的寿命是一个个体，总体是寿命 <span class="arithmatex">\(X\)</span> 服从的分布</em></li>
+</ul>
+</li>
+<li><mark>样本</mark> ：在相同条件下对总体 <span class="arithmatex">\(X\)</span> 进行 <span class="arithmatex">\(n\)</span> 次简单随机抽样，得到的 <span class="arithmatex">\(n\)</span> 个观察结果。 <span class="arithmatex">\(X_1,X_2,\dots,X_n\)</span> <strong>相互独立 ** 且 ** 同分布于总体 ** <span class="arithmatex">\(X\)</span>，称 <span class="arithmatex">\(X_1,X_2,\dots,X_n\)</span> 为来自总体 <span class="arithmatex">\(X\)</span> 的一个 ** 简单随机样本 ** ，简称 ** 样本 ** ，其中 <span class="arithmatex">\(n\)</span> 称为 ** 样本容量 ** .抽样得到的一组实数记为 <span class="arithmatex">\(x_1,x_2,\dots,x_n\)</span>，称为 ** 样本观察值 ** ，简称 ** 样本值</strong> 。<ul>
+<li>*例如，从该批机器中随机抽取 20 台测定其寿命，既得到容量为 20 的样本观测值 <span class="arithmatex">\(x_1,x_2,\cdots,x_{20}\)</span> 抽取前无法预知每台样本的寿命，因此样本 <span class="arithmatex">\(X_1,X_2,\cdots,X_{20}\)</span> 是随机变量</li>
+</ul>
+</li>
+<li><mark>经验分布函数</mark> ：设 <span class="arithmatex">\(X_1,X_2,\cdots,X_n\)</span> 为总体 <span class="arithmatex">\(X\)</span> 的一个样本，其样本值为 <span class="arithmatex">\(x_1,x_2,\cdots,x_n\)</span>,则称函数</li>
+</ul>
+<p>\displaystyle F_n(x)=\dfrac{{x_1,x_2,\cdots,x_n中小于或等于x的个数}}{n}(-\infty&lt;x&lt;+\infty)
+为样本值 <span class="arithmatex">\(x_1,x_2,\cdots,x_n\)</span> 的经验分布函数
+- <mark>统计量和统计值</mark> 定义 不含任何未知参数的样本函数 <span class="arithmatex">\(g(X_1,X_2,\dots,X_n)\)</span> 称为 <strong>统计量 ** 。设 <span class="arithmatex">\(x_1,x_2,\dots,x_n\)</span> 是对应于样本 <span class="arithmatex">\(X_1,X_2,\dots,X_n\)</span> 的样本值，则称 <span class="arithmatex">\(g(x_1,x_2,\dots,x_n)\)</span> 是 <span class="arithmatex">\(g(X_1,X_2,\dots,X_n)\)</span> 的观测值，称为 ** 统计值</strong> 。
+- <mark>常用统计量</mark>
+    - <strong>样本均值</strong> ：</p>
+<div class="arithmatex">\[
+\bar X = \frac{1}{n}\sum_{i=1}^{n} X_i
+\]</div>
+<ul>
+<li><strong>样本方差</strong> ：</li>
+</ul>
+<div class="arithmatex">\[
+S^2=\frac{1}{n-1}\sum_{i=1}^{n}(X_i-\bar X)^2=\frac{1}{n-1}\left(\sum_{i=1}^{n} X_i^2 - n\bar X^2\right)
+\]</div>
+<ul>
+<li><strong>样本标准差</strong> ：</li>
+</ul>
+<div class="arithmatex">\[
+S = \sqrt{S^2}=\sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(X_i-\bar X)^2}
+\]</div>
+<ul>
+<li><strong>样本k阶原点矩</strong> ：</li>
+</ul>
+<div class="arithmatex">\[
+A_k=\frac{1}{n}\sum_{i=1}^{n} X_i^k,\quad k=1,2,\dots
+\]</div>
+<ul>
+<li><strong>样本k阶中心距</strong> ：</li>
+</ul>
+<div class="arithmatex">\[
+B_k=\frac{1}{n}\sum_{i=1}^{n}(X_i-\bar X)^k,\quad k=1,2,\dots
+\]</div>
+<h3 id="_14"><mark>三大抽样分布</mark> ：</h3>
+<p>统计量的分布称为 <strong>抽样分布</strong>
+ <strong><span class="arithmatex">\(\chi^2\)</span> 分布：</strong> 设 <span class="arithmatex">\(X_1,X_2,\dots,X_n\)</span> 是来自总体 <span class="arithmatex">\(N(0,1)\)</span> 的样本，则统计量</p>
+<div class="arithmatex">\[
+\chi^2 = X_1^2 + X_2^2 + \cdots + X_n^2
+\]</div>
+<p>服从自由度为 <span class="arithmatex">\(n\)</span> 的 <span class="arithmatex">\(\chi^2\)</span> 分布，记为 <span class="arithmatex">\(\chi^2 \sim \chi^2(n)\)</span>。 
+- 可加性
+- <span class="arithmatex">\(\chi^2\sim\chi^2(n)\)</span> 则有 <span class="arithmatex">\(E(\chi^2)=n,D(\chi^2)=2n\)</span>
+--- <strong>t分布</strong> ：设 <span class="arithmatex">\(X\sim N(0,1)\)</span> ,<span class="arithmatex">\(Y\sim\chi^2(n)\)</span> 且 <span class="arithmatex">\(X,Y\)</span> 独立，则称随机变量</p>
+<div class="arithmatex">\[
+t=\dfrac{X}{\sqrt{Y/n}}
+\]</div>
+<p>服从自由度为 <span class="arithmatex">\(n\)</span> 的 <span class="arithmatex">\(t\)</span> 分布，记为 <span class="arithmatex">\(t\sim t(n)\)</span>
+- 偶函数
+- <span class="arithmatex">\(t_{1-\alpha}=-t_{\alpha}(n)\)</span>
+--- <strong>F分布</strong> 设 <span class="arithmatex">\(X \sim \chi^2(n_1)\)</span>，<span class="arithmatex">\(Y \sim \chi^2(n_2)\)</span>，且 <span class="arithmatex">\(X,Y\)</span> 独立，则称随机变量</p>
+<div class="arithmatex">\[
+F = \frac{X / n_1}{Y / n_2}
+\]</div>
+<p>服从自由度为 <span class="arithmatex">\((n_1,n_2)\)</span> 的 <span class="arithmatex">\(F\)</span> 分布，记为 <span class="arithmatex">\(F \sim F(n_1,n_2)\)</span>，其中 <span class="arithmatex">\(n_1\)</span> 称为第一自由度，<span class="arithmatex">\(n_2\)</span> 称为第二自由度。
+- 若 <span class="arithmatex">\(F\sim F(n_1,n_2)\)</span> ，则 <span class="arithmatex">\(\dfrac{1}{F}\sim F(n_2,n_1)\)</span>
+- <span class="arithmatex">\(F_{1-\alpha}(n_1,n_2)=\dfrac{1}{F_\alpha(n_2,n_1)}\)</span></p>
+<h3 id="x_1x_2dotsx_n-xsim-nmusigma2">正态总体抽样分布 <strong>一个正态总体</strong> 假设 <span class="arithmatex">\(X_1,X_2,\dots,X_n\)</span> 是来自正态总体 <span class="arithmatex">\(X\sim N(\mu,\sigma^2)\)</span> 的样本，样本均值与样本方差分别是</h3>
+<div class="arithmatex">\[
+\bar X=\frac{1}{n}\sum_{i=1}^{n}X_i,
+\qquad
+S^2=\frac{1}{n-1}\sum_{i=1}^{n}(X_i-\bar X)^2
+\]</div>
+<p>则有以下结论：
+<mark>1）</mark> 样本均值的分布</p>
+<div class="arithmatex">\[
+\bar X \sim N\!\left(\mu,\frac{\sigma^2}{n}\right),
+\qquad
+\frac{(\bar X-\mu)\sqrt n}{\sigma}\sim N(0,1)
+\]</div>
+<p><mark>2）</mark> 样本均值 <span class="arithmatex">\(\bar X\)</span> 与样本方差 <span class="arithmatex">\(S^2\)</span> 相互独立； == 3）== 卡方分布性质</p>
+<div class="arithmatex">\[
+\frac{(n-1)S^2}{\sigma^2}
+=
+\frac{\displaystyle\sum_{i=1}^{n}(X_i-\bar X)^2}{\sigma^2}
+\sim \chi^2(n-1),
+\qquad
+\frac{\displaystyle\sum_{i=1}^{n}(X_i-\mu)^2}{\sigma^2}
+\sim \chi^2(n)
+\]</div>
+<p><mark>4）</mark> t 分布</p>
+<div class="arithmatex">\[
+T=\frac{\bar X-\mu}{S/\sqrt n}
+\sim t(n-1)
+\]</div>
+<p>--- <strong>两个正态总体</strong> 设 <span class="arithmatex">\(X_1,\dots,X_{n_1}\)</span> 是取自总体 <span class="arithmatex">\(X\sim N(\mu_1,\sigma_1^2)\)</span> 的一个样本，<span class="arithmatex">\(Y_1,\dots,Y_{n_2}\)</span> 是取自总体 <span class="arithmatex">\(Y\sim N(\mu_2,\sigma_2^2)\)</span> 的一个样本，且这两个样本相互独立，即 <span class="arithmatex">\(X_1,\dots,X_{n_1},Y_1,\dots,Y_{n_2}\)</span>是 <span class="arithmatex">\(n_1+n_2\)</span> 个相互独立的随机变量，则有：
+<mark>1）</mark> 均值之差的分布</p>
+<div class="arithmatex">\[
+\frac{(\bar X-\bar Y)-(\mu_1-\mu_2)}
+{\sqrt{\dfrac{\sigma_1^2}{n_1}+\dfrac{\sigma_2^2}{n_2}}}
+\sim N(0,1)
+\]</div>
+<p><mark>2）</mark> 方差比的分布</p>
+<div class="arithmatex">\[
+\frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}
+\sim F(n_1-1,n_2-1)
+\]</div>
+<p><mark>3）</mark> 当 <span class="arithmatex">\(\sigma_1^2=\sigma_2^2=\sigma^2\)</span> 时</p>
+<div class="arithmatex">\[
+\frac{(\bar X-\bar Y)-(\mu_1-\mu_2)}
+{S_w\sqrt{\dfrac{1}{n_1}+\dfrac{1}{n_2}}}
+\sim t(n_1+n_2-2)
+\]</div>
+<p>其中</p>
+<div class="arithmatex">\[
+S_1^2=\frac{1}{n_1-1}\sum_{i=1}^{n_1}(X_i-\bar X)^2,
+\qquad
+S_2^2=\frac{1}{n_2-1}\sum_{i=1}^{n_2}(Y_i-\bar Y)^2,
+S_w^2=\frac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2}.
+\]</div>
+<h2 id="_15">第七章 点估计与估计量的评价</h2>
+<p>设总体分布函数 <span class="arithmatex">\(F(x;\theta)\)</span> 的形式为已知， <span class="arithmatex">\(\theta\)</span> 是 <strong>待估参数</strong> ，<span class="arithmatex">\(X_1,X_2,\dots,X_n\)</span> 为总体 <span class="arithmatex">\(X\)</span> 的一个样本， 其样本值为<span class="arithmatex">\(x_1,x_2,\dots,x_n\)</span>
+点估计即构造一个适当的统计量 <span class="arithmatex">\(\hat\theta=\theta(X_1,X_2,\dots,X_n)\)</span>，用它的观测值 <span class="arithmatex">\(\hat\theta=\theta(x_1,x_2,\dots,x_n)\)</span>作为未知参数 <span class="arithmatex">\(\theta\)</span> 的近似值。称 <span class="arithmatex">\(\hat\theta=\theta(X_1,X_2,\dots,X_n)\)</span>为 <span class="arithmatex">\(\theta\)</span> 的 <strong>估计量 ** ，<span class="arithmatex">\(\hat\theta=\theta(x_1,x_2,\dots,x_n)\)</span> 为 <span class="arithmatex">\(\theta\)</span> 的 ** 估计值</strong> 。</p>
+<h3 id="_16">矩估计法</h3>
+<p>用样本矩估计同阶的总体矩，用样本矩的函数估计总体矩的函数，这种估计方法称为参数的 <strong>矩估计</strong> !!!note
+    步骤
+    估计 k 个位置参数 <span class="arithmatex">\(\theta_1,\theta_2,\cdots,\theta_n\)</span> <span class="arithmatex">\(X_1,X_2,\cdots,X_n\)</span> 为来自总体 <span class="arithmatex">\(X\)</span> 的样本，令</p>
+<div class="arithmatex">\[
+\dfrac{1}{n}\displaystyle\sum_{i=1}^{n}X_i^l=E(X^l)(l=1,2,\cdots,k)
+\]</div>
+<p>解得 <span class="arithmatex">\(\hat\theta_l=\theta(X_1,\cdots,X_n)\)</span></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<ol>
+<li>矩估计使用前提是有总体矩的存在</li>
+<li>用样本一阶原点矩 <span class="arithmatex">\(\bar X\)</span> 估计期望 <span class="arithmatex">\(E(X)\)</span> </li>
+<li>用样本二阶中心矩 <span class="arithmatex">\(\dfrac{1}{n}\displaystyle\sum_{i=1}^{n}(X_i-\bar X)^2\)</span> 估计方差 <span class="arithmatex">\(D(X)\)</span></li>
+</ol>
+</div>
+<h3 id="x-pxa_ipa_ithetaquad-i12ldotsquad-thetaintheta">最大似然估计法 <strong>似然函数 ** 离散型总体</strong> <span class="arithmatex">\(X\)</span>，设  <span class="arithmatex">\(P\{X=a_i\}=p(a_i;\theta),\quad i=1,2,\ldots,\quad \theta\in\Theta\)</span></h3>
+<p>则称  </p>
+<div class="arithmatex">\[
+L(\theta)=L(x_1,\ldots,x_n;\theta)=\prod_{i=1}^{n} p(x_i;\theta)
+\]</div>
+<p>为该总体的似然函数。 <strong>连续型总体</strong> <span class="arithmatex">\(X\)</span>，设  <span class="arithmatex">\(X\sim f(x;\theta),\quad \theta\in\Theta\)</span> 则称  </p>
+<div class="arithmatex">\[
+L(\theta)=L(x_1,\ldots,x_n;\theta)=\prod_{i=1}^{n} f(x_i;\theta)
+\]</div>
+<p>为该总体的似然函数。</p>
+<blockquote>
+<p>将似然函数理解为恰好取到样本值的概率</p>
+</blockquote>
+<p>=最大似然估计=
+固定样本值 <span class="arithmatex">\(x_1,x_2,\ldots,x_n\)</span>，在 <span class="arithmatex">\(\theta\in\Theta\)</span> 内使似然函数 <span class="arithmatex">\(L(\theta)=L(x_1,\ldots,x_n;\theta)\)</span> 达到最大的参数值 <span class="arithmatex">\(\hat\theta(x_1,\ldots,x_n)\)</span>，作为参数 <span class="arithmatex">\(\theta\)</span> 的估计值。 <strong>最大似然估计不变性原理：</strong> 设 <span class="arithmatex">\(\hat\theta\)</span> 是未知参数 <span class="arithmatex">\(\theta\)</span> 的最大似然估计，函数 <span class="arithmatex">\(g(\theta)\)</span> 具有单值反函数，则 <span class="arithmatex">\(g(\hat\theta)\)</span> 是参数 <span class="arithmatex">\(g(\theta)\)</span> 的最大似然估计量。</p>
+<blockquote>
+<p>设总体 <span class="arithmatex">\(X\sim N(\mu,\sigma^2)\)</span>（<span class="arithmatex">\(\mu,\sigma^2\)</span> 都未知），则 <span class="arithmatex">\(EX=\mu\)</span> 的最大似然估计为 <span class="arithmatex">\(\bar X\)</span>, <span class="arithmatex">\(DX=\sigma^2\)</span> 的最大似然估计为 <span class="arithmatex">\(\frac{1}{n}\sum_{i=1}^{n}(X_i-\bar X)^2\)</span>。</p>
+</blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>步骤（以连续性总体 <span class="arithmatex">\(X\sim f(x;\theta)\)</span> 为例）
+1. 构造似然函数 <span class="arithmatex">\(L(\theta)=L(x_1,\cdots,x_n;\theta)=\displaystyle\prod_{i=1}^{n}f(x_i;\theta)\)</span>
+2. 取对数 <span class="arithmatex">\(\ln L(\theta)=L(x_1,\cdots,x_n;\theta)=\displaystyle\sum_{i=1}^{n}\ln f(x_i;\theta)\)</span>
+3. 解方程 <span class="arithmatex">\(\displaystyle\dfrac{\mathrm{d}[\ln L(\theta)]}{\mathrm{d}\theta}=0\)</span></p>
+</div>
+<h2 id="_17">第八章 区间估计</h2>
+<p>设总体 <span class="arithmatex">\(X\)</span> 的分布中含有一个未知参数 <span class="arithmatex">\(\theta\)</span>。若对于给定的概率 <span class="arithmatex">\(1-\alpha(0&lt;\alpha&lt;1)\)</span>，存在两个统计量<span class="arithmatex">\(\hat\theta_1=\hat\theta_1(X_1,X_2,\ldots,X_n)\)</span> 与 <span class="arithmatex">\(\hat\theta_2=\hat\theta_2(X_1,X_2,\ldots,X_n)\)</span>，使得  </p>
+<div class="arithmatex">\[
+P\{\hat\theta_1\le\theta\le\hat\theta_2\}=1-\alpha
+\]</div>
+<p>则随机区间 <span class="arithmatex">\((\hat\theta_1,\hat\theta_2)\)</span> 称为参数 <span class="arithmatex">\(\theta\)</span> 的置信水平（或置信度）为 <span class="arithmatex">\(1-\alpha\)</span> 的置信区间（或区间估计），<span class="arithmatex">\(\hat\theta_1\)</span> 称为置信下限，<span class="arithmatex">\(\hat\theta_2\)</span> 称为置信上限，<span class="arithmatex">\(1-\alpha\)</span> 称为置信水平。</p>
+<blockquote>
+<p>置信区间的含义：反复抽样多次（各次的样本容量相等，均为 <span class="arithmatex">\(n\)</span>）,每一组样本值确定一个区间 <span class="arithmatex">\((\hat\theta_1,\hat\theta_2)\)</span>，每个这样的区间要么包含 <span class="arithmatex">\(\theta\)</span> 的真值，要么不包含，按照伯努利大数定理，这么多区间中，包含 <span class="arithmatex">\(\theta\)</span> 真值的约占 <span class="arithmatex">\(100(1-\alpha)\%\)</span></p>
+</blockquote>
+<p>x服从指数为1的指数分布，Y=e^{-x},问Y&gt;2\3的概率</p>
+<h2 id="21-22-ba">21-22 第二学期 概统B（A卷）</h2>
+<p><img alt="pasted-image-20260109200614.png" src="../../images/Pasted%20image%2020260109200614.png" /> <strong>常数A的取值范围</strong> !!!note
+    解析
+    #分布函数性质
+    分布函数必须满足如下的基本性质：
+    1. 单调不减
+    2. <span class="arithmatex">\(0\le F(x)\le 1\)</span>
+    3. 右连续
+    4. <span class="arithmatex">\(\lim_{x\rightarrow -\infty}F(x)=0,\lim_{x\to +\infty}F(x)=1\)</span></p>
+<p>那么在区间 <span class="arithmatex">\(0\le x &lt; 1\)</span> 上有 <span class="arithmatex">\(F(x)=Ax\)</span>，根据 <strong>性质2</strong> ，可以得到 <span class="arithmatex">\(0\le Ax \le 1\)</span>
+当 <span class="arithmatex">\(x&gt;0\)</span> 的时候，上式等价于 <span class="arithmatex">\(0\le A\le \dfrac{1}{x}\)</span>，又要对于 <span class="arithmatex">\(x\in(0,1)\)</span> 均成立，那么必须要有 <span class="arithmatex">\(0\le A \le 1\)</span>
+再根据 <strong>性质3</strong> ：<span class="arithmatex">\(\displaystyle\lim_{x\to 1^{-}}F(x)=A\le F(1)=1\Rightarrow A\le 1\)</span>
+综上 <span class="arithmatex">\(\boxed{0\le A\le 1}\)</span> <strong>Y=X^2的取值范围 ** 1. ** 先确定 <span class="arithmatex">\(Y\)</span> 的取值范围</strong> ：由于 <span class="arithmatex">\(X\in [0,1]\)</span>,所以 <span class="arithmatex">\(Y\in[0,1]\)</span>
+2. <strong>求 <span class="arithmatex">\(Y\)</span> 的分布函数</strong> ：对于任意的 <span class="arithmatex">\(y\in\mathbb{R}\)</span> 都有 <span class="arithmatex">\(F_Y(y)=P(Y\le y)=P(X^2\le y)\)</span>，接下来分情况讨论
+    1. 当 <span class="arithmatex">\(y&lt;0\)</span> 有 <span class="arithmatex">\(F_Y(y)=0\)</span>
+    2. 当 <span class="arithmatex">\(0\le y &lt;1\)</span>，由于 <span class="arithmatex">\(X\ge0\)</span>，则有 <span class="arithmatex">\(X^2\le y\Leftrightarrow X\le \sqrt{y}\)</span>。因此 <span class="arithmatex">\(F_Y(y)=P(X\le \sqrt{y})=F(\sqrt{y})=A\sqrt{y}\)</span>
+    3. 当 <span class="arithmatex">\(y\ge 1\)</span>，则有 <span class="arithmatex">\(F_Y(y)=1\)</span></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>随机变量函数的分布（核心方法）</p>
+<h1 id="_18">随机变量函数的分布</h1>
+<p>若 <span class="arithmatex">\(Y=g(X)\)</span>
+通用思路一般是</p>
+</div>
+<div class="arithmatex">\[
+F_Y(y)=P(Y\le y)=P(g(X)\le y)
+\]</div>
+<p>然后：
+    1. 解不等式 <span class="arithmatex">\(g(X)\le y\)</span>
+    2. 转化为关于 <span class="arithmatex">\(X\)</span> 的事件
+    3. 用已知的 <span class="arithmatex">\(F_X(x)\)</span> 表示</p>
+<p><img alt="pasted-image-20260109203503.png" src="../../images/Pasted%20image%2020260109203503.png" /> <strong>求 X 和 Y 的边缘概率密度</strong>
+<strong>边缘概率密度的计算</strong> a. <span class="arithmatex">\(f_X(x)\)</span>
+对 <span class="arithmatex">\(y\)</span> 做积分:<span class="arithmatex">\(f_X(x)=\int_0^{x}3x\mathrm{d}y=3x^2,0\le x\le1\)</span> 其余为 <span class="arithmatex">\(0\)</span></p>
+<div class="arithmatex">\[
+\boxed{
+f_X(x)=
+\begin{cases}
+3x^2,&amp;0\le x\le1 \\
+0,&amp;其它
+\end{cases}
+}
+\]</div>
+<p>b. <span class="arithmatex">\(f_Y(y)\)</span>
+对 <span class="arithmatex">\(x\)</span> 做积分：<span class="arithmatex">\(f_Y(y)=\int_{y}^1 3x\mathrm{d}x=\left.\dfrac{3}{2}x^2\right|_{y}^{1}=\dfrac{3}{2}(1-y^2),0\le y\le1\)</span>，其余为 <span class="arithmatex">\(0\)</span></p>
+<div class="arithmatex">\[
+\boxed{
+f_Y(y)=
+\begin{cases}
+\dfrac{3}{2}(1-y^2),&amp;0\le y\le1 \\
+0,&amp;其它
+\end{cases}
+}
+\]</div>
+<p><strong>X与Y是否独立</strong> <span class="arithmatex">\(f(x,y)\ne f_X(x)f_Y(y)\)</span> 不独立 ** Z=X+2Y的概率密度**
+<strong>Z的概率密度的计算</strong> <img alt="0fe5d38918b4e3b0f9514804d937388c_720.jpg" src="../../images/0fe5d38918b4e3b0f9514804d937388c_720.jpg" /></p>
+<p><img alt="pasted-image-20260109211615.png" src="../../images/Pasted%20image%2020260109211615.png" />
+设合格品数为 <span class="arithmatex">\(X\)</span> ，则 <span class="arithmatex">\(X\sim Bin(n=200.p=0.9),\mu=E(X)=np=180,\sigma^2=np(1-p)=18\)</span> 要求</p>
+<p>P(175\le X\le 185) <strong>用切比雪夫不等式估计</strong>
+<strong>切比雪夫不等式</strong> 注意到 <span class="arithmatex">\(X\)</span> 为整数，则</p>
+<p>175\le X\le 185 \Leftrightarrow \left|X-180\right|\le 5\Leftrightarrow \left|X-180\right|&lt;5 <strong>切比雪夫不等式</strong></p>
+<div class="arithmatex">\[
+P(|X-\mu|\ge a)\le \dfrac{\sigma^2}{a^2}
+\]</div>
+<p>取 <span class="arithmatex">\(a=5\)</span>，得</p>
+<p>P(|X-180|\le 5)\ge 1-\dfrac{\sigma<sup>2}{5</sup>2}=\dfrac{7}{25} <strong>中心极限定理</strong>
+<strong>中心极限定理</strong></p>
+<div class="arithmatex">\[
+\begin{align}
+P(175\le X\le 185)=P(|X-180|\le 5)&amp;=P\left(\left|\dfrac{X-180}{\sqrt{18}}\right|\le\dfrac{5}{\sqrt{18}}\right)=\Phi\left(\dfrac{5}{\sqrt{18}}\right)-\Phi\left(-\dfrac{5}{\sqrt{18}}\right)
+\\&amp;=2\Phi\left(\dfrac{5}{\sqrt{18}}\right)-1
+\end{align}
+\]</div>
+<h2 id="_19">习题</h2>
+<p><img alt="pasted-image-20260109213852.png" src="../../images/Pasted%20image%2020260109213852.png" /></p>
+<p><span class="arithmatex">\(X_1,\dots,X_n\)</span> 为来自 <span class="arithmatex">\(N(\mu,\sigma^2)\)</span> 的样本（独立同分布）。  </p>
+<div class="arithmatex">\[
+\bar X=\frac1n\sum_{k=1}^n X_k,\qquad
+Y_i=X_i-\mu,\qquad
+Z_i=X_i-\bar X\quad(i=1,\dots,n).
+\]</div>
+<p><strong>求 <span class="arithmatex">\(\operatorname{cov}(Z_1,Z_2)\)</span></strong> 先写</p>
+<div class="arithmatex">\[
+Z_1=X_1-\bar X,\quad Z_2=X_2-\bar X.
+\]</div>
+<p>利用协方差双线性：  </p>
+<div class="arithmatex">\[
+\operatorname{cov}(Z_1,Z_2)=\operatorname{cov}(X_1-\bar X,;X_2-\bar X).
+\]</div>
+<p>展开：  </p>
+<div class="arithmatex">\[
+\operatorname{cov}(Z_1,Z_2)=\operatorname{cov}(X_1,X_2)-\operatorname{cov}(X_1,\bar X)-\operatorname{cov}(\bar X,X_2)+\operatorname{D}(\bar X).
+\]</div>
+<p>逐项算（注意 <span class="arithmatex">\(X_i\)</span> 独立）：
+- <span class="arithmatex">\(\operatorname{cov}(X_1,X_2)=0\)</span>（独立且同方差）
+- <span class="arithmatex">\(\operatorname{cov}(X_1,\bar X)=\operatorname{cov}!\left(X_1,\frac1n\sum_{k=1}^n X_k\right)=\frac1n\operatorname{cov}(X_1,X_1)=\frac1n\operatorname{D}(X_1)=\frac{\sigma^2}{n}\)</span> 
+    （因为和其它 <span class="arithmatex">\(X_k(k\neq 1)\)</span> 的协方差为 0）
+- 同理 <span class="arithmatex">\(\operatorname{cov}(\bar X,X_2)=\frac{\sigma^2}{n}\)</span>
+- <span class="arithmatex">\(\operatorname{D}(\bar X)=\operatorname{D}!\left(\frac1n\sum_{k=1}^n X_k\right)=\frac{1}{n^2}\sum_{k=1}^n\operatorname{D}(X_k)=\frac{n\sigma^2}{n^2}=\frac{\sigma^2}{n}\)</span>
+代回去：  </p>
+<div class="arithmatex">\[
+\operatorname{cov}(Z_1,Z_2)=0-\frac{\sigma^2}{n}-\frac{\sigma^2}{n}+\frac{\sigma^2}{n}
+= -\frac{\sigma^2}{n}.
+\]</div>
+<p>✅ 答案：  </p>
+<div class="arithmatex">\[
+\boxed{\operatorname{cov}(Z_1,Z_2)=-\frac{\sigma^2}{n}.}
+\]</div>
+<blockquote>
+<p>这个结果其实对任意 <span class="arithmatex">\(i\neq j\)</span> 都成立：<span class="arithmatex">\(\operatorname{cov}(Z_i,Z_j)=-\sigma^2/n\)</span>。直观上：因为所有 <span class="arithmatex">\(Z_i\)</span> 加起来等于 0<span class="arithmatex">\((\sum Z_i=0)\)</span>，它们必然“互相牵制”，所以协方差为负。 <strong>求 <span class="arithmatex">\(\frac1n\sum_{i=1}^n Y_i^2\)</span> 和 <span class="arithmatex">\(\frac1{n-1}\sum_{i=1}^n Z_i^2\)</span> 的期望与方差</strong>
+A. <span class="arithmatex">\(\displaystyle A=\frac1n\sum_{i=1}^n Y_i^2\)</span>
+<em>第一步：识别分布</em>
+<span class="arithmatex">\(Y_i=X_i-\mu\sim N(0,\sigma^2)\)</span>，且独立同分布。
+因此  </p>
+</blockquote>
+<div class="arithmatex">\[
+\frac{Y_i}{\sigma}\sim N(0,1)\quad\Rightarrow\quad
+\left(\frac{Y_i}{\sigma}\right)^2\sim \chi^2_1.
+\]</div>
+<p>独立可加性给出：  </p>
+<div class="arithmatex">\[
+\sum_{i=1}^n \left(\frac{Y_i}{\sigma}\right)^2
+=\frac{1}{\sigma^2}\sum_{i=1}^n Y_i^2 \sim \chi^2_n.
+\]</div>
+<p>令  </p>
+<div class="arithmatex">\[
+Q=\sum_{i=1}^n Y_i^2 \quad\Rightarrow\quad \frac{Q}{\sigma^2}\sim\chi^2_n.
+\]</div>
+<p><em>第二步：用卡方的均值方差</em></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>若 <span class="arithmatex">\(U\sim\chi^2_\nu\)</span>，则  </p>
+</div>
+<div class="arithmatex">\[
+E(U)=\nu,\qquad \operatorname{D}(U)=2\nu.
+\]</div>
+<p>这里 <span class="arithmatex">\(U=Q/\sigma^2\)</span>，<span class="arithmatex">\(\nu=n\)</span>，所以  </p>
+<div class="arithmatex">\[
+E!\left(\frac{Q}{\sigma^2}\right)=n \Rightarrow E(Q)=n\sigma^2,
+\operatorname{D}!\left(\frac{Q}{\sigma^2}\right)=2n \Rightarrow \operatorname{D}(Q)=2n\sigma^4.
+\]</div>
+<p>而  </p>
+<div class="arithmatex">\[
+A=\frac{Q}{n}.
+\]</div>
+<p>所以</p>
+<div class="arithmatex">\[
+E(A)=\frac{E(Q)}{n}=\frac{n\sigma^2}{n}=\sigma^2,
+\operatorname{D}(A)=\frac{\operatorname{D}(Q)}{n^2}=\frac{2n\sigma^4}{n^2}=\frac{2\sigma^4}{n}.
+\]</div>
+<p>✅ 结论：  </p>
+<div class="arithmatex">\[
+\boxed{E\left(\frac1n\sum_{i=1}^n Y_i^2\right)=\sigma^2,\qquad
+\operatorname{D}\left(\frac1n\sum_{i=1}^n Y_i^2\right)=\frac{2\sigma^4}{n}.}
+\]</div>
+<p><strong>B. <span class="arithmatex">\(\displaystyle B=\frac1{n-1}\sum_{i=1}^n Z_i^2\)</span></strong> 注意  </p>
+<div class="arithmatex">\[
+Z_i=X_i-\bar X,\quad \sum_{i=1}^n Z_i^2=\sum_{i=1}^n (X_i-\bar X)^2.
+\]</div>
+<p>而  </p>
+<div class="arithmatex">\[
+S^2=\frac1{n-1}\sum_{i=1}^n (X_i-\bar X)^2
+\]</div>
+<p>正是 <strong>样本方差（无偏估计）</strong> ，所以本题的  </p>
+<div class="arithmatex">\[
+B=S^2.
+\]</div>
+<p><em>第一步：识别分布（正态样本的重要结论）</em>
+当样本来自正态 <span class="arithmatex">\(N(\mu,\sigma^2)\)</span> 时，有经典结论：  </p>
+<div class="arithmatex">\[
+\frac{(n-1)S^2}{\sigma^2}\sim \chi^2_{n-1}.
+\]</div>
+<p>也就是  </p>
+<div class="arithmatex">\[
+\sum_{i=1}^n Z_i^2=(n-1)S^2 \quad\Rightarrow\quad
+\frac{\sum Z_i^2}{\sigma^2}\sim\chi^2_{n-1}.
+\]</div>
+<p><strong>第二步：用卡方的均值方差</strong> 令  </p>
+<div class="arithmatex">\[
+W=\frac{(n-1)S^2}{\sigma^2}\sim\chi^2_{n-1}.
+\]</div>
+<p>则  </p>
+<div class="arithmatex">\[
+E(W)=n-1,\qquad \operatorname{D}(W)=2(n-1).
+\]</div>
+<p>把 <span class="arithmatex">\(S^2=\sigma^2\cdot \frac{W}{n-1}\)</span> 代回：
+期望：  </p>
+<div class="arithmatex">\[
+E(S^2)=\sigma^2\cdot \frac{E(W)}{n-1}
+=\sigma^2\cdot \frac{n-1}{n-1}
+=\sigma^2.
+\]</div>
+<p>方差：  </p>
+<div class="arithmatex">\[
+\operatorname{D}(S^2)=\sigma^4\cdot \frac{\operatorname{D}(W)}{(n-1)^2}
+=\sigma^4\cdot \frac{2(n-1)}{(n-1)^2}
+=\frac{2\sigma^4}{n-1}.
+\]</div>
+<p>✅ <strong>结论：</strong>  </p>
+<div class="arithmatex">\[
+\boxed{E\left(\frac1{n-1}\sum_{i=1}^n Z_i^2\right)=\sigma^2,\qquad
+\operatorname{D}\left(\frac1{n-1}\sum_{i=1}^n Z_i^2\right)=\frac{2\sigma^4}{n-1}.}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="arithmatex">\[
+X_i \sim N(\mu,\sigma^2), \quad i=1,2,\dots,n
+\bar X=\frac{1}{n}\sum_{i=1}^n X_i
+Y_i = X_i - \mu
+Z_i = X_i - \bar X
+\operatorname{cov}(X_i,X_j)=0 \quad (i\neq j)
+\operatorname{D}(X_i)=\sigma^2
+\operatorname{cov}(X_i,\bar X)=\frac{\sigma^2}{n}
+\operatorname{D}(\bar X)=\frac{\sigma^2}{n}
+\operatorname{cov}(Z_1,Z_2)=\operatorname{cov}(X_1-\bar X,\;X_2-\bar X)
+\operatorname{cov}(Z_1,Z_2)=\operatorname{cov}(X_1,X_2)
+-\operatorname{cov}(X_1,\bar X)
+-\operatorname{cov}(\bar X,X_2)
++\operatorname{D}(\bar X)
+\operatorname{cov}(Z_1,Z_2)=-\frac{\sigma^2}{n}
+\frac{Y_i}{\sigma}\sim N(0,1)
+\sum_{i=1}^n \left(\frac{Y_i}{\sigma}\right)^2
+=\frac{1}{\sigma^2}\sum_{i=1}^n Y_i^2
+\sim \chi^2_n
+E(\chi^2_n)=n
+\operatorname{D}(\chi^2_n)=2n
+E\!\left(\sum_{i=1}^n Y_i^2\right)=n\sigma^2
+\operatorname{D}\!\left(\sum_{i=1}^n Y_i^2\right)=2n\sigma^4
+\]</div>
+</div>
+<p><img alt="pasted-image-20260111175554.png" src="../../images/Pasted%20image%2020260111175554.png" /></p>
+<p><mark>已知总体服从正态分布<span class="arithmatex">\(N(\mu,\sigma^2)\)</span>，所谓“正常生产”意味着同时满足两点：均值<span class="arithmatex">\(\mu=30\)</span>且标准差<span class="arithmatex">\(\sigma\le 0.5\)</span>。因此可以拆成两个检验：先对方差（标准差）做<span class="arithmatex">\(\chi^2\)</span>检验，再对均值做<span class="arithmatex">\(t\)</span>检验</mark>
+一、检验标准差是否超过<span class="arithmatex">\(0.5\)</span>（单侧<span class="arithmatex">\(\chi^2\)</span>检验）
+1. 提出假设<br />
+    原假设（正常波动）：<span class="arithmatex">\(H_0:\sigma\le 0.5\)</span>（等价写为<span class="arithmatex">\(H_0:\sigma^2\le 0.25\)</span>）<br />
+    备择假设（波动偏大）：<span class="arithmatex">\(H_1:\sigma&gt;0.5\)</span>（等价写为<span class="arithmatex">\(H_1:\sigma^2&gt;0.25\)</span>）
+这是右侧单侧检验。
+2. 构造检验统计量<br />
+    正态总体下有(均值未知，自由度为n-1;若已知，则为n)</p>
+<div class="arithmatex">\[
+\frac{(n-1)s^2}{\sigma^2}\sim \chi^2(n-1)
+\]</div>
+<p>在<span class="arithmatex">\(H_0\)</span>的边界<span class="arithmatex">\(\sigma_0^2=0.25\)</span>处取统计量  </p>
+<div class="arithmatex">\[
+\boxed{
+\chi^2=\frac{(n-1)s^2}{\sigma_0^2}  }
+\]</div>
+<p>代入<span class="arithmatex">\(n=25\)</span>、<span class="arithmatex">\(s=0.6\)</span>，得<span class="arithmatex">\(s^2=0.36\)</span>，自由度<span class="arithmatex">\(\nu=n-1=24\)</span>：  </p>
+<div class="arithmatex">\[
+\chi^2=\frac{24\times 0.36}{0.25}=24\times 1.44=34.56
+\]</div>
+<ol>
+<li>确定拒绝域<br />
+    显著性水平<span class="arithmatex">\(\alpha=0.05\)</span>，右侧检验拒绝域为  </li>
+</ol>
+<div class="arithmatex">\[
+\chi^2&gt;\chi^2_{0.05}(24)
+\]</div>
+<p>题目给出<span class="arithmatex">\(\chi^2_{0.05}(24)=36.42\)</span>，所以拒绝域为<span class="arithmatex">\(\chi^2&gt;36.42\)</span>。
+4. 作出统计决策<br />
+    计算得<span class="arithmatex">\(\chi^2=34.56\)</span>，比较可得<span class="arithmatex">\(34.56&lt;36.42\)</span>，因此在<span class="arithmatex">\(\alpha=0.05\)</span>下不落入拒绝域，结论为：不拒绝<span class="arithmatex">\(H_0\)</span>。
+5. 结论解释<br />
+    在显著性水平<span class="arithmatex">\(\alpha=0.05\)</span>下，没有充分证据认为这天生产的标准差<span class="arithmatex">\(\sigma\)</span>超过<span class="arithmatex">\(0.5\)</span> mm，即“<span class="arithmatex">\(\sigma\le 0.5\)</span>”这一条没有被否定。
+二、检验均值是否为<span class="arithmatex">\(30\)</span>（双侧<span class="arithmatex">\(t\)</span>检验）
+1. 提出假设<br />
+    原假设（均值正常）：<span class="arithmatex">\(H_0:\mu=30\)</span><br />
+    备择假设（均值异常）：<span class="arithmatex">\(H_1:\mu\ne 30\)</span>
+这是双侧检验。
+2. 构造检验统计量<br />
+    当总体正态且<span class="arithmatex">\(\sigma\)</span>未知时，有  </p>
+<p>$$
+\boxed{
+t=\frac{\bar X-\mu_0}{S/\sqrt{n}}\sim t(n-1)\quad (\text{在 }H_0\text{ 下})
+}
+$$
+其中<span class="arithmatex">\(\mu_0=30\)</span>。代入样本数据：  </p>
+<div class="arithmatex">\[
+t=\frac{30.18-30}{0.6/\sqrt{25}}
+\]</div>
+<p>由于<span class="arithmatex">\(\sqrt{25}=5\)</span>，所以<span class="arithmatex">\(0.6/\sqrt{25}=0.6/5=0.12\)</span>，因此  </p>
+<div class="arithmatex">\[
+t=\frac{0.18}{0.12}=1.5
+\]</div>
+<p>自由度同样为<span class="arithmatex">\(24\)</span>。
+3. 确定拒绝域<br />
+    显著性水平<span class="arithmatex">\(\alpha=0.05\)</span>的双侧检验拒绝域为  </p>
+<p>|t|&gt;t_{0.025}(24)<br />
+题目给出<span class="arithmatex">\(t_{0.025}(24)=2.064\)</span>，所以拒绝域为<span class="arithmatex">\(|t|&gt;2.064\)</span>。
+4. 作出统计决策<br />
+    计算得<span class="arithmatex">\(|t|=1.5\)</span>，比较可得<span class="arithmatex">\(1.5&lt;2.064\)</span>，因此不落入拒绝域，结论为：不拒绝<span class="arithmatex">\(H_0\)</span>。
+5. 结论解释<br />
+    在显著性水平<span class="arithmatex">\(\alpha=0.05\)</span>下，没有充分证据认为均值偏离<span class="arithmatex">\(30\)</span> mm，即“<span class="arithmatex">\(\mu=30\)</span>”这一条没有被否定。</p>
+<p>三、综合结论（是否正常生产）</p>
+<p>“正常生产”的标准是同时满足<span class="arithmatex">\(\mu=30\)</span>且<span class="arithmatex">\(\sigma\le 0.5\)</span>。在上述两个检验中，我们均得到“不拒绝正常条件”的结论：<br />
+一方面，方差检验不拒绝<span class="arithmatex">\(H_0:\sigma\le 0.5\)</span>；另一方面，均值检验不拒绝<span class="arithmatex">\(H_0:\mu=30\)</span>。因此在显著性水平<span class="arithmatex">\(\alpha=0.05\)</span>下，认为这天生产是正常的。</p>
+<h2 id="_20">小公式</h2>
+<div class="arithmatex">\[
+\boxed{
+\displaystyle\int_{-\infty}^{+\infty}e^{-\dfrac{x^2}{2\sigma^2}}\mathrm{d}x=\sqrt{2\pi}\sigma
+}
+\int_{y=a}^{y=b}f(y)\mathrm{d}y
+\Rightarrow
+\int_{t=g(a)}^{t=g(b)}f(y(t))\dfrac{\mathrm{d}y}{\mathrm{d}t}\mathrm{d}t
+\int_0^{+\infty}x^ne^{-x}\mathrm{d}x=n!
+\]</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.select", "navigation.titles", "navigation.tabs", "navigation.indexes"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
