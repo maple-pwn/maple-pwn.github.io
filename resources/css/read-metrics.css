@@ -1,0 +1,22 @@
+.reading-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  margin: 0.45rem 0 1.1rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-left: 4px solid var(--md-accent-fg-color);
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 255, 0.9));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+  color: var(--md-default-fg-color);
+  font-size: 0.78rem;
+}
+
+.reading-metrics span {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.12rem 0.42rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.04);
+}

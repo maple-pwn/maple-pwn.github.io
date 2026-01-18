@@ -5,9 +5,121 @@ font-family: "LXGW WenKai";
 font-weight: normal;
 }
 
+:root {
+  --page-bg-base: #fbfbf7;
+  --page-bg-grid: rgba(30, 30, 30, 0.035);
+  --page-bg-grid-bold: rgba(30, 30, 30, 0.06);
+  --page-bg: linear-gradient(var(--page-bg-base), var(--page-bg-base));
+  --page-bg-grid-size: 32px;
+  --page-bg-grid-bold-size: 160px;
+  --footer-border: rgba(0, 0, 0, 0.08);
+  --footer-border-width: 0.03rem;
+}
+
+body {
+  background-color: var(--page-bg-base);
+  background-image:
+    linear-gradient(var(--page-bg-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--page-bg-grid) 1px, transparent 1px),
+    linear-gradient(var(--page-bg-grid-bold) 1px, transparent 1px),
+    linear-gradient(90deg, var(--page-bg-grid-bold) 1px, transparent 1px);
+  background-size:
+    var(--page-bg-grid-size) var(--page-bg-grid-size),
+    var(--page-bg-grid-size) var(--page-bg-grid-size),
+    var(--page-bg-grid-bold-size) var(--page-bg-grid-bold-size),
+    var(--page-bg-grid-bold-size) var(--page-bg-grid-bold-size);
+  background-position: 0 0, 0 0, 0 0, 0 0;
+}
+
+[data-md-color-scheme="slate"] {
+  --page-bg-base: #0f141a;
+  --page-bg-grid: rgba(255, 255, 255, 0.03);
+  --page-bg-grid-bold: rgba(255, 255, 255, 0.06);
+  --footer-border: rgba(255, 255, 255, 0.12);
+}
 
 
+:root {
+  --list-level-1: #000000;
+  --list-level-2: #000000;
+  --list-level-3: #000000;
+  --list-level-4: #000000;
+  --heading-h1: #000000;
+  --heading-h2: #000000;
+  --heading-h3: #000000;
+  --heading-h4: #000000;
+}
 
+.md-typeset ul li::marker {
+  color: var(--list-level-1);
+}
 
+.md-typeset ul ul li::marker {
+  color: var(--list-level-2);
+}
 
+.md-typeset ul ul ul li::marker {
+  color: var(--list-level-3);
+}
 
+.md-typeset ul ul ul ul li::marker {
+  color: var(--list-level-4);
+}
+
+.md-nav--secondary .md-nav__link {
+  color: var(--list-level-1);
+}
+
+.md-nav--secondary .md-nav__list .md-nav__list .md-nav__link {
+  color: var(--list-level-2);
+}
+
+.md-nav--secondary .md-nav__list .md-nav__list .md-nav__list .md-nav__link {
+  color: var(--list-level-3);
+}
+
+.md-nav--secondary .md-nav__list .md-nav__list .md-nav__list .md-nav__list .md-nav__link {
+  color: var(--list-level-4);
+}
+
+.md-nav--secondary .md-nav__link--active {
+  font-weight: 700;
+}
+
+.md-typeset h1 {
+  color: var(--heading-h1);
+  font-weight: 700;
+}
+
+.md-typeset h2 {
+  color: var(--heading-h2);
+  font-weight: 700;
+}
+
+.md-typeset h3 {
+  color: var(--heading-h3);
+  font-weight: 700;
+}
+
+.md-typeset h4 {
+  color: var(--heading-h4);
+  font-weight: 700;
+}
+
+.md-typeset h5,
+.md-typeset h6 {
+  font-weight: 700;
+}
+
+.md-typeset mark {
+  background-color: rgba(255, 165, 0, 0.35);
+}
+
+.md-footer {
+  border-top: var(--footer-border-width) solid var(--footer-border);
+}
+
+.md-header,
+.md-tabs {
+  border-bottom: var(--footer-border-width) solid var(--footer-border);
+}

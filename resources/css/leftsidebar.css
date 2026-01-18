@@ -17,3 +17,47 @@
   transform: translateX(4px);
 }
 
+.md-sidebar--primary,
+.md-sidebar--secondary {
+  position: relative;
+  min-width: 200px;
+  max-width: 480px;
+}
+
+.sidebar-resize-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 12px;
+  background: rgba(0, 0, 0, 0.02);
+  cursor: ew-resize;
+  z-index: 3;
+  touch-action: none;
+}
+
+.md-sidebar--primary .sidebar-resize-handle {
+  right: -6px;
+}
+
+.md-sidebar--secondary .sidebar-resize-handle {
+  left: -6px;
+}
+
+.sidebar-resize-handle::after {
+  content: "<>";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 10px;
+  line-height: 1;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.sidebar-resize-handle:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
