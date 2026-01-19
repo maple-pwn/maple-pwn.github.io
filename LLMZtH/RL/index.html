@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://maple-pwn.github.io/LLMZtH/1/">
+        <link rel="canonical" href="https://maple-pwn.github.io/LLMZtH/RL/">
       
       
         <link rel="prev" href="../../mysys/06/">
@@ -22,7 +22,7 @@
     
     
       
-        <title>LLMZtH - Maple's blog</title>
+        <title>RL学习笔记 - Maple's blog</title>
       
     
     
@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -102,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              LLMZtH
+              RL学习笔记
             
           </span>
         </div>
@@ -577,17 +582,74 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    RL学习笔记
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
-    LLMZtH
+    RL学习笔记
     
   </span>
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      第一章 绪论
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      第二章 模型评估与选择
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      第三章 线性模型
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1044,6 +1106,41 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      第一章 绪论
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      第二章 模型评估与选择
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      第三章 线性模型
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1058,9 +1155,170 @@
 
 
 
-  <h1>LLMZtH</h1>
+  <h1>RL学习笔记</h1>
 
-<p>施工中</p>
+<p>笔者参看的是周志华老师的《机器学习》，也就是网上很热门的“西瓜书”。笔者必然比不过网上大量的经验，就不做拾人牙慧的事情了，这里主要是记录一些个人的思考，以及完善本书中的一些数学推导（本书中的数学推导确实有些简略了呢，笔者并非数学专业学生，看到公式就头疼）</p>
+<h2 id="_1">第一章 绪论</h2>
+<p>这一部分介绍了一些概念，包括基础术语、假设空间、归纳偏好，然后讲了讲机器学习的发展与历史，比较笼统的串联了一下后面的章节</p>
+<p>NFL 定理：对于所有可能的问题和数据分布，任何学习算法的性能都不会在所有问题上普遍优于其他算法。</p>
+<p>个人觉得本书这里的后续解释有些混乱，简单来说，NFL 定理证明了：<mark>不同的学习算法在不同的问题和数据集上表现不同，无法存在一个“万能的”学习算法，能够在所有任务中表现最佳。</mark></p>
+<p>假设样本空间 <span class="arithmatex">\(\mathcal{X}\)</span> 和假设空间 <span class="arithmatex">\(\mathcal{H}\)</span> 都是离散的，令 <span class="arithmatex">\(P\!\left(h \mid X, \Sigma_a\right)\)</span> 代表算法 <span class="arithmatex">\(\Sigma_a\)</span> 基于训练数据 <span class="arithmatex">\(X\)</span> 产生假设 <span class="arithmatex">\(h\)</span> 的概率，再令 <span class="arithmatex">\(f\)</span> 代表我们希望学习的真实目标函数。<span class="arithmatex">\(\Sigma_a\)</span> 的“训练集外误差”，即 <span class="arithmatex">\(\Sigma_a\)</span> 在训练集之外的所有样本上的误差为</p>
+<div class="arithmatex">\[
+E_{ote}(\Sigma_a \mid X, f)
+= \sum_{h} \sum_{x \in \mathcal{X}-X}
+P(x)\,\mathbb{I}\!\bigl(h(x) \neq f(x)\bigr)\,P(h \mid X, \Sigma_a)
+\]</div>
+<blockquote>
+<p>这里做一下解释，这里本质上是一个算期望的过程。</p>
+<p><span class="arithmatex">\(E_{ote}(\Sigma_a \mid X, f)\)</span> 表示当测试样本从样本空间中按分布随机抽取、算法输出的假设具有随机性时，算法在测试阶段会犯多大错误的比例</p>
+<p><span class="arithmatex">\(\displaystyle\sum_{x \in \mathcal{X}-X}P(x)\)</span> 表示测试样本 <span class="arithmatex">\(x\)</span> 是从样本空间 <span class="arithmatex">\(\mathcal{X}\)</span> 中按分布 <span class="arithmatex">\(P(x)\)</span> 抽取的。也就是说，我们不是只关心某一个特定输入，而是对**所有可能的输入点**按其出现概率加权。</p>
+<p><span class="arithmatex">\(\displaystyle \sum_{h\in\mathcal{H}}P(h \mid X, \Sigma_a)\)</span> 表示学习算法 <span class="arithmatex">\(\Sigma_a\)</span> 在给定的训练集 <span class="arithmatex">\(X\)</span> 的情况下，可能输出不同的假设，并且每个假设 <span class="arithmatex">\(h\)</span> 都有一个对应的概率</p>
+<p><span class="arithmatex">\(\mathbb{I}\!\bigl(h(x) \neq f(x)\bigr)\)</span> 是损失函数，如果假设 <span class="arithmatex">\(h\)</span> 在输入 <span class="arithmatex">\(x\)</span> 上预测错误，那么记为 1，预测正确则记为 0</p>
+<p>接下来将三个部分乘一起，表示：<strong>测试点是 x，算法产生假设是 <span class="arithmatex">\(h\)</span>，并且在这个点上预测错误的联合贡献</strong></p>
+</blockquote>
+<p>然后对所有可能的 <span class="arithmatex">\(f\)</span> 进行求和，可以得到终式与学习算法无关，进而出现了 NFL 定理（这里原书的推导过程不加赘述）</p>
+<p>之后就是经典的“机器学习的发展与历史”，不予赘述</p>
+<h2 id="_2">第二章 模型评估与选择</h2>
+<p>模型总有优劣，倘若泛化性能过低，则称之为过拟合。本质原因是学习能力过于强大，把训练样本所包含的不太一般的特性给学会了</p>
+<p>通过实验测试来对学习器的泛化误差进行评估，需要一定的测试集。而为了从数据集中分出测试集和训练集。提出了 <strong>留出法</strong>，<strong>交叉验证法</strong> 和 <strong>自助法</strong> 这样的分离方法。</p>
+<ul>
+<li>留出法就是把测试集按比例划分</li>
+<li>交叉验证法就是将数据集化成 k 个大小相似的互斥子集，每次用 k-1 个子集作为训练集，另一个作为测试集。称为 k 折交叉验证</li>
+<li>自助法就是放回随机抽样，重复样本数量次抽样进行学习</li>
+</ul>
+<p>学得模型在实际使用中遇到的数据称为 <em>测试数据</em>，模型评估与选择中用于评估测试的数据集称为 <em>验证即</em></p>
+<p>在研究对比不同算法的泛化性能时，我们用测试集上的判别效果来估计模型在实际使用时的泛化能力，而把训练数据另外划分为训练集和验证集</p>
+<hr />
+<p>再接下来，我们有了可行的实验估计方法，还需要有衡量模型泛化能力的评价标准，这就是 <strong>性能度量</strong></p>
+<p>其中，回归任务 (输出具体数值是多少) 最常用的性能度量是“均方误差”</p>
+<div class="arithmatex">\[
+E(f;D)=\int_{x\sim D}(f(x_i)-y_i)^2p(x)\mathrm{d}x
+\]</div>
+<p>而分类任务比较常用的性能度量是 <strong>错误率</strong> 和 <strong>精度</strong></p>
+<div class="arithmatex">\[
+\begin{align}
+&amp;E(f;D)=\dfrac{1}{m}\displaystyle\sum_{i=1}^{m}\mathbb{I}(f(x_i)\ne y_i) \\
+&amp;acc(f;D)=1-E(f;D)
+\end{align}
+\]</div>
+<hr />
+<p>但是错误率和精度不能满足所有任务需求，于是提出了 <strong>查准率（准确率）</strong> 和 <strong>查全率（召回率）</strong>。</p>
+<blockquote>
+<p>查准率意味着有多少数据被判别为错误，查全率意味着所有准确数据有多少被挑选了出来。</p>
+</blockquote>
+<p>对于二分类问题，可以将样例根据其 <strong>真实类别</strong> 与 <strong>学习器预测类别</strong> 的组合划分为真正例 (TP)、假正例 (FP)、真反例 (TN)、假反例 (FN)，如下表，称为分类结果的“混淆矩阵”</p>
+<p><img alt="image" src="../../images/Pasted%20image%2020260119213733.png" /></p>
+<p>我们如果根据学习器的预测结果对样例进行排序，排在前面的是 <strong>学习器认为最可能是正例的样本</strong>，按此顺序逐个把样本作为正例进行预测，则每次可以计算出当前的查全率、准确率。进而做出“P-R 曲线”，类似下图</p>
+<p><img alt="image" src="../../images/Pasted%20image%2020260119214139.png" /></p>
+<p>如果一个曲线 A 包住了一个曲线 C，那么充分说明学习器 A 优于学习器 C。</p>
+<p>但也可以用 BEP(平衡点) 作为一个量度，例如 A 点 BEP=0.8&gt;B 点 BEP，所以可以认为学习器 A 优于学习器 B</p>
+<blockquote>
+<p>BEP 之所以能作为评判学习器优劣的量度，是因为它在不依赖主观阈值的前提下，公平、对称地衡量了模型在查准率与查全率之间的整体平衡能力，特别适用于样本不平衡且错误代价对称的任务。</p>
+</blockquote>
+<p>不过 BEP 还是有些简略了，更常用的是 F1 度量，如下：</p>
+<div class="arithmatex">\[
+F1=\dfrac{2\times P\times R}{P+R}=\dfrac{2\times TP}{样例总数+TP-TN}
+\]</div>
+<blockquote>
+<p>这里是对准确率和召回率的调和平均数，强烈惩罚了偏科的模型</p>
+</blockquote>
+<p>再然后，我们实际的应用会对查准率 P 和查全率 R 的重视程度有所不同，所以又引入了新的变量，构成了 F1 度量的一般形式 <span class="arithmatex">\(F_\beta\)</span></p>
+<div class="arithmatex">\[
+F_\beta=\dfrac{(1+\beta^2)\times P\times R}{(\beta^2\times P)+R}
+\]</div>
+<blockquote>
+<p>其实就是把乘法力度设置为了人为的定义</p>
+</blockquote>
+<hr />
+<p>以上是评判模型的泛化能力，也就是评判 <strong>模型作为一个分类器是否好用</strong>；但我们缺乏一定的量化标准去评判  <strong>学习器在不同判别阈值下区分政府样本的整体能力</strong>，所以再接下来又提出了 <strong>ROC</strong> 和 <strong>AUC</strong> 以作为度量标准</p>
+<p>ROC 全称为受试者工作特征，根据学习器的预测结果对样例进行排序，按此顺序逐个把样本作为正例进行预测，每次计算出两个重要量的值，分别是“真正例率 TPR”和“假正例率 FPR”</p>
+<div class="arithmatex">\[
+\begin{align}
+TPR=\dfrac{TP}{TP+FN}\\ \\
+FPR=\dfrac{FP}{TN+FP}
+\end{align}
+\]</div>
+<p>可做出类似下面的图</p>
+<p><img alt="image" src="../../images/Pasted%20image%2020260119220835.png" /></p>
+<p>然后 AUC(Area Under ROC Curve) 就是 ROC 所包围的面积，用来评判 ROC 的好坏，进而评判学习器的性能</p>
+<hr />
+<p>不过现实不是非黑即白的，通常有些预测错误会带来难以想象的代价，所以我们的模型评判要进一步一般化，<strong>为错误赋予“非均等代价”</strong></p>
+<p>我们可以根据任务的领域知识设定一个“代价矩阵”，如下表，<span class="arithmatex">\(cost_{ij}\)</span> 表示将第 <span class="arithmatex">\(i\)</span> 类样本预测为第 <span class="arithmatex">\(j\)</span> 类样本的代价</p>
+<p><img alt="image" src="../../images/Pasted%20image%2020260119223937.png" /></p>
+<blockquote>
+<p>一般来说 <span class="arithmatex">\(cost_{ij}=0\)</span>，若将第 0 类别为第 1 类所造成的损失更大，则 <span class="arithmatex">\(cost_{01}&gt;cost_{10}\)</span>；随时程度相差越大，<span class="arithmatex">\(cost_{01}\)</span> 与 <span class="arithmatex">\(cost_{10}\)</span> 值的差别越大</p>
+</blockquote>
+<p>于是我们对性能度量扩展其定义，如下</p>
+<p>“代价敏感”错误率为</p>
+<div class="arithmatex">\[
+E(f; D; cost)
+= \frac{1}{m}
+\left(
+\sum_{x_i \in D^{+}} \mathbb{I}\!\left(f(x_i) \neq y_i\right)\cdot cost_{01}
+\;+\;
+\sum_{x_i \in D^{-}} \mathbb{I}\!\left(f(x_i) \neq y_i\right)\cdot cost_{10}
+\right)
+\]</div>
+<p>然后再次状态下，ROC 曲线是不可以直接反映出学习器的期望总体代价的，所以又加入了“代价曲线”作为评判。</p>
+<p>代价曲线图的横轴是取值为 <span class="arithmatex">\([0,1]\)</span> 的正例概率代价如下，其中 <span class="arithmatex">\(p\)</span> 是样例为正例的概率：</p>
+<div class="arithmatex">\[
+P(+)_{\text{cost}}
+=
+\frac{p \times cost_{01}}
+{p \times cost_{01} + (1 - p) \times cost_{10}}
+\]</div>
+<p>纵轴是取值为 <span class="arithmatex">\([0,1]\)</span> 的归一化代价，如下，其中 FPR 是假正例率，FNR=1-TPR 是假反例率。</p>
+<div class="arithmatex">\[
+cost_{\mathrm{norm}}
+=
+\frac{\mathrm{FNR}\times p \times cost_{01}
+\;+\;
+\mathrm{FPR}\times (1-p)\times cost_{10}}
+{p \times cost_{01} + (1-p)\times cost_{10}}
+\]</div>
+<p>接下来我们绘制代价曲线：ROC 曲线上每一点对应代价平面上一条线段，设 ROC 曲线上点的坐标为 <span class="arithmatex">\((TPR,FPR)\)</span>，则可以相应地计算出 <span class="arithmatex">\(FNR\)</span>，然后在代价平面上做一条从 <span class="arithmatex">\((0,FPR)\)</span> 到 <span class="arithmatex">\((1,FNR)\)</span> 的线段，线段下的面积即表示了该条件下的期望的总体代价，如下图</p>
+<p><img alt="image" src="../../images/Pasted%20image%2020260119225731.png" /></p>
+<hr />
+<p>至此，我们有了完整的实验评估方法和性能度量，但是如今缺少了“比较”的方法。于是提出了 <strong>统计假设检验</strong> 来对学习器性能比较提供依据。本书以错误率为性能度量，用 <span class="arithmatex">\(\epsilon\)</span> 表示</p>
+<blockquote>
+<p>也就是，若在测试集上观察到学习器 A 比 B 好，则 A 的泛化性能是否在统计意义上优于 B，以及这个结论的把握有多大</p>
+</blockquote>
+<p>现实任务中我们并不知道学习器的泛化错误率，只能获知其测试错误率 <span class="arithmatex">\(\hat\epsilon\)</span> .泛化错误率与测试错误率未必相同，但直观上，二者接近的可能性应比较大，相差很远的可能性比较小。因此可以根据测试错误率估推处泛化错误率的分布</p>
+<p>我们假设 <span class="arithmatex">\(m\)</span> 个测试样本，其中泛化错误率为 <span class="arithmatex">\(\epsilon\)</span> 的学习器将其中 <span class="arithmatex">\(m'\)</span> 个样本误分类、其余样本全都分类正确的概率为 <span class="arithmatex">\(\epsilon^{m'}(1-\epsilon)^{m-m'}\)</span>，可以估算处其恰将 <span class="arithmatex">\(\hat\epsilon\times m\)</span> 个样本误分类的概率如下</p>
+<div class="arithmatex">\[
+P(\hat{\epsilon}; \epsilon)
+=
+\binom{m}{\hat{\epsilon}\times m}
+\epsilon^{\hat{\epsilon}\times m}
+(1-\epsilon)^{m-\hat{\epsilon}\times m}
+\]</div>
+<p>给定测试错误率，则解 <span class="arithmatex">\(\frac{\partial P(\hat{\epsilon};\epsilon)}{\partial \epsilon} = 0\Rightarrow P(\hat\epsilon ;\epsilon)_{max}\big|_{\epsilon=\hat\epsilon}\)</span></p>
+<p>后面就是一些检验的介绍了</p>
+<hr />
+<p>再然后，学习算法除了实验估计其泛化性能，人们往往还希望了解它“为什么”有这样的性能。于是 <strong>偏差 - 方差分解</strong> 是解释学习算法泛化性能的重要工具</p>
+<p>偏差 - 方差分解试图对学习算法的期望泛化错误率进行拆解。算法在不同训练集上学得的结果很可能不同，即便这些训练集是来自同一个分布</p>
+<p>我们约定：对一个测试样本 <span class="arithmatex">\(\vec x\)</span>，令 <span class="arithmatex">\(y_D\)</span> 为 <span class="arithmatex">\(\vec x\)</span> 在数据集中的标记，<span class="arithmatex">\(y\)</span> 为 <span class="arithmatex">\(\vec x\)</span> 的真实标记，<span class="arithmatex">\(f(\vec x;D)\)</span> 为训练集 D 上学得模型 <span class="arithmatex">\(f\)</span> 在 <span class="arithmatex">\(\vec{x}\)</span> 上的预测输出，则</p>
+<p>学习算法的期望预测为 <span class="arithmatex">\(\bar{f}(x) = \mathbb{E}_{D}\!\left[f(x;D)\right]\)</span></p>
+<p>使用样本数相同的不同训练集产生的方差为 <span class="arithmatex">\(\mathrm{var}(x)=\mathbb{E}_{D}\!\left[\left(f(x;D)-\bar{f}(x)\right)^2\right]\)</span></p>
+<p>噪声为 <span class="arithmatex">\(\epsilon^2=\mathbb{E}_{D}\!\left[(y_D - y)^2\right]\)</span></p>
+<p>期望输出与真实标记的差别称为偏差 (bias)，即 <span class="arithmatex">\(\mathrm{bias}^2(x)=\left(\bar{f}(x)-y\right)^2\)</span></p>
+<p>然后就是一系列数学推导，这里书上的推导相当完善，可以直接看书，最终结论为</p>
+<div class="arithmatex">\[
+E(f;D)
+=
+\mathrm{bias}^2(x)
++
+\mathrm{var}(x)
++
+\epsilon^2
+\]</div>
+<p>即，<strong>泛化误差可以分解为偏差、方差和噪声之和</strong></p>
+<blockquote>
+<p>偏差度量了学习算法的期望预测与真是结果的偏离程度，刻画了 <strong>学习算法本身的拟合关系</strong></p>
+<p>方差度量了同样大小的训练集的变动导致的学习性能的变化，刻画了 <strong>数据扰动所造成的影响</strong></p>
+<p>噪声则表达了当前任务上学习算法所能达到的期望泛化误差的下届，刻画了 <strong>学习问题本身的难度</strong></p>
+</blockquote>
+<h2 id="_3">第三章 线性模型</h2>
 
 
 
