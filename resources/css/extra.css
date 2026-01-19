@@ -123,3 +123,11 @@ body {
 .md-tabs {
   border-bottom: var(--footer-border-width) solid var(--footer-border);
 }
+
+.md-typeset hr,
+.md-content hr {
+  border: 0;
+  border-top: 1.5px solid #1a1a1a !important;
+  opacity: 1 !important;
+  margin: 1.5rem 0;
+}
