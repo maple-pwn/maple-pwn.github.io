@@ -1,11 +1,12 @@
 (() => {
-  const MIN_WIDTH = 200;
+  const MIN_WIDTH = 240;
   const MAX_WIDTH = 480;
 
+  const getMaxWidth = () => Math.min(MAX_WIDTH, window.innerWidth - 200);
   const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
   const setWidth = (sidebar, width) => {
-    const next = clamp(width, MIN_WIDTH, MAX_WIDTH);
+    const next = clamp(width, MIN_WIDTH, getMaxWidth());
     sidebar.style.width = `${next}px`;
     sidebar.style.flexBasis = `${next}px`;
   };
@@ -43,11 +44,27 @@
     });
   };
 
+  const isDesktop = () =>
+    window.matchMedia("(pointer: fine)").matches &&
+    window.matchMedia("(min-width: 60em)").matches;
+
   document.addEventListener("DOMContentLoaded", () => {
+    if (!isDesktop()) return;
+
     const primary = document.querySelector(".md-sidebar--primary");
     const secondary = document.querySelector(".md-sidebar--secondary");
 
     if (primary) setupHandle(primary, "primary");
     if (secondary) setupHandle(secondary, "secondary");
+
+    const onResize = () => {
+      [primary, secondary].forEach((sidebar) => {
+        if (!sidebar) return;
+        const width = sidebar.getBoundingClientRect().width;
+        setWidth(sidebar, width);
+      });
+    };
+
+    window.addEventListener("resize", onResize);
   });
 })();
