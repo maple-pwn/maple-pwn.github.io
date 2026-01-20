@@ -197,6 +197,23 @@ body {
   padding: 0.85rem 1.1rem;
   color: var(--ink-soft);
   box-shadow: 0 8px 20px rgba(30, 60, 90, 0.08);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.md-typeset blockquote:hover {
+  transform: scale(1.01);
+  box-shadow: 0 12px 26px rgba(30, 60, 90, 0.12);
+}
+
+.md-typeset .admonition,
+.md-typeset details {
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.md-typeset .admonition:hover,
+.md-typeset details:hover {
+  transform: scale(1.01);
+  box-shadow: 0 12px 26px rgba(30, 60, 90, 0.12);
 }
 
 /* Code blocks: clearer structure and stronger emphasis */
@@ -211,6 +228,17 @@ body {
 .md-typeset .highlight {
   border-radius: 10px;
   overflow: hidden;
+}
+
+.md-typeset .highlight,
+.md-typeset .highlighttable {
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.md-typeset .highlight:hover,
+.md-typeset .highlighttable:hover {
+  transform: scale(1.01);
+  box-shadow: 0 12px 26px rgba(30, 60, 90, 0.12);
 }
 
 .md-typeset .highlight .filename {
@@ -255,4 +283,28 @@ body {
   height: 1rem;
   background: var(--accent-cool);
   border-radius: 2px;
+}
+
+.md-typeset img {
+  display: block;
+  margin: 0 auto;
+  background: #fcfcf8;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  padding: 6px;
+  box-shadow: 0 10px 22px rgba(20, 30, 40, 0.08);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.md-typeset figure {
+  text-align: center;
+}
+
+.md-typeset figure img {
+  margin: 0 auto;
+}
+
+.md-typeset img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 14px 28px rgba(20, 30, 40, 0.12);
 }
