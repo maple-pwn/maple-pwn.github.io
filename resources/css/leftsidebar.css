@@ -24,3 +24,8 @@
     max-width: 480px;
   }
 }
+
+/* One Dark Pro dark mode overrides for primary sidebar */
+[data-md-color-scheme="slate"] .md-sidebar--primary .md-nav__link:hover {
+  background: rgba(97, 175, 239, 0.08);
+}

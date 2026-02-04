@@ -88,3 +88,46 @@
   background: linear-gradient(180deg, #e74c3c, #3498db);
   transition: height 0.3s ease;
 }
+
+/* One Dark Pro dark mode overrides for secondary sidebar */
+[data-md-color-scheme="slate"] .md-sidebar--secondary > .md-nav > .md-nav__list > .md-nav__item > .md-nav__link {
+  color: #e6e6e6 !important;
+}
+
+[data-md-color-scheme="slate"] .md-sidebar--secondary nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > .md-nav__link {
+  color: #abb2bf !important;
+}
+
+[data-md-color-scheme="slate"] .md-sidebar--secondary nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > .md-nav__link {
+  color: #7f848e !important;
+}
+
+[data-md-color-scheme="slate"] .md-sidebar--secondary nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > .md-nav__link {
+  color: #5c6370 !important;
+}
+
+[data-md-color-scheme="slate"] .md-sidebar--secondary > .md-nav > .md-nav__list > .md-nav__item > .md-nav__link:hover {
+  color: #e06c75 !important;
+}
+
+[data-md-color-scheme="slate"] .md-sidebar--secondary nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > .md-nav__link:hover {
+  color: #d19a66 !important;
+}
+
+[data-md-color-scheme="slate"] .md-sidebar--secondary nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > .md-nav__link:hover {
+  color: #61afef !important;
+}
+
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__link:hover {
+  background: rgba(97, 175, 239, 0.08);
+}
+
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__link--active::before,
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__item--active > .md-nav__link::before,
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__item--current > .md-nav__link::before {
+  background: linear-gradient(180deg, #e06c75, #d19a66);
+}
+
+[data-md-color-scheme="slate"] .md-sidebar--secondary::before {
+  background: linear-gradient(180deg, #e06c75, #61afef);
+}

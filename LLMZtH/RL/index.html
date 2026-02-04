@@ -28,6 +28,9 @@
     
       <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
       
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
       
 
 
@@ -65,7 +68,14 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -113,6 +123,32 @@
         </div>
       </div>
     </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
     
     
       <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
@@ -1319,6 +1355,315 @@ E(f;D)
 <p>噪声则表达了当前任务上学习算法所能达到的期望泛化误差的下届，刻画了 <strong>学习问题本身的难度</strong></p>
 </blockquote>
 <h2 id="_3">第三章 线性模型</h2>
+<div class="arithmatex">\[
+f(x)=\vec w^T\vec x+b
+\]</div>
+<p>当 <span class="arithmatex">\(\vec w\)</span> 和 b 学得后，模型得以确定</p>
+<hr />
+<p>对于回归任务，其试图学得</p>
+<div class="arithmatex">\[
+f(x_i)=wx_i+b,使得f(x_i)\simeq y_i
+\]</div>
+<p>然后为了确定 <span class="arithmatex">\(w\)</span> 和 <span class="arithmatex">\(b\)</span> ,一般采用让均方误差最小化的方法，如下</p>
+<div class="arithmatex">\[
+\begin{align}
+(w*,b*)&amp;=\arg_{(w,b)}\min \sum_{i=1}^{m}(f(x_i)-y_i)^2 \\
+&amp;=\arg_{(w,b)}\min \sum_{i=1}^{m}(y_i-wx_i-b)^2 
+\end{align}
+\tag{3.4}
+\]</div>
+<p>然后是这个式子分别对 w 和 b 求偏导为零，得到 w 和 b。不过书上的推导过程不能说很少，只能说没有</p>
+<div class="arithmatex">\[
+\begin{align}
+\dfrac{\partial E_{(w,b)}}{\partial w}&amp;=2\left(w\sum_{i=1}^{m}x_i^2-\sum_{i=1}^{m}(y_i-b)x_i\right)=0\tag{3.5} \\
+\dfrac{\partial E_{(w,b)}}{\partial b}&amp;=2\left(mb-\sum_{i=1}^{m}(y_i-wx_i)\right)=0\tag{3.6}
+\end{align}
+\]</div>
+<p>推导如下</p>
+<blockquote>
+<p>令式 <span class="arithmatex">\((3.5)\)</span> 等于 0，有</p>
+<div class="arithmatex">\[
+0=w\sum_{i=1}^mx_i^2-\sum_{i=1}^{m}(y_i-b)x_i\Rightarrow w\sum_{i=1}^mx_i^2=\sum_{i=1}^{m}(y_i-b)x_i
+\]</div>
+<p>再由 <span class="arithmatex">\((3.6)\)</span> 等于 0 得到 <span class="arithmatex">\(b=\displaystyle\dfrac{1}{m}\sum_{i=1}^{m}(y_i-wx_i)\)</span>,又因为 <span class="arithmatex">\(\displaystyle\dfrac{1}{m}\sum_{i=1}^{m}y_i=\bar y\)</span> 并且 <span class="arithmatex">\(\displaystyle\dfrac{1}{m}\sum_{i=1}^{m}x_i=\bar x\)</span> ,则 <span class="arithmatex">\(b=\bar y-w\bar x\)</span>,代入上式，可得</p>
+<div class="arithmatex">\[
+w\sum_{i=1}^{m}x_i^2=\sum_{i=1}^{m}y_ix_i-\bar y\sum_{i=1}^{m}x_i+w\bar x\sum_{i=1}^{m}x_i
+\]</div>
+<p>可以整理出</p>
+<div class="arithmatex">\[
+w=\dfrac{\sum_{i=1}^my_ix_i-\bar y\sum_{i=1}^mx_i}{\sum_{i=1}^mx_i^2-\bar x\sum_{i=1}^mx_i}
+\]</div>
+<p>然后我们把 <span class="arithmatex">\(\bar x\)</span> 和 <span class="arithmatex">\(\bar y\)</span> 的计算代入到上式，得到</p>
+<div class="arithmatex">\[
+w=\dfrac{\sum_{i=1}^{m}y_i(x_i-\bar x)}{\sum_{i=1}^{m}x^2_i-\dfrac{1}{m}\left(\sum_{i=1}^{m}x_i\right)^2}
+\]</div>
+<p>然后我们把 <span class="arithmatex">\(\bar x\)</span> 和 <span class="arithmatex">\(\bar y\)</span> 的计算代入到上式，得到</p>
+<div class="arithmatex">\[
+w=\dfrac{\sum_{i=1}^{m}y_i(x_i-\bar x)}{\sum_{i=1}^{m}x^2_i-\dfrac{1}{m}\left(\sum_{i=1}^{m}x_i\right)^2}
+\]</div>
+<p>然后我们把 <span class="arithmatex">\(\bar x\)</span> 和 <span class="arithmatex">\(\bar y\)</span> 的计算代入到上式，得到</p>
+<div class="arithmatex">\[
+w=\dfrac{\displaystyle\sum_{i=1}^{m}y_i(x_i-\bar x)}{\displaystyle\sum_{i=1}^{m}x^2_i-\dfrac{1}{m}\left(\displaystyle\sum_{i=1}^{m}x_i\right)^2}\tag{3.7}
+\]</div>
+<p>然后 b 的计算比较简单，不多赘述</p>
+</blockquote>
+<p>但通常的属性并非单一的，此时的我们试图学得如下的式子，即 <strong>多元线性回归</strong></p>
+<div class="arithmatex">\[
+f(x_i)=w^Tx_i+b,使得f(x_i)\simeq y_i
+\]</div>
+<p>计算方法就是线性代数的相关内容了，最小二乘法估计 <span class="arithmatex">\(\vec w\)</span> 和 <span class="arithmatex">\(b\)</span>，<span class="arithmatex">\(\hat w=(w;b)\)</span>，把数据集 D 表示为一个 <span class="arithmatex">\(m\times (d+1)\)</span> 大小的矩阵 <span class="arithmatex">\(\vec{A}\)</span>，每行对应于一个示例，该行前 d 个元素对应于示例的 d 个属性值，最后元素恒为 1，如下</p>
+<div class="arithmatex">\[
+X = \begin{pmatrix}
+x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1d} &amp; 1\\
+x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2d} &amp; 1\\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots\\
+x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{nd} &amp; 1
+\end{pmatrix}
+=
+\begin{pmatrix}
+x_1^T &amp; 1\\
+x_2^T &amp; 1\\
+\vdots &amp; \vdots\\
+x_m^T &amp; 1
+\end{pmatrix}
+\]</div>
+<p>可以得到类似于 3.4 的式子</p>
+<div class="arithmatex">\[
+\boldsymbol{w}^* = \arg\min_{\boldsymbol{w}} (\boldsymbol{y} - \mathbf{X}\boldsymbol{w})^T (\boldsymbol{y} - \mathbf{X}\boldsymbol{w})
+\]</div>
+<p>进而对 <span class="arithmatex">\(E_{\boldsymbol{w}} = (\boldsymbol{y} - \mathbf{X}\boldsymbol{w})^T (\boldsymbol{y} - \mathbf{X}\boldsymbol{w})\)</span> 求导，得到 <span class="arithmatex">\(\bar w\)</span> 最优解的闭式解</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>本节的最后提出了广义线性模型，如下</p>
+<div class="arithmatex">\[
+y=g^{-1}(w^T+b)
+\tag{3.15}
+\]</div>
+<p>函数 <span class="arithmatex">\(g(\cdot)\)</span> 称为联系函数，单调可微</p>
+</div>
+<hr />
+<p>上一节讨论的是如何使用线性模型进行回归学习，但是如果对分类任务进行处理，我们可以通过 <strong>找一个单调可微函数</strong> 将分类任务的真实标记 y 与线形回归模型的预测值联系起来。</p>
+<p>对于 <span class="arithmatex">\(y\in\text{0,1}\)</span> 的二分类任务，**对数几率函数**就是这样一个常用的替代函数，如下，其中 z 表示的是线性回归模型产生的预测值</p>
+<div class="arithmatex">\[
+y=\dfrac{1}{1+e^{-z}}
+\tag{3.18}
+\]</div>
+<p>将 <span class="arithmatex">\((3.18)\)</span> 代入回 <span class="arithmatex">\((3.15)\)</span>，再经过一些简单变化，我们可以得到下式</p>
+<div class="arithmatex">\[
+\ln\dfrac{y}{1-y}=w^Tx+b
+\tag{3.19}
+\]</div>
+<p>接着将 y 视为 <strong>类后验概率估计</strong> 如下 </p>
+<div class="arithmatex">\[
+ p(y=1|\boldsymbol{x}) = \frac{e^{\boldsymbol{w}^{\mathrm{T}}\boldsymbol{x}+b}}{1+e^{\boldsymbol{w}^{\mathrm{T}}\boldsymbol{x}+b}} = \frac{1}{1+e^{-(\boldsymbol{w}^{\mathrm{T}}\boldsymbol{x}+b)}} 
+\]</div>
+<div class="arithmatex">\[
+ p(y=0|\boldsymbol{x}) = \frac{1}{1+e^{\boldsymbol{w}^{\mathrm{T}}\boldsymbol{x}+b}} 
+\]</div>
+<blockquote>
+<p>推导：设 <span class="arithmatex">\(p_1 = p(y=1|\boldsymbol{x})\)</span>，由 <span class="arithmatex">\(\frac{p_1}{1-p_1} = e^{\boldsymbol{w}^{\mathrm{T}}\boldsymbol{x}+b}\)</span> 解得上式。</p>
+</blockquote>
+<hr />
+<p><strong>极大似然估计</strong> 
+记 <span class="arithmatex">\(\boldsymbol{\beta} = (\boldsymbol{w};b)\)</span>，<span class="arithmatex">\(\hat{\boldsymbol{x}} = (\boldsymbol{x};1)\)</span>，则最大化对数似然：</p>
+<div class="arithmatex">\[
+ \ell(\boldsymbol{\beta}) = \sum_{i=1}^{m} \ln p(y_i|\boldsymbol{x}_i;\boldsymbol{\beta}) 
+\]</div>
+<p>其中：</p>
+<div class="arithmatex">\[
+ p(y_i|\boldsymbol{x}_i) = y_i p_1(\hat{\boldsymbol{x}}_i;\boldsymbol{\beta}) + (1-y_i)p_0(\hat{\boldsymbol{x}}_i;\boldsymbol{\beta}) 
+\]</div>
+<p>展开得：</p>
+<div class="arithmatex">\[
+ \ell(\boldsymbol{\beta}) = \sum_{i=1}^{m}\left[-y_i\boldsymbol{\beta}^{\mathrm{T}}\hat{\boldsymbol{x}}_i + \ln(1+e^{\boldsymbol{\beta}^{\mathrm{T}}\hat{\boldsymbol{x}}_i})\right] 
+\]</div>
+<hr />
+<p>然后用 <strong>牛顿法</strong> 求得最优解如下</p>
+<p>梯度下降：</p>
+<div class="arithmatex">\[
+ \boldsymbol{\beta}^{t+1} = \boldsymbol{\beta}^t - \alpha \sum_{i=1}^{m}(p_1(\hat{\boldsymbol{x}}_i;\boldsymbol{\beta}^t) - y_i)\hat{\boldsymbol{x}}_i 
+\]</div>
+<p>牛顿法：</p>
+<div class="arithmatex">\[
+ \boldsymbol{\beta}^{t+1} = \boldsymbol{\beta}^t - \left(\frac{\partial^2 \ell(\boldsymbol{\beta})}{\partial\boldsymbol{\beta}\partial\boldsymbol{\beta}^{\mathrm{T}}}\right)^{-1} \frac{\partial\ell(\boldsymbol{\beta})}{\partial\boldsymbol{\beta}} 
+\]</div>
+<p>代码如下：</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># =========================</span>
+<span class="c1"># 1. 生成二维二分类数据</span>
+<span class="c1"># =========================</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">n_samples</span> <span class="o">=</span> <span class="mi">200</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">true_w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.0</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span> <span class="o">@</span> <span class="n">true_w</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="c1"># =========================</span>
+<span class="c1"># 2. 划分训练集 / 测试集</span>
+<span class="c1"># =========================</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)</span>
+<span class="n">train_idx</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[:</span><span class="mi">140</span><span class="p">]</span>
+<span class="n">test_idx</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[</span><span class="mi">140</span><span class="p">:]</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">train_idx</span><span class="p">]</span>
+<span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">test_idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">test_idx</span><span class="p">]</span>
+
+<span class="c1"># =========================</span>
+<span class="c1"># 3. 逻辑回归</span>
+<span class="c1"># =========================</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">))</span>
+
+<span class="c1"># 加偏置项</span>
+<span class="n">Xb_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">)),</span> <span class="n">X_train</span><span class="p">]</span>
+<span class="n">Xb_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_test</span><span class="p">)),</span> <span class="n">X_test</span><span class="p">]</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">n_iter</span> <span class="o">=</span> <span class="mi">2000</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_iter</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">Xb_train</span> <span class="o">@</span> <span class="n">w</span><span class="p">)</span>
+    <span class="n">grad</span> <span class="o">=</span> <span class="n">Xb_train</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span><span class="n">p</span> <span class="o">-</span> <span class="n">y_train</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+    <span class="n">w</span> <span class="o">-=</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">grad</span>
+
+<span class="c1"># =========================</span>
+<span class="c1"># 4. 预测与评估</span>
+<span class="c1"># =========================</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="n">Xb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)),</span> <span class="n">X</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">Xb</span> <span class="o">@</span> <span class="n">w</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="n">train_acc</span> <span class="o">=</span> <span class="p">(</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span> <span class="o">==</span> <span class="n">y_train</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">test_acc</span> <span class="o">=</span> <span class="p">(</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span> <span class="o">==</span> <span class="n">y_test</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Train accuracy:&quot;</span><span class="p">,</span> <span class="n">train_acc</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test accuracy :&quot;</span><span class="p">,</span> <span class="n">test_acc</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model weights :&quot;</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+
+<span class="c1"># =========================</span>
+<span class="c1"># 5. 可视化（数据 + 决策边界）</span>
+<span class="c1"># =========================</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+<span class="c1"># 训练集</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">y_train</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_train</span><span class="p">[</span><span class="n">y_train</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Train y=0&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">y_train</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_train</span><span class="p">[</span><span class="n">y_train</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Train y=1&#39;</span><span class="p">)</span>
+
+<span class="c1"># 测试集</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="n">y_test</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_test</span><span class="p">[</span><span class="n">y_test</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Test y=0&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="n">y_test</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_test</span><span class="p">[</span><span class="n">y_test</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Test y=1&#39;</span><span class="p">)</span>
+
+<span class="c1"># 决策边界 w0 + w1*x1 + w2*x2 = 0</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x1</span><span class="p">)</span> <span class="o">/</span> <span class="n">w</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Decision boundary&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;x2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Logistic Regression</span><span class="se">\n</span><span class="s2">Train acc=</span><span class="si">{</span><span class="n">train_acc</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, Test acc=</span><span class="si">{</span><span class="n">test_acc</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;logistic_regression.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;图已保存为 logistic_regression.png&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>随机数种子为 42，生成 200 数据，真实边界 <code>[-3,2]</code>。</p>
+<p>训练集为前 140 个数据，测试集为后 140 个数据。</p>
+<p>学习率为 0.2，迭代轮次 2000 次。</p>
+<p><img alt="" src="../../images/Pasted%20image%2020260126222430.png" /></p>
+<p>圆圈为训练数据，×为预测数据</p>
+<p><img alt="" src="../../images/result.png" /></p>
+<hr />
+<p>上述我们完成了一个二分类预测，而 LDA（线性判别分析）又是另一种经典的线性学习方法。</p>
+<p>它的想法很简单：</p>
+<ul>
+<li>给定训练样例集，设法将样例投影到一条直线上，使得同类样例的投影点尽可能接近、异类样例的投影点尽可能原理；</li>
+<li>在对新样本进行分类时，将其投影到同样的这一条直线上，再根据投影点的位置来确定新样本的类别</li>
+<li>如下图，其中 "+" 代表正例，"-" 代表反例，椭圆表示数据簇的外轮廓，虚线表示投影，红色是实心圆和实心三角形分别表示两类样本的投影后的中心点 <img alt="" src="../../images/Pasted%20image%2020260126223235.png" />
+同理 <span class="arithmatex">\(w^T\)</span> 是参数，<span class="arithmatex">\(\mu_0,\mu_1\)</span> 分别是 0,1 数据的均值</li>
+<li>我们要做的是让类中心的距离尽可能大，即 <span class="arithmatex">\(\left\| w^\top \mu_0 - w^\top \mu_1 \right\|_2^2\)</span> 尽可能大（这个式子的意思是“把两类的均值 <span class="arithmatex">\(\mu_0\)</span>​ 和 <span class="arithmatex">\(\mu_1\)</span>​ 投影到方向 <span class="arithmatex">\(w\)</span> 上之后的距离的平方”）</li>
+<li>同时还要让同类的尽可能接近，也就是同类样例协方差尽可能小 <span class="arithmatex">\(w^T\sum_0w+w^T\sum_1w\)</span> 尽可能小</li>
+<li>于是可以得到式子如下</li>
+</ul>
+<div class="arithmatex">\[
+J = \frac{\| w^\top \mu_0 - w^\top \mu_1 \|_2^2}{w^\top \Sigma_0 w + w^\top \Sigma_1 w}= \frac{w^\top (\mu_0 - \mu_1)(\mu_0 - \mu_1)^\top w}{w^\top (\Sigma_0 + \Sigma_1) w}\tag{3.32}
+\]</div>
+<blockquote>
+<p>这线性代数得学啊</p>
+</blockquote>
+<p>接下来就是 <span class="arithmatex">\(w\)</span> 的计算，书上的推导挺完善了，不加赘述了</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Plot data clusters (covariance ellipses) and mean vector m = mu1 - mu0</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ellipse</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">X0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">X1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+
+<span class="c1"># Means and covariances</span>
+<span class="n">mu0</span> <span class="o">=</span> <span class="n">X0</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">mu1</span> <span class="o">=</span> <span class="n">X1</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">Sigma0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">X0</span><span class="p">,</span> <span class="n">rowvar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">Sigma1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">rowvar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">mu1</span> <span class="o">-</span> <span class="n">mu0</span>  <span class="c1"># mean difference vector</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">draw_ellipse</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">n_std</span><span class="o">=</span><span class="mf">2.0</span><span class="p">):</span>
+    <span class="n">vals</span><span class="p">,</span> <span class="n">vecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">cov</span><span class="p">)</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="n">vals</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">vals</span><span class="p">,</span> <span class="n">vecs</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="n">order</span><span class="p">],</span> <span class="n">vecs</span><span class="p">[:,</span> <span class="n">order</span><span class="p">]</span>
+    <span class="n">angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">vecs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">vecs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n_std</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Ellipse</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="n">angle</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+<span class="c1"># Data points</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X0</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X0</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Class 0&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X1</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X1</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Class 1&quot;</span><span class="p">)</span>
+
+<span class="c1"># Covariance ellipses (data clusters)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">draw_ellipse</span><span class="p">(</span><span class="n">mu0</span><span class="p">,</span> <span class="n">Sigma0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">draw_ellipse</span><span class="p">(</span><span class="n">mu1</span><span class="p">,</span> <span class="n">Sigma1</span><span class="p">))</span>
+
+<span class="c1"># Means</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">mu0</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mu0</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">mu1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mu1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">mu0</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mu0</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="sa">r</span><span class="s1">&#39;$\mu_0$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">mu1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mu1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="sa">r</span><span class="s1">&#39;$\mu_1$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="c1"># Mean difference vector m</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">mu0</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mu0</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">mu0</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">mu0</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$m=\mu_1-\mu_0$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;x2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Data Clusters and Mean Vector m&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;LDA.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;图已保存为 LDA.png&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><img alt="" src="../../images/Pasted%20image%2020260126225614.png" /></p>
+<hr />
+<p>多分类任务有 OvO（一对一），OvR（一对其余），MvM（多对多）这几种拆分策略</p>
+<p><strong>OvO</strong> 与 <strong>OvR</strong> </p>
+<p><img alt="" src="../../images/Pasted%20image%2020260126225905.png" /></p>
+<hr />
+<p>类别不平衡问题：就是说当正例和反例的数量出现明显差别的时候，对学习过程产生较大困扰。</p>
+<p>解决方法则是加入修正量进行 <strong>再放缩</strong>，如下，我们约定 <span class="arithmatex">\(m^+\)</span> 为正例数量，<span class="arithmatex">\(m^-\)</span> 为反例数量，<span class="arithmatex">\(y\)</span> 为预测的实数值，则有下式</p>
+<div class="arithmatex">\[
+\dfrac{y}{1-y}\times\dfrac{m^-}{m^+}&gt;0.5
+\]</div>
+<p>认为为正例，不过由于训练集为真实样本总体的无偏采样这个假设很难成立，所以这个方案一般性不同</p>
+<p>现有技术大体上有三类做法</p>
+<ul>
+<li>删除一些样例使得正例和反例数量差不多，“欠采样”，代表性算法是EasyEnsemble</li>
+<li>增加一些样例使得正例和反例数量差不多，“过采样”，代表性算法是SMOTE</li>
+<li>直接基于原有训练集学习，但在预测时候将上式加入决策过程中，“阈值偏移”</li>
+</ul>
 
 
 
@@ -1338,6 +1683,12 @@ E(f;D)
           
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
         
       </main>
       
@@ -1367,7 +1718,7 @@ E(f;D)
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.select", "navigation.titles", "navigation.tabs", "navigation.indexes"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.titles", "navigation.tabs", "navigation.indexes", "navigation.top"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
