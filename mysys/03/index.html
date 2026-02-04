@@ -1571,6 +1571,7 @@
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
+  
                   
 
 
@@ -1667,32 +1668,76 @@
 <span class="p">};</span>
 </code></pre></div>
 <p>上面的结构图告诉我们有三个栈顶<code>esp0、esp1、esp2</code>，分别对应3个特权级，用来保存相关的内容。而3号特权级栈，也即用户栈，它的切换是通过保存上下文来进行的</p>
-<p>!!!note 进程&amp;&amp;任务：点击查看更多</p>
-<pre><code>**进程**是程序的一次执行实例，是操作系统进行资源分配和调度的基本单位
-
-- 拥有独立的地址空间
-- 拥有自己的代码段、数据段、堆、栈
-- 有用系统资源（文件描述符、内存、信号量等）
-- 每个进程都有一个唯一的PID
-
-**任务**是一个更加广义的术语，在不同上下文中含义不太一样
-
-| 上下文    | 含义                                    |
-| --------- | --------------------------------------- |
-| Linux内核 | 任务 ≈ 一个执行单元，可能是进程或者线程 |
-| x86架构   | 指的是一个TSS表示的活动实体             |
-| 一般语境  | 抽象的工作单元，比如某个需要执行的功能  |
-
-**任务vs进程（Linux角度）**
-
-| 比较项       | 任务（Task）                              | 进程（Process）                   |
-| ------------ | ----------------------------------------- | --------------------------------- |
-| 定义         | 内核中的调度单元，使用 `task_struct` 表示 | 程序的执行实例，使用 PID 区分     |
-| 范围         | 包含进程和线程                            | 严格指拥有独立资源的执行体        |
-| 地址空间     | 可共享（线程）或不共享（进程）            | 拥有独立地址空间                  |
-| 资源管理单位 | 否（线程间共享资源）                      | 是（进程独立拥有资源）            |
-| 调度单位     | 是                                        | 是（本质上由 `task_struct` 支持） |
-</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>**进程**是程序的一次执行实例，是操作系统进行资源分配和调度的基本单位</p>
+<ul>
+<li>拥有独立的地址空间</li>
+<li>拥有自己的代码段、数据段、堆、栈</li>
+<li>有用系统资源（文件描述符、内存、信号量等）</li>
+<li>每个进程都有一个唯一的PID</li>
+</ul>
+<p>**任务**是一个更加广义的术语，在不同上下文中含义不太一样</p>
+<table>
+<thead>
+<tr>
+<th>上下文</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linux内核</td>
+<td>任务 ≈ 一个执行单元，可能是进程或者线程</td>
+</tr>
+<tr>
+<td>x86架构</td>
+<td>指的是一个TSS表示的活动实体</td>
+</tr>
+<tr>
+<td>一般语境</td>
+<td>抽象的工作单元，比如某个需要执行的功能</td>
+</tr>
+</tbody>
+</table>
+<p><strong>任务vs进程（Linux角度）</strong></p>
+<table>
+<thead>
+<tr>
+<th>比较项</th>
+<th>任务（Task）</th>
+<th>进程（Process）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>定义</td>
+<td>内核中的调度单元，使用 <code>task_struct</code> 表示</td>
+<td>程序的执行实例，使用 PID 区分</td>
+</tr>
+<tr>
+<td>范围</td>
+<td>包含进程和线程</td>
+<td>严格指拥有独立资源的执行体</td>
+</tr>
+<tr>
+<td>地址空间</td>
+<td>可共享（线程）或不共享（进程）</td>
+<td>拥有独立地址空间</td>
+</tr>
+<tr>
+<td>资源管理单位</td>
+<td>否（线程间共享资源）</td>
+<td>是（进程独立拥有资源）</td>
+</tr>
+<tr>
+<td>调度单位</td>
+<td>是</td>
+<td>是（本质上由 <code>task_struct</code> 支持）</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>特权级在变化的时候，需要用到不同特权级下的栈，当处理器进入不同特权级时，他会自动在TSS中找同特权级的栈</p>
 <p>!!!note 举个例子（从用户态中断进入内核态）</p>
 <pre><code>假设现在的情况是：Ring3遭遇触发中断,则变化过程如下：
@@ -2253,7 +2298,97 @@ Low Address
 
 
 
+<div class="md-typeset" style="margin-top: 2rem;">
+  <h2 id="__comments">评论</h2>
+  
+  <script>
+    var giscusTheme = document.body.getAttribute("data-md-color-scheme") === "slate" ? "dark_dimmed" : "light";
+    
+    var giscusScript = document.createElement("script");
+    giscusScript.src = "https://giscus.app/client.js";
+    giscusScript.setAttribute("data-repo", "maple-pwn/maple-pwn.github.io");
+    giscusScript.setAttribute("data-repo-id", "R_kgDOP5uLTQ");
+    giscusScript.setAttribute("data-category", "Comments");
+    giscusScript.setAttribute("data-category-id", "DIC_kwDOP5uLTc4C130e");
+    giscusScript.setAttribute("data-mapping", "pathname");
+    giscusScript.setAttribute("data-strict", "0");
+    giscusScript.setAttribute("data-reactions-enabled", "1");
+    giscusScript.setAttribute("data-emit-metadata", "0");
+    giscusScript.setAttribute("data-input-position", "bottom");
+    giscusScript.setAttribute("data-theme", giscusTheme);
+    giscusScript.setAttribute("data-lang", "zh-CN");
+    giscusScript.setAttribute("data-loading", "lazy");
+    giscusScript.setAttribute("crossorigin", "anonymous");
+    giscusScript.async = true;
+    
+    document.getElementById("__comments").insertAdjacentElement("afterend", giscusScript);
+    
+    // Theme sync
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.attributeName === "data-md-color-scheme") {
+          var theme = document.body.getAttribute("data-md-color-scheme") === "slate" ? "dark_dimmed" : "light";
+          var iframe = document.querySelector(".giscus-frame");
+          if (iframe) {
+            iframe.contentWindow.postMessage(
+              { giscus: { setConfig: { theme: theme } } },
+              "https://giscus.app"
+            );
+          }
+        }
+      });
+    });
+    observer.observe(document.body, { attributes: true });
+  </script>
+</div>
+
                 
+  
+<div class="md-typeset" style="margin-top: 2rem;">
+  <h2 id="__comments">评论</h2>
+  
+  <script>
+    var giscusTheme = document.body.getAttribute("data-md-color-scheme") === "slate" ? "dark_dimmed" : "light";
+    
+    var giscusScript = document.createElement("script");
+    giscusScript.src = "https://giscus.app/client.js";
+    giscusScript.setAttribute("data-repo", "maple-pwn/maple-pwn.github.io");
+    giscusScript.setAttribute("data-repo-id", "R_kgDOP5uLTQ");
+    giscusScript.setAttribute("data-category", "Comments");
+    giscusScript.setAttribute("data-category-id", "DIC_kwDOP5uLTc4C130e");
+    giscusScript.setAttribute("data-mapping", "pathname");
+    giscusScript.setAttribute("data-strict", "0");
+    giscusScript.setAttribute("data-reactions-enabled", "1");
+    giscusScript.setAttribute("data-emit-metadata", "0");
+    giscusScript.setAttribute("data-input-position", "bottom");
+    giscusScript.setAttribute("data-theme", giscusTheme);
+    giscusScript.setAttribute("data-lang", "zh-CN");
+    giscusScript.setAttribute("data-loading", "lazy");
+    giscusScript.setAttribute("crossorigin", "anonymous");
+    giscusScript.async = true;
+    
+    document.getElementById("__comments").insertAdjacentElement("afterend", giscusScript);
+    
+    // Theme sync
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.attributeName === "data-md-color-scheme") {
+          var theme = document.body.getAttribute("data-md-color-scheme") === "slate" ? "dark_dimmed" : "light";
+          var iframe = document.querySelector(".giscus-frame");
+          if (iframe) {
+            iframe.contentWindow.postMessage(
+              { giscus: { setConfig: { theme: theme } } },
+              "https://giscus.app"
+            );
+          }
+        }
+      });
+    });
+    observer.observe(document.body, { attributes: true });
+  </script>
+</div>
+
+
               </article>
             </div>
           
