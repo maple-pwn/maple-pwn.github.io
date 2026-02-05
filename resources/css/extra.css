@@ -626,11 +626,27 @@ body {
    Glassmorphism Header & Navigation
    ═══════════════════════════════════════════════════════════════════ */
 .md-header {
-  background: rgba(255, 255, 255, 0.85) !important;
+  background: rgba(255, 255, 255, 0.88) !important;
   backdrop-filter: blur(12px) saturate(180%);
   -webkit-backdrop-filter: blur(12px) saturate(180%);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  border-bottom: none !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  position: relative;
+}
+
+.md-header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(200, 170, 110, 0.35) 25%, 
+    rgba(195, 165, 105, 0.5) 50%, 
+    rgba(200, 170, 110, 0.35) 75%, 
+    transparent);
 }
 
 .md-header .md-header__title,

