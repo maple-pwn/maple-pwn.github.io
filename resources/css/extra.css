@@ -19,9 +19,10 @@ font-weight: normal;
 }
 
 :root {
-  --page-bg-base: #fbfbf7;
+  --page-bg-base: #fcfcfc;
   --page-bg-grid: rgba(30, 30, 30, 0.035);
   --page-bg-grid-bold: rgba(30, 30, 30, 0.06);
+  --md-default-bg-color: #fcfcfc;
   --page-bg: linear-gradient(var(--page-bg-base), var(--page-bg-base));
   --page-bg-grid-size: 32px;
   --page-bg-grid-bold-size: 160px;
@@ -31,17 +32,21 @@ font-weight: normal;
 
 body {
   background-color: var(--page-bg-base);
-  background-image:
-    linear-gradient(var(--page-bg-grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--page-bg-grid) 1px, transparent 1px),
-    linear-gradient(var(--page-bg-grid-bold) 1px, transparent 1px),
-    linear-gradient(90deg, var(--page-bg-grid-bold) 1px, transparent 1px);
-  background-size:
-    var(--page-bg-grid-size) var(--page-bg-grid-size),
-    var(--page-bg-grid-size) var(--page-bg-grid-size),
-    var(--page-bg-grid-bold-size) var(--page-bg-grid-bold-size),
-    var(--page-bg-grid-bold-size) var(--page-bg-grid-bold-size);
-  background-position: 0 0, 0 0, 0 0, 0 0;
+}
+
+.md-main {
+  background: transparent;
+}
+
+.md-content {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  margin: 0.5rem;
+}
+
+[data-md-color-scheme="slate"] .md-content {
+  background: rgba(33, 37, 43, 0.5);
 }
 
 /* ═══════════════════════════════════════════════════════════════════

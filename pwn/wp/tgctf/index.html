@@ -2525,7 +2525,7 @@
 <p>先检查，除了canary其它全开；read允许读入18字节，读入区域可执行</p>
 <p>跟进<code>sub_11C9</code>,将除了rdi之外的值全部清空了</p>
 <p>gdb调试一下</p>
-<p>![image-20250414224526951]](../images/image-20250414224526951.png)</p>
+<p><img alt="image-20250414224526951" src="../../images/image-20250414224526951.png" /></p>
 <p>发现我们输入的内容写入了rdi，所以就很好构造了</p>
 <table>
 <thead>
