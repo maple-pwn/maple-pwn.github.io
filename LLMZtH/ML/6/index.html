@@ -875,7 +875,25 @@
         <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
-      软间隔与正则化
+      软间隔与正则化（避免过拟合）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      支持向量回归
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      核方法
     </span>
   </a>
   
@@ -2970,7 +2988,25 @@
         <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
-      软间隔与正则化
+      软间隔与正则化（避免过拟合）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      支持向量回归
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      核方法
     </span>
   </a>
   
@@ -3403,7 +3439,448 @@ K = \begin{bmatrix}
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Predictions:&quot;</span><span class="p">,</span> <span class="n">prediction</span><span class="p">)</span>
 </code></pre></div>
 </details>
-<h3 id="_3">软间隔与正则化</h3>
+<h3 id="_3">软间隔与正则化（避免过拟合）</h3>
+<p>理想情况下，模型可以找到一个“硬间隔”超平面，把所有样本完全分开。但是现实情况下通常存在两个特征：</p>
+<ol>
+<li>数据有噪声</li>
+<li>类别本身可能线性不可分</li>
+</ol>
+<p>如果强行要求“完全正确分类”，模型会：</p>
+<ul>
+<li>对噪声样本过度拟合</li>
+<li>间隔变得很小</li>
+<li>泛化能力下降</li>
+</ul>
+<p>所以需要 <mark>允许适度犯错，并控制模型复杂度</mark>，即“软间隔”</p>
+<p><img alt="image-20260211192649662" src="../../../images/image-20260211192649662.png" /></p>
+<p>结合上图，软间隔是允许某些样本不满足约束</p>
+<div class="arithmatex">\[
+y_i(\boldsymbol{w^Tx_i}+b)\ge 1\tag{6.28}
+\]</div>
+<p>当然我们希望最大化间隔的时候，不满足约束的样本尽可能少，于是优化目标如下：</p>
+<div class="arithmatex">\[
+\min_{w,b}\ \frac{1}{2}\,\|w\|^{2}
+\;+\;
+C\sum_{i=1}^{m}\,\ell_{0/1}\!\left(y_i\bigl(\boldsymbol{w^\top x_i}+b\bigr)-1\right).\tag{6.29}
+\]</div>
+<blockquote>
+<p>这个式子第一项不必解释，主要解释第二项</p>
+<ul>
+<li>
+<p>数据：<span class="arithmatex">\((\boldsymbol{x_i},y_i)\)</span> 其中 <span class="arithmatex">\(y_i\in\{+1,-1\}\)</span></p>
+</li>
+<li>
+<p>量 <span class="arithmatex">\(y_i\bigl(\boldsymbol{w^\top x_i}+b\bigr)\)</span> 叫做 <strong>函数间隔</strong>。</p>
+<ul>
+<li>若 <span class="arithmatex">\(y_i\bigl(\boldsymbol{w^\top x_i}+b\bigr)\ge1\)</span>，则说明样本分对了，且满足至少离分界面有一定距离的间隔约束</li>
+<li>若 <span class="arithmatex">\(y_i\bigl(\boldsymbol{w^\top x_i}+b\bigr)&lt;1\)</span>，则叫做 <strong>间隔违背</strong>（分对了但靠太近，或者就是分错了）</li>
+</ul>
+</li>
+<li>
+<p><span class="arithmatex">\(\ell_{0/1}\)</span> 是0/1损失函数，用来计数：多少个样本不满足约束。<em>不过这个函数的数学性质不好，一般用其它损失函数替代，如 hinge损失、指数损失、对率损失等</em></p>
+<div class="arithmatex">\[
+\ell_{0/1}(z)=
+\begin{cases}
+1,\text{if  z &lt; 0}\\
+0,\text{otherwise}
+\end{cases}
+\tag{6.30}
+\]</div>
+</li>
+<li>
+<p>C是一个常数，当C越大，则越重视训练集上少错误（也就是拟合数据的时候更“硬”）</p>
+</li>
+</ul>
+</blockquote>
+<p><img alt="image-20260211194150083" src="../../../images/image-20260211194150083.png" /></p>
+<p>然后我们约定一个 <strong>松弛量</strong> 来更好的统计数据，如下</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\min_{w,b,\{\xi_i\}} \quad &amp; \frac{1}{2}\|w\|^2 + C\sum_{i=1}^{m}\xi_i \\
+\text{s.t.}\quad &amp; y_i\bigl(w^\top x_i + b\bigr) \ge 1-\xi_i,\quad i=1,2,\ldots,m,\\
+&amp; \xi_i \ge 0,\quad i=1,2,\ldots,m.
+\end{aligned}
+\tag{6.35}
+\]</div>
+<p>然后我们就得到了最常用的“软间隔支持向量机”</p>
+<p>接下来就是和上面计算基础向量机的计算方式差不多（下面的计算是用hinge损失来做替代）</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>1) 拉格朗日函数</strong></p>
+<p>对约束引入拉格朗日乘子：<span class="arithmatex">\(\alpha_i\ge 0\)</span>、<span class="arithmatex">\(\mu_i\ge 0\)</span>。</p>
+<div class="arithmatex">\[
+\begin{aligned}
+L(w,b,\alpha,\xi,\mu)
+=&amp;\ \frac{1}{2}|w|^2 + C\sum_{i=1}^{m}\xi_i \\
+&amp;+ \sum_{i=1}^{m}\alpha_i\Bigl(1-\xi_i-y_i\bigl(w^\top x_i+b\bigr)\Bigr)
+- \sum_{i=1}^{m}\mu_i\xi_i .
+  \end{aligned}\tag{6.36}
+\]</div>
+<hr />
+<p><strong>2) 驻点条件（对 <span class="arithmatex">\(w,b,\xi_i\)</span> 求偏导为 0）</strong></p>
+<p>令 <span class="arithmatex">\(\frac{\partial L}{\partial w}=0\)</span>、<span class="arithmatex">\(\frac{\partial L}{\partial b}=0\)</span>、<span class="arithmatex">\(\frac{\partial L}{\partial \xi_i}=0\)</span>，得到：</p>
+<ul>
+<li>关于 <span class="arithmatex">\(w\)</span>：</li>
+</ul>
+<p>$$
+  w=\sum_{i=1}^{m}\alpha_i y_i x_i.\tag{6.37}
+  $$</p>
+<ul>
+<li>关于 <span class="arithmatex">\(b\)</span>：</li>
+</ul>
+<p>$$
+  \sum_{i=1}^{m}\alpha_i y_i=0.\tag{6.38}
+  $$</p>
+<ul>
+<li>关于 <span class="arithmatex">\(\xi_i\)</span>：
+  $$
+  C=\alpha_i+\mu_i.\tag{6.39}
+  $$</li>
+</ul>
+<p>由于 <span class="arithmatex">\(\mu_i\ge 0\)</span>，推出</p>
+<div class="arithmatex">\[
+0\le \alpha_i \le C.
+\]</div>
+<hr />
+<p><strong>3) 对偶问题（Dual）</strong></p>
+<p>将上式代回可得对偶问题：</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\max_{\alpha}\quad &amp;
+\sum_{i=1}^{m}\alpha_i
+-\frac{1}{2}\sum_{i=1}^{m}\sum_{j=1}^{m}\alpha_i\alpha_j y_i y_j, x_i^\top x_j \\
+\text{s.t.}\quad &amp;
+\sum_{i=1}^{m}\alpha_i y_i = 0,\\
+&amp;0\le \alpha_i \le C,\quad i=1,2,\ldots,m.
+\end{aligned}
+\tag{6.40}
+\]</div>
+<p>与硬间隔 SVM 的唯一区别：<strong>硬间隔只有 <span class="arithmatex">\(\alpha_i\ge 0\)</span>，软间隔多了上界 <span class="arithmatex">\(\alpha_i\le C\)</span></strong>。</p>
+<hr />
+<p><strong>4) KKT 条件与样本几何意义</strong></p>
+<p>KKT 条件：</p>
+<div class="arithmatex">\[
+\begin{cases}
+\alpha_i \ge 0,\ \mu_i \ge 0,\\
+y_i f(x_i) - 1 + \xi_i \ge 0,\\
+\alpha_i\bigl(y_i f(x_i) - 1 + \xi_i\bigr)=0,\\
+\xi_i \ge 0,\ \mu_i\xi_i=0,
+\end{cases}
+\quad i=1,2,\ldots,m.\tag{6.41}
+\]</div>
+<p>其中 <span class="arithmatex">\(f(x)=w^\top x+b\)</span>。</p>
+<p>由 KKT 可得：</p>
+<ul>
+<li>若 <span class="arithmatex">\(\alpha_i=0\)</span>：样本对 <span class="arithmatex">\(f(x)\)</span> 无影响（不是支持向量）。</li>
+<li>若 <span class="arithmatex">\(\alpha_i   0\)</span>：必有</li>
+</ul>
+<p>$$
+  y_i f(x_i)=1-\xi_i,
+  $$</p>
+<p>该样本是支持向量。</p>
+<p>进一步结合 <span class="arithmatex">\(C=\alpha_i+\mu_i\)</span>：</p>
+<ul>
+<li>若 <span class="arithmatex">\(0&lt;\alpha_i&lt;C\)</span>：则 <span class="arithmatex">\(\mu_i   0\Rightarrow \xi_i=0\)</span>，因此</li>
+</ul>
+<p>$$
+  y_i f(x_i)=1,
+  $$</p>
+<p>样本恰在最大间隔边界上。</p>
+<ul>
+<li>若 <span class="arithmatex">\(\alpha_i=C\)</span>：则 <span class="arithmatex">\(\mu_i=0\)</span>，此时允许 <span class="arithmatex">\(\xi_i\ge 0\)</span>：<ul>
+<li><span class="arithmatex">\(0&lt;\xi_i\le 1\)</span>：样本在间隔内但仍分对；</li>
+<li><span class="arithmatex">\(\xi_i&gt;1\)</span>：样本被误分类。</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>更一般的，优化目标中的第一项用来描述划分超平面的“间隔”大小，另一项 <span class="arithmatex">\(\sum_{i=1}^{m}\ell(f(\boldsymbol{x_i},y_i)\)</span> 来表述训练集上的误差，于是我们可以得到一般式
+$$
+\min_f\Omega(f)+C\sum_{i=1}^{m}\ell(f(\boldsymbol{x_i}),y_i)\tag{6.42}
+$$</p>
+<ul>
+<li>第一项 <span class="arithmatex">\(\Omega(f)\)</span>：<strong>结构风险</strong> 用来描述/约束模型 <span class="arithmatex">\(f\)</span> 的某些性质（例如希望模型更简单、复杂度更低、间隔更大等）。</li>
+<li>第二项 <span class="arithmatex">\(\sum_{i=1}^m \ell(f(x_i),y_i)\)</span>：<strong>经验风险</strong> 衡量模型在训练集上的拟合误差（损失的总和）。</li>
+<li><span class="arithmatex">\(C\)</span>：在“模型复杂度（结构风险）”与“训练误差（经验风险）”之间做权衡的系数，也常称为 <strong>正则化常数</strong>。</li>
+</ul>
+<blockquote>
+<p>从经验风险最小化角度看，引入 <span class="arithmatex">\(\Omega(f)\)</span> 等价于：</p>
+<ul>
+<li>表达我们“希望得到什么样的模型”（例如更简单/更平滑/更稀疏）；</li>
+<li>缩小假设空间，降低过拟合风险，从而提升泛化能力。</li>
+</ul>
+<p>常用的正则化项之一是对参数做范数约束（以线性模型参数 <span class="arithmatex">\(w\)</span> 为例）：</p>
+<ul>
+<li><span class="arithmatex">\(L_2\)</span> 范数：<span class="arithmatex">\(|w|_2\)</span>（或 <span class="arithmatex">\(|w|_2^2\)</span>）倾向于让 <span class="arithmatex">\(w\)</span> 的分量“更均匀、整体更小”，通常得到 <strong>更稠密</strong> 的解（非零分量多）。</li>
+<li><span class="arithmatex">\(L_0\)</span> “范数”：<span class="arithmatex">\(|w|_0\)</span>（非零分量个数）倾向于让非零分量尽可能少，得到 <strong>最稀疏</strong> 的解（但优化通常很难）。</li>
+<li><span class="arithmatex">\(L_1\)</span> 范数：<span class="arithmatex">\(|w|_1\)</span> 也倾向于产生 <strong>稀疏</strong> 解（很多分量被压到 0），且比 <span class="arithmatex">\(L_0\)</span> 更易优化（常用作稀疏替代）。</li>
+</ul>
+</blockquote>
+<h3 id="_4">支持向量回归</h3>
+<p>我们将支持向量的分类问题扩展到了一般的情况，现在回过头来看看如何用 支持向量 来解决回归问题</p>
+<p>支持向量回归（SVR）假设我们能容忍 <span class="arithmatex">\(f(\boldsymbol{x})\)</span> 与 <span class="arithmatex">\(y\)</span> 之间最多有 <span class="arithmatex">\(\epsilon\)</span> 的偏差，即仅当 <span class="arithmatex">\(f(\boldsymbol{x})\)</span> 与 <span class="arithmatex">\(y\)</span> 之间的差别绝对值大于 <span class="arithmatex">\(\epsilon\)</span> 时才计算损失，如下图所示，只要训练样本落入此间隔带，就被认为预测正确</p>
+<p><img alt="image-20260211201429374" src="../../../images/image-20260211201429374.png" /></p>
+<p>那么，SVR问题可形式化为</p>
+<div class="arithmatex">\[
+\begin{equation}
+\min_{w,b}\ \frac{1}{2}\lVert w\rVert^{2}
++ C\sum_{i=1}^{m}\ell_{\epsilon}\!\bigl(f(x_i)-y_i\bigr),
+\tag{6.43}
+\end{equation}
+\]</div>
+<p>其中 C 为正则化常数，<span class="arithmatex">\(\ell_\epsilon\)</span> 是图6.7所示的 <span class="arithmatex">\(\epsilon-\)</span> 不敏感损失函数</p>
+<div class="arithmatex">\[
+\begin{equation}
+\ell_{\epsilon}(z)=
+\begin{cases}
+0, &amp; \text{if } |z|\le \epsilon,\\
+|z|-\epsilon, &amp; \text{otherwise.}
+\end{cases}
+\tag{6.44}
+\end{equation}
+\]</div>
+<p>接着在引入松弛变量 <span class="arithmatex">\(\xi_i\)</span> 和 <span class="arithmatex">\(\hat{\xi_i}\)</span> ，可以将(6.43)转换为</p>
+<div class="arithmatex">\[
+\begin{equation}
+\min_{w,b,\xi_i,\hat{\xi}_i}\ \frac{1}{2}\lVert w\rVert^{2}
++ C\sum_{i=1}^{m}\bigl(\xi_i+\hat{\xi}_i\bigr)
+\tag{6.45}
+\end{equation}
+\]</div>
+<p><img alt="image-20260211202143054" src="../../../images/image-20260211202143054.png" /></p>
+<p>然后和之前的计算方式一样，用对偶问题继续计算得到SVR的解形如</p>
+<div class="arithmatex">\[
+\begin{equation}
+f(x)=\sum_{i=1}^{m}\left(\hat{\alpha}_i-\alpha_i\right)x_i^{\top}x+b.
+\tag{6.53}
+\end{equation}
+\]</div>
+<p>能使式(6.53)中的 <span class="arithmatex">\((\hat\alpha_i-\alpha_i)\ne0\)</span> 的样本即为 SVR 的支持向量，它们一定在 <span class="arithmatex">\(\epsilon-\)</span> 隔离带之外</p>
+<p>由 KKT 条件 (6.52) 可知，对每个样本 <span class="arithmatex">\((x_i,y_i)\)</span> 满足</p>
+<div class="arithmatex">\[
+(C-\alpha_i)\xi_i=0,\qquad \alpha_i\bigl(f(x_i)-y_i-\epsilon-\xi_i\bigr)=0.
+\]</div>
+<p>因此在求得 <span class="arithmatex">\(\alpha_i\)</span> 后，若 <span class="arithmatex">\(0&lt;\alpha_i&lt;C\)</span>，则必有 <span class="arithmatex">\(\xi_i=0\)</span>，并可由</p>
+<div class="arithmatex">\[
+b = y_i+\epsilon-\sum_{i=1}^{m}(\hat{\alpha}_i-\alpha_i)x_i^{\top}x\tag{6.54}
+\]</div>
+<p>计算偏置项 <span class="arithmatex">\(b\)</span>。理论上可任选一个满足 <span class="arithmatex">\(0&lt;\alpha_i&lt;C\)</span> 的样本来求 <span class="arithmatex">\(b\)</span>，但实践中更稳健的做法是选取多个（或所有）满足条件的样本分别求出 <span class="arithmatex">\(b\)</span> 后取平均。</p>
+<p>若考虑特征映射形式，则对应有</p>
+<div class="arithmatex">\[
+w=\sum_{i=1}^{m}(\hat{\alpha}_i-\alpha_i)\phi(x_i),\tag{6.55}
+\]</div>
+<p>代入后 SVR 的预测函数可写为核形式</p>
+<div class="arithmatex">\[
+f(x)=\sum_{i=1}^{m}(\hat{\alpha}_i-\alpha_i)\kappa(x,x_i)+b,\tag{6.56}
+\]</div>
+<p>其中核函数 <span class="arithmatex">\(\kappa(x_i,x_j)=\phi(x_i)^{\top}\phi(x_j)\)</span>。</p>
+<h3 id="_5">核方法</h3>
+<p><mark>1）从 SVM / SVR 观察到的共性：解总是“核函数线性组合”</mark></p>
+<ul>
+<li>
+<p>给定训练样本 <span class="arithmatex">\({(x_1,y_1),\dots,(x_m,y_m)}\)</span>，不考虑偏置项时，很多核学习模型（如 SVM、SVR）学到的函数都可以写成</p>
+<div class="arithmatex">\[
+h(x)=\sum_{i=1}^m \alpha_i,\kappa(x,x_i)
+\]</div>
+</li>
+<li>
+<p>直觉：模型并不需要显式在高维（甚至无限维）特征空间里求解，只要能通过 <span class="arithmatex">\(\kappa(x,x')\)</span> 计算“相似度”，最优解就会落在由训练样本诱导出来的有限维子空间中。</p>
+</li>
+</ul>
+<hr />
+<p><mark>2）表示定理（Representer Theorem）的形式与含义</mark></p>
+<p><strong>定理（表示定理）</strong>
+令 <span class="arithmatex">\(\mathcal H\)</span> 为核函数 <span class="arithmatex">\(\kappa\)</span> 对应的再生核希尔伯特空间（RKHS），<span class="arithmatex">\(|h|_{\mathcal H}\)</span> 为 RKHS 范数。对任意 <strong>单调递增</strong> 函数 <span class="arithmatex">\(\Omega:[0,\infty)\to\mathbb R\)</span>，以及任意 <strong>非负损失</strong> 函数 <span class="arithmatex">\(\ell:\mathbb R^m\to[0,\infty)\)</span>，优化问题</p>
+<div class="arithmatex">\[
+\min_{h\in\mathcal H}; F(h)=\Omega\big(|h|_{\mathcal H}\big)+\ell\big(h(x_1),h(x_2),\dots,h(x_m)\big)
+\tag{6.57}
+\]</div>
+<p>的最优解总能写成</p>
+<div class="arithmatex">\[
+h^*(x)=\sum_{i=1}^m \alpha_i,\kappa(x,x_i)
+\tag{6.58}
+\]</div>
+<p><strong>关键理解</strong></p>
+<ul>
+<li>定理对损失 <span class="arithmatex">\(\ell\)</span> 几乎不设限制（只要求非负），对正则项 <span class="arithmatex">\(\Omega\)</span> 只要求单调递增（甚至不要求凸）。</li>
+<li>
+<p>结论非常强：只要目标函数长得像“正则项（依赖 <span class="arithmatex">\(|h|_{\mathcal H}\)</span>） + 经验损失（只依赖训练点上的函数值）”，最优解必在</p>
+<div class="arithmatex">\[
+\mathrm{span}\{\kappa(\cdot,x_1),\dots,\kappa(\cdot,x_m)\}
+\]</div>
+<p>这个由训练样本生成的有限维空间里。
+- 这解释了“核方法”为何通用：把学习问题转化为求系数向量 <span class="arithmatex">\(\alpha\)</span>，所有与高维特征映射 <span class="arithmatex">\(\phi(\cdot)\)</span> 有关的计算都用核函数替代（核技巧）。</p>
+</li>
+</ul>
+<hr />
+<p><mark>3）核化思路：把线性算法搬到特征空间 <span class="arithmatex">\(\mathcal F\)</span></mark></p>
+<ul>
+<li>
+<p>假设存在映射 <span class="arithmatex">\(\phi:\mathcal X\to\mathcal F\)</span>，使得在特征空间里做线性模型：</p>
+<div class="arithmatex">\[
+h(x)=w^\top \phi(x)
+\tag{6.59}
+\]</div>
+</li>
+<li>
+<p>但通常 <span class="arithmatex">\(\phi\)</span> 不可知或维度极高，于是用核函数隐式表示：</p>
+<div class="arithmatex">\[
+\kappa(x,x')=\phi(x)^\top\phi(x')
+\]</div>
+</li>
+<li>
+<p>表示定理保证：即使你在 <span class="arithmatex">\(\mathcal F\)</span> 里求 <span class="arithmatex">\(w\)</span>，最终也能只用训练点的核展开来表示 <span class="arithmatex">\(h(\cdot)\)</span>。</p>
+</li>
+</ul>
+<hr />
+<p><mark>4）例子：核线性判别分析（KLDA）的推导骨架</mark></p>
+<p>这一部分是在用“核化”把 LDA 推广到非线性可分情形。</p>
+<p><strong>（1）LDA 在特征空间里的目标函数</strong></p>
+<ul>
+<li>
+<p>二分类（类标 <span class="arithmatex">\(i\in{0,1}\)</span>），在 <span class="arithmatex">\(\mathcal F\)</span> 中的 Fisher 准则写为</p>
+<div class="arithmatex">\[
+\max_w J(w)=\frac{w^\top S_b^\phi w}{w^\top S_w^\phi w}
+\tag{6.60}
+\]</div>
+</li>
+<li>
+<p>其中：</p>
+<ul>
+<li><span class="arithmatex">\(S_b^\phi\)</span>：类间散度矩阵（between-class scatter）</li>
+<li><span class="arithmatex">\(S_w^\phi\)</span>：类内散度矩阵（within-class scatter）</li>
+</ul>
+</li>
+</ul>
+<p><strong>（2）特征空间中的类均值</strong></p>
+<ul>
+<li>令 <span class="arithmatex">\(X_i\)</span> 为第 <span class="arithmatex">\(i\)</span> 类样本集合，样本数 <span class="arithmatex">\(m_i\)</span>，总样本数 <span class="arithmatex">\(m=m_0+m_1\)</span>。</li>
+<li>
+<p>第 <span class="arithmatex">\(i\)</span> 类在 <span class="arithmatex">\(\mathcal F\)</span> 中的均值：</p>
+<div class="arithmatex">\[
+\mu_i^\phi=\frac{1}{m_i}\sum_{x\in X_i}\phi(x)
+\tag{6.61}
+\]</div>
+</li>
+</ul>
+<p><strong>（3）特征空间中的散度矩阵</strong></p>
+<ul>
+<li>
+<p>类间散度（两类情形）：</p>
+<div class="arithmatex">\[
+S_b^\phi=(\mu_1^\phi-\mu_0^\phi)(\mu_1^\phi-\mu_0^\phi)^\top
+\tag{6.62}
+\]</div>
+</li>
+<li>
+<p>类内散度：</p>
+<div class="arithmatex">\[
+S_w^\phi=\sum_{i=0}^1\sum_{x\in X_i}\big(\phi(x)-\mu_i^\phi\big)\big(\phi(x)-\mu_i^\phi\big)^\top
+\tag{6.63}
+\]</div>
+</li>
+</ul>
+<hr />
+<p><mark>5）用表示定理把 <span class="arithmatex">\(w\)</span> 写成训练样本展开（关键一步）</mark></p>
+<ul>
+<li>因为 <span class="arithmatex">\(\phi\)</span> 通常未知，我们希望所有量最终都能用核矩阵表达。</li>
+<li>
+<p>由核展开（把 KLDA 的目标视作某种“损失”，并取 <span class="arithmatex">\(\Omega=0\)</span> 的情形）得到：</p>
+<div class="arithmatex">\[
+h(x)=\sum_{i=1}^m \alpha_i,\kappa(x,x_i)
+\tag{6.64}
+\]</div>
+</li>
+<li>
+<p>与 <span class="arithmatex">\(h(x)=w^\top\phi(x)\)</span> 对比，可得</p>
+<div class="arithmatex">\[
+w=\sum_{i=1}^m \alpha_i,\phi(x_i)
+\tag{6.65}
+\]</div>
+</li>
+<li>
+<p>解释：KLDA 的最优方向 <span class="arithmatex">\(w\)</span> 落在训练样本特征向量张成的子空间里，因此只需求 <span class="arithmatex">\(\alpha\)</span>。</p>
+</li>
+</ul>
+<hr />
+<p><mark>6）把所有东西改写成核矩阵形式（从 (<span class="arithmatex">\(phi\)</span> 到 <span class="arithmatex">\(\kappa\)</span>）</mark></p>
+<p><strong>（1）核矩阵</strong></p>
+<ul>
+<li>
+<p>定义核矩阵 <span class="arithmatex">\(K\in\mathbb R^{m\times m}\)</span>：</p>
+<div class="arithmatex">\[
+K_{ij}=\kappa(x_i,x_j)
+\]</div>
+</li>
+</ul>
+<p><strong>（2）类别指示向量</strong></p>
+<ul>
+<li>定义 <span class="arithmatex">\(1_i\in{0,1}^{m\times 1}\)</span> 为第 <span class="arithmatex">\(i\)</span> 类样本指示向量：<ul>
+<li><span class="arithmatex">\((1_i)_j=1\iff x_j\in X_i\)</span>，否则为 0。</li>
+</ul>
+</li>
+</ul>
+<p><strong>（3）用核矩阵表示“类均值在训练样本上的投影”</strong></p>
+<ul>
+<li>
+<p>文中定义（写成向量形式，落在 <span class="arithmatex">\(\mathbb R^m\)</span>）：</p>
+<div class="arithmatex">\[
+\hat\mu_0=\frac{1}{m_0}K,1_0
+\tag{6.66}
+\]</div>
+<div class="arithmatex">\[
+\qquad
+\hat\mu_1=\frac{1}{m_1}K,1_1
+\tag{6.67}
+\]</div>
+<p>这里 <span class="arithmatex">\(\hat\mu_i\)</span> 可以理解为：把特征空间里的类均值通过“与所有训练点做核相似度”的方式表达到样本索引空间中。</p>
+</li>
+</ul>
+<p><strong>（4）构造广义 Rayleigh 商的分子/分母矩阵</strong></p>
+<ul>
+<li>
+<p>分子矩阵：</p>
+<div class="arithmatex">\[
+M=(\hat\mu_0-\hat\mu_1)(\hat\mu_0-\hat\mu_1)^\top
+\tag{6.68}
+\]</div>
+</li>
+<li>
+<p>分母矩阵（对应类内散度的核化表达，文中给出）：</p>
+<div class="arithmatex">\[
+N = KK^\top-\sum_{i=0}^1 m_i,\hat\mu_i\hat\mu_i^\top\tag{6.69}
+\]</div>
+<p>直觉：<span class="arithmatex">\(KK^\top\)</span> 聚合了整体二阶信息，减去各类均值项后得到“类内变化”相关的量。</p>
+</li>
+</ul>
+<hr />
+<p><mark>最终问题：转化为对 <span class="arithmatex">\(\alpha\)</span> 的广义特征值优化</mark></p>
+<ul>
+<li>
+<p>原始的</p>
+<div class="arithmatex">\[
+\max_w \frac{w^\top S_b^\phi w}{w^\top S_w^\phi w}
+\]</div>
+<p>等价为</p>
+<div class="arithmatex">\[
+\max_\alpha J(\alpha)=\frac{\alpha^\top M\alpha}{\alpha^\top N\alpha}
+\tag{6.70}
+\]</div>
+</li>
+<li>
+<p>这是标准的广义 Rayleigh 商最大化问题，通常通过广义特征值分解求解：</p>
+<ul>
+<li>最大化解对应最大广义特征值的特征向量（在数值实现里常见形式是解 <span class="arithmatex">\(M\alpha=\lambda N\alpha\)</span>，再取最大 <span class="arithmatex">\(\lambda\)</span> 对应的 <span class="arithmatex">\(\alpha\)</span>)。</li>
+</ul>
+</li>
+<li>
+<p>解出 <span class="arithmatex">\(\alpha\)</span> 后，分类/投影函数用核展开给出：</p>
+<div class="arithmatex">\[
+h(x)=\sum_{i=1}^m \alpha_i,\kappa(x,x_i)
+\]</div>
+<p>这就是 KLDA 的“核化输出形式”。</p>
+</li>
+</ul>
 
 
 
