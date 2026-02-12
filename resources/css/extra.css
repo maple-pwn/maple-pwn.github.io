@@ -10,12 +10,12 @@ font-weight: normal;
 }
 
 .giscus-frame {
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  border-radius: 0;
+  box-shadow: none;
 }
 
 [data-md-color-scheme="slate"] .giscus-frame {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: none;
 }
 
 :root {
@@ -36,6 +36,10 @@ body {
 
 .md-main {
   background: transparent;
+}
+
+.md-grid {
+  max-width: 86%;
 }
 
 .md-content {
