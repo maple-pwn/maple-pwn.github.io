@@ -1,0 +1,3793 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://maple-pwn.github.io/LLMZtH/ML/8/">
+      
+      
+        <link rel="prev" href="../7/">
+      
+      
+        <link rel="next" href="../../RL/1/">
+      
+      
+      <link rel="icon" href="../../../images/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>第八章 集成学习 - Maple's blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.e53b48f4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../resources/css/extra.css">
+    
+      <link rel="stylesheet" href="../../../resources/css/tittle.css">
+    
+      <link rel="stylesheet" href="../../../resources/css/read-metrics.css">
+    
+      <link rel="stylesheet" href="../../../resources/css/leftsidebar.css">
+    
+      <link rel="stylesheet" href="https://static.zeoseven.com/zsft/292/main/result.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="Maple&#39;s blog" class="md-header__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+      
+  <img src="../../../images/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Maple's blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第八章 集成学习
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../mysys/pre/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  我的手搓OS笔记
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../pre/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  AI学习
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../study/pre/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  校内学习相关笔记
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../pwn/pre/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  二进制安全
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../sth/proj/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  一些零碎
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../testpage/test/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  功能测试页
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Maple&#39;s blog" class="md-nav__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+      
+  <img src="../../../images/logo.svg" alt="logo">
+
+    </a>
+    Maple's blog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    我的手搓OS笔记
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            我的手搓OS笔记
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mysys/pre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mysys/01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    实模式
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mysys/02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    保护模式
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mysys/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    内核
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mysys/04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    内存管理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mysys/05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    IO机制
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mysys/06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    扩展文件系统
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    AI学习
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            AI学习
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    ML学习笔记
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            ML学习笔记
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基本知识
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第四章 决策树
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第五章 神经网络
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第六章 支持向量机
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第七章 贝叶斯分类器
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    第八章 集成学习
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    第八章 集成学习
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      个体与集成
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#boosting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Boosting
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bagging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bagging 和 随机森林
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      结合策略
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      多样性
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    RL学习笔记
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            RL学习笔记
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../RL/1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    NLP学习笔记
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            NLP学习笔记
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../NLP/1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    校内学习相关笔记
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            校内学习相关笔记
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/pre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/dw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    大学物理(十二、十三章)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/dw2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    大学物理(十四、十五章)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/gt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    概率与统计
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/lisan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    离散数学
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/cs_final/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    计组部分笔记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/cs_exam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    计组部分试卷&重点题目分析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/mao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    毛中特
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/eda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    数字逻辑
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/asm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    汇编速通
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    二进制安全
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            二进制安全
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/pre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/tricks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    小技巧
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    栈利用
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            栈利用
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Stack/%E6%B1%87%E7%BC%96%E9%80%9F%E9%80%9A/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    汇编速通
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Stack/ASLR/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ASLR绕过
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Stack/Canary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Canary绕过
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Stack/PIE%E7%BB%95%E8%BF%87/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PIE绕过
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Stack/fmt-all-in-one/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    格式化字符串
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Stack/shellcode-all-in-one/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Shellcode
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Stack/SROP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SROP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    堆利用
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            堆利用
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Heap/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基础知识
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Heap/%E5%90%84%E4%B8%AA%E5%87%BD%E6%95%B0%E5%8E%9F%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    函数原型
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Heap/%E5%A0%86%E6%BA%A2%E5%87%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    堆溢出
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Heap/%E5%A0%86%E6%BA%A2%E5%87%BA%E4%B8%AD%E6%AF%94%E8%BE%83%E9%87%8D%E8%A6%81%E7%9A%84%E6%AD%A5%E9%AA%A4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    堆溢出要点
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Heap/%E5%A0%86%E4%B8%AD%E7%9A%84off-by-one/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Off-by-one
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Heap/%E5%A0%86%E5%90%84%E7%B1%BB%E6%94%BB%E5%87%BB%E6%89%8B%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    攻击手法
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Heap/%E4%BE%8B%E9%A2%98%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    例题记录
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    IO_FILE
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            IO_FILE
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/IO_FILE/_IO_FILE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基础知识
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/IO_FILE/IO_FILE%E6%BA%90%E7%A0%81/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    源码分析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/IO_FILE/fopen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    fopen
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/IO_FILE/fread/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    fread
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/IO_FILE/%E5%81%9A%E9%A2%98%E6%8A%80%E5%B7%A7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    做题技巧
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    House系列
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
+            <span class="md-nav__icon md-icon"></span>
+            House系列
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse%20of%20apple1%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Apple1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-apple2%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Apple2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse%20of%20cat%20%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Cat
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-kiwi%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Kiwi
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-botcake%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Botcake
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_7" id="__nav_4_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    CTF Writeups
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_7">
+            <span class="md-nav__icon md-icon"></span>
+            CTF Writeups
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/basectf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    BaseCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/moectf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MoeCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/isctf2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ISCTF2024
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/ghctf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GHCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/xyctf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    XYCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/tgctf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TGCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/NPCCTF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NPCCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/ctfshow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CTFShow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/whuctf2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    WHUCTF2024
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/whuctf2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    WHUCTF2025
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/%E5%BC%BA%E7%BD%91%E6%9D%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    强网杯
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/polarD%26N/polarD%26N/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PolarD&N
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_7_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_7_13" id="__nav_4_7_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    BUUCTF
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_7_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_7_13">
+            <span class="md-nav__icon md-icon"></span>
+            BUUCTF
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%881-20%E9%A2%98%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1-20题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8821-40%E9%A2%98%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    21-40题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8841-60%E9%A2%98%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    41-60题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8861-80%E9%A2%98%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    61-80题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    一些零碎
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            一些零碎
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sth/proj/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    project
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    功能测试页
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            功能测试页
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../testpage/test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    test
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      个体与集成
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#boosting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Boosting
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bagging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bagging 和 随机森林
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      结合策略
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      多样性
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+  
+                  
+
+
+
+  <h1>第八章 集成学习</h1>
+
+<blockquote>
+<p>集成学习是一种机器学习思想：把多个模型的预测结果进行组合，从而得到比单个模型更稳定、更准确的最终预测</p>
+</blockquote>
+<h3 id="_1">个体与集成</h3>
+<p>集成学习是通过构建并结合多个个体学习器来完成学习任务，又称“多分类器系统”、“基于委员会的学习”</p>
+<p>其基本流程为：多个个体学习器 <span class="arithmatex">\(\rightarrow\)</span> 结合模块 <span class="arithmatex">\(\rightarrow\)</span> 最终输出</p>
+<p><img alt="image-20260212212643541" src="../../../images/image-20260212212643541.png" /></p>
+<p><mark>个体学习器的类型</mark></p>
+<p><strong>同质集成</strong>：</p>
+<ul>
+<li>个体学习器通常由同一种现有的学习算法从训练数据产生，此时集成中只包含同种类型的个体学习器</li>
+<li>同质集成中的个体学习器也称为“基学习器”，对应算法称为“基学习算法”</li>
+</ul>
+<p><strong>异质集成</strong>：</p>
+<ul>
+<li>个体学习器使用不同的学习算法，类型也不同</li>
+<li>此时个体学习器不称为“基学习器”，而是 <strong>组件学习器</strong></li>
+</ul>
+<p><mark>好而不同：集成成功的关键条件</mark></p>
+<p><strong>准确性</strong>：每个个体学习器不能太差；且至少要优于随机猜测</p>
+<p><strong>多样性</strong>：不同学习器犯错方式不同；且学习器之间存在差异</p>
+<p><img alt="image-20260212220106189" src="../../../images/image-20260212220106189.png" /></p>
+<p><mark>投票集成的理论分析（二分类）</mark></p>
+<p><strong>假设</strong>：标签 <span class="arithmatex">\(y\in\{-1,+1\}\)</span>；每个基分类错误率 <span class="arithmatex">\(\epsilon\)</span>；错误相互独立</p>
+<p>则对每个基分类器 <span class="arithmatex">\(h_i\)</span> 有：
+$$
+P(h_i(\boldsymbol{x})\ne f(\boldsymbol{x}))=\epsilon\tag{8.1}
+$$
+我们假设集成通过简单投票法结合 <span class="arithmatex">\(T\)</span> 个基分类器，若有超过半数的基分类器正确，那么集成分类就正确。投票规则如下：
+$$
+H(\boldsymbol{x})=\text{sign}\left(\sum_{i=1}^Th_i(\boldsymbol{x})\right)\tag{8.2}
+$$
+由一般经验可得，当集成中个体分类数目 <span class="arithmatex">\(T\)</span> 增大，集成的错误率将以指数级下降。即 <span class="arithmatex">\(T\rightarrow\infty\)</span> 时，错误率趋近于 0</p>
+<p><mark>现实情况</mark></p>
+<p>刚刚的理论分析中，我们有一个很强的假设：各基学习器错误相互独立；不过由于个体学习器往往在同一数据上训练，错误高度相关。</p>
+<p>因此可以得到如下的核心矛盾：<strong>提高准确性</strong> 和 <strong>增加多样性</strong> 两者通常互相制约</p>
+<p>所以如何产生并结合“好而不同“的个体学习器就是集成学习研究的核心</p>
+<p><mark>集成方法的两大类别</mark></p>
+<p>根据个体学习器的生成方式，目前的集成学习方法大致可以分为两类，如下</p>
+<p><strong>序列化方法</strong>：个体学习器之间存在强依赖关系、必须串行生成，代表为 Boosting</p>
+<p><strong>并行化方法</strong>：个体学习器之间不存在强依赖关系、可同时生成，代表为 Bagging 和 随机森林</p>
+<h3 id="boosting">Boosting</h3>
+<p>Boosting是将弱学习器逐步提升为强学习器的集成方法，核心机制如下：</p>
+<ol>
+<li>现在初始数据分布上训练一个基学习器</li>
+<li>根据该学习器的错误情况 <strong>调整样本分布</strong></li>
+<li>让后续学习器 <strong>更加关注之前分错的样本</strong></li>
+<li>重复上述过程，直到训练出 <span class="arithmatex">\(T\)</span> 个基学习器</li>
+<li>对所有基学期器进行 <strong>加权组合</strong>，形成最终模型</li>
+</ol>
+<p>所以 Boosting 的学习器生成是序列化的</p>
+<hr />
+<p><mark>AdaBoost 的加性模型视角</mark></p>
+<p><img alt="image-20260212222830559" src="../../../images/image-20260212222830559.png" /></p>
+<p>AdaBoost的最终模型是一个 <strong>加性模型</strong>
+$$
+H(\boldsymbol{x})=\sum_{t=1}^T\alpha_th_t(\boldsymbol{x})\tag{8.4}
+$$
+其中：</p>
+<ul>
+<li><span class="arithmatex">\(h_t(\boldsymbol{x})\in\{-1,+1\}\)</span>：第 t 个基分类器</li>
+<li><span class="arithmatex">\(\alpha_t\)</span> 对应权重</li>
+</ul>
+<p>而AdaBoost的优化目标是 <strong>最小化指数损失函数</strong>
+$$
+\ell_{exp}(H\mid\mathcal{D})=\mathbb{E}_{x\sim\mathcal{D}}\left[e^{-f(\boldsymbol x)H(\boldsymbol x)}\right]
+\tag{8.5}
+$$
+其中：</p>
+<ul>
+<li><span class="arithmatex">\(f(\boldsymbol{x})\)</span> 是真实分类函数，<span class="arithmatex">\(f(\boldsymbol{x})\in\{-1,+1\}\)</span></li>
+<li><span class="arithmatex">\(\mathcal{D}\)</span> 为样本分布</li>
+</ul>
+<p><mark>指数损失最优解的贝叶斯解释</mark></p>
+<p>我们要求最小化指数损失函数，那么很容易想到让式(8.5)对式(8.4)也就是 <span class="arithmatex">\(H(\boldsymbol{x})\)</span> 求偏导，如下</p>
+<div class="arithmatex">\[
+\frac{\partial \ell_{\exp}(H \mid \mathcal{D})}{\partial H(\boldsymbol{x})} = -e^{-H(\boldsymbol{x})} P(f(\boldsymbol{x}) = 1 \mid \boldsymbol{x}) + e^{H(\boldsymbol{x})} P(f(\boldsymbol{x}) = -1 \mid \boldsymbol{x}), \tag{8.6}
+\]</div>
+<p>再令其为0，解得</p>
+<div class="arithmatex">\[
+\begin{align}
+\tag{8.7} H(x) &amp;= \frac{1}{2} \ln \frac{P(f(x)=1 \mid x)}{P(f(x)=-1 \mid x)}\\
+\end{align}
+\]</div>
+<p>进而得到</p>
+<div class="arithmatex">\[
+\text{sign}(H(x)) = \text{arg} \max_{y \in \{-1, +1\}} P(f(x) = y \mid x) \tag{8.8}
+\]</div>
+<p>到这里，式(8.8)证明了 <span class="arithmatex">\(\text{sign}(H(\boldsymbol{x}))\)</span> 达到了贝叶斯最优错误率。也就是说，如果指数损失函数最小化，那么分类错误率也将最小（取代了0/1损失函数的位置）</p>
+<p>那么，我们可以将此函数作为0/1损失函数的替代，来进行优化，即式（8.5）处提到的AdaBoost优化目标</p>
+<p><mark>基学习器权重 <span class="arithmatex">\(\alpha_t\)</span> 的推导</mark></p>
+<p>AdaBoost中，第一个基分类器 <span class="arithmatex">\(h_1\)</span> 通过直接将基学习算法用于初始数据分布得到，此后迭代生成 <span class="arithmatex">\(h_t\)</span> 和 <span class="arithmatex">\(\alpha_t\)</span> </p>
+<p>结合上式（8.4）和（8.8），我们发现，当基分类器 <span class="arithmatex">\(h_t\)</span> 基于分布 <span class="arithmatex">\(\mathcal{D_t}\)</span> 生成后，该基分类器的权重 <span class="arithmatex">\(\alpha_t\)</span> 应该使得 <span class="arithmatex">\(\alpha_t h_t\)</span> 最小化指数损失函数</p>
+<p>考虑单轮优化：</p>
+<div class="arithmatex">\[
+\begin{align}
+\ell_{\exp}(\alpha_t h_t \mid D_t)
+&amp;= \mathbb{E}_{x \sim D_t}
+\left[
+e^{-f(x)\alpha_t h_t(x)}
+\right]
+\\
+&amp;= e^{-\alpha_t} P(f(x) = h_t(x))+ e^{\alpha_t} P(f(x) \ne h_t(x))\tag{展开}
+\end{align}
+\]</div>
+<p>我们记 <span class="arithmatex">\(\epsilon_t= P_{x \sim D_t}\bigl(h_t(x) \ne f(x)\bigr)\)</span>(，可以将上式化为一般式：</p>
+<blockquote>
+<p>这里的 <span class="arithmatex">\(\epsilon_t\)</span> 是算法第4行内容，误差率</p>
+</blockquote>
+<div class="arithmatex">\[
+\begin{equation}
+\ell_{\exp}
+= e^{-\alpha_t}(1-\epsilon_t)
+  + e^{\alpha_t}\epsilon_t
+\tag{8.9}
+\end{equation}
+\]</div>
+<p>由于是求权重 <span class="arithmatex">\(\alpha_t\)</span>，那么将上式对 <span class="arithmatex">\(\alpha_t\)</span> 求导：</p>
+<div class="arithmatex">\[
+\begin{equation}
+\frac{\partial \ell_{\exp}}{\partial \alpha_t}
+=
+- e^{-\alpha_t}(1-\epsilon_t)
++ e^{\alpha_t}\epsilon_t
+\tag{8.10}
+\end{equation}
+\]</div>
+<p>令(8.10)为零，解得</p>
+<div class="arithmatex">\[
+\alpha_t=\dfrac{1}{2}\ln\left(\dfrac{1-\epsilon_t}{\epsilon_t}\right)\tag{8.11}
+\]</div>
+<blockquote>
+<p>算法第6行，分类器权重更新公式</p>
+</blockquote>
+<p><mark>样本分布更新的理论来源</mark></p>
+<p>经过一次迭代后，整体模型会更新为</p>
+<div class="arithmatex">\[
+H_t(x)=H_{t-1}(x)+\alpha_th_t(x)
+\]</div>
+<p>于是指数损失也会随之发生变化</p>
+<div class="arithmatex">\[
+\begin{equation}
+\ell_{\exp}(H_t \mid \mathcal{D})
+=
+\mathbb{E}_{x \sim \mathcal{D}}
+\left[
+e^{-f(x)H_{t-1}(x)}
+e^{-f(x)h_t(x)}
+\right]
+\tag{8.12}
+\end{equation}
+\]</div>
+<p>由于 <span class="arithmatex">\(f^2(x)=h_t^2(x)=1\)</span> ，所以对 <span class="arithmatex">\(e^{-f(x)h_t(x)}\)</span> 作泰勒展开近似，如下</p>
+<div class="arithmatex">\[
+\begin{equation}
+\ell_{\exp}(H_{t-1}+h_t \mid \mathcal{D})
+\approx
+\mathbb{E}_{x \sim \mathcal{D}}
+\left[
+e^{-f(x)H_{t-1}(x)}
+\left(
+1 - f(x)h_t(x) + \frac{1}{2}
+\right)
+\right]
+\tag{8.13}
+\end{equation}
+\]</div>
+<blockquote>
+<p>AdaBoost中，真实函数与基分类器的输出都被编码为 <span class="arithmatex">\(\{-1,+1\}\)</span>，因此有 <span class="arithmatex">\(f^2(x)=h_t^2(x)=1\)</span> </p>
+<p>将这个性质带入到(8.17)也可以进行解释，其中 <span class="arithmatex">\(\mathbb{I}(\cdot)\)</span> 为示性函数，内部条件成立时它的输出为1，否则为0</p>
+</blockquote>
+<p>那么可以得到理想的基学习器为</p>
+<div class="arithmatex">\[
+\begin{equation}
+h_t
+=
+\arg\max_{h}
+\mathbb{E}_{x \sim \mathcal{D}_t}
+\left[
+f(x)h(x)
+\right]
+\tag{8.16}
+\end{equation}
+\]</div>
+<p>又由于</p>
+<div class="arithmatex">\[
+\begin{equation}
+f(x)h(x)
+=
+1 - 2\mathbb{I}(f(x) \ne h(x))
+\tag{8.17}
+\end{equation}
+\]</div>
+<p>所以可以得到</p>
+<div class="arithmatex">\[
+\begin{equation}
+h_t
+=
+\arg\min_{h}
+\mathbb{E}_{x \sim \mathcal{D}_t}
+\left[
+\mathbb{I}(f(x) \ne h(x))
+\right]
+\tag{8.18}
+\end{equation}
+\]</div>
+<p>即：<strong>基学习器在分布 <span class="arithmatex">\(\mathcal{D_t}\)</span> 下最小化分类误差</strong></p>
+<p><mark>接下来就是更新 <span class="arithmatex">\(\mathcal{D_t}\)</span> 和 <span class="arithmatex">\(\mathcal{D_{t+1}}\)</span>，</mark></p>
+<p>在 <span class="arithmatex">\(t\)</span> 轮种，我们已经固定 <span class="arithmatex">\(H_{t-1}\)</span>，要选 <span class="arithmatex">\(h\)</span> 让指数损失下降，我们可以把目标整理为</p>
+<div class="arithmatex">\[
+\begin{equation}
+h_t
+=
+\arg\max_{h}
+\mathbb{E}_{x \sim \mathcal{D}}
+\left[
+\frac{
+e^{-f(x)H_{t-1}(x)}
+}{
+\mathbb{E}_{x \sim \mathcal{D}}
+\left[
+e^{-f(x)H_{t-1}(x)}
+\right]
+}
+\, f(x)h(x)
+\right].
+\tag{8.14}
+\end{equation}
+\]</div>
+<blockquote>
+<p>分母中 <span class="arithmatex">\(\mathbb{E}_{x \sim \mathcal{D}}\left[e^{-f(x)H_{t-1}(x)}\right]\)</span> 与 x 无关，对 <span class="arithmatex">\(\arg\max_h\)</span> 来说只是常数缩放</p>
+</blockquote>
+<p>我们观察(8.14)里乘在 <span class="arithmatex">\(f(x)h(x)\)</span> 前面的权重函数</p>
+<div class="arithmatex">\[
+w_t(x)
+\triangleq
+\frac{
+e^{-f(x)H_{t-1}(x)}
+}{
+\mathbb{E}_{x \sim \mathcal{D}}
+\left[
+e^{-f(x)H_{t-1}(x)}
+\right]
+}
+\]</div>
+<p>如果原始数据分布记为 <span class="arithmatex">\(\mathcal{D}(x)\)</span>，那么把它按 <span class="arithmatex">\(w_t(x)\)</span> 重新加权，就可以得到一个新的分布，如下</p>
+<div class="arithmatex">\[
+\mathcal{D}_t(x)
+\triangleq
+\mathcal{D}(x)\, w_t(x).
+\]</div>
+<p>展开来就是</p>
+<div class="arithmatex">\[
+\begin{equation}
+\mathcal{D}_t(x)
+=
+\frac{
+\mathcal{D}(x)\, e^{-f(x)H_{t-1}(x)}
+}{
+\mathbb{E}_{x \sim \mathcal{D}}
+\left[
+e^{-f(x)H_{t-1}(x)}
+\right]
+}.
+\tag{8.15}
+\end{equation}
+\]</div>
+<p>依次类推</p>
+<div class="arithmatex">\[
+\begin{equation}
+\mathcal{D}_{t+1}(x)
+=
+\mathcal{D}_t(x)\,
+\frac{
+e^{-f(x)\alpha_t h_t(x)}
+}{
+\mathbb{E}_{x \sim \mathcal{D}_t}
+\left[
+e^{-f(x)\alpha_t h_t(x)}
+\right]
+}.
+\tag{8.19}
+\end{equation}
+\]</div>
+<blockquote>
+<p>算法第7行，样本分布更新公式</p>
+</blockquote>
+<hr />
+<p><mark>分析算法</mark></p>
+<p>从偏差-方差分解的角度来看，Boosting主要关注降低偏差，因此可以将泛化能力较弱的学习器提升为强模型</p>
+<hr />
+<p><mark>示例</mark></p>
+<div class="highlight"><pre><span></span><code>root@iZbp1gtqhrbrar9e0rt59yZ:~/rl/8#<span class="w"> </span>python3<span class="w"> </span><span class="m">2</span>.py
+<span class="o">=====</span><span class="w"> </span><span class="nv">数据集</span><span class="w"> </span><span class="o">=====</span>
+<span class="nv">i</span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="w">  </span><span class="nv">x</span><span class="o">=[</span><span class="m">0</span>.1,<span class="w"> </span><span class="m">0</span>.2<span class="o">]</span><span class="w">  </span><span class="nv">y</span><span class="o">=</span><span class="m">1</span>
+<span class="nv">i</span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="w">  </span><span class="nv">x</span><span class="o">=[</span><span class="m">0</span>.2,<span class="w"> </span><span class="m">0</span>.1<span class="o">]</span><span class="w">  </span><span class="nv">y</span><span class="o">=</span><span class="m">1</span>
+<span class="nv">i</span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="w">  </span><span class="nv">x</span><span class="o">=[</span><span class="m">0</span>.35,<span class="w"> </span><span class="m">0</span>.8<span class="o">]</span><span class="w">  </span><span class="nv">y</span><span class="o">=</span><span class="m">1</span>
+<span class="nv">i</span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="w">  </span><span class="nv">x</span><span class="o">=[</span><span class="m">0</span>.4,<span class="w"> </span><span class="m">0</span>.7<span class="o">]</span><span class="w">  </span><span class="nv">y</span><span class="o">=</span>-1
+<span class="nv">i</span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="w">  </span><span class="nv">x</span><span class="o">=[</span><span class="m">0</span>.6,<span class="w"> </span><span class="m">0</span>.3<span class="o">]</span><span class="w">  </span><span class="nv">y</span><span class="o">=</span>-1
+<span class="nv">i</span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="w">  </span><span class="nv">x</span><span class="o">=[</span><span class="m">0</span>.7,<span class="w"> </span><span class="m">0</span>.4<span class="o">]</span><span class="w">  </span><span class="nv">y</span><span class="o">=</span>-1
+<span class="nv">i</span><span class="o">=</span><span class="w"> </span><span class="m">6</span><span class="w">  </span><span class="nv">x</span><span class="o">=[</span><span class="m">0</span>.8,<span class="w"> </span><span class="m">0</span>.9<span class="o">]</span><span class="w">  </span><span class="nv">y</span><span class="o">=</span>-1
+<span class="nv">i</span><span class="o">=</span><span class="w"> </span><span class="m">7</span><span class="w">  </span><span class="nv">x</span><span class="o">=[</span><span class="m">0</span>.9,<span class="w"> </span><span class="m">0</span>.85<span class="o">]</span><span class="w">  </span><span class="nv">y</span><span class="o">=</span><span class="nv">1</span>
+
+<span class="o">=====</span><span class="w"> </span>AdaBoost<span class="w"> </span><span class="nv">迭代开始</span><span class="w"> </span><span class="o">=====</span>
+
+-----<span class="w"> </span>Round<span class="w"> </span><span class="nv">t</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>-----
+D_t：<span class="w"> </span><span class="o">[</span><span class="s1">&#39;0.125000&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.125000&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.125000&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.125000&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.125000&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.125000&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.125000&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.125000&#39;</span><span class="o">]</span>
+
+选择的基学习器<span class="w"> </span>h_t：
+<span class="w">  </span><span class="nv">feature</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">threshold</span><span class="o">=</span><span class="m">0</span>.375000,<span class="w"> </span><span class="nv">polarity</span><span class="o">=</span><span class="m">1</span>
+<span class="w">  </span>h_t<span class="o">(</span>x_i<span class="o">)</span>：<span class="w"> </span><span class="o">[</span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1<span class="o">]</span>
+
+加权错误率<span class="w"> </span><span class="nv">epsilon_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>P_<span class="o">{</span>x~D<span class="o">}(</span>h!<span class="o">=</span>y<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.125000
+
+<span class="nv">alpha_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span>/2<span class="w"> </span>ln<span class="o">((</span><span class="m">1</span>-eps<span class="o">)</span>/eps<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.972955<span class="w">  </span><span class="o">(</span>公式8.11<span class="o">)</span>
+
+F_t<span class="o">(</span>x_i<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>sum_<span class="o">{</span>k&lt;<span class="o">=</span>t<span class="o">}</span><span class="w"> </span>alpha_k<span class="w"> </span>h_k<span class="o">(</span>x_i<span class="o">)</span><span class="w">  </span><span class="o">(</span>公式8.4<span class="o">)</span>
+<span class="o">[</span><span class="s1">&#39;0.972955&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.972955&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.972955&#39;</span>,<span class="w"> </span><span class="s1">&#39;-0.972955&#39;</span>,<span class="w"> </span><span class="s1">&#39;-0.972955&#39;</span>,<span class="w"> </span><span class="s1">&#39;-0.972955&#39;</span>,<span class="w"> </span><span class="s1">&#39;-0.972955&#39;</span>,<span class="w"> </span><span class="s1">&#39;-0.972955&#39;</span><span class="o">]</span>
+sign<span class="o">(</span>F_t<span class="o">)</span>：<span class="w"> </span><span class="o">[</span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1<span class="o">]</span>
+训练集0/1错误率：0.125000
+
+指数损失<span class="w"> </span>l_exp<span class="o">(</span>H<span class="p">|</span>D<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>E<span class="o">[</span>exp<span class="o">(</span>-f<span class="o">(</span>x<span class="o">)</span>H<span class="o">(</span>x<span class="o">))]</span><span class="w">  </span><span class="o">(</span>公式8.5<span class="o">)</span>
+<span class="w">  </span>均匀经验平均：0.661438
+<span class="w">  </span>按当前<span class="w"> </span>D_t<span class="w"> </span>加权：0.661438
+
+D_<span class="o">{</span>t+1<span class="o">}(</span>i<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>D_t<span class="o">(</span>i<span class="o">)</span><span class="w"> </span>*<span class="w"> </span>exp<span class="o">(</span>-alpha_t<span class="w"> </span>f<span class="o">(</span>x_i<span class="o">)</span><span class="w"> </span>h_t<span class="o">(</span>x_i<span class="o">))</span><span class="w"> </span>/<span class="w"> </span>Z_t<span class="w">  </span><span class="o">(</span>公式8.19<span class="o">)</span>
+未归一化：<span class="w"> </span><span class="o">[</span><span class="s1">&#39;0.047246&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.047246&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.047246&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.047246&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.047246&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.047246&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.047246&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.330719&#39;</span><span class="o">]</span>
+<span class="nv">Z_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>sum_i<span class="w"> </span><span class="nv">未归一化</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.661438
+D_<span class="o">{</span>t+1<span class="o">}</span>：<span class="w"> </span><span class="o">[</span><span class="s1">&#39;0.071429&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.071429&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.071429&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.071429&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.071429&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.071429&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.071429&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.500000&#39;</span><span class="o">]</span>
+
+-----<span class="w"> </span>Round<span class="w"> </span><span class="nv">t</span><span class="o">=</span><span class="m">2</span><span class="w"> </span>-----
+D_t：<span class="w"> </span><span class="o">[</span><span class="s1">&#39;0.071429&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.071429&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.071429&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.071429&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.071429&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.071429&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.071429&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.500000&#39;</span><span class="o">]</span>
+
+选择的基学习器<span class="w"> </span>h_t：
+<span class="w">  </span><span class="nv">feature</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">threshold</span><span class="o">=</span><span class="m">0</span>.850000,<span class="w"> </span><span class="nv">polarity</span><span class="o">=</span>-1
+<span class="w">  </span>h_t<span class="o">(</span>x_i<span class="o">)</span>：<span class="w"> </span><span class="o">[</span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span><span class="m">1</span><span class="o">]</span>
+
+加权错误率<span class="w"> </span><span class="nv">epsilon_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>P_<span class="o">{</span>x~D<span class="o">}(</span>h!<span class="o">=</span>y<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.214286
+
+<span class="nv">alpha_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span>/2<span class="w"> </span>ln<span class="o">((</span><span class="m">1</span>-eps<span class="o">)</span>/eps<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.649641<span class="w">  </span><span class="o">(</span>公式8.11<span class="o">)</span>
+
+F_t<span class="o">(</span>x_i<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>sum_<span class="o">{</span>k&lt;<span class="o">=</span>t<span class="o">}</span><span class="w"> </span>alpha_k<span class="w"> </span>h_k<span class="o">(</span>x_i<span class="o">)</span><span class="w">  </span><span class="o">(</span>公式8.4<span class="o">)</span>
+<span class="o">[</span><span class="s1">&#39;0.323314&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.323314&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.323314&#39;</span>,<span class="w"> </span><span class="s1">&#39;-1.622597&#39;</span>,<span class="w"> </span><span class="s1">&#39;-1.622597&#39;</span>,<span class="w"> </span><span class="s1">&#39;-1.622597&#39;</span>,<span class="w"> </span><span class="s1">&#39;-1.622597&#39;</span>,<span class="w"> </span><span class="s1">&#39;-0.323314&#39;</span><span class="o">]</span>
+sign<span class="o">(</span>F_t<span class="o">)</span>：<span class="w"> </span><span class="o">[</span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1<span class="o">]</span>
+训练集0/1错误率：0.125000
+
+指数损失<span class="w"> </span>l_exp<span class="o">(</span>H<span class="p">|</span>D<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>E<span class="o">[</span>exp<span class="o">(</span>-f<span class="o">(</span>x<span class="o">)</span>H<span class="o">(</span>x<span class="o">))]</span><span class="w">  </span><span class="o">(</span>公式8.5<span class="o">)</span>
+<span class="w">  </span>均匀经验平均：0.542810
+<span class="w">  </span>按当前<span class="w"> </span>D_t<span class="w"> </span>加权：0.902334
+
+D_<span class="o">{</span>t+1<span class="o">}(</span>i<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>D_t<span class="o">(</span>i<span class="o">)</span><span class="w"> </span>*<span class="w"> </span>exp<span class="o">(</span>-alpha_t<span class="w"> </span>f<span class="o">(</span>x_i<span class="o">)</span><span class="w"> </span>h_t<span class="o">(</span>x_i<span class="o">))</span><span class="w"> </span>/<span class="w"> </span>Z_t<span class="w">  </span><span class="o">(</span>公式8.19<span class="o">)</span>
+未归一化：<span class="w"> </span><span class="o">[</span><span class="s1">&#39;0.136775&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.136775&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.136775&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.037302&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.037302&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.037302&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.037302&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.261116&#39;</span><span class="o">]</span>
+<span class="nv">Z_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>sum_i<span class="w"> </span><span class="nv">未归一化</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.820652
+D_<span class="o">{</span>t+1<span class="o">}</span>：<span class="w"> </span><span class="o">[</span><span class="s1">&#39;0.166667&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.166667&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.166667&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.045455&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.045455&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.045455&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.045455&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.318182&#39;</span><span class="o">]</span>
+
+-----<span class="w"> </span>Round<span class="w"> </span><span class="nv">t</span><span class="o">=</span><span class="m">3</span><span class="w"> </span>-----
+D_t：<span class="w"> </span><span class="o">[</span><span class="s1">&#39;0.166667&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.166667&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.166667&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.045455&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.045455&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.045455&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.045455&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.318182&#39;</span><span class="o">]</span>
+
+选择的基学习器<span class="w"> </span>h_t：
+<span class="w">  </span><span class="nv">feature</span><span class="o">=</span><span class="m">1</span>,<span class="w"> </span><span class="nv">threshold</span><span class="o">=</span><span class="m">0</span>.875000,<span class="w"> </span><span class="nv">polarity</span><span class="o">=</span><span class="m">1</span>
+<span class="w">  </span>h_t<span class="o">(</span>x_i<span class="o">)</span>：<span class="w"> </span><span class="o">[</span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span>-1,<span class="w"> </span><span class="m">1</span><span class="o">]</span>
+
+加权错误率<span class="w"> </span><span class="nv">epsilon_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>P_<span class="o">{</span>x~D<span class="o">}(</span>h!<span class="o">=</span>y<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.136364
+
+<span class="nv">alpha_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span>/2<span class="w"> </span>ln<span class="o">((</span><span class="m">1</span>-eps<span class="o">)</span>/eps<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.922913<span class="w">  </span><span class="o">(</span>公式8.11<span class="o">)</span>
+
+F_t<span class="o">(</span>x_i<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>sum_<span class="o">{</span>k&lt;<span class="o">=</span>t<span class="o">}</span><span class="w"> </span>alpha_k<span class="w"> </span>h_k<span class="o">(</span>x_i<span class="o">)</span><span class="w">  </span><span class="o">(</span>公式8.4<span class="o">)</span>
+<span class="o">[</span><span class="s1">&#39;1.246227&#39;</span>,<span class="w"> </span><span class="s1">&#39;1.246227&#39;</span>,<span class="w"> </span><span class="s1">&#39;1.246227&#39;</span>,<span class="w"> </span><span class="s1">&#39;-0.699683&#39;</span>,<span class="w"> </span><span class="s1">&#39;-0.699683&#39;</span>,<span class="w"> </span><span class="s1">&#39;-0.699683&#39;</span>,<span class="w"> </span><span class="s1">&#39;-2.545510&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.599600&#39;</span><span class="o">]</span>
+sign<span class="o">(</span>F_t<span class="o">)</span>：<span class="w"> </span><span class="o">[</span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span><span class="m">1</span><span class="o">]</span>
+训练集0/1错误率：0.000000
+
+指数损失<span class="w"> </span>l_exp<span class="o">(</span>H<span class="p">|</span>D<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>E<span class="o">[</span>exp<span class="o">(</span>-f<span class="o">(</span>x<span class="o">)</span>H<span class="o">(</span>x<span class="o">))]</span><span class="w">  </span><span class="o">(</span>公式8.5<span class="o">)</span>
+<span class="w">  </span>均匀经验平均：0.372557
+<span class="w">  </span>按当前<span class="w"> </span>D_t<span class="w"> </span>加权：0.389788
+
+D_<span class="o">{</span>t+1<span class="o">}(</span>i<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>D_t<span class="o">(</span>i<span class="o">)</span><span class="w"> </span>*<span class="w"> </span>exp<span class="o">(</span>-alpha_t<span class="w"> </span>f<span class="o">(</span>x_i<span class="o">)</span><span class="w"> </span>h_t<span class="o">(</span>x_i<span class="o">))</span><span class="w"> </span>/<span class="w"> </span>Z_t<span class="w">  </span><span class="o">(</span>公式8.19<span class="o">)</span>
+未归一化：<span class="w"> </span><span class="o">[</span><span class="s1">&#39;0.066227&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.066227&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.066227&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.114391&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.114391&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.114391&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.018062&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.126433&#39;</span><span class="o">]</span>
+<span class="nv">Z_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>sum_i<span class="w"> </span><span class="nv">未归一化</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.686349
+D_<span class="o">{</span>t+1<span class="o">}</span>：<span class="w"> </span><span class="o">[</span><span class="s1">&#39;0.096491&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.096491&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.096491&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.166667&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.166667&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.166667&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.026316&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.184211&#39;</span><span class="o">]</span>
+
+-----<span class="w"> </span>Round<span class="w"> </span><span class="nv">t</span><span class="o">=</span><span class="m">4</span><span class="w"> </span>-----
+D_t：<span class="w"> </span><span class="o">[</span><span class="s1">&#39;0.096491&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.096491&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.096491&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.166667&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.166667&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.166667&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.026316&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.184211&#39;</span><span class="o">]</span>
+
+选择的基学习器<span class="w"> </span>h_t：
+<span class="w">  </span><span class="nv">feature</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">threshold</span><span class="o">=</span><span class="m">0</span>.375000,<span class="w"> </span><span class="nv">polarity</span><span class="o">=</span><span class="m">1</span>
+<span class="w">  </span>h_t<span class="o">(</span>x_i<span class="o">)</span>：<span class="w"> </span><span class="o">[</span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1<span class="o">]</span>
+
+加权错误率<span class="w"> </span><span class="nv">epsilon_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>P_<span class="o">{</span>x~D<span class="o">}(</span>h!<span class="o">=</span>y<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.184211
+
+<span class="nv">alpha_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span>/2<span class="w"> </span>ln<span class="o">((</span><span class="m">1</span>-eps<span class="o">)</span>/eps<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.744039<span class="w">  </span><span class="o">(</span>公式8.11<span class="o">)</span>
+
+F_t<span class="o">(</span>x_i<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>sum_<span class="o">{</span>k&lt;<span class="o">=</span>t<span class="o">}</span><span class="w"> </span>alpha_k<span class="w"> </span>h_k<span class="o">(</span>x_i<span class="o">)</span><span class="w">  </span><span class="o">(</span>公式8.4<span class="o">)</span>
+<span class="o">[</span><span class="s1">&#39;1.990265&#39;</span>,<span class="w"> </span><span class="s1">&#39;1.990265&#39;</span>,<span class="w"> </span><span class="s1">&#39;1.990265&#39;</span>,<span class="w"> </span><span class="s1">&#39;-1.443722&#39;</span>,<span class="w"> </span><span class="s1">&#39;-1.443722&#39;</span>,<span class="w"> </span><span class="s1">&#39;-1.443722&#39;</span>,<span class="w"> </span><span class="s1">&#39;-3.289548&#39;</span>,<span class="w"> </span><span class="s1">&#39;-0.144439&#39;</span><span class="o">]</span>
+sign<span class="o">(</span>F_t<span class="o">)</span>：<span class="w"> </span><span class="o">[</span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1<span class="o">]</span>
+训练集0/1错误率：0.125000
+
+指数损失<span class="w"> </span>l_exp<span class="o">(</span>H<span class="p">|</span>D<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>E<span class="o">[</span>exp<span class="o">(</span>-f<span class="o">(</span>x<span class="o">)</span>H<span class="o">(</span>x<span class="o">))]</span><span class="w">  </span><span class="o">(</span>公式8.5<span class="o">)</span>
+<span class="w">  </span>均匀经验平均：0.288848
+<span class="w">  </span>按当前<span class="w"> </span>D_t<span class="w"> </span>加权：0.371399
+
+D_<span class="o">{</span>t+1<span class="o">}(</span>i<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>D_t<span class="o">(</span>i<span class="o">)</span><span class="w"> </span>*<span class="w"> </span>exp<span class="o">(</span>-alpha_t<span class="w"> </span>f<span class="o">(</span>x_i<span class="o">)</span><span class="w"> </span>h_t<span class="o">(</span>x_i<span class="o">))</span><span class="w"> </span>/<span class="w"> </span>Z_t<span class="w">  </span><span class="o">(</span>公式8.19<span class="o">)</span>
+未归一化：<span class="w"> </span><span class="o">[</span><span class="s1">&#39;0.045852&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.045852&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.045852&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.079198&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.079198&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.079198&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.012505&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.387656&#39;</span><span class="o">]</span>
+<span class="nv">Z_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>sum_i<span class="w"> </span><span class="nv">未归一化</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.775312
+D_<span class="o">{</span>t+1<span class="o">}</span>：<span class="w"> </span><span class="o">[</span><span class="s1">&#39;0.059140&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.059140&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.059140&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.102151&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.102151&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.102151&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.016129&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.500000&#39;</span><span class="o">]</span>
+
+-----<span class="w"> </span>Round<span class="w"> </span><span class="nv">t</span><span class="o">=</span><span class="m">5</span><span class="w"> </span>-----
+D_t：<span class="w"> </span><span class="o">[</span><span class="s1">&#39;0.059140&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.059140&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.059140&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.102151&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.102151&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.102151&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.016129&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.500000&#39;</span><span class="o">]</span>
+
+选择的基学习器<span class="w"> </span>h_t：
+<span class="w">  </span><span class="nv">feature</span><span class="o">=</span><span class="m">1</span>,<span class="w"> </span><span class="nv">threshold</span><span class="o">=</span><span class="m">0</span>.750000,<span class="w"> </span><span class="nv">polarity</span><span class="o">=</span>-1
+<span class="w">  </span>h_t<span class="o">(</span>x_i<span class="o">)</span>：<span class="w"> </span><span class="o">[</span>-1,<span class="w"> </span>-1,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span><span class="o">]</span>
+
+加权错误率<span class="w"> </span><span class="nv">epsilon_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>P_<span class="o">{</span>x~D<span class="o">}(</span>h!<span class="o">=</span>y<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.134409
+
+<span class="nv">alpha_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span>/2<span class="w"> </span>ln<span class="o">((</span><span class="m">1</span>-eps<span class="o">)</span>/eps<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.931264<span class="w">  </span><span class="o">(</span>公式8.11<span class="o">)</span>
+
+F_t<span class="o">(</span>x_i<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>sum_<span class="o">{</span>k&lt;<span class="o">=</span>t<span class="o">}</span><span class="w"> </span>alpha_k<span class="w"> </span>h_k<span class="o">(</span>x_i<span class="o">)</span><span class="w">  </span><span class="o">(</span>公式8.4<span class="o">)</span>
+<span class="o">[</span><span class="s1">&#39;1.059001&#39;</span>,<span class="w"> </span><span class="s1">&#39;1.059001&#39;</span>,<span class="w"> </span><span class="s1">&#39;2.921530&#39;</span>,<span class="w"> </span><span class="s1">&#39;-2.374986&#39;</span>,<span class="w"> </span><span class="s1">&#39;-2.374986&#39;</span>,<span class="w"> </span><span class="s1">&#39;-2.374986&#39;</span>,<span class="w"> </span><span class="s1">&#39;-2.358284&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.786826&#39;</span><span class="o">]</span>
+sign<span class="o">(</span>F_t<span class="o">)</span>：<span class="w"> </span><span class="o">[</span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span>-1,<span class="w"> </span><span class="m">1</span><span class="o">]</span>
+训练集0/1错误率：0.000000
+
+指数损失<span class="w"> </span>l_exp<span class="o">(</span>H<span class="p">|</span>D<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>E<span class="o">[</span>exp<span class="o">(</span>-f<span class="o">(</span>x<span class="o">)</span>H<span class="o">(</span>x<span class="o">))]</span><span class="w">  </span><span class="o">(</span>公式8.5<span class="o">)</span>
+<span class="w">  </span>均匀经验平均：0.197047
+<span class="w">  </span>按当前<span class="w"> </span>D_t<span class="w"> </span>加权：0.301879
+
+D_<span class="o">{</span>t+1<span class="o">}(</span>i<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>D_t<span class="o">(</span>i<span class="o">)</span><span class="w"> </span>*<span class="w"> </span>exp<span class="o">(</span>-alpha_t<span class="w"> </span>f<span class="o">(</span>x_i<span class="o">)</span><span class="w"> </span>h_t<span class="o">(</span>x_i<span class="o">))</span><span class="w"> </span>/<span class="w"> </span>Z_t<span class="w">  </span><span class="o">(</span>公式8.19<span class="o">)</span>
+未归一化：<span class="w"> </span><span class="o">[</span><span class="s1">&#39;0.150080&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.150080&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.023304&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.040253&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.040253&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.040253&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.040931&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.197028&#39;</span><span class="o">]</span>
+<span class="nv">Z_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>sum_i<span class="w"> </span><span class="nv">未归一化</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.682182
+D_<span class="o">{</span>t+1<span class="o">}</span>：<span class="w"> </span><span class="o">[</span><span class="s1">&#39;0.220000&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.220000&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.034161&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.059006&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.059006&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.059006&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.060000&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.288820&#39;</span><span class="o">]</span>
+
+<span class="o">=====</span><span class="w"> </span><span class="nv">最终强分类器</span><span class="w"> </span><span class="o">=====</span>
+H<span class="o">(</span>x<span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>sign<span class="o">(</span><span class="w"> </span>sum_t<span class="w"> </span>alpha_t<span class="w"> </span>h_t<span class="o">(</span>x<span class="o">)</span><span class="w"> </span><span class="o">)</span>
+<span class="nv">t</span><span class="o">=</span><span class="m">1</span>:<span class="w"> </span><span class="nv">alpha</span><span class="o">=</span><span class="m">0</span>.972955,<span class="w"> </span><span class="nv">stump</span><span class="o">=(</span><span class="nv">feature</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">thr</span><span class="o">=</span><span class="m">0</span>.375000,<span class="w"> </span><span class="nv">pol</span><span class="o">=</span><span class="m">1</span><span class="o">)</span>
+<span class="nv">t</span><span class="o">=</span><span class="m">2</span>:<span class="w"> </span><span class="nv">alpha</span><span class="o">=</span><span class="m">0</span>.649641,<span class="w"> </span><span class="nv">stump</span><span class="o">=(</span><span class="nv">feature</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">thr</span><span class="o">=</span><span class="m">0</span>.850000,<span class="w"> </span><span class="nv">pol</span><span class="o">=</span>-1<span class="o">)</span>
+<span class="nv">t</span><span class="o">=</span><span class="m">3</span>:<span class="w"> </span><span class="nv">alpha</span><span class="o">=</span><span class="m">0</span>.922913,<span class="w"> </span><span class="nv">stump</span><span class="o">=(</span><span class="nv">feature</span><span class="o">=</span><span class="m">1</span>,<span class="w"> </span><span class="nv">thr</span><span class="o">=</span><span class="m">0</span>.875000,<span class="w"> </span><span class="nv">pol</span><span class="o">=</span><span class="m">1</span><span class="o">)</span>
+<span class="nv">t</span><span class="o">=</span><span class="m">4</span>:<span class="w"> </span><span class="nv">alpha</span><span class="o">=</span><span class="m">0</span>.744039,<span class="w"> </span><span class="nv">stump</span><span class="o">=(</span><span class="nv">feature</span><span class="o">=</span><span class="m">0</span>,<span class="w"> </span><span class="nv">thr</span><span class="o">=</span><span class="m">0</span>.375000,<span class="w"> </span><span class="nv">pol</span><span class="o">=</span><span class="m">1</span><span class="o">)</span>
+<span class="nv">t</span><span class="o">=</span><span class="m">5</span>:<span class="w"> </span><span class="nv">alpha</span><span class="o">=</span><span class="m">0</span>.931264,<span class="w"> </span><span class="nv">stump</span><span class="o">=(</span><span class="nv">feature</span><span class="o">=</span><span class="m">1</span>,<span class="w"> </span><span class="nv">thr</span><span class="o">=</span><span class="m">0</span>.750000,<span class="w"> </span><span class="nv">pol</span><span class="o">=</span>-1<span class="o">)</span>
+</code></pre></div>
+<p>这里算出来的最终模型如下；各个基分类器属性参考feature，阈值参考thr，大于thr则取pol值，负责取-pol：</p>
+<div class="arithmatex">\[
+F(x)=0.972955h_1(x)+0.649641h_2(x)+0.922913h_3(x)+0.744039h_4(x)+0.931264h_5(x)
+\]</div>
+<p>然后我们假设样本 <span class="arithmatex">\(x=[0.30,0.80]\)</span> 带入计算可以得到 </p>
+<div class="arithmatex">\[
+(h_1,h_2,h_3​,h_4​,h_5​)=(+1,−1,+1,+1,+1)
+\]</div>
+<p>得到 <span class="arithmatex">\(F(x)=2.921530&gt;0\Rightarrow H(x)=sign(F(x))=+1\)</span></p>
+<h3 id="bagging">Bagging 和 随机森林</h3>
+<p>刚刚讲了序列化的生成方法，下面讲并行化生成方法</p>
+<p><mark>总体思路</mark></p>
+<p>为了得到泛化能力更强的集成模型，关键是让多个基学习器尽量“有差异”（降低相关性），但又不能差到学不到东西。</p>
+<p>做法是：对训练集进行多次采样，得到多个相互有交叠的训练子集，在每个子集上训练一个基学习器，再把它们组合起来。</p>
+<hr />
+<p><mark>Bagging</mark></p>
+<p><img alt="image-20260213164308811" src="../../../images/image-20260213164308811.png" /></p>
+<p>核心做法基于自助采样法（第2章）：</p>
+<ul>
+<li>对大小为 <span class="arithmatex">\(m\)</span> 的训练集做 自助采样，每次从原训练集中“有放回”抽取 <span class="arithmatex">\(m\)</span> 次，形成一个采样集</li>
+<li>重复 <span class="arithmatex">\(T\)</span> 次，得到 <span class="arithmatex">\(T\)</span> 个采样集，训练 <span class="arithmatex">\(T\)</span> 个基学习器</li>
+<li>集成输出：分类问题采用多数投票；回归问题采用平均</li>
+</ul>
+<blockquote>
+<p>之前证明过，自助采样法的训练集中大约63.2% 的样本会至少出现一次进入采样集，其余36.8%没被抽到。</p>
+</blockquote>
+<p>因为每个基学习器都有一部分没见过的样本，可以用这些样本来做该学习器的验证。把对每个样本“没用它训练过的那些学习器”的预测汇总起来，就可以得到 OOB 预测，进而估计泛化误差（相当于一种“自带的交叉验证”，不需要额外划分验证集</p>
+<p>令 <span class="arithmatex">\(H^{oob}(x)\)</span> 表示对样本 <span class="arithmatex">\(x\)</span> 的包外预测，即仅考虑哪些未使用 <span class="arithmatex">\(x\)</span> 训练的基学习器在 <span class="arithmatex">\(x\)</span> 上的预测，有</p>
+<div class="arithmatex">\[
+\begin{equation}
+H^{\mathrm{oob}}(x)
+=
+\arg\max_{y \in \mathcal{Y}}
+\sum_{t=1}^{T}
+\mathbb{I}\!\left(h_t(x) = y\right)
+\cdot
+\mathbb{I}\!\left(x \notin \mathcal{D}_t\right).
+\tag{8.20}
+\end{equation}
+\]</div>
+<p>用 Bagging 泛化误差的包外估计为</p>
+<div class="arithmatex">\[
+\begin{equation}
+\epsilon^{\mathrm{oob}}
+=
+\frac{1}{|\mathcal{D}|}
+\sum_{(x,y)\in \mathcal{D}}
+\mathbb{I}\!\left(H^{\mathrm{oob}}(x) \ne y\right).
+\tag{8.21}
+\end{equation}
+\]</div>
+<hr />
+<p><mark>随机森林RF</mark></p>
+<p>Bagging的扩展变体，可以看作：<strong>Bagging+决策树+额外的属性随机性</strong></p>
+<p>具体来说：对基决策树的每个节点，先从该节点的属性集合中随机选择一个包含 <span class="arithmatex">\(k\)</span> 个属性的子集，然后再从这个子集中选择一个最优属性用于划分。</p>
+<blockquote>
+<p>这样的话就通过控制参数 <span class="arithmatex">\(k\)</span> 达到控制随机性的目的</p>
+</blockquote>
+<p>虽然引入特征随机性会让单棵树变弱，但是树与树之间的相关性更低，整体集成变得更强，泛化误差往往更低</p>
+<h3 id="_2">结合策略</h3>
+<p>截至目前，我们的基学习器相关的算法学得差不多了，接下来是如何结合的问题。</p>
+<p><mark>平均法：用于回归/数值输出</mark></p>
+<p>假设有 <span class="arithmatex">\(T\)</span> 个基学习器，输出数值为 <span class="arithmatex">\(h_i(x)\in\mathbb{R}\)</span></p>
+<p><strong>简单平均</strong>：</p>
+<div class="arithmatex">\[
+H(x)=\dfrac{1}{T}\sum_{i=1}^Th_i(x)\tag{8.22}
+\]</div>
+<p><strong>加权平均</strong>：</p>
+<div class="arithmatex">\[
+H(x)=\dfrac{1}{T}\sum_{i=1}^Tw_ih_i(x)\tag{8.23}\\
+w_i\ge0,\sum_{i=1}^Tw_i=1
+\]</div>
+<p>权重通常从数据中学习，但**权重参数多**、训练数据不足或噪声大时容易过拟合，所以实践里“学权重”不一定比简单平均强。</p>
+<hr />
+<p><mark>投票法：用于分类</mark></p>
+<p>设类别集合 <span class="arithmatex">\(\{c_1,\dots,c_N\}\)</span> 。书里把第 <span class="arithmatex">\(i\)</span> 个学习器在样本 <span class="arithmatex">\(x\)</span> 上对类别 <span class="arithmatex">\(c_j\)</span> 的输出写成 <span class="arithmatex">\(h_i^j(x)\)</span></p>
+<p><strong>绝对多数投票</strong>：</p>
+<p>若某类得票超过总票数的一半时输出该类，否则可以拒绝预测</p>
+<ul>
+<li>这个“拒绝”机制适合对可靠性要求高的场景</li>
+<li>若任务必须输出结果、不允许拒绝，则会退化为下面的相对多数</li>
+</ul>
+<p><strong>相对多数投票</strong>：</p>
+<div class="arithmatex">\[
+H(x)=c_{\arg\max_j\sum_{i=1}^Th_i^j(x)}\tag{8.25}
+\]</div>
+<p>也就是哪个类票最多就选哪个；若并列最高就随机选一个</p>
+<p><strong>加权投票</strong>：</p>
+<div class="arithmatex">\[
+H(x)=c_{\arg\max_j\sum_{i=1}^Tw_ih_i^j(x)}\tag{8.26}\\
+w_i\ge0,\sum_iw_i=1
+\]</div>
+<p>不过要注意：</p>
+<ul>
+<li>不同学习器输出的“概率/得分”<strong>不可直接混用</strong>，需要先做概率校准（calibration），常见方法包括 <strong>Platt scaling</strong>、<strong>isotonic regression</strong> 等。</li>
+<li>若学习器类型不同、概率尺度不可比，有时要先把概率转成硬标签再投票。</li>
+</ul>
+<hr />
+<p><mark>学习法：堆叠</mark></p>
+<p>核心思想就是再训练一个二级学习器/元学习器来做结合。</p>
+<p>书中将个体学习器称为初级学习器，用于结合的学习器称为次级学习器或元学习器，算法如下</p>
+<p><img alt="image-20260213200708532" src="../../../images/image-20260213200708532.png" /></p>
+<ol>
+<li>先训练 <span class="arithmatex">\(T\)</span> 个初级学习器</li>
+<li>用它们在样本 <span class="arithmatex">\(x_i\)</span> 上的输出组成新特征向量 <span class="arithmatex">\(z_i=(h_1(x_i),\dots,h_T(x_i))\)</span>,并配上原标签 <span class="arithmatex">\(y_i\)</span>，得到二级训练集 <span class="arithmatex">\(D’=\{(z_i,y_i)\}\)</span></li>
+<li>在 <span class="arithmatex">\(D’\)</span> 上训练二级学习器 <span class="arithmatex">\(h’\)</span>，最终得到 <span class="arithmatex">\(H(x)=h’(h_1(x),\dots,h_T(x))\)</span></li>
+</ol>
+<p>如过直接用训练初级学习器的同一批数据来生成 <span class="arithmatex">\(z_i\)</span> ，二级学习器很容易过拟合。</p>
+<p>标准做法一般是采用 <strong>交叉验证/留一法</strong>：对每个样本，用“没见过它”的初级模型输出作为它的二级特征（out-of-fold 预测），再训练二级学习器。</p>
+<h3 id="_3">多样性</h3>
+<p>集成想要泛化强，个体学习器应“<strong>好而不同</strong>”：既要各自有一定准确性（好），又要彼此不一致/相关性低（不同）。本节给出一个回归任务下的理论分解，并介绍分类任务中常用的多样性度量与增强手段。</p>
+<hr />
+<p><mark>误差-分歧分解</mark></p>
+<p>假定有 <span class="arithmatex">\(T\)</span> 个个体学习器 <span class="arithmatex">\(h_1,\dots,h_T\)</span>。用加权平均得到集成输出 <span class="arithmatex">\(H(x)=\dfrac{1}{T}\sum_{i=1}^Tw_ih_i(x)\)</span>。任务是回归：目标函数 <span class="arithmatex">\(f:\mathbb{R}^d\rightarrow\mathbb{R}\)</span></p>
+<p>首先定义一下 <strong>分歧</strong>：</p>
+<p>todo</p>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="md-typeset" style="margin-top: 2rem;">
+  <h2 id="__comments">评论</h2>
+  
+  <script>
+    var giscusTheme = document.body.getAttribute("data-md-color-scheme") === "slate" ? "dark_dimmed" : "light";
+    
+    var giscusScript = document.createElement("script");
+    giscusScript.src = "https://giscus.app/client.js";
+    giscusScript.setAttribute("data-repo", "maple-pwn/maple-pwn.github.io");
+    giscusScript.setAttribute("data-repo-id", "R_kgDOP5uLTQ");
+    giscusScript.setAttribute("data-category", "Comments");
+    giscusScript.setAttribute("data-category-id", "DIC_kwDOP5uLTc4C130e");
+    giscusScript.setAttribute("data-mapping", "pathname");
+    giscusScript.setAttribute("data-strict", "0");
+    giscusScript.setAttribute("data-reactions-enabled", "1");
+    giscusScript.setAttribute("data-emit-metadata", "0");
+    giscusScript.setAttribute("data-input-position", "bottom");
+    giscusScript.setAttribute("data-theme", giscusTheme);
+    giscusScript.setAttribute("data-lang", "zh-CN");
+    giscusScript.setAttribute("data-loading", "lazy");
+    giscusScript.setAttribute("crossorigin", "anonymous");
+    giscusScript.async = true;
+    
+    document.getElementById("__comments").insertAdjacentElement("afterend", giscusScript);
+    
+    // Theme sync
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.attributeName === "data-md-color-scheme") {
+          var theme = document.body.getAttribute("data-md-color-scheme") === "slate" ? "dark_dimmed" : "light";
+          var iframe = document.querySelector(".giscus-frame");
+          if (iframe) {
+            iframe.contentWindow.postMessage(
+              { giscus: { setConfig: { theme: theme } } },
+              "https://giscus.app"
+            );
+          }
+        }
+      });
+    });
+    observer.observe(document.body, { attributes: true });
+  </script>
+</div>
+
+                
+  
+<div class="md-typeset" style="margin-top: 2rem;">
+  <h2 id="__comments">评论</h2>
+  
+  <script>
+    var giscusTheme = document.body.getAttribute("data-md-color-scheme") === "slate" ? "dark_dimmed" : "light";
+    
+    var giscusScript = document.createElement("script");
+    giscusScript.src = "https://giscus.app/client.js";
+    giscusScript.setAttribute("data-repo", "maple-pwn/maple-pwn.github.io");
+    giscusScript.setAttribute("data-repo-id", "R_kgDOP5uLTQ");
+    giscusScript.setAttribute("data-category", "Comments");
+    giscusScript.setAttribute("data-category-id", "DIC_kwDOP5uLTc4C130e");
+    giscusScript.setAttribute("data-mapping", "pathname");
+    giscusScript.setAttribute("data-strict", "0");
+    giscusScript.setAttribute("data-reactions-enabled", "1");
+    giscusScript.setAttribute("data-emit-metadata", "0");
+    giscusScript.setAttribute("data-input-position", "bottom");
+    giscusScript.setAttribute("data-theme", giscusTheme);
+    giscusScript.setAttribute("data-lang", "zh-CN");
+    giscusScript.setAttribute("data-loading", "lazy");
+    giscusScript.setAttribute("crossorigin", "anonymous");
+    giscusScript.async = true;
+    
+    document.getElementById("__comments").insertAdjacentElement("afterend", giscusScript);
+    
+    // Theme sync
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.attributeName === "data-md-color-scheme") {
+          var theme = document.body.getAttribute("data-md-color-scheme") === "slate" ? "dark_dimmed" : "light";
+          var iframe = document.querySelector(".giscus-frame");
+          if (iframe) {
+            iframe.contentWindow.postMessage(
+              { giscus: { setConfig: { theme: theme } } },
+              "https://giscus.app"
+            );
+          }
+        }
+      });
+    });
+    observer.observe(document.body, { attributes: true });
+  </script>
+</div>
+
+
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.titles", "navigation.tabs", "navigation.indexes", "navigation.top"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../../resources/js/read-metrics.js"></script>
+      
+    
+  </body>
+</html>

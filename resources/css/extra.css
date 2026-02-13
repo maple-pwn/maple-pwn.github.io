@@ -39,7 +39,7 @@ body {
 }
 
 .md-grid {
-  max-width: 86%;
+  max-width: max(85%, 65rem);
 }
 
 .md-content {
