@@ -1,9 +1,20 @@
-@import url('https://static.zeoseven.com/zsft/292/main/result.css');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&display=swap');
 
 body {
-font-family: "LXGW WenKai";
-font-weight: normal;
+  font-family: 'Noto Serif SC', 'Georgia', 'Times New Roman', serif;
 }
+
+/* GitHub 热力图 */
+.github-heatmap {
+  text-align: center;
+  margin: 1.5rem 0;
+}
+.github-heatmap img {
+  width: 100%;
+  max-width: 720px;
+}
+
+
 
 .giscus {
   margin-top: 1.5rem;
@@ -147,22 +158,18 @@ body {
 
 /* Dark mode blockquotes */
 [data-md-color-scheme="slate"] .md-typeset blockquote {
-  background: linear-gradient(180deg, var(--odp-bg-light), var(--odp-bg-highlight));
-  border: 1px solid rgba(97, 175, 239, 0.15);
-  border-left: 6px solid var(--odp-blue);
+  background: rgba(255, 255, 255, 0.04);
+  border: none;
+  border-left: 3px solid var(--odp-blue);
+  border-radius: 6px;
   color: var(--odp-fg);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-[data-md-color-scheme="slate"] .md-typeset blockquote:hover {
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.4);
 }
 
 /* Dark mode code blocks */
 [data-md-color-scheme="slate"] .md-typeset pre > code {
   background: var(--odp-bg-light);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  box-shadow: none;
 }
 
 [data-md-color-scheme="slate"] .md-typeset .highlight .filename {
@@ -179,7 +186,8 @@ body {
 
 [data-md-color-scheme="slate"] .md-typeset .highlight:hover,
 [data-md-color-scheme="slate"] .md-typeset .highlighttable:hover {
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.4);
+  transform: none;
+  box-shadow: none;
 }
 
 /* Dark mode tables */
@@ -199,13 +207,7 @@ body {
 
 /* Dark mode images */
 [data-md-color-scheme="slate"] .md-typeset img {
-  background: var(--odp-bg-light);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
-}
-
-[data-md-color-scheme="slate"] .md-typeset img:hover {
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.4);
+  background: none;
 }
 
 /* Dark mode mark/highlight */
@@ -236,7 +238,8 @@ body {
 /* Dark mode admonitions hover */
 [data-md-color-scheme="slate"] .md-typeset .admonition:hover,
 [data-md-color-scheme="slate"] .md-typeset details:hover {
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.4);
+  transform: none;
+  box-shadow: none;
 }
 
 /* Pygments/Highlight.js One Dark Pro syntax colors */
@@ -386,6 +389,7 @@ body {
 
 .md-typeset mark {
   background-color: rgba(255, 165, 0, 0.35);
+  font-size: 1.15em;
 }
 
 .md-footer {
@@ -463,37 +467,38 @@ body {
 }
 
 .md-typeset blockquote {
-  background: linear-gradient(180deg, #ffffff, var(--paper-alt));
-  border: 1px solid rgba(58, 139, 255, 0.22);
-  border-left: 6px solid rgba(58, 139, 255, 0.6);
-  border-radius: 12px;
-  padding: 0.85rem 1.1rem;
+  background: rgba(175, 171, 171, 0.056);
+  border: none;
+  border-left: 3px solid rgba(58, 139, 255, 0.5);
+  border-radius: 6px;
+  padding: 0.3rem 0.9rem;
+  margin: 0.35rem 0;
   color: var(--ink-soft);
-  box-shadow: 0 8px 20px rgba(30, 60, 90, 0.08);
-  transition: transform 160ms ease, box-shadow 160ms ease;
+  font-size: 0.92em;
+  line-height: 1.6;
+  position: relative;
 }
 
-.md-typeset blockquote:hover {
-  transform: scale(1.01);
-  box-shadow: 0 12px 26px rgba(30, 60, 90, 0.12);
+.md-typeset blockquote p {
+  margin: 0.2em 0;
 }
 
 .md-typeset .admonition,
 .md-typeset details {
-  transition: transform 160ms ease, box-shadow 160ms ease;
+  transition: none;
 }
 
 .md-typeset .admonition:hover,
 .md-typeset details:hover {
-  transform: scale(1.01);
-  box-shadow: 0 12px 26px rgba(30, 60, 90, 0.12);
+  transform: none;
+  box-shadow: none;
 }
 
 /* Code blocks: clearer structure and stronger emphasis */
 .md-typeset pre > code {
   background: var(--code-bg);
   border: 1px solid var(--code-border);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+   box-shadow: none;
   line-height: 1.7;
 }
 
@@ -505,13 +510,13 @@ body {
 
 .md-typeset .highlight,
 .md-typeset .highlighttable {
-  transition: transform 160ms ease, box-shadow 160ms ease;
+  transition: none;
 }
 
 .md-typeset .highlight:hover,
 .md-typeset .highlighttable:hover {
-  transform: scale(1.01);
-  box-shadow: 0 12px 26px rgba(30, 60, 90, 0.12);
+  transform: none;
+  box-shadow: none;
 }
 
 .md-typeset .highlight .filename {
@@ -561,12 +566,6 @@ body {
 .md-typeset img {
   display: block;
   margin: 0 auto;
-  background: #fcfcf8;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 10px;
-  padding: 6px;
-  box-shadow: 0 10px 22px rgba(20, 30, 40, 0.08);
-  transition: transform 160ms ease, box-shadow 160ms ease;
 }
 
 .md-typeset figure {
@@ -575,11 +574,6 @@ body {
 
 .md-typeset figure img {
   margin: 0 auto;
-}
-
-.md-typeset img:hover {
-  transform: scale(1.03);
-  box-shadow: 0 14px 28px rgba(20, 30, 40, 0.12);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -904,7 +898,7 @@ body {
 [data-md-color-scheme="slate"] .md-typeset .admonition,
 [data-md-color-scheme="slate"] .md-typeset details {
   background: var(--odp-bg-light);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+   box-shadow: none;
 }
 
 [data-md-color-scheme="slate"] .md-typeset .admonition.note,
