@@ -3633,8 +3633,133 @@ w_i\ge0,\sum_iw_i=1
 <hr />
 <p><mark>误差-分歧分解</mark></p>
 <p>假定有 <span class="arithmatex">\(T\)</span> 个个体学习器 <span class="arithmatex">\(h_1,\dots,h_T\)</span>。用加权平均得到集成输出 <span class="arithmatex">\(H(x)=\dfrac{1}{T}\sum_{i=1}^Tw_ih_i(x)\)</span>。任务是回归：目标函数 <span class="arithmatex">\(f:\mathbb{R}^d\rightarrow\mathbb{R}\)</span></p>
-<p>首先定义一下 <strong>分歧</strong>：</p>
-<p>todo</p>
+<p>对样本 <span class="arithmatex">\(x\)</span> ，定义学习器 <span class="arithmatex">\(h_i\)</span> 的分歧为：</p>
+<div class="arithmatex">\[
+A(h_i\mid x)=\left(h_i(x)-H(x)\right)^2\tag{8.27}
+\]</div>
+<blockquote>
+<p><strong>分歧</strong> 表示个体预测集成离集成预测偏离多少，偏离越大，多样性越强</p>
+</blockquote>
+<p>于是根据式(8.27)进行加权平均，可以得到集成的“分歧”为</p>
+<div class="arithmatex">\[
+\bar A(h\mid x)=\sum_{i=1}^Tw_iA(h_i\mid x)=\sum_{i=1}^Tw_i(h_i(x)-H(x))^2\tag{8.28}
+\]</div>
+<p>又由于个体学习器在样本 <span class="arithmatex">\(x\)</span> 的平方误差则为</p>
+<div class="arithmatex">\[
+E(h_i\mid x)=(f(x)-h_i(x))^2\tag{8.29}
+\]</div>
+<p>同理，集成在样本 <span class="arithmatex">\(x\)</span> 的平方误差为</p>
+<div class="arithmatex">\[
+E(H\mid x)=(f(x)-H(x))^2\tag{8.30}
+\]</div>
+<p>于是我们可以参考式(8.28)，定义个体误差的加权均值为</p>
+<div class="arithmatex">\[
+\bar E(h\mid x)=\sum_{i=1}^Tw_iE(h_i\mid x)
+\]</div>
+<p>根据式(8.28)-(8.30)，进而得到下式</p>
+<div class="arithmatex">\[
+\begin{align}
+\bar A(h\mid x)&amp;=\sum_{i=1}^Tw_iE(h_i\mid x)-E(H\mid x)
+\\
+&amp;=\bar E(h\mid x)-E(H\mid x)
+\tag{8.31}
+\end{align}
+\]</div>
+<p>再进行一下变形</p>
+<div class="arithmatex">\[
+E(H\mid x)=\bar E(h\mid x)-\bar A(h\mid x)
+\]</div>
+<p>此式意味着：<strong>集成误差=个体误差均值-分歧</strong>。在个体误差均值固定时，分歧越大，集成误差越小</p>
+<p>不过刚刚是离散态，通过权重 <span class="arithmatex">\(w_i\)</span> 进行的集成，接下来扩展到连续态：</p>
+<p>令 <span class="arithmatex">\(p(x)\)</span> 为样本分布密度，对所有 <span class="arithmatex">\(x\)</span> 积分，根据式(8.31)可以得到</p>
+<div class="arithmatex">\[
+\sum_{i=1}^Tw_i\int A(h_i\mid x)p(x)\mathrm{d}x=
+\sum_{i=1}^Tw_i\int E(h_i\mid x)p(x)\mathrm{d}x-\int E(H\mid x)p(x)\mathrm{d}x
+\tag{8.32}
+\]</div>
+<p>同样，定义第 <span class="arithmatex">\(i\)</span>  个学习器在全空间上的泛化误差与分歧项以及集成的泛化误差</p>
+<div class="arithmatex">\[
+\begin{align}
+E_i=\int E(h_i\mid x)p(x)\mathrm{d}x\tag{8.33个体泛化误差}\\
+A_i=\int A(h_i\mid x)p(x)\mathrm{d}x\tag{8.34分歧项}\\
+E=\int E(H\mid x)p(x)\mathrm{d}x\tag{8.35集成的泛化误差}
+\end{align}
+\]</div>
+<p>然后定义加权均值</p>
+<div class="arithmatex">\[
+\begin{align}
+\bar E=\sum_{i=1}^Tw_iE_i\\
+\bar A=\sum_{i=1}^Tw_iA_i
+\end{align}
+\]</div>
+<p>接下来，把式(8.33)-(8.35)带入(8.32)，可以得到总公式为：</p>
+<div class="arithmatex">\[
+E=\bar E-\bar A\tag{8.36}
+\]</div>
+<p>即：<strong>个体越准确(<span class="arithmatex">\(\bar E\)</span> 越小)、多样性越大(<span class="arithmatex">\(\bar A\)</span> 越大)，集成越好</strong></p>
+<hr />
+<p><mark>多样性度量</mark></p>
+<p>书中用二分类进行举例 <span class="arithmatex">\(y_i\in\{-1,+1\}\)</span> 。常见的做法是度量两二分类器 <span class="arithmatex">\(h_i、h_j\)</span> 的”相似/不相似“</p>
+<p>对数据集 <span class="arithmatex">\(D=\{(x_1,y_1),\dots,(x_m,y_m)\}\)</span> 统计 <span class="arithmatex">\(h_i、h_j\)</span> 的预测组合如下</p>
+<p><img alt="image-20260214174739378" src="../../../images/image-20260214174739378.png" /></p>
+<p>基于这个列联表，下面给出一些常见的多样性度量</p>
+<p><strong>不合度量</strong>：</p>
+<div class="arithmatex">\[
+dis_{ij}=\dfrac{b+c}{m}\tag{8.37}
+\]</div>
+<p><span class="arithmatex">\(dis_{ij}\)</span> 的值域为 <span class="arithmatex">\([0,1]\)</span>,值越大则多样性越大</p>
+<p><strong>相关系数</strong>：</p>
+<div class="arithmatex">\[
+\rho_{ij}=\dfrac{ad-bc}{\sqrt{(a+b)(a+c)(c+d)(b+d)}}\tag{8.38}
+\]</div>
+<p>值域为 <span class="arithmatex">\([-1,1]\)</span>,<span class="arithmatex">\(\rho_{ij}=0\)</span> 表示不相关，正值表示正相关，负值表示负相关</p>
+<p><strong><span class="arithmatex">\(Q\)</span> 统计量</strong></p>
+<div class="arithmatex">\[
+Q_{ij}=\dfrac{ad-bc}{ad+bc}\tag{8.39}
+\]</div>
+<p>与 <span class="arithmatex">\(\rho_{ij}\)</span> 符号相同，<span class="arithmatex">\(\mid Q_{ij}\mid\le\mid\rho_{ij}\mid\)</span></p>
+<p><strong><span class="arithmatex">\(\kappa-\)</span> 统计量</strong></p>
+<div class="arithmatex">\[
+\kappa=\dfrac{p_1-p_2}{1-p_2}\tag{8.40}
+\]</div>
+<p>其中</p>
+<div class="arithmatex">\[
+\begin{align}
+p_1&amp;=\dfrac{a+d}{m}\tag{8.41}\\
+p_2&amp;=\dfrac{(a+b)(a+c)+(c+d)(b+d)}{m^2}\tag{8.42}
+\end{align}
+\]</div>
+<ul>
+<li><span class="arithmatex">\(p_1\)</span>：两分类器“实际一致”的概率（在数据上估计）</li>
+<li><span class="arithmatex">\(p_2\)</span>：按边际分布推算的“随机一致”的概率</li>
+</ul>
+<p>因此 <span class="arithmatex">\(\kappa\)</span> 是“扣除偶然一致之后的一致性”。完全一致时 <span class="arithmatex">\(\kappa=1\)</span>；若只相当于随机一致，<span class="arithmatex">\(\kappa\approx 0\)</span>；在某些“比随机还不一致”的极端情况下可能为负。</p>
+<hr />
+<p><mark>多样性增强</mark></p>
+<ul>
+<li>数据样本扰动：从原始数据集产生不同训练子集，各子集训练不同个体。</li>
+</ul>
+<blockquote>
+<p>Bagging的自助采样；AdaBoost的序列式重采样</p>
+</blockquote>
+<ul>
+<li>输入属性扰动：用不同特征子空间训练不同个体。例如随机子空间算法</li>
+</ul>
+<p><img alt="image-20260214194121272" src="../../../images/image-20260214194121272.png" /></p>
+<ul>
+<li>输出表示扰动：通过“改造标签/输出空间”制造差异</li>
+</ul>
+<blockquote>
+<p>翻转法：随机改动少量训练样本标签；</p>
+<p>ECOC：把多分类拆成一组二分类子任务训练多个分类器</p>
+</blockquote>
+<ul>
+<li>算法参数扰动：对同一算法用不同随机参数/初始化/超参数训练得到差异个体</li>
+</ul>
+<blockquote>
+<p>神经网络：不同初始化、网络结构、训练超参等</p>
+<p>决策树：改变属性选择机制等</p>
+</blockquote>
 
 
 
