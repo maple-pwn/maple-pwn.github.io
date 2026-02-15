@@ -947,6 +947,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      原型聚类
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3033,6 +3042,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      原型聚类
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3176,6 +3194,113 @@ d_{\min}(C_i, C_j)
 </blockquote>
 <h3 id="_2">距离计算</h3>
 <p>刚刚引入了一个函数 <span class="arithmatex">\(\text{dist}(\cdot,\cdot)\)</span> 表示两样本之间的距离，但是我们并没有解决这个函数的计算，接下来就是关于这个函数的推导</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>函数 <span class="arithmatex">\(\text{dist}(\cdot,\cdot)\)</span> 应当满足以下基本性质</p>
+<div class="arithmatex">\[
+\begin{align}
+&amp;\text{dist}(x_i,x_j)\ge0\tag{9.14非负性}\\
+&amp;\text{dist}(x_i,x_j)=0\text{当且仅当}x_i=x_j\tag{9.15同一性}\\
+&amp;\text{dist}(x_i,x_j)=\text{dist}(x_j,x_i)\tag{9.16对称性}\\
+&amp;\text{dist}(x_i,x_j)\le\text{dist}(x_i,x_k)+\text{dist}(x_k,x_j)\tag{9.17直递性}
+\end{align}
+\]</div>
+</div>
+<p>给定样本 <span class="arithmatex">\(\boldsymbol{x_i}=(x_{i1};x_{i2};\dots;x_{in})\)</span> ,<span class="arithmatex">\(\boldsymbol{x_j}=(x_{j1};x_{j2};\dots;x_{jn})\)</span> </p>
+<p>比较常用的是 <strong>闵可夫斯基距离</strong></p>
+<div class="arithmatex">\[
+\begin{equation}
+\mathrm{dist}_{\mathrm{mk}}(x_i, x_j)
+=
+\left(
+\sum_{u=1}^{n}
+\left| x_{iu} - x_{ju} \right|^{p}
+\right)^{\frac{1}{p}}.
+\tag{9.18}
+\end{equation}
+\]</div>
+<p>当 <span class="arithmatex">\(p=2\)</span> 时，可以得到 <strong>欧氏距离</strong></p>
+<div class="arithmatex">\[
+\begin{equation}
+\mathrm{dist}_{\mathrm{ed}}(x_i, x_j)
+=
+\|x_i - x_j\|_2
+=
+\sqrt{
+\sum_{u=1}^{n}
+\left|x_{iu} - x_{ju}\right|^2
+}.
+\tag{9.19}
+\end{equation}
+\]</div>
+<p>当 <span class="arithmatex">\(p=1\)</span> 时，可以得到 <strong>曼哈顿距离</strong></p>
+<div class="arithmatex">\[
+\begin{equation}
+\mathrm{dist}_{\mathrm{man}}(x_i, x_j)
+=
+\|x_i - x_j\|_1
+=
+\sum_{u=1}^{n}
+\left|x_{iu} - x_{ju}\right|.
+\tag{9.20}
+\end{equation}
+\]</div>
+<hr />
+<p><mark>属性类型与距离</mark></p>
+<p>属性又一般分为连续属性和离散属性。前者在定义域上有无穷多个可能的取值，后者在定义域上取值有限。</p>
+<p>很明显，连续属性可以简单的计算出距离；</p>
+<p>而定义域为{1，2，3}这种的离散属性相对能直接计算属性值的距离，这种属性称为有序属性</p>
+<p>但定义域为 <span class="arithmatex">\(\{飞机，火车，轮船\}\)</span>，不太适合直接计算属性值的距离，这种属性称为无序属性</p>
+<hr />
+<p><mark>VDM</mark></p>
+<p>明显可知，闵可夫斯基距离只能适用于连续属性和有序属性。那么如何评估无序属性的距离呢，书中介绍了 VDM 方法，如下：</p>
+<p>设：</p>
+<ul>
+<li><span class="arithmatex">\(m_{u,a}\)</span> 表示在属性 <span class="arithmatex">\(u\)</span> 上取值为 <span class="arithmatex">\(a\)</span> 的样本数，</li>
+<li><span class="arithmatex">\(m_{u,a,i}\)</span> 表示在第 <span class="arithmatex">\(i\)</span> 个样本簇中在属性 <span class="arithmatex">\(u\)</span> 上取值为 <span class="arithmatex">\(a\)</span> 的样本数，</li>
+<li><span class="arithmatex">\(k\)</span> 为样本簇数</li>
+</ul>
+<p>则属性 <span class="arithmatex">\(u\)</span> 上有两个离散值 <span class="arithmatex">\(a\)</span> 与 <span class="arithmatex">\(b\)</span> 之间的VDM距离为</p>
+<div class="arithmatex">\[
+VDM_p(a,b)=\sum_{i=1}^k\left|\dfrac{m_{u,a,i}}{m_{u,a}}-\dfrac{m_{u,b,i}}{m_{u,b}}\right|^p\tag{9.21}
+\]</div>
+<blockquote>
+<p>意味着比较两个取值在各类别中的分布差异</p>
+</blockquote>
+<hr />
+<p><mark>多种距离变种</mark></p>
+<p><strong>混合属性距离</strong></p>
+<p>于是我们可以将闵可夫斯基距离和VDM结合，处理混合属性。如下假定我们有</p>
+<ul>
+<li><span class="arithmatex">\(n_c\)</span> 个有序属性</li>
+<li><span class="arithmatex">\(n-n_c\)</span> 个无序属性</li>
+</ul>
+<div class="arithmatex">\[
+\text{MinkovDM}_p(x_i,x_j)=
+\left(
+\sum_{u=1}^{n_c}
+\left|
+x_{iu}-x_{ju}
+\right|^p
++
+\sum_{u=1+n_c}^{n}
+\text{VDM}_p(x_{iu},x_{ju})
+\right)^{\dfrac{1}{p}}
+\tag{9.22}
+\]</div>
+<p><strong>加权距离</strong></p>
+<p>当属性的重要性不同的时候，我们可以为每个距离加上一定的权重</p>
+<div class="arithmatex">\[
+\text{dist}_\text{wmk}=(w_1\cdot|x_{i1}-x_{j1}|^p+\dots w_n\cdot|x_{in}-x_{jn}|^p)^\dfrac{1}{p}
+\tag{9.23}
+\]</div>
+<hr />
+<p><mark>距离与相似</mark></p>
+<p>一般来说，属性之间距离越大，相似度就越小。但是用于相似度度量的距离未必一定满足距离度量的基本性质，尤其是式(9.17)直递性，如下例子</p>
+<p><img alt="image-20260215214101113" src="../../../images/image-20260215214101113.png" /></p>
+<p>人与人马相似，马与人马相似，但是人与人马完全不相似；这样的距离称为“非度量距离”</p>
+<p>此外，本节的距离计算式都是事先定义好的，但是不少的现实任务中，有必要基于数据样本来确定合适的距离计算式，于是有 <strong>“距离度量学习”</strong> 来实现这一步骤</p>
+<h3 id="_3">原型聚类</h3>
 
 
 
