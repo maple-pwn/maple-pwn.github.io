@@ -84,7 +84,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#dnnmhc" class="md-skip">
+        <a href="#dnn-mhc" class="md-skip">
           跳转至
         </a>
       
@@ -1569,7 +1569,7 @@
           <li class="md-nav__item">
   <a href="#resnet" class="md-nav__link">
     <span class="md-ellipsis">
-      残差(经典ResNet范式)
+      残差 (经典 ResNet 范式)
     </span>
   </a>
   
@@ -3247,7 +3247,7 @@
           <li class="md-nav__item">
   <a href="#resnet" class="md-nav__link">
     <span class="md-ellipsis">
-      残差(经典ResNet范式)
+      残差 (经典 ResNet 范式)
     </span>
   </a>
   
@@ -3302,25 +3302,25 @@
 
 
 
-<h1 id="dnnmhc">从DNN到mHC</h1>
+<h1 id="dnn-mhc">从 DNN 到 mHC</h1>
 <blockquote>
-<p>前一段时间DeepSeek发布了mHC架构，这边了解了一下，做一个阅读记录</p>
+<p>前一段时间 DeepSeek 发布了 mHC 架构，这边了解了一下，做一个阅读记录</p>
 </blockquote>
-<p>想理解mHC就要先知道HC(Hyper-Connections)；而想理解HC，要先知道Residuals(残差)；理解Residuals，得先知道DNN(深度神经元网络)，这些内容以后可能会单独写一些阅读记录，不过今天就速过一下</p>
+<p>想理解 mHC 就要先知道 HC(Hyper-Connections)；而想理解 HC，要先知道 Residuals(残差)；理解 Residuals，得先知道 DNN(深度神经元网络)，这些内容以后可能会单独写一些阅读记录，不过今天就速过一下</p>
 <h2 id="_1">前置知识</h2>
 <h3 id="dnn">DNN</h3>
-<p>这个内容在ML学习记录的神经网络章节中有简单提及。</p>
+<p>这个内容在 ML 学习记录的神经网络章节中有简单提及。</p>
 <p>核心就是通过多层神经元进行信息传递和转换，每个神经元接受来自前一层神经元的输入，应用权重和偏置，然后通过激活函数输出结果，这些结果作为下一层神经元的输入。</p>
 <blockquote>
-<p>简单来说，DNN由很多层构成，每一层都表示为一个函数，如下图所示</p>
+<p>简单来说，DNN 由很多层构成，每一层都表示为一个函数，如下图所示</p>
 <p><img alt="img" src="https://picx.zhimg.com/v2-1afa0c7d95bea01c038d82deca9d683b_1440w.jpg" /></p>
 </blockquote>
 <p>我们规定：</p>
 <ul>
-<li>输入为<span class="arithmatex">\(x\in\mathbb{R}^d\)</span>；目标输出为 <span class="arithmatex">\(y\)</span>；预期函数为 <span class="arithmatex">\(y=F(x)\)</span></li>
-<li>DNN的目的是构造出来一个近似函数 <span class="arithmatex">\(\hat{y}=G(x;\mathcal{W})\)</span>，其中 <span class="arithmatex">\(\mathcal{W}\)</span> 为所有可学习的参数，<span class="arithmatex">\(G(\cdot)\)</span> 由多层复合构成</li>
+<li>输入为 <span class="arithmatex">\(x\in\mathbb{R}^d\)</span>；目标输出为 <span class="arithmatex">\(y\)</span>；预期函数为 <span class="arithmatex">\(y=F(x)\)</span></li>
+<li>DNN 的目的是构造出来一个近似函数 <span class="arithmatex">\(\hat{y}=G(x;\mathcal{W})\)</span>，其中 <span class="arithmatex">\(\mathcal{W}\)</span> 为所有可学习的参数，<span class="arithmatex">\(G(\cdot)\)</span> 由多层复合构成</li>
 </ul>
-<p>令 <span class="arithmatex">\(x_l\)</span> 表示第 <span class="arithmatex">\(l\)</span> 层的中间表示（隐藏变量）；<span class="arithmatex">\(f_l\)</span>  表示第 <span class="arithmatex">\(l\)</span> 层的非线性映射；<span class="arithmatex">\(\mathcal{W}\)</span> 表示第 <span class="arithmatex">\(l\)</span> 层的参数。那么一个 <span class="arithmatex">\(L\)</span> 层的DNN可以写为</p>
+<p>令 <span class="arithmatex">\(x_l\)</span> 表示第 <span class="arithmatex">\(l\)</span> 层的中间表示（隐藏变量）；<span class="arithmatex">\(f_l\)</span> 表示第 <span class="arithmatex">\(l\)</span> 层的非线性映射；<span class="arithmatex">\(\mathcal{W}\)</span> 表示第 <span class="arithmatex">\(l\)</span> 层的参数。那么一个 <span class="arithmatex">\(L\)</span> 层的 DNN 可以写为</p>
 <div class="arithmatex">\[
 \begin{align}
 x_0&amp;=x\\
@@ -3328,28 +3328,28 @@ x_{l+1}&amp;=f_{l}(x_l;\mathcal{W}_l)\\
 \hat y&amp;=x_L
 \end{align}
 \]</div>
-<p><strong>但是</strong> 每一层都在试图重新构造 <span class="arithmatex">\(x_{l+1}=f_{l}(x_l)\)</span> 。这会导致效率低下，原因如下：</p>
+<p><strong>但是</strong> 每一层都在试图重新构造 <span class="arithmatex">\(x_{l+1}=f_{l}(x_l)\)</span>。这会导致效率低下，原因如下：</p>
 <ul>
 <li>如果 <span class="arithmatex">\(f_l\)</span> 没有学好，信息会被覆盖</li>
 <li>深度增加的时候，梯度容易消失或者爆炸</li>
 <li>每层都必须学习完整的变化</li>
 </ul>
-<p>一个多层感知机本质上就是在做函数逼近。我们有输入 <span class="arithmatex">\(x\)</span> ，想要逼近一个复杂函数 <span class="arithmatex">\(F(x)\)</span>。网络一层层叠加非线性变换，最后得到输出。不过层层叠加的过程中，特征会逐渐衰减，导致结果出现误差。</p>
+<p>一个多层感知机本质上就是在做函数逼近。我们有输入 <span class="arithmatex">\(x\)</span>，想要逼近一个复杂函数 <span class="arithmatex">\(F(x)\)</span>。网络一层层叠加非线性变换，最后得到输出。不过层层叠加的过程中，特征会逐渐衰减，导致结果出现误差。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>A给B消息 <span class="arithmatex">\(x_A\)</span>，B给C自己理解的消息 <span class="arithmatex">\(x_B\)</span>，C给D自己理解的消息 <span class="arithmatex">\(x_C\)</span>，依此类推，最终的结果相比 <span class="arithmatex">\(x_A\)</span> 将出现误差</p>
 </div>
 <p>为了解决这些问题，引入了残差的思路</p>
-<h3 id="resnet">残差(经典ResNet范式)</h3>
-<p>我们令 <span class="arithmatex">\(x_l\)</span>  表示当前状态，<span class="arithmatex">\(F_l(x_l)\)</span> 表示残差函数(需要修正的量）；<span class="arithmatex">\(x_{l+1}\)</span> 表示修正后的状态；<span class="arithmatex">\(H_{x+l}\)</span> 表示从第 <span class="arithmatex">\(l\)</span> 层输入到下一层输出的目标映射。</p>
-<p>目标依然是 <span class="arithmatex">\(x_{l+1}\approx H(x_l)\)</span> ；但是我们不直接学习 <span class="arithmatex">\(H(x_l)\)</span>，而是学习
-$$
+<h3 id="resnet">残差 (经典 ResNet 范式)</h3>
+<p>我们令 <span class="arithmatex">\(x_l\)</span> 表示当前状态，<span class="arithmatex">\(F_l(x_l)\)</span> 表示残差函数 (需要修正的量）；<span class="arithmatex">\(x_{l+1}\)</span> 表示修正后的状态；<span class="arithmatex">\(H_{x+l}\)</span> 表示从第 <span class="arithmatex">\(l\)</span> 层输入到下一层输出的目标映射。</p>
+<p>目标依然是 <span class="arithmatex">\(x_{l+1}\approx H(x_l)\)</span>；但是我们不直接学习 <span class="arithmatex">\(H(x_l)\)</span>，而是学习</p>
+<div class="arithmatex">\[
 F_l(x_l)=H(x_l)-x_l
-$$
- 那么我们可以得到
-$$
+\]</div>
+<p>那么我们可以得到</p>
+<div class="arithmatex">\[
 x_{l+1}=x_l+F_l(x_l)
-$$</p>
+\]</div>
 <p>更标准一些的写法是</p>
 <div class="arithmatex">\[
 x_{l+1}=x_l+\mathcal{F}(x_l,\mathcal{W}_l)
@@ -3358,22 +3358,22 @@ x_{l+1}=x_l+\mathcal{F}(x_l,\mathcal{W}_l)
 <p><img alt="image-20260216164228637" src="../../../images/image-20260216164228637.png" /></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>A给B消息 <span class="arithmatex">\(x_A\)</span>，B给C自己理解的消息 <span class="arithmatex">\(x_B\)</span> 以及A给自己的消息 <span class="arithmatex">\(x_A\)</span>；C给D自己理解的消息 <span class="arithmatex">\(x_C\)</span> 以及B给自己的消息 <span class="arithmatex">\(x_B\)</span>；依此类推，每一层都将得到上一层理解的消息和上上层理解的消息</p>
+<p>A 给 B 消息 <span class="arithmatex">\(x_A\)</span>，B 给 C 自己理解的消息 <span class="arithmatex">\(x_B\)</span> 以及 A 给自己的消息 <span class="arithmatex">\(x_A\)</span>；C 给 D 自己理解的消息 <span class="arithmatex">\(x_C\)</span> 以及 B 给自己的消息 <span class="arithmatex">\(x_B\)</span>；依此类推，每一层都将得到上一层理解的消息和上上层理解的消息</p>
 </div>
 <h3 id="hc">HC</h3>
 <p><img alt="image-20260216164428239" src="../../../images/image-20260216164428239.png" /></p>
 <blockquote>
-<p>图b就是HC结构，其目的是将残差流变宽。</p>
-<p>不过个人觉得DeepSeek那篇论文中的HC更易懂一些（图b）</p>
+<p>图 b 就是 HC 结构，其目的是将残差流变宽。</p>
+<p>不过个人觉得 DeepSeek 那篇论文中的 HC 更易懂一些（图 b）</p>
 <p><img alt="Refer to caption" src="https://arxiv.org/html/2512.24880v2/x1.png" /></p>
 </blockquote>
-<p>传统的残差结构也就是 ResNet 范式中 <strong>只有一个residual stream(单条跳线)</strong> 且 <strong>恒等映射是固定并同一的</strong></p>
-<p>HC则提出了一种比残差连接更广义可学习的连接机制，核心动机为 <strong>让网络学习如何连接输入与输出，而不是单单加上恒等映射</strong></p>
-<p>详细的数学推导略过不谈，HC将残差流的特征维度从 C 扩展到了 <span class="arithmatex">\(n\times C\)</span>,，让层与层之间由更加丰富的信息通道。公式扩展为
-$$
-x_{l+1}=\mathcal{H}_l<sup>{res}x_l+\mathcal{H}_l</sup>{post}\top\mathcal{F}(\mathcal{H}_l^{pre}x_l,\mathcal{W}_l)
-$$
-这里引入了三个可学习的矩阵</p>
+<p>传统的残差结构也就是 ResNet 范式中 <strong>只有一个 residual stream(单条跳线)</strong> 且 <strong>恒等映射是固定并同一的</strong></p>
+<p>HC 则提出了一种比残差连接更广义可学习的连接机制，核心动机为 <strong>让网络学习如何连接输入与输出，而不是单单加上恒等映射</strong></p>
+<p>详细的数学推导略过不谈，HC 将残差流的特征维度从 C 扩展到了 <span class="arithmatex">\(n\times C\)</span>,，让层与层之间由更加丰富的信息通道。公式扩展为</p>
+<div class="arithmatex">\[
+x_{l+1}=\mathcal{H}_l^{res}x_l+\mathcal{H}_l^{post}\top\mathcal{F}(\mathcal{H}_l^{pre}x_l,\mathcal{W}_l)
+\]</div>
+<p>这里引入了三个可学习的矩阵</p>
 <ul>
 <li><span class="arithmatex">\(\mathcal{H}_l^{res}\)</span>：从宽残差流聚合信息输入到层</li>
 <li><span class="arithmatex">\(\mathcal{H}_l^{post}\)</span>：将层输入映射回宽残差流</li>
@@ -3387,21 +3387,21 @@ $$
 <p>C把 ”他和B的聊天记录“ 转给D，记为消息 <span class="arithmatex">\(x_C\)</span>，强调了C认为重要的消息，有意减少了认为不重要的内容</p>
 <p>如果B觉得某消息非常重要，他甚至可以越级传给D</p>
 </div>
-<p>预期产生更加保证的信息传递，但是有一个问题：HC会破环原本的恒等映射基础，当网络层数L变深的时候，信号经过多个 <span class="arithmatex">\(\mathcal{H}^{res}\)</span> 连乘，会导致数值爆炸或者消失</p>
+<p>预期产生更加保证的信息传递，但是有一个问题：HC 会破环原本的恒等映射基础，当网络层数 L 变深的时候，信号经过多个 <span class="arithmatex">\(\mathcal{H}^{res}\)</span> 连乘，会导致数值爆炸或者消失</p>
 <h2 id="mhc">mHC</h2>
 <blockquote>
-<p>mHC的核心思路比较直观：它认为只要 HC 中 <span class="arithmatex">\(\mathcal{H}^{res}\)</span> 最大特征值不恒为1 ，就会在连乘过程中导致信号无边界的放大或衰减，进而导致大规模训练时的不稳定性。那么就把它限制在一个安全的流形上</p>
+<p>mHC 的核心思路比较直观：它认为只要 HC 中 <span class="arithmatex">\(\mathcal{H}^{res}\)</span> 最大特征值不恒为 1，就会在连乘过程中导致信号无边界的放大或衰减，进而导致大规模训练时的不稳定性。那么就把它限制在一个安全的流形上</p>
 </blockquote>
 <p><img alt="image-20260216172142001" src="../../../images/image-20260216172142001.png" /></p>
-<p>网上很多在扯流型相关的内容，个人觉得其实没必要，况且DS也没给出来对应的模型，简单做下介绍。</p>
+<p>网上很多在扯流型相关的内容，个人觉得其实没必要，况且 DS 也没给出来对应的模型，简单做下介绍。</p>
 <p>回归思路：限制在一个安全的流型上，我们简单思考，其实有不少选择：</p>
 <ol>
 <li><span class="arithmatex">\(\mathcal{H}^{res}\)</span> 的奇异值（矩阵的放大倍率和缩小倍率）直接除，但这样的话就会导致某一条流特别强，其它流变的很弱，自然不合适</li>
-<li>做一个SVD（奇异值分解，将任意一个矩阵分解为三个结构明确的矩阵的乘积），将奇异值都变为1。看起来没什么问题，但是在大量的数据处理下，会变得很慢，同样不太合适</li>
-<li>双随机矩阵（每一行加起来等于1，每一列加起来也等于1，所有元素大于等于0）：用Sinkhorn算法把原矩阵投影到双随机矩阵空间</li>
+<li>做一个 SVD（奇异值分解，将任意一个矩阵分解为三个结构明确的矩阵的乘积），将奇异值都变为 1。看起来没什么问题，但是在大量的数据处理下，会变得很慢，同样不太合适</li>
+<li>双随机矩阵（每一行加起来等于 1，每一列加起来也等于 1，所有元素大于等于 0）：用 Sinkhorn 算法把原矩阵投影到双随机矩阵空间</li>
 </ol>
 <blockquote>
-<p>Sinkhorn算法其实就是交替归一化，把一个矩阵先行归一化，再列归一化，交替计算，直到完成</p>
+<p>Sinkhorn 算法其实就是交替归一化，把一个矩阵先行归一化，再列归一化，交替计算，直到完成</p>
 <p>例如 </p>
 <div class="arithmatex">\[
 K=
@@ -3436,9 +3436,9 @@ K^{(1)}=
 0.5625 &amp; 0.46154
 \end{pmatrix}
 \]</div>
-<p>这是第一轮的结果，列因为刚做完归一化所以为1，接下来对行再做归一化，依此类推</p>
+<p>这是第一轮的结果，列因为刚做完归一化所以为 1，接下来对行再做归一化，依此类推</p>
 </blockquote>
-<p>Sinkhorn代码</p>
+<p>Sinkhorn 代码</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">sinkhorn_knopp</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">max_iters</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span> <span class="n">return_scalings</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">K</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>

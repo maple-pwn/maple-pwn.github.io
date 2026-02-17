@@ -3461,6 +3461,87 @@ x_{iu}-x_{ju}
 <p>人与人马相似，马与人马相似，但是人与人马完全不相似；这样的距离称为“非度量距离”</p>
 <p>此外，本节的距离计算式都是事先定义好的，但是不少的现实任务中，有必要基于数据样本来确定合适的距离计算式，于是有 <strong>“距离度量学习”</strong> 来实现这一步骤</p>
 <h3 id="_3">原型聚类</h3>
+<p>用一组“原型”去刻画簇结构。其本质为：<strong>把样本分组，让组内相似、组间不同</strong>。其核心假设是：每个簇可以用一个（或几个）代表物来概括，这个代表物就叫做原型。</p>
+<p>按照原型的表示方法，书中介绍了三种代表方法：</p>
+<ul>
+<li>一个向量（例如簇均值）<span class="arithmatex">\(\rightarrow\)</span> k-means</li>
+<li>一个带类别标签的向量 <span class="arithmatex">\(\rightarrow\)</span> LVQ</li>
+<li>一套概率模型参数(均值/协方差/混合权重) <span class="arithmatex">\(\rightarrow\)</span> GMM</li>
+</ul>
+<p>这样的话就把“找簇”变为了“找原型”，同时也将很多聚类算法统一为一种哲学：<strong>初始化原型 <span class="arithmatex">\(\rightarrow\)</span> 反复：用原型解释数据、再用数据修正原型 <span class="arithmatex">\(\rightarrow\)</span> 直到不再变化</strong>、</p>
+<hr />
+<p><mark>k-means</mark></p>
+<p>在k均值算法中，我们希望每个簇内部点都围着某个中心转，而且越紧凑越好。用数学语言表述如下</p>
+<p>给定样本集 <span class="arithmatex">\(D=\{x_1,x_2,\dots,x_m\}\)</span> ,”k-均值“ 算法针对聚类所得簇划分 <span class="arithmatex">\(\mathcal{C}=\{C_1,C_2,\dots,C_k\}\)</span> ，<span class="arithmatex">\(\mu_i=\dfrac{1}{|C_i|}\sum_{x\in C_i}x\)</span> 表示簇 <span class="arithmatex">\(C_i\)</span> 的均值向量，于是有
+$$
+E=\sum_{i=1}^{k}\sum_{x\in C_i}||x-\mu_i||^2_2\tag{9.24}
+$$</p>
+<blockquote>
+<p>这个公式有两层：</p>
+<ul>
+<li>内层：一个簇里面每个点到中心的距离的平方</li>
+<li>外层：把所有簇的这种“离散程度“加起来</li>
+</ul>
+</blockquote>
+<p>不过式(9.24)中有两个变量需要确定：</p>
+<ol>
+<li>每个点属于哪个簇（离散的组合问题）</li>
+<li>每个簇中心在哪（连续变量）</li>
+</ol>
+<p>想要找到它的最优解需要考察样本集 <span class="arithmatex">\(D\)</span> 所有可能的簇划分，属于NP难问题。于是k-means采用了贪心的思路，如下</p>
+<p><mark>贪心迭代</mark></p>
+<p>k-means的经典思路为：把难问题拆成两步简单问题，交替做：</p>
+<ul>
+<li>分配步（固定中心，优化划分）：每个点去离它最近的 <span class="arithmatex">\(\mu_i\)</span> </li>
+<li>更新步（固定划分，优化中心）：每个簇的最优中心就是均值</li>
+</ul>
+<p>将这两步轮流操作，每次只优化一部分变量，直到目标停在一个局部最优/稳定点，如下算法</p>
+<p><img alt="image-20260217172439645" src="../../../images/image-20260217172439645.png" /></p>
+<p>书中给出了一个训练过程图，如下</p>
+<p><img alt="image-20260217174049144" src="../../../images/image-20260217174049144.png" /></p>
+<hr />
+<p><mark>LVQ</mark></p>
+<p>k-means是无监督的，它不关心标签的好坏，只在意几何上的紧凑与否。这样可能导致分类出现错误，于是提出了LVQ想法，如下</p>
+<p><strong>仍然用原型向量代表区域，但更新原型时利用标签</strong></p>
+<ul>
+<li>若为同类：把原型拉向样本（强化这类的代表）</li>
+<li>若为异类：把原型推离样本（避免混淆）</li>
+</ul>
+<p>数学语言表达如下：给定样本 <span class="arithmatex">\(D = \{(x_1, y_1), (x_2, y_2), \ldots, (x_m, y_m)\}\)</span>，每个样本 <span class="arithmatex">\(x_j\)</span> 是由 <span class="arithmatex">\(n\)</span> 个属性描述的特征向量 <span class="arithmatex">\((x_{j1}; x_{j2}; \ldots; x_{jn}),y_j \in \mathcal{Y}\)</span>  是样本 <span class="arithmatex">\(x_j\)</span> 的类别标记。LVQ的目标是学得一组 <span class="arithmatex">\(n\)</span> 维原型向量 <span class="arithmatex">\(\{p_1, p_2, \ldots, p_q\}\)</span>，每个原型向量代表一个聚类簇，簇标记 <span class="arithmatex">\(t_i \in \mathcal{Y}\)</span>
+$$
+p'=p_{i<sup>*}+\eta\cdot(x_j-p_{i</sup>*})\tag{9.25同类相近}
+$$</p>
+<blockquote>
+<p>实际上就是向样本的方向走一段距离，由 <span class="arithmatex">\(\eta\)</span> 控制走多远</p>
+</blockquote>
+<div class="arithmatex">\[
+||p'-x_j||_2=(1-\eta)||p_{i^*}-x_j||_2\tag{9.26}
+\]</div>
+<blockquote>
+<p>由于 <span class="arithmatex">\(0&lt;\eta&lt;1\)</span> ,所以 <span class="arithmatex">\(1-\eta&lt;1\)</span>，更新后距离缩小。这意味着同类样本会将原型吸引过来</p>
+<p>同理，遇到异类情况，距离按照 <span class="arithmatex">\(1+\eta\)</span>  放大，让原型离开这类样本 </p>
+</blockquote>
+<p><mark>算法：一次只看一个样本的在线学习</mark></p>
+<p>每轮：</p>
+<ol>
+<li>随机抽一个样本 <span class="arithmatex">\((x_i,y_i)\)</span></li>
+<li>找到离它最近的原型 <span class="arithmatex">\(p_i\)</span></li>
+<li>如果 <span class="arithmatex">\(y_i=t_{i^*}\)</span> (标签一致）就靠近，否则远离</li>
+</ol>
+<p><img alt="image-20260217172834488" src="../../../images/image-20260217172834488.png" /></p>
+<p>我们得到输出的原型向量后，就可以做一种”最近原型分类/聚类“，因为此时任意点 <span class="arithmatex">\(x\)</span> 都归到最近的原型对应的簇中。</p>
+<p>这会将空间切成很多最近点区域，称之为 Voronoi 区域，数学表达如下</p>
+<div class="arithmatex">\[
+R_i=\{
+x\in X
+\mid
+||x-p_i||_2
+\le
+||x-p_{i'}||_2,
+i'\ne i
+\}
+\tag{9.27}
+\]</div>
 
 
 
