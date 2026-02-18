@@ -3472,10 +3472,10 @@ x_{iu}-x_{ju}
 <hr />
 <p><mark>k-means</mark></p>
 <p>在k均值算法中，我们希望每个簇内部点都围着某个中心转，而且越紧凑越好。用数学语言表述如下</p>
-<p>给定样本集 <span class="arithmatex">\(D=\{x_1,x_2,\dots,x_m\}\)</span> ,”k-均值“ 算法针对聚类所得簇划分 <span class="arithmatex">\(\mathcal{C}=\{C_1,C_2,\dots,C_k\}\)</span> ，<span class="arithmatex">\(\mu_i=\dfrac{1}{|C_i|}\sum_{x\in C_i}x\)</span> 表示簇 <span class="arithmatex">\(C_i\)</span> 的均值向量，于是有
-$$
+<p>给定样本集 <span class="arithmatex">\(D=\{x_1,x_2,\dots,x_m\}\)</span> ,”k-均值“ 算法针对聚类所得簇划分 <span class="arithmatex">\(\mathcal{C}=\{C_1,C_2,\dots,C_k\}\)</span> ，<span class="arithmatex">\(\mu_i=\dfrac{1}{|C_i|}\sum_{x\in C_i}x\)</span> 表示簇 <span class="arithmatex">\(C_i\)</span> 的均值向量，于是有</p>
+<div class="arithmatex">\[
 E=\sum_{i=1}^{k}\sum_{x\in C_i}||x-\mu_i||^2_2\tag{9.24}
-$$</p>
+\]</div>
 <blockquote>
 <p>这个公式有两层：</p>
 <ul>
@@ -3507,10 +3507,10 @@ $$</p>
 <li>若为同类：把原型拉向样本（强化这类的代表）</li>
 <li>若为异类：把原型推离样本（避免混淆）</li>
 </ul>
-<p>数学语言表达如下：给定样本 <span class="arithmatex">\(D = \{(x_1, y_1), (x_2, y_2), \ldots, (x_m, y_m)\}\)</span>，每个样本 <span class="arithmatex">\(x_j\)</span> 是由 <span class="arithmatex">\(n\)</span> 个属性描述的特征向量 <span class="arithmatex">\((x_{j1}; x_{j2}; \ldots; x_{jn}),y_j \in \mathcal{Y}\)</span>  是样本 <span class="arithmatex">\(x_j\)</span> 的类别标记。LVQ的目标是学得一组 <span class="arithmatex">\(n\)</span> 维原型向量 <span class="arithmatex">\(\{p_1, p_2, \ldots, p_q\}\)</span>，每个原型向量代表一个聚类簇，簇标记 <span class="arithmatex">\(t_i \in \mathcal{Y}\)</span>
-$$
-p'=p_{i<sup>*}+\eta\cdot(x_j-p_{i</sup>*})\tag{9.25同类相近}
-$$</p>
+<p>数学语言表达如下：给定样本 <span class="arithmatex">\(D = \{(x_1, y_1), (x_2, y_2), \ldots, (x_m, y_m)\}\)</span>，每个样本 <span class="arithmatex">\(x_j\)</span> 是由 <span class="arithmatex">\(n\)</span> 个属性描述的特征向量 <span class="arithmatex">\((x_{j1}; x_{j2}; \ldots; x_{jn}),y_j \in \mathcal{Y}\)</span>  是样本 <span class="arithmatex">\(x_j\)</span> 的类别标记。LVQ的目标是学得一组 <span class="arithmatex">\(n\)</span> 维原型向量 <span class="arithmatex">\(\{p_1, p_2, \ldots, p_q\}\)</span>，每个原型向量代表一个聚类簇，簇标记 <span class="arithmatex">\(t_i \in \mathcal{Y}\)</span></p>
+<div class="arithmatex">\[
+p'=p_{i^*}+\eta\cdot(x_j-p_{i^*})\tag{9.25同类相近}
+\]</div>
 <blockquote>
 <p>实际上就是向样本的方向走一段距离，由 <span class="arithmatex">\(\eta\)</span> 控制走多远</p>
 </blockquote>
@@ -3542,6 +3542,120 @@ i'\ne i
 \}
 \tag{9.27}
 \]</div>
+<blockquote>
+<p>区域 <span class="arithmatex">\(R_i\)</span> 里的点到 <span class="arithmatex">\(p_i\)</span> 的距离不大于到任何其它原型的距离。如下图所示，每个颜色中的点都离他所属颜色的黑点最近</p>
+<p><img alt="img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Euclidean_Voronoi_diagram.svg/250px-Euclidean_Voronoi_diagram.svg.png" /></p>
+</blockquote>
+<hr />
+<p><mark>GMM</mark></p>
+<p>继续回到k-means，它隐含了一个假设：簇大致是凸/球形的，用均值代表。</p>
+<p>但现实中，可能有这些问题：簇的不同方向方差可能不同；簇之间可能会重叠；你不希望把点直接划分给某个簇，而是想要属于某簇的概率。</p>
+<p>这时就映入了概率生成模型：<strong>高斯混合模型</strong></p>
+<p><mark>单高斯分布</mark></p>
+<p>对 <span class="arithmatex">\(n\)</span> 维样本空间 <span class="arithmatex">\(\mathcal{X}\)</span> 中的随机向量 <span class="arithmatex">\(x\)</span>，若 <span class="arithmatex">\(x\)</span> 服从高斯分布，<span class="arithmatex">\(\mu\)</span> 是 <span class="arithmatex">\(n\)</span> 维均值向量，<span class="arithmatex">\(\sum\)</span> 是 <span class="arithmatex">\(n\times n\)</span> 的协方差矩阵（形状与方向），其 <strong>概率密度函数</strong> 为</p>
+<div class="arithmatex">\[
+p(x)=\dfrac{1}{
+(2\pi)^{\dfrac{n}{2}}
+|\Sigma_i|^{\dfrac{1}{2}}
+}
+\exp\left({
+-\dfrac{1}{2}(x-\mu)^T
+\Sigma_i^{-1}(x-\mu)
+}
+\right)
+\tag{9.28}
+\]</div>
+<p>接下来，我们 <strong>计算混合分布</strong>：</p>
+<p>取 <span class="arithmatex">\(\alpha_i\)</span> 为混合系数，它满足 <span class="arithmatex">\(\alpha_i&gt;0,\sum_i{\alpha_i}=1\)</span>。对于高斯分布 <span class="arithmatex">\(x_i\sim N(\mu_i,\Sigma_i)\)</span> ，我们先按 <span class="arithmatex">\(\alpha\)</span> 选一个成分 <span class="arithmatex">\(i\)</span> ,再从高斯分布 <span class="arithmatex">\(N(\mu_i,\Sigma_i)\)</span> 中采样出来 <span class="arithmatex">\(x\)</span> ，可以得到 <strong>高斯混合分布</strong> 为
+$$
+p_{\mathcal{M}}(x)=\sum_{i=1}^{k}\alpha_i\cdot p(x\mid\mu_i,\Sigma_i)
+\tag{9.29}
+$$
+于是我们可以来 <strong>计算后验概率</strong>，即这个点来自哪个成分的概率：</p>
+<p>引入隐变量 <span class="arithmatex">\(z_j\)</span> 表示第 <span class="arithmatex">\(j\)</span> 个样本来自哪个成分，给定 <span class="arithmatex">\(x_j\)</span> ，它属于第 <span class="arithmatex">\(i\)</span> 个成分的后验概率如下式，记作 <span class="arithmatex">\(\gamma_{ji}\)</span></p>
+<div class="arithmatex">\[
+\begin{align}
+p_\mathcal{M}(z_j=i\mid x_j)&amp;=\dfrac{
+P(z_j=i)\cdot p_{\mathcal{M}(x_j\mid z_j=i)}
+}{
+p_{\mathcal{M}}(x_j)
+}\\
+&amp;=\dfrac{
+\alpha_i\cdot p(x_j\mid\mu_i,\Sigma_i)
+}{
+\sum_{l=1}^k\alpha_lp(x_j\mid\mu_l,\Sigma_l)
+}
+\end{align}
+\tag{9.30}
+\]</div>
+<blockquote>
+<p>分子：该成分的先验概率 * 在该成分下生成这个点的可能性</p>
+<p>分母：对所有成分做归一化</p>
+</blockquote>
+<p>接下来进一步扩展，我们加入簇标签：</p>
+<p>当高斯混合分布(9.29)已知，高斯混合聚类把样本集 <span class="arithmatex">\(D\)</span> 划分成 <span class="arithmatex">\(k\)</span> 个簇 <span class="arithmatex">\(\mathcal{C}=\{C_1,C_2,\dots,C_k\}\)</span> ，每个样本 <span class="arithmatex">\(x_j\)</span> 的簇标记 <span class="arithmatex">\(\lambda_i\)</span> 按照下式确定：
+$$
+\lambda_j=\arg\max_{i\in{1,2,\dots,k}}\gamma_{ji}\tag{9.31}
+$$
+<mark>计算</mark></p>
+<p>我们完成了一系列定义内容，接下来就是计算了，给定数据集 <span class="arithmatex">\(D\)</span> ，模型参数是 <span class="arithmatex">\(\{(\alpha_i,\mu_i,\Sigma_i)\}\)</span>。我们希望“模型最能解释数据”，也就是最大化似然（等价最大化对数似然）
+$$
+\begin{align}
+LL(D) 
+&amp;= \ln \left( \prod_{j=1}^{m} p_{\mathcal{M}}(x_j) \right) \
+&amp;= \sum_{j=1}^{m} \ln \left( \sum_{i=1}^{k} \alpha_i \cdot p(x_j \mid \mu_i, \Sigma_i) \right),
+\tag{9.32}
+\end{align}
+$$
+采用7.6中介绍的 EM 算法(E+M交替计算，迭代出优化值)，详细过程如下：</p>
+<p>若参数 <span class="arithmatex">\(\{(\alpha_i,\mu_i,\Sigma_i)\mid1\le i\le k\}\)</span> 可以使式(9.32)最大化，则由 <span class="arithmatex">\(\dfrac{\partial LL(D)}{\partial\mu_i}=0\)</span> 有
+$$
+\sum_{j=1}^{m}
+\frac{
+\alpha_i \, p(x_j \mid \mu_i, \Sigma_i)
+}{
+\sum_{l=1}^{k} \alpha_l \, p(x_j \mid \mu_l, \Sigma_l)
+}
+(x_j - \mu_i)
+= 0
+\tag{9.33}
+$$
+接下来把 <span class="arithmatex">\(\gamma_{ji}\)</span> (9.30)带入进来，得到有
+$$
+\mu_i
+=
+\frac{
+\sum_{j=1}^{m} \gamma_{ji} x_j
+}{
+\sum_{j=1}^{m} \gamma_{ji}
+}\tag{9.34}
+$$</p>
+<blockquote>
+<p>每个点按“属于成分i的概率”当权重求平均，比较更柔和一些</p>
+</blockquote>
+<p>同样的，对于协方差，我们让 <span class="arithmatex">\(\dfrac{\partial LL(D)}{\partial \Sigma_i}=0\)</span> 可得
+$$
+\Sigma_i = \frac{\sum_{j=1}^{m} \gamma_{ji} (x_j - \mu_i)(x_j - \mu_i)^{\mathrm T}}{\sum_{j=1}^{m} \gamma_{ji}} \tag{9.35}
+$$</p>
+<blockquote>
+<p>也就是责任度加权的“离均值散布程度”</p>
+</blockquote>
+<p>而对于混合系数 <span class="arithmatex">\(\alpha_i\)</span> ，除了要最大化 <span class="arithmatex">\(LL(D)\)</span> ，我们还需要满足一些条件：<span class="arithmatex">\(\alpha_i\ge0,\sum_{i=1}^{k}\alpha_i=1\)</span>。于是引入拉格朗日：
+$$
+LL(D)+\lambda\left(\sum_{i=1}^k\alpha_i-1\right)\tag{9.36}
+$$
+接下来对 <span class="arithmatex">\(\alpha_i\)</span> 求导，得到条件如下
+$$
+\sum_{j=1}^{m} \frac{p(x_j \mid \mu_i, \Sigma_i)}{\sum_{l=1}^{k} \alpha_l\, p(x_j \mid \mu_l, \Sigma_l)} + \lambda = 0\tag{9.37}
+$$
+整理后可以得到一个很优雅的式子
+$$
+\alpha_i=\dfrac{1}{m}\sum_{j=1}^{m}\gamma_{ji}\tag{9.38}
+$$</p>
+<blockquote>
+<p>即成分 <span class="arithmatex">\(i\)</span> 的权重就是它对所有点“平均负责多少”</p>
+</blockquote>
+<p><img alt="image-20260218222021314" src="../../../images/image-20260218222021314.png" /></p>
 
 
 
