@@ -988,6 +988,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      密度聚类
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      层次聚类
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3211,6 +3229,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      密度聚类
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      层次聚类
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3656,6 +3692,353 @@ $$</p>
 <p>即成分 <span class="arithmatex">\(i\)</span> 的权重就是它对所有点“平均负责多少”</p>
 </blockquote>
 <p><img alt="image-20260218222021314" src="../../../images/image-20260218222021314.png" /></p>
+<h3 id="_4">密度聚类</h3>
+<p>接下来是密度聚类，它提出的观点是：<strong>簇不是围绕某个中心的一团，而是高密度区域</strong></p>
+<p>因此它从“样本分布的稠密程度”出发，通过样本之间的可达/连通关系逐步扩展簇，最终得到聚类结果；同时将稀疏区域当作噪声/离群点。</p>
+<p>书中主要介绍了 DBSCAN 这一密度聚类算法，它用一组 “邻域” 参数 <span class="arithmatex">\((\epsilon,MinPts)\)</span> 来刻画”密度足够高“的区域</p>
+<hr />
+<p><mark>基础概念</mark></p>
+<ul>
+<li><strong><span class="arithmatex">\(\epsilon-\)</span> 邻域</strong>：对任意样本 <span class="arithmatex">\(x_j\)</span>,它的 <span class="arithmatex">\(\epsilon-\)</span> 邻域为</li>
+</ul>
+<div class="arithmatex">\[
+N_{\epsilon}(x_j)=\{x_i\in D\mid \text{dist}(x_i,x_j)\le\epsilon\}
+\]</div>
+<blockquote>
+<p>距离 <span class="arithmatex">\(x_j\)</span> 不超过 <span class="arithmatex">\(\epsilon\)</span>  的所有点集合</p>
+</blockquote>
+<ul>
+<li><strong>核心对象</strong>：如果 <span class="arithmatex">\(x_j\)</span> 的邻域中至少有 <span class="arithmatex">\(MinPts\)</span> 个样本，即 <span class="arithmatex">\(|N_{\epsilon(x_j)}|\ge MinPts\)</span>，那么称 <span class="arithmatex">\(x_j\)</span> 为核心对象</li>
+</ul>
+<blockquote>
+<p>以 <span class="arithmatex">\(x_j\)</span> 为中心的局部区域足够稠密，可以作为簇扩展的起点</p>
+</blockquote>
+<ul>
+<li><strong>密度直达</strong>：若 <span class="arithmatex">\(x_j\in N_\epsilon(x_i)\)</span> 并且 <span class="arithmatex">\(x_i\)</span> 是核心对象，则称 <span class="arithmatex">\(x_j\)</span> 由 <span class="arithmatex">\(x_i\)</span> 密度直达。</li>
+</ul>
+<blockquote>
+<p>这个定义有方向性，要求出发点 <span class="arithmatex">\(x_i\)</span> 必须是核心对象</p>
+</blockquote>
+<ul>
+<li><strong>密度可达</strong>：若存在样本序列 <span class="arithmatex">\(p_1,p_2,\dots,p_n\)</span> 使得：<span class="arithmatex">\(p_1=x_i,p_n=x_j\)</span> 且 <span class="arithmatex">\(p_{(t+1)}\)</span> 由 <span class="arithmatex">\(p_t\)</span> 密度直达。那么称 <span class="arithmatex">\(x_j\)</span> 由 <span class="arithmatex">\(x_i\)</span> 密度可达</li>
+</ul>
+<blockquote>
+<p>也就是说，从 <span class="arithmatex">\(x_i\)</span> 出发，沿着核心点能扩展到的邻域一步步走，能走到 <span class="arithmatex">\(x_j\)</span></p>
+</blockquote>
+<ul>
+<li><strong>密度相连</strong>：若存在某个 <span class="arithmatex">\(x_k\)</span> ,使得 <span class="arithmatex">\(x_i\)</span> 与 <span class="arithmatex">\(x_j\)</span> 都由 <span class="arithmatex">\(x_k\)</span> 密度可达，则称 <span class="arithmatex">\(x_i\)</span> 与 <span class="arithmatex">\(x_j\)</span> 密度相连</li>
+</ul>
+<blockquote>
+<p>即：两个点可能不是相互可达，但如果能从同一个密度源头扩展到它们，它们就属于同一片高密度连通区域</p>
+</blockquote>
+<p>如下图所示，虚线圈是 <span class="arithmatex">\(\epsilon-\)</span>邻域，核心对象能“带动”扩展，密度可达是链式传播，密度相连是“共同源头”。</p>
+<p><img alt="image-20260219160307929" src="../../../images/image-20260219160307929.png" /></p>
+<p><mark>对簇进行形式化定义</mark></p>
+<p>DBSCAN 通过刚刚介绍的“可达/相连”关系把簇定义出来。有一些性质如下：</p>
+<p>给定邻域参数 <span class="arithmatex">\((\epsilon,MinPts)\)</span> ，簇 <span class="arithmatex">\(C\subseteq D\)</span> 是满足以下性质的非空样本子集
+$$
+连接性：x_i\in C,x_j\in C\Rightarrow x_i与x_j密度相连\tag{9.39}
+$$</p>
+<blockquote>
+<p>簇内任意两点都密度相连。它保证“簇内部是一整块连通的高密度区域”</p>
+</blockquote>
+<div class="arithmatex">\[
+最大性：x_i\in C,x_j 由 x_i 密度可达\Rightarrow x_j \in C\tag{9.40}
+\]</div>
+<blockquote>
+<p>如果 <span class="arithmatex">\(x_i\)</span> 能走到 <span class="arithmatex">\(x_j\)</span> ，那么 <span class="arithmatex">\(x_j\)</span>  要属于 <span class="arithmatex">\(x_i\)</span> 所在的簇。它保证“只要还能密度扩展，就不能停”，否则簇就不是最大块</p>
+</blockquote>
+<hr />
+<p><mark>计算</mark></p>
+<p>算法思想：先找所有核心对象，再用核心对象当种子做“密度可达”的广度扩展（BFS）</p>
+<p><img alt="image-20260219171550279" src="../../../images/image-20260219171550279.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">deque</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">euclidean</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span><span class="n">b</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span><span class="o">-&gt;</span><span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;欧式距离，sqrt(sum((a_i-b_i)^2))&quot;&quot;&quot;</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">a_i</span><span class="p">,</span> <span class="n">b_i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">a_i</span> <span class="o">-</span> <span class="n">b_i</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="n">d</span> <span class="o">*</span> <span class="n">d</span>
+    <span class="k">return</span> <span class="n">s</span> <span class="o">**</span> <span class="mf">0.5</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">dbscan</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span>   <span class="c1"># 样本列表，长度n，每个样本都是d维向量</span>
+    <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="c1"># 邻域半径</span>
+    <span class="n">min_pts</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>   <span class="c1">#MinPts</span>
+    <span class="n">dist</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># 欧氏距离函数</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    输出:</span>
+<span class="sd">        labels: 长度n的簇标签,-1表示噪声</span>
+<span class="sd">        clusters: 簇中点的索引列表（每个簇一个索引数组）</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">dist</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">euclidean</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[],</span> <span class="p">[]</span>
+
+    <span class="c1">#======Step1:预计算ε-邻域 N_eps(xj)，2-7行=====</span>
+    <span class="n">neighbors</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">x_i</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="c1"># dist(x_i,x_j) &lt;= eps ==&gt; j 在 i 的邻域内</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">dist</span><span class="p">(</span><span class="n">x_i</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span> <span class="o">&lt;=</span> <span class="n">eps</span><span class="p">:</span>
+                <span class="n">neighbors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+
+    <span class="c1">#========Step2:找核心对象集合 Ω=====</span>
+    <span class="n">core</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="n">core_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">neighbors</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">min_pts</span><span class="p">:</span>
+            <span class="n">core</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">core_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+    <span class="c1">#=======Step3:初始化========</span>
+    <span class="n">UNVISITED</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>  <span class="c1"># 尚未访问</span>
+    <span class="n">NOISE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>  <span class="c1"># 噪声</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">UNVISITED</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="n">clusters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># 外层：while Ω != ∅：每次从 Ω 取一个核心对象当种子，生成一个簇</span>
+    <span class="n">cluster_id</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">core_set</span><span class="p">:</span>
+        <span class="c1"># 选一个核心对象当seed</span>
+        <span class="n">seed</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">core_set</span><span class="p">))</span>
+
+        <span class="c1"># r_old记录本轮生成簇之前未访问的集合</span>
+        <span class="n">queue</span> <span class="o">=</span> <span class="n">deque</span><span class="p">([</span><span class="n">seed</span><span class="p">])</span>
+        <span class="c1"># 把 seed 先放进当前簇</span>
+        <span class="n">labels</span><span class="p">[</span><span class="n">seed</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_id</span>
+        <span class="n">current_cluster</span> <span class="o">=</span> <span class="p">[</span><span class="n">seed</span><span class="p">]</span>
+        <span class="c1"># BFS扩展</span>
+        <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+            <span class="c1"># 只有核心对象才会扩展邻域</span>
+            <span class="k">if</span> <span class="n">core</span><span class="p">[</span><span class="n">q</span><span class="p">]:</span>
+                <span class="c1"># Δ = N_eps(q) ∩ Γ ：q 的邻域里尚未访问的点</span>
+                <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">neighbors</span><span class="p">[</span><span class="n">q</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="n">labels</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">==</span> <span class="n">UNVISITED</span><span class="p">:</span>
+                        <span class="c1"># 标记p归入当前簇，并加入队列继续扩展</span>
+                        <span class="n">labels</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_id</span>
+                        <span class="n">current_cluster</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                        <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">labels</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">==</span> <span class="n">NOISE</span><span class="p">:</span>
+                        <span class="n">labels</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_id</span>
+                        <span class="n">current_cluster</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="c1"># 一个簇扩展完成:记录簇</span>
+        <span class="n">clusters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_cluster</span><span class="p">)</span>
+
+        <span class="c1"># 从 Ω 去掉已经归入该簇的核心对象（图 9.9 第 23 行 Ω = Ω \ Ck）</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">current_cluster</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">core_set</span><span class="p">:</span>
+                <span class="n">core_set</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+
+        <span class="n">cluster_id</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="c1">#=====Step4:剩余未访问的标记为噪声====</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">UNVISITED</span><span class="p">:</span>
+            <span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">NOISE</span>
+
+    <span class="k">return</span> <span class="n">labels</span><span class="p">,</span><span class="n">clusters</span>
+
+<span class="c1"># demo演示</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[</span><span class="mf">0.40</span><span class="p">,</span> <span class="mf">0.23</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.41</span><span class="p">,</span> <span class="mf">0.24</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.39</span><span class="p">,</span> <span class="mf">0.22</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.45</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.76</span><span class="p">,</span> <span class="mf">0.46</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.74</span><span class="p">,</span> <span class="mf">0.44</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">]</span>
+    <span class="p">]</span>
+    <span class="n">eps</span> <span class="o">=</span> <span class="mf">0.03</span>
+    <span class="n">min_pts</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">labels</span><span class="p">,</span><span class="n">clusters</span><span class="o">=</span><span class="n">dbscan</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">eps</span><span class="p">,</span><span class="n">min_pts</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;eps:&quot;</span><span class="p">,</span><span class="n">eps</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;labels:&quot;</span><span class="p">,</span><span class="n">labels</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;clusters:&quot;</span><span class="p">,</span><span class="n">clusters</span><span class="p">)</span>
+</code></pre></div>
+<p><img alt="image-20260219175351851" src="../../../images/image-20260219175351851.png" /></p>
+<h3 id="_5">层次聚类</h3>
+<p>层次聚类想要得到的是一种“树形”的聚类结构(从细到粗或从粗到细)，而不是一次性给出一个固定的划分。有两种划分路线，书中主要介绍了自底向上路线AGNES</p>
+<ol>
+<li><strong>自底向上（凝聚/聚合）</strong>：从每个样本格子成簇开始，不断合并最近的两簇，直到剩下目标簇数</li>
+<li><strong>自顶向下（分裂）</strong>：从所有样本一个簇开始，不断拆分</li>
+</ol>
+<hr />
+<p><mark>簇间距离的定义</mark></p>
+<p>由于每个簇 <span class="arithmatex">\(C_i\)</span> 本质上是一个样本集合，所以簇间距离就是集合到集合的距离。常见三种定义：</p>
+<p><strong>最小距离</strong>：由两簇中最近的两个样本决定：</p>
+<div class="arithmatex">\[
+d_{min}(C_i,C_j)=\min_{x\in C_i,z\in C_j}\text{dist}(x,z)\tag{9.41}
+\]</div>
+<p><strong>最大距离</strong>：由两簇中最远的两个样本决定：</p>
+<div class="arithmatex">\[
+d_{max}(C_i,C_j)=\min_{x\in C_i,z\in C_j}\text{dist}(x,z)\tag{9.42}
+\]</div>
+<p><strong>平均距离</strong>：考虑两簇之间所有成对样本的平均距离</p>
+<div class="arithmatex">\[
+d_{avg}(C_i,C_j)=\dfrac{1}{|C_i||C_j|}\sum_{x\in C_i}\sum_{z\in C_j}\text{dist}(x,z)\tag{9.43}
+\]</div>
+<hr />
+<p><mark>算法</mark></p>
+<p><img alt="image-20260219180418250" src="../../../images/image-20260219180418250.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+
+<span class="n">Linkage</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;single&quot;</span><span class="p">,</span> <span class="s2">&quot;complete&quot;</span><span class="p">,</span> <span class="s2">&quot;average&quot;</span><span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">euclidean</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">b</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;欧式距离&quot;&quot;&quot;</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">a_i</span><span class="p">,</span> <span class="n">b_i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">a_i</span> <span class="o">-</span> <span class="n">b_i</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="n">d</span> <span class="o">*</span> <span class="n">d</span>
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">agnes</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span>  <span class="c1"># 样本列表，n个样本，每个是d维向量</span>
+    <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>  <span class="c1"># 目标簇数</span>
+    <span class="n">linkage</span><span class="p">:</span> <span class="n">Linkage</span> <span class="o">=</span> <span class="s2">&quot;complete&quot;</span><span class="p">,</span>
+    <span class="n">dist</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]]:</span>
+    <span class="k">if</span> <span class="n">dist</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">euclidean</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;k must be in [1,</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">],got </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ========Step1:初始化，每个样本一个簇=====</span>
+    <span class="c1"># clusters:当前活跃簇</span>
+    <span class="n">clusters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+
+    <span class="c1"># 为了记录合并历史，给每个簇一个稳定ID</span>
+    <span class="n">active_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+    <span class="n">next_cluster_id</span> <span class="o">=</span> <span class="n">n</span>
+
+    <span class="c1"># =======Step2:预计算点间距离矩阵=======</span>
+    <span class="c1"># pdist[i][j] = dist(X[i],X[j])</span>
+
+    <span class="n">pdist</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">dist</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">X</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+            <span class="n">pdist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span>
+            <span class="n">pdist</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span>
+
+    <span class="c1"># =======Step3: 定义簇间距离d(C_i,C_j)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">clusters_distance</span><span class="p">(</span><span class="n">ci</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">cj</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        计算簇c_i与簇c_j的距离</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">linkage</span> <span class="o">==</span> <span class="s2">&quot;single&quot;</span><span class="p">:</span>
+            <span class="n">best</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">:</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="n">pdist</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">cj</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="n">z</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">best</span><span class="p">:</span>
+                        <span class="n">best</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">z</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">best</span>
+
+        <span class="k">if</span> <span class="n">linkage</span> <span class="o">==</span> <span class="s2">&quot;complete&quot;</span><span class="p">:</span>
+            <span class="n">best</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">:</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="n">pdist</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">cj</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="n">z</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">best</span><span class="p">:</span>
+                        <span class="n">best</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">z</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">best</span>
+
+        <span class="k">if</span> <span class="n">linkage</span> <span class="o">==</span> <span class="s2">&quot;average&quot;</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">:</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="n">pdist</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">cj</span><span class="p">:</span>
+                    <span class="n">s</span> <span class="o">+=</span> <span class="n">row</span><span class="p">[</span><span class="n">z</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">s</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">cj</span><span class="p">))</span>
+
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknow linkage: </span><span class="si">{</span><span class="n">linkage</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># -------Step4:初始化簇间距离矩阵-----</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">n</span>  <span class="c1"># 当前簇数</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)]</span> <span class="o">*</span> <span class="n">q</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">q</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">clusters_distance</span><span class="p">(</span><span class="n">clusters</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">clusters</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+            <span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span>
+            <span class="n">M</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span>
+    <span class="n">merges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># =======Step5:主循环，反复合并最近两簇========</span>
+    <span class="k">while</span> <span class="n">q</span> <span class="o">&gt;</span> <span class="n">k</span><span class="p">:</span>
+        <span class="c1"># (a) 找距离最近的一对簇 (i*, j*)</span>
+        <span class="n">best</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+        <span class="n">i_star</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">j_star</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">best</span><span class="p">:</span>
+                    <span class="n">best</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+                    <span class="n">i_star</span><span class="p">,</span> <span class="n">j_star</span> <span class="o">=</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span>
+
+        <span class="c1"># (b) 记录合并历史（用于树状图）</span>
+        <span class="n">id_a</span> <span class="o">=</span> <span class="n">active_ids</span><span class="p">[</span><span class="n">i_star</span><span class="p">]</span>
+        <span class="n">id_b</span> <span class="o">=</span> <span class="n">active_ids</span><span class="p">[</span><span class="n">j_star</span><span class="p">]</span>
+        <span class="n">new_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">clusters</span><span class="p">[</span><span class="n">i_star</span><span class="p">])</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">clusters</span><span class="p">[</span><span class="n">j_star</span><span class="p">])</span>
+        <span class="n">merges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">id_a</span><span class="p">,</span> <span class="n">id_b</span><span class="p">,</span> <span class="n">best</span><span class="p">,</span> <span class="n">new_size</span><span class="p">))</span>
+
+        <span class="c1"># (c) 合并簇：Ci* = Ci* ∪ Cj*</span>
+        <span class="n">clusters</span><span class="p">[</span><span class="n">i_star</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">clusters</span><span class="p">[</span><span class="n">j_star</span><span class="p">])</span>
+
+        <span class="c1"># 合并后簇的ID 更新为新的内部节点ID</span>
+        <span class="n">active_ids</span><span class="p">[</span><span class="n">i_star</span><span class="p">]</span> <span class="o">=</span> <span class="n">next_cluster_id</span>
+        <span class="n">next_cluster_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># (d) 删除簇 j_star（对应图 9.11 删除矩阵第 j* 行列）</span>
+        <span class="n">clusters</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">j_star</span><span class="p">)</span>
+        <span class="n">active_ids</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">j_star</span><span class="p">)</span>
+
+        <span class="c1"># 同步删除距离矩阵 M 的第 j_star 行与列</span>
+        <span class="n">M</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">j_star</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">M</span><span class="p">:</span>
+            <span class="n">row</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">j_star</span><span class="p">)</span>
+
+        <span class="n">q</span> <span class="o">-=</span> <span class="mi">1</span>  <span class="c1"># 当前簇数减少 1</span>
+
+        <span class="c1"># (e) 更新：重新计算合并后簇 i_star 与其他簇的距离</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">i_star</span><span class="p">:</span>
+                <span class="n">M</span><span class="p">[</span><span class="n">i_star</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="n">clusters_distance</span><span class="p">(</span><span class="n">clusters</span><span class="p">[</span><span class="n">i_star</span><span class="p">],</span> <span class="n">clusters</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+                <span class="n">M</span><span class="p">[</span><span class="n">i_star</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span>
+                <span class="n">M</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i_star</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span>
+
+    <span class="c1"># 输出最终簇划分（样本索引列表） + 合并历史</span>
+    <span class="k">return</span> <span class="n">clusters</span><span class="p">,</span> <span class="n">merges</span>
+
+
+<span class="c1"># ------------------- 小示例 -------------------</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[</span><span class="mf">0.40</span><span class="p">,</span> <span class="mf">0.23</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.41</span><span class="p">,</span> <span class="mf">0.24</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.39</span><span class="p">,</span> <span class="mf">0.22</span><span class="p">],</span>  <span class="c1"># 一团</span>
+        <span class="p">[</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.45</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.76</span><span class="p">,</span> <span class="mf">0.46</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.74</span><span class="p">,</span> <span class="mf">0.44</span><span class="p">],</span>  <span class="c1"># 另一团</span>
+        <span class="p">[</span><span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">],</span>  <span class="c1"># 远点</span>
+    <span class="p">]</span>
+    <span class="n">clusters</span><span class="p">,</span> <span class="n">merges</span> <span class="o">=</span> <span class="n">agnes</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">linkage</span><span class="o">=</span><span class="s2">&quot;complete&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;clusters:&quot;</span><span class="p">,</span> <span class="n">clusters</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;merges (first 5):&quot;</span><span class="p">,</span> <span class="n">merges</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span>
+</code></pre></div>
 
 
 
