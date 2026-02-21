@@ -8,28 +8,28 @@
       
       
       
-        <link rel="canonical" href="https://maple-pwn.github.io/study/asm/">
+        <link rel="canonical" href="https://maple-pwn.github.io/LLMZtH/ML/10/">
       
       
-        <link rel="prev" href="../eda/">
+        <link rel="prev" href="../9/">
       
       
-        <link rel="next" href="../../READ/paperread/mHC/">
+        <link rel="next" href="../../RL/1/">
       
       
-      <link rel="icon" href="../../images/logo.svg">
+      <link rel="icon" href="../../../images/logo.svg">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
     
     
       
-        <title>汇编速通 - Maple's blog</title>
+        <title>第十章 降维与度量学习 - Maple's blog</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.e53b48f4.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -48,17 +48,17 @@
       
     
     
-      <link rel="stylesheet" href="../../resources/css/extra.css">
+      <link rel="stylesheet" href="../../../resources/css/extra.css">
     
-      <link rel="stylesheet" href="../../resources/css/tittle.css">
+      <link rel="stylesheet" href="../../../resources/css/tittle.css">
     
-      <link rel="stylesheet" href="../../resources/css/read-metrics.css">
+      <link rel="stylesheet" href="../../../resources/css/read-metrics.css">
     
-      <link rel="stylesheet" href="../../resources/css/leftsidebar.css">
+      <link rel="stylesheet" href="../../../resources/css/leftsidebar.css">
     
       <link rel="stylesheet" href="https://static.zeoseven.com/zsft/292/main/result.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -98,9 +98,9 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="页眉">
-    <a href="../.." title="Maple&#39;s blog" class="md-header__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+    <a href="../../.." title="Maple&#39;s blog" class="md-header__button md-logo" aria-label="Maple's blog" data-md-component="logo">
       
-  <img src="../../images/logo.svg" alt="logo">
+  <img src="../../../images/logo.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -117,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              汇编速通
+              第十章 降维与度量学习
             
           </span>
         </div>
@@ -218,7 +218,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../mysys/pre/" class="md-tabs__link">
+        <a href="../../../mysys/pre/" class="md-tabs__link">
           
   
   
@@ -236,11 +236,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../LLMZtH/pre/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../pre/" class="md-tabs__link">
           
   
   
@@ -258,13 +260,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../pre/" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../../study/pre/" class="md-tabs__link">
           
   
   
@@ -293,7 +293,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../READ/paperread/mHC/" class="md-tabs__link">
+        <a href="../../../READ/paperread/mHC/" class="md-tabs__link">
           
   
   
@@ -318,7 +318,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../pwn/pre/" class="md-tabs__link">
+        <a href="../../../pwn/pre/" class="md-tabs__link">
           
   
   
@@ -340,7 +340,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../sth/proj/" class="md-tabs__link">
+        <a href="../../../sth/proj/" class="md-tabs__link">
           
   
   
@@ -362,7 +362,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../testpage/test/" class="md-tabs__link">
+        <a href="../../../testpage/test/" class="md-tabs__link">
           
   
   
@@ -398,9 +398,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Maple&#39;s blog" class="md-nav__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+    <a href="../../.." title="Maple&#39;s blog" class="md-nav__button md-logo" aria-label="Maple's blog" data-md-component="logo">
       
-  <img src="../../images/logo.svg" alt="logo">
+  <img src="../../../images/logo.svg" alt="logo">
 
     </a>
     Maple's blog
@@ -472,7 +472,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../mysys/pre/" class="md-nav__link">
+      <a href="../../../mysys/pre/" class="md-nav__link">
         
   
   
@@ -495,7 +495,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../mysys/01/" class="md-nav__link">
+      <a href="../../../mysys/01/" class="md-nav__link">
         
   
   
@@ -518,7 +518,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../mysys/02/" class="md-nav__link">
+      <a href="../../../mysys/02/" class="md-nav__link">
         
   
   
@@ -541,7 +541,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../mysys/03/" class="md-nav__link">
+      <a href="../../../mysys/03/" class="md-nav__link">
         
   
   
@@ -564,7 +564,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../mysys/04/" class="md-nav__link">
+      <a href="../../../mysys/04/" class="md-nav__link">
         
   
   
@@ -587,7 +587,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../mysys/05/" class="md-nav__link">
+      <a href="../../../mysys/05/" class="md-nav__link">
         
   
   
@@ -610,7 +610,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../mysys/06/" class="md-nav__link">
+      <a href="../../../mysys/06/" class="md-nav__link">
         
   
   
@@ -637,8 +637,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -654,17 +656,20 @@
     
     
       
+        
+        
+      
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   
@@ -677,7 +682,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             AI学习
@@ -691,7 +696,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../LLMZtH/pre/" class="md-nav__link">
+      <a href="../../pre/" class="md-nav__link">
         
   
   
@@ -711,8 +716,10 @@
                 
   
   
+    
   
   
+  
     
     
       
@@ -739,11 +746,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
         
           
           <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
@@ -759,7 +766,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2_2">
             <span class="md-nav__icon md-icon"></span>
             ML学习笔记
@@ -773,7 +780,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../LLMZtH/ML/1-3/" class="md-nav__link">
+      <a href="../1-3/" class="md-nav__link">
         
   
   
@@ -796,7 +803,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../LLMZtH/ML/4/" class="md-nav__link">
+      <a href="../4/" class="md-nav__link">
         
   
   
@@ -819,7 +826,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../LLMZtH/ML/5/" class="md-nav__link">
+      <a href="../5/" class="md-nav__link">
         
   
   
@@ -842,7 +849,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../LLMZtH/ML/6/" class="md-nav__link">
+      <a href="../6/" class="md-nav__link">
         
   
   
@@ -865,7 +872,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../LLMZtH/ML/7/" class="md-nav__link">
+      <a href="../7/" class="md-nav__link">
         
   
   
@@ -888,7 +895,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../LLMZtH/ML/8/" class="md-nav__link">
+      <a href="../8/" class="md-nav__link">
         
   
   
@@ -911,7 +918,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../LLMZtH/ML/9/" class="md-nav__link">
+      <a href="../9/" class="md-nav__link">
         
   
   
@@ -931,10 +938,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../LLMZtH/ML/10/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    第十章 降维与度量学习
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -945,6 +972,57 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      第十章 降维与度量学习
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第十章 降维与度量学习">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#k" class="md-nav__link">
+    <span class="md-ellipsis">
+      \(k\) 近邻学习
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      低维嵌入
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1010,7 +1088,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../LLMZtH/RL/1/" class="md-nav__link">
+      <a href="../../RL/1/" class="md-nav__link">
         
   
   
@@ -1086,7 +1164,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../LLMZtH/NLP/1/" class="md-nav__link">
+      <a href="../../NLP/1/" class="md-nav__link">
         
   
   
@@ -1121,10 +1199,8 @@
       
   
   
-    
   
   
-  
     
     
       
@@ -1152,20 +1228,17 @@
     
     
       
-        
-        
-      
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
             
   
   
@@ -1178,7 +1251,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             校内学习相关笔记
@@ -1192,7 +1265,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../pre/" class="md-nav__link">
+      <a href="../../../study/pre/" class="md-nav__link">
         
   
   
@@ -1215,7 +1288,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dw/" class="md-nav__link">
+      <a href="../../../study/dw/" class="md-nav__link">
         
   
   
@@ -1238,7 +1311,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dw2/" class="md-nav__link">
+      <a href="../../../study/dw2/" class="md-nav__link">
         
   
   
@@ -1261,7 +1334,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../gt/" class="md-nav__link">
+      <a href="../../../study/gt/" class="md-nav__link">
         
   
   
@@ -1284,7 +1357,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../lisan/" class="md-nav__link">
+      <a href="../../../study/lisan/" class="md-nav__link">
         
   
   
@@ -1307,7 +1380,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cs_final/" class="md-nav__link">
+      <a href="../../../study/cs_final/" class="md-nav__link">
         
   
   
@@ -1330,7 +1403,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cs_exam/" class="md-nav__link">
+      <a href="../../../study/cs_exam/" class="md-nav__link">
         
   
   
@@ -1353,7 +1426,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../mao/" class="md-nav__link">
+      <a href="../../../study/mao/" class="md-nav__link">
         
   
   
@@ -1376,7 +1449,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../eda/" class="md-nav__link">
+      <a href="../../../study/eda/" class="md-nav__link">
         
   
   
@@ -1396,32 +1469,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    汇编速通
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../study/asm/" class="md-nav__link">
         
   
   
@@ -1432,257 +1483,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      机器级代码
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      数据格式
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      信息访问⭐
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="信息访问⭐">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      操作数指示符
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      数据传送指令
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
-    <span class="md-ellipsis">
-      举例
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
-    <span class="md-ellipsis">
-      压入和弹出栈数据
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_9" class="md-nav__link">
-    <span class="md-ellipsis">
-      算数和逻辑操作
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="算数和逻辑操作">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_10" class="md-nav__link">
-    <span class="md-ellipsis">
-      举例
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#leaq" class="md-nav__link">
-    <span class="md-ellipsis">
-      加载有效地址leaq
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_11" class="md-nav__link">
-    <span class="md-ellipsis">
-      特殊的算数操作
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_12" class="md-nav__link">
-    <span class="md-ellipsis">
-      控制
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="控制">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_13" class="md-nav__link">
-    <span class="md-ellipsis">
-      条件码
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_14" class="md-nav__link">
-    <span class="md-ellipsis">
-      访问条件码
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_15" class="md-nav__link">
-    <span class="md-ellipsis">
-      跳转指令
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_16" class="md-nav__link">
-    <span class="md-ellipsis">
-      举例
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_17" class="md-nav__link">
-    <span class="md-ellipsis">
-      循环
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#switch" class="md-nav__link">
-    <span class="md-ellipsis">
-      switch
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_18" class="md-nav__link">
-    <span class="md-ellipsis">
-      过程
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="过程">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_19" class="md-nav__link">
-    <span class="md-ellipsis">
-      运行时栈
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_20" class="md-nav__link">
-    <span class="md-ellipsis">
-      数据传送
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_21" class="md-nav__link">
-    <span class="md-ellipsis">
-      数组分配与访问
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_22" class="md-nav__link">
-    <span class="md-ellipsis">
-      异质的数据结构
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1792,7 +1592,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../READ/paperread/mHC/" class="md-nav__link">
+      <a href="../../../READ/paperread/mHC/" class="md-nav__link">
         
   
   
@@ -1887,7 +1687,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/pre/" class="md-nav__link">
+      <a href="../../../pwn/pre/" class="md-nav__link">
         
   
   
@@ -1910,7 +1710,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/tricks/" class="md-nav__link">
+      <a href="../../../pwn/tricks/" class="md-nav__link">
         
   
   
@@ -1990,7 +1790,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/Stack/%E6%B1%87%E7%BC%96%E9%80%9F%E9%80%9A/" class="md-nav__link">
+      <a href="../../../pwn/Stack/%E6%B1%87%E7%BC%96%E9%80%9F%E9%80%9A/" class="md-nav__link">
         
   
   
@@ -2013,7 +1813,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/Stack/ASLR/" class="md-nav__link">
+      <a href="../../../pwn/Stack/ASLR/" class="md-nav__link">
         
   
   
@@ -2036,7 +1836,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/Stack/Canary/" class="md-nav__link">
+      <a href="../../../pwn/Stack/Canary/" class="md-nav__link">
         
   
   
@@ -2059,7 +1859,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/Stack/PIE%E7%BB%95%E8%BF%87/" class="md-nav__link">
+      <a href="../../../pwn/Stack/PIE%E7%BB%95%E8%BF%87/" class="md-nav__link">
         
   
   
@@ -2082,7 +1882,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/Stack/fmt-all-in-one/" class="md-nav__link">
+      <a href="../../../pwn/Stack/fmt-all-in-one/" class="md-nav__link">
         
   
   
@@ -2105,7 +1905,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/Stack/shellcode-all-in-one/" class="md-nav__link">
+      <a href="../../../pwn/Stack/shellcode-all-in-one/" class="md-nav__link">
         
   
   
@@ -2128,7 +1928,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/Stack/SROP/" class="md-nav__link">
+      <a href="../../../pwn/Stack/SROP/" class="md-nav__link">
         
   
   
@@ -2216,7 +2016,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/Heap/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+      <a href="../../../pwn/Heap/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
         
   
   
@@ -2239,7 +2039,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/Heap/%E5%90%84%E4%B8%AA%E5%87%BD%E6%95%B0%E5%8E%9F%E5%9E%8B/" class="md-nav__link">
+      <a href="../../../pwn/Heap/%E5%90%84%E4%B8%AA%E5%87%BD%E6%95%B0%E5%8E%9F%E5%9E%8B/" class="md-nav__link">
         
   
   
@@ -2262,7 +2062,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/Heap/%E5%A0%86%E6%BA%A2%E5%87%BA/" class="md-nav__link">
+      <a href="../../../pwn/Heap/%E5%A0%86%E6%BA%A2%E5%87%BA/" class="md-nav__link">
         
   
   
@@ -2285,7 +2085,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/Heap/%E5%A0%86%E6%BA%A2%E5%87%BA%E4%B8%AD%E6%AF%94%E8%BE%83%E9%87%8D%E8%A6%81%E7%9A%84%E6%AD%A5%E9%AA%A4/" class="md-nav__link">
+      <a href="../../../pwn/Heap/%E5%A0%86%E6%BA%A2%E5%87%BA%E4%B8%AD%E6%AF%94%E8%BE%83%E9%87%8D%E8%A6%81%E7%9A%84%E6%AD%A5%E9%AA%A4/" class="md-nav__link">
         
   
   
@@ -2308,7 +2108,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/Heap/%E5%A0%86%E4%B8%AD%E7%9A%84off-by-one/" class="md-nav__link">
+      <a href="../../../pwn/Heap/%E5%A0%86%E4%B8%AD%E7%9A%84off-by-one/" class="md-nav__link">
         
   
   
@@ -2331,7 +2131,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/Heap/%E5%A0%86%E5%90%84%E7%B1%BB%E6%94%BB%E5%87%BB%E6%89%8B%E6%B3%95/" class="md-nav__link">
+      <a href="../../../pwn/Heap/%E5%A0%86%E5%90%84%E7%B1%BB%E6%94%BB%E5%87%BB%E6%89%8B%E6%B3%95/" class="md-nav__link">
         
   
   
@@ -2354,7 +2154,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/Heap/%E4%BE%8B%E9%A2%98%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+      <a href="../../../pwn/Heap/%E4%BE%8B%E9%A2%98%E8%AE%B0%E5%BD%95/" class="md-nav__link">
         
   
   
@@ -2438,7 +2238,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/IO_FILE/_IO_FILE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+      <a href="../../../pwn/IO_FILE/_IO_FILE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
         
   
   
@@ -2461,7 +2261,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/IO_FILE/IO_FILE%E6%BA%90%E7%A0%81/" class="md-nav__link">
+      <a href="../../../pwn/IO_FILE/IO_FILE%E6%BA%90%E7%A0%81/" class="md-nav__link">
         
   
   
@@ -2484,7 +2284,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/IO_FILE/fopen/" class="md-nav__link">
+      <a href="../../../pwn/IO_FILE/fopen/" class="md-nav__link">
         
   
   
@@ -2507,7 +2307,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/IO_FILE/fread/" class="md-nav__link">
+      <a href="../../../pwn/IO_FILE/fread/" class="md-nav__link">
         
   
   
@@ -2530,7 +2330,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/IO_FILE/%E5%81%9A%E9%A2%98%E6%8A%80%E5%B7%A7/" class="md-nav__link">
+      <a href="../../../pwn/IO_FILE/%E5%81%9A%E9%A2%98%E6%8A%80%E5%B7%A7/" class="md-nav__link">
         
   
   
@@ -2614,7 +2414,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse%20of%20apple1%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
+      <a href="../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse%20of%20apple1%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
         
   
   
@@ -2637,7 +2437,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-apple2%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+      <a href="../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-apple2%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
         
   
   
@@ -2660,7 +2460,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse%20of%20cat%20%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+      <a href="../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse%20of%20cat%20%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
         
   
   
@@ -2683,7 +2483,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-kiwi%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+      <a href="../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-kiwi%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
         
   
   
@@ -2706,7 +2506,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-botcake%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
+      <a href="../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-botcake%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
         
   
   
@@ -2806,7 +2606,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/wp/basectf/" class="md-nav__link">
+      <a href="../../../pwn/wp/basectf/" class="md-nav__link">
         
   
   
@@ -2829,7 +2629,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/wp/moectf/" class="md-nav__link">
+      <a href="../../../pwn/wp/moectf/" class="md-nav__link">
         
   
   
@@ -2852,7 +2652,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/wp/isctf2024/" class="md-nav__link">
+      <a href="../../../pwn/wp/isctf2024/" class="md-nav__link">
         
   
   
@@ -2875,7 +2675,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/wp/ghctf/" class="md-nav__link">
+      <a href="../../../pwn/wp/ghctf/" class="md-nav__link">
         
   
   
@@ -2898,7 +2698,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/wp/xyctf/" class="md-nav__link">
+      <a href="../../../pwn/wp/xyctf/" class="md-nav__link">
         
   
   
@@ -2921,7 +2721,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/wp/tgctf/" class="md-nav__link">
+      <a href="../../../pwn/wp/tgctf/" class="md-nav__link">
         
   
   
@@ -2944,7 +2744,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/wp/NPCCTF/" class="md-nav__link">
+      <a href="../../../pwn/wp/NPCCTF/" class="md-nav__link">
         
   
   
@@ -2967,7 +2767,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/wp/ctfshow/" class="md-nav__link">
+      <a href="../../../pwn/wp/ctfshow/" class="md-nav__link">
         
   
   
@@ -2990,7 +2790,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/wp/whuctf2024/" class="md-nav__link">
+      <a href="../../../pwn/wp/whuctf2024/" class="md-nav__link">
         
   
   
@@ -3013,7 +2813,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/wp/whuctf2025/" class="md-nav__link">
+      <a href="../../../pwn/wp/whuctf2025/" class="md-nav__link">
         
   
   
@@ -3036,7 +2836,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/wp/%E5%BC%BA%E7%BD%91%E6%9D%AF/" class="md-nav__link">
+      <a href="../../../pwn/wp/%E5%BC%BA%E7%BD%91%E6%9D%AF/" class="md-nav__link">
         
   
   
@@ -3059,7 +2859,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/wp/polarD%26N/polarD%26N/" class="md-nav__link">
+      <a href="../../../pwn/wp/polarD%26N/polarD%26N/" class="md-nav__link">
         
   
   
@@ -3133,7 +2933,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%881-20%E9%A2%98%EF%BC%89/" class="md-nav__link">
+      <a href="../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%881-20%E9%A2%98%EF%BC%89/" class="md-nav__link">
         
   
   
@@ -3156,7 +2956,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8821-40%E9%A2%98%EF%BC%89/" class="md-nav__link">
+      <a href="../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8821-40%E9%A2%98%EF%BC%89/" class="md-nav__link">
         
   
   
@@ -3179,7 +2979,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8841-60%E9%A2%98%EF%BC%89/" class="md-nav__link">
+      <a href="../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8841-60%E9%A2%98%EF%BC%89/" class="md-nav__link">
         
   
   
@@ -3202,7 +3002,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8861-80%E9%A2%98%EF%BC%89/" class="md-nav__link">
+      <a href="../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8861-80%E9%A2%98%EF%BC%89/" class="md-nav__link">
         
   
   
@@ -3293,7 +3093,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../sth/proj/" class="md-nav__link">
+      <a href="../../../sth/proj/" class="md-nav__link">
         
   
   
@@ -3368,7 +3168,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../testpage/test/" class="md-nav__link">
+      <a href="../../../testpage/test/" class="md-nav__link">
         
   
   
@@ -3408,8 +3208,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -3418,64 +3216,28 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      第十章 降维与度量学习
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第十章 降维与度量学习">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#k" class="md-nav__link">
+    <span class="md-ellipsis">
+      \(k\) 近邻学习
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
-      机器级代码
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      数据格式
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      信息访问⭐
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="信息访问⭐">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      操作数指示符
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      数据传送指令
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
-    <span class="md-ellipsis">
-      举例
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
-    <span class="md-ellipsis">
-      压入和弹出栈数据
+      低维嵌入
     </span>
   </a>
   
@@ -3483,168 +3245,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_9" class="md-nav__link">
-    <span class="md-ellipsis">
-      算数和逻辑操作
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="算数和逻辑操作">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_10" class="md-nav__link">
-    <span class="md-ellipsis">
-      举例
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#leaq" class="md-nav__link">
-    <span class="md-ellipsis">
-      加载有效地址leaq
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_11" class="md-nav__link">
-    <span class="md-ellipsis">
-      特殊的算数操作
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_12" class="md-nav__link">
-    <span class="md-ellipsis">
-      控制
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="控制">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_13" class="md-nav__link">
-    <span class="md-ellipsis">
-      条件码
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_14" class="md-nav__link">
-    <span class="md-ellipsis">
-      访问条件码
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_15" class="md-nav__link">
-    <span class="md-ellipsis">
-      跳转指令
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_16" class="md-nav__link">
-    <span class="md-ellipsis">
-      举例
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_17" class="md-nav__link">
-    <span class="md-ellipsis">
-      循环
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#switch" class="md-nav__link">
-    <span class="md-ellipsis">
-      switch
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_18" class="md-nav__link">
-    <span class="md-ellipsis">
-      过程
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="过程">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_19" class="md-nav__link">
-    <span class="md-ellipsis">
-      运行时栈
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_20" class="md-nav__link">
-    <span class="md-ellipsis">
-      数据传送
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_21" class="md-nav__link">
-    <span class="md-ellipsis">
-      数组分配与访问
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_22" class="md-nav__link">
-    <span class="md-ellipsis">
-      异质的数据结构
-    </span>
-  </a>
   
 </li>
       
@@ -3665,341 +3265,59 @@
 
 
 
-<h1 id="_1">汇编速通</h1>
-<h2 id="_2">机器级代码</h2>
-<p>机器级编程，两种抽象比较重要</p>
-<ol>
-<li>第一种是由指令集体系结构或指令集架构（Instruction Set Architecture，ISA）来定义机器级程序的格式和行为，它定义了处理器状态、指令的格式，以及每条指令对状态的影响。</li>
-<li>第二种是机器级程序使用的内存地址是虚拟地址，提供的内存模型看上去是一个非常大的 <strong>字节</strong> 数组。</li>
-</ol>
-<p><em>以上不重要</em></p>
-<h2 id="_3">数据格式</h2>
-<p>Intel 用术语“字（word）”表示 16 位数据类型，称 32 位数为“双字（double words）”，称 64 位数为“四字（quad words）”。</p>
-<table>
-<thead>
-<tr>
-<th><img alt="img" src="../../images/image-20220704191537496.png" /></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>图 3-1 C 语言数据类型在 x86-64 中的大小。在 64 位机器中，指针长 8 字节</td>
-</tr>
-</tbody>
-</table>
-<p>如上图所示，大多数 GCC 生成的汇编代码指令都有一个字符的后缀，表明操作数的大小。例如，数据传送指令有四个变种：<code>movb</code>（传送字节）、<code>movw</code>（传送字）、<code>movl</code>（传送双字）和 <code>movq</code>（传送四字）。注意，汇编代码也使用后缀 <code>l</code> 来表示 4 字节整数和 8 字节双精度浮点数。这不会产生歧义，因为 <strong>浮点数使用的是一组完全不同的指令和寄存器</strong> 。</p>
-<h2 id="_4">信息访问⭐</h2>
-<p>一个 x86-64 的中央处理单元（CPU）包含一组 16 个存储 64 位值的通用目的寄存器，这些寄存器用来存储整数数据和指针。</p>
-<table>
-<thead>
-<tr>
-<th><img alt="image-20220704192557175" src="../../images/image-20220704192557175.png" /></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>图 3-2 整数寄存器</td>
-</tr>
-</tbody>
-</table>
-<p>指令可以对这 16 个寄存器的低位字节中存放的不同大小的数据进行操作。</p>
-<h3 id="_5">操作数指示符</h3>
-<p>大多数指令有一个或多个操作数（operand），指示出执行一个操作中要使用的源数据值，以及放置结果的目的位置。源数据值可以以常数形式给出，或是从寄存器或内存中读出。结果可以存放在寄存器或内存中。</p>
-<table>
-<thead>
-<tr>
-<th><img alt="image-20220704194524240" src="../../images/image-20220704194524240.png" /></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>图 3-3 操作数格式。 <strong>比例因子 <code>s</code> 必须是 1、2、4 或者 8</strong> 。</td>
-</tr>
-</tbody>
-</table>
-<p>地址计算的练习</p>
-<table>
-<thead>
-<tr>
-<th><img alt="img" src="../../images/add-computation-example.jpg" /></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h3 id="_6">数据传送指令</h3>
-<p><code>mov</code> 类指令把数据从源位置 <strong>复制</strong> 到目的位置，不做任何变化。</p>
-<table>
-<thead>
-<tr>
-<th><img alt="image-20220704194834339" src="../../images/image-20220704194834339.png" /></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>图 3-4 简单的数据传送指令</td>
-</tr>
-</tbody>
-</table>
-<p>x86-64 加了一条限制，传送指令的两个操作数不能都指向内存位置。将一个值从一个内存位置复制到另一个内存位置需要两条指令：第一条指令将源值加载到寄存器中，第二条将该寄存器值写入目的位置。</p>
-<h3 id="_7">举例</h3>
-<div class="highlight"><pre><span></span><code><span class="kt">long</span><span class="w"> </span><span class="nf">exchange</span><span class="w"> </span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="o">*</span><span class="n">xp</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">xp</span><span class="p">;</span>
-<span class="w">    </span><span class="o">*</span><span class="n">xp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-<p><code>gcc -og exchange exchange.c</code></p>
-<div class="highlight"><pre><span></span><code>.long exchange (long *xp, long y)
-.xp in %rdi, y in %rsi
-exchange:
-    movq    (%rdi), %rax    将xp赋值给x，然后作为返回值
-    movq    %rsi, (%rdi)    将y存储在xp中
-    ret                     返回
-</code></pre></div>
-<h3 id="_8">压入和弹出栈数据</h3>
-<table>
-<thead>
-<tr>
-<th><img alt="image-20220828200248791" src="../../images/image-20220828200248791.png" /></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>图 3-8 入栈和出栈指令</td>
-</tr>
-</tbody>
-</table>
-<p><code>pushq</code> 和 <code>popq</code> 指令都只有一个操作数：压入的数据源和弹出的数据目的。</p>
-<p>将一个四字值压入栈中，首先要将栈指针（栈指针 <code>%rsp</code> 保存着栈顶元素的地址）减 8，然后将值写到新的栈顶地址。在 x86-64 中，栈向低地址方向增长，所以压栈是减小栈指针（寄存器 <code>%rsp</code>）的值，并将数据存放到内存中，而出栈是从内存中读数据，并增加栈指针的值。</p>
-<p>无论如何，<code>%rsp</code> 指向的地址总是栈顶。</p>
-<h2 id="_9">算数和逻辑操作</h2>
-<p><strong>源在前，目的地在后</strong></p>
-<p>下图这些操作被分为四组：加载有效地址、一元操作、二元操作和移位。</p>
-<table>
-<thead>
-<tr>
-<th><img alt="image-20220705193103548" src="../../images/image-20220705193103548.png" /></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>图 3-10 整数算术操作。<strong>注意：ATT 格式的汇编代码中，操作数的顺序与直觉相反</strong>。</td>
-</tr>
-</tbody>
-</table>
-<h3 id="_10">举例</h3>
-<div class="highlight"><pre><span></span><code><span class="kt">long</span><span class="w"> </span><span class="nf">arith</span><span class="w"> </span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">z</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">t2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">t1</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">t3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">t4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">48</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">t5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t3</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">t4</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">rval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t5</span><span class="p">;</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">raval</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>.x in %rdi, y in %rsi, z in %rdx, t1、t2、rval in %rax, t4 in %rdx, t5 in %rcx
-arith:
-    leaq    (%rdi, %rsi), %rax      ;t1 = x + y
-    addq    %rdx, %rax              ;t2 = z + t1
-    leaq    (%rsi, %rsi, 2), %rdx   ;t4 = y+y*2 =&gt; t4 = 3*y
-    salq    $4, %rdx                ;t4&lt;&lt;4 =&gt; t4*=16
-                                    ;加在一起就是t4 = y*48
-    leaq    4(%rdi, %rdx), %rcx     ;t5 = 4 + x + t4
-    imulq   %rcx, %rax              ;rval*=t5
-    ret
-</code></pre></div>
-<h3 id="leaq">加载有效地址<code>leaq</code></h3>
-<p>加载有效地址（load effective address）指令 <code>leaq</code> 实际上是 <code>movq</code> 指令的变形， <strong>它的第一个操作数将有效地址写入到目的操作数</strong>。<strong>目的操作数必须是一个寄存器</strong> 。</p>
-<h3 id="_11">特殊的算数操作</h3>
-<p>x86-64 指令集对 128 位（16 字节）数的操作提供有限的支持。延续字（2 字节）、双字（4 字节）和四字（8 字节）的命名惯例，Intel 把 16 字节的数称为八字（oct word）。</p>
-<table>
-<thead>
-<tr>
-<th><img alt="image-20220705194040325" src="../../images/image-20220705194040325.png" /></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>图 3-12 特殊的算术操作。一对寄存器 <code>%rdx</code> 和 <code>%rax</code> 组成一个 128 位的八字</td>
-</tr>
-</tbody>
-</table>
-<h2 id="_12">控制</h2>
-<p>机器代码提供两种基本的低级机制来实现有条件的行为：测试数据值，然后根据测试的结果来改变控制流或者数据流。</p>
-<h3 id="_13">条件码</h3>
-<p>除了整数寄存器，CPU 还维护着一组单个位的条件码（condition code）寄存器。</p>
-<p>最常用的条件码有：</p>
-<ul>
-<li>CF：进位标志。最近的操作使最高位产生了进位，可用来检查无符号操作的溢出。</li>
-<li>ZF：零标志。最近的操作得出的结果为 0。</li>
-<li>SF：符号标志。最近的操作得到的结果为负数。</li>
-<li>OF：溢出标志。最近的操作导致一个补码溢出，正溢出或负溢出。</li>
-</ul>
-<p><code>leaq</code> 指令不改变任何条件码，它是用来进行地址计算的，<strong>除此之外</strong>，图 3-10中列出的所有指令都会设置条件码。还有两类指令，它们只设置条件码而不改变任何其他寄存器，如下图所示：</p>
-<table>
-<thead>
-<tr>
-<th><img alt="image-20220705195332940" src="../../images/image-20220705195332940.png" /></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>图 3-13 比较和测试指令。这些指令不修改任何寄存器的值，只设置条件码</td>
-</tr>
-</tbody>
-</table>
-<h3 id="_14">访问条件码</h3>
-<table>
-<thead>
-<tr>
-<th><img alt="img" src="../../images/image-20220902201422665.png" /></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>图 3-14 <code>SET</code> 指令</td>
-</tr>
-</tbody>
-</table>
-<p>某些底层的机器指令可能有多个名字，称之为“同义名（synonym）”。例如，<code>setg</code>（表示“设置大于”）和 <code>setnle</code>（表示“设置不小于等于”）指的就是同一条机器指令，编译器和反汇编器会随意决定使用哪个名字。</p>
-<h3 id="_15">跳转指令</h3>
-<p>类似于<code>goto</code>代码</p>
-<p>考虑下面的汇编代码序列：</p>
-<div class="highlight"><pre><span></span><code>  movq $0,%rax  ; Set %rax to 0
-  jmp .L1   ; Goto .L1
-  movq (%rax),%rdx  ; Null pointer dereference (skipped)
-.L1:
-  popq %rdx  ; Jump target
-</code></pre></div>
-<p>指令 <code>jmp .L1</code> 会导致程序跳过 <code>movq</code> 指令，而从 <code>popq</code> 指令开始继续执行。</p>
-<p>在产生目标代码文件时，汇编器会确定所有带标号指令的地址，并将跳转目标（目的指令的地址）编码为跳转指令的一部分。</p>
-<table>
-<thead>
-<tr>
-<th><img alt="img" src="../../images/image-20220705195602494.png" /></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>图 3-15 <code>jump</code> 指令</td>
-</tr>
-</tbody>
-</table>
-<h3 id="_16">举例</h3>
-<div class="highlight"><pre><span></span><code><span class="kt">long</span><span class="w"> </span><span class="n">lt_cnt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="kt">long</span><span class="w"> </span><span class="n">ge_cnt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+  <h1>第十章 降维与度量学习</h1>
 
-<span class="kt">long</span><span class="w"> </span><span class="nf">absdiff_se</span><span class="w"> </span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">lt_cnt</span><span class="o">++</span><span class="p">;</span>
-<span class="w">        </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="o">-</span><span class="n">x</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">else</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">gc_cnt</span><span class="o">++</span><span class="p">;</span>
-<span class="w">        </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>.long absdiff_se (long x, long y)
-.x in %rdi, y in %rsi
-absdidd_se:
-    cmpq    %rsi, %rdi          ;比较x:y
-    jge     .L2                 ;如果x&gt;=y，跳转到L2处
-    addq    $1, lt_cnt(%rip)    ;lt_cnt++
-    movq    %rsi, %rax          ;result = y
-    subq    %rdi, %rax          ;result-=x;
-.L2:
-    addq    $1,ge_cnt(%rip)     ;gd_cnt++
-    movq    %rdi, %rax
-    subq    %rsi, %rax
-    ret
-</code></pre></div>
-<h3 id="_17">循环</h3>
-<p>其实和判断是一样的，goto回循环开头</p>
-<h3 id="switch">switch</h3>
-<p><code>switch</code>（开关）语句可以根据一个 <strong>整数索引值</strong> 进行多重分支（multiway branching），在处理具有多种可能结果的测试时，这种语句特别有用。通过使用跳转表（jump table）这种数据结构使得实现。</p>
-<p>使用跳转表的优点是执行开关语句的时间与开关情况的数量无关。GCC 根据开关情况的数量和开关情况值的稀疏程度来翻译开关语句，当开关情况数量比较多（例如 4 个以上），并且值的范围跨度比较小时，就会使用跳转表。</p>
-<table>
-<thead>
-<tr>
-<th><img alt="img" src="../../images/image-20220905144239732.png" /></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>图 3-22 <code>switch</code> 语句示例以及翻译到扩展的 C 语言。 该翻译给出了跳转表 <code>jt</code> 的结构，以及如何访问它。作为对 C 语言的扩展，GCC 支持这样的表。</td>
-</tr>
-<tr>
-<td><img alt="img" src="../../images/image-20220905144652985.png" /></td>
-</tr>
-<tr>
-<td>上图 <code>switch</code> 语句示例的汇编代码</td>
-</tr>
-<tr>
-<td><img alt="image-20220905145814013" src="../../images/image-20220905145814013.png" /></td>
-</tr>
-<tr>
-<td>在汇编代码中，跳转表用上述声明表示</td>
-</tr>
-</tbody>
-</table>
-<h2 id="_18">过程</h2>
-<p><strong>假设</strong> 过程 <code>P</code> 调用过程 <code>Q</code>，<code>Q</code> 执行后返回到 <code>P</code>。这些动作包括下面一个或多个机制：</p>
+<h2 id="_1">第十章 降维与度量学习</h2>
+<p>降维比较好解释，将高维数据（比较多的特征）映射到低维，同时尽量保留有用的结构。用数学语言描述就是：</p>
+<p>降维是在学一个“表示/坐标系” <span class="arithmatex">\(z=f(x)\)</span></p>
+<p>度量学习则是通过一定的算法，让该近的更近，该远的更远。比方说原本的距离度量用的是欧氏距离，即 <span class="arithmatex">\(d(x,y)=||x-y||_2\)</span> ,而度量学习会学得一个更适合任务的距离，比如 Mahalanobis 距离： <span class="arithmatex">\(d_M(x,y)=\sqrt{(x-y)\top M (x-y)}，M\succeq0\)</span>，其中 <span class="arithmatex">\(M\)</span> 控制不同特征的不同权重，允许特征之间相关性影响距离</p>
+<h3 id="k"><span class="arithmatex">\(k\)</span> 近邻学习</h3>
+<p>首先介绍一下 <span class="arithmatex">\(k\)</span> 近邻学习：<span class="arithmatex">\(k\)</span> 近邻(kNN)是一类典型的基于实例的监督学习方法：</p>
 <ul>
-<li>传递控制。在进入过程 <code>Q</code> 的时候，程序计数器必须被设置为 <code>Q</code> 的代码的起始地址，然后在返回时，要把程序计数器设置为 <code>P</code> 中调用 <code>Q</code> 后面那条指令的地址。</li>
-<li>传递数据。<code>P</code> 必须能够向 <code>Q</code> 提供一个或多个参数，<code>Q</code> 必须能够向 <code>P</code> 返回一个值。</li>
-<li>分配和释放内存。在开始时，<code>Q</code> 可能需要为局部变量分配空间，而在返回前，又必须释放这些存储空间。</li>
+<li>给定测试样本，先选一个距离度量（欧氏距离/余弦距离/马氏距离等）</li>
+<li>在训练集里找离 <span class="arithmatex">\(x\)</span> 最近的 <span class="arithmatex">\(k\)</span> 个样本</li>
 </ul>
-<h3 id="_19">运行时栈</h3>
-<p>C 语言过程调用机制的一个关键特性（大多数其他语言也是如此）在于使用了栈数据结构提供的后进先出的内存管理原则。程序可以用栈来管理它的过程所需要的存储空间，栈和程序寄存器存放着传递控制和数据、分配内存所需要的信息。</p>
-<p>将栈指针（<code>%rsp</code>）减小一个适当的量可以为没有指定初始值的数据在栈上分配空间，类似地，可以通过增加栈指针来释放空间。</p>
-<table>
-<thead>
-<tr>
-<th><img alt="image-20220706195512876" src="../../images/image-20220706195512876.png" /></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>图 3-25 通用的栈帧结构</td>
-</tr>
-</tbody>
-</table>
-<p>当 x86-64 过程需要的存储空间超出寄存器能够存放的大小时，就会在栈上分配空间，这个部分称为过程的栈帧（stack frame）。</p>
-<p>通过寄存器，过程 <code>P</code> 可以传递最多 6 个整数值（也就是指针和整数），但是如果 <code>Q</code> 需要更多的参数，<code>P</code> 可以在调用 <code>Q</code> 之前在自己的栈帧里存储好这些参数。</p>
-<h3 id="_20">数据传送</h3>
-<p>x86-64 中，可以通过寄存器最多传递 6 个整型（整数和指针）参数。寄存器的使用是 <strong>有特殊顺序的</strong> ，寄存器使用的名字取决于要传递的数据类型的大小，如下图所示：</p>
-<table>
-<thead>
-<tr>
-<th><img alt="image-20220706200736910" src="../../images/image-20220706200736910.png" /></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>图 3-28 传递函数参数的寄存器。寄存器是按照特殊顺序来使用的，而使用的名字是根据参数的大小来确定的</td>
-</tr>
-</tbody>
-</table>
-<p>会根据参数在参数列表中的顺序为它们分配寄存器，可以通过 64 位寄存器适当的部分访问小于 64 位的参数。例如，如果第一个参数是 32 位的，那么可以用 <code>%edi</code> 来访问它。</p>
-<p>如果一个函数有大于 6 个整型参数，超出 6 个的部分就要通过栈来传递。通过栈传递参数时，所有的数据大小都向 8 的倍数对齐。</p>
-<h2 id="_21">数组分配与访问</h2>
-<p>略</p>
-<h2 id="_22">异质的数据结构</h2>
-<p>就是 <code>struct</code>、<code>union</code> 这样子的数据结构</p>
-<p>略</p>
+<blockquote>
+<p>之前学的很多模型，如线性回归、SVM、神经网络等，都有一个明显的训练阶段，用于训练参数 <span class="arithmatex">\(\theta\)</span></p>
+<p>但 kNN 几乎不训练，它的训练阶段基本就是把数据存储起来，所以 kNN 也被称为懒惰学习：训练开销低，预测时开销高</p>
+</blockquote>
+<p>如下图所展示的，不同的 <span class="arithmatex">\(k\)</span> 会导致不同的分类</p>
+<p><img alt="image-20260221132327350" src="../../../images/image-20260221132327350.png" /></p>
+<ul>
+<li>当 k=1 的时候，只看到最近的 1 个点，容易受到噪声的影响，但时边界比较灵活</li>
+<li>当 k=3 的时候，看 3 个邻居，多数投票可能反转结果</li>
+<li>当 k=5 的时候，更加平滑也更稳定，但是可能抹掉了局部细节</li>
+</ul>
+<blockquote>
+<p>总的来说，kNN的基本过程就是：距离度量 + <span class="arithmatex">\(k\)</span> 选择 <span class="arithmatex">\(\rightarrow\)</span> 邻居集合 <span class="arithmatex">\(\rightarrow\)</span> 投票/平均 <span class="arithmatex">\(\rightarrow\)</span> 预测结果</p>
+</blockquote>
+<hr />
+<p>接下来我们理论分析一下 1NN(最近邻分类器) 的泛化错误率如何：</p>
+<p>设测试样本为 <span class="arithmatex">\(x\)</span> ,其最近邻训练样本为 <span class="arithmatex">\(z\)</span> 。当 <span class="arithmatex">\(x\)</span> 的真实类别和 <span class="arithmatex">\(z\)</span> 的类别不一致的时候，我们给出</p>
+<div class="arithmatex">\[
+P(err)=1-\sum_{c\in\mathcal{Y}}P(c\mid x)P(c\mid z)\tag{10.1}
+\]</div>
+<blockquote>
+<p><span class="arithmatex">\(\sum_cP(c\mid x)P(c\mid z)\)</span> 表示“x和z在同一类别上的概率一致性”，一致性越大，出错越小</p>
+</blockquote>
+<p>假设样本独立同分布，并且对任意 <span class="arithmatex">\(x\)</span> 和任意小的 <span class="arithmatex">\(\delta\)</span>，在 <span class="arithmatex">\(x\)</span> 附近总能找到训练样本。于是最近邻 <span class="arithmatex">\(z\)</span> 会非常接近 <span class="arithmatex">\(x\)</span>，那么从概率上就可以近似认为 <span class="arithmatex">\(P(c\mid z)\approx P(c\mid x)\)</span>，那么我们把此式带回式(10.1)，可得</p>
+<div class="arithmatex">\[
+P(err)\approx1-\sum_{c\in\mathcal{Y}}P^2(c\mid x)
+\]</div>
+<p>接下来我们令 <span class="arithmatex">\(\displaystyle c^*=\arg\max_{c\in\mathcal{Y}}P(c\mid x)\)</span> 来表示贝叶斯最优分类器在 <span class="arithmatex">\(x\)</span> 处选择的类别（也就是后验概率最大的类）。然后继续推导上式</p>
+<div class="arithmatex">\[
+\begin{align}
+P(err)&amp;\approx1-\sum_{c\in\mathcal{Y}}P^2(c\mid x)\\
+&amp;\le 1-P^2(c^*\mid x)\\
+&amp;=(1+P(c^*\mid x))(1-P(c^*\mid x))\\
+&amp;\le2\times(1-P(c^*\mid x))\tag{10.2}
+\end{align}
+\]</div>
+<blockquote>
+<p><span class="arithmatex">\(1-P(c^*\mid x)\)</span> 是 贝叶斯最优分类器在点 <span class="arithmatex">\(x\)</span> 处的错误概率</p>
+<p>所以此式意味着：<strong>1NN 的泛化错误率不超过贝叶斯最优错误率的 2 倍</strong></p>
+</blockquote>
+<h3 id="_2">低维嵌入</h3>
 
 
 
@@ -4144,14 +3462,14 @@ absdidd_se:
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.titles", "navigation.tabs", "navigation.indexes", "navigation.top"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.titles", "navigation.tabs", "navigation.indexes", "navigation.top"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
-        <script src="../../resources/js/read-metrics.js"></script>
+        <script src="../../../resources/js/read-metrics.js"></script>
       
     
   </body>
