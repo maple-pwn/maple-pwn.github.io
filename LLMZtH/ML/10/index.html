@@ -3318,6 +3318,22 @@ P(err)&amp;\approx1-\sum_{c\in\mathcal{Y}}P^2(c\mid x)\\
 <p>所以此式意味着：<strong>1NN 的泛化错误率不超过贝叶斯最优错误率的 2 倍</strong></p>
 </blockquote>
 <h3 id="_2">低维嵌入</h3>
+<p>上一节中我们发现 1NN 在可以接受的范围内，获得了巨大的效率提升，但这取决于我们的一个前提假设：我们假设在 <span class="arithmatex">\(x\)</span> 附近总能找到训练样本且最近邻 <span class="arithmatex">\(z\)</span> 和 <span class="arithmatex">\(x\)</span> 非常接近。这个假设在现实情况下是较难实现的，我们举个例子如下：</p>
+<ul>
+<li>维度 <span class="arithmatex">\(d=1\)</span> 的时候，<span class="arithmatex">\(\delta=0.001\)</span> 这种邻域，采样 1000 个点均匀铺开，还算可以覆盖</li>
+<li>但维度 <span class="arithmatex">\(d=20\)</span> 的时候， 要在每个维度达到 <span class="arithmatex">\(\delta=0.001\)</span> 的粒度，粗略需要 <span class="arithmatex">\({(10^3)}^{20}=10^{60}\)</span> 的量级</li>
+</ul>
+<p>这就是常见学习算法都会遇到的问题：样本在高维空间变稀疏，即便是最近邻也会很远；距离计算变得很困难，不可靠。即所谓的 <strong>维数灾难</strong></p>
+<hr />
+<p><mark>解决</mark></p>
+<p>解决方案一般是降维或低维嵌入，让数据在更合适的子空间里变密集，如下图所示的过程</p>
+<p><img alt="image-20260222224929777" src="../../../images/image-20260222224929777.png" /></p>
+<p>这里将一个比较经典的方法——MDS（多维缩放），其目标是低维里尽量保持原始距离。</p>
+<blockquote>
+<p>它的设定简单来说为：原始先给出原空间的两两距离矩阵，再计算出一个低维坐标，使得低维欧式距离尽量复现原距离</p>
+</blockquote>
+<p>我们假设有 <span class="arithmatex">\(m\)</span> 个样本，原始距离矩阵为 <span class="arithmatex">\(D\in\mathbb{R}^{m\times m}\)</span> 其中， <span class="arithmatex">\(D_{ij}=dist_{ij}=样本 x_i 到 x_j 的距离\)</span> 。我们的目标是寻找低维表示 <span class="arithmatex">\(Z\in\mathbb{R}^{d’\times m},d’\le d\)</span>，并满足 <span class="arithmatex">\(||z_i-z_j||=dist_{ij}\)</span>。下面是推导过程：</p>
+<p>我们令低维内积矩阵为 <span class="arithmatex">\(B=Z^{T} Z\in \mathbb{R}^{m\times m},b_{ij}=z_i^T z_j\)</span>  </p>
 
 
 
