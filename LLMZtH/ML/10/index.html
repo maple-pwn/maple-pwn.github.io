@@ -1015,9 +1015,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#pca" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      主成分分析PCA
     </span>
   </a>
   
@@ -3253,9 +3253,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#pca" class="md-nav__link">
     <span class="md-ellipsis">
-      
+      主成分分析PCA
     </span>
   </a>
   
@@ -3505,7 +3505,57 @@ Z=W^TX\tag{10.13}
 \]</div>
 <p>其中 <span class="arithmatex">\(X\in \mathbb{R}^{d\times m}\)</span> 是原始样本矩阵，<span class="arithmatex">\(W\in\mathbb{R}^{d\times d'}\)</span> 是变换矩阵。若 <span class="arithmatex">\(W\)</span> 的列向量正交，就是正交变换；<span class="arithmatex">\(Z\)</span> 的每一列就是样本在新坐标系下的表示 </p>
 <p>而下一节的重点就在于变换矩阵 <span class="arithmatex">\(W\)</span> 上，研究对 <span class="arithmatex">\(W\)</span> 加不同目标/约束可以产生哪些线性降维方法的差异</p>
-<h3 id="_3"></h3>
+<h3 id="pca">主成分分析PCA</h3>
+<blockquote>
+<p>接下来我们将降维这个思想推进到一个更加常用、更加可计算的具体方法，即PCA。</p>
+</blockquote>
+<p>先考虑这样一个问题：对于一个正交属性空间中的样本点，如何用一个超平面对所有样本进行恰当表达？</p>
+<p>这个超平面应当满足这些性质：</p>
+<ul>
+<li>最近重构性：样本点到这个超平面的距离都足够近</li>
+<li>最大可分性：样本点在这个超平面上的投影能尽可能分开</li>
+</ul>
+<p>接下来我们把这两个性质作为我们推导的目的，开始计算</p>
+<hr />
+<p><mark>从最近重构推到PCA目标</mark></p>
+<p>我们假定数据样本进行了中心化，即 <span class="arithmatex">\(\sum_ix_i=0\)</span>，取一组标准正交基组成投影矩阵 <span class="arithmatex">\(W=[w_1,w_2,\dots,w_d]\)</span>，满足 <span class="arithmatex">\(W^TW=I\)</span>，我们令样本 <span class="arithmatex">\(x_i\)</span> 在低维空间的坐标是 <span class="arithmatex">\(z_i=W^Tx_i\)</span>，重构回原空间是 <span class="arithmatex">\(\hat x_i=Wz_i=WW^Tx_i\)</span>，也就是说</p>
+<div class="arithmatex">\[
+\hat x_i=\sum_{j=1}^{d'}z_{ij}w_j\\
+s.t. z_{ij}=w_j^Tx_i
+\]</div>
+<p>于是我们可以简单计算原样本点 <span class="arithmatex">\(x_i\)</span> 与基于投影重构的样本点 <span class="arithmatex">\(\hat x_i\)</span> 之间的距离为</p>
+<div class="arithmatex">\[
+\begin{align}
+\sum_{i=1}^{m} \left\| \sum_{j=1}^{d'} z_{ij} w_j - x_i \right\|_2^2
+&amp;= \sum_{i=1}^{m} z_i^{\top} z_i
+- 2 \sum_{i=1}^{m} z_i^{\top} W^{\top} x_i
++ \mathrm{const}\\
+&amp;\propto
+- \operatorname{tr}
+\left(
+W^{\top}
+\left(
+\sum_{i=1}^{m} x_i x_i^{\top}
+\right)
+W
+\right).
+\tag{10.14}
+\end{align}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>此式左边是 <strong>所有样本的平方重构误差</strong>。式(10.14)表明：在正交约束下，最小化重构误差等价于 <strong>最大投影化后捕获到的能量</strong></p>
+<p>数学直觉来说：你投影到某个子空间，能解释的数据能量越多，丢掉的能量越少，重构就越准</p>
+</div>
+<p>然后根据我们的目标，最近重构性，那么应该让式(10.14)最小，由于 <span class="arithmatex">\(w_j\)</span> 是标准正交基，<span class="arithmatex">\(\sum_ix_ix_i^T\)</span> 是协方差矩阵，那么有
+$$
+\min_W -\text{tr}(W<sup>TXX</sup>TW)\
+s.t. W^TW=I\tag{10.15}
+$$</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>在所有 <span class="arithmatex">\(d’\)</span> 维正交子空间中，找一个让投影能量中最大（也就是重构误差最小）的子空间</p>
+</div>
 
 
 
