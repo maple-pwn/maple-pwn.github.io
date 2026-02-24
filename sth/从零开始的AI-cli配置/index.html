@@ -8,28 +8,24 @@
       
       
       
-        <link rel="canonical" href="https://maple-pwn.github.io/LLMZtH/ML/10/">
+        <link rel="canonical" href="https://maple-pwn.github.io/sth/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84AI-cli%E9%85%8D%E7%BD%AE/">
       
       
-        <link rel="prev" href="../9/">
       
       
-        <link rel="next" href="../../RL/1/">
-      
-      
-      <link rel="icon" href="../../../images/logo.svg">
+      <link rel="icon" href="../../images/logo.svg">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
     
     
       
-        <title>第十章 降维与度量学习 - Maple's blog</title>
+        <title>从零开始的AI cli配置 - Maple's blog</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.e53b48f4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -48,17 +44,17 @@
       
     
     
-      <link rel="stylesheet" href="../../../resources/css/extra.css">
+      <link rel="stylesheet" href="../../resources/css/extra.css">
     
-      <link rel="stylesheet" href="../../../resources/css/tittle.css">
+      <link rel="stylesheet" href="../../resources/css/tittle.css">
     
-      <link rel="stylesheet" href="../../../resources/css/read-metrics.css">
+      <link rel="stylesheet" href="../../resources/css/read-metrics.css">
     
-      <link rel="stylesheet" href="../../../resources/css/leftsidebar.css">
+      <link rel="stylesheet" href="../../resources/css/leftsidebar.css">
     
       <link rel="stylesheet" href="https://static.zeoseven.com/zsft/292/main/result.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -84,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#0xff" class="md-skip">
           跳转至
         </a>
       
@@ -98,9 +94,9 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="页眉">
-    <a href="../../.." title="Maple&#39;s blog" class="md-header__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+    <a href="../.." title="Maple&#39;s blog" class="md-header__button md-logo" aria-label="Maple's blog" data-md-component="logo">
       
-  <img src="../../../images/logo.svg" alt="logo">
+  <img src="../../images/logo.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -117,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              第十章 降维与度量学习
+              从零开始的AI cli配置
             
           </span>
         </div>
@@ -218,7 +214,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../mysys/pre/" class="md-tabs__link">
+        <a href="../../mysys/pre/" class="md-tabs__link">
           
   
   
@@ -236,13 +232,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../pre/" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../LLMZtH/pre/" class="md-tabs__link">
           
   
   
@@ -264,7 +258,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../study/pre/" class="md-tabs__link">
+        <a href="../../study/pre/" class="md-tabs__link">
           
   
   
@@ -293,7 +287,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../READ/paperread/mHC/" class="md-tabs__link">
+        <a href="../../READ/paperread/mHC/" class="md-tabs__link">
           
   
   
@@ -318,7 +312,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../pwn/pre/" class="md-tabs__link">
+        <a href="../../pwn/pre/" class="md-tabs__link">
           
   
   
@@ -340,7 +334,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../sth/proj/" class="md-tabs__link">
+        <a href="../proj/" class="md-tabs__link">
           
   
   
@@ -362,7 +356,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../testpage/test/" class="md-tabs__link">
+        <a href="../../testpage/test/" class="md-tabs__link">
           
   
   
@@ -398,9 +392,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Maple&#39;s blog" class="md-nav__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+    <a href="../.." title="Maple&#39;s blog" class="md-nav__button md-logo" aria-label="Maple's blog" data-md-component="logo">
       
-  <img src="../../../images/logo.svg" alt="logo">
+  <img src="../../images/logo.svg" alt="logo">
 
     </a>
     Maple's blog
@@ -472,7 +466,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../mysys/pre/" class="md-nav__link">
+      <a href="../../mysys/pre/" class="md-nav__link">
         
   
   
@@ -495,7 +489,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../mysys/01/" class="md-nav__link">
+      <a href="../../mysys/01/" class="md-nav__link">
         
   
   
@@ -518,7 +512,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../mysys/02/" class="md-nav__link">
+      <a href="../../mysys/02/" class="md-nav__link">
         
   
   
@@ -541,7 +535,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../mysys/03/" class="md-nav__link">
+      <a href="../../mysys/03/" class="md-nav__link">
         
   
   
@@ -564,7 +558,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../mysys/04/" class="md-nav__link">
+      <a href="../../mysys/04/" class="md-nav__link">
         
   
   
@@ -587,7 +581,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../mysys/05/" class="md-nav__link">
+      <a href="../../mysys/05/" class="md-nav__link">
         
   
   
@@ -610,7 +604,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../mysys/06/" class="md-nav__link">
+      <a href="../../mysys/06/" class="md-nav__link">
         
   
   
@@ -637,10 +631,8 @@
       
   
   
-    
   
   
-  
     
     
       
@@ -656,20 +648,17 @@
     
     
       
-        
-        
-      
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
             
   
   
@@ -682,7 +671,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             AI学习
@@ -696,7 +685,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pre/" class="md-nav__link">
+      <a href="../../LLMZtH/pre/" class="md-nav__link">
         
   
   
@@ -716,10 +705,8 @@
                 
   
   
-    
   
   
-  
     
     
       
@@ -746,11 +733,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
         
           
           <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
@@ -766,7 +753,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_2">
             <span class="md-nav__icon md-icon"></span>
             ML学习笔记
@@ -780,7 +767,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../1-3/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/1-3/" class="md-nav__link">
         
   
   
@@ -803,7 +790,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../4/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/4/" class="md-nav__link">
         
   
   
@@ -826,7 +813,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../5/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/5/" class="md-nav__link">
         
   
   
@@ -849,7 +836,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../6/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/6/" class="md-nav__link">
         
   
   
@@ -872,7 +859,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../7/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/7/" class="md-nav__link">
         
   
   
@@ -895,7 +882,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../8/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/8/" class="md-nav__link">
         
   
   
@@ -918,7 +905,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../9/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/9/" class="md-nav__link">
         
   
   
@@ -938,30 +925,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    第十章 降维与度量学习
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/ML/10/" class="md-nav__link">
         
   
   
@@ -972,66 +939,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      第十章 降维与度量学习
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="第十章 降维与度量学习">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#k" class="md-nav__link">
-    <span class="md-ellipsis">
-      \(k\) 近邻学习
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      低维嵌入
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1097,7 +1004,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../RL/1/" class="md-nav__link">
+      <a href="../../LLMZtH/RL/1/" class="md-nav__link">
         
   
   
@@ -1173,7 +1080,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../NLP/1/" class="md-nav__link">
+      <a href="../../LLMZtH/NLP/1/" class="md-nav__link">
         
   
   
@@ -1274,7 +1181,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/pre/" class="md-nav__link">
+      <a href="../../study/pre/" class="md-nav__link">
         
   
   
@@ -1297,7 +1204,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/dw/" class="md-nav__link">
+      <a href="../../study/dw/" class="md-nav__link">
         
   
   
@@ -1320,7 +1227,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/dw2/" class="md-nav__link">
+      <a href="../../study/dw2/" class="md-nav__link">
         
   
   
@@ -1343,7 +1250,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/gt/" class="md-nav__link">
+      <a href="../../study/gt/" class="md-nav__link">
         
   
   
@@ -1366,7 +1273,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/lisan/" class="md-nav__link">
+      <a href="../../study/lisan/" class="md-nav__link">
         
   
   
@@ -1389,7 +1296,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/cs_final/" class="md-nav__link">
+      <a href="../../study/cs_final/" class="md-nav__link">
         
   
   
@@ -1412,7 +1319,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/cs_exam/" class="md-nav__link">
+      <a href="../../study/cs_exam/" class="md-nav__link">
         
   
   
@@ -1435,7 +1342,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/mao/" class="md-nav__link">
+      <a href="../../study/mao/" class="md-nav__link">
         
   
   
@@ -1458,7 +1365,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/eda/" class="md-nav__link">
+      <a href="../../study/eda/" class="md-nav__link">
         
   
   
@@ -1481,7 +1388,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/asm/" class="md-nav__link">
+      <a href="../../study/asm/" class="md-nav__link">
         
   
   
@@ -1601,7 +1508,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../READ/paperread/mHC/" class="md-nav__link">
+      <a href="../../READ/paperread/mHC/" class="md-nav__link">
         
   
   
@@ -1696,7 +1603,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/pre/" class="md-nav__link">
+      <a href="../../pwn/pre/" class="md-nav__link">
         
   
   
@@ -1719,7 +1626,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/tricks/" class="md-nav__link">
+      <a href="../../pwn/tricks/" class="md-nav__link">
         
   
   
@@ -1799,7 +1706,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/Stack/%E6%B1%87%E7%BC%96%E9%80%9F%E9%80%9A/" class="md-nav__link">
+      <a href="../../pwn/Stack/%E6%B1%87%E7%BC%96%E9%80%9F%E9%80%9A/" class="md-nav__link">
         
   
   
@@ -1822,7 +1729,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/Stack/ASLR/" class="md-nav__link">
+      <a href="../../pwn/Stack/ASLR/" class="md-nav__link">
         
   
   
@@ -1845,7 +1752,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/Stack/Canary/" class="md-nav__link">
+      <a href="../../pwn/Stack/Canary/" class="md-nav__link">
         
   
   
@@ -1868,7 +1775,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/Stack/PIE%E7%BB%95%E8%BF%87/" class="md-nav__link">
+      <a href="../../pwn/Stack/PIE%E7%BB%95%E8%BF%87/" class="md-nav__link">
         
   
   
@@ -1891,7 +1798,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/Stack/fmt-all-in-one/" class="md-nav__link">
+      <a href="../../pwn/Stack/fmt-all-in-one/" class="md-nav__link">
         
   
   
@@ -1914,7 +1821,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/Stack/shellcode-all-in-one/" class="md-nav__link">
+      <a href="../../pwn/Stack/shellcode-all-in-one/" class="md-nav__link">
         
   
   
@@ -1937,7 +1844,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/Stack/SROP/" class="md-nav__link">
+      <a href="../../pwn/Stack/SROP/" class="md-nav__link">
         
   
   
@@ -2025,7 +1932,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/Heap/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+      <a href="../../pwn/Heap/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
         
   
   
@@ -2048,7 +1955,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/Heap/%E5%90%84%E4%B8%AA%E5%87%BD%E6%95%B0%E5%8E%9F%E5%9E%8B/" class="md-nav__link">
+      <a href="../../pwn/Heap/%E5%90%84%E4%B8%AA%E5%87%BD%E6%95%B0%E5%8E%9F%E5%9E%8B/" class="md-nav__link">
         
   
   
@@ -2071,7 +1978,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/Heap/%E5%A0%86%E6%BA%A2%E5%87%BA/" class="md-nav__link">
+      <a href="../../pwn/Heap/%E5%A0%86%E6%BA%A2%E5%87%BA/" class="md-nav__link">
         
   
   
@@ -2094,7 +2001,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/Heap/%E5%A0%86%E6%BA%A2%E5%87%BA%E4%B8%AD%E6%AF%94%E8%BE%83%E9%87%8D%E8%A6%81%E7%9A%84%E6%AD%A5%E9%AA%A4/" class="md-nav__link">
+      <a href="../../pwn/Heap/%E5%A0%86%E6%BA%A2%E5%87%BA%E4%B8%AD%E6%AF%94%E8%BE%83%E9%87%8D%E8%A6%81%E7%9A%84%E6%AD%A5%E9%AA%A4/" class="md-nav__link">
         
   
   
@@ -2117,7 +2024,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/Heap/%E5%A0%86%E4%B8%AD%E7%9A%84off-by-one/" class="md-nav__link">
+      <a href="../../pwn/Heap/%E5%A0%86%E4%B8%AD%E7%9A%84off-by-one/" class="md-nav__link">
         
   
   
@@ -2140,7 +2047,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/Heap/%E5%A0%86%E5%90%84%E7%B1%BB%E6%94%BB%E5%87%BB%E6%89%8B%E6%B3%95/" class="md-nav__link">
+      <a href="../../pwn/Heap/%E5%A0%86%E5%90%84%E7%B1%BB%E6%94%BB%E5%87%BB%E6%89%8B%E6%B3%95/" class="md-nav__link">
         
   
   
@@ -2163,7 +2070,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/Heap/%E4%BE%8B%E9%A2%98%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+      <a href="../../pwn/Heap/%E4%BE%8B%E9%A2%98%E8%AE%B0%E5%BD%95/" class="md-nav__link">
         
   
   
@@ -2247,7 +2154,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/IO_FILE/_IO_FILE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+      <a href="../../pwn/IO_FILE/_IO_FILE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
         
   
   
@@ -2270,7 +2177,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/IO_FILE/IO_FILE%E6%BA%90%E7%A0%81/" class="md-nav__link">
+      <a href="../../pwn/IO_FILE/IO_FILE%E6%BA%90%E7%A0%81/" class="md-nav__link">
         
   
   
@@ -2293,7 +2200,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/IO_FILE/fopen/" class="md-nav__link">
+      <a href="../../pwn/IO_FILE/fopen/" class="md-nav__link">
         
   
   
@@ -2316,7 +2223,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/IO_FILE/fread/" class="md-nav__link">
+      <a href="../../pwn/IO_FILE/fread/" class="md-nav__link">
         
   
   
@@ -2339,7 +2246,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/IO_FILE/%E5%81%9A%E9%A2%98%E6%8A%80%E5%B7%A7/" class="md-nav__link">
+      <a href="../../pwn/IO_FILE/%E5%81%9A%E9%A2%98%E6%8A%80%E5%B7%A7/" class="md-nav__link">
         
   
   
@@ -2423,7 +2330,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse%20of%20apple1%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
+      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse%20of%20apple1%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
         
   
   
@@ -2446,7 +2353,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-apple2%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-apple2%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
         
   
   
@@ -2469,7 +2376,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse%20of%20cat%20%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse%20of%20cat%20%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
         
   
   
@@ -2492,7 +2399,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-kiwi%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-kiwi%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
         
   
   
@@ -2515,7 +2422,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-botcake%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
+      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-botcake%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
         
   
   
@@ -2615,7 +2522,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/wp/basectf/" class="md-nav__link">
+      <a href="../../pwn/wp/basectf/" class="md-nav__link">
         
   
   
@@ -2638,7 +2545,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/wp/moectf/" class="md-nav__link">
+      <a href="../../pwn/wp/moectf/" class="md-nav__link">
         
   
   
@@ -2661,7 +2568,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/wp/isctf2024/" class="md-nav__link">
+      <a href="../../pwn/wp/isctf2024/" class="md-nav__link">
         
   
   
@@ -2684,7 +2591,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/wp/ghctf/" class="md-nav__link">
+      <a href="../../pwn/wp/ghctf/" class="md-nav__link">
         
   
   
@@ -2707,7 +2614,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/wp/xyctf/" class="md-nav__link">
+      <a href="../../pwn/wp/xyctf/" class="md-nav__link">
         
   
   
@@ -2730,7 +2637,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/wp/tgctf/" class="md-nav__link">
+      <a href="../../pwn/wp/tgctf/" class="md-nav__link">
         
   
   
@@ -2753,7 +2660,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/wp/NPCCTF/" class="md-nav__link">
+      <a href="../../pwn/wp/NPCCTF/" class="md-nav__link">
         
   
   
@@ -2776,7 +2683,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/wp/ctfshow/" class="md-nav__link">
+      <a href="../../pwn/wp/ctfshow/" class="md-nav__link">
         
   
   
@@ -2799,7 +2706,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/wp/whuctf2024/" class="md-nav__link">
+      <a href="../../pwn/wp/whuctf2024/" class="md-nav__link">
         
   
   
@@ -2822,7 +2729,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/wp/whuctf2025/" class="md-nav__link">
+      <a href="../../pwn/wp/whuctf2025/" class="md-nav__link">
         
   
   
@@ -2845,7 +2752,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/wp/%E5%BC%BA%E7%BD%91%E6%9D%AF/" class="md-nav__link">
+      <a href="../../pwn/wp/%E5%BC%BA%E7%BD%91%E6%9D%AF/" class="md-nav__link">
         
   
   
@@ -2868,7 +2775,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/wp/polarD%26N/polarD%26N/" class="md-nav__link">
+      <a href="../../pwn/wp/polarD%26N/polarD%26N/" class="md-nav__link">
         
   
   
@@ -2942,7 +2849,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%881-20%E9%A2%98%EF%BC%89/" class="md-nav__link">
+      <a href="../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%881-20%E9%A2%98%EF%BC%89/" class="md-nav__link">
         
   
   
@@ -2965,7 +2872,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8821-40%E9%A2%98%EF%BC%89/" class="md-nav__link">
+      <a href="../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8821-40%E9%A2%98%EF%BC%89/" class="md-nav__link">
         
   
   
@@ -2988,7 +2895,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8841-60%E9%A2%98%EF%BC%89/" class="md-nav__link">
+      <a href="../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8841-60%E9%A2%98%EF%BC%89/" class="md-nav__link">
         
   
   
@@ -3011,7 +2918,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8861-80%E9%A2%98%EF%BC%89/" class="md-nav__link">
+      <a href="../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8861-80%E9%A2%98%EF%BC%89/" class="md-nav__link">
         
   
   
@@ -3102,7 +3009,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../sth/proj/" class="md-nav__link">
+      <a href="../proj/" class="md-nav__link">
         
   
   
@@ -3177,7 +3084,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../testpage/test/" class="md-nav__link">
+      <a href="../../testpage/test/" class="md-nav__link">
         
   
   
@@ -3225,37 +3132,46 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
+  <a href="#0xff" class="md-nav__link">
     <span class="md-ellipsis">
-      第十章 降维与度量学习
+      0xFF 前置条件
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="第十章 降维与度量学习">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x1-opencodelinux" class="md-nav__link">
+    <span class="md-ellipsis">
+      0x1 安装 OpenCode（Linux）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x2" class="md-nav__link">
+    <span class="md-ellipsis">
+      0x2 接入模型
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0x2 接入模型">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#k" class="md-nav__link">
+  <a href="#31-tui-connect" class="md-nav__link">
     <span class="md-ellipsis">
-      \(k\) 近邻学习
+      3.1 TUI /connect
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#32-cli-opencode-auth-login" class="md-nav__link">
     <span class="md-ellipsis">
-      低维嵌入
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
+      3.2 CLI opencode auth login（适合脚本/远程机）
     </span>
   </a>
   
@@ -3263,6 +3179,183 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-configopencodeopencodejson-opencodejson" class="md-nav__link">
+    <span class="md-ellipsis">
+      4）配置文件：全局 ~/.config/opencode/opencode.json + 项目内 opencode.json
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4）配置文件：全局 ~/.config/opencode/opencode.json + 项目内 opencode.json">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 配置文件放哪？优先级怎么叠？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 创建一个“可工作的最小全局配置”
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 项目内配置：指定模型 + 控制工具权限（推荐）
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-agentsmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      5）在项目里“初始化”：生成 AGENTS.md，让它更懂你的仓库
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6tui-vs-opencode-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      6）两种使用姿势：TUI 日常开发 vs opencode run 脚本化
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6）两种使用姿势：TUI 日常开发 vs opencode run 脚本化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-tui" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 TUI：日常“在仓库里对话+改代码”
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-opencode-run-tui" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 opencode run：不进 TUI，直接一句话出结果（适合脚本）
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      7）凭据、日志、缓存都在哪？（排错必备）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      8）安全与“别把仓库当祭品”：权限、密钥、变量替换
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8）安全与“别把仓库当祭品”：权限、密钥、变量替换">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1 用环境变量占位符（推荐）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.2 用文件引用（更适合放到密码管理/私密目录）
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      9）常见坑速查（Linux 版）
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9）常见坑速查（Linux 版）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-tui" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.1 “开了代理后 TUI 连不上 / 卡死 / 奇怪的循环”
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-tls" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.2 “证书相关 TLS 报错”
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.3 “想知道它到底把 key 放哪了”
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      10）一个可复制的“从零到跑通”最短路径
+    </span>
+  </a>
   
 </li>
       
@@ -3283,229 +3376,228 @@
 
 
 
-  <h1>第十章 降维与度量学习</h1>
+  <h1>从零开始的AI cli配置</h1>
 
-<h2 id="_1">第十章 降维与度量学习</h2>
-<p>降维比较好解释，将高维数据（比较多的特征）映射到低维，同时尽量保留有用的结构。用数学语言描述就是：</p>
-<p>降维是在学一个“表示/坐标系” <span class="arithmatex">\(z=f(x)\)</span></p>
-<p>度量学习则是通过一定的算法，让该近的更近，该远的更远。比方说原本的距离度量用的是欧氏距离，即 <span class="arithmatex">\(d(x,y)=||x-y||_2\)</span> ,而度量学习会学得一个更适合任务的距离，比如 Mahalanobis 距离： <span class="arithmatex">\(d_M(x,y)=\sqrt{(x-y)\top M (x-y)}，M\succeq0\)</span>，其中 <span class="arithmatex">\(M\)</span> 控制不同特征的不同权重，允许特征之间相关性影响距离</p>
-<h3 id="k"><span class="arithmatex">\(k\)</span> 近邻学习</h3>
-<p>首先介绍一下 <span class="arithmatex">\(k\)</span> 近邻学习：<span class="arithmatex">\(k\)</span> 近邻(kNN)是一类典型的基于实例的监督学习方法：</p>
-<ul>
-<li>给定测试样本，先选一个距离度量（欧氏距离/余弦距离/马氏距离等）</li>
-<li>在训练集里找离 <span class="arithmatex">\(x\)</span> 最近的 <span class="arithmatex">\(k\)</span> 个样本</li>
-</ul>
+<p>这边做一个AI cli的配置教程，笔者日常使用的是opencode，所以教程主要就以这个为主</p>
+<p>从安装 → 联网/证书 → 登录/接入模型 → 配置 <code>opencode.json</code> → 在项目里 <code>/init</code> 跑通 → 常见坑排雷。内容以 OpenCode / opencode 的官方文档为主线</p>
 <blockquote>
-<p>之前学的很多模型，如线性回归、SVM、神经网络等，都有一个明显的训练阶段，用于训练参数 <span class="arithmatex">\(\theta\)</span></p>
-<p>但 kNN 几乎不训练，它的训练阶段基本就是把数据存储起来，所以 kNN 也被称为懒惰学习：训练开销低，预测时开销高</p>
+<p>终端是程序员的“指挥舱”，但它长期缺一件东西：能读懂上下文、能解释报错、能按项目风格改代码的助手。OpenCode（命令是 <code>opencode</code>）属于“AI coding agent”这一类：你在项目目录里启动它，它会用 TUI（终端 UI）跟你交互，也支持非交互模式用于脚本化。官方强调它支持多模型/多 provider，并且配置可以全局+项目分层覆盖。(<a href="https://opencode.ai/docs/">OpenCode</a>)</p>
 </blockquote>
-<p>如下图所展示的，不同的 <span class="arithmatex">\(k\)</span> 会导致不同的分类</p>
-<p><img alt="image-20260221132327350" src="../../../images/image-20260221132327350.png" /></p>
+<h2 id="0xff">0xFF 前置条件</h2>
 <ul>
-<li>当 k=1 的时候，只看到最近的 1 个点，容易受到噪声的影响，但时边界比较灵活</li>
-<li>当 k=3 的时候，看 3 个邻居，多数投票可能反转结果</li>
-<li>当 k=5 的时候，更加平滑也更稳定，但是可能抹掉了局部细节</li>
+<li>一个“现代终端”（随便哪个都行；WezTerm/Kitty/Alacritty 这类更舒服）</li>
+<li>你要用的 LLM Provider 的 API key（OpenAI / Anthropic / Gemini / 各种兼容网关都可以）</li>
+<li>网络环境：公司/校园网可能需要代理或自定义 CA 证书（后面会讲）</li>
 </ul>
-<blockquote>
-<p>总的来说，kNN的基本过程就是：距离度量 + <span class="arithmatex">\(k\)</span> 选择 <span class="arithmatex">\(\rightarrow\)</span> 邻居集合 <span class="arithmatex">\(\rightarrow\)</span> 投票/平均 <span class="arithmatex">\(\rightarrow\)</span> 预测结果</p>
-</blockquote>
 <hr />
-<p>接下来我们理论分析一下 1NN(最近邻分类器) 的泛化错误率如何：</p>
-<p>设测试样本为 <span class="arithmatex">\(x\)</span> ,其最近邻训练样本为 <span class="arithmatex">\(z\)</span> 。当 <span class="arithmatex">\(x\)</span> 的真实类别和 <span class="arithmatex">\(z\)</span> 的类别不一致的时候，我们给出</p>
-<div class="arithmatex">\[
-P(err)=1-\sum_{c\in\mathcal{Y}}P(c\mid x)P(c\mid z)\tag{10.1}
-\]</div>
-<blockquote>
-<p><span class="arithmatex">\(\sum_cP(c\mid x)P(c\mid z)\)</span> 表示“x和z在同一类别上的概率一致性”，一致性越大，出错越小</p>
-</blockquote>
-<p>假设样本独立同分布，并且对任意 <span class="arithmatex">\(x\)</span> 和任意小的 <span class="arithmatex">\(\delta\)</span>，在 <span class="arithmatex">\(x\)</span> 附近总能找到训练样本。于是最近邻 <span class="arithmatex">\(z\)</span> 会非常接近 <span class="arithmatex">\(x\)</span>，那么从概率上就可以近似认为 <span class="arithmatex">\(P(c\mid z)\approx P(c\mid x)\)</span>，那么我们把此式带回式(10.1)，可得</p>
-<div class="arithmatex">\[
-P(err)\approx1-\sum_{c\in\mathcal{Y}}P^2(c\mid x)
-\]</div>
-<p>接下来我们令 <span class="arithmatex">\(\displaystyle c^*=\arg\max_{c\in\mathcal{Y}}P(c\mid x)\)</span> 来表示贝叶斯最优分类器在 <span class="arithmatex">\(x\)</span> 处选择的类别（也就是后验概率最大的类）。然后继续推导上式</p>
-<div class="arithmatex">\[
-\begin{align}
-P(err)&amp;\approx1-\sum_{c\in\mathcal{Y}}P^2(c\mid x)\\
-&amp;\le 1-P^2(c^*\mid x)\\
-&amp;=(1+P(c^*\mid x))(1-P(c^*\mid x))\\
-&amp;\le2\times(1-P(c^*\mid x))\tag{10.2}
-\end{align}
-\]</div>
-<blockquote>
-<p><span class="arithmatex">\(1-P(c^*\mid x)\)</span> 是 贝叶斯最优分类器在点 <span class="arithmatex">\(x\)</span> 处的错误概率</p>
-<p>所以此式意味着：<strong>1NN 的泛化错误率不超过贝叶斯最优错误率的 2 倍</strong></p>
-</blockquote>
-<h3 id="_2">低维嵌入</h3>
-<p>上一节中我们发现 1NN 在可以接受的范围内，获得了巨大的效率提升，但这取决于我们的一个前提假设：我们假设在 <span class="arithmatex">\(x\)</span> 附近总能找到训练样本且最近邻 <span class="arithmatex">\(z\)</span> 和 <span class="arithmatex">\(x\)</span> 非常接近。这个假设在现实情况下是较难实现的，我们举个例子如下：</p>
-<ul>
-<li>维度 <span class="arithmatex">\(d=1\)</span> 的时候，<span class="arithmatex">\(\delta=0.001\)</span> 这种邻域，采样 1000 个点均匀铺开，还算可以覆盖</li>
-<li>但维度 <span class="arithmatex">\(d=20\)</span> 的时候， 要在每个维度达到 <span class="arithmatex">\(\delta=0.001\)</span> 的粒度，粗略需要 <span class="arithmatex">\({(10^3)}^{20}=10^{60}\)</span> 的量级</li>
-</ul>
-<p>这就是常见学习算法都会遇到的问题：样本在高维空间变稀疏，即便是最近邻也会很远；距离计算变得很困难，不可靠。即所谓的 <strong>维数灾难</strong></p>
+<h2 id="0x1-opencodelinux">0x1 安装 OpenCode（Linux）</h2>
+<p>官方给了三条常见路：安装脚本、Node 包安装、发行版包管理器。(<a href="https://opencode.ai/docs/">OpenCode</a>)
+笔者这边建议优先选 <strong>安装脚本</strong>，其次是 <strong>npm 全局安装</strong>（如果你习惯 Node 生态的话）。</p>
+<p><strong>方案 A：官方安装脚本（推荐）</strong></p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://opencode.ai/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</code></pre></div>
+<p>官方文档把它作为最简单的安装方式。(<a href="https://opencode.ai/docs/">OpenCode</a>)</p>
+<p><strong>方案 B：npm 全局安装（你有 Node.js 时）</strong></p>
+<p>官方写法是安装 <code>opencode-ai</code> 这个包：(<a href="https://opencode.ai/docs/">OpenCode</a>)</p>
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>opencode-ai
+</code></pre></div>
+<p><strong>方案 C：Arch / AUR（Arch 用户）</strong></p>
+<p>官方也给了 pacman/paru 的例子：(<a href="https://opencode.ai/docs/">OpenCode</a>)</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>pacman<span class="w"> </span>-S<span class="w"> </span>opencode<span class="w">        </span><span class="c1"># 稳定版</span>
+<span class="c1"># 或</span>
+paru<span class="w"> </span>-S<span class="w"> </span>opencode-bin<span class="w">           </span><span class="c1"># AUR 最新</span>
+</code></pre></div>
+<p>稍等片刻后，安装完成长这样</p>
+<p><img alt="image-20260223210947041" src="../../images/image-20260223210947041.png" /></p>
+<p>然后安装好之后会有一系列配置内容，我们慢慢介绍，接下来直接在命令行里输入 <code>opencode</code> 即可启动，如下</p>
+<p><img alt="image-20260223211147855" src="../../images/image-20260223211147855.png" /></p>
+<p>但我们还未接入模型，无法使用，所以接下来介绍接入模型</p>
 <hr />
-<p><mark>解决</mark></p>
-<p>解决方案一般是降维或低维嵌入，让数据在更合适的子空间里变密集，如下图所示的过程</p>
-<p><img alt="image-20260222224929777" src="../../../images/image-20260222224929777.png" /></p>
-<p>这里将一个比较经典的方法——MDS（多维缩放），其目标是低维里尽量保持原始距离。</p>
+<h2 id="0x2">0x2 接入模型</h2>
+<p>OpenCode 既可以在 TUI 里用 <code>/connect</code> 交互式接入 provider，也可以用 CLI 的 <code>opencode auth login</code> 来配置 provider key(<a href="https://opencode.ai/docs/">OpenCode</a>)
+它们最终都会把凭据写到本地存储里（后面会告诉你文件在哪）</p>
+<h3 id="31-tui-connect">3.1 TUI <code>/connect</code></h3>
+<p>1）在终端里启动：</p>
+<div class="highlight"><pre><span></span><code>opencode
+</code></pre></div>
+<p>2）进入后输入：</p>
+<div class="highlight"><pre><span></span><code>/connect
+</code></pre></div>
+<h3 id="32-cli-opencode-auth-login">3.2 CLI <code>opencode auth login</code>（适合脚本/远程机）</h3>
+<div class="highlight"><pre><span></span><code>opencode<span class="w"> </span>auth<span class="w"> </span>login
+</code></pre></div>
+<p>CLI 文档写得很直白：它会把 provider 凭据存到 <code>~/.local/share/opencode/auth.json</code>。(<a href="https://opencode.ai/docs/cli/">OpenCode</a>)</p>
+<p>你还可以列出当前已经登录的 provider：</p>
+<div class="highlight"><pre><span></span><code>opencode<span class="w"> </span>auth<span class="w"> </span>list
+<span class="c1"># 或短写</span>
+opencode<span class="w"> </span>auth<span class="w"> </span>ls
+</code></pre></div>
+<p>(<a href="https://opencode.ai/docs/cli/">OpenCode</a>)</p>
+<hr />
+<h2 id="4-configopencodeopencodejson-opencodejson">4）配置文件：全局 <code>~/.config/opencode/opencode.json</code> + 项目内 <code>opencode.json</code></h2>
+<p>OpenCode 的配置体系很“工程化”：配置源会按优先级合并，后者覆盖前者，并且支持 JSONC（带注释）。(<a href="https://opencode.ai/docs/config/">OpenCode</a>)</p>
+<h3 id="41">4.1 配置文件放哪？优先级怎么叠？</h3>
+<p>官方给了清晰的 precedence（从低到高大概是 remote → global → custom → project → <code>.opencode</code> → inline）。(<a href="https://opencode.ai/docs/config/">OpenCode</a>)
+你最常用的就两种：</p>
+<ul>
+<li><strong>全局配置</strong>：<code>~/.config/opencode/opencode.json</code>（用户偏好：主题、默认模型、快捷键…）(<a href="https://opencode.ai/docs/config/">OpenCode</a>)</li>
+<li><strong>项目配置</strong>：项目根目录的 <code>opencode.json</code>（项目专属：这个仓库用哪个模型、开不开写文件工具…）(<a href="https://opencode.ai/docs/config/">OpenCode</a>)</li>
+</ul>
 <blockquote>
-<p>它的设定简单来说为：原始先给出原空间的两两距离矩阵，再计算出一个低维坐标，使得低维欧式距离尽量复现原距离</p>
+<p>小提醒：它会从当前目录往上找配置，直到最近的 Git 目录；所以一般把 <code>opencode.json</code> 放项目根就对了。(<a href="https://opencode.ai/docs/config/">OpenCode</a>)</p>
 </blockquote>
-<p>我们假设有 <span class="arithmatex">\(m\)</span> 个样本，原始距离矩阵为 <span class="arithmatex">\(D\in\mathbb{R}^{m\times m}\)</span> 其中， <span class="arithmatex">\(D_{ij}=dist_{ij}=样本 x_i 到 x_j 的距离\)</span> 。我们的目标是寻找低维表示 <span class="arithmatex">\(Z\in\mathbb{R}^{d’\times m},d’\le d\)</span>，并满足 <span class="arithmatex">\(||z_i-z_j||=dist_{ij}\)</span>。下面是推导过程：</p>
-<p><mark>用内积矩阵把距离转换成坐标</mark></p>
-<p>我们令低维内积矩阵为 <span class="arithmatex">\(B=Z^{T} Z\in \mathbb{R}^{m\times m},b_{ij}=z_i^T z_j\)</span>  ，然后欧式距离展开，可以得到</p>
-<div class="arithmatex">\[
-\begin{align}
-dist^2_{ij}=||z_i-z_j||^2&amp;=||z_i||^2+||z_j||^2-2z_t^{T}z_j\\
-&amp;=b_{ii}+b_{jj}-2b_{ij}\tag{10.3}
-\end{align}
-\]</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>这一步是将“两个点的欧式距离”改写为“点的长度+点之间的相似度”：</p>
-<p><span class="arithmatex">\(b_{ii}=||z_i||^2\)</span> 表示点 <span class="arithmatex">\(i\)</span> 离原点有多远；<span class="arithmatex">\(b_{ij}=z_i^Tz_j\)</span> 表示点 <span class="arithmatex">\(i\)</span> 和点 <span class="arithmatex">\(j\)</span> 在方向上有多对齐（相似度）</p>
-</div>
-<p>然后整理公式，令 <span class="arithmatex">\(Z\)</span> 中心化，即 <span class="arithmatex">\(\sum_{i=1}^mz_i=0\)</span>，这会让 <span class="arithmatex">\(B\)</span> 的行/列和为 0 ，进而整理得到便于讨论的式子,其中 <span class="arithmatex">\(\text{tr}(\cdot)\)</span> 是迹，<span class="arithmatex">\(\text{tr}(B)=\sum_{i=1}^m||z_i||^2\)</span></p>
-<div class="arithmatex">\[
-\begin{align}
-\sum_{i=1}^mdist^2_{ij}=\text{tr}(B)+mb_{jj}\tag{10.4}\\
-\sum_{j=1}^mdist^2_{ij}=\text{tr}(B)+mb_{ii}\tag{10.5}\\
-\sum_{i=1}^m\sum_{j=1}^mdist_{ij}^2=2m\text{tr}(B)\tag{10.6}
-\end{align}
-\]</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>刚刚式(10.3)中存在未知的 <span class="arithmatex">\(b_{ii}\)</span> 等内容，但是我们只有距离 <span class="arithmatex">\(dist_{ij}\)</span> 的预测值，那么怎么解呢？给出的办法是对 <span class="arithmatex">\(i\)</span> 和 <span class="arithmatex">\(j\)</span> 求和/全体求和，利用中心化带来的行列和为0，把未知项消去。</p>
-<p>以式(10.4)为例，它意味着：固定 <span class="arithmatex">\(j\)</span> ，把所有点到 <span class="arithmatex">\(j\)</span> 的距离平方加起来，等价于 “总能量 <span class="arithmatex">\(\text{tr}(B)\)</span>+<span class="arithmatex">\(j\)</span> 点的长度项<span class="arithmatex">\(mb_{jj}\)</span>“。可以认为是：距离的列求和=你能推回每个点的 <span class="arithmatex">\(||z_j||^2\)</span> </p>
-<p>这三个式子合起来意味着：用求和把未知的自内积项和全局常数变成可由距离算到的量</p>
-</div>
-<p>接下来定义三个平均距离平方，如下</p>
-<div class="arithmatex">\[
-\begin{align}
-dist_{i\cdot}^2=\dfrac{1}{m}\sum_{j=1}^mdist_{ij}^2\tag{10.7}\\
-dist_{\cdot j}^2=\dfrac{1}{m}\sum_{i=1}^mdist_{ij}^2\tag{10.8}\\
-dist_{\cdot\cdot}^2=\dfrac{1}{m^2}\sum_{i=1}^m\sum_{j=1}^mdist_{ij}^2\tag{10.9}
-\end{align}
-\]</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>这三个按顺序分别是行平均、列平均和全局平均</p>
-<p>它们是为了把式(10.4)-(10.6)的求和结果写得更加紧凑，最终塞进(10.10)形成一个直接可算得闭式公式</p>
-</div>
-<p>然后把式（10.4）~（10.9）带入式（10.3），得到从距离直接回复内积矩阵元素的公式</p>
-<div class="arithmatex">\[
-b_{ij}=-\dfrac{1}{2}(dist_{ij}^2-dist_{i\cdot}^2-dist_{\cdot j}^2+dist_{\cdot\cdot}^2)\tag{10.10}
-\]</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>这里在做双中心化操作：去掉行均值、列均值，再加回总体均值。效果为：</p>
+<h3 id="42">4.2 创建一个“可工作的最小全局配置”</h3>
+<p>先建目录：</p>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span>~/.config/opencode
+</code></pre></div>
+<p>写一个最小配置（你可以先只配模型）：</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://opencode.ai/config.json&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;theme&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;opencode&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;autoupdate&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>配置 schema、JSON/JSONC 支持、以及示例字段在官方 config 文档里都有。(<a href="https://opencode.ai/docs/config/">OpenCode</a>)</p>
+<h3 id="43">4.3 项目内配置：指定模型 + 控制工具权限（推荐）</h3>
+<p>在项目根目录新建 <code>opencode.json</code>：</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://opencode.ai/config.json&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;anthropic/claude-sonnet-4-5&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;tools&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;write&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;bash&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>这里有两个重要点：</p>
 <ul>
-<li>把距离平方矩阵里的”平移影响“去掉（因为你只知道距离，不知道坐标原点的位置）</li>
-<li>得到一个与某组中心化坐标Z相一致的Gram矩阵 <span class="arithmatex">\(B=Z^TZ\)</span></li>
+<li><code>tools</code> 能控制 LLM 是否允许写文件、跑命令（安全边界很实用）。官方 config 文档明确给了 <code>tools.write</code> / <code>tools.bash</code> 的例子。(<a href="https://opencode.ai/docs/config/">OpenCode</a>)</li>
+<li>model 字符串格式是 <code>provider/model</code>，你可以用 <code>opencode models</code> 来查有哪些模型名。(<a href="https://opencode.ai/docs/cli/">OpenCode</a>)</li>
 </ul>
-<p>直观上来说，距离告诉你相隔多远，这个式子把距离转化为了”在低维空间中有多相似“</p>
-</div>
-<p><mark>将内积矩阵B进行特征分解，恢复坐标Z</mark></p>
-<p>对 <span class="arithmatex">\(B\)</span> 做特征分解： <span class="arithmatex">\(B = V \Lambda V^{T}\)</span> 取非零特征值的那一部分（即假设有 <span class="arithmatex">\(d^*\)</span> 个非零特征值），令 <span class="arithmatex">\(\Lambda=\text{diag}(\lambda_1,\lambda_2,\dots,\lambda_d)\)</span> 、<span class="arithmatex">\(V_*\)</span> 为对应特征向量矩阵，则</p>
-<div class="arithmatex">\[
-Z=\Lambda_*^{1/2}V_*^{T}\in\mathbb{R}^{d^*\times m}\tag{10.11}
-\]</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>如果这些距离真的是某个欧式空间中产生的（噪声很小，没有冲突），那么：</p>
-<ul>
-<li><span class="arithmatex">\(B=V\Lambda V^T\)</span> 的特征分解相当于找到了坐标轴（特征向量）</li>
-<li>特征值 <span class="arithmatex">\(\lambda\)</span> 给出每个轴的“尺度/方差”(<span class="arithmatex">\(\sqrt{\lambda}\)</span> 是长度尺度）</li>
-<li>只取非零特征值那部分，就能恢复出一组坐标 <span class="arithmatex">\(Z\)</span>，使得 <span class="arithmatex">\(Z^T Z=B\)</span></li>
-</ul>
-<p>式(10.10)把距离变成内积，式(10.11)把内积变为坐标</p>
-</div>
-<p>不过实际中不必严格相等，取最大的 <span class="arithmatex">\(d’\)</span> 个特征值对应的部分降到更低维，可以得到</p>
-<div class="arithmatex">\[
-Z=\hat \Lambda^{1/2}\hat V^{T}\in\mathbb{R}^{d'\times m}\tag{10.12}
-\]</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>实际距离往往不可能被低维完全满足（噪声、非欧式结构、维度不够），那就：</p>
-<ul>
-<li>只取最大的 <span class="arithmatex">\(d'\)</span> 个特征值/特征向量</li>
-<li>得到最能保留整体结构的低维表示</li>
-</ul>
-</div>
-<p>如下算法及其对应代码</p>
-<p><img alt="image-20260223220918943" src="../../../images/image-20260223220918943.png" /></p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">classical_mds</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">d_prime</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    经典 MDS（Classical MDS）</span>
-<span class="sd">    输入:</span>
-<span class="sd">        D: (m, m) 距离矩阵，D[i, j] = dist(x_i, x_j)，要求对称、对角为0</span>
-<span class="sd">        d_prime: 目标降维维度 d&#39;</span>
-<span class="sd">        eps: 数值稳定用的小阈值</span>
-<span class="sd">    输出:</span>
-<span class="sd">        Z: (m, d&#39;) 低维坐标矩阵，每一行是一个样本在低维空间的坐标</span>
-<span class="sd">        eigvals: 选取的前 d&#39; 个特征值（从大到小）</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-    <span class="n">m</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">D</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">),</span> <span class="s2">&quot;D 必须是方阵 (m, m)&quot;</span>
-
-    <span class="c1"># 1) 距离平方矩阵：D2[i,j] = dist_ij^2</span>
-    <span class="n">D2</span> <span class="o">=</span> <span class="n">D</span> <span class="o">**</span> <span class="mi">2</span>
-
-    <span class="c1"># 2) 双中心化（对应教材(10.10)的效果）</span>
-    <span class="c1">#    B = -1/2 * J * D2 * J</span>
-    <span class="c1">#    其中 J = I - (1/m) * 11^T 是中心化矩阵</span>
-    <span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
-    <span class="n">one</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">m</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-    <span class="n">J</span> <span class="o">=</span> <span class="n">I</span> <span class="o">-</span> <span class="p">(</span><span class="n">one</span> <span class="o">@</span> <span class="n">one</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">/</span> <span class="n">m</span>
-    <span class="n">B</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">J</span> <span class="o">@</span> <span class="n">D2</span> <span class="o">@</span> <span class="n">J</span>
-
-    <span class="c1"># 3) B 是对称矩阵，用 eigh（专门处理对称/厄米矩阵）更稳</span>
-    <span class="c1">#    eigvals 升序，eigvecs 列为特征向量</span>
-    <span class="n">eigvals</span><span class="p">,</span> <span class="n">eigvecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
-
-    <span class="c1"># 4) 按特征值从大到小排序</span>
-    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">eigvals</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">eigvals</span> <span class="o">=</span> <span class="n">eigvals</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-    <span class="n">eigvecs</span> <span class="o">=</span> <span class="n">eigvecs</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">]</span>
-
-    <span class="c1"># 5) 取前 d&#39; 个“非负”特征值（理论上 B 半正定；数值误差可能出现微小负数）</span>
-    <span class="c1">#    Z = V_{d&#39;} * sqrt(Lambda_{d&#39;})，输出 shape (m, d&#39;)</span>
-    <span class="n">eigvals_top</span> <span class="o">=</span> <span class="n">eigvals</span><span class="p">[:</span><span class="n">d_prime</span><span class="p">]</span>
-    <span class="n">eigvecs_top</span> <span class="o">=</span> <span class="n">eigvecs</span><span class="p">[:,</span> <span class="p">:</span><span class="n">d_prime</span><span class="p">]</span>
-
-    <span class="c1"># 将小于 0 的特征值截断为 0（避免 sqrt 出现 nan）</span>
-    <span class="n">eigvals_top_clipped</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">eigvals_top</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
-
-    <span class="c1"># 低维坐标：每列缩放对应特征向量</span>
-    <span class="n">Z</span> <span class="o">=</span> <span class="n">eigvecs_top</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">eigvals_top_clipped</span> <span class="o">+</span> <span class="n">eps</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">Z</span><span class="p">,</span> <span class="n">eigvals_top</span>
-
-
-<span class="c1"># ========== 示例 ==========</span>
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="c1"># 构造 4 个点的距离矩阵（例子随便写的）</span>
-    <span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
-        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-    <span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-
-    <span class="n">Z</span><span class="p">,</span> <span class="n">lam</span> <span class="o">=</span> <span class="n">classical_mds</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">d_prime</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;前两个特征值:&quot;</span><span class="p">,</span> <span class="n">lam</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;二维坐标 Z:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>
+<p>查模型列表：</p>
+<div class="highlight"><pre><span></span><code>opencode<span class="w"> </span>models
+opencode<span class="w"> </span>models<span class="w"> </span>anthropic
+opencode<span class="w"> </span>models<span class="w"> </span>--refresh
+</code></pre></div>
+<p>(<a href="https://opencode.ai/docs/cli/">OpenCode</a>)</p>
+<hr />
+<h2 id="5-agentsmd">5）在项目里“初始化”：生成 <code>AGENTS.md</code>，让它更懂你的仓库</h2>
+<p>官方的建议流程是：</p>
+<p>1）进入项目目录
+2）启动 opencode
+3）运行 <code>/init</code>
+4）它会分析项目并生成 <code>AGENTS.md</code>，建议提交到 Git</p>
+<p>对应文档写得非常明确。(<a href="https://opencode.ai/docs/">OpenCode</a>)</p>
+<p>实操：</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/path/to/your/project
+opencode
+</code></pre></div>
+<p>进入后输入：</p>
+<div class="highlight"><pre><span></span><code>/init
+</code></pre></div>
+<p>生成 <code>AGENTS.md</code> 后，建议你立刻看一遍再提交：</p>
+<div class="highlight"><pre><span></span><code>sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;1,120p&#39;</span><span class="w"> </span>AGENTS.md
+git<span class="w"> </span>add<span class="w"> </span>AGENTS.md
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;chore: add AGENTS.md for opencode&quot;</span>
 </code></pre></div>
 <hr />
-<p>接下来我们把得到低维子空间统一成线性形式，如下</p>
-<div class="arithmatex">\[
-Z=W^TX\tag{10.13}
-\]</div>
-<p>其中 <span class="arithmatex">\(X\in \mathbb{R}^{d\times m}\)</span> 是原始样本矩阵，<span class="arithmatex">\(W\in\mathbb{R}^{d\times d'}\)</span> 是变换矩阵。若 <span class="arithmatex">\(W\)</span> 的列向量正交，就是正交变换；<span class="arithmatex">\(Z\)</span> 的每一列就是样本在新坐标系下的表示 </p>
-<p>而下一节的重点就在于变换矩阵 <span class="arithmatex">\(W\)</span> 上，研究对 <span class="arithmatex">\(W\)</span> 加不同目标/约束可以产生哪些线性降维方法的差异</p>
-<h3 id="_3"></h3>
+<h2 id="6tui-vs-opencode-run">6）两种使用姿势：TUI 日常开发 vs <code>opencode run</code> 脚本化</h2>
+<h3 id="61-tui">6.1 TUI：日常“在仓库里对话+改代码”</h3>
+<p>最常见就是启动：</p>
+<div class="highlight"><pre><span></span><code>opencode
+</code></pre></div>
+<p>然后你可以直接问它项目相关问题。官方举例提到：用 <code>@</code> 键模糊搜索文件并引用。(<a href="https://opencode.ai/docs/">OpenCode</a>)</p>
+<p>你可以这么问（更容易得到可执行结果）：</p>
+<ul>
+<li>“请解释这个模块的入口和主要数据流，引用到关键文件路径”</li>
+<li>“修复这个报错：……（粘日志），要求最小改动，给出 diff”</li>
+<li>“把这段逻辑重构成函数，保持现有风格，不引入新依赖”</li>
+</ul>
+<h3 id="62-opencode-run-tui">6.2 <code>opencode run</code>：不进 TUI，直接一句话出结果（适合脚本）</h3>
+<p>CLI 文档里有 <code>opencode run [message..]</code>：(<a href="https://opencode.ai/docs/cli/">OpenCode</a>)</p>
+<div class="highlight"><pre><span></span><code>opencode<span class="w"> </span>run<span class="w"> </span><span class="s2">&quot;Explain the use of context in Go&quot;</span>
+</code></pre></div>
+<p>如果你想减少每次启动的冷启动成本，可以先 <code>opencode serve</code>，再让 <code>run</code> 附着到 server（文档也提到了这个用途）。(<a href="https://opencode.ai/docs/cli/">OpenCode</a>)</p>
+<hr />
+<h2 id="7">7）凭据、日志、缓存都在哪？（排错必备）</h2>
+<p>当你遇到“能启动但不工作”“provider 报错”“莫名其妙连不上”，别猜，先看日志和本地存储位置。</p>
+<p>官方 troubleshooting 写明：</p>
+<ul>
+<li>日志目录：<code>~/.local/share/opencode/log/</code></li>
+<li>存储目录：<code>~/.local/share/opencode/</code>，里面包括 <code>auth.json</code>（API key / OAuth 等）(<a href="https://opencode.ai/docs/troubleshooting/">OpenCode</a>)</li>
+</ul>
+<p>常用命令：</p>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>-lah<span class="w"> </span>~/.local/share/opencode/
+ls<span class="w"> </span>-lah<span class="w"> </span>~/.local/share/opencode/log/
+tail<span class="w"> </span>-n<span class="w"> </span><span class="m">200</span><span class="w"> </span>~/.local/share/opencode/log/*.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;1,200p&#39;</span>
+</code></pre></div>
+<p>如果需要更详细日志，官方提到可以用 <code>--log-level DEBUG</code>：(<a href="https://opencode.ai/docs/troubleshooting/">OpenCode</a>)</p>
+<div class="highlight"><pre><span></span><code>opencode<span class="w"> </span>--log-level<span class="w"> </span>DEBUG
+</code></pre></div>
+<hr />
+<h2 id="8">8）安全与“别把仓库当祭品”：权限、密钥、变量替换</h2>
+<p>OpenCode 的 config 支持把敏感信息从环境变量或文件里引用，而不是直接把 key 写进 JSON：(<a href="https://opencode.ai/docs/config/">OpenCode</a>)</p>
+<h3 id="81">8.1 用环境变量占位符（推荐）</h3>
+<p>在 <code>opencode.json</code> 里：</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;provider&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;anthropic&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;options&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;apiKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{env:ANTHROPIC_API_KEY}&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>(<a href="https://opencode.ai/docs/config/">OpenCode</a>)</p>
+<h3 id="82">8.2 用文件引用（更适合放到密码管理/私密目录）</h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;provider&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;openai&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;options&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;apiKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{file:~/.secrets/openai-key}&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>(<a href="https://opencode.ai/docs/config/">OpenCode</a>)</p>
+<p>然后：</p>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span>~/.secrets
+chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>~/.secrets
+<span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;%s&quot;</span><span class="w"> </span><span class="s2">&quot;你的key&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>~/.secrets/openai-key
+chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>~/.secrets/openai-key
+</code></pre></div>
+<hr />
+<h2 id="9linux">9）常见坑速查（Linux 版）</h2>
+<h3 id="91-tui">9.1 “开了代理后 TUI 连不上 / 卡死 / 奇怪的循环”</h3>
+<p>几乎都是忘了 <code>NO_PROXY=localhost,127.0.0.1</code>。官方明确警告 TUI 会和本地 HTTP server 通信，需要 bypass proxy，否则会 routing loop。(<a href="https://opencode.ai/docs/network/">OpenCode</a>)</p>
+<h3 id="92-tls">9.2 “证书相关 TLS 报错”</h3>
+<p>企业 CA 没加：用 <code>NODE_EXTRA_CA_CERTS</code>。(<a href="https://opencode.ai/docs/network/">OpenCode</a>)</p>
+<h3 id="93-key">9.3 “想知道它到底把 key 放哪了”</h3>
+<p><code>~/.local/share/opencode/auth.json</code>（troubleshooting 也说明存储目录含 auth.json）。(<a href="https://opencode.ai/docs/cli/">OpenCode</a>)</p>
+<hr />
+<h2 id="10">10）一个可复制的“从零到跑通”最短路径</h2>
+<p>把上面的东西压缩成 10 分钟可完成版本：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1) 安装</span>
+curl<span class="w"> </span>-fsSL<span class="w"> </span>https://opencode.ai/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+
+<span class="c1"># 2)（可选）代理</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">HTTPS_PROXY</span><span class="o">=</span><span class="s2">&quot;http://127.0.0.1:7890&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">HTTP_PROXY</span><span class="o">=</span><span class="s2">&quot;http://127.0.0.1:7890&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">NO_PROXY</span><span class="o">=</span><span class="s2">&quot;localhost,127.0.0.1&quot;</span>
+
+<span class="c1"># 3) 登录 provider</span>
+opencode<span class="w"> </span>auth<span class="w"> </span>login
+
+<span class="c1"># 4) 进项目</span>
+<span class="nb">cd</span><span class="w"> </span>/path/to/project
+opencode
+<span class="c1"># 在 TUI 里执行：</span>
+<span class="c1"># /init</span>
+</code></pre></div>
+<hr />
+<p>如果你愿意把你的 Linux 发行版（Ubuntu/Debian/Arch/Fedora）、以及你打算用的 provider（OpenAI/Claude/Gemini/国内网关/自建）说一下，我可以把文中的 **模型选择、最小 opencode.json、以及代理/证书的排错路径**再收敛成“只适用于你那套环境”的版本，保证复制就能跑、报错也有对应抓手。</p>
 
 
 
@@ -3650,14 +3742,14 @@ Z=W^TX\tag{10.13}
     
     
       
-      <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.titles", "navigation.tabs", "navigation.indexes", "navigation.top"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.titles", "navigation.tabs", "navigation.indexes", "navigation.top"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
-        <script src="../../../resources/js/read-metrics.js"></script>
+        <script src="../../resources/js/read-metrics.js"></script>
       
     
   </body>
