@@ -1023,6 +1023,33 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#kpca" class="md-nav__link">
+    <span class="md-ellipsis">
+      核化线性降维(KPCA)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      流形学习
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      度量学习
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3261,6 +3288,33 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#kpca" class="md-nav__link">
+    <span class="md-ellipsis">
+      核化线性降维(KPCA)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      流形学习
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      度量学习
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3547,15 +3601,782 @@ W
 <p>此式左边是 <strong>所有样本的平方重构误差</strong>。式(10.14)表明：在正交约束下，最小化重构误差等价于 <strong>最大投影化后捕获到的能量</strong></p>
 <p>数学直觉来说：你投影到某个子空间，能解释的数据能量越多，丢掉的能量越少，重构就越准</p>
 </div>
-<p>然后根据我们的目标，最近重构性，那么应该让式(10.14)最小，由于 <span class="arithmatex">\(w_j\)</span> 是标准正交基，<span class="arithmatex">\(\sum_ix_ix_i^T\)</span> 是协方差矩阵，那么有
-$$
-\min_W -\text{tr}(W<sup>TXX</sup>TW)\
+<p>然后根据我们的目标，最近重构性，那么应该让式(10.14)最小，由于 <span class="arithmatex">\(w_j\)</span> 是标准正交基，<span class="arithmatex">\(\sum_ix_ix_i^T\)</span> 是协方差矩阵，那么有</p>
+<div class="arithmatex">\[
+\min_W -\text{tr}(W^TXX^TW)\\
 s.t. W^TW=I\tag{10.15}
-$$</p>
+\]</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>在所有 <span class="arithmatex">\(d’\)</span> 维正交子空间中，找一个让投影能量中最大（也就是重构误差最小）的子空间</p>
+<hr />
 </div>
+<p><mark>从最大可分性推到PCA目标</mark></p>
+<p>我们知道样本点 <span class="arithmatex">\(x_i\)</span> 在新空间中超平面上的投影是 <span class="arithmatex">\(W^Tx_i\)</span> ，若所有样本点的投影尽可能分开，那么应该让投影后样本点的方差最大化，如下图</p>
+<p><img alt="image-20260225111041297" src="../../../images/image-20260225111041297.png" /></p>
+<p>由于投影后样本点的方差是 <span class="arithmatex">\(\sum_iW^Tx_ix_i^TW\)</span> ,那么我们的优化目标可以写为</p>
+<div class="arithmatex">\[
+\begin{align}
+\max_W \text{tr}(W^TXX^TW)\tag{10.16}\\
+s.t. W^TW=I
+\end{align}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>投影后样本的方差（散布程度）由协方差决定，trace可以理解为“各投影轴上方差的总和”</p>
+<p>式(10.16)就是在找投影后最分散的 <span class="arithmatex">\(d’\)</span> 维子空间——点拉得开，信息更集中在少数维里 </p>
+</div>
+<hr />
+<p><mark>解方程及算法</mark></p>
+<p>很容易知道，式(10.15)与式(10.16)等价，对这两个式子使用拉格朗日乘子法可得</p>
+<div class="arithmatex">\[
+XX^TW=W\Lambda\tag{10.17}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>最优的 <span class="arithmatex">\(W\)</span> 的列向量就是协方差矩阵（或 <span class="arithmatex">\(XX^T\)</span> ）的特征向量，<span class="arithmatex">\(\Lambda\)</span> 的对角元素是对应特征值</p>
+</div>
+<p>然后按照特征值从大到小取前 <span class="arithmatex">\(d’\)</span> 个特征向量（也就是选择维度，下面会介绍别的方法），就得到主成分方向</p>
+<ul>
+<li>特征值 <span class="arithmatex">\(\lambda_k\)</span>：第 <span class="arithmatex">\(k\)</span> 个主成分方向上“解释的方差/能量”</li>
+<li>特征向量 <span class="arithmatex">\(w_k\)</span>：那条方向</li>
+</ul>
+<p><img alt="image-20260225112733557" src="../../../images/image-20260225112733557.png" /></p>
+<p>然后对于维度的选择，我们可以换个方式，可以从重构的角度设置一个重构阈值，例如 <span class="arithmatex">\(t=95\%\)</span> ,然后选取使下式成立的最小 <span class="arithmatex">\(d’\)</span> 值：</p>
+<div class="arithmatex">\[
+\dfrac{
+\sum_{i=1}^{d'}\lambda_i
+}{
+\sum_{i=1}^{d}\lambda_i
+}\ge t\tag{10.18}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>总方差看作信息总量，前 <span class="arithmatex">\(d’\)</span> 个主成分解释的比例至少要达到 <span class="arithmatex">\(t\)</span></p>
+</div>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">pca</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">d_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">var_ratio</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    PCA（主成分分析）</span>
+
+<span class="sd">    输入:</span>
+<span class="sd">        X: (m, d) numpy数组，m个样本、d维特征（行=样本）</span>
+<span class="sd">        d_out: 目标降到的维度 d&#39;（二选一；优先使用d_out）</span>
+<span class="sd">        var_ratio: 解释方差阈值t（如0.95），自动选最小d&#39;</span>
+
+<span class="sd">    输出:</span>
+<span class="sd">        Z: (m, d&#39;) 降维后的表示（投影坐标）</span>
+<span class="sd">        W: (d, d&#39;) 投影矩阵（列为主成分方向）</span>
+<span class="sd">        mu: (d,) 均值向量（用于对新样本做同样中心化）</span>
+<span class="sd">        eigvals: (d,) 按降序排列的特征值（方差大小）</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="c1"># 1) 中心化</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">Xc</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="n">mu</span>
+
+    <span class="c1"># 2) 协方差矩阵（对称）</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="p">(</span><span class="n">Xc</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">Xc</span><span class="p">)</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># 3) 特征分解（对称矩阵用eigh更稳）</span>
+    <span class="n">eigvals</span><span class="p">,</span> <span class="n">eigvecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>              <span class="c1"># 升序</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">eigvals</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>                   <span class="c1"># 改为降序</span>
+    <span class="n">eigvals</span><span class="p">,</span> <span class="n">eigvecs</span> <span class="o">=</span> <span class="n">eigvals</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">eigvecs</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">]</span>  <span class="c1"># eigvecs列对应特征值</span>
+
+    <span class="c1"># 4) 选择降维维度 d&#39;</span>
+    <span class="k">if</span> <span class="n">d_out</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">var_ratio</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">d_out</span> <span class="o">=</span> <span class="n">d</span>  <span class="c1"># 不指定则不降维</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">total</span> <span class="o">=</span> <span class="n">eigvals</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">total</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">d_out</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">cum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">eigvals</span><span class="p">)</span> <span class="o">/</span> <span class="n">total</span>
+                <span class="n">d_out</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span><span class="n">cum</span><span class="p">,</span> <span class="n">var_ratio</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">d_out</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">d_out</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">d</span><span class="p">))</span>
+
+    <span class="c1"># 5) 投影：W为前d&#39;个主成分，Z为低维坐标</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">eigvecs</span><span class="p">[:,</span> <span class="p">:</span><span class="n">d_out</span><span class="p">]</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">Xc</span> <span class="o">@</span> <span class="n">W</span>
+
+    <span class="k">return</span> <span class="n">Z</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">eigvals</span>
+
+<span class="c1"># ====== demo ======</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">Z</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">eigvals</span> <span class="o">=</span> <span class="n">pca</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">d_out</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 降到1维</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Z=</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;W=</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mu=&quot;</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;eigvals=&quot;</span><span class="p">,</span> <span class="n">eigvals</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>梳理一下到此为止的思路：</strong></p>
+<p>我们先是在 <span class="arithmatex">\(k\)</span> 近邻学习中讨论 1NN的上界，不过需要dense sample。</p>
+<p>而高维情况下的densen sample是不现实的，距离和近邻并不可靠，于是我们要做低维嵌入/降维，让样本在低维中更密、距离更有意义；</p>
+<p>然后我们介绍了MDS算法，即从距离矩阵出发保持距离，得到计算式用来映射；</p>
+<p>但MDS的映射可能会在某种情况下强化噪声，于是有PCA的“从原始特征出发做线性投影”，并给出可计算、稳健的选子空间原则，也就是按照合理的方法删除一些比较小特征值的方向</p>
+<p><strong>但是</strong>：</p>
+<p>现实里的数据常在“弯曲的低维结构上”，线性投影会把结构破坏（可以见图10.6）。那么我们该如何解决呢？</p>
+</div>
+<h3 id="kpca">核化线性降维(KPCA)</h3>
+<p><img alt="image-20260225115214592" src="../../../images/image-20260225115214592.png" /></p>
+<p>从数学的角度来看，PCA假设高维到低维的映射是线性的，也就是又找了一个线性子空间。然是如果数据再高维里呈现 S 形曲面（这个本质叫做二维流形，下一节的内容），线性投影就会把折叠的结构压到一起，导致本来相近/相远的关系被破坏。于是提出了此方案，目的是：<strong>用非线性映射把它展开，再做PCA</strong></p>
+<p>假定我们将在高维特征空间中把数据投影到由 W 确定的超平面上，即 PCA 欲求解</p>
+<div class="arithmatex">\[
+\left(\sum_{i=1}^mz_iz_i^T\right)W=\lambda W\tag{10.19}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>这里 <span class="arithmatex">\(z_i\)</span> 不是指原始 <span class="arithmatex">\(x_i\)</span>，是它在更高维特征空间中的表示，后续写为 <span class="arithmatex">\(\phi(x_i)\)</span></p>
+<p>此式意味着：PCA的本质仍然是对“协方差做特征分解“，只不过把它搬到了一个可能是高维甚至无限维的空间里</p>
+</div>
+<p>那么最优方向 W 落在样本张成的子空间应该为</p>
+<div class="arithmatex">\[
+\begin{align}
+W&amp;=\dfrac{1}{\lambda}\left(
+\sum_{i=1}^mz_iz_i^T
+\right)W=\sum_{i=1}^mz_i\dfrac{z_i^TW}{\lambda}\\
+&amp;=\sum_{i=1}^mz_i\alpha_i\tag{10.20}
+\end{align}
+\]</div>
+<p>如果我们考虑把 <span class="arithmatex">\(z_i\)</span> 给替换为映射形式，那么可以写为</p>
+<div class="arithmatex">\[
+W=\sum_{i=1}^m\phi(x_i)\alpha_i\tag{10.22}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>最优投影方向W可以写成训练样本在特征空间表示的线性组合。这一步让我们后续只需要样本之间的内积，不需要显式写出W的坐标</p>
+</div>
+<p>接下来我们用映射 <span class="arithmatex">\(\phi\)</span> 把 <span class="arithmatex">\(z_i\)</span> 改写为 <span class="arithmatex">\(\phi(x_i)\)</span></p>
+<div class="arithmatex">\[
+\left(
+\sum_{i=1}^m\phi(x_i)\phi(x_i)^T
+\right)W
+=\lambda W\tag{10.21}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>明确“非线性”的来源：先用 <span class="arithmatex">\(\phi\)</span> 把数据送去高维，再在高维空间做线性 PCA</p>
+</div>
+<p><strong>但是</strong>，式(10.21)和式(10.22)存在一个问题：我们可能并不知道 <span class="arithmatex">\(\phi\)</span> 的显式表达，该怎么解决呢？</p>
+<p>在第六章的支持向量机中我们介绍了核函数，一个用来绕过高维映射计算，转而算内积的方法。这里同样适用</p>
+<p>先引入核函数</p>
+<div class="arithmatex">\[
+\kappa(x_i,x_j)=\phi(x_i)^T\phi(x_j)\tag{10.23}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>核技巧的核心内容，只要能计算 <span class="arithmatex">\(\kappa\)</span>，就等价于在某个高维空间里做内积</p>
+</div>
+<p>基于式(10.23)带来的核函数，我们可以重构式(10.21)，也就是变为核矩阵的特征分解
+$$
+K A=\lambda A\tag{10.24}
+$$</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>这里的 <span class="arithmatex">\(K\)</span> 为 <span class="arithmatex">\(\kappa\)</span> 对应的核矩阵，<span class="arithmatex">\(K_{ij}=\kappa(x_i,x_j)\)</span>，<span class="arithmatex">\(A=(\alpha_1,\dots,\alpha_m)\)</span></p>
+<p>KPCA 的训练阶段就是：构造核矩阵 <span class="arithmatex">\(K\)</span> ，然后做特征分解，取最大的 <span class="arithmatex">\(d’\)</span> 个特征值对应的特征向量(PCA的取最大特征值方向一样)</p>
+</div>
+<p>那么我们通过核矩阵的特征分解，获得了新的样本 <span class="arithmatex">\(x\)</span> ,那么如何投影呢？我们只需要它与所有训练样本的核值就可以了</p>
+<p>投影后第 <span class="arithmatex">\(j\)</span> 维坐标为：</p>
+<div class="arithmatex">\[
+\begin{align}
+z_j&amp;=w_j^T\phi(x)=\sum_{i=1}^m\alpha_i^j\phi(x_i)^T\phi(x)\\
+&amp;=\sum_{i=1}^m\alpha_i^j\kappa(x_i,x)\tag{10.25}
+\end{align}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><span class="arithmatex">\(\alpha_i\)</span> 已经过规范化，<span class="arithmatex">\(\alpha_i^j\)</span> 是 <span class="arithmatex">\(\alpha_i\)</span> 的第 <span class="arithmatex">\(j\)</span> 个分量</p>
+<p>此式意味着：新点的第 <span class="arithmatex">\(j\)</span> 维低维坐标，等于“它和每个训练点的相似度”做加权加和</p>
+<p>不过这也解释了计算代价：每多出一个新样本，就要算它与全部训练样本的核(m次)，所以KPCA在大样本下开销很大</p>
+</div>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># 之前的MDS</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">classical_mds</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">d_prime</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    经典 MDS（Classical MDS）</span>
+<span class="sd">    输入:</span>
+<span class="sd">        D: (m, m) 距离矩阵，D[i, j] = dist(x_i, x_j)，要求对称、对角为0</span>
+<span class="sd">        d_prime: 目标降维维度 d&#39;</span>
+<span class="sd">        eps: 数值稳定用的小阈值</span>
+<span class="sd">    输出:</span>
+<span class="sd">        Z: (m, d&#39;) 低维坐标矩阵，每一行是一个样本在低维空间的坐标</span>
+<span class="sd">        eigvals: 选取的前 d&#39; 个特征值（从大到小）</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">D</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">),</span> <span class="s2">&quot;D 必须是方阵 (m, m)&quot;</span>
+
+    <span class="n">D2</span> <span class="o">=</span> <span class="n">D</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    <span class="n">one</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">m</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">J</span> <span class="o">=</span> <span class="n">I</span> <span class="o">-</span> <span class="p">(</span><span class="n">one</span> <span class="o">@</span> <span class="n">one</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">/</span> <span class="n">m</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">J</span> <span class="o">@</span> <span class="n">D2</span> <span class="o">@</span> <span class="n">J</span>
+
+    <span class="n">eigvals</span><span class="p">,</span> <span class="n">eigvecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">eigvals</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">eigvals</span> <span class="o">=</span> <span class="n">eigvals</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="n">eigvecs</span> <span class="o">=</span> <span class="n">eigvecs</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">]</span>
+
+    <span class="n">eigvals_top</span> <span class="o">=</span> <span class="n">eigvals</span><span class="p">[:</span><span class="n">d_prime</span><span class="p">]</span>
+    <span class="n">eigvecs_top</span> <span class="o">=</span> <span class="n">eigvecs</span><span class="p">[:,</span> <span class="p">:</span><span class="n">d_prime</span><span class="p">]</span>
+    <span class="n">eigvals_top_clipped</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">eigvals_top</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">eigvecs_top</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">eigvals_top_clipped</span> <span class="o">+</span> <span class="n">eps</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Z</span><span class="p">,</span> <span class="n">eigvals_top</span>
+
+
+<span class="c1"># =========================</span>
+<span class="c1"># 工具：两两欧氏距离矩阵</span>
+<span class="c1"># =========================</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">pairwise_dist</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;输入 X:(m,d)，输出 D:(m,m) 欧氏距离矩阵&quot;&quot;&quot;</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">sq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+    <span class="n">D2</span> <span class="o">=</span> <span class="n">sq</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">sq</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">G</span>
+    <span class="n">D2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">D2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">D2</span><span class="p">)</span>
+
+
+<span class="c1"># =========================</span>
+<span class="c1"># 1) KPCA（核PCA）</span>
+<span class="c1"># =========================</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">kpca</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">d_prime</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="s2">&quot;rbf&quot;</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">coef0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    KPCA（Kernel PCA）</span>
+<span class="sd">    输入:</span>
+<span class="sd">        X: (m,d) 样本矩阵（行=样本）</span>
+<span class="sd">        d_prime: 目标维度</span>
+<span class="sd">        kernel: &quot;rbf&quot; | &quot;poly&quot; | &quot;linear&quot;</span>
+<span class="sd">        gamma: RBF/poly 的系数；None 时默认 1/d</span>
+<span class="sd">        degree, coef0: poly 核参数</span>
+<span class="sd">        eps: 数值稳定</span>
+<span class="sd">    输出:</span>
+<span class="sd">        Z: (m,d&#39;) 训练样本的低维坐标</span>
+<span class="sd">        model: dict，用于对新样本做投影（包含 X_train、alpha、eigvals、核参数等）</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">if</span> <span class="n">gamma</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">gamma</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># 1) 构造核矩阵 K</span>
+    <span class="k">if</span> <span class="n">kernel</span> <span class="o">==</span> <span class="s2">&quot;linear&quot;</span><span class="p">:</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">elif</span> <span class="n">kernel</span> <span class="o">==</span> <span class="s2">&quot;poly&quot;</span><span class="p">:</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">*</span> <span class="p">(</span><span class="n">X</span> <span class="o">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="n">coef0</span><span class="p">)</span> <span class="o">**</span> <span class="n">degree</span>
+    <span class="k">elif</span> <span class="n">kernel</span> <span class="o">==</span> <span class="s2">&quot;rbf&quot;</span><span class="p">:</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="n">pairwise_dist</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">gamma</span> <span class="o">*</span> <span class="p">(</span><span class="n">D</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;kernel 仅支持: &#39;rbf&#39; | &#39;poly&#39; | &#39;linear&#39;&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 2) 中心化核矩阵：Kc = J K J</span>
+    <span class="n">one</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">m</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">J</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">one</span> <span class="o">@</span> <span class="n">one</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">/</span> <span class="n">m</span>
+    <span class="n">Kc</span> <span class="o">=</span> <span class="n">J</span> <span class="o">@</span> <span class="n">K</span> <span class="o">@</span> <span class="n">J</span>
+
+    <span class="c1"># 3) 特征分解（对称）</span>
+    <span class="n">eigvals</span><span class="p">,</span> <span class="n">eigvecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">Kc</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">eigvals</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">eigvals</span><span class="p">,</span> <span class="n">eigvecs</span> <span class="o">=</span> <span class="n">eigvals</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">eigvecs</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">]</span>
+
+    <span class="c1"># 4) 取前 d&#39; 个（截断非正特征值）</span>
+    <span class="n">eigvals_top</span> <span class="o">=</span> <span class="n">eigvals</span><span class="p">[:</span><span class="n">d_prime</span><span class="p">]</span>
+    <span class="n">eigvecs_top</span> <span class="o">=</span> <span class="n">eigvecs</span><span class="p">[:,</span> <span class="p">:</span><span class="n">d_prime</span><span class="p">]</span>
+    <span class="n">eigvals_top</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">eigvals_top</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+    <span class="c1"># 5) 归一化 alpha：alpha_j = v_j / sqrt(lambda_j)</span>
+    <span class="c1">#    这样新样本投影：z_j(x)=sum_i alpha_ij * k(x_i, x)（对应教材(10.25)）</span>
+    <span class="n">denom</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">eigvals_top</span> <span class="o">+</span> <span class="n">eps</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">eigvecs_top</span> <span class="o">/</span> <span class="n">denom</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+
+    <span class="c1"># 6) 训练样本坐标：Z = Kc @ alpha</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">Kc</span> <span class="o">@</span> <span class="n">alpha</span>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;X_train&quot;</span><span class="p">:</span> <span class="n">X</span><span class="p">,</span>
+        <span class="s2">&quot;kernel&quot;</span><span class="p">:</span> <span class="n">kernel</span><span class="p">,</span>
+        <span class="s2">&quot;gamma&quot;</span><span class="p">:</span> <span class="n">gamma</span><span class="p">,</span>
+        <span class="s2">&quot;degree&quot;</span><span class="p">:</span> <span class="n">degree</span><span class="p">,</span>
+        <span class="s2">&quot;coef0&quot;</span><span class="p">:</span> <span class="n">coef0</span><span class="p">,</span>
+        <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="n">alpha</span><span class="p">,</span>          <span class="c1"># (m,d&#39;)</span>
+        <span class="s2">&quot;eigvals&quot;</span><span class="p">:</span> <span class="n">eigvals_top</span><span class="p">,</span>  <span class="c1"># (d&#39;,)</span>
+        <span class="s2">&quot;K_row_mean&quot;</span><span class="p">:</span> <span class="n">K</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>   <span class="c1"># 用于中心化新样本核向量</span>
+        <span class="s2">&quot;K_all_mean&quot;</span><span class="p">:</span> <span class="n">K</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>         <span class="c1"># 用于中心化新样本核向量</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">Z</span><span class="p">,</span> <span class="n">model</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">kpca_transform</span><span class="p">(</span><span class="n">X_new</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    KPCA 对新样本投影</span>
+<span class="sd">    输入:</span>
+<span class="sd">        X_new: (n,d) 新样本</span>
+<span class="sd">        model: kpca 返回的 model</span>
+<span class="sd">    输出:</span>
+<span class="sd">        Z_new: (n,d&#39;) 新样本低维坐标</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">X_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X_new</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">Xtr</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="s2">&quot;X_train&quot;</span><span class="p">]</span>
+    <span class="n">kernel</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="s2">&quot;kernel&quot;</span><span class="p">]</span>
+    <span class="n">gamma</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="s2">&quot;gamma&quot;</span><span class="p">]</span>
+    <span class="n">degree</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="s2">&quot;degree&quot;</span><span class="p">]</span>
+    <span class="n">coef0</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="s2">&quot;coef0&quot;</span><span class="p">]</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="s2">&quot;alpha&quot;</span><span class="p">]</span>
+
+    <span class="c1"># 1) 计算 K_new: (n,m)</span>
+    <span class="k">if</span> <span class="n">kernel</span> <span class="o">==</span> <span class="s2">&quot;linear&quot;</span><span class="p">:</span>
+        <span class="n">K_new</span> <span class="o">=</span> <span class="n">X_new</span> <span class="o">@</span> <span class="n">Xtr</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">elif</span> <span class="n">kernel</span> <span class="o">==</span> <span class="s2">&quot;poly&quot;</span><span class="p">:</span>
+        <span class="n">K_new</span> <span class="o">=</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">*</span> <span class="p">(</span><span class="n">X_new</span> <span class="o">@</span> <span class="n">Xtr</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="n">coef0</span><span class="p">)</span> <span class="o">**</span> <span class="n">degree</span>
+    <span class="k">elif</span> <span class="n">kernel</span> <span class="o">==</span> <span class="s2">&quot;rbf&quot;</span><span class="p">:</span>
+        <span class="c1"># 欧氏距离：||a-b||^2 = a^2 + b^2 -2ab</span>
+        <span class="n">A2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">X_new</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
+        <span class="n">B2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Xtr</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">D2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">A2</span> <span class="o">+</span> <span class="n">B2</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">X_new</span> <span class="o">@</span> <span class="n">Xtr</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">K_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">D2</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;bad kernel&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 2) 中心化新样本核向量（与训练时 Kc=J K J 一致）</span>
+    <span class="c1">#    k_c(x,·) = k(x,·) - mean_row(·) - mean(k(x,·)) + mean_all</span>
+    <span class="n">row_mean</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="s2">&quot;K_row_mean&quot;</span><span class="p">][</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>     <span class="c1"># (1,m)</span>
+    <span class="n">all_mean</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="s2">&quot;K_all_mean&quot;</span><span class="p">]</span>
+    <span class="n">new_mean</span> <span class="o">=</span> <span class="n">K_new</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># (n,1)</span>
+    <span class="n">K_new_c</span> <span class="o">=</span> <span class="n">K_new</span> <span class="o">-</span> <span class="n">row_mean</span> <span class="o">-</span> <span class="n">new_mean</span> <span class="o">+</span> <span class="n">all_mean</span>
+
+    <span class="c1"># 3) 投影：Z = K_new_c @ alpha</span>
+    <span class="k">return</span> <span class="n">K_new_c</span> <span class="o">@</span> <span class="n">alpha</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+    <span class="n">Z_kpca</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">kpca</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">d_prime</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="s2">&quot;rbf&quot;</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">Z_kpca</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="_3">流形学习</h3>
+<p>流形学习同样是一种降维方法，这一节的核心假设是：数据落在一个低维“流形”上——<strong>局部</strong> 近似欧式空间，所以局部距离/线性关系可靠；但 <strong>全局</strong> 直线距离不可靠。本节主要就是解决此问题</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>流形 <strong>在局部看起来像欧式空间的空间</strong>。或者说：当你站的足够近，它就像一个普通平面，但拉远看会发现很弯曲，带入地球想一下就行</p>
+</div>
+<p><img alt="image-20260226120548458" src="../../../images/image-20260226120548458.png" /></p>
+<p>这里先介绍 <strong>等度量映射方法(Isomap)</strong>,其核心思想就是用测地线距离代替直线距离，再用MDS</p>
+<p>如上图所示，它的红线是曲面上的最短路径（测地线）。高维中的直线距离会低估它</p>
+<blockquote>
+<p>换个说法，我们是无法做到直接穿过空间内部计算两点间的直线距离的，因为这个直线不存在于空间中，必须走红线测量</p>
+</blockquote>
+<p>然后就是计算测地线距离了，Isomap的做法如下图</p>
+<p><img alt="image-20260226120953689" src="../../../images/image-20260226120953689.png" /></p>
+<p>不过Isomap仅仅得到了训练样本子低维空间的坐标，对于新样本，目前采取的措施是：将训练样本的高维空间坐标作为输入、低维空间作为输出，训练一个回归学习器来对新样本的低维空间坐标做预测</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># 之前的MDS</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">classical_mds</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">d_prime</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    经典 MDS（Classical MDS）</span>
+<span class="sd">    输入:</span>
+<span class="sd">        D: (m, m) 距离矩阵，D[i, j] = dist(x_i, x_j)，要求对称、对角为0</span>
+<span class="sd">        d_prime: 目标降维维度 d&#39;</span>
+<span class="sd">        eps: 数值稳定用的小阈值</span>
+<span class="sd">    输出:</span>
+<span class="sd">        Z: (m, d&#39;) 低维坐标矩阵，每一行是一个样本在低维空间的坐标</span>
+<span class="sd">        eigvals: 选取的前 d&#39; 个特征值（从大到小）</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">D</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">),</span> <span class="s2">&quot;D 必须是方阵 (m, m)&quot;</span>
+
+    <span class="n">D2</span> <span class="o">=</span> <span class="n">D</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    <span class="n">one</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">m</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">J</span> <span class="o">=</span> <span class="n">I</span> <span class="o">-</span> <span class="p">(</span><span class="n">one</span> <span class="o">@</span> <span class="n">one</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">/</span> <span class="n">m</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">J</span> <span class="o">@</span> <span class="n">D2</span> <span class="o">@</span> <span class="n">J</span>
+
+    <span class="n">eigvals</span><span class="p">,</span> <span class="n">eigvecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">eigvals</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">eigvals</span> <span class="o">=</span> <span class="n">eigvals</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="n">eigvecs</span> <span class="o">=</span> <span class="n">eigvecs</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">]</span>
+
+    <span class="n">eigvals_top</span> <span class="o">=</span> <span class="n">eigvals</span><span class="p">[:</span><span class="n">d_prime</span><span class="p">]</span>
+    <span class="n">eigvecs_top</span> <span class="o">=</span> <span class="n">eigvecs</span><span class="p">[:,</span> <span class="p">:</span><span class="n">d_prime</span><span class="p">]</span>
+    <span class="n">eigvals_top_clipped</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">eigvals_top</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">eigvecs_top</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">eigvals_top_clipped</span> <span class="o">+</span> <span class="n">eps</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Z</span><span class="p">,</span> <span class="n">eigvals_top</span>
+
+<span class="c1"># =========================</span>
+<span class="c1"># 工具：两两欧氏距离矩阵</span>
+<span class="c1"># =========================</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">pairwise_dist</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;输入 X:(m,d)，输出 D:(m,m) 欧氏距离矩阵&quot;&quot;&quot;</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">sq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+    <span class="n">D2</span> <span class="o">=</span> <span class="n">sq</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">sq</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">G</span>
+    <span class="n">D2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">D2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">D2</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">isomap</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">d_prime</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Isomap</span>
+<span class="sd">    输入:</span>
+<span class="sd">        X: (m,d) 样本矩阵</span>
+<span class="sd">        k: 近邻数</span>
+<span class="sd">        d_prime: 目标维度</span>
+<span class="sd">    输出:</span>
+<span class="sd">        Z: (m,d&#39;) 低维坐标（用 MDS 得到）</span>
+<span class="sd">        D_geo: (m,m) 近似测地线距离（图最短路距离）</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">D</span> <span class="o">=</span> <span class="n">pairwise_dist</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+    <span class="c1"># 1) 构造 kNN 图的邻接矩阵（非邻居设为 inf）</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+        <span class="n">nn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">D</span><span class="p">[</span><span class="n">i</span><span class="p">])[</span><span class="mi">1</span><span class="p">:</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># 排除自己</span>
+        <span class="n">G</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">nn</span><span class="p">]</span> <span class="o">=</span> <span class="n">D</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">nn</span><span class="p">]</span>
+
+    <span class="c1"># 无向化（常见做法：取 min）</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">G</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+    <span class="c1"># 2) Floyd-Warshall 求所有点对最短路（测地线近似）</span>
+    <span class="n">D_geo</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+        <span class="c1"># 利用广播加速：D[i,j] = min(D[i,j], D[i,t]+D[t,j])</span>
+        <span class="n">D_geo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">D_geo</span><span class="p">,</span> <span class="n">D_geo</span><span class="p">[:,</span> <span class="p">[</span><span class="n">t</span><span class="p">]]</span> <span class="o">+</span> <span class="n">D_geo</span><span class="p">[[</span><span class="n">t</span><span class="p">],</span> <span class="p">:])</span>
+
+    <span class="c1"># 3) 用 MDS 将测地线距离嵌入到低维</span>
+    <span class="n">Z</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">classical_mds</span><span class="p">(</span><span class="n">D_geo</span><span class="p">,</span> <span class="n">d_prime</span><span class="o">=</span><span class="n">d_prime</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Z</span><span class="p">,</span> <span class="n">D_geo</span>
+
+<span class="c1"># =========================</span>
+<span class="c1"># 简短用法示例</span>
+<span class="c1"># =========================</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+    <span class="n">Z_iso</span><span class="p">,</span> <span class="n">D_geo</span> <span class="o">=</span> <span class="n">isomap</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">d_prime</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span> <span class="n">Z_iso</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<p><img alt="image-20260226121349706" src="../../../images/image-20260226121349706.png" /></p>
+<p>接下来介绍 <strong>局部线性嵌入（LLE）</strong> 方法，它的核心思想是追求局部几何关系在低维也保持</p>
+<p>如上图，假定样本点 <span class="arithmatex">\(x_i\)</span> 的坐标能通过它的邻域样本 <span class="arithmatex">\(x_j,x_k,x_l\)</span> 的坐标通过线性组合而重构出来，即</p>
+<div class="arithmatex">\[
+x_i=w_{ij}x_j+w_{ik}x_k+w_{il}x_l\tag{10.26}
+\]</div>
+<p>LLE 希望式(10.26)的关系在低维空间中也可以保持</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>点 <span class="arithmatex">\(x_i\)</span> 可以由它的邻居点线性组合重构，这符合流形的“在小邻近域里近似成立”</p>
+</div>
+<p>下面是计算过程，我们先为每个样本 <span class="arithmatex">\(x_i\)</span> 找到其近邻下标集合 <span class="arithmatex">\(Q_i\)</span> ，然后计算出基于 <span class="arithmatex">\(Q_i\)</span> 中的样本点对 <span class="arithmatex">\(x_i\)</span> 进行线性重构的系数 <span class="arithmatex">\(w_i\)</span>，也就是在高维里求重构权重</p>
+<div class="arithmatex">\[
+\begin{align}
+\min_{w_1, w_2, \ldots, w_m}
+&amp;\sum_{i=1}^{m}
+\left\| x_i - \sum_{j \in Q_i} w_{ij} x_j \right\|_2^2\tag{10.27}
+\\
+&amp;\text{s.t.} \quad
+\sum_{j \in Q_i} w_{ij} = 1
+\end{align}
+\]</div>
+<p>接下来，由于 <span class="arithmatex">\(x_i\)</span> 和 <span class="arithmatex">\(x_j\)</span> 均为已知，令 <span class="arithmatex">\(C_{jk}=(x_i-x_j)^T(x_i-x_k)\)</span>,则 <span class="arithmatex">\(w_{ij}\)</span> 有闭式解</p>
+<div class="arithmatex">\[
+w_{ij}=\dfrac{\sum_{k\in Q_i}C_{jk}^{-1}}{\sum_{l,k\in Q_i}C_{ls}^{-1}}\tag{10.28}
+\]</div>
+<p>然后按照我们的想法，在低维种保持同样的重构权重，解答低维坐标 <span class="arithmatex">\(z_i\)</span></p>
+<div class="arithmatex">\[
+\min_{z_1,\dots,z_m}\sum_{i=1}^{m}\left\|
+z_i-\sum_{j\in Q_i}w_{ij}z_j
+\right\|_2^2\tag{10.29}
+\]</div>
+<p>对比式(10.27)和式(10.29)，我们发现，式(10.27)中 <span class="arithmatex">\(w_i\)</span> 未知，式(10.29)中 <span class="arithmatex">\(x_i\)</span> 对应的低维空间坐标 <span class="arithmatex">\(z_i\)</span> 未知，我们尝试解答</p>
+<p>令 <span class="arithmatex">\(Z=(z_1,z_2,\dots,z_m)\in\mathbb{R}^{d'\times m}\)</span> ，<span class="arithmatex">\(W_{ij}=w_{ij}\)</span>，我们把所有点的局部重构误差组织成一个二次型，方便写为trace形式并用特征分解求解</p>
+<div class="arithmatex">\[
+M=(I-W)^T(I-W)\tag{10.30}
+\]</div>
+<p>进而将式(10.29)通过trace形式+约束，重写为特征值问题</p>
+<div class="arithmatex">\[
+\min_Z\text{tr}(ZMZ^T)\\
+s.t.\quad ZZ^T=I\tag{10.31}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>这里是标准的“在正交约束下最小化二次型”，解就是取 M 的最小的 d' 个特征值对应的特征向量</p>
+</div>
+<p><img alt="image-20260226143039444" src="../../../images/image-20260226143039444.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># =========================</span>
+<span class="c1"># 工具：两两欧氏距离矩阵</span>
+<span class="c1"># =========================</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">pairwise_dist</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;输入 X:(m,d)，输出 D:(m,m) 欧氏距离矩阵&quot;&quot;&quot;</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">sq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+    <span class="n">D2</span> <span class="o">=</span> <span class="n">sq</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">sq</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">G</span>
+    <span class="n">D2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">D2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">D2</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">lle</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">d_prime</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">reg</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    LLE（Locally Linear Embedding）</span>
+<span class="sd">    输入:</span>
+<span class="sd">        X: (m,d) 样本矩阵</span>
+<span class="sd">        k: 近邻数</span>
+<span class="sd">        d_prime: 目标维度</span>
+<span class="sd">        reg: 求逆稳定项（对局部协方差加 reg*trace）</span>
+<span class="sd">    输出:</span>
+<span class="sd">        Z: (m,d&#39;) 低维坐标（每行一个样本）</span>
+<span class="sd">        W: (m,m) 权重矩阵（W[i,j]=w_ij；非邻居为0）</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">D</span> <span class="o">=</span> <span class="n">pairwise_dist</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+    <span class="c1"># 1) 找近邻并求权重（对应(10.27)(10.28)）</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+        <span class="n">nn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">D</span><span class="p">[</span><span class="n">i</span><span class="p">])[</span><span class="mi">1</span><span class="p">:</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">Xi</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">Xn</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">nn</span><span class="p">]</span>                    <span class="c1"># (k,d)</span>
+        <span class="n">Zloc</span> <span class="o">=</span> <span class="n">Xn</span> <span class="o">-</span> <span class="n">Xi</span>                <span class="c1"># (k,d)</span>
+
+        <span class="c1"># 局部Gram矩阵 C = (x_i-x_j)^T (x_i-x_k) = Zloc Zloc^T</span>
+        <span class="n">C</span> <span class="o">=</span> <span class="n">Zloc</span> <span class="o">@</span> <span class="n">Zloc</span><span class="o">.</span><span class="n">T</span>             <span class="c1"># (k,k)</span>
+
+        <span class="c1"># 正则化：避免奇异（reg * trace(C)）</span>
+        <span class="n">tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+        <span class="n">C</span> <span class="o">=</span> <span class="n">C</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">reg</span> <span class="o">*</span> <span class="p">(</span><span class="n">tr</span> <span class="k">if</span> <span class="n">tr</span> <span class="o">&gt;</span> <span class="n">eps</span> <span class="k">else</span> <span class="mf">1.0</span><span class="p">))</span>
+
+        <span class="c1"># 解 C w = 1，然后归一化使 sum(w)=1</span>
+        <span class="n">ones</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">ones</span><span class="p">)</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">w</span> <span class="o">/</span> <span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">+</span> <span class="n">eps</span><span class="p">)</span>
+        <span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">nn</span><span class="p">]</span> <span class="o">=</span> <span class="n">w</span>
+
+    <span class="c1"># 2) 构造 M = (I-W)^T(I-W)（对应(10.30)）</span>
+    <span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="p">(</span><span class="n">I</span> <span class="o">-</span> <span class="n">W</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span><span class="n">I</span> <span class="o">-</span> <span class="n">W</span><span class="p">)</span>
+
+    <span class="c1"># 3) 解最小特征值对应的特征向量（对应(10.31)）</span>
+    <span class="n">eigvals</span><span class="p">,</span> <span class="n">eigvecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>  <span class="c1"># 升序</span>
+    <span class="c1"># 跳过最小的一个（理论上为0，对应平移不变的常数向量）</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">eigvecs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:</span><span class="n">d_prime</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">Z</span><span class="p">,</span> <span class="n">W</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+    <span class="n">Z_lle</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="n">lle</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">d_prime</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">Z_lle</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>PCA/KPCA都在找全局投影方向，也就是线性或核化后的线性，偏全局结构</p>
+<p>Isomap是先把距离改为近似测地线，再用MDS全局保持距离</p>
+<p>LLE则不管全局距离，只保留局部线性重构关系，再拼出全局坐标</p>
+<p>总而言之，这些都在对抗我们提到的维数灾难，努力让数据在低维里结构更清晰、距离/邻域更靠谱，从而kNN等方法更能工作</p>
+</div>
+<h3 id="_4">度量学习</h3>
+<p>本节内容与之前的思路完全改变：与其选一个低维空间，不如直接学习一个好距离。</p>
+<p>首先我们对欧氏距离进行改造，让它变为一个存在可调节参数，能够学习的式子</p>
+<p>我们把欧式距离进行平方分解</p>
+<div class="arithmatex">\[
+dist_{ed}^2(x_i,x_j)=\|x_i-x_j\|_2^2=dist_{ij,2}^2+dist_{ij,2}^2+\dots+dist_{ij,d}^2\tag{10.32}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>欧氏距离默认把每个维度当成同等重要、互不相关的“正交坐标轴”，所以就是逐维差平方求和。</p>
+<p><strong>但</strong>：现实里不同特征的重要性不同，而且特征之间还会相关（比如“重量”和“体积”）。</p>
+</div>
+<p>我们引入对角权重，变化为加权欧式距离，得到 <mark>第一层泛化</mark></p>
+<div class="arithmatex">\[
+\begin{align}
+\operatorname{dist}^2_{\mathrm{wed}}(x_i, x_j)
+&amp;= \lVert x_i - x_j \rVert_2^2
+= w_1 \cdot \operatorname{dist}^2_{ij,1}
++ w_2 \cdot \operatorname{dist}^2_{ij,2}
++ \cdots
++ w_d \cdot \operatorname{dist}^2_{ij,d}\\
+&amp;= (x_i - x_j)^{\top} W (x_i - x_j),
+\tag{10.33}
+\end{align}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>这里我们假设 <span class="arithmatex">\(W\)</span> 是对角矩阵，依旧意味着我们仍然假设各维度不相关，坐标轴存在正交。</p>
+<p>因此这一步可以看作“可学习的特征缩放“，但还不够灵活</p>
+</div>
+<p>接下来我们允许特征相关，变化为马氏距离，得到 <mark>第二层泛化</mark></p>
+<div class="arithmatex">\[
+dist_{mah}^2(x_i,x_j)=(x_i-x_j)^TM(x_i,x_j)=\|x_i-x_j\|^2_M\tag{10.34}
+\]</div>
+<p>其中 <span class="arithmatex">\(M\)</span> 要求半正定对阵，并且可以写为 <span class="arithmatex">\(M=PP^T\)</span> ，<span class="arithmatex">\(P\)</span> 为正交基</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>这样的话，M 的**非对角项**允许我们表达“特征相关/旋转坐标轴”：距离不再是逐维独立相加，而是在一个被旋转+拉伸的空间里测量。</p>
+<hr />
+<p>揭示了“度量学习 ≈ 学一个线性变换 <span class="arithmatex">\(P^\top x\)</span>”：</p>
+<div class="arithmatex">\[
+(x_i-x_j)^\top PP^\top (x_i-x_j) = \|P^\top x_i - P^\top x_j\|_2^2
+\]</div>
+<p>所以度量学习和降维天然相连：如果 <span class="arithmatex">\(P\)</span> 是低秩（列数小），你同时学到了一个**降维映射**。</p>
+</div>
+<p>接下来我们要把M应用到目标函数中，书中介绍了用NCA（近邻成分分析）优化kNN的方法</p>
+<p>NCA将投票改为可微的概率投票，即获得一个概率邻居：对任意样本 <span class="arithmatex">\(x_j\)</span>,它对 <span class="arithmatex">\(x_i\)</span> 分类结果的影响概率为</p>
+<div class="arithmatex">\[
+p_{ij}=\dfrac{
+\exp(-\|x_i-x_j\|_M^2)
+}{
+\sum_l\exp(-\|x_i-x_l\|_M^2)
+}
+\tag{10.35}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>这里的 分母是归一化，保证 <span class="arithmatex">\(\sum_j p_{ij}=1\)</span></p>
+</div>
+<p>然后验证一下，我们若以留一法（LOO）正确率的最大化为目标，则可以计算 <span class="arithmatex">\(x_i\)</span> 的留一法正确率，即它被自身之外的所有样本正确分类的概率为</p>
+<div class="arithmatex">\[
+p_i=\sum_{j\in\Omega_i}p_{ij}\tag{10.36}
+\]</div>
+<p><span class="arithmatex">\(\Omega_i\)</span> 表示与 <span class="arithmatex">\(x_i\)</span> 属于相同类别的样本的下标集合，进而得到全数据集中LOO的正确率为</p>
+<div class="arithmatex">\[
+\sum_{i=1}^{m}p_i=\sum_{i=1}^{m}\sum_{j\in\Omega_i}p_{ij}.
+\tag{10.37}
+\]</div>
+<p>接下来我们将刚刚的马氏距离应用进来，将式(10.35)代入(10.37)，同时令 <span class="arithmatex">\(M=PP^T\)</span>，可以得到NCA的优化目标</p>
+<div class="arithmatex">\[
+\min_{P}\ 1-\sum_{i=1}^{m}\sum_{j\in\Omega_i}
+\frac{\exp\!\big(-\|P^{\top}x_i-P^{\top}x_j\|_2^{2}\big)}
+{\sum_{l}\exp\!\big(-\|P^{\top}x_i-P^{\top}x_l\|_2^{2}\big)}.
+\tag{10.38}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>直接学习一个线性变换 <span class="arithmatex">\(P^\top x\)</span>（相当于学一个嵌入空间）；在这个空间里，soft-kNN 的 LOO 正确率最大（损失最小）；这就是“把距离学习和分类性能绑定”的典型做法：不是在抽象地学几何，而是在为 kNN 的准确率服务。</p>
+</div>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># =========================</span>
+<span class="c1"># 10.6 度量学习：NCA + 约束式(类似Xing) 的最小可用实现</span>
+<span class="c1"># =========================</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_pairwise_sqdist</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;返回 (n,m) 的平方欧氏距离矩阵 ||A_i - B_j||^2&quot;&quot;&quot;</span>
+    <span class="n">A2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="o">*</span><span class="n">A</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">B2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">B</span><span class="o">*</span><span class="n">B</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">D2</span> <span class="o">=</span> <span class="n">A2</span> <span class="o">+</span> <span class="n">B2</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">A</span> <span class="o">@</span> <span class="n">B</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">D2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_softmax_rows</span><span class="p">(</span><span class="n">S</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;对每行做 softmax（数值稳定）&quot;&quot;&quot;</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">S</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">E</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">E</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-12</span><span class="p">)</span>
+
+<span class="c1"># ==========================================================</span>
+<span class="c1"># (A) NCA：对应教材(10.35)-(10.38)，学习 P，使 soft-kNN 的 LOO 正确率最大</span>
+<span class="c1"># ==========================================================</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">nca_fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">d_out</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">reg</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    NCA 训练（学习线性变换 P，M = P P^T）</span>
+<span class="sd">    输入:</span>
+<span class="sd">        X: (m,d) 样本矩阵（行=样本）</span>
+<span class="sd">        y: (m,) 0..C-1 类别标签</span>
+<span class="sd">        d_out: 低维维度 d&#39;（P 的输出维）</span>
+<span class="sd">        lr: 学习率</span>
+<span class="sd">        epochs: 迭代轮数</span>
+<span class="sd">        reg: L2 正则（防止发散）</span>
+<span class="sd">    输出:</span>
+<span class="sd">        P: (d,d&#39;) 线性变换矩阵；距离为 ||P^T x_i - P^T x_j||^2</span>
+<span class="sd">        history: 每轮目标值列表（越小越好）</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">((</span><span class="n">d</span><span class="p">,</span> <span class="n">d_out</span><span class="p">))</span>
+
+    <span class="c1"># 同类掩码：same[i,j]=True 表示 y_i==y_j，训练中用于(10.36)</span>
+    <span class="n">same</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">==</span> <span class="n">y</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">same</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>  <span class="c1"># 留一法：不让自己投票</span>
+
+    <span class="n">history</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+        <span class="n">Z</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">P</span>                       <span class="c1"># (m,d&#39;)</span>
+        <span class="n">D2</span> <span class="o">=</span> <span class="n">_pairwise_sqdist</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>     <span class="c1"># (m,m) 低维平方距离</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">D2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>    <span class="c1"># 排除自己（更接近LOO）</span>
+
+        <span class="c1"># (10.35) p_ij = softmax( -||zi-zj||^2 )</span>
+        <span class="n">Pij</span> <span class="o">=</span> <span class="n">_softmax_rows</span><span class="p">(</span><span class="o">-</span><span class="n">D2</span><span class="p">)</span>
+
+        <span class="c1"># (10.36) p_i = sum_{j in same class} p_ij</span>
+        <span class="n">pi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Pij</span> <span class="o">*</span> <span class="n">same</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>                     <span class="c1"># (m,)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span> <span class="o">+</span> <span class="n">reg</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">P</span> <span class="o">*</span> <span class="n">P</span><span class="p">)</span>      <span class="c1"># (10.38) 的平均版 + 正则</span>
+        <span class="n">history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+
+        <span class="c1"># --------- 下面是对 P 的梯度（一个紧凑可用的推导实现）---------</span>
+        <span class="c1"># 记 A_ij = Pij_ij，S_ij = same_ij</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">Pij</span>
+        <span class="n">S</span> <span class="o">=</span> <span class="n">same</span>
+
+        <span class="c1"># 对每个 i，构造权重矩阵 Wi:</span>
+        <span class="c1"># Wi[j] = A_ij * (pi_i - S_ij)</span>
+        <span class="c1"># 这是 NCA 常见梯度形式的核心权重</span>
+        <span class="n">pi_col</span> <span class="o">=</span> <span class="n">pi</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>                               <span class="c1"># (m,1)</span>
+        <span class="n">W</span> <span class="o">=</span> <span class="n">A</span> <span class="o">*</span> <span class="p">(</span><span class="n">pi_col</span> <span class="o">-</span> <span class="n">S</span><span class="p">)</span>                               <span class="c1"># (m,m)</span>
+
+        <span class="c1"># 梯度：dL/dP = 2 X^T (G) ，其中</span>
+        <span class="c1"># G_i = sum_j W_ij (z_i - z_j)   （按 i 聚合）</span>
+        <span class="c1"># 用矩阵方式实现：G = diag(row_sum(W)) Z - W Z</span>
+        <span class="n">row_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>                        <span class="c1"># (m,)</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="p">(</span><span class="n">row_sum</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">Z</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">W</span> <span class="o">@</span> <span class="n">Z</span><span class="p">)</span>               <span class="c1"># (m,d&#39;)</span>
+        <span class="n">grad</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">G</span><span class="p">)</span> <span class="o">/</span> <span class="n">m</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">reg</span> <span class="o">*</span> <span class="n">P</span>         <span class="c1"># (d,d&#39;)</span>
+
+        <span class="n">P</span> <span class="o">-=</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">grad</span>
+
+    <span class="k">return</span> <span class="n">P</span><span class="p">,</span> <span class="n">history</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">nca_transform</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">P</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;用学到的 P 做嵌入：Z = X P&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="o">@</span> <span class="n">P</span>
+
+
+
+<span class="c1"># =========================</span>
+<span class="c1"># 用法示例（可删）</span>
+<span class="c1"># =========================</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+    <span class="c1"># NCA</span>
+    <span class="n">P</span><span class="p">,</span> <span class="n">hist</span> <span class="o">=</span> <span class="n">nca_fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">d_out</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">nca_transform</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">P</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;NCA:&quot;</span><span class="p">,</span> <span class="n">Z</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">&quot;last loss:&quot;</span><span class="p">,</span> <span class="n">hist</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</code></pre></div>
 
 
 
