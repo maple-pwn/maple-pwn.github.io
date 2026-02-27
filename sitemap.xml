@@ -265,6 +265,10 @@
          <lastmod>2026-02-27</lastmod>
     </url>
     <url>
+         <loc>https://maple-pwn.github.io/sth/pre/</loc>
+         <lastmod>2026-02-27</lastmod>
+    </url>
+    <url>
          <loc>https://maple-pwn.github.io/sth/proj/</loc>
          <lastmod>2026-02-27</lastmod>
     </url>
@@ -306,10 +310,6 @@
     </url>
     <url>
          <loc>https://maple-pwn.github.io/study/pre/</loc>
-         <lastmod>2026-02-27</lastmod>
-    </url>
-    <url>
-         <loc>https://maple-pwn.github.io/testpage/test/</loc>
          <lastmod>2026-02-27</lastmod>
     </url>
 </urlset>
