@@ -1201,7 +1201,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../NLP/1/" class="md-nav__link">
+      <a href="../../DL/1/" class="md-nav__link">
         
   
   
@@ -3984,6 +3984,173 @@ z^i+\lambda/L,z^i&lt; -\lambda/L
 <div class="arithmatex">\[
 \min_{B,\alpha_i}\sum_{i=1}^m\|x_i-B\alpha_i\|_2^2+\lambda\sum_{i=1}^{m}\|\alpha_i\|_1\tag{11.15}
 \]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li><span class="arithmatex">\(x_i\in\mathbb{R}^d\)</span>：第 <span class="arithmatex">\(i\)</span> 个样本</li>
+<li><span class="arithmatex">\(B\in\mathbb{R}^{d\times k}\)</span>：字典（<span class="arithmatex">\(k\)</span> 个“原子/基向量”，通常 <span class="arithmatex">\(k   d\)</span> 叫过完备）</li>
+<li><span class="arithmatex">\(\alpha_i\in\mathbb{R}^k\)</span>：样本 <span class="arithmatex">\(x_i\)</span> 在字典上的表示系数</li>
+<li>第一项：<strong>重构误差</strong>（希望<span class="arithmatex">\(B\alpha_i\)</span> 能逼近 <span class="arithmatex">\(x_i\)</span>）</li>
+<li>第二项：<strong>稀疏惩罚</strong>（希望 <span class="arithmatex">\(\alpha_i\)</span> 里尽可能多的分量为 0）</li>
+<li><span class="arithmatex">\(\lambda\)</span>：控制“重构 vs 稀疏”的权衡（越大越稀疏但重构可能变差）</li>
+</ul>
+</div>
+<p><strong>我们可以采用变量交替优化的策略来解决式(11.15)</strong>，首先固定字典 <span class="arithmatex">\(B\)</span>，每个样本各自做一次稀疏编码，为每个样本 <span class="arithmatex">\(x_i\)</span> 找到对应的 <span class="arithmatex">\(\alpha_i\)</span></p>
+<div class="arithmatex">\[
+\min_{\alpha_i}\|x_i-B\alpha_i\|_2^2+\lambda\|\alpha_i\|_1\tag{11.16}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>即在字典B给定时，求最稀疏且重构好的 <span class="arithmatex">\(\alpha_i\)</span>。由于按分量展开没有 <span class="arithmatex">\(\alpha_i^u\alpha_i^v\)</span> 这种耦合项，所以可以用近端梯度等高效解</p>
+</div>
+<p>接下来固定稀疏矩阵 <span class="arithmatex">\(A\)</span>,更新字典是最小二乘。我们定义 <span class="arithmatex">\(X=(x_1,\dots,x_m)\in\mathbb{R}^{d\times m};A=(\alpha_1,\dots,\alpha_m)\in\mathbb{R}^{k\times m}\)</span></p>
+<p>于是我们可以更新字典为</p>
+<div class="arithmatex">\[
+\min_B\|X-BA\|_F^2\tag{11.17}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><span class="arithmatex">\(\|\cdot\|_F\)</span> 表示Frobenius范数，是把矩阵所有元素平方求和再开方。当我们在式(11.17)固定A时，这就是一个线性最小二乘问题。或者说，系数都定了，就把字典调到最能重构这些样本的那一套</p>
+</div>
+<p>然后我们对式(11.17)进行求解，书中采用了KSVD算法，把字典按列更新</p>
+<p>我们记 <span class="arithmatex">\(b_j\)</span> 是字典 <span class="arithmatex">\(B\)</span> 的第 <span class="arithmatex">\(j\)</span> 列（第 <span class="arithmatex">\(j\)</span> 个原子），<span class="arithmatex">\(\alpha^j\)</span> 是 <span class="arithmatex">\(A\)</span> 的第 <span class="arithmatex">\(j\)</span> 行（这个原子在所有样本上的系数），然后带入 <span class="arithmatex">\(BA=\sum_{j=1}^kb_j\alpha^j\)</span>,可以将式(11.17)写为对每一列的更新子问题：</p>
+<div class="arithmatex">\[
+\begin{align}
+\min_{B} \|X - BA\|_F^2
+&amp;= \min_{b_i} \left\| X - \sum_{j=1}^{k} b_j \alpha^{j} \right\|_F^2
+\\
+&amp;= \min_{b_i} \left\| 
+\left( X - \sum_{j \ne i} b_j \alpha^{j} \right) - b_i \alpha^{i}
+\right\|_F^2
+\\
+&amp;= \min_{b_i} \|E_i - b_i \alpha^{i}\|_F^2,
+\tag{11.18}
+\end{align}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>也就是，其它原子先固定，我们只更新第 <span class="arithmatex">\(i\)</span> 个原子，使残差下降最多，轮流让每个字典原子去解释它所负责的那部分残差</p>
+</div>
+<p>之后反复迭代上述两步，先固定 <span class="arithmatex">\(B\)</span> 再固定 <span class="arithmatex">\(A\)</span>，最终得到结果</p>
+<hr />
+<p><mark>算法</mark></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">soft_threshold</span><span class="p">(</span><span class="n">z</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">tau</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">-</span> <span class="n">tau</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">ista_lasso</span><span class="p">(</span><span class="n">B</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">lam</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span> <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-6</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    解 (11.16) 的一个常见归一化版本：</span>
+<span class="sd">        min_a  0.5||x - B a||^2 + lam||a||_1</span>
+<span class="sd">    用 ISTA：a &lt;- S_{lam/L}(a - (1/L) * grad)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+    <span class="c1"># L = ||B||_2^2（梯度 Lipschitz 常数）</span>
+    <span class="c1"># 用谱范数估计：np.linalg.norm(B, 2) 是 SVD，k不大时可接受</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-12</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">L</span>
+
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_iter</span><span class="p">):</span>
+        <span class="n">grad</span> <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span><span class="n">B</span> <span class="o">@</span> <span class="n">a</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span>              <span class="c1"># ∇(0.5||x-Ba||^2)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">step</span> <span class="o">*</span> <span class="n">grad</span>
+        <span class="n">a_new</span> <span class="o">=</span> <span class="n">soft_threshold</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">lam</span> <span class="o">*</span> <span class="n">step</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">a_new</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-12</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">:</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">a_new</span>
+            <span class="k">break</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">a_new</span>
+    <span class="k">return</span> <span class="n">a</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">normalize_columns</span><span class="p">(</span><span class="n">B</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-12</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="n">norms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">norms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">norms</span><span class="p">,</span> <span class="n">eps</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">B</span> <span class="o">/</span> <span class="n">norms</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">dictionary_learning_ksvd</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>              <span class="c1"># (d, m) 每列一个样本</span>
+    <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>                     <span class="c1"># 字典原子数</span>
+    <span class="n">lam</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>                 <span class="c1"># L1 系数</span>
+    <span class="n">n_outer</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>          <span class="c1"># 外层交替次数</span>
+    <span class="n">ista_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    近似求解 (11.15)：交替优化</span>
+<span class="sd">      1) 固定 B：逐样本解 LASSO 得 A（对应 11.16）</span>
+<span class="sd">      2) 固定 A：按列更新字典 B（对应 11.17/11.18，K-SVD 思路）</span>
+
+<span class="sd">    返回：</span>
+<span class="sd">      B: (d, k)</span>
+<span class="sd">      A: (k, m)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">d</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">random_state</span><span class="p">)</span>
+
+    <span class="c1"># --- 初始化字典：随机挑样本列 + 归一化 ---</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="p">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="n">m</span><span class="p">))</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">normalize_columns</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_outer</span><span class="p">):</span>
+        <span class="c1"># ===== Step 1: Sparse coding (11.16) =====</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+            <span class="n">A</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">ista_lasso</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">X</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">lam</span><span class="o">=</span><span class="n">lam</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="n">ista_iter</span><span class="p">)</span>
+
+        <span class="c1"># ===== Step 2: Dictionary update (11.17/11.18) =====</span>
+        <span class="c1"># 逐原子更新（K-SVD：只在该原子激活的样本集合上做 rank-1 SVD）</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+            <span class="n">omega</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="p">:])[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># 该原子参与重构的样本索引（α_j,i != 0）</span>
+            <span class="k">if</span> <span class="n">omega</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># 如果这个原子“没人用”，重新初始化为某个残差最大的样本方向</span>
+                <span class="n">residual</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="n">B</span> <span class="o">@</span> <span class="n">A</span>
+                <span class="n">col_norms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">residual</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">pick</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">col_norms</span><span class="p">))</span>
+                <span class="n">B</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">residual</span><span class="p">[:,</span> <span class="n">pick</span><span class="p">]</span>
+                <span class="n">B</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">/=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">B</span><span class="p">[:,</span> <span class="n">j</span><span class="p">])</span> <span class="o">+</span> <span class="mf">1e-12</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># 计算去掉第 j 个原子后的残差 E_j</span>
+            <span class="c1"># E = X - sum_{l!=j} b_l a_l = X - B A + b_j a_j</span>
+            <span class="n">E</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">B</span> <span class="o">@</span> <span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">B</span><span class="p">[:,</span> <span class="n">j</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="p">:])</span>
+
+            <span class="c1"># 只在 omega 上更新，保持稀疏结构不变</span>
+            <span class="n">E_omega</span> <span class="o">=</span> <span class="n">E</span><span class="p">[:,</span> <span class="n">omega</span><span class="p">]</span>                  <span class="c1"># (d, |omega|)</span>
+            <span class="c1"># rank-1 SVD：E_omega ≈ u1 s1 v1^T</span>
+            <span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">E_omega</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">b_new</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="n">a_new</span> <span class="o">=</span> <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">Vt</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>               <span class="c1"># (|omega|,)</span>
+
+            <span class="n">B</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">b_new</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">omega</span><span class="p">]</span> <span class="o">=</span> <span class="n">a_new</span>
+
+        <span class="c1"># 列归一化（尺度不定性：B 变大 A 变小同样重构）</span>
+        <span class="n">B</span> <span class="o">=</span> <span class="n">normalize_columns</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">B</span><span class="p">,</span> <span class="n">A</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># demo：用随机稀疏系数合成数据，再学回字典</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">d</span><span class="p">,</span> <span class="n">k_true</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">200</span>
+    <span class="n">B_true</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">k_true</span><span class="p">))</span>
+    <span class="n">B_true</span> <span class="o">=</span> <span class="n">normalize_columns</span><span class="p">(</span><span class="n">B_true</span><span class="p">)</span>
+
+    <span class="n">A_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">k_true</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">k_true</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">A_true</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="n">X</span> <span class="o">=</span> <span class="n">B_true</span> <span class="o">@</span> <span class="n">A_true</span> <span class="o">+</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span>
+
+    <span class="n">B_hat</span><span class="p">,</span> <span class="n">A_hat</span> <span class="o">=</span> <span class="n">dictionary_learning_ksvd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">n_outer</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">recon_err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">B_hat</span> <span class="o">@</span> <span class="n">A_hat</span><span class="p">,</span> <span class="s2">&quot;fro&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="s2">&quot;fro&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;relative recon error:&quot;</span><span class="p">,</span> <span class="n">recon_err</span><span class="p">)</span>
+</code></pre></div>
 
 
 
