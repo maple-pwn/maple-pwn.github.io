@@ -3374,12 +3374,15 @@
 <h1 id="_1">图像识别</h1>
 <p>这是一堂入门讲座，旨在向计算机视觉领域以外的人们介绍图像份额里问题以及数据驱动方法。目录：</p>
 <ul>
-<li>图像分类</li>
+<li>图像分类<ul>
 <li>最近邻分类器</li>
+<li>k-最近邻分类器</li>
 <li>用于超参数调优的验证集</li>
 <li>摘要</li>
 <li>摘要：kNN的实际应用<ul>
 <li>延伸阅读</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -3476,11 +3479,11 @@ d_1(I_1,I_2)=\sum_p|I_1^p-I_2^p|
         <span class="k">return</span> <span class="n">Ypred</span>
 </code></pre></div>
 <p>如果运行这个代码，会发现这个分类器在 CIFAR-10 的准确率只有 38.6%。比随机猜测的 10% 高了很多，但比人类的识别水平（<a href="https://karpathy.github.io/2011/04/27/manually-classifying-cifar10/">推测约为94%</a>）或卷积神经网络的95% 差多了。（可以在这里看CIFAR-10的 <a href="https://www.kaggle.com/c/cifar-10/leaderboard">Kaggle 竞赛排行榜</a>)</p>
-<p><strong>距离选择</strong>：有许多方式计算两个向量之间的距离。另一种常见的替代方法是 <span class="arithmatex">\(L_2\)</span> 距离。从几何学的角度来看，它在计算两个向量之间的欧氏距离。距离计算公式如下：
-$$
-d_2(I_1,I_2)=\sqrt{\sum_p(I_1<sup>p-I_2</sup>p)^2}
-$$
-换句话说，我们依旧是计算像素点的差值，只是先求其平方，然后把这些平方全部加起来，最后对这个和开方。在numpy中，我们只需要简单替换一行即可：</p>
+<p><strong>距离选择</strong>：有许多方式计算两个向量之间的距离。另一种常见的替代方法是 <span class="arithmatex">\(L_2\)</span> 距离。从几何学的角度来看，它在计算两个向量之间的欧氏距离。距离计算公式如下：</p>
+<div class="arithmatex">\[
+d_2(I_1,I_2)=\sqrt{\sum_p(I_1^p-I_2^p)^2}
+\]</div>
+<p>换句话说，我们依旧是计算像素点的差值，只是先求其平方，然后把这些平方全部加起来，最后对这个和开方。在numpy中，我们只需要简单替换一行即可：</p>
 <div class="highlight"><pre><span></span><code><span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">squqre</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,:]),</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">))</span>
 </code></pre></div>
 <p>这里虽然使用了 <code>np.sqrt</code> ，但是在实际中可能不用。因为求平方根是一个单调函数，它对不同距离的绝对值求平方根虽然改变了数值大小，但依然保持了不同距离大小的顺序。所以用不用都能对像素差异的大小进行正确比较。如果将这个模型用于 CIFAR-10 数据集，将可以得到 35.4% 的准确率（略低于 L1 距离的结果）</p>
@@ -3516,7 +3519,7 @@ $$
     <span class="n">Xte_rows</span> <span class="o">=</span> <span class="n">Xte</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xte</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
 
 <span class="n">nn</span> <span class="o">=</span> <span class="n">NearestNeighbor</span><span class="p">()</span>
-<span class="n">nn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">Xtr_rows</span><span class="err">【</span><span class="p">:</span><span class="mi">2000</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">[:</span><span class="mi">2000</span><span class="p">])</span>
+<span class="n">nn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">Xtr_rows</span><span class="p">[:</span><span class="mi">2000</span><span class="p">],</span> <span class="n">Ytr</span><span class="p">[:</span><span class="mi">2000</span><span class="p">])</span>
 <span class="n">Yte_predict</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xte_rows</span><span class="p">[:</span><span class="mi">200</span><span class="p">])</span>
 
 <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;accuracy: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Yte_predict</span> <span class="o">==</span> <span class="n">Yte</span><span class="p">[:</span><span class="mi">200</span><span class="p">])))</span>
