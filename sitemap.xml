@@ -69,6 +69,10 @@
          <lastmod>2026-03-03</lastmod>
     </url>
     <url>
+         <loc>https://maple-pwn.github.io/READ/paperread/cs231n/</loc>
+         <lastmod>2026-03-03</lastmod>
+    </url>
+    <url>
          <loc>https://maple-pwn.github.io/READ/paperread/mHC/</loc>
          <lastmod>2026-03-03</lastmod>
     </url>
@@ -273,15 +277,11 @@
          <lastmod>2026-03-03</lastmod>
     </url>
     <url>
-         <loc>https://maple-pwn.github.io/sth/I/</loc>
-         <lastmod>2026-03-03</lastmod>
-    </url>
-    <url>
-         <loc>https://maple-pwn.github.io/sth/pre/</loc>
-         <lastmod>2026-03-03</lastmod>
-    </url>
-    <url>
          <loc>https://maple-pwn.github.io/sth/proj/</loc>
+         <lastmod>2026-03-03</lastmod>
+    </url>
+    <url>
+         <loc>https://maple-pwn.github.io/sth/ssh/</loc>
          <lastmod>2026-03-03</lastmod>
     </url>
     <url>
@@ -322,6 +322,14 @@
     </url>
     <url>
          <loc>https://maple-pwn.github.io/study/pre/</loc>
+         <lastmod>2026-03-03</lastmod>
+    </url>
+    <url>
+         <loc>https://maple-pwn.github.io/thinking/I/</loc>
+         <lastmod>2026-03-03</lastmod>
+    </url>
+    <url>
+         <loc>https://maple-pwn.github.io/thinking/pre/</loc>
          <lastmod>2026-03-03</lastmod>
     </url>
 </urlset>
