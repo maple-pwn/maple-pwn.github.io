@@ -1224,10 +1224,9 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="图像分类">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       最近邻分类
@@ -1235,8 +1234,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#k-" class="md-nav__link">
     <span class="md-ellipsis">
       k-最近邻分类器
@@ -1244,8 +1243,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       用于超参数调优的验证集
@@ -1253,9 +1252,13 @@
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
   
 </li>
       
@@ -3337,10 +3340,9 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="图像分类">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       最近邻分类
@@ -3348,8 +3350,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#k-" class="md-nav__link">
     <span class="md-ellipsis">
       k-最近邻分类器
@@ -3357,8 +3359,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       用于超参数调优的验证集
@@ -3366,9 +3368,13 @@
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
   
 </li>
       
@@ -3436,7 +3442,7 @@
 <li><strong>学习</strong>：我们的任务是使用训练集去学习每一种分类长什么样。称这一步为 <em>训练分类器</em> 或 <em>学习模型</em></li>
 <li><strong>评价</strong>：最后，让分类器学习它之前从未见过的图像，并以此来评价分类器的质量。我们将这些图像的正确标签与分类器的预测标签做对比。毫无疑问，我们希望更多的预测可以符合正确答案(称为 <em>ground truth</em>)</li>
 </ul>
-<h3 id="_3">最近邻分类</h3>
+<h2 id="_3">最近邻分类</h2>
 <p>作为课程介绍的第一个方法，我们将尝试实现一个最近邻分类器。这个分类器和CNN（卷积神经网络）没有任何关系，实际中也很少使用。但通过实现它，我们可以理解图像识别问题的基本方法</p>
 <p><strong>图像分类数据集：CIFAR-10</strong>：一个常见的图像分类数据集是 <a href="https://www.cs.toronto.edu/~kriz/cifar.html">CIFAR-10 dataset</a>。这个数据集有 60,000 张 32像素高、32像素宽的小图片。每个图片的标签是 10  个分类标签中的一种。这 6 万张图片分为包含 5 万张图片的训练集和包含 1 万张图片的测试集。下图中你可以看到 10 个类的10张随机图片</p>
 <hr />
@@ -3576,7 +3582,7 @@ d_2(I_1,I_2)=\sqrt{\sum_p(I_1^p-I_2^p)^2}
     <span class="k">return</span> <span class="n">Xtr</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">,</span> <span class="n">Xte</span><span class="p">,</span> <span class="n">Yte</span>
 </code></pre></div></p>
 </details>
-<h3 id="k-">k-最近邻分类器</h3>
+<h2 id="k-">k-最近邻分类器</h2>
 <p>你可能注意到，我们为什么只用最相似的1张图片的标签来预测测试图像的标签呢，这不是很奇怪吗？事实上，一般来说使用 <strong>k-最近邻分类器</strong> 可以做的更好。它的思想很简单：不在训练集里找单个最近的图像，而是找前 <strong>k</strong> 个最近的图片，并让它们对测试图像的标签进行投票。特别的，当 <span class="arithmatex">\(k=1\)</span> 的时候，我们又得到了最近邻分类器。只管来说， k值越大越有平滑效果，使得分类器更能抵抗异常(或者噪声)</p>
 <hr />
 <p><img alt="image-20260303103634462" src="../../../images/image-20260303103634462.png" /></p>
@@ -3635,7 +3641,7 @@ d_2(I_1,I_2)=\sqrt{\sum_p(I_1^p-I_2^p)^2}
 </code></pre></div>
 <img alt="alt text" src="../image.png" /></p>
 </details>
-<h3 id="_4">用于超参数调优的验证集</h3>
+<h2 id="_4">用于超参数调优的验证集</h2>
 <blockquote>
 <p>Validation sets for Hyperparameter tuning</p>
 </blockquote>
@@ -3671,6 +3677,42 @@ d_2(I_1,I_2)=\sqrt{\sum_p(I_1^p-I_2^p)^2}
 <blockquote>
 <p>将训练集分为训练集和验证集。使用验证集调优超参数。最后只在测试集上跑一次并报告结果</p>
 </blockquote>
+<p><strong>交叉验证</strong>：当我们的训练数据较小的时候（也包括验证数据），可以使用一种更加复杂的超参数调整技术，称为 <strong>交叉验证</strong>。依旧使用之前的例子，交叉验证集不是取前1000个数据点去验证剩下的作为训练集，而是迭代不同的验证集并取平均，最终得到一个更好、噪声更小的估计，进而了解某个 <em>k</em> 的效果如何。例如，在 5折交叉验证 中，我们将训练集平均分为 5 份，使用4份进行训练，另外 1 份用于验证。我们循环着取其中 4 份来训练，其中 1 份用来验证，最后取所有 5 次验证结果的平均值作为结果</p>
+<hr />
+<p><img alt="img" src="https://cs231n.github.io/assets/cvplot.png" /></p>
+<p>这就是 5 折交叉验证对 <strong>k</strong> 值调优的例子。对于每一个 <strong>k</strong> 值，得到 5 个准确率结果，取其平均值，准确值作为纵轴，对每个结果描点，然后对不同 k 值的平均表现画线连接。误差线表示标准差。需要注意到，在这种情况下，交叉验证表明k=7在这个特定数据集表现最佳(即图中峰值)。如果我们使用超过 5折，直线会更加平滑（噪声更少）</p>
+<hr />
+<p><strong>实际操作</strong>。实际上，人们尽量避免交叉验证，因为他会消耗大量计算资源，而更喜欢单一验证分割。一般直接把训练集按照 50%-90% 的比例分成训练集和验证集。这取决于大量因素：例如如果超参数数量相当大，可能更倾向于使用更大的验证集。而验证集的数量不够，那么最好使用交叉验证。实际中一些比较典型的折数有3折、5折、10折</p>
+<hr />
+<p><img alt="img" src="https://cs231n.github.io/assets/crossval.jpeg" /></p>
+<p>常见数据划分。训练和测试集被给出后，训练集被划分为多折（例如5折）。1～4折变为训练集。其中一折（图中黄色那个）被作为验证集，用于超参数调优。交叉验证则更进一步，迭代选择某个折作为验证集。最后模型训练完毕，超参数都确定之后，模型在测试数据上只评估一次</p>
+<hr />
+<p><strong>最近邻分类器的优劣</strong></p>
+<p>我们思考一下最近邻分类器的优点与缺点。很明显，最近邻分类器易于理解、实现简单。此外，这个分类器不需要花费时间去训练，因为其训练过程只是将训练集数据存储起来。不过我们需要花费大量的计算资源在测试阶段，因为每个测试图像需要和所有存储的训练图像进行比较。这显然是一个缺点。在实际应用中，相较于训练效率，我们更关注测试效率。而实际上，我们后续会介绍的深度神经网络走向了另一个极端：训练非常昂贵，但是一旦训练完毕，它对新数据测试速度非常快。这种模式更加符合实际使用需求</p>
+<p>顺便一提，最近邻分类器的计算复杂度依旧是一个活跃的领域，并且几种 <strong>近似最近邻(ANN)</strong> 算法和库的使用可以提升最近邻分类器在数据计算上的速度(例如 <a href="https://github.com/mariusmuja/flann">FLANN</a>)。这些算法可以让最近邻在检索的过程中权衡准确率和时空复杂度，并且通常依赖一个预处理/索引过程，这个过程中一般包含 kd 树的创建和 k-means 算法的运用</p>
+<p>在某些情况下，最近邻分类器也可以是一个很好的选择(尤其当数据是低维时)，但是它很少直接用于实际的图像分类工作。因为图像都是高维数据，并且在高维空间中的距离可以非常反直觉。下面的图片说明了基于像素的L2相似和基于感官的相似非常不同</p>
+<hr />
+<p><img alt="img" src="https://cs231n.github.io/assets/samenorm.png" /></p>
+<p>在高维数据中(尤其是图像)，基于像素的距离和感官上的非常不同。上图中，对于第 1 张原始图像(左侧)和右边 3 张图片，它们从L2像素距离来看，都与原始图像等距。显然，像素距离与感知或语义相似性完全不符</p>
+<hr />
+<p>这里还有个视觉化的例子可以证明使用像素差异来比较图像是不够的。我们可以使用叫做  <a href="https://lvdmaaten.github.io/tsne/">t-SNE</a> 的视觉技术处理 CIFAR-10 图片。将CIFAR-10的图片按照二维的方式排布从而使得它们可以被更好的展示。在这个可视化中，排列相邻的图片 L2 距离就小</p>
+<hr />
+<p><img alt="img" src="https://cs231n.github.io/assets/pixels_embed_cifar10.jpg" /></p>
+<p>通过 t-SNE 在二维上加载 CIFAR-10图像。这里接近的图像就是像素间L2距离接近的。注意到背景的影响远大于图片语义内容本身。点<a href="https://cs231n.github.io/assets/pixels_embed_cifar10_big.jpg">这里</a>看详细可视化</p>
+<hr />
+<p>需要额外注意的是，彼此靠近的图片更多的取决于图像的整体颜色分布，或者背景类型，而不是它们的语义身份。例如：由于两者都恰好位于白色背景上，狗可能被分类到青蛙附近。理想情况下我们希望 10 个类别的图像都能形成自己的聚类，以便于同一类别的图像可以接近，且不在意不相关的特征和变化(比如说，背景)。然而，为了达到这个目的，我们不能止步于原始像素比较，得继续前进</p>
+<h2 id="summary">Summary</h2>
+<p>简单来说：</p>
+<ul>
+<li>我们介绍了 <strong>图像分类</strong> 问题。在该问题中，我们给出一个由被标注了分类标签的图像组成的集合，要求算法能预测没有标签的图像的分类标签，并根据算法预测准确率进行评价</li>
+<li>我们介绍了 <strong>最近邻分类器</strong>。我们可以看到存在大量不同的超参数(比如k值或距离类型的选取)与分类器强相关，但是没有有效的方法可以选择合适的数值</li>
+<li>选取超参数的正确方法是：将原始训练集分为训练集和 <strong>验证集</strong>，我们在验证集上尝试不同的超参数，最后保留表现最好那个</li>
+<li>如果训练数据不够，我们采用 <strong>交叉验证</strong> 方法，它能帮我们在选取最优超参数的时候减少噪音</li>
+<li>一旦找到最佳超参数，我们就让算法以该参数在测试集上进行一次测试，并根据测试结果评价算法</li>
+<li>我们可以看到最近邻算法在 CIFAR-10 数据集上可以达到大约 40% 的准确率。它的实现很简单但是需要我们存储所有的训练数据，并且在测试的时候过于消耗计算能力</li>
+<li>最后，我们了解到只使用 L1 或 L2 范数来进行像素比较是不够的，图像更多的按照背景和颜色被分类，而不是语义主题本身</li>
+</ul>
+<p>在接下来的课程中，我们将着手解决这些挑战，并最终找到能够达到：90% 准确率、在完成学习后完全丢弃训练集、并且能够以不到一毫秒的时间评估测试图像的解决方案。</p>
 
 
 
