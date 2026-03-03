@@ -1245,6 +1245,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      用于超参数调优的验证集
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3349,6 +3358,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      用于超参数调优的验证集
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3559,6 +3577,100 @@ d_2(I_1,I_2)=\sqrt{\sum_p(I_1^p-I_2^p)^2}
 </code></pre></div></p>
 </details>
 <h3 id="k-">k-最近邻分类器</h3>
+<p>你可能注意到，我们为什么只用最相似的1张图片的标签来预测测试图像的标签呢，这不是很奇怪吗？事实上，一般来说使用 <strong>k-最近邻分类器</strong> 可以做的更好。它的思想很简单：不在训练集里找单个最近的图像，而是找前 <strong>k</strong> 个最近的图片，并让它们对测试图像的标签进行投票。特别的，当 <span class="arithmatex">\(k=1\)</span> 的时候，我们又得到了最近邻分类器。只管来说， k值越大越有平滑效果，使得分类器更能抵抗异常(或者噪声)</p>
+<hr />
+<p><img alt="image-20260303103634462" src="../../../images/image-20260303103634462.png" /></p>
+<p>这是一个最近邻分类器和 5-最近邻分类器的差异示例，使用了二维点和3个类（红、蓝、绿）。颜色区域表示使用L2距离的分类器的 <strong>决策边界</strong>。白色的区域则显示模糊分类的点（也就是至少有两类的类别投票相同）。在 NN 分类器中，异常数据点（例如一群蓝色点中的绿色点）会制造一个导致错误预测的孤岛。5-NN 分类器就平滑了这些不规则，使得测试数据得到了更好的 <strong>泛化(generalization)</strong> 。同时我们注意到 5-NN 图像也有灰色区域，这些区域是因为紧邻标签的最高票数相同（例如两个近邻是红色，另外两个是蓝色，还有一个是绿色）</p>
+<hr />
+<p>事实上，你几乎总是用 k-NN 算法。但 <em>k</em> 的取值应该如何呢？我们接下来看看这个问题</p>
+<details class="查看knn代码">
+<summary>查看knn代码</summary>
+<p><div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">data_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_CIRFA10</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">NearestNeighbor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">5</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">=</span> <span class="n">X</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span> <span class="o">=</span> <span class="n">y</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="n">num_test</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">Ypred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_test</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+        <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;k must be &gt;= 1&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;k cannot be larger than number of training smaples&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_test</span><span class="p">):</span>
+            <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="n">knn_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argpartition</span><span class="p">(</span><span class="n">distances</span><span class="p">,</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)[:</span><span class="n">k</span><span class="p">]</span>
+            <span class="n">knn_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="p">[</span><span class="n">knn_idx</span><span class="p">]</span>
+
+            <span class="n">Ypred</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">knn_labels</span><span class="p">,</span> <span class="n">minlength</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Ypred</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">Xtr</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">,</span> <span class="n">Xte</span><span class="p">,</span> <span class="n">Yte</span> <span class="o">=</span> <span class="n">load_CIRFA10</span><span class="p">(</span><span class="s2">&quot;cifar-10-batches-py&quot;</span><span class="p">)</span>
+    <span class="n">Xtr_rows</span> <span class="o">=</span> <span class="n">Xtr</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xtr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">Xte_rows</span> <span class="o">=</span> <span class="n">Xte</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xte</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+        <span class="n">knn</span> <span class="o">=</span> <span class="n">NearestNeighbor</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">knn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">Xtr_rows</span><span class="p">[:</span><span class="mi">10000</span><span class="p">],</span> <span class="n">Ytr</span><span class="p">[:</span><span class="mi">10000</span><span class="p">])</span>
+        <span class="n">Yte_predict</span> <span class="o">=</span> <span class="n">knn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xte_rows</span><span class="p">[:</span><span class="mi">500</span><span class="p">])</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> 精度为: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">knn</span><span class="o">.</span><span class="n">k</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Yte_predict</span> <span class="o">==</span> <span class="n">Yte</span><span class="p">[:</span><span class="mi">500</span><span class="p">])))</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<img alt="alt text" src="../image.png" /></p>
+</details>
+<h3 id="_4">用于超参数调优的验证集</h3>
+<blockquote>
+<p>Validation sets for Hyperparameter tuning</p>
+</blockquote>
+<p>k-NN 分类器需要设置 <em>k</em> 值，但选哪个更合适呢？此外，我们可以选择不同的距离函数，如L1范数、L2范数。有太多的其他选择我们从未考虑过（如：点积）。所有这些选择被称为 <strong>超参数（hyperparameters）</strong> 。在许多基于数据进行学习的机器学习算法设计中，超参数很常见。一般来说，这些超参数如何取值或设置并不是那么显而易见。</p>
+<p>你可能建议尝试不同的值去看看哪个效果最好。这是一个好主意，并且我们的确就是这么做的，但是这样做的时候必须小心。额外注意的是，<strong>我们不能用测试集去调优超参数</strong>。当你在设计机器学习算法时，应该把测试集看做非常珍贵的资源，不到最后一步永远不要去触碰。否则，你会发现你的参数在测试集中工作的很好，但将算法实际部署后，性能可能会远低于预期。这种情况称为对测试集 <strong>过拟合(overfit)</strong>。另一种角度来说，如果用测试集来调优，相当于把测试集当作训练集，由测试集训练出来的算法再跑测试集，当然可以得到优秀的结果。但如果你只在最后使用一次测试集，可以很好地近似度量你的分类器的泛化性能（后续章节中将有更多围绕泛化性能的讨论）</p>
+<blockquote>
+<p>只在测试集上评估一次，在最后的最后</p>
+</blockquote>
+<p>好在我们有不同的方法去调优超参数，并且不需要接触测试集。方式是将训练集分为两个部分：将一个稍小的训练集称为 <strong>验证集(validation set)</strong>。以 CIFAR-10 为例，我们可以选择 4.9 万张图片作为训练，留下 1 千张作为验证。验证集其实就是作为假的测试集来调优。代码如下</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># assume we have Xtr_rows, Ytr, Xte_rows, Yte as before</span>
+<span class="c1"># recall Xtr_rows is 50,000 x 3072 matrix</span>
+<span class="n">Xval_rows</span> <span class="o">=</span> <span class="n">Xtr_rows</span><span class="p">[:</span><span class="mi">1000</span><span class="p">,</span> <span class="p">:]</span>  <span class="c1"># take first 1000 for validation</span>
+<span class="n">Yval</span> <span class="o">=</span> <span class="n">Ytr</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span>
+<span class="n">Xtr_rows</span> <span class="o">=</span> <span class="n">Xtr_rows</span><span class="p">[</span><span class="mi">1000</span><span class="p">:,</span> <span class="p">:]</span>   <span class="c1"># take last 49,000 for train</span>
+<span class="n">Ytr</span> <span class="o">=</span> <span class="n">Ytr</span><span class="p">[</span><span class="mi">1000</span><span class="p">:]</span>
+
+<span class="c1"># find hyperparameters that work best on the validation set</span>
+<span class="n">validation_accuracies</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">]:</span>
+
+  <span class="c1"># use a particual value of k and evaluation on validation data</span>
+  <span class="n">nn</span> <span class="o">=</span> <span class="n">NearestNeighbot</span><span class="p">()</span>
+  <span class="n">nn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">Xtr_rows</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">)</span>
+  <span class="c1"># here we assume a modified NearestNeighbor class that can take a k as input</span>
+  <span class="n">Yval_predict</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xval_rows</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">k</span><span class="p">)</span>
+  <span class="n">acc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Yval_predict</span> <span class="o">==</span> <span class="n">Yval</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;accuracy: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">acc</span><span class="p">,))</span>
+
+  <span class="c1"># keep track of what works on the validation set</span>
+  <span class="n">validation_accuracies</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">acc</span><span class="p">))</span>
+</code></pre></div>
+<p>程序的最后，我们可以做图分析哪个 k 效果最好。然后用这个 k 值来跑真正的测试集，并作出对算法的评价</p>
+<blockquote>
+<p>将训练集分为训练集和验证集。使用验证集调优超参数。最后只在测试集上跑一次并报告结果</p>
+</blockquote>
 
 
 
