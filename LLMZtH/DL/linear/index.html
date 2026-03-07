@@ -3599,11 +3599,11 @@
 <p>例如，在 CIFAR-10 中我们有一个 <span class="arithmatex">\(N=50,000\)</span> 的训练集，每个图像有 <span class="arithmatex">\(D=32\times 32\times 3\)</span> 个像素，因为有 10 个不同类别所以 <span class="arithmatex">\(K=10\)</span>。</p>
 </blockquote>
 <p>我们现在定义分数函数 <span class="arithmatex">\(f:R^D\mapsto R^K\)</span> 表示从图像像素到类别分数的映射</p>
-<p><strong>线性分类</strong>：在这个模型中，我们从一个简单的概率函数开始，一个线性映射：
-$$
+<p><strong>线性分类</strong>：在这个模型中，我们从一个简单的概率函数开始，一个线性映射：</p>
+<div class="arithmatex">\[
 f(x_i,W,b)=Wx_i+b
-$$
-在上式中，我们假定图像 <span class="arithmatex">\(x_i\)</span> 的所有像素被拉长为一个长度为 <span class="arithmatex">\(D\)</span> 的列向量。矩阵 <span class="arithmatex">\(W\)</span>（大小为 <span class="arithmatex">\([K\times D]\)</span>) 和列向量 <span class="arithmatex">\(b\)</span> (<span class="arithmatex">\([K\times 1]\)</span>) 是函数的 <strong>参数(parameters)</strong>。</p>
+\]</div>
+<p>在上式中，我们假定图像 <span class="arithmatex">\(x_i\)</span> 的所有像素被拉长为一个长度为 <span class="arithmatex">\(D\)</span> 的列向量。矩阵 <span class="arithmatex">\(W\)</span>（大小为 <span class="arithmatex">\([K\times D]\)</span>) 和列向量 <span class="arithmatex">\(b\)</span> (<span class="arithmatex">\([K\times 1]\)</span>) 是函数的 <strong>参数(parameters)</strong>。</p>
 <blockquote>
 <p>在 CIFAR-10 中，<span class="arithmatex">\(x_i\)</span> 包含第 <span class="arithmatex">\(i\)</span>  个图像的所有像素信息，这些信息被拉长为 <span class="arithmatex">\([3072\times 1]\)</span> 的列向量，<span class="arithmatex">\(W\)</span> 的大小为 <span class="arithmatex">\([10\times 3072]\)</span>，<span class="arithmatex">\(b\)</span> 是 <span class="arithmatex">\([10\times 1]\)</span>。所以函数的输入为 3072 个数字，输出为 10个数字(分类得分)。</p>
 </blockquote>
@@ -3634,7 +3634,7 @@ $$
 <p>图像空间示意图。其中每个图像都是一个点，有3个分类器可视化了。以汽车分类器（红色线）为例，红线展示了空间中汽车分类分数为 0 的点集合，红色的箭头表示分值上升的方向，所以所有红线右边的点有更高得分，左边的点得分更低</p>
 <hr />
 <p>就像我们在上面看到的，<span class="arithmatex">\(W\)</span> 的每一行是一种类别的分类器。从几何角度解释这些数字，我们改变 <span class="arithmatex">\(W\)</span> 的任意一行，像素空间中对应的线将会向着不同方向旋转。偏差 <span class="arithmatex">\(b\)</span> 则使分类器对应的线平移。值得注意的是，当没有偏差时，<span class="arithmatex">\(x_i=0\)</span> 时分类器分值始终为 0 。这样所有分类器都将穿过原点</p>
-<p><strong>将线性分类器视为模板匹配</strong>。另一种关于 <span class="arithmatex">\(W\)</span> </p>
+<p><strong>将线性分类器视为模板匹配</strong>。另一种关于 <span class="arithmatex">\(W\)</span>  的解释是它的每一行对应一种分类的模板(有时也称为 <em>原型</em>)</p>
 
 
 
