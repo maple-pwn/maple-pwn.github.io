@@ -3915,43 +3915,43 @@ L_i = C \max(0,, 1 - y_i w^T x_i) + R(W)
 <h3 id="softmax">Softmax 分类器</h3>
 <p>事实证明，SVM 只是两类常见分类器中的一种。另一种同样广泛使用的选择是 <strong>Softmax 分类器</strong>，它采用的是另一种损失函数。若你之前接触过二分类的 <strong>逻辑回归</strong>（Logistic Regression）分类器，那么可以把 Softmax 分类器看作它在 <strong>多分类情形</strong> 下的自然推广。</p>
 <p>与 SVM 不同，SVM 将输出 <span class="arithmatex">\(f(x_i, W)\)</span> 看作每个类别的分数；这些分数没有经过校准，因而往往不太直观，也不容易直接解释。Softmax 分类器则给出一种稍微更直观的输出—— <strong>归一化后的类别概率</strong>，并且它还具有一种概率意义上的解释，我们很快就会看到。</p>
-<p>在 Softmax 分类器中，映射函数 <span class="arithmatex">\(f(x_i; W) = W x_i\)</span> 本身并没有变化；变化的是我们对这些分数的理解：现在我们把它们解释为各类别 <strong>未经归一化的对数概率</strong>，并用 <strong>交叉熵损失</strong>（cross-entropy loss）来替代原先的 hinge loss，其形式为：
-$$
+<p>在 Softmax 分类器中，映射函数 <span class="arithmatex">\(f(x_i; W) = W x_i\)</span> 本身并没有变化；变化的是我们对这些分数的理解：现在我们把它们解释为各类别 <strong>未经归一化的对数概率</strong>，并用 <strong>交叉熵损失</strong>（cross-entropy loss）来替代原先的 hinge loss，其形式为：</p>
+<div class="arithmatex">\[
 L_i = -\log\left(\frac{e^{f_{y_i}}}{\sum_j e^{f_j}}\right)
-$$
-或者等价地写成：
-$$
+\]</div>
+<p>或者等价地写成：</p>
+<div class="arithmatex">\[
 L_i = -f_{y_i} + \log \sum_j e^{f_j}
-$$
-这里，记号 <span class="arithmatex">\(f_j\)</span> 表示类别得分向量 <span class="arithmatex">\(f\)</span> 的第 <span class="arithmatex">\(j\)</span> 个分量。和前面一样，整个数据集上的总损失，是所有训练样本损失 <span class="arithmatex">\(L_i\)</span> 的平均值，再加上一个正则化项 <span class="arithmatex">\(R(W)\)</span>。</p>
+\]</div>
+<p>这里，记号 <span class="arithmatex">\(f_j\)</span> 表示类别得分向量 <span class="arithmatex">\(f\)</span> 的第 <span class="arithmatex">\(j\)</span> 个分量。和前面一样，整个数据集上的总损失，是所有训练样本损失 <span class="arithmatex">\(L_i\)</span> 的平均值，再加上一个正则化项 <span class="arithmatex">\(R(W)\)</span>。</p>
 <p>函数 <span class="arithmatex">\(f_j(z) = \frac{e^{z_j}}{\sum_k e^{z_k}}\)</span> 被称为 <strong>softmax 函数</strong>。它接收一个由任意实数分数组成的向量 <span class="arithmatex">\(z\)</span>，并将其压缩映射为一个新的向量；新向量中的每个值都落在 <span class="arithmatex">\(0\)</span> 到 <span class="arithmatex">\(1\)</span> 之间，且所有分量之和恰好为 <span class="arithmatex">\(1\)</span>。若你是第一次见到包含 softmax 的完整交叉熵损失，它看上去也许有些吓人，但其实它的动机并不难理解。</p>
-<p><strong>从信息论的角度看</strong>。真实分布 <span class="arithmatex">\(p\)</span> 与估计分布 <span class="arithmatex">\(q\)</span> 之间的**交叉熵**定义为：
-$$
+<p><strong>从信息论的角度看</strong>。真实分布 <span class="arithmatex">\(p\)</span> 与估计分布 <span class="arithmatex">\(q\)</span> 之间的**交叉熵**定义为：</p>
+<div class="arithmatex">\[
 H(p, q) = - \sum_x p(x)\log q(x)
-$$
-因此，Softmax 分类器所做的事情，就是最小化 <strong>估计类别概率分布</strong> 与 <strong>真实分布</strong> 之间的交叉熵。这里，估计分布就是上面得到的类别概率：<span class="arithmatex">\(q = \frac{e^{f_{y_i}}}{\sum_j e^{f_j}}\)</span> 。而所谓“真实分布”，在这里指的是一种把 <strong>全部概率质量都集中在正确类别上</strong> 的分布。也就是说，<span class="arithmatex">\(p = [0, \ldots, 1, \ldots, 0]\)</span>.其中只有第 <span class="arithmatex">\(y_i\)</span> 个位置为 <span class="arithmatex">\(1\)</span>，其余位置全为 <span class="arithmatex">\(0\)</span>。</p>
-<p>进一步地，由于交叉熵可以写成熵与 <strong>Kullback–Leibler 散度</strong>（KL 散度）之和，即：
-$$
+\]</div>
+<p>因此，Softmax 分类器所做的事情，就是最小化 <strong>估计类别概率分布</strong> 与 <strong>真实分布</strong> 之间的交叉熵。这里，估计分布就是上面得到的类别概率：<span class="arithmatex">\(q = \frac{e^{f_{y_i}}}{\sum_j e^{f_j}}\)</span> 。而所谓“真实分布”，在这里指的是一种把 <strong>全部概率质量都集中在正确类别上</strong> 的分布。也就是说，<span class="arithmatex">\(p = [0, \ldots, 1, \ldots, 0]\)</span>.其中只有第 <span class="arithmatex">\(y_i\)</span> 个位置为 <span class="arithmatex">\(1\)</span>，其余位置全为 <span class="arithmatex">\(0\)</span>。</p>
+<p>进一步地，由于交叉熵可以写成熵与 <strong>Kullback–Leibler 散度</strong>（KL 散度）之和，即：</p>
+<div class="arithmatex">\[
 H(p, q) = H(p) + D_{KL}(p \parallel q)
-$$
-而这里的 <span class="arithmatex">\(p\)</span> 是一个 delta 分布，它本身的熵 <span class="arithmatex">\(H(p)\)</span> 为零，所以最小化交叉熵，其实也就等价于最小化这两个分布之间的 <strong>KL 散度</strong>（可以把它理解为一种分布间距离的度量）。</p>
+\]</div>
+<p>而这里的 <span class="arithmatex">\(p\)</span> 是一个 delta 分布，它本身的熵 <span class="arithmatex">\(H(p)\)</span> 为零，所以最小化交叉熵，其实也就等价于最小化这两个分布之间的 <strong>KL 散度</strong>（可以把它理解为一种分布间距离的度量）。</p>
 <p>换句话说，交叉熵这个目标函数“希望”的是：模型预测出的概率分布，能够把尽可能全部的概率质量都压到正确答案上。</p>
 <blockquote>
 <p>这段的要点很清楚：SVM 关心“正确类别要比错误类别高多少”，而 Softmax 关心“你给正确类别分了多大概率”。一个像打分裁判，一个像下注系统。</p>
 </blockquote>
-<p><strong>概率解释</strong> 观察下面这个式子，我们可以看到
-$$
+<p><strong>概率解释</strong> 观察下面这个式子，我们可以看到</p>
+<div class="arithmatex">\[
 $P(y_i \mid x_i; W) = \frac{e^{f_{y_i}}}{\sum_j e^{f_j}}
-$$
-它可以被解释为：在给定图像 <span class="arithmatex">\(x_i\)</span>、并以参数 <span class="arithmatex">\(W\)</span> 为模型参数的条件下，模型分配给正确标签 <span class="arithmatex">\(y_i\)</span> 的**（归一化）概率**。要理解这一点，需要记住：Softmax 分类器会将输出向量 <span class="arithmatex">\(f\)</span> 中的分数看作 <strong>未归一化的对数概率</strong>。因此，对这些量取指数后，就得到了 <strong>未归一化的概率</strong>；而分母中的除法操作则完成了归一化，使所有概率之和为 1。在这种概率解释下，我们实际上是在最小化正确类别的**负对数似然**（negative log likelihood），这可以理解为在做**最大似然估计**（Maximum Likelihood Estimation, MLE）。</p>
+\]</div>
+<p>它可以被解释为：在给定图像 <span class="arithmatex">\(x_i\)</span>、并以参数 <span class="arithmatex">\(W\)</span> 为模型参数的条件下，模型分配给正确标签 <span class="arithmatex">\(y_i\)</span> 的**（归一化）概率**。要理解这一点，需要记住：Softmax 分类器会将输出向量 <span class="arithmatex">\(f\)</span> 中的分数看作 <strong>未归一化的对数概率</strong>。因此，对这些量取指数后，就得到了 <strong>未归一化的概率</strong>；而分母中的除法操作则完成了归一化，使所有概率之和为 1。在这种概率解释下，我们实际上是在最小化正确类别的**负对数似然**（negative log likelihood），这可以理解为在做**最大似然估计**（Maximum Likelihood Estimation, MLE）。</p>
 <p>这种视角还有一个很好的地方：我们现在也可以把完整损失函数中的正则项 <span class="arithmatex">\(R(W)\)</span> 理解为来源于权重矩阵 <span class="arithmatex">\(W\)</span> 上的一个 <strong>高斯先验</strong>。这样一来，我们所进行的就不再只是 MLE，而是 <strong>最大后验估计</strong>（Maximum a posteriori, MAP）。这里提到这些解释，主要是为了帮助你建立直觉；至于完整推导的细节，则超出了本课程的讨论范围。</p>
-<p><strong>实际问题：数值稳定性</strong>：在实际编写 Softmax 函数的代码时，中间项 <span class="arithmatex">\(e^{f_{y_i}}\)</span> 和 <span class="arithmatex">\(\sum_j e^{f_j}\)</span> 由于指数运算的存在，可能会变得非常大。两个很大的数相除，往往会带来 <strong>数值不稳定</strong> 的问题，因此必须使用一种归一化技巧。注意，如果我们将分子和分母同时乘以一个常数 <span class="arithmatex">\(C\)</span>，并把它并入求和式中，就可以得到如下这个**在数学上等价**的表达式：
-$$
+<p><strong>实际问题：数值稳定性</strong>：在实际编写 Softmax 函数的代码时，中间项 <span class="arithmatex">\(e^{f_{y_i}}\)</span> 和 <span class="arithmatex">\(\sum_j e^{f_j}\)</span> 由于指数运算的存在，可能会变得非常大。两个很大的数相除，往往会带来 <strong>数值不稳定</strong> 的问题，因此必须使用一种归一化技巧。注意，如果我们将分子和分母同时乘以一个常数 <span class="arithmatex">\(C\)</span>，并把它并入求和式中，就可以得到如下这个**在数学上等价**的表达式：</p>
+<p>$$
 \frac{e^{f_{y_i}}}{\sum_j e^{f_j}}=</p>
 <p>\frac{C e^{f_{y_i}}}{C \sum_j e^{f_j}}=</p>
 <p>\frac{e^{f_{y_i} + \log C}}{\sum_j e^{f_j + \log C}}
-$$
-我们可以自由选择 <span class="arithmatex">\(C\)</span> 的取值。这样做不会改变结果，但可以借此提升计算过程的数值稳定性。一个常见的选择是令：<span class="arithmatex">\(\log C = -\max_j f_j\)</span> 这实际上就是说：我们应该将向量 <span class="arithmatex">\(f\)</span> 中的所有值整体平移，使其中的最大值变为 0。</p>
+$$</p>
+<p>我们可以自由选择 <span class="arithmatex">\(C\)</span> 的取值。这样做不会改变结果，但可以借此提升计算过程的数值稳定性。一个常见的选择是令：<span class="arithmatex">\(\log C = -\max_j f_j\)</span> 这实际上就是说：我们应该将向量 <span class="arithmatex">\(f\)</span> 中的所有值整体平移，使其中的最大值变为 0。</p>
 <div class="highlight"><pre><span></span><code><span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">123</span><span class="p">,</span> <span class="mi">456</span><span class="p">,</span> <span class="mi">789</span><span class="p">])</span> <span class="c1"># example with 3 classes and each having large scores</span>
 <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">f</span><span class="p">))</span> <span class="c1"># Bad: Numeric problem, potential blowup</span>
 
