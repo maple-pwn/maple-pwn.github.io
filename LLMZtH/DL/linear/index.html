@@ -1291,6 +1291,63 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      损失函数
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="损失函数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#svm" class="md-nav__link">
+    <span class="md-ellipsis">
+      多分类 SVM 损失函数
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      实际中的一些考虑
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="实际中的一些考虑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#delta" class="md-nav__link">
+    <span class="md-ellipsis">
+      间隔参数 Delta 的设定
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#softmax" class="md-nav__link">
+    <span class="md-ellipsis">
+      Softmax 分类器
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3546,6 +3603,63 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      损失函数
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="损失函数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#svm" class="md-nav__link">
+    <span class="md-ellipsis">
+      多分类 SVM 损失函数
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      实际中的一些考虑
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="实际中的一些考虑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#delta" class="md-nav__link">
+    <span class="md-ellipsis">
+      间隔参数 Delta 的设定
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#softmax" class="md-nav__link">
+    <span class="md-ellipsis">
+      Softmax 分类器
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3615,10 +3729,10 @@ f(x_i,W,b)=Wx_i+b
 <li>这种方法的优点是训练集被用来训练参数 <span class="arithmatex">\(W,b\)</span>，一旦学习完成我们可以舍弃整个训练集并只保留学得的参数。一个新的测试图片可以仅通过这个函数进行预测，然后基于计算到的评分分类</li>
 <li>最后，值得注意的是对测试图像分类只需要一个矩阵乘法和一个矩阵加法，这比 kNN 中将所有测试图像和所有训练数据作比较的方法快多了</li>
 </ul>
-<blockquote>
-<p>[!Note]</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>预告：卷积神经网络对图像像素的映射和上述差不多，但映射函数(f)更加复杂，也包含更多参数</p>
-</blockquote>
+</div>
 <h3 id="_3">理解线性分类器</h3>
 <p>线性分类器先计算3个颜色通道中所有像素的值，再与权重的矩阵相乘，从而得到类别分数。根据不同的权重设置，函数可以对图像特定颜色或位置表现喜恶(根据每个权重信号)。例如，“ship”类别会更喜欢图像边缘是蓝色(对应水)。我们也希望“ship”的分类器在蓝色通道的权重上更加激进(也就是蓝色的存在会增加“ship”类别的得分)，在红色/绿色通道的权重更消极</p>
 <hr />
@@ -3647,7 +3761,204 @@ $$
 我们分开处理这两个参数的话有些笨拙，常用的方法是将两个参数放到一个矩阵中，然后为 <span class="arithmatex">\(x_i\)</span> 增添一个维度，这个维度的数值为常量1——默认的 <em>偏差维度</em>。带上额外的维度，新的评分函数可以简化为一个简单的矩阵相乘
 $$
 f(x_i,W)=Wx_i
-$$</p>
+$$
+用 CIFAR-10 为例，<span class="arithmatex">\(x_i\)</span> 变为了 <span class="arithmatex">\([3073\times 1]\)</span> (额外一个包含常数1的维度)，<span class="arithmatex">\(W\)</span> 变为了 <span class="arithmatex">\([10\times 3073]\)</span> 。 <span class="arithmatex">\(W\)</span> 额外的列向量就是偏差值 <span class="arithmatex">\(b\)</span>,具体如下</p>
+<hr />
+<p><img alt="img" src="https://cs231n.github.io/assets/wb.jpeg" /></p>
+<p>偏差合并技巧解释图。左图是做一个矩阵乘法然后加上偏差向量，右图是将输入向量的维度增加一个含常量1的维度，并在权重矩阵中增加一个偏差列，这两种发法师等价的。因此，如果我们通过在所有向量中添加1来及进行数据预处理，我们只需要学习一个权重矩阵，而不是分别存储权重和偏差的矩阵</p>
+<hr />
+<p><strong>图像数据预处理</strong>。简而言之，在上述的示例中，我们使用的是原始像素值。在机器学习中，对输入特征进行归一化(normalization)是一种非常普遍的做法，以图像分类为例，每个像素被认为是一个特征。在实际中，将每个特征减去平均值获得 <strong>中心化</strong> 是很有必要的。依旧以图像分类为例，通过训练数据计算出一个平均图片，然后每个图像都减去这个平均值，这样的话每个像素都在 [-127,127]之间了。进一步的常见预处理是将每个输入特征值进行放缩，使其值得范围在[-1,1] 。当然，零均值的中心化是很重要的，等我们理解了梯度下降后再来详细解释</p>
+<h3 id="_4">损失函数</h3>
+<p>在前面的小节中，我们定义了一个将像素值转化为类别分数的函数，该函数的参数是权重矩阵 <span class="arithmatex">\(W\)</span>。此外，函数中的数据 <span class="arithmatex">\((x_i,y_i)\)</span> 是给定的，不可以修改。但是我们可以调整权重矩阵这个参数，使得评分函数的结果与训练数据集中图像的真实类别一致，也就是评分函数在正确的分类的位置应该得到最高的评分</p>
+<p>前面的例子里，模型把一张猫的图片分类得很差：猫这一类的分数很低，而狗和船的分数反而更高，说明这组权重效果不好。为了衡量模型分类得有多差，我们要引入**损失函数**（也叫 cost function 或 objective）。直觉上，模型分类得越差，损失就越大；分类得越好，损失就越小。</p>
+<h4 id="svm">多分类 SVM 损失函数</h4>
+<p><strong>多分类支持向量机损失</strong></p>
+<p>损失函数的具体形式有多种定义方式。作为第一个例子，我们先介绍一种常用的损失函数，叫做**多分类支持向量机（SVM）损失**。这种损失的设计目标是：对于每张图像，SVM 都“希望”正确类别的得分比所有错误类别的得分至少高出一个固定的间隔 <span class="arithmatex">\(\Delta\)</span>。需要注意的是，像上文那样把损失函数拟人化来理解，有时会很有帮助：所谓 SVM “希望”出现某种结果，本质上是指这种结果会带来更低的损失值，而更低的损失显然是我们所追求的。</p>
+<p>下面把它说得更精确一些。回忆一下：对于第 <span class="arithmatex">\(i\)</span> 个样本，我们已知输入图像 <span class="arithmatex">\(x_i\)</span> 的像素，以及标签 <span class="arithmatex">\(y_i\)</span>，其中 <span class="arithmatex">\(y_i\)</span> 表示该样本真实类别的索引。评分函数会根据图像像素计算出一个类别得分向量 <span class="arithmatex">\(f(x_i, W)\)</span>，我们把它简记为 <span class="arithmatex">\(s\)</span>（即 scores，得分）。例如，第 <span class="arithmatex">\(j\)</span> 个类别的得分就是该向量的第 <span class="arithmatex">\(j\)</span> 个分量：
+$$
+s_j = f(x_i, W)<em>j
+$$
+于是，第 <span class="arithmatex">\(i\)</span> 个样本的多分类 SVM 损失可以形式化地写成：
+$$
+L_i = \sum</em>{j \ne y_i} \max(0,, s_j - s_{y_i} + \Delta)
+$$
+<strong>例子。</strong> 下面我们用一个具体例子把这个公式拆开看看它是怎么工作的。假设有三个类别，它们的得分为
+$$
+s = [13, -7, 11]
+$$
+并且第一个类别是真实类别（即 <span class="arithmatex">\(y_i = 0\)</span>）。再假设 <span class="arithmatex">\(\Delta\)</span>（一个超参数，稍后会详细介绍）取 10。上面的式子会对所有错误类别（<span class="arithmatex">\(j \ne y_i\)</span>）求和，因此这里有两项：
+$$
+L_i = \max(0, -7 - 13 + 10) + \max(0, 11 - 13 + 10)
+$$
+可以看出，第一项等于 0，因为 <span class="arithmatex">\(-7 - 13 + 10\)</span> 是一个负数，而负数经过 <span class="arithmatex">\(\max(0, \cdot)\)</span> 函数后会被截断为 0。之所以这一项的损失为 0，是因为正确类别的得分 13 比错误类别的得分 -7 至少高出了间隔 10。实际上，它们的差值是 20，远大于 10；但 SVM 并不关心这个差距到底大了多少，它只在乎差距是否 <strong>至少达到 10</strong>。一旦超过这个间隔，多出来的部分在 <span class="arithmatex">\(\max\)</span> 运算下都会被视为 0，不再额外计入损失。</p>
+<p>第二项计算的是 <span class="arithmatex">\(11 - 13 + 10\)</span>，结果为 8。也就是说，虽然正确类别的得分确实高于错误类别（<span class="arithmatex">\(13 &gt; 11\)</span>），但它并没有高出我们要求的 10 这个间隔，实际只高了 2，因此还差 8，于是这一项的损失就是 8。换句话说，这个损失值刻画的是：为了满足间隔要求，正确类别的得分还需要再比错误类别高出多少。</p>
+<p>总的来说，SVM 损失函数要求正确类别 <span class="arithmatex">\(y_i\)</span> 的得分，至少要比所有错误类别的得分高出一个 <span class="arithmatex">\(\Delta\)</span>（delta）那么大的间隔；如果做不到，就会累积损失。</p>
+<p>需要注意的是，在本节中我们讨论的是 <strong>线性评分函数</strong>
+$$
+f(x_i; W) = Wx_i
+$$
+因此，损失函数也可以等价地写成：
+$$
+L_i = \sum_{j \ne y_i} \max(0, w_j^T x_i - w_{y_i}^T x_i + \Delta)
+$$
+其中，<span class="arithmatex">\(w_j\)</span> 表示矩阵 <span class="arithmatex">\(W\)</span> 的第 <span class="arithmatex">\(j\)</span> 行，并将其看作列向量。不过，当我们之后考虑更复杂的评分函数 <span class="arithmatex">\(f\)</span> 时，这种写法就不一定仍然成立了。</p>
+<p>在结束这一节前，再补充一个术语：这个在 0 处进行截断的 <span class="arithmatex">\(\max(0, \cdot)\)</span> 函数，通常被称为 <strong>hinge loss（铰链损失）</strong>。你有时也会听到 <strong>平方铰链损失</strong>（squared hinge loss，SVM 或 L2-SVM），其形式为 <span class="arithmatex">\(\max(0, \cdot)^2\)</span> 。它会对违反间隔约束的情况施加更强的惩罚，因为惩罚是二次增长的，而不是线性增长。未平方的版本更为常见，但在某些数据集上，平方铰链损失可能效果更好。究竟哪种更合适，通常可以通过交叉验证来确定。</p>
+<blockquote>
+<p>损失函数量化了我们对训练集上预测的不满</p>
+</blockquote>
+<hr />
+<p><img alt="img" src="https://cs231n.github.io/assets/margin.jpg" /></p>
+<p>多分类支持向量机希望正确类别的得分，至少要比其余所有类别高出一个 <span class="arithmatex">\(\delta\)</span> 的间隔。只要有某个类别的得分落入红色区域之内（或更高），就会产生累计损失；否则，损失为零。我们的目标，就是找到一组权重，使训练数据中的所有样本都尽可能同时满足这一约束，并让总损失尽可能小。</p>
+<hr />
+<p><strong>正则化（Regularization）</strong>。我们上面给出的损失函数其实有一个问题。假设现在有一个数据集，以及一组参数 <span class="arithmatex">\(W\)</span>，它能够把所有样本都正确分类（也就是说，所有类别间隔条件都被满足，并且对任意 <span class="arithmatex">\(i\)</span> 都有 <span class="arithmatex">\(L_i = 0\)</span>）。问题在于，这样的一组 <span class="arithmatex">\(W\)</span> 往往 <strong>并不是唯一的</strong>：可能存在很多相近的 <span class="arithmatex">\(W\)</span>，同样都能把这些样本分对。</p>
+<p>这个现象很容易理解：如果某组参数 <span class="arithmatex">\(W\)</span> 已经能够正确分类所有样本（即每个样本的损失都为 0），那么把它整体放大为 <span class="arithmatex">\(\lambda W\)</span>（其中 <span class="arithmatex">\(\lambda &gt; 1\)</span>），仍然会得到 0 损失。原因是，这种变换会把所有得分的大小按比例同时拉伸，从而也把它们之间的绝对差值一并放大。举例来说，如果某个样本中，正确类别得分与最接近它的错误类别得分之差是 15，那么把 <span class="arithmatex">\(W\)</span> 的所有元素都乘以 2 后，这个差值就会变成 30。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>笔者个人理解：对 <span class="arithmatex">\(\lambda\)</span> 没有约束的话，会导致参数倾向于变得很大，因为足够大的参数可以避免 loss function 的惩罚，从而趋向于此</p>
+</div>
+<p>换句话说，我们希望在不同的权重 <span class="arithmatex">\(W\)</span> 之间加入某种“偏好”，以消除这种不确定性。做到这一点的方法，是在原有损失函数之外，再加入一个 <strong>正则化惩罚项</strong> <span class="arithmatex">\(R(W)\)</span>。最常见的正则化方式是 <strong>L2 范数平方</strong>，它通过对所有参数施加逐元素的二次惩罚，来抑制权重过大：
+$$
+R(W) = \sum_k \sum_l W_{k,l}^2
+$$
+在上式中，我们对 <span class="arithmatex">\(W\)</span> 的所有元素的平方进行了求和。注意，正则化函数并不是数据的函数，它只依赖于权重本身。把正则化惩罚项加入之后，就得到了完整的多分类支持向量机损失。这个完整损失由两部分构成：一部分是 <strong>数据损失</strong>（即所有样本损失 <span class="arithmatex">\(L_i\)</span> 的平均值），另一部分是 <strong>正则化损失</strong>。也就是说，完整的多分类 SVM 损失可写为：
+$$
+L = \frac{1}{N}\sum_i L_i + \lambda R(W)
+$$
+其中，第一项是数据损失，第二项是正则化损失。</p>
+<p>如果把它进一步展开成完整形式，则有：
+$$
+L = \frac{1}{N}\sum_i \sum_{j \ne y_i} \left[ \max\bigl(0,, f(x_i; W)<em>j - f(x_i; W)</em>{y_i} + \Delta \bigr) \right] + \lambda \sum_k \sum_l W_{k,l}^2
+$$
+这里，<span class="arithmatex">\(N\)</span> 表示训练样本的数量。可以看到，我们在原来的损失目标后附加了一个正则化惩罚项，并用超参数 <span class="arithmatex">\(\lambda\)</span> 来控制它的权重。这个超参数并没有简单直接的设定方法，通常需要通过**交叉验证**来确定。</p>
+<p>除了前面提到的动机之外，引入正则化惩罚项还有许多理想的性质，后文还会回到这些内容。举例来说，加入 L2 惩罚后，SVM 会具有一个很吸引人的性质——<strong>最大间隔</strong>（max margin）性质。</p>
+<p>最值得称道的一点在于：对较大的权重施加惩罚，往往能够提升模型的**泛化能力**。原因是，这意味着任何一个输入维度都不能仅凭自身就对最终得分产生过大的影响。</p>
+<p>举个例子，设输入向量为：<span class="arithmatex">\(x = [1,1,1,1]\)</span> 并有两个权重向量：<span class="arithmatex">\(w_1 = [1,0,0,0]\)</span>，<span class="arithmatex">\(w_2 = [0.25,0.25,0.25,0.25]\)</span>。那么有：
+$$
+w_1^T x = w_2^T x = 1
+$$
+也就是说，这两个权重向量都会得到相同的点积结果；但 <span class="arithmatex">\(w_1\)</span> 的 L2 惩罚为 <span class="arithmatex">\(1.0\)</span>，而 <span class="arithmatex">\(w_2\)</span> 的 L2 惩罚只有 <span class="arithmatex">\(0.25\)</span>。因此，按照 L2 惩罚的标准，我们会更偏好权重向量 <span class="arithmatex">\(w_2\)</span>，因为它对应的正则化损失更小。</p>
+<p>从直觉上看，这是因为 <span class="arithmatex">\(w_2\)</span> 中的权重更小，也更分散。既然 L2 惩罚偏好这种“更小、更均匀分布”的权重向量，那么最终得到的分类器就会倾向于让所有输入维度都各自贡献一点作用，而不是只让少数几个输入维度起到极强的决定性作用。正如我们在后面的课程中会看到的，这种效应能够提升分类器在测试图像上的泛化表现，并减少 <strong>过拟合</strong>。</p>
+<p>还需要注意的是，偏置项（bias）并不会产生同样的效果。因为和权重不同，偏置并不控制某个输入维度影响结果的强弱。因此，实践中通常只对权重 <span class="arithmatex">\(W\)</span> 进行正则化，而不对偏置 <span class="arithmatex">\(b\)</span> 进行正则化。不过在很多实际场景里，这一点带来的影响往往很小，几乎可以忽略。</p>
+<p>最后还要指出，由于加入了正则化惩罚项，我们实际上不可能在所有样本上都取得严格等于 <span class="arithmatex">\(0.0\)</span> 的损失；因为那只有在一种近乎病态的情形下才可能发生，即：<span class="arithmatex">\(W = 0\)</span></p>
+<p><strong>代码。</strong> 下面给出了 Python 中损失函数（暂不包含正则化项）的实现，包括 <strong>非向量化</strong> 和 <strong>半向量化</strong> 两种形式。</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">L_i</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  unvectorized version. Compute the multiclass svm loss for a single example (x,y)</span>
+<span class="sd">  - x is a column vector representing an image (e.g. 3073 x 1 in CIFAR-10)</span>
+<span class="sd">    with an appended bias dimension in the 3073-rd position (i.e. bias trick)</span>
+<span class="sd">  - y is an integer giving index of correct class (e.g. between 0 and 9 in CIFAR-10)</span>
+<span class="sd">  - W is the weight matrix (e.g. 10 x 3073 in CIFAR-10)</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">delta</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="c1"># see notes about delta later in this section</span>
+  <span class="n">scores</span> <span class="o">=</span> <span class="n">W</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># scores becomes of size 10 x 1, the scores for each class</span>
+  <span class="n">correct_class_score</span> <span class="o">=</span> <span class="n">scores</span><span class="p">[</span><span class="n">y</span><span class="p">]</span>
+  <span class="n">D</span> <span class="o">=</span> <span class="n">W</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># number of classes, e.g. 10</span>
+  <span class="n">loss_i</span> <span class="o">=</span> <span class="mf">0.0</span>
+  <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">D</span><span class="p">):</span> <span class="c1"># iterate over all wrong classes</span>
+    <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">y</span><span class="p">:</span>
+      <span class="c1"># skip for the true class to only loop over incorrect classes</span>
+      <span class="k">continue</span>
+    <span class="c1"># accumulate loss for the i-th example</span>
+    <span class="n">loss_i</span> <span class="o">+=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">scores</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">correct_class_score</span> <span class="o">+</span> <span class="n">delta</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">loss_i</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">L_i_vectorized</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  A faster half-vectorized implementation. half-vectorized</span>
+<span class="sd">  refers to the fact that for a single example the implementation contains</span>
+<span class="sd">  no for loops, but there is still one loop over the examples (outside this function)</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">delta</span> <span class="o">=</span> <span class="mf">1.0</span>
+  <span class="n">scores</span> <span class="o">=</span> <span class="n">W</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+  <span class="c1"># compute the margins for all classes in one vector operation</span>
+  <span class="n">margins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">scores</span> <span class="o">-</span> <span class="n">scores</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">+</span> <span class="n">delta</span><span class="p">)</span>
+  <span class="c1"># on y-th position scores[y] - scores[y] canceled and gave delta. We want</span>
+  <span class="c1"># to ignore the y-th position and only consider margin on max wrong class</span>
+  <span class="n">margins</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">loss_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">margins</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">loss_i</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">L</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  fully-vectorized implementation :</span>
+<span class="sd">  - X holds all the training examples as columns (e.g. 3073 x 50,000 in CIFAR-10)</span>
+<span class="sd">  - y is array of integers specifying correct class (e.g. 50,000-D array)</span>
+<span class="sd">  - W are weights (e.g. 10 x 3073)</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="c1"># evaluate loss over all examples in X without using any for loops</span>
+  <span class="c1"># left as exercise to reader in the assignment</span>
+</code></pre></div>
+<p>这一节的核心结论是：SVM 损失采用了一种特定的方法，用来衡量模型在训练数据上的预测，与真实标签之间到底有多一致。进一步说，在训练集上做出更好的预测，本质上就等价于让损失函数取得更小的值。</p>
+<blockquote>
+<p>现在剩下要做的，就是找到一种方法，求出那组能够使损失最小化的权重。</p>
+</blockquote>
+<h3 id="_5">实际中的一些考虑</h3>
+<h4 id="delta">间隔参数 Delta 的设定</h4>
+<p>注意，前面我们对超参数 <span class="arithmatex">\(\Delta\)</span> 及其取值并没有展开细讲。那么，<span class="arithmatex">\(\Delta\)</span> 应该取多少？是否需要通过交叉验证来专门调它？事实证明，在实际中，这个超参数通常都可以直接安全地设为 <span class="arithmatex">\(\Delta = 1.0\)</span> </p>
+<p>表面上看，<span class="arithmatex">\(\Delta\)</span> 和 <span class="arithmatex">\(\lambda\)</span> 是两个不同的超参数；但实际上，它们控制的是同一个权衡关系：也就是目标函数中**数据损失**与**正则化损失**之间的平衡。</p>
+<p>理解这一点的关键在于：权重 <span class="arithmatex">\(W\)</span> 的大小会直接影响各类别的得分，进而影响它们之间的差值。随着 <span class="arithmatex">\(W\)</span> 中各元素整体缩小，类别得分之间的差距也会随之减小；反过来，若把权重整体放大，得分差距也会一并增大。因此，分数之间的“间隔”到底精确设成多少（比如 <span class="arithmatex">\(\Delta = 1\)</span>，还是 <span class="arithmatex">\(\Delta = 100\)</span>），从某种意义上说并没有那么重要，因为权重本身就可以任意地压缩或拉伸这些差值。</p>
+<p>所以，真正需要权衡的，其实只有一件事：我们究竟允许权重增长到多大。而这一点，是通过正则化强度 <span class="arithmatex">\(\lambda\)</span> 来控制的。</p>
+<p><strong>与二分类支持向量机的关系</strong>.你在学习这门课之前，也许已经接触过**二分类支持向量机**。在那种情形下，第 <span class="arithmatex">\(i\)</span> 个样本的损失可以写成：</p>
+<div class="arithmatex">\[
+L_i = C \max(0,, 1 - y_i w^T x_i) + R(W)
+\]</div>
+<p>其中，<span class="arithmatex">\(C\)</span> 是一个超参数，且：<span class="arithmatex">\(y_i \in \text\{-1, 1\text\}\)</span>。可以进一步验证：当类别数只有两个时，本节给出的多分类形式，其实就包含了二分类 SVM 作为一个特例。也就是说，如果问题中只有两个类别，那么这里的损失函数就会退化为上面的二分类 SVM 形式。</p>
+<p>另外，在这个二分类公式中，<span class="arithmatex">\(C\)</span> 与我们前面使用的 <span class="arithmatex">\(\lambda\)</span>，控制的其实也是同一种权衡关系；二者之间大致满足倒数关系：<span class="arithmatex">\(C \propto \frac{1}{\lambda}\)</span></p>
+<p><strong>题外话：在原始形式中进行优化</strong>。如果你在学习这门课之前已经了解过 SVM，那么你可能也听说过核方法（kernel）、对偶形式（dual）、SMO 算法之类的内容。而在这门课里——事实上，在神经网络的一般讨论中也是如此——我们始终采用的是 <strong>无约束的原始形式</strong>（unconstrained primal form）下的优化目标。</p>
+<p>这些目标函数中，有不少在严格意义上其实并 <strong>不可微</strong>。例如，<span class="arithmatex">\(\max(x, y)\)</span> 函数在 <span class="arithmatex">\(x = y\)</span> 时会出现一个“折点”（kink），因此在那里不可微。不过在实际中，这通常并不构成问题，因为我们完全可以使用 <strong>次梯度</strong>（subgradient）来进行优化。</p>
+<p><strong>题外话：多分类 SVM 的其他形式</strong>。值得注意的是，本节介绍的多分类 SVM，只是 SVM 在多类别情形下的一种构造方式，而且只是少数几种方式中的一种。</p>
+<p>另一种常见形式是 <strong>One-Vs-All（OVA）SVM</strong>，也就是为每一个类别分别训练一个二分类 SVM，用来区分“该类”与“其余所有类”。</p>
+<p>与之相关、但在实践中相对少见的，还有 <strong>All-Vs-All（AVA）</strong> 策略。</p>
+<p>本节采用的形式遵循的是 <strong>Weston 和 Watkins 1999</strong> 提出的版本。相比 OVA，它在某种意义上更强：你可以构造一些多分类数据集，使得这种形式能够达到零数据损失，而 OVA 却做不到。更具体的细节，可以去看原论文。</p>
+<p>你还可能见到另一种形式，叫做 <strong>Structured SVM</strong>。它的思想是：最大化正确类别得分与“得分最高的错误类别”之间的间隔。</p>
+<p>至于这些不同形式之间到底有什么差别，并不在本课程的讨论范围之内。本讲义中给出的这一版本，在实践中是一个比较稳妥的选择；不过，也完全可以认为，最简单的 OVA 策略往往就已经足够好用了。学界也有人持这种看法，例如 <strong>Rifkin 等人在 2004 年</strong> 的论文 <em>In Defense of One-Vs-All Classification</em> 中就做过类似论证。</p>
+<h3 id="softmax">Softmax 分类器</h3>
+<p>事实证明，SVM 只是两类常见分类器中的一种。另一种同样广泛使用的选择是 <strong>Softmax 分类器</strong>，它采用的是另一种损失函数。若你之前接触过二分类的 <strong>逻辑回归</strong>（Logistic Regression）分类器，那么可以把 Softmax 分类器看作它在 <strong>多分类情形</strong> 下的自然推广。</p>
+<p>与 SVM 不同，SVM 将输出 <span class="arithmatex">\(f(x_i, W)\)</span> 看作每个类别的分数；这些分数没有经过校准，因而往往不太直观，也不容易直接解释。Softmax 分类器则给出一种稍微更直观的输出—— <strong>归一化后的类别概率</strong>，并且它还具有一种概率意义上的解释，我们很快就会看到。</p>
+<p>在 Softmax 分类器中，映射函数 <span class="arithmatex">\(f(x_i; W) = W x_i\)</span> 本身并没有变化；变化的是我们对这些分数的理解：现在我们把它们解释为各类别 <strong>未经归一化的对数概率</strong>，并用 <strong>交叉熵损失</strong>（cross-entropy loss）来替代原先的 hinge loss，其形式为：
+$$
+L_i = -\log\left(\frac{e^{f_{y_i}}}{\sum_j e^{f_j}}\right)
+$$
+或者等价地写成：
+$$
+L_i = -f_{y_i} + \log \sum_j e^{f_j}
+$$
+这里，记号 <span class="arithmatex">\(f_j\)</span> 表示类别得分向量 <span class="arithmatex">\(f\)</span> 的第 <span class="arithmatex">\(j\)</span> 个分量。和前面一样，整个数据集上的总损失，是所有训练样本损失 <span class="arithmatex">\(L_i\)</span> 的平均值，再加上一个正则化项 <span class="arithmatex">\(R(W)\)</span>。</p>
+<p>函数 <span class="arithmatex">\(f_j(z) = \frac{e^{z_j}}{\sum_k e^{z_k}}\)</span> 被称为 <strong>softmax 函数</strong>。它接收一个由任意实数分数组成的向量 <span class="arithmatex">\(z\)</span>，并将其压缩映射为一个新的向量；新向量中的每个值都落在 <span class="arithmatex">\(0\)</span> 到 <span class="arithmatex">\(1\)</span> 之间，且所有分量之和恰好为 <span class="arithmatex">\(1\)</span>。若你是第一次见到包含 softmax 的完整交叉熵损失，它看上去也许有些吓人，但其实它的动机并不难理解。</p>
+<p><strong>从信息论的角度看</strong>。真实分布 <span class="arithmatex">\(p\)</span> 与估计分布 <span class="arithmatex">\(q\)</span> 之间的**交叉熵**定义为：
+$$
+H(p, q) = - \sum_x p(x)\log q(x)
+$$
+因此，Softmax 分类器所做的事情，就是最小化 <strong>估计类别概率分布</strong> 与 <strong>真实分布</strong> 之间的交叉熵。这里，估计分布就是上面得到的类别概率：<span class="arithmatex">\(q = \frac{e^{f_{y_i}}}{\sum_j e^{f_j}}\)</span> 。而所谓“真实分布”，在这里指的是一种把 <strong>全部概率质量都集中在正确类别上</strong> 的分布。也就是说，<span class="arithmatex">\(p = [0, \ldots, 1, \ldots, 0]\)</span>.其中只有第 <span class="arithmatex">\(y_i\)</span> 个位置为 <span class="arithmatex">\(1\)</span>，其余位置全为 <span class="arithmatex">\(0\)</span>。</p>
+<p>进一步地，由于交叉熵可以写成熵与 <strong>Kullback–Leibler 散度</strong>（KL 散度）之和，即：
+$$
+H(p, q) = H(p) + D_{KL}(p \parallel q)
+$$
+而这里的 <span class="arithmatex">\(p\)</span> 是一个 delta 分布，它本身的熵 <span class="arithmatex">\(H(p)\)</span> 为零，所以最小化交叉熵，其实也就等价于最小化这两个分布之间的 <strong>KL 散度</strong>（可以把它理解为一种分布间距离的度量）。</p>
+<p>换句话说，交叉熵这个目标函数“希望”的是：模型预测出的概率分布，能够把尽可能全部的概率质量都压到正确答案上。</p>
+<blockquote>
+<p>这段的要点很清楚：SVM 关心“正确类别要比错误类别高多少”，而 Softmax 关心“你给正确类别分了多大概率”。一个像打分裁判，一个像下注系统。</p>
+</blockquote>
+<p><strong>概率解释</strong> 观察下面这个式子，我们可以看到
+$$
+$P(y_i \mid x_i; W) = \frac{e^{f_{y_i}}}{\sum_j e^{f_j}}
+$$
+它可以被解释为：在给定图像 <span class="arithmatex">\(x_i\)</span>、并以参数 <span class="arithmatex">\(W\)</span> 为模型参数的条件下，模型分配给正确标签 <span class="arithmatex">\(y_i\)</span> 的**（归一化）概率**。要理解这一点，需要记住：Softmax 分类器会将输出向量 <span class="arithmatex">\(f\)</span> 中的分数看作 <strong>未归一化的对数概率</strong>。因此，对这些量取指数后，就得到了 <strong>未归一化的概率</strong>；而分母中的除法操作则完成了归一化，使所有概率之和为 1。在这种概率解释下，我们实际上是在最小化正确类别的**负对数似然**（negative log likelihood），这可以理解为在做**最大似然估计**（Maximum Likelihood Estimation, MLE）。</p>
+<p>这种视角还有一个很好的地方：我们现在也可以把完整损失函数中的正则项 <span class="arithmatex">\(R(W)\)</span> 理解为来源于权重矩阵 <span class="arithmatex">\(W\)</span> 上的一个 <strong>高斯先验</strong>。这样一来，我们所进行的就不再只是 MLE，而是 <strong>最大后验估计</strong>（Maximum a posteriori, MAP）。这里提到这些解释，主要是为了帮助你建立直觉；至于完整推导的细节，则超出了本课程的讨论范围。</p>
+<p><strong>实际问题：数值稳定性</strong>：在实际编写 Softmax 函数的代码时，中间项 <span class="arithmatex">\(e^{f_{y_i}}\)</span> 和 <span class="arithmatex">\(\sum_j e^{f_j}\)</span> 由于指数运算的存在，可能会变得非常大。两个很大的数相除，往往会带来 <strong>数值不稳定</strong> 的问题，因此必须使用一种归一化技巧。注意，如果我们将分子和分母同时乘以一个常数 <span class="arithmatex">\(C\)</span>，并把它并入求和式中，就可以得到如下这个**在数学上等价**的表达式：
+$$
+\frac{e^{f_{y_i}}}{\sum_j e^{f_j}}=</p>
+<p>\frac{C e^{f_{y_i}}}{C \sum_j e^{f_j}}=</p>
+<p>\frac{e^{f_{y_i} + \log C}}{\sum_j e^{f_j + \log C}}
+$$
+我们可以自由选择 <span class="arithmatex">\(C\)</span> 的取值。这样做不会改变结果，但可以借此提升计算过程的数值稳定性。一个常见的选择是令：<span class="arithmatex">\(\log C = -\max_j f_j\)</span> 这实际上就是说：我们应该将向量 <span class="arithmatex">\(f\)</span> 中的所有值整体平移，使其中的最大值变为 0。</p>
+<div class="highlight"><pre><span></span><code><span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">123</span><span class="p">,</span> <span class="mi">456</span><span class="p">,</span> <span class="mi">789</span><span class="p">])</span> <span class="c1"># example with 3 classes and each having large scores</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">f</span><span class="p">))</span> <span class="c1"># Bad: Numeric problem, potential blowup</span>
+
+<span class="c1"># instead: first shift the values of f so that the highest number is 0:</span>
+<span class="n">f</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="c1"># f becomes [-666, -333, 0]</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">f</span><span class="p">))</span> <span class="c1"># safe to do, gives the correct answer</span>
+</code></pre></div>
 
 
 
