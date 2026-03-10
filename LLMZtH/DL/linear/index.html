@@ -1348,6 +1348,33 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      交互网演示
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      总结
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      扩展阅读
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3660,6 +3687,33 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      交互网演示
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      总结
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      扩展阅读
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3964,6 +4018,51 @@ P(y_i \mid x_i; W) = \frac{e^{f_{y_i}}}{\sum_j e^{f_j}}
 <p>这张照片可能可以帮你区分 Softmax 和 SVM 分类器的区别：</p>
 <hr />
 <p><img alt="img" src="https://cs231n.github.io/assets/svmvssoftmax.png" /></p>
+<p>SVM 和 Softmax 分类器在单个数据点上的差异。在这两种情况下我们计算相同的向量 <span class="arithmatex">\(f\)</span> 分数（例如这一节的矩阵乘法）。二者真正的区别，不在于分数本身，而是在于如何解释这些分数：</p>
+<ul>
+<li>SVM 将 <span class="arithmatex">\(f\)</span> 中的值解释为各类别得分，它的损失函数会推动正确类别(蓝色标出的第2类)相比其他类别取得一个至少高出某个间隔的分数</li>
+<li>Softmax 分类器则是将这些分数解释为各类未经归一化的对数概率，随后通过损失函数推动正确类别的归一化对数概率尽可能大——或者说让它的相反数尽可能小</li>
+</ul>
+<p>在这个具体的例子中，最终损失对 SVM 来说是 1.58，对Softmax分类器来说是1.04。需要注意的是，这里的1.04是在使用自然对数时得到的，而不是以 2 或 10 为底的对数。但还需要特别提醒，这两个数值本身并不能直接拿来比较。它们只有在同一个分类器、并且面对同一份数据时，才具有可比性</p>
+<hr />
+<p><strong>Softmax 分类器为每个类别给出“概率”</strong>。 SVM 为所有类别输出的是未经校准、也不太容易直接解释的分数；与 SVM 不同，Softmax 分类器能够为每个类别计算出“概率”。</p>
+<p>例如，给定一张图像，SVM 分类器可能会为 “cat“、“dog“和”ship“三个类别给出分数：<span class="arithmatex">\([12.5,0.6,-23.0]\)</span>。而 Softmax 分类器则会进一步将它们转化为三个标签对应的概率：<span class="arithmatex">\([0.9,0.09,0.01]\)</span>。这样一来我们就可以据此理解模型对各个类别的置信程度。这里对“概率”打上引号的原因是，这些概率分布是平缓还是尖锐，直接取决于正则化强度 <span class="arithmatex">\(\lambda\)</span> ——这个量由你决定。再举个例子，假设某三个类别对应的未归一化对数概率为：<span class="arithmatex">\([1,-2,0]\)</span>，那么softmax 函数的计算过程就是
+$$
+[1,-2,0]\rightarrow
+[e<sup>1,e</sup>{-2},e^0]=
+[2.71,0.14,1]\rightarrow
+[0.7,0.04,0.26]
+$$
+这里的步骤就是：现对每个分量取指数，然后做归一化，使得总和为 <span class="arithmatex">\(1\)</span>。现在，如果正则化强度 <span class="arithmatex">\(\lambda\)</span> 变大，那么权重 <span class="arithmatex">\(W\)</span> 会受到更强的惩罚，进而变得更小。比如，假设这些权重缩小为一半，值变为了 <span class="arithmatex">\([0.5,-1,0]\)</span>.我们再次计算
+$$
+[0.5,-1,0]\rightarrow
+[e<sup>{0.5},e</sup>{-1},e^0]=
+[1.65,0.37,1]\rightarrow
+[0.55,0.12,0.33]
+$$
+可以看到，这时的概率分布就更加平缓、更加分散。更进一步，当正则化 <span class="arithmatex">\(\lambda\)</span> 非常强，以至于权重都被压缩到非常接近零时，输出概率就会趋近于均匀分布。因此，Softmax 分类器给出的这些“概率”，更适合被理解为一种置信度。和 SVM 一样，分数之间的大小规律是有意义的，但这些绝对数值本身(以及它们之间的具体差值)，从严格意义来说并不能被过度字面化解释</p>
+<p><strong>实际应用中，SVM 和 Softmax 的表现通常相似</strong>。 两者之间的性能差异一半很小，因此就是哪种分类器更好，不同的人有不同的看法。相较于Softmax 函数，SVM 的目标函数更加偏向一种局部目标(local objective)，这点既是缺点又是有点</p>
+<p>我们来看个例子，假设某个样本得到的分数是 <span class="arithmatex">\([10,-2,3]\)</span>，并且第一个类别是正确类别。那么对于一个 SVM 来说(期望间隔 <span class="arithmatex">\(\Delta=1\)</span>)，它会发现正确类别的得分已经比其余类别高出了足够的间隔，因此损失就是 0。SVM 并不关系得分内部更细致的差别，也就是说，如果分数不是上面的<span class="arithmatex">\([10,-2,3]\)</span>，而是 <span class="arithmatex">\([10,-100,-100]\)</span> 或者 <span class="arithmatex">\([10,9,9]\)</span>。只要那个间隔 <span class="arithmatex">\(1\)</span> 仍然满足， SVM都会一视同仁，因为它们对应的损失都同样为 0。</p>
+<p>但对于 Softmax 分类器来说，这几种情况完全不等价。对于分数 <span class="arithmatex">\([10,9,9]\)</span>，Softmax 所积累的损失会远高于 <span class="arithmatex">\([10,-100,-100]\)</span> 时的损失。或者说，Softmax 分类器对自己给出的分数从来不会满意，它认为错误类别的概率还可以更低，正确类别概率还可以更高，只要继续朝这个方向推，损失就还能进一步下降。而SVM不同，一旦间隔条件已经满足了，他就会满意；在此之后，他不会再去详细的管控这些分数的具体数值，只要求那个约束不要被破坏即可。</p>
+<p>从直觉上来看，这其实也可以被理解为一种优点。比如，一个“汽车分类器”应该把更多的精力花在更困难的问题上——例如把汽车和卡车分开，它不应该受到青蛙样本的干扰，因为这样想样本本来就被赋予了很低的分数，而且它们大概率分布在数据云的另一边，和汽车这类样本几乎不在同一个局部结构里</p>
+<h3 id="_6">交互网演示</h3>
+<hr />
+<p><img alt="img" src="https://cs231n.github.io/assets/classifydemo.jpeg" /></p>
+<p>官方制作了一个交互式网页演示，用来帮助建立对线形分类器的直观理解。这个演示基于一个二维数据上的三分类玩具问题，把本节讨论过的损失函数可视化展示出来。</p>
+<p>除此之外，这个演示还稍微剧透了一些：它已经开始执行优化过程了，而关于优化本身，会在下一节进行更加完整、细致的讨论</p>
+<hr />
+<h3 id="_7">总结</h3>
+<ul>
+<li>我们定义了一个 <strong>评分函数</strong>，将图像像素映射为各类别的分数（本节中，这个函数是一个依赖于权重 <span class="arithmatex">\(W\)</span> 和 <span class="arithmatex">\(b\)</span> 的线性函数）</li>
+<li>与 kNN 分类器不同，这种参数化的方法在于：一旦参数学出来了，训练数据本身就可以被丢弃了。此外，对一张新的测试图像进行预测也很快，因为他只需要和 <span class="arithmatex">\(W\)</span> 做一次矩阵乘法，而不必与每个训练样本进行穷举式比较</li>
+<li>我们引入了偏置技巧，他可以把偏执向量并入权重矩阵，从而实现上只需要维护一个参数矩阵，方便处理</li>
+<li>我们定义了一个损失函数，用来衡量某组参与与训练真实标签之间的匹配程度。（这里我们介绍了线形分类器中两种常用损失）。同时我们可以看到，这个损失函数的定义方法使得：在训练数据上预测得越好，损失就越小</li>
+</ul>
+<p>到此为止，我们已经看到了一种方法：给定一组参数，把图像数据映射为类别分数；同时也看到了两种损失函数的例子，用来衡量这些预测的好坏</p>
+<p>但接下来的问题是：<strong>我们应该如何高效地找到那组能使损失最小的参数？</strong></p>
+<p>这个过程叫做 <em>优化(optimization)</em>，也就是下节课的主题</p>
+<h3 id="_8">扩展阅读</h3>
+<p>[Deep Learning using Linear Support Vector Machines][<a href="https://arxiv.org/abs/1306.0239">https://arxiv.org/abs/1306.0239</a>] from Charlie Tang 2013 presents some results claiming that the L2SVM outperforms Softmax.</p>
 
 
 
