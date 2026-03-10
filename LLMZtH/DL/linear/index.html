@@ -3808,15 +3808,15 @@ f(x_i,W,b)=Wx_i+b
 <p>提前提两句：这里是 CIFAR-10 为训练集，学习结束后的权重的例子。不过需要注意的是，船的模板如期望的那样有很多蓝色像素。如果有一个图片是船航行在海上，那么用这个模板的内积计算就可以获得更高的分数</p>
 <hr />
 <p>此外，我们可以注意到马模板似乎有个双头马，这是因为数据集中左右朝向的马都有。线性分类器将这两种马融合为一个模板。类似的，汽车分类器也将多个不同模型融合为一个模板，进而分辨不同方向不同颜色的汽车。这个模板的汽车看起来是红色的是因为 CIFAR-10 数据集中红色车远多于别的颜色。线性分类器在辨认不同颜色汽车的时候比较若，但我们后续学习的神经网络将解决这个问题。再超前一些，神经网络可以在隐藏层中发展出中间神经元，进而检测特定汽车模型（朝左的绿车，朝前的蓝车等），并且下一层的神经元可以通过对单个车辆检测器的加权求和，将这些信息组合成一个更准确的车辆评分</p>
-<p><strong>偏差权重合并技巧</strong>：在更近一步之前，我们要学习将两个参数 <span class="arithmatex">\(W,b\)</span> 合并为一个的技巧。回忆一下分类评分函数的定义：
-$$
+<p><strong>偏差权重合并技巧</strong>：在更近一步之前，我们要学习将两个参数 <span class="arithmatex">\(W,b\)</span> 合并为一个的技巧。回忆一下分类评分函数的定义：</p>
+<div class="arithmatex">\[
 f(x_i,W,b)=Wx_i+b
-$$
-我们分开处理这两个参数的话有些笨拙，常用的方法是将两个参数放到一个矩阵中，然后为 <span class="arithmatex">\(x_i\)</span> 增添一个维度，这个维度的数值为常量1——默认的 <em>偏差维度</em>。带上额外的维度，新的评分函数可以简化为一个简单的矩阵相乘
-$$
+\]</div>
+<p>我们分开处理这两个参数的话有些笨拙，常用的方法是将两个参数放到一个矩阵中，然后为 <span class="arithmatex">\(x_i\)</span> 增添一个维度，这个维度的数值为常量1——默认的 <em>偏差维度</em>。带上额外的维度，新的评分函数可以简化为一个简单的矩阵相乘</p>
+<div class="arithmatex">\[
 f(x_i,W)=Wx_i
-$$
-用 CIFAR-10 为例，<span class="arithmatex">\(x_i\)</span> 变为了 <span class="arithmatex">\([3073\times 1]\)</span> (额外一个包含常数1的维度)，<span class="arithmatex">\(W\)</span> 变为了 <span class="arithmatex">\([10\times 3073]\)</span> 。 <span class="arithmatex">\(W\)</span> 额外的列向量就是偏差值 <span class="arithmatex">\(b\)</span>,具体如下</p>
+\]</div>
+<p>用 CIFAR-10 为例，<span class="arithmatex">\(x_i\)</span> 变为了 <span class="arithmatex">\([3073\times 1]\)</span> (额外一个包含常数1的维度)，<span class="arithmatex">\(W\)</span> 变为了 <span class="arithmatex">\([10\times 3073]\)</span> 。 <span class="arithmatex">\(W\)</span> 额外的列向量就是偏差值 <span class="arithmatex">\(b\)</span>,具体如下</p>
 <hr />
 <p><img alt="img" src="https://cs231n.github.io/assets/wb.jpeg" /></p>
 <p>偏差合并技巧解释图。左图是做一个矩阵乘法然后加上偏差向量，右图是将输入向量的维度增加一个含常量1的维度，并在权重矩阵中增加一个偏差列，这两种发法师等价的。因此，如果我们通过在所有向量中添加1来及进行数据预处理，我们只需要学习一个权重矩阵，而不是分别存储权重和偏差的矩阵</p>
@@ -3827,34 +3827,34 @@ $$
 <p>前面的例子里，模型把一张猫的图片分类得很差：猫这一类的分数很低，而狗和船的分数反而更高，说明这组权重效果不好。为了衡量模型分类得有多差，我们要引入**损失函数**（也叫 cost function 或 objective）。直觉上，模型分类得越差，损失就越大；分类得越好，损失就越小。</p>
 <h4 id="svm">多分类 SVM 损失函数</h4>
 <p><strong>多分类支持向量机损失</strong> 损失函数的具体形式有多种定义方式。作为第一个例子，我们先介绍一种常用的损失函数，叫做**多分类支持向量机（SVM）损失**。这种损失的设计目标是：对于每张图像，SVM 都“希望”正确类别的得分比所有错误类别的得分至少高出一个固定的间隔 <span class="arithmatex">\(\Delta\)</span>。需要注意的是，像上文那样把损失函数拟人化来理解，有时会很有帮助：所谓 SVM “希望”出现某种结果，本质上是指这种结果会带来更低的损失值，而更低的损失显然是我们所追求的。</p>
-<p>下面把它说得更精确一些。回忆一下：对于第 <span class="arithmatex">\(i\)</span> 个样本，我们已知输入图像 <span class="arithmatex">\(x_i\)</span> 的像素，以及标签 <span class="arithmatex">\(y_i\)</span>，其中 <span class="arithmatex">\(y_i\)</span> 表示该样本真实类别的索引。评分函数会根据图像像素计算出一个类别得分向量 <span class="arithmatex">\(f(x_i, W)\)</span>，我们把它简记为 <span class="arithmatex">\(s\)</span>（即 scores，得分）。例如，第 <span class="arithmatex">\(j\)</span> 个类别的得分就是该向量的第 <span class="arithmatex">\(j\)</span> 个分量：
-$$
-s_j = f(x_i, W)<em>j
-$$
-于是，第 <span class="arithmatex">\(i\)</span> 个样本的多分类 SVM 损失可以形式化地写成：
-$$
-L_i = \sum</em>{j \ne y_i} \max(0,, s_j - s_{y_i} + \Delta)
-$$
-<strong>例子。</strong> 下面我们用一个具体例子把这个公式拆开看看它是怎么工作的。假设有三个类别，它们的得分为
-$$
+<p>下面把它说得更精确一些。回忆一下：对于第 <span class="arithmatex">\(i\)</span> 个样本，我们已知输入图像 <span class="arithmatex">\(x_i\)</span> 的像素，以及标签 <span class="arithmatex">\(y_i\)</span>，其中 <span class="arithmatex">\(y_i\)</span> 表示该样本真实类别的索引。评分函数会根据图像像素计算出一个类别得分向量 <span class="arithmatex">\(f(x_i, W)\)</span>，我们把它简记为 <span class="arithmatex">\(s\)</span>（即 scores，得分）。例如，第 <span class="arithmatex">\(j\)</span> 个类别的得分就是该向量的第 <span class="arithmatex">\(j\)</span> 个分量：</p>
+<div class="arithmatex">\[
+s_j = f(x_i, W)_j
+\]</div>
+<p>于是，第 <span class="arithmatex">\(i\)</span> 个样本的多分类 SVM 损失可以形式化地写成：</p>
+<div class="arithmatex">\[
+L_i = \sum_{j \ne y_i} \max(0,, s_j - s_{y_i} + \Delta)
+\]</div>
+<p><strong>例子。</strong> 下面我们用一个具体例子把这个公式拆开看看它是怎么工作的。假设有三个类别，它们的得分为</p>
+<div class="arithmatex">\[
 s = [13, -7, 11]
-$$
-并且第一个类别是真实类别（即 <span class="arithmatex">\(y_i = 0\)</span>）。再假设 <span class="arithmatex">\(\Delta\)</span>（一个超参数，稍后会详细介绍）取 10。上面的式子会对所有错误类别（<span class="arithmatex">\(j \ne y_i\)</span>）求和，因此这里有两项：
-$$
+\]</div>
+<p>并且第一个类别是真实类别（即 <span class="arithmatex">\(y_i = 0\)</span>）。再假设 <span class="arithmatex">\(\Delta\)</span>（一个超参数，稍后会详细介绍）取 10。上面的式子会对所有错误类别（<span class="arithmatex">\(j \ne y_i\)</span>）求和，因此这里有两项：</p>
+<div class="arithmatex">\[
 L_i = \max(0, -7 - 13 + 10) + \max(0, 11 - 13 + 10)
-$$
-可以看出，第一项等于 0，因为 <span class="arithmatex">\(-7 - 13 + 10\)</span> 是一个负数，而负数经过 <span class="arithmatex">\(\max(0, \cdot)\)</span> 函数后会被截断为 0。之所以这一项的损失为 0，是因为正确类别的得分 13 比错误类别的得分 -7 至少高出了间隔 10。实际上，它们的差值是 20，远大于 10；但 SVM 并不关心这个差距到底大了多少，它只在乎差距是否 <strong>至少达到 10</strong>。一旦超过这个间隔，多出来的部分在 <span class="arithmatex">\(\max\)</span> 运算下都会被视为 0，不再额外计入损失。</p>
+\]</div>
+<p>可以看出，第一项等于 0，因为 <span class="arithmatex">\(-7 - 13 + 10\)</span> 是一个负数，而负数经过 <span class="arithmatex">\(\max(0, \cdot)\)</span> 函数后会被截断为 0。之所以这一项的损失为 0，是因为正确类别的得分 13 比错误类别的得分 -7 至少高出了间隔 10。实际上，它们的差值是 20，远大于 10；但 SVM 并不关心这个差距到底大了多少，它只在乎差距是否 <strong>至少达到 10</strong>。一旦超过这个间隔，多出来的部分在 <span class="arithmatex">\(\max\)</span> 运算下都会被视为 0，不再额外计入损失。</p>
 <p>第二项计算的是 <span class="arithmatex">\(11 - 13 + 10\)</span>，结果为 8。也就是说，虽然正确类别的得分确实高于错误类别（<span class="arithmatex">\(13 &gt; 11\)</span>），但它并没有高出我们要求的 10 这个间隔，实际只高了 2，因此还差 8，于是这一项的损失就是 8。换句话说，这个损失值刻画的是：为了满足间隔要求，正确类别的得分还需要再比错误类别高出多少。</p>
 <p>总的来说，SVM 损失函数要求正确类别 <span class="arithmatex">\(y_i\)</span> 的得分，至少要比所有错误类别的得分高出一个 <span class="arithmatex">\(\Delta\)</span>（delta）那么大的间隔；如果做不到，就会累积损失。</p>
-<p>需要注意的是，在本节中我们讨论的是 <strong>线性评分函数</strong>
-$$
+<p>需要注意的是，在本节中我们讨论的是 <strong>线性评分函数</strong></p>
+<div class="arithmatex">\[
 f(x_i; W) = Wx_i
-$$
-因此，损失函数也可以等价地写成：
-$$
+\]</div>
+<p>因此，损失函数也可以等价地写成：</p>
+<div class="arithmatex">\[
 L_i = \sum_{j \ne y_i} \max(0, w_j^T x_i - w_{y_i}^T x_i + \Delta)
-$$
-其中，<span class="arithmatex">\(w_j\)</span> 表示矩阵 <span class="arithmatex">\(W\)</span> 的第 <span class="arithmatex">\(j\)</span> 行，并将其看作列向量。不过，当我们之后考虑更复杂的评分函数 <span class="arithmatex">\(f\)</span> 时，这种写法就不一定仍然成立了。</p>
+\]</div>
+<p>其中，<span class="arithmatex">\(w_j\)</span> 表示矩阵 <span class="arithmatex">\(W\)</span> 的第 <span class="arithmatex">\(j\)</span> 行，并将其看作列向量。不过，当我们之后考虑更复杂的评分函数 <span class="arithmatex">\(f\)</span> 时，这种写法就不一定仍然成立了。</p>
 <p>在结束这一节前，再补充一个术语：这个在 0 处进行截断的 <span class="arithmatex">\(\max(0, \cdot)\)</span> 函数，通常被称为 <strong>hinge loss（铰链损失）</strong>。你有时也会听到 <strong>平方铰链损失</strong>（squared hinge loss，SVM 或 L2-SVM），其形式为 <span class="arithmatex">\(\max(0, \cdot)^2\)</span> 。它会对违反间隔约束的情况施加更强的惩罚，因为惩罚是二次增长的，而不是线性增长。未平方的版本更为常见，但在某些数据集上，平方铰链损失可能效果更好。究竟哪种更合适，通常可以通过交叉验证来确定。</p>
 <blockquote>
 <p>损失函数量化了我们对训练集上预测的不满</p>
@@ -3869,20 +3869,20 @@ $$
 <p class="admonition-title">Note</p>
 <p>笔者个人理解：对 <span class="arithmatex">\(\lambda\)</span> 没有约束的话，会导致参数倾向于变得很大，因为足够大的参数可以避免 loss function 的惩罚，从而趋向于此</p>
 </div>
-<p>换句话说，我们希望在不同的权重 <span class="arithmatex">\(W\)</span> 之间加入某种“偏好”，以消除这种不确定性。做到这一点的方法，是在原有损失函数之外，再加入一个 <strong>正则化惩罚项</strong> <span class="arithmatex">\(R(W)\)</span>。最常见的正则化方式是 <strong>L2 范数平方</strong>，它通过对所有参数施加逐元素的二次惩罚，来抑制权重过大：
-$$
+<p>换句话说，我们希望在不同的权重 <span class="arithmatex">\(W\)</span> 之间加入某种“偏好”，以消除这种不确定性。做到这一点的方法，是在原有损失函数之外，再加入一个 <strong>正则化惩罚项</strong> <span class="arithmatex">\(R(W)\)</span>。最常见的正则化方式是 <strong>L2 范数平方</strong>，它通过对所有参数施加逐元素的二次惩罚，来抑制权重过大：</p>
+<div class="arithmatex">\[
 R(W) = \sum_k \sum_l W_{k,l}^2
-$$
-在上式中，我们对 <span class="arithmatex">\(W\)</span> 的所有元素的平方进行了求和。注意，正则化函数并不是数据的函数，它只依赖于权重本身。把正则化惩罚项加入之后，就得到了完整的多分类支持向量机损失。这个完整损失由两部分构成：一部分是 <strong>数据损失</strong>（即所有样本损失 <span class="arithmatex">\(L_i\)</span> 的平均值），另一部分是 <strong>正则化损失</strong>。也就是说，完整的多分类 SVM 损失可写为：
-$$
+\]</div>
+<p>在上式中，我们对 <span class="arithmatex">\(W\)</span> 的所有元素的平方进行了求和。注意，正则化函数并不是数据的函数，它只依赖于权重本身。把正则化惩罚项加入之后，就得到了完整的多分类支持向量机损失。这个完整损失由两部分构成：一部分是 <strong>数据损失</strong>（即所有样本损失 <span class="arithmatex">\(L_i\)</span> 的平均值），另一部分是 <strong>正则化损失</strong>。也就是说，完整的多分类 SVM 损失可写为：</p>
+<div class="arithmatex">\[
 L = \frac{1}{N}\sum_i L_i + \lambda R(W)
-$$
-其中，第一项是数据损失，第二项是正则化损失。</p>
-<p>如果把它进一步展开成完整形式，则有：
-$$
-L = \frac{1}{N}\sum_i \sum_{j \ne y_i} \left[ \max\bigl(0,, f(x_i; W)<em>j - f(x_i; W)</em>{y_i} + \Delta \bigr) \right] + \lambda \sum_k \sum_l W_{k,l}^2
-$$
-这里，<span class="arithmatex">\(N\)</span> 表示训练样本的数量。可以看到，我们在原来的损失目标后附加了一个正则化惩罚项，并用超参数 <span class="arithmatex">\(\lambda\)</span> 来控制它的权重。这个超参数并没有简单直接的设定方法，通常需要通过 <strong>交叉验证</strong> 来确定。</p>
+\]</div>
+<p>其中，第一项是数据损失，第二项是正则化损失。</p>
+<p>如果把它进一步展开成完整形式，则有：</p>
+<div class="arithmatex">\[
+L = \frac{1}{N}\sum_i \sum_{j \ne y_i} \left[ \max\bigl(0,, f(x_i; W)_j - f(x_i; W)_{y_i} + \Delta \bigr) \right] + \lambda \sum_k \sum_l W_{k,l}^2
+\]</div>
+<p>这里，<span class="arithmatex">\(N\)</span> 表示训练样本的数量。可以看到，我们在原来的损失目标后附加了一个正则化惩罚项，并用超参数 <span class="arithmatex">\(\lambda\)</span> 来控制它的权重。这个超参数并没有简单直接的设定方法，通常需要通过 <strong>交叉验证</strong> 来确定。</p>
 <p>除了前面提到的动机之外，引入正则化惩罚项还有许多理想的性质，后文还会回到这些内容。举例来说，加入 L2 惩罚后，SVM 会具有一个很吸引人的性质——<strong>最大间隔</strong>（max margin）性质。</p>
 <p>最值得称道的一点在于：对较大的权重施加惩罚，往往能够提升模型的 <strong>泛化能力</strong>。原因是，这意味着任何一个输入维度都不能仅凭自身就对最终得分产生过大的影响。</p>
 <p>举个例子，设输入向量为：<span class="arithmatex">\(x = [1,1,1,1]\)</span> 并有两个权重向量：<span class="arithmatex">\(w_1 = [1,0,0,0]\)</span>，<span class="arithmatex">\(w_2 = [0.25,0.25,0.25,0.25]\)</span>。那么有：</p>
@@ -3950,10 +3950,10 @@ w_1^T x = w_2^T x = 1
 <p>表面上看，<span class="arithmatex">\(\Delta\)</span> 和 <span class="arithmatex">\(\lambda\)</span> 是两个不同的超参数；但实际上，它们控制的是同一个权衡关系：也就是目标函数中 <strong>数据损失</strong> 与 <strong>正则化损失</strong> 之间的平衡。</p>
 <p>理解这一点的关键在于：权重 <span class="arithmatex">\(W\)</span> 的大小会直接影响各类别的得分，进而影响它们之间的差值。随着 <span class="arithmatex">\(W\)</span> 中各元素整体缩小，类别得分之间的差距也会随之减小；反过来，若把权重整体放大，得分差距也会一并增大。因此，分数之间的“间隔”到底精确设成多少（比如 <span class="arithmatex">\(\Delta = 1\)</span>，还是 <span class="arithmatex">\(\Delta = 100\)</span>），从某种意义上说并没有那么重要，因为权重本身就可以任意地压缩或拉伸这些差值。</p>
 <p>所以，真正需要权衡的，其实只有一件事：我们究竟允许权重增长到多大。而这一点，是通过正则化强度 <span class="arithmatex">\(\lambda\)</span> 来控制的。</p>
-<p><strong>与二分类支持向量机的关系</strong>.你在学习这门课之前，也许已经接触过 <strong>二分类支持向量机</strong>。在那种情形下，第 <span class="arithmatex">\(i\)</span> 个样本的损失可以写成：
-$$
+<p><strong>与二分类支持向量机的关系</strong>.你在学习这门课之前，也许已经接触过 <strong>二分类支持向量机</strong>。在那种情形下，第 <span class="arithmatex">\(i\)</span> 个样本的损失可以写成：</p>
+<div class="arithmatex">\[
 L_i = C \max(0,, 1 - y_i w^T x_i) + R(W)
-$$</p>
+\]</div>
 <p>其中，<span class="arithmatex">\(C\)</span> 是一个超参数，且：<span class="arithmatex">\(y_i \in \text\{-1, 1\text\}\)</span>。可以进一步验证：当类别数只有两个时，本节给出的多分类形式，其实就包含了二分类 SVM 作为一个特例。也就是说，如果问题中只有两个类别，那么这里的损失函数就会退化为上面的二分类 SVM 形式。</p>
 <p>另外，在这个二分类公式中，<span class="arithmatex">\(C\)</span> 与我们前面使用的 <span class="arithmatex">\(\lambda\)</span>，控制的其实也是同一种权衡关系；二者之间大致满足倒数关系：<span class="arithmatex">\(C \propto \frac{1}{\lambda}\)</span></p>
 <p><strong>题外话：在原始形式中进行优化</strong>。如果你在学习这门课之前已经了解过 SVM，那么你可能也听说过核方法（kernel）、对偶形式（dual）、SMO 算法之类的内容。而在这门课里——事实上，在神经网络的一般讨论中也是如此——我们始终采用的是 <strong>无约束的原始形式</strong>（unconstrained primal form）下的优化目标。</p>
@@ -4026,21 +4026,21 @@ P(y_i \mid x_i; W) = \frac{e^{f_{y_i}}}{\sum_j e^{f_j}}
 <p>在这个具体的例子中，最终损失对 SVM 来说是 1.58，对Softmax分类器来说是1.04。需要注意的是，这里的1.04是在使用自然对数时得到的，而不是以 2 或 10 为底的对数。但还需要特别提醒，这两个数值本身并不能直接拿来比较。它们只有在同一个分类器、并且面对同一份数据时，才具有可比性</p>
 <hr />
 <p><strong>Softmax 分类器为每个类别给出“概率”</strong>。 SVM 为所有类别输出的是未经校准、也不太容易直接解释的分数；与 SVM 不同，Softmax 分类器能够为每个类别计算出“概率”。</p>
-<p>例如，给定一张图像，SVM 分类器可能会为 “cat“、“dog“和”ship“三个类别给出分数：<span class="arithmatex">\([12.5,0.6,-23.0]\)</span>。而 Softmax 分类器则会进一步将它们转化为三个标签对应的概率：<span class="arithmatex">\([0.9,0.09,0.01]\)</span>。这样一来我们就可以据此理解模型对各个类别的置信程度。这里对“概率”打上引号的原因是，这些概率分布是平缓还是尖锐，直接取决于正则化强度 <span class="arithmatex">\(\lambda\)</span> ——这个量由你决定。再举个例子，假设某三个类别对应的未归一化对数概率为：<span class="arithmatex">\([1,-2,0]\)</span>，那么softmax 函数的计算过程就是
-$$
+<p>例如，给定一张图像，SVM 分类器可能会为 “cat“、“dog“和”ship“三个类别给出分数：<span class="arithmatex">\([12.5,0.6,-23.0]\)</span>。而 Softmax 分类器则会进一步将它们转化为三个标签对应的概率：<span class="arithmatex">\([0.9,0.09,0.01]\)</span>。这样一来我们就可以据此理解模型对各个类别的置信程度。这里对“概率”打上引号的原因是，这些概率分布是平缓还是尖锐，直接取决于正则化强度 <span class="arithmatex">\(\lambda\)</span> ——这个量由你决定。再举个例子，假设某三个类别对应的未归一化对数概率为：<span class="arithmatex">\([1,-2,0]\)</span>，那么softmax 函数的计算过程就是</p>
+<div class="arithmatex">\[
 [1,-2,0]\rightarrow
-[e<sup>1,e</sup>{-2},e^0]=
+[e^1,e^{-2},e^0]=
 [2.71,0.14,1]\rightarrow
 [0.7,0.04,0.26]
-$$
-这里的步骤就是：现对每个分量取指数，然后做归一化，使得总和为 <span class="arithmatex">\(1\)</span>。现在，如果正则化强度 <span class="arithmatex">\(\lambda\)</span> 变大，那么权重 <span class="arithmatex">\(W\)</span> 会受到更强的惩罚，进而变得更小。比如，假设这些权重缩小为一半，值变为了 <span class="arithmatex">\([0.5,-1,0]\)</span>.我们再次计算
-$$
+\]</div>
+<p>这里的步骤就是：现对每个分量取指数，然后做归一化，使得总和为 <span class="arithmatex">\(1\)</span>。现在，如果正则化强度 <span class="arithmatex">\(\lambda\)</span> 变大，那么权重 <span class="arithmatex">\(W\)</span> 会受到更强的惩罚，进而变得更小。比如，假设这些权重缩小为一半，值变为了 <span class="arithmatex">\([0.5,-1,0]\)</span>.我们再次计算</p>
+<div class="arithmatex">\[
 [0.5,-1,0]\rightarrow
-[e<sup>{0.5},e</sup>{-1},e^0]=
+[e^{0.5},e^{-1},e^0]=
 [1.65,0.37,1]\rightarrow
 [0.55,0.12,0.33]
-$$
-可以看到，这时的概率分布就更加平缓、更加分散。更进一步，当正则化 <span class="arithmatex">\(\lambda\)</span> 非常强，以至于权重都被压缩到非常接近零时，输出概率就会趋近于均匀分布。因此，Softmax 分类器给出的这些“概率”，更适合被理解为一种置信度。和 SVM 一样，分数之间的大小规律是有意义的，但这些绝对数值本身(以及它们之间的具体差值)，从严格意义来说并不能被过度字面化解释</p>
+\]</div>
+<p>可以看到，这时的概率分布就更加平缓、更加分散。更进一步，当正则化 <span class="arithmatex">\(\lambda\)</span> 非常强，以至于权重都被压缩到非常接近零时，输出概率就会趋近于均匀分布。因此，Softmax 分类器给出的这些“概率”，更适合被理解为一种置信度。和 SVM 一样，分数之间的大小规律是有意义的，但这些绝对数值本身(以及它们之间的具体差值)，从严格意义来说并不能被过度字面化解释</p>
 <p><strong>实际应用中，SVM 和 Softmax 的表现通常相似</strong>。 两者之间的性能差异一半很小，因此就是哪种分类器更好，不同的人有不同的看法。相较于Softmax 函数，SVM 的目标函数更加偏向一种局部目标(local objective)，这点既是缺点又是有点</p>
 <p>我们来看个例子，假设某个样本得到的分数是 <span class="arithmatex">\([10,-2,3]\)</span>，并且第一个类别是正确类别。那么对于一个 SVM 来说(期望间隔 <span class="arithmatex">\(\Delta=1\)</span>)，它会发现正确类别的得分已经比其余类别高出了足够的间隔，因此损失就是 0。SVM 并不关系得分内部更细致的差别，也就是说，如果分数不是上面的<span class="arithmatex">\([10,-2,3]\)</span>，而是 <span class="arithmatex">\([10,-100,-100]\)</span> 或者 <span class="arithmatex">\([10,9,9]\)</span>。只要那个间隔 <span class="arithmatex">\(1\)</span> 仍然满足， SVM都会一视同仁，因为它们对应的损失都同样为 0。</p>
 <p>但对于 Softmax 分类器来说，这几种情况完全不等价。对于分数 <span class="arithmatex">\([10,9,9]\)</span>，Softmax 所积累的损失会远高于 <span class="arithmatex">\([10,-100,-100]\)</span> 时的损失。或者说，Softmax 分类器对自己给出的分数从来不会满意，它认为错误类别的概率还可以更低，正确类别概率还可以更高，只要继续朝这个方向推，损失就还能进一步下降。而SVM不同，一旦间隔条件已经满足了，他就会满意；在此之后，他不会再去详细的管控这些分数的具体数值，只要求那个约束不要被破坏即可。</p>
@@ -4062,7 +4062,7 @@ $$
 <p>但接下来的问题是：<strong>我们应该如何高效地找到那组能使损失最小的参数？</strong></p>
 <p>这个过程叫做 <em>优化(optimization)</em>，也就是下节课的主题</p>
 <h3 id="_8">扩展阅读</h3>
-<p>[Deep Learning using Linear Support Vector Machines][<a href="https://arxiv.org/abs/1306.0239">https://arxiv.org/abs/1306.0239</a>] from Charlie Tang 2013 presents some results claiming that the L2SVM outperforms Softmax.</p>
+<p><a href="https://arxiv.org/abs/1306.0239">Deep Learning using Linear Support Vector Machines</a> from Charlie Tang 2013 presents some results claiming that the L2SVM outperforms Softmax.</p>
 
 
 
