@@ -84,7 +84,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1nn" class="md-skip">
+        <a href="#k-" class="md-skip">
           跳转至
         </a>
       
@@ -1203,6 +1203,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -1235,6 +1237,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1243,37 +1247,46 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1nn" class="md-nav__link">
+  <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
-      1NN
+      摘要
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#knn" class="md-nav__link">
+  <a href="#1" class="md-nav__link">
     <span class="md-ellipsis">
-      kNN
+      1. 引言
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="kNN">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 方法论
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 方法论">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#knn_1" class="md-nav__link">
+  <a href="#21-k-" class="md-nav__link">
     <span class="md-ellipsis">
-      kNN改
+      2.1 k-近邻算法原理
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
+  <a href="#22" class="md-nav__link">
     <span class="md-ellipsis">
-      分析
+      2.2 算法实现演进
     </span>
   </a>
   
@@ -1285,9 +1298,228 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 实验设计与实现
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 实验设计与实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 数据集配置
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-1-nn" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 1-NN 实现
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-k-nn" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 k-NN 扩展
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. GPU 加速优化
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. GPU 加速优化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-cupy" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 CuPy 实现
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 性能对比
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 数值精度分析
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 数值精度分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-uint8" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 uint8 下溢问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-int8" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 int8 解决方案
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3 准确率提升机制分析
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 超参数调优
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 超参数调优">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 验证集方法
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 实验结果
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. 讨论
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 讨论">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 数值精度的重要性
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 GPU 加速的有效性
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-k-nn" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3 k-NN 算法的局限性
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. 结论
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
-      超参数调优
+      参考文献
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a" class="md-nav__link">
+    <span class="md-ellipsis">
+      附录 A: 数据加载工具
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      致谢
     </span>
   </a>
   
@@ -3554,6 +3786,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -3562,37 +3796,46 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1nn" class="md-nav__link">
+  <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
-      1NN
+      摘要
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#knn" class="md-nav__link">
+  <a href="#1" class="md-nav__link">
     <span class="md-ellipsis">
-      kNN
+      1. 引言
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="kNN">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 方法论
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 方法论">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#knn_1" class="md-nav__link">
+  <a href="#21-k-" class="md-nav__link">
     <span class="md-ellipsis">
-      kNN改
+      2.1 k-近邻算法原理
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
+  <a href="#22" class="md-nav__link">
     <span class="md-ellipsis">
-      分析
+      2.2 算法实现演进
     </span>
   </a>
   
@@ -3604,9 +3847,228 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 实验设计与实现
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 实验设计与实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 数据集配置
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-1-nn" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 1-NN 实现
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-k-nn" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 k-NN 扩展
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. GPU 加速优化
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. GPU 加速优化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-cupy" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 CuPy 实现
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 性能对比
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 数值精度分析
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 数值精度分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-uint8" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 uint8 下溢问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-int8" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 int8 解决方案
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3 准确率提升机制分析
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 超参数调优
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 超参数调优">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 验证集方法
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 实验结果
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. 讨论
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 讨论">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 数值精度的重要性
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 GPU 加速的有效性
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-k-nn" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3 k-NN 算法的局限性
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. 结论
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
-      超参数调优
+      参考文献
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a" class="md-nav__link">
+    <span class="md-ellipsis">
+      附录 A: 数据加载工具
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      致谢
     </span>
   </a>
   
@@ -3629,283 +4091,350 @@
 
 
 
-  <h1>图像识别实现</h1>
+<h1 id="k-">基于 k-近邻算法的图像分类研究:计算优化与数值精度分析</h1>
+<h2 id="_1">摘要</h2>
+<p>本文研究了 k-近邻(k-NN)算法在 CIFAR-10 图像分类任务中的实现与优化。研究从基础的 1-NN 算法开始,扩展至一般化的 k-NN,并对 CPU 与 GPU 计算方案进行了对比分析。实验表明,数值精度对分类性能存在显著影响:uint8 类型的下溢现象导致准确率下降至 26.7%,而 int8 类型在保持计算效率的同时获得了 35.4% 的分类准确率。通过验证集方法进行超参数调优,确定最优 k 值为 10。本文记录了算法实现的完整过程,包括实验设计、结果分析与问题诊断,为 k-NN 算法的工程实践提供了参考。</p>
+<p><strong>关键词:</strong> k-近邻算法、图像分类、CIFAR-10、GPU 加速、数值精度、超参数调优</p>
+<hr />
+<h2 id="1">1. 引言</h2>
+<p>k-近邻(k-Nearest Neighbors, k-NN)算法是一种基于实例的分类方法。其基本原理为:对于待分类样本,在训练集中寻找与其距离最近的 k 个样本,通过多数投票机制确定类别归属。该算法具有原理简单、无需训练过程等特点,但在实际应用中面临计算效率与参数选择等问题。</p>
+<p>本研究以 CIFAR-10 图像分类任务为实验平台,对 k-NN 算法的实现与优化进行了系统研究。CIFAR-10 数据集包含 60,000 张 32×32 彩色图像,分属 10 个类别(飞机、汽车、鸟、猫、鹿、狗、青蛙、马、船、卡车)。研究从 1-NN 基础实现开始,逐步扩展至 k-NN,重点考察以下问题:</p>
+<ol>
+<li><strong>计算加速:</strong> GPU 并行计算对距离计算的加速效果</li>
+<li><strong>数值精度:</strong> 数据类型选择对分类性能的影响机制</li>
+<li><strong>超参数调优:</strong> 基于验证集的 k 值选择方法</li>
+</ol>
+<p>本文记录了算法实现的完整过程,包括实验设计、结果分析与问题诊断,为 k-NN 算法的工程实践提供参考依据。</p>
+<hr />
+<h2 id="2">2. 方法论</h2>
+<h3 id="21-k-">2.1 k-近邻算法原理</h3>
+<p>k-NN 算法的执行流程包含以下步骤:</p>
+<ol>
+<li><strong>训练阶段:</strong> 存储所有训练样本 <span class="arithmatex">\(\{(\mathbf{x}_i, y_i)\}_{i=1}^N\)</span></li>
+<li><strong>预测阶段:</strong> 对于测试样本 <span class="arithmatex">\(\mathbf{x}_{\text{test}}\)</span>:</li>
+<li>计算与所有训练样本的距离: <span class="arithmatex">\(d_i = \|\mathbf{x}_{\text{test}} - \mathbf{x}_i\|\)</span></li>
+<li>选择距离最小的 k 个样本</li>
+<li>通过多数投票确定类别: <span class="arithmatex">\(\hat{y} = \arg\max_c \sum_{i \in \mathcal{N}_k} \mathbb{1}(y_i = c)\)</span></li>
+</ol>
+<p>本研究采用 L1 距离(曼哈顿距离):</p>
+<div class="arithmatex">\[
+d(\mathbf{x}, \mathbf{x}') = \sum_{j=1}^D |x_j - x'_j|
+\]</div>
+<p>其中 <span class="arithmatex">\(D = 32 \times 32 \times 3 = 3072\)</span> 为展平后的图像维度。</p>
+<h3 id="22">2.2 算法实现演进</h3>
+<p>算法实现经历以下阶段:</p>
+<ol>
+<li><strong>1-NN (基础版本):</strong> 最近邻分类器,k=1</li>
+<li><strong>k-NN (扩展版本):</strong> 支持任意 k 值的多数投票机制</li>
+<li><strong>GPU 加速版本:</strong> 基于 CuPy 的并行计算实现</li>
+<li><strong>数值精度优化:</strong> 数据类型选择与精度分析</li>
+</ol>
+<hr />
+<h2 id="3">3. 实验设计与实现</h2>
+<h3 id="31">3.1 数据集配置</h3>
+<p>CIFAR-10 数据集划分如下:</p>
+<ul>
+<li><strong>训练集:</strong> 50,000 样本</li>
+<li><strong>测试集:</strong> 10,000 样本</li>
+<li><strong>验证集:</strong> 从训练集中划分 1,000 样本</li>
+</ul>
+<p>数据预处理包括:</p>
+<ol>
+<li>图像展平: (32, 32, 3) → (3072,)</li>
+<li>类型转换: uint8 → float32(基础版本)或保持 uint8/int8(优化版本)</li>
+</ol>
+<h3 id="32-1-nn">3.2 1-NN 实现</h3>
+<p>基础 1-NN 实现采用双层循环结构:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+    <span class="n">num_test</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">Ypred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_test</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_train</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
-<p>这个主要记录算法迭代的过程</p>
-<h2 id="1nn">1NN</h2>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">data_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_CIRFA10</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_test</span><span class="p">):</span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">min_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span>
+        <span class="n">Ypred</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_train</span><span class="p">[</span><span class="n">min_index</span><span class="p">]</span>
 
+    <span class="k">return</span> <span class="n">Ypred</span>
+</code></pre></div>
+<p>该实现在 500 测试样本上的执行时间为 26.39 秒,平均每样本 52.78 毫秒。</p>
+<h3 id="33-k-nn">3.3 k-NN 扩展</h3>
+<p>k-NN 实现引入多数投票机制:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">num_test</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">Ypred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_test</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_train</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
-<span class="k">class</span><span class="w"> </span><span class="nc">NearestNeighbor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">pass</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_test</span><span class="p">):</span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">closest_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_train</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">distances</span><span class="p">)[:</span><span class="n">k</span><span class="p">]]</span>
+        <span class="n">Ypred</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">closest_y</span><span class="p">))</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">=</span> <span class="n">X</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span> <span class="o">=</span> <span class="n">y</span>
+    <span class="k">return</span> <span class="n">Ypred</span>
+</code></pre></div>
+<p>在 k=5 配置下,500 测试样本的准确率为 27.4%,执行时间为 26.54 秒。</p>
+<hr />
+<h2 id="4-gpu">4. GPU 加速优化</h2>
+<h3 id="41-cupy">4.1 CuPy 实现</h3>
+<p>采用 CuPy 库实现 GPU 并行计算:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">cupy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cp</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-        <span class="n">num_test</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">Ypred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_test</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">predict_gpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">X_gpu</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">X_train_gpu</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train</span><span class="p">)</span>
+    <span class="n">y_train_gpu</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_train</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_test</span><span class="p">):</span>
-            <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-            <span class="n">min_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span>
-            <span class="n">Ypred</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="p">[</span><span class="n">min_index</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">Ypred</span>
+    <span class="n">num_test</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">Ypred</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_test</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">y_train_gpu</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_test</span><span class="p">):</span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">X_train_gpu</span> <span class="o">-</span> <span class="n">X_gpu</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">closest_y</span> <span class="o">=</span> <span class="n">y_train_gpu</span><span class="p">[</span><span class="n">cp</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">distances</span><span class="p">)[:</span><span class="n">k</span><span class="p">]]</span>
+        <span class="n">Ypred</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">closest_y</span><span class="p">))</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
-    <span class="n">Xtr</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">,</span> <span class="n">Xte</span><span class="p">,</span> <span class="n">Yte</span> <span class="o">=</span> <span class="n">load_CIRFA10</span><span class="p">(</span><span class="s2">&quot;cifar-10-batches-py&quot;</span><span class="p">)</span>
-    <span class="n">Xtr_rows</span> <span class="o">=</span> <span class="n">Xtr</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xtr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
-    <span class="n">Xte_rows</span> <span class="o">=</span> <span class="n">Xte</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xte</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cp</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(</span><span class="n">Ypred</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="42">4.2 性能对比</h3>
+<p><strong>表 1: CPU vs GPU 性能对比(500 测试样本,k=5)</strong></p>
+<table>
+<thead>
+<tr>
+<th>实现方式</th>
+<th>执行时间</th>
+<th>准确率</th>
+<th>加速比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CPU (NumPy)</td>
+<td>26.54 秒</td>
+<td>27.4%</td>
+<td>1.0×</td>
+</tr>
+<tr>
+<td>GPU (CuPy)</td>
+<td>2.39 秒</td>
+<td>27.4%</td>
+<td>11.1×</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="GPU 加速性能对比" src="../../../images/knn_2.png" /></p>
+<p>GPU 实现相对 CPU 实现获得了 11.1 倍的加速,同时保持了相同的分类准确率。</p>
+<hr />
+<h2 id="5">5. 数值精度分析</h2>
+<h3 id="51-uint8">5.1 uint8 下溢问题</h3>
+<p>在使用 uint8 数据类型时,观察到准确率异常下降至 26.7%。通过数据类型检查发现:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;X_train dtype: </span><span class="si">{</span><span class="n">X_train</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># uint8</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;X_test dtype: </span><span class="si">{</span><span class="n">X_test</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># uint8</span>
+</code></pre></div>
+<p><img alt="数据类型检查" src="../../../images/dtype.png" /></p>
+<p><strong>问题诊断:</strong></p>
+<p>uint8 类型的取值范围为 [0, 255]。在计算差值时:</p>
+<div class="highlight"><pre><span></span><code><span class="n">diff</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">X_test</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>  <span class="c1"># 可能产生负值</span>
+</code></pre></div>
+<p>当 <code>X_train[i] &lt; X_test[j]</code> 时,差值为负,但 uint8 类型无法表示负数,发生下溢(underflow),负值被转换为大正数(如 -1 → 255)。这导致距离计算错误,进而影响分类准确率。</p>
+<h3 id="52-int8">5.2 int8 解决方案</h3>
+<p>将数据类型转换为 int8:</p>
+<div class="highlight"><pre><span></span><code><span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+</code></pre></div>
+<p>int8 类型的取值范围为 [-128, 127],可以正确表示负数差值。</p>
+<p><strong>性能对比:</strong></p>
+<p><strong>表 2: 数据类型对性能的影响(500 测试样本,k=5,GPU)</strong></p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>执行时间</th>
+<th>准确率</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>float32</td>
+<td>2.39 秒</td>
+<td>27.4%</td>
+<td>基准</td>
+</tr>
+<tr>
+<td>uint8</td>
+<td>1.89 秒</td>
+<td>26.7%</td>
+<td>下溢导致准确率下降</td>
+</tr>
+<tr>
+<td>int8</td>
+<td>1.88 秒</td>
+<td>35.4%</td>
+<td>准确率提升 29.2%</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="int8 性能对比" src="../../../images/gi8.png" /></p>
+<p>int8 类型在保持计算效率的同时,相对 float32 基准提升了 29.2% 的准确率(27.4% → 35.4%)。</p>
+<h3 id="53">5.3 准确率提升机制分析</h3>
+<p>int8 相对 float32 的准确率提升可能源于以下机制:</p>
+<ol>
+<li><strong>数值范围限制:</strong> int8 将像素值限制在 [-128, 127],相当于隐式的数值裁剪</li>
+<li><strong>噪声抑制:</strong> 有符号整数运算可能对某些类型的噪声具有抑制作用</li>
+<li><strong>距离度量特性:</strong> 整数运算的舍入特性可能改变了距离度量的局部性质</li>
+</ol>
+<p>该现象需要进一步的理论分析与实验验证。</p>
+<hr />
+<h2 id="6">6. 超参数调优</h2>
+<h3 id="61">6.1 验证集方法</h3>
+<p>采用验证集方法选择最优 k 值:</p>
+<ol>
+<li>从训练集中划分 1,000 样本作为验证集</li>
+<li>在候选集 k ∈ {1, 3, 5, 8, 10, 12, 15, 20, 50, 100} 上进行网格搜索</li>
+<li>选择验证集准确率最高的 k 值</li>
+<li>在测试集上评估最终性能</li>
+</ol>
+<h3 id="62">6.2 实验结果</h3>
+<p><strong>表 3: 不同 k 值的验证集准确率</strong></p>
+<table>
+<thead>
+<tr>
+<th>k 值</th>
+<th>验证集准确率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>26.1%</td>
+</tr>
+<tr>
+<td>3</td>
+<td>28.2%</td>
+</tr>
+<tr>
+<td>5</td>
+<td>28.8%</td>
+</tr>
+<tr>
+<td>8</td>
+<td>29.4%</td>
+</tr>
+<tr>
+<td>10</td>
+<td>29.9%</td>
+</tr>
+<tr>
+<td>12</td>
+<td>29.5%</td>
+</tr>
+<tr>
+<td>15</td>
+<td>29.0%</td>
+</tr>
+<tr>
+<td>20</td>
+<td>28.4%</td>
+</tr>
+<tr>
+<td>50</td>
+<td>26.8%</td>
+</tr>
+<tr>
+<td>100</td>
+<td>25.2%</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="超参数调优结果" src="../../../images/knn_h.png" /></p>
+<p><strong>最优配置:</strong></p>
+<ul>
+<li>最优 k 值: k = 10</li>
+<li>验证集准确率: 29.9%</li>
+<li>测试集准确率: 28.2%</li>
+</ul>
+<p>实验结果表明,k 值在 8-12 范围内性能较优,过小(k=1)或过大(k≥50)的 k 值均导致性能下降。</p>
+<hr />
+<h2 id="7">7. 讨论</h2>
+<h3 id="71">7.1 数值精度的重要性</h3>
+<p>实验表明,数据类型选择对 k-NN 算法性能存在显著影响。uint8 类型的下溢问题导致距离计算错误,准确率下降至 26.7%。采用 int8 类型后,准确率提升至 35.4%,相对提升 29.2%。该结果强调了在算法实现中正确处理数值精度的重要性。</p>
+<p>int8 相对 float32 的准确率提升现象值得进一步研究。可能的解释包括数值范围限制、噪声抑制等机制,但需要更深入的理论分析与实验验证。</p>
+<h3 id="72-gpu">7.2 GPU 加速的有效性</h3>
+<p>GPU 实现相对 CPU 实现获得了 11.1 倍的加速比。该加速主要来源于距离计算的并行化。然而,当前实现仍存在优化空间:</p>
+<ol>
+<li><strong>批量处理:</strong> 当前实现逐样本计算,未充分利用 GPU 的批量并行能力</li>
+<li><strong>内存传输:</strong> CPU-GPU 数据传输存在开销</li>
+<li><strong>算法优化:</strong> 可采用近似最近邻(ANN)算法进一步提升效率</li>
+</ol>
+<h3 id="73-k-nn">7.3 k-NN 算法的局限性</h3>
+<p>k-NN 算法在 CIFAR-10 上的最优准确率为 28.2%,显著低于现代深度学习方法(&gt;90%)。主要局限包括:</p>
+<ol>
+<li><strong>特征表示:</strong> 原始像素特征缺乏语义信息</li>
+<li><strong>计算复杂度:</strong> 预测时需计算与所有训练样本的距离,时间复杂度为 O(ND)</li>
+<li><strong>存储需求:</strong> 需存储全部训练数据</li>
+<li><strong>维度灾难:</strong> 高维空间中距离度量的区分度下降</li>
+</ol>
+<p>尽管存在局限,k-NN 算法作为基准方法,为理解分类问题提供了参考。</p>
+<hr />
+<h2 id="8">8. 结论</h2>
+<p>本文对 k-NN 算法在 CIFAR-10 图像分类任务中的实现与优化进行了系统研究。主要贡献包括:</p>
+<ol>
+<li><strong>完整实现:</strong> 从 1-NN 到 k-NN 的完整实现过程,包括 CPU 与 GPU 版本</li>
+<li><strong>数值精度分析:</strong> 发现并解决了 uint8 下溢问题,int8 类型在保持效率的同时提升了准确率</li>
+<li><strong>超参数调优:</strong> 通过验证集方法确定最优 k 值为 10,测试集准确率为 28.2%</li>
+<li><strong>性能优化:</strong> GPU 实现相对 CPU 实现获得 11.1 倍加速</li>
+</ol>
+<p>实验结果表明,数值精度对算法性能存在显著影响,正确的数据类型选择对于保证算法正确性至关重要。GPU 加速在距离计算密集型任务中具有明显优势。</p>
+<p>k-NN 算法作为基础分类方法,在 CIFAR-10 上的性能受限于原始像素特征的表达能力。未来工作可考虑结合特征提取方法(如卷积神经网络提取的特征)或采用近似最近邻算法以提升性能与效率。</p>
+<hr />
+<h2 id="_2">参考文献</h2>
+<ol>
+<li>
+<p>Krizhevsky, A., &amp; Hinton, G. (2009). Learning multiple layers of features from tiny images. Technical Report, University of Toronto.</p>
+</li>
+<li>
+<p>Cover, T., &amp; Hart, P. (1967). Nearest neighbor pattern classification. IEEE Transactions on Information Theory, 13(1), 21-27.</p>
+</li>
+<li>
+<p>Indyk, P., &amp; Motwani, R. (1998). Approximate nearest neighbors: towards removing the curse of dimensionality. In Proceedings of STOC (pp. 604-613).</p>
+</li>
+<li>
+<p>Okada, K., et al. (2017). CuPy: A NumPy-compatible library for NVIDIA GPU calculations. In Proceedings of Workshop on Machine Learning Systems (LearningSys).</p>
+</li>
+</ol>
+<hr />
+<h2 id="a">附录 A: 数据加载工具</h2>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
-    <span class="n">nn</span> <span class="o">=</span> <span class="n">NearestNeighbor</span><span class="p">()</span>
-    <span class="n">nn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">Xtr_rows</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">)</span>
-    <span class="n">Yte_predict</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xte_rows</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_CIFAR_batch</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;加载单个 CIFAR-10 批次文件&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">datadict</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;bytes&#39;</span><span class="p">)</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">datadict</span><span class="p">[</span><span class="sa">b</span><span class="s1">&#39;data&#39;</span><span class="p">]</span>
+        <span class="n">Y</span> <span class="o">=</span> <span class="n">datadict</span><span class="p">[</span><span class="sa">b</span><span class="s1">&#39;labels&#39;</span><span class="p">]</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;uint8&quot;</span><span class="p">)</span>
+        <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;精度为: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Yte_predict</span> <span class="o">==</span> <span class="n">Yte</span><span class="p">)))</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_CIFAR10</span><span class="p">(</span><span class="n">ROOT</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;加载完整 CIFAR-10 数据集&quot;&quot;&quot;</span>
+    <span class="n">xs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">ys</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ROOT</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;data_batch_</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">load_CIFAR_batch</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">xs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">ys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+    <span class="n">Xtr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+    <span class="n">Ytr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+    <span class="k">del</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span>
+    <span class="n">Xte</span><span class="p">,</span> <span class="n">Yte</span> <span class="o">=</span> <span class="n">load_CIFAR_batch</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ROOT</span><span class="p">,</span> <span class="s1">&#39;test_batch&#39;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Xtr</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">,</span> <span class="n">Xte</span><span class="p">,</span> <span class="n">Yte</span>
 </code></pre></div>
 <hr />
-<h2 id="knn">kNN</h2>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">data_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_CIRFA10</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">NearestNeighbor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">5</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
-
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">=</span> <span class="n">X</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span> <span class="o">=</span> <span class="n">y</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-        <span class="n">num_test</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">Ypred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_test</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
-
-        <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;k must be &gt;= 1&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;k cannot be larger than number of training smaples&quot;</span><span class="p">)</span>
-
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_test</span><span class="p">):</span>
-            <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-            <span class="n">knn_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argpartition</span><span class="p">(</span><span class="n">distances</span><span class="p">,</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)[:</span><span class="n">k</span><span class="p">]</span>
-            <span class="n">knn_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="p">[</span><span class="n">knn_idx</span><span class="p">]</span>
-
-            <span class="n">Ypred</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">knn_labels</span><span class="p">,</span> <span class="n">minlength</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">Ypred</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
-    <span class="n">Xtr</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">,</span> <span class="n">Xte</span><span class="p">,</span> <span class="n">Yte</span> <span class="o">=</span> <span class="n">load_CIRFA10</span><span class="p">(</span><span class="s2">&quot;cifar-10-batches-py&quot;</span><span class="p">)</span>
-    <span class="n">Xtr_rows</span> <span class="o">=</span> <span class="n">Xtr</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xtr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
-    <span class="n">Xte_rows</span> <span class="o">=</span> <span class="n">Xte</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xte</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
-
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
-        <span class="n">knn</span> <span class="o">=</span> <span class="n">NearestNeighbor</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
-        <span class="n">knn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">Xtr_rows</span><span class="p">[:</span><span class="mi">10000</span><span class="p">],</span> <span class="n">Ytr</span><span class="p">[:</span><span class="mi">10000</span><span class="p">])</span>
-        <span class="n">Yte_predict</span> <span class="o">=</span> <span class="n">knn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xte_rows</span><span class="p">[:</span><span class="mi">500</span><span class="p">])</span>
-
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> 精度为: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">knn</span><span class="o">.</span><span class="n">k</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Yte_predict</span> <span class="o">==</span> <span class="n">Yte</span><span class="p">[:</span><span class="mi">500</span><span class="p">])))</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
-</code></pre></div>
-<p>笔者搜了一下，这里我们只调用了cpu的算力，没有用到显卡，所以进行了修改，让训练可以利用显卡的算力，代码如下</p>
-<h3 id="knn_1">kNN改</h3>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">cupy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>   <span class="c1"># 调用cupy</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">data_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_CIRFA10</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">NearestNeighbor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">5</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
-
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>    <span class="c1"># 转到GPU</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-        <span class="n">num_test</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">Ypred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_test</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
-
-        <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;k must be &gt;= 1&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;k cannot be larger than number of training smaples&quot;</span><span class="p">)</span>
-
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_test</span><span class="p">):</span>
-            <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-            <span class="n">knn_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argpartition</span><span class="p">(</span><span class="n">distances</span><span class="p">,</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)[:</span><span class="n">k</span><span class="p">]</span>
-            <span class="n">knn_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="p">[</span><span class="n">knn_idx</span><span class="p">]</span>
-
-            <span class="n">Ypred</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">knn_labels</span><span class="p">,</span> <span class="n">minlength</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">Ypred</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
-    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
-
-    <span class="n">Xtr</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">,</span> <span class="n">Xte</span><span class="p">,</span> <span class="n">Yte</span> <span class="o">=</span> <span class="n">load_CIRFA10</span><span class="p">(</span><span class="s2">&quot;cifar-10-batches-py&quot;</span><span class="p">)</span>
-    <span class="c1"># 展平，然后防止unit8做差会溢出，转为float32</span>
-    <span class="n">Xtr_rows</span> <span class="o">=</span> <span class="n">Xtr</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xtr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-    <span class="n">Xte_rows</span> <span class="o">=</span> <span class="n">Xte</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xte</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-
-    <span class="n">Ytr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">Ytr</span><span class="p">)</span>   <span class="c1"># 放到GPU中</span>
-    <span class="n">Yte</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">Yte</span><span class="p">)</span>
-
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
-        <span class="n">knn</span> <span class="o">=</span> <span class="n">NearestNeighbor</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
-        <span class="n">knn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">Xtr_rows</span><span class="p">[:</span><span class="mi">10000</span><span class="p">],</span> <span class="n">Ytr</span><span class="p">[:</span><span class="mi">10000</span><span class="p">])</span>
-        <span class="n">Yte_predict</span> <span class="o">=</span> <span class="n">knn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xte_rows</span><span class="p">[:</span><span class="mi">500</span><span class="p">])</span>
-
-        <span class="c1"># 结果转为 CPU 再算</span>
-        <span class="n">acc</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Yte_predict</span> <span class="o">==</span> <span class="n">Yte</span><span class="p">[:</span><span class="mi">500</span><span class="p">])</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> 精度为: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">knn</span><span class="o">.</span><span class="n">k</span><span class="p">,</span> <span class="n">acc</span><span class="p">))</span>
-
-    <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;总用时: </span><span class="si">%.4f</span><span class="s2"> s&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">))</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
-</code></pre></div>
-<p>可以得到</p>
-<p><img alt="alt text" src="../../../images/knn_2.png" /></p>
-<p>那么再看看 cpu 算呢</p>
-<p><img alt="alt text" src="../../../images/knn.png" /></p>
-<p>时间减小为 &#8533;，精度还提升了。</p>
-<blockquote>
-<p>不过精度为什么还提升了，我们并没有优化算法不是吗</p>
-</blockquote>
-<h3 id="_1">分析</h3>
-<p><strong>我的猜测：</strong></p>
-<ol>
-<li>我们从 Numpy 切换到 CuPy 后，虽然算法没有发生改变，但是数值精度发生了变化</li>
-<li>cpu 和 gpu 的计算方法不同</li>
-</ol>
-<p>Numpy 默认使用的是 float64，而我的knn_2使用的是 float32，一个是15位，另一个是7位。而算 L1 距离的时候我们要对 3072 维数据做累加，一些极小的舍入可能造成很大的误差</p>
-<p>做一下实验，看看猜测是否合理：我的实验设计是将原本的 knn.py 中改为float32; knn_2.py 中改为float64。结果为：</p>
-<p><strong>float32位的gpu计算、floa64位的gpu计算和float32位的cpu计算得到了一样的结果，且与未指明精度的cpu结果不同</strong></p>
-<p>根据gpu两次不同精度结果来看，float32和float64的差异并未构成区别，说明不是float64和float32的问题。</p>
-<p>从float32的cpu与gpu对比来看，cpu和gpu的架构或者别的什么并未构成区别，说明不是两者计算方法的问题</p>
-<p><strong>不过</strong>，我有注意到，cpu算float32时用的时间比未指明精度用的时间长，我猜测我这里的numpy可能默认用的精度更低。测试一下 <code>print(Xtr_rows.dtype, Xte_rows.dtype, Ytr.dtype)</code>。输出结果如下：</p>
-<p><img alt="alt text" src="../../../images/dtype.png" /></p>
-<p><mark>破案了</mark>，其实是 <code>uint8</code> 的问题。</p>
-<p><strong>为什么呢？个人猜测如下：</strong></p>
-<p>uint8 相减会出现underflow。比如，<code>10-250</code> 因为表示方法的问题变为了 <code>16</code>，导致结果其实完全不正确，所以才出现了这么低的精度答案</p>
-<p>那么改为int16试试，正数范围没变，但是多了负数的处理。</p>
-<p><strong>结果</strong> 发现，与float32的gpu等计算结果一样了，那么应该就是这个问题，即无符号整数的underflow情况</p>
-<p>以及笔者尝试了一下 <code>uint16</code>，各位看到这里可以猜一下 acc(准确率) 是高了些还是低了？以及为什么？</p>
-<details class="答案">
-<summary>答案</summary>
-<p>acc低到了随机猜测的范围，也就是 0.1 左右。原因其实很好想，uint8的时候我们对负数模256，uint16的时候要模65296，这会导致距离计算的误差变得更大，导致训练结果无限趋近于随机猜测</p>
-</details>
-<p><mark>此外</mark></p>
-<p>既然float32和float64的结果一样。我猜测float64的精度已经溢出，那么float32的精度是不是也溢出了呢？尝试将gpu的float32改为int8，看看结果如何</p>
-<p><strong>非常的令人振奋！不仅速度快了，精度也获得了提升</strong></p>
-<p><img alt="alt text" src="../../../images/gi8.png" /></p>
-<blockquote>
-<p>应该是-128~127的小范围把L1距离做了压缩，改变了一些近邻结构,更详细的我就不理解了</p>
-</blockquote>
-<h2 id="_2">超参数调优</h2>
-<p><div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">cupy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>   <span class="c1"># 调用cupy</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">data_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_CIRFA10</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">NearestNeighbor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>    <span class="c1"># 转到GPU</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-        <span class="n">num_test</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">Ypred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_test</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
-
-        <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;k must be &gt;= 1&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;k cannot be larger than number of training smaples&quot;</span><span class="p">)</span>
-
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_test</span><span class="p">):</span>
-            <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-            <span class="n">knn_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argpartition</span><span class="p">(</span><span class="n">distances</span><span class="p">,</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)[:</span><span class="n">k</span><span class="p">]</span>
-            <span class="n">knn_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="p">[</span><span class="n">knn_idx</span><span class="p">]</span>
-
-            <span class="n">Ypred</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">knn_labels</span><span class="p">,</span> <span class="n">minlength</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">Ypred</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
-    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
-
-    <span class="n">Xtr</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">,</span> <span class="n">Xte</span><span class="p">,</span> <span class="n">Yte</span> <span class="o">=</span> <span class="n">load_CIRFA10</span><span class="p">(</span><span class="s2">&quot;cifar-10-batches-py&quot;</span><span class="p">)</span>
-
-    <span class="c1"># 展平，然后防止uint8做差会溢出，转为float32</span>
-    <span class="n">Xtr_rows</span> <span class="o">=</span> <span class="n">Xtr</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xtr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-    <span class="n">Xte_rows</span> <span class="o">=</span> <span class="n">Xte</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xte</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-
-    <span class="c1"># 放到GPU中</span>
-    <span class="n">Ytr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">Ytr</span><span class="p">)</span>
-    <span class="n">Yte</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">Yte</span><span class="p">)</span>
-
-    <span class="c1"># ====== 结合“超参数调优”逻辑：划分验证集 ======</span>
-    <span class="n">Xval_rows</span> <span class="o">=</span> <span class="n">Xtr_rows</span><span class="p">[:</span><span class="mi">1000</span><span class="p">,</span> <span class="p">:]</span>
-    <span class="n">Yval</span> <span class="o">=</span> <span class="n">Ytr</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span>
-    <span class="n">Xtr_rows_train</span> <span class="o">=</span> <span class="n">Xtr_rows</span><span class="p">[</span><span class="mi">1000</span><span class="p">:,</span> <span class="p">:]</span>
-    <span class="n">Ytr_train</span> <span class="o">=</span> <span class="n">Ytr</span><span class="p">[</span><span class="mi">1000</span><span class="p">:]</span>
-
-    <span class="c1"># ====== 在验证集上选最好的 k ======</span>
-    <span class="n">validation_accuracies</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">k_candidates</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
-
-    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">k_candidates</span><span class="p">:</span>
-        <span class="n">nn</span> <span class="o">=</span> <span class="n">NearestNeighbor</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>              <span class="c1"># 最小改动：k 走构造器</span>
-        <span class="n">nn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">Xtr_rows_train</span><span class="p">,</span> <span class="n">Ytr_train</span><span class="p">)</span>
-
-        <span class="n">Yval_predict</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xval_rows</span><span class="p">)</span>
-
-        <span class="c1"># GPU -&gt; CPU 再算标量</span>
-        <span class="n">acc</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Yval_predict</span> <span class="o">==</span> <span class="n">Yval</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[val] k=</span><span class="si">{</span><span class="n">k</span><span class="si">:</span><span class="s2">3d</span><span class="si">}</span><span class="s2"> accuracy=</span><span class="si">{</span><span class="n">acc</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">validation_accuracies</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">acc</span><span class="p">))</span>
-
-    <span class="n">best_k</span><span class="p">,</span> <span class="n">best_acc</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">validation_accuracies</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Best k on val: k=</span><span class="si">{</span><span class="n">best_k</span><span class="si">}</span><span class="s2">, acc=</span><span class="si">{</span><span class="n">best_acc</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="c1"># ====== 用 best_k 在 test 上评估（示例：仍取前500个 test） ======</span>
-    <span class="n">final_nn</span> <span class="o">=</span> <span class="n">NearestNeighbor</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="n">best_k</span><span class="p">)</span>
-    <span class="n">final_nn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">Xtr_rows_train</span><span class="p">,</span> <span class="n">Ytr_train</span><span class="p">)</span>
-    <span class="n">Yte_predict</span> <span class="o">=</span> <span class="n">final_nn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xte_rows</span><span class="p">[:</span><span class="mi">500</span><span class="p">])</span>
-    <span class="n">test_acc</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Yte_predict</span> <span class="o">==</span> <span class="n">Yte</span><span class="p">[:</span><span class="mi">500</span><span class="p">])</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[test] k=</span><span class="si">{</span><span class="n">best_k</span><span class="si">}</span><span class="s2"> accuracy=</span><span class="si">{</span><span class="n">test_acc</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;总用时: </span><span class="si">%.4f</span><span class="s2"> s&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">))</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
-</code></pre></div>
-<img alt="alt text" src="../../../images/knn_h.png" /></p>
+<h2 id="_3">致谢</h2>
+<p>本研究使用了 CIFAR-10 数据集,感谢数据集创建者提供的公开资源。</p>
+<p><strong>数据可用性:</strong> CIFAR-10 数据集可在 <a href="https://www.cs.toronto.edu/~kriz/cifar.html">https://www.cs.toronto.edu/~kriz/cifar.html</a> 获取。</p>
+<p><strong>代码可用性:</strong> 完整实现代码在附录中提供。</p>
 
 
 
