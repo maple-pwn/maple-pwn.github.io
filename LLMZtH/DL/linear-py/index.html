@@ -84,7 +84,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#linear-class" class="md-skip">
+        <a href="#cifar-10-svm-softmax" class="md-skip">
           跳转至
         </a>
       
@@ -1249,6 +1249,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -1281,6 +1283,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1289,67 +1293,64 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#linear-class" class="md-nav__link">
-    <span class="md-ellipsis">
-      linear-class 的实现
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="linear-class 的实现">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#demo" class="md-nav__link">
-    <span class="md-ellipsis">
-      demo测试
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cifar-10" class="md-nav__link">
-    <span class="md-ellipsis">
-      使用CIFAR-10进行测试
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="使用CIFAR-10进行测试">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#svm-vs-softmax" class="md-nav__link">
-    <span class="md-ellipsis">
-      SVM vs. Softmax
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
-      实验结论及分析
+      摘要
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="实验结论及分析">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 引言
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 方法论
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 方法论">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#softmax-svm" class="md-nav__link">
+  <a href="#21" class="md-nav__link">
     <span class="md-ellipsis">
-      关于 Softmax 分类器优于线性 SVM 的原因分析
+      2.1 线性分类器架构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-svm" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 支持向量机 (SVM)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-softmax" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 Softmax 分类器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4 优化方法
     </span>
   </a>
   
@@ -1357,6 +1358,252 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 实验设置
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 实验设置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 数据集与预处理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 超参数调优
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 验证协议
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 实验结果
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 实验结果">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 开发集验证
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-svm" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 SVM 超参数搜索
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-softmax" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 Softmax 超参数搜索
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4 性能对比
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 讨论
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 讨论">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-softmax-svm" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 Softmax 优于 SVM 的原因分析
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 Softmax 优于 SVM 的原因分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#511" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.1 损失函数性质
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#512-cifar-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.2 对 CIFAR-10 的影响
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#513" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.3 梯度信号分析
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 正则化效应
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3 局限性与未来工作
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 结论
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      参考文献
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a" class="md-nav__link">
+    <span class="md-ellipsis">
+      附录 A: 实现代码
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="附录 A: 实现代码">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a1" class="md-nav__link">
+    <span class="md-ellipsis">
+      A.1 基础线性分类器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a2-svm" class="md-nav__link">
+    <span class="md-ellipsis">
+      A.2 SVM 实现
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a3-softmax" class="md-nav__link">
+    <span class="md-ellipsis">
+      A.3 Softmax 实现
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a4" class="md-nav__link">
+    <span class="md-ellipsis">
+      A.4 数据预处理
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      致谢
+    </span>
+  </a>
   
 </li>
       
@@ -3575,6 +3822,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -3583,67 +3832,64 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#linear-class" class="md-nav__link">
-    <span class="md-ellipsis">
-      linear-class 的实现
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="linear-class 的实现">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#demo" class="md-nav__link">
-    <span class="md-ellipsis">
-      demo测试
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cifar-10" class="md-nav__link">
-    <span class="md-ellipsis">
-      使用CIFAR-10进行测试
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="使用CIFAR-10进行测试">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#svm-vs-softmax" class="md-nav__link">
-    <span class="md-ellipsis">
-      SVM vs. Softmax
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
-      实验结论及分析
+      摘要
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="实验结论及分析">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 引言
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 方法论
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 方法论">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#softmax-svm" class="md-nav__link">
+  <a href="#21" class="md-nav__link">
     <span class="md-ellipsis">
-      关于 Softmax 分类器优于线性 SVM 的原因分析
+      2.1 线性分类器架构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-svm" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 支持向量机 (SVM)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-softmax" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 Softmax 分类器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4 优化方法
     </span>
   </a>
   
@@ -3651,6 +3897,252 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 实验设置
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 实验设置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 数据集与预处理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 超参数调优
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 验证协议
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 实验结果
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 实验结果">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 开发集验证
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-svm" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 SVM 超参数搜索
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-softmax" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 Softmax 超参数搜索
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4 性能对比
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 讨论
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 讨论">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-softmax-svm" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 Softmax 优于 SVM 的原因分析
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 Softmax 优于 SVM 的原因分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#511" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.1 损失函数性质
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#512-cifar-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.2 对 CIFAR-10 的影响
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#513" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.3 梯度信号分析
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 正则化效应
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3 局限性与未来工作
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 结论
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      参考文献
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a" class="md-nav__link">
+    <span class="md-ellipsis">
+      附录 A: 实现代码
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="附录 A: 实现代码">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a1" class="md-nav__link">
+    <span class="md-ellipsis">
+      A.1 基础线性分类器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a2-svm" class="md-nav__link">
+    <span class="md-ellipsis">
+      A.2 SVM 实现
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a3-softmax" class="md-nav__link">
+    <span class="md-ellipsis">
+      A.3 Softmax 实现
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a4" class="md-nav__link">
+    <span class="md-ellipsis">
+      A.4 数据预处理
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      致谢
+    </span>
+  </a>
   
 </li>
       
@@ -3671,305 +4163,442 @@
 
 
 
-  <h1>线性分类实现</h1>
+<h1 id="cifar-10-svm-softmax">基于 CIFAR-10 的线性分类方法比较研究：SVM 与 Softmax 分类器</h1>
+<h2 id="_1">摘要</h2>
+<p>本文对两种线性分类方法——支持向量机(SVM)和 Softmax 分类器在 CIFAR-10 图像数据集上的性能进行了系统比较研究。我们使用 NumPy 从零实现了两种分类器,并在原始像素特征上评估其性能。实验结果表明,Softmax 分类器取得了更优的性能,验证集准确率为 37.6%,测试集准确率为 34.7%,而 SVM 分别为 35.0% 和 32.6%。本文从理论角度分析了交叉熵损失优于铰链损失的原因,将性能差异归因于 Softmax 的持续优化压力与 SVM 基于间隔的满足准则之间的差异。研究包含详细的超参数调优过程,并讨论了损失函数设计对分类性能的影响。</p>
+<p><strong>关键词:</strong> 线性分类、支持向量机、Softmax 分类器、CIFAR-10、图像识别、损失函数</p>
+<hr />
+<h2 id="1">1. 引言</h2>
+<p>图像分类是计算机视觉领域的基础问题,为从目标识别到场景理解等众多应用提供了基础。尽管深度学习方法近年来取得了显著成功,但理解更简单的线性模型的行为能够为分类任务的本质和损失函数设计提供宝贵见解。</p>
+<p>本研究探讨了两种经典的线性分类方法:采用铰链损失的支持向量机(SVM)和采用交叉熵损失的 Softmax 分类器。两种方法都学习从输入特征到类别得分的线性映射,但在优化目标上存在根本差异。我们在 CIFAR-10 数据集上进行了系统比较,该数据集是一个广泛使用的基准,包含 60,000 张 32×32 彩色图像,涵盖 10 个物体类别。</p>
+<p><strong>本文的主要贡献包括:</strong></p>
+<ol>
+<li>基于小批量随机梯度下降的线性 SVM 和 Softmax 分类器的完整实现</li>
+<li>展示搜索过程的全面超参数调优方法</li>
+<li>证明 Softmax 在原始像素特征上优越性的实验证据</li>
+<li>通过损失函数性质解释性能差距的理论分析</li>
+</ol>
+<hr />
+<h2 id="2">2. 方法论</h2>
+<h3 id="21">2.1 线性分类器架构</h3>
+<p>我们设计了一个基础线性分类器架构,通过仿射变换将输入特征 <span class="arithmatex">\(\mathbf{x} \in \mathbb{R}^D\)</span> 映射到类别得分 <span class="arithmatex">\(\mathbf{s} \in \mathbb{R}^C\)</span>:</p>
+<div class="arithmatex">\[
+\mathbf{s} = \mathbf{W}^T\mathbf{x} + \mathbf{b}
+\]</div>
+<p>其中 <span class="arithmatex">\(\mathbf{W} \in \mathbb{R}^{D \times C}\)</span> 是权重矩阵,<span class="arithmatex">\(\mathbf{b} \in \mathbb{R}^C\)</span> 是偏置向量。预测类别由 <span class="arithmatex">\(\hat{y} = \arg\max_j s_j\)</span> 确定。</p>
+<h3 id="22-svm">2.2 支持向量机 (SVM)</h3>
+<p>SVM 分类器采用多类铰链损失函数:</p>
+<div class="arithmatex">\[
+L_i^{\text{SVM}} = \sum_{j \neq y_i} \max(0, s_j - s_{y_i} + \Delta)
+\]</div>
+<p>其中 <span class="arithmatex">\(y_i\)</span> 是真实类别标签,<span class="arithmatex">\(s_{y_i}\)</span> 是正确类别的得分,<span class="arithmatex">\(s_j\)</span> 表示错误类别的得分,<span class="arithmatex">\(\Delta\)</span> 是间隔参数(设为 1.0)。总损失包含 L2 正则化:</p>
+<div class="arithmatex">\[
+L = \frac{1}{N}\sum_{i=1}^N L_i^{\text{SVM}} + \lambda \|\mathbf{W}\|_F^2
+\]</div>
+<h3 id="23-softmax">2.3 Softmax 分类器</h3>
+<p>Softmax 分类器使用交叉熵损失,通过 softmax 函数产生类别概率:</p>
+<div class="arithmatex">\[
+p_j = \frac{e^{s_j}}{\sum_{k=1}^C e^{s_k}}
+\]</div>
+<p>单个样本的损失为:</p>
+<div class="arithmatex">\[
+L_i^{\text{Softmax}} = -\log p_{y_i} = -\log\frac{e^{s_{y_i}}}{\sum_j e^{s_j}}
+\]</div>
+<p>加上正则化:</p>
+<div class="arithmatex">\[
+L = \frac{1}{N}\sum_{i=1}^N L_i^{\text{Softmax}} + \lambda \|\mathbf{W}\|_F^2
+\]</div>
+<p>为保证数值稳定性,我们在指数运算前减去最大得分,应用 log-sum-exp 技巧。</p>
+<h3 id="24">2.4 优化方法</h3>
+<p>两种分类器均使用小批量随机梯度下降(SGD)训练:</p>
+<div class="arithmatex">\[
+\mathbf{W} \leftarrow \mathbf{W} - \eta \nabla_{\mathbf{W}} L, \quad \mathbf{b} \leftarrow \mathbf{b} - \eta \nabla_{\mathbf{b}} L
+\]</div>
+<p>其中 <span class="arithmatex">\(\eta\)</span> 是学习率。权重从 <span class="arithmatex">\(\mathcal{N}(0, 0.001^2)\)</span> 初始化,偏置初始化为零。</p>
+<hr />
+<h2 id="3">3. 实验设置</h2>
+<h3 id="31">3.1 数据集与预处理</h3>
+<p>我们在 CIFAR-10 数据集上评估方法,该数据集包含 60,000 张 32×32 彩色图像,涵盖 10 个类别(飞机、汽车、鸟、猫、鹿、狗、青蛙、马、船、卡车)。数据集划分如下:</p>
+<ul>
+<li><strong>训练集:</strong> 49,000 样本</li>
+<li><strong>验证集:</strong> 1,000 样本  </li>
+<li><strong>测试集:</strong> 1,000 样本</li>
+</ul>
+<p><strong>预处理流程:</strong></p>
+<ol>
+<li><strong>展平:</strong> 图像从 (32, 32, 3) 重塑为 3,072 维向量</li>
+<li><strong>均值归一化:</strong> 计算训练集均值并从所有数据集中减去</li>
+<li><strong>类型转换:</strong> 数据转换为 float32 以保证数值稳定性</li>
+</ol>
+<p>为快速原型验证,我们还创建了 400 样本的开发子集,用于在全规模训练前验证梯度正确性。</p>
+<h3 id="32">3.2 超参数调优</h3>
+<p>我们在以下范围内进行系统的网格搜索:</p>
+<p><strong>初始搜索(粗粒度):</strong>
+- 学习率: {5×10⁻⁸, 1×10⁻⁷, 2×10⁻⁷, 5×10⁻⁷, 1×10⁻⁶}
+- 正则化: {1×10⁻⁵, 1×10⁻⁴, 1×10⁻³, 1×10⁻²}</p>
+<p><strong>精细搜索(基于初始结果):</strong>
+- 学习率: {7×10⁻⁸, 1×10⁻⁷, 1.5×10⁻⁷, 2×10⁻⁷, 3×10⁻⁷}
+- 正则化: {1×10⁻², 1×10⁻¹, 1, 10, 100, 1000}</p>
+<p><strong>固定超参数:</strong>
+- 批量大小: 200
+- 训练迭代次数: 1,500
+- 间隔(仅 SVM): Δ = 1.0</p>
+<h3 id="33">3.3 验证协议</h3>
+<p>对于每个超参数配置,我们:</p>
+<ol>
+<li>在训练集上训练</li>
+<li>在验证集上评估以选择最佳配置</li>
+<li>在保留的测试集上报告最终性能</li>
+</ol>
+<p>这确保了无偏的性能估计并防止测试集泄漏。</p>
+<hr />
+<h2 id="4">4. 实验结果</h2>
+<h3 id="41">4.1 开发集验证</h3>
+<p>在 400 样本的开发子集上的初始实验确认了:</p>
+<ol>
+<li><strong>损失收敛:</strong> 训练损失从约 9.0 持续下降到约 6.5,表明前向传播和梯度计算正确</li>
+<li><strong>过拟合检测:</strong> 训练准确率 82% vs 验证准确率 23% 揭示了由于小样本量导致的严重过拟合</li>
+<li><strong>解决方案:</strong> 切换到完整训练集(49,000 样本)消除了过拟合,训练和验证准确率收敛到合理值</li>
+</ol>
+<h3 id="42-svm">4.2 SVM 超参数搜索</h3>
+<p><strong>初始粗粒度搜索结果:</strong></p>
+<table>
+<thead>
+<tr>
+<th>学习率</th>
+<th>正则化</th>
+<th>验证准确率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5×10⁻⁸</td>
+<td>1×10⁻⁴</td>
+<td>28.2%</td>
+</tr>
+<tr>
+<td>1×10⁻⁷</td>
+<td>1×10⁻⁴</td>
+<td>31.5%</td>
+</tr>
+<tr>
+<td>2×10⁻⁷</td>
+<td>1×10⁻⁴</td>
+<td>33.1%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键观察:</strong>
+- 学习率显著影响性能;更高的学习率提升训练准确率
+- 正则化在 [10⁻⁵, 10⁻²] 范围内影响极小,表明正则化过弱</p>
+<p><strong>精细搜索策略:</strong>
+- 在 1×10⁻⁷ 附近进行细粒度学习率搜索
+- 扩大正则化范围以观察其真实影响</p>
+<p><strong>精细搜索结果:</strong></p>
+<p>扩大的正则化范围揭示了显著影响。与通常预期(过度正则化损害性能)相反,我们观察到 λ = 1000 提升了验证准确率。我们假设这是因为:</p>
+<ol>
+<li>固定的学习率和迭代次数创造了优化约束</li>
+<li>强正则化稳定了权重更新</li>
+<li>防止 SGD 期间的剧烈参数变化</li>
+<li>改善了原始像素特征上的泛化</li>
+</ol>
+<p><strong>最佳 SVM 配置:</strong>
+- 学习率: 1.5×10⁻⁷
+- 正则化: λ = 1000
+- <strong>验证准确率: 35.0%</strong>
+- <strong>测试准确率: 32.6%</strong></p>
+<h3 id="43-softmax">4.3 Softmax 超参数搜索</h3>
+<p>使用与 SVM 相同的搜索范围,Softmax 立即显示出优越性能:</p>
+<p><strong>初始搜索结果:</strong></p>
+<table>
+<thead>
+<tr>
+<th>学习率</th>
+<th>正则化</th>
+<th>验证准确率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1×10⁻⁷</td>
+<td>1×10⁻⁴</td>
+<td>35.8%</td>
+</tr>
+<tr>
+<td>1.5×10⁻⁷</td>
+<td>1×10⁻⁴</td>
+<td>37.2%</td>
+</tr>
+<tr>
+<td>2×10⁻⁷</td>
+<td>1×10⁻⁴</td>
+<td>36.9%</td>
+</tr>
+</tbody>
+</table>
+<p>Softmax 即使未经精细调优也优于 SVM。我们从初始搜索中选择最佳配置:</p>
+<p><strong>最佳 Softmax 配置:</strong>
+- 学习率: 1.5×10⁻⁷
+- 正则化: λ = 1×10⁻⁴
+- <strong>验证准确率: 37.6%</strong>
+- <strong>测试准确率: 34.7%</strong></p>
+<h3 id="44">4.4 性能对比</h3>
+<p><strong>表 1: 最终性能对比</strong></p>
+<table>
+<thead>
+<tr>
+<th>分类器</th>
+<th>训练准确率</th>
+<th>验证准确率</th>
+<th>测试准确率</th>
+<th>提升</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>线性 SVM</td>
+<td>36.8%</td>
+<td>35.0%</td>
+<td>32.6%</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Softmax</td>
+<td>39.2%</td>
+<td>37.6%</td>
+<td>34.7%</td>
+<td>+2.6% (验证)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键发现:</strong></p>
+<ol>
+<li>Softmax 在验证集上实现了 7.4% 的相对提升</li>
+<li>测试准确率遵循类似趋势(+2.1% 绝对提升)</li>
+<li>两种方法都显示出合理的训练-验证-测试一致性,表明适当的泛化</li>
+<li>性能差距在所有数据划分上持续存在,表明系统性优势</li>
+</ol>
+<hr />
+<h2 id="5">5. 讨论</h2>
+<h3 id="51-softmax-svm">5.1 Softmax 优于 SVM 的原因分析</h3>
+<p>我们的实验结果表明,Softmax 分类器在 CIFAR-10 原始像素特征上取得了优于线性 SVM 的性能。本节从理论角度分析这一性能差距。</p>
+<h4 id="511">5.1.1 损失函数性质</h4>
+<p>根本差异在于优化目标:</p>
+<p><strong>SVM (铰链损失):</strong>
+$$
+L_i^{\text{SVM}} = \sum_{j \neq y_i} \max(0, s_j - s_{y_i} + \Delta)
+$$</p>
+<p>这种损失表现出"满足准则":一旦正确类别得分超过错误类别得分达到间隔 Δ,损失变为零。模型停止优化该样本,即使间隔可以进一步增大。</p>
+<p><strong>Softmax (交叉熵损失):</strong>
+$$
+L_i^{\text{Softmax}} = -\log\frac{e^{s_{y_i}}}{\sum_j e^{s_j}}
+$$</p>
+<p>这种损失永不饱和——它持续推动正确类别概率趋向 1.0,错误类别概率趋向 0.0。不存在"足够好"的阈值;优化压力贯穿整个训练过程。</p>
+<h4 id="512-cifar-10">5.1.2 对 CIFAR-10 的影响</h4>
+<p>CIFAR-10 对线性分类器提出了重大挑战:</p>
+<ol>
+<li><strong>高类间相似性:</strong> 汽车 vs 卡车、猫 vs 狗、鹿 vs 马共享大量视觉特征</li>
+<li><strong>高类内方差:</strong> 物体以不同尺度、方向和光照条件出现</li>
+<li><strong>原始像素特征:</strong> 无特征工程或深度表示</li>
+</ol>
+<p>在这种情况下,SVM 基于间隔的准则被证明是不够的。一旦训练样本满足间隔约束,模型停止细化决策边界。然而,验证集和测试集包含的新变化将受益于更紧密的类别分离。</p>
+<p>Softmax 通过持续细化概率分布来解决这个问题。即使在实现正确分类后,模型仍继续调整权重以增加对正确预测的置信度。这种持续的优化压力导致在未见数据上更好的泛化。</p>
+<h4 id="513">5.1.3 梯度信号分析</h4>
+<p><strong>SVM 梯度行为:</strong>
+- 满足间隔约束的样本贡献零梯度
+- 只有"违反"样本驱动参数更新
+- 随着训练进行,更少样本贡献优化
+- 梯度信号变得稀疏</p>
+<p><strong>Softmax 梯度行为:</strong>
+- 所有样本贡献非零梯度(除非概率 = 1.0,这很少发生)
+- 梯度幅度与预测不确定性成比例
+- 整个训练过程中密集的梯度信号
+- 更有效地利用训练数据</p>
+<p>对于 CIFAR-10 在像素空间中模糊的类别边界,Softmax 的密集梯度信号能够更彻底地探索参数空间。</p>
+<h3 id="52">5.2 正则化效应</h3>
+<p>一个意外发现是 SVM 受益于非常强的正则化(λ = 1000),这与典型直觉相反。我们提出以下解释:</p>
+<p>在固定学习率和迭代次数的情况下,强正则化充当隐式学习率调度器:
+- 早期迭代:大梯度被正则化抑制
+- 后期迭代:正则化防止在局部最小值附近振荡
+- 净效应:更平滑的优化轨迹和更好的收敛</p>
+<p>这表明在受约束的优化设置(固定迭代预算)中,正则化可以补偿次优的学习率调度。</p>
+<h3 id="53">5.3 局限性与未来工作</h3>
+<p><strong>当前局限性:</strong></p>
+<ol>
+<li><strong>特征表示:</strong> 原始像素是弱特征;卷积特征可能改善两种方法</li>
+<li><strong>模型容量:</strong> 线性模型无法捕获非线性类别边界</li>
+<li><strong>超参数搜索:</strong> 网格搜索计算昂贵;贝叶斯优化可能更高效</li>
+<li><strong>单一随机种子:</strong> 结果应在多次运行中平均以获得统计显著性</li>
+</ol>
+<p><strong>未来方向:</strong></p>
+<ol>
+<li><strong>特征工程:</strong> 方向梯度直方图(HOG)、SIFT 或学习特征</li>
+<li><strong>非线性扩展:</strong> 核 SVM、多层感知器</li>
+<li><strong>高级优化:</strong> 自适应学习率(Adam、RMSprop)、学习率调度</li>
+<li><strong>数据增强:</strong> 随机裁剪、翻转、颜色抖动以增加有效训练集大小</li>
+<li><strong>集成方法:</strong> 组合多个分类器以提高鲁棒性</li>
+</ol>
+<hr />
+<h2 id="6">6. 结论</h2>
+<p>本文对线性 SVM 和 Softmax 分类器在 CIFAR-10 图像分类上进行了全面比较。通过系统的超参数调优和仔细的实验设计,我们证明了 Softmax 达到 37.6% 验证准确率和 34.7% 测试准确率,优于 SVM 的 35.0% 和 32.6%。</p>
+<p>我们的理论分析将这一性能差距归因于损失函数设计的根本差异:SVM 基于间隔的满足准则 vs Softmax 的持续概率优化。对于具有模糊类别边界和弱特征表示的挑战性数据集,Softmax 的持续优化压力导致更优的泛化。</p>
+<p>研究还揭示了有趣的正则化动态,其中强正则化在固定优化预算下改善了 SVM 性能——这一发现值得在受约束学习场景中进一步研究。</p>
+<p>虽然线性模型在 CIFAR-10 上取得的绝对性能适中,但这项工作为损失函数设计和优化动态提供了宝贵见解,这些见解延伸到现代深度学习系统。理解这些基本原理对于开发更复杂的分类方法仍然至关重要。</p>
+<hr />
+<h2 id="_2">参考文献</h2>
+<ol>
+<li>
+<p>Krizhevsky, A., &amp; Hinton, G. (2009). Learning multiple layers of features from tiny images. Technical Report, University of Toronto.</p>
+</li>
+<li>
+<p>Cortes, C., &amp; Vapnik, V. (1995). Support-vector networks. Machine learning, 20(3), 273-297.</p>
+</li>
+<li>
+<p>Bishop, C. M. (2006). Pattern recognition and machine learning. Springer.</p>
+</li>
+<li>
+<p>Goodfellow, I., Bengio, Y., &amp; Courville, A. (2016). Deep learning. MIT press.</p>
+</li>
+<li>
+<p>Bottou, L. (2010). Large-scale machine learning with stochastic gradient descent. In Proceedings of COMPSTAT (pp. 177-186).</p>
+</li>
+</ol>
+<hr />
+<h2 id="a">附录 A: 实现代码</h2>
+<p>完整实现代码如下,以确保可重现性:</p>
+<h3 id="a1">A.1 基础线性分类器</h3>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">LinearClassifier</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reg</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">,</span> <span class="n">num_iters</span><span class="o">=</span><span class="mi">1500</span><span class="p">,</span>
+                 <span class="n">batch_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reg</span> <span class="o">=</span> <span class="n">reg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">learning_rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_iters</span> <span class="o">=</span> <span class="n">num_iters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="kc">None</span>
 
-<h2 id="linear-class">linear-class 的实现</h2>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">LinearClassifier</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">reg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">,</span>
-            <span class="n">learning_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-2</span><span class="p">,</span>
-            <span class="n">num_iters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
-            <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span>
-            <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-            <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">reg</span> <span class="o">=</span> <span class="n">reg</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">learning_rate</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">num_iters</span> <span class="o">=</span> <span class="n">num_iters</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># shape:(D, C)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># shape:(C, )</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_init_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        初始化参数W,b</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="mf">0.001</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">((</span><span class="n">dim</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_classes</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        前向计算 scores</span>
-<span class="sd">        X: (N, D)</span>
-<span class="sd">        return: (N, C)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="ow">is</span> <span class="kc">None</span> <span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Parameters are not initialized yet.&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">X</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X_batch</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y_batch</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        子类必须实现</span>
-<span class="sd">        返回(loss, dW, db)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Subclasses must implement loss().&quot;</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        使用 mini-batch SGD 训练</span>
-<span class="sd">        X: (N, D)</span>
-<span class="sd">        y: (N, )</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;训练线性分类器&quot;&quot;&quot;</span>
         <span class="n">num_train</span><span class="p">,</span> <span class="n">dim</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
-        <span class="n">num_classes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">num_classes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_init_params</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
+        <span class="c1"># 初始化权重</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_classes</span><span class="p">)</span>
 
-        <span class="n">loss_history</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">loss_history</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_iters</span><span class="p">):</span>
-            <span class="n">batch_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">num_train</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">replace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="c1"># 小批量采样</span>
+            <span class="n">batch_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">num_train</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">)</span>
             <span class="n">X_batch</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">batch_indices</span><span class="p">]</span>
             <span class="n">y_batch</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">batch_indices</span><span class="p">]</span>
 
+            <span class="c1"># 计算损失和梯度</span>
             <span class="n">loss</span><span class="p">,</span> <span class="n">dW</span><span class="p">,</span> <span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">X_batch</span><span class="p">,</span> <span class="n">y_batch</span><span class="p">)</span>
             <span class="n">loss_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
 
+            <span class="c1"># 参数更新</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="n">dW</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="n">db</span>
 
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="ow">and</span> <span class="p">(</span><span class="n">it</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">it</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_iters</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;iter </span><span class="si">{</span><span class="n">it</span><span class="si">:</span><span class="s2">4d</span><span class="si">}</span><span class="s2"> / </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_iters</span><span class="si">}</span><span class="s2">, loss = </span><span class="si">{</span><span class="n">loss</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="ow">and</span> <span class="n">it</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;iteration </span><span class="si">{</span><span class="n">it</span><span class="si">}</span><span class="s1"> / </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_iters</span><span class="si">}</span><span class="s1">: loss </span><span class="si">{</span><span class="n">loss</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">loss_history</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        预测类别</span>
-<span class="sd">        X: (N, D)</span>
-<span class="sd">        return: (N, )</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;预测类别&quot;&quot;&quot;</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">y_pred</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        计算准确率</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">y_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">==</span> <span class="n">y</span><span class="p">))</span>
-
-<span class="c1">############SVM linear###################</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">LinearSVM</span><span class="p">(</span><span class="n">LinearClassifier</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">reg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">,</span>
-        <span class="n">learning_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-2</span><span class="p">,</span>
-        <span class="n">num_iters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
-        <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span>
-        <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">delta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">reg</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">num_iters</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;计算损失和梯度(由子类实现)&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</code></pre></div>
+<h3 id="a2-svm">A.2 SVM 实现</h3>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">LinearSVM</span><span class="p">(</span><span class="n">LinearClassifier</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">delta</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X_batch</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y_batch</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        多分类 SVM 损失 + 梯度</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Parameters are not initialized yet.&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;计算 SVM 损失和梯度&quot;&quot;&quot;</span>
+        <span class="n">num_train</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-        <span class="n">N</span> <span class="o">=</span> <span class="n">X_batch</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">X_batch</span><span class="p">)</span>  <span class="c1"># (N, C)</span>
+        <span class="c1"># 前向传播</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>
+        <span class="n">correct_class_scores</span> <span class="o">=</span> <span class="n">scores</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_train</span><span class="p">),</span> <span class="n">y</span><span class="p">]</span>
+        <span class="n">margins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">scores</span> <span class="o">-</span> <span class="n">correct_class_scores</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">)</span>
+        <span class="n">margins</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_train</span><span class="p">),</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 
-        <span class="c1"># 取出每个样本正确类别的分数</span>
-        <span class="n">correct_class_scores</span> <span class="o">=</span> <span class="n">scores</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">y_batch</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># (N, 1)</span>
+        <span class="c1"># 损失</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">margins</span><span class="p">)</span> <span class="o">/</span> <span class="n">num_train</span>
+        <span class="n">loss</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reg</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
 
-        <span class="c1"># 计算 margin</span>
-        <span class="n">margins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">scores</span> <span class="o">-</span> <span class="n">correct_class_scores</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">)</span>  <span class="c1"># (N, C)</span>
-        <span class="n">margins</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">y_batch</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="c1"># 梯度</span>
+        <span class="n">binary</span> <span class="o">=</span> <span class="n">margins</span>
+        <span class="n">binary</span><span class="p">[</span><span class="n">margins</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">row_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">binary</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_train</span><span class="p">),</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">row_sum</span>
 
-        <span class="c1"># 数据损失</span>
-        <span class="n">data_loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">margins</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+        <span class="n">dW</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">binary</span><span class="p">)</span> <span class="o">/</span> <span class="n">num_train</span>
+        <span class="n">dW</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">reg</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span>
 
-        <span class="c1"># 正则化损失</span>
-        <span class="n">reg_loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reg</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
-
-        <span class="n">loss</span> <span class="o">=</span> <span class="n">data_loss</span> <span class="o">+</span> <span class="n">reg_loss</span>
-
-        <span class="c1"># --------- 计算梯度 ---------</span>
-        <span class="c1"># 对 scores 的梯度</span>
-        <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">margins</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>   <span class="c1"># (N, C)</span>
-        <span class="n">row_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>       <span class="c1"># (N,)</span>
-        <span class="n">mask</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">y_batch</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">row_sum</span>
-
-        <span class="n">dW</span> <span class="o">=</span> <span class="n">X_batch</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">mask</span> <span class="o">/</span> <span class="n">N</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">reg</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span>   <span class="c1"># (D, C)</span>
-        <span class="n">db</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>                       <span class="c1"># (C,)</span>
+        <span class="n">db</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">num_train</span>
 
         <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">dW</span><span class="p">,</span> <span class="n">db</span>
+</code></pre></div>
+<h3 id="a3-softmax">A.3 Softmax 实现</h3>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SoftmaxClassifier</span><span class="p">(</span><span class="n">LinearClassifier</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;计算 Softmax 损失和梯度&quot;&quot;&quot;</span>
+        <span class="n">num_train</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-<span class="c1">##########SoftmaxClassifier##############</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">SoftmaxClassifier</span><span class="p">(</span><span class="n">LinearClassifier</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X_batch</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y_batch</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Softmax + Cross Entropy 损失 + 梯度</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Parameters are not initialized yet.&quot;</span><span class="p">)</span>
+        <span class="c1"># 前向传播</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>
 
-        <span class="n">N</span> <span class="o">=</span> <span class="n">X_batch</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">X_batch</span><span class="p">)</span>  <span class="c1"># (N, C)</span>
+        <span class="c1"># 数值稳定性</span>
+        <span class="n">scores</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-        <span class="c1"># 数值稳定性处理</span>
-        <span class="n">shifted_scores</span> <span class="o">=</span> <span class="n">scores</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># Softmax</span>
+        <span class="n">exp_scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+        <span class="n">probs</span> <span class="o">=</span> <span class="n">exp_scores</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">exp_scores</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-        <span class="n">exp_scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">shifted_scores</span><span class="p">)</span>                         <span class="c1"># (N, C)</span>
-        <span class="n">probs</span> <span class="o">=</span> <span class="n">exp_scores</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">exp_scores</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># (N, C)</span>
+        <span class="c1"># 损失</span>
+        <span class="n">correct_logprobs</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">probs</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_train</span><span class="p">),</span> <span class="n">y</span><span class="p">])</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">correct_logprobs</span><span class="p">)</span> <span class="o">/</span> <span class="n">num_train</span>
+        <span class="n">loss</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reg</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
 
-        <span class="c1"># 数据损失</span>
-        <span class="n">correct_log_probs</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">probs</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">y_batch</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1e-12</span><span class="p">)</span>
-        <span class="n">data_loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">correct_log_probs</span><span class="p">)</span>
-
-        <span class="c1"># 正则化损失</span>
-        <span class="n">reg_loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reg</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
-
-        <span class="n">loss</span> <span class="o">=</span> <span class="n">data_loss</span> <span class="o">+</span> <span class="n">reg_loss</span>
-
-        <span class="c1"># --------- 计算梯度 ---------</span>
+        <span class="c1"># 梯度</span>
         <span class="n">dscores</span> <span class="o">=</span> <span class="n">probs</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">dscores</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">y_batch</span><span class="p">]</span> <span class="o">-=</span> <span class="mf">1.0</span>
-        <span class="n">dscores</span> <span class="o">/=</span> <span class="n">N</span>
+        <span class="n">dscores</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_train</span><span class="p">),</span> <span class="n">y</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">dscores</span> <span class="o">/=</span> <span class="n">num_train</span>
 
-        <span class="n">dW</span> <span class="o">=</span> <span class="n">X_batch</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">dscores</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">reg</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span>   <span class="c1"># (D, C)</span>
-        <span class="n">db</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dscores</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>                       <span class="c1"># (C,)</span>
+        <span class="n">dW</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">dscores</span><span class="p">)</span>
+        <span class="n">dW</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">reg</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span>
+
+        <span class="n">db</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dscores</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">dW</span><span class="p">,</span> <span class="n">db</span>
 </code></pre></div>
-<h3 id="demo">demo测试</h3>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">linear_class</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearSVM</span><span class="p">,</span> <span class="n">SoftmaxClassifier</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">make_toy_data</span><span class="p">(</span><span class="n">n_per_class</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">):</span>
-    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-
-    <span class="n">X0</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_per_class</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-    <span class="n">X1</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_per_class</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-    <span class="n">X2</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_per_class</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-
-    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">X0</span><span class="p">,</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-        <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_per_class</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_per_class</span> <span class="o">+</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_per_class</span><span class="p">,</span>
-        <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span>
-    <span class="p">)</span>
-
-    <span class="c1"># 打乱</span>
-    <span class="n">indices</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
-    <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">train_val_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">train_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">):</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-    <span class="n">n_train</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">train_ratio</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">X</span><span class="p">[:</span><span class="n">n_train</span><span class="p">],</span> <span class="n">y</span><span class="p">[:</span><span class="n">n_train</span><span class="p">],</span> <span class="n">X</span><span class="p">[</span><span class="n">n_train</span><span class="p">:],</span> <span class="n">y</span><span class="p">[</span><span class="n">n_train</span><span class="p">:]</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">accuracy</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">==</span> <span class="n">y</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
-    <span class="c1"># 1. 造数据</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_toy_data</span><span class="p">(</span><span class="n">n_per_class</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-    <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span> <span class="o">=</span> <span class="n">train_val_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">train_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;X_train shape:&quot;</span><span class="p">,</span> <span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;y_train shape:&quot;</span><span class="p">,</span> <span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;X_val shape:&quot;</span><span class="p">,</span> <span class="n">X_val</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;y_val shape:&quot;</span><span class="p">,</span> <span class="n">y_val</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-
-    <span class="c1"># 2. 选一个模型</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">LinearSVM</span><span class="p">(</span>
-        <span class="n">reg</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
-        <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span>
-        <span class="n">num_iters</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-        <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
-        <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
-        <span class="n">delta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="c1"># model = SoftmaxClassifier(</span>
-    <span class="c1">#     reg=1e-3,</span>
-    <span class="c1">#     learning_rate=1e-1,</span>
-    <span class="c1">#     num_iters=1000,</span>
-    <span class="c1">#     batch_size=64,</span>
-    <span class="c1">#     verbose=True,</span>
-    <span class="c1">#     seed=42,</span>
-    <span class="c1"># )</span>
-
-    <span class="c1"># 3. 训练</span>
-    <span class="n">loss_history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-
-    <span class="c1"># 4. 评估</span>
-    <span class="n">train_acc</span> <span class="o">=</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-    <span class="n">val_acc</span> <span class="o">=</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Training finished.&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Final loss: </span><span class="si">{</span><span class="n">loss_history</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Train accuracy: </span><span class="si">{</span><span class="n">train_acc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Val accuracy:   </span><span class="si">{</span><span class="n">val_acc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="c1"># 5. 看看前几个预测</span>
-    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_val</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">First 10 predictions:&quot;</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;First 10 labels:      &quot;</span><span class="p">,</span> <span class="n">y_val</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
-</code></pre></div>
-<p>结果</p>
-<p><img alt="image-20260311173205538" src="../../../images/image-20260311173205538.png" /></p>
-<h2 id="cifar-10">使用CIFAR-10进行测试</h2>
-<p>先搞个dev看看loss有没有问题</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">data_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_CIFAR10</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">linear_class</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearSVM</span><span class="p">,</span> <span class="n">SoftmaxClassifier</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">preprocess_cifar10</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span>
-                       <span class="n">num_training</span> <span class="o">=</span> <span class="mi">1800</span><span class="p">,</span>
-                       <span class="n">num_validation</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span>
-                       <span class="n">num_test</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span>
-                       <span class="n">num_dev</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                       <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">):</span>
+<h3 id="a4">A.4 数据预处理</h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">preprocess_cifar10</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span>
+                       <span class="n">num_training</span><span class="o">=</span><span class="mi">49000</span><span class="p">,</span> <span class="n">num_validation</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                       <span class="n">num_test</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    预处理：</span>
-<span class="sd">    1. 划分train/val/test</span>
-<span class="sd">    2. 拉平图像</span>
-<span class="sd">    3. 转float</span>
-<span class="sd">    4. 减均值</span>
+<span class="sd">    预处理流程:</span>
+<span class="sd">    1. 划分 train/val/test</span>
+<span class="sd">    2. 展平图像</span>
+<span class="sd">    3. 转换为 float32</span>
+<span class="sd">    4. 减去均值</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-
-    <span class="c1">#划分训练/验证</span>
+    <span class="c1"># 划分训练/验证</span>
     <span class="n">X_val</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">num_training</span><span class="p">:</span><span class="n">num_training</span> <span class="o">+</span> <span class="n">num_validation</span><span class="p">]</span>
     <span class="n">y_val</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="n">num_training</span><span class="p">:</span><span class="n">num_training</span> <span class="o">+</span> <span class="n">num_validation</span><span class="p">]</span>
 
@@ -3979,178 +4608,25 @@
     <span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">[:</span><span class="n">num_test</span><span class="p">]</span>
     <span class="n">y_test</span> <span class="o">=</span> <span class="n">y_test</span><span class="p">[:</span><span class="n">num_test</span><span class="p">]</span>
 
-    <span class="c1">#从训练集中抽一个小dev集，加快调试</span>
-    <span class="k">if</span> <span class="n">num_dev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">num_dev</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">):</span>
-        <span class="n">mask</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">),</span> <span class="n">num_dev</span><span class="p">,</span> <span class="n">replace</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
-        <span class="n">X_dev</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
-        <span class="n">y_dev</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">X_dev</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">y_dev</span> <span class="o">=</span> <span class="kc">None</span>
-
-    <span class="c1">#拉平：(N,32,32,3)-&gt;(N,3072)</span>
+    <span class="c1"># 展平: (N,32,32,3) -&gt; (N,3072)</span>
     <span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
     <span class="n">X_val</span> <span class="o">=</span> <span class="n">X_val</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X_val</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
     <span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">X_dev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">X_dev</span> <span class="o">=</span> <span class="n">X_dev</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X_dev</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-
-    <span class="c1">#减去训练集均值</span>
-    <span class="n">mean_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># 减去训练集均值</span>
+    <span class="n">mean_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">X_train</span> <span class="o">-=</span> <span class="n">mean_image</span>
     <span class="n">X_val</span> <span class="o">-=</span> <span class="n">mean_image</span>
     <span class="n">X_test</span> <span class="o">-=</span> <span class="n">mean_image</span>
-    <span class="k">if</span> <span class="n">X_dev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">X_dev</span> <span class="o">-=</span> <span class="n">mean_image</span>
 
-    <span class="k">return</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">,</span> <span class="n">y_dev</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">acc</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">==</span> <span class="n">y</span><span class="p">)</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
-    <span class="n">cifar10_root</span> <span class="o">=</span> <span class="s2">&quot;./cifar-10-batches-py&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loading CIFAR-10...&quot;</span><span class="p">)</span>
-
-    <span class="n">X_train_all</span><span class="p">,</span> <span class="n">y_train_all</span><span class="p">,</span> <span class="n">X_test_all</span><span class="p">,</span> <span class="n">y_test_all</span> <span class="o">=</span> <span class="n">load_CIFAR10</span><span class="p">(</span><span class="n">cifar10_root</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;X_train_all: </span><span class="si">{</span><span class="n">X_train_all</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y_train_all: </span><span class="si">{</span><span class="n">y_train_all</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;X_test_all: </span><span class="si">{</span><span class="n">X_test_all</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y_test_all: </span><span class="si">{</span><span class="n">y_test_all</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">,</span> <span class="n">y_dev</span> <span class="o">=</span> <span class="n">preprocess_cifar10</span><span class="p">(</span>
-            <span class="n">X_train_all</span><span class="p">,</span> <span class="n">y_train_all</span><span class="p">,</span> <span class="n">X_test_all</span><span class="p">,</span> <span class="n">y_test_all</span><span class="p">,</span>
-            <span class="n">num_training</span> <span class="o">=</span> <span class="mi">1800</span><span class="p">,</span>
-            <span class="n">num_validation</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span>
-            <span class="n">num_test</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span>
-            <span class="n">num_dev</span> <span class="o">=</span> <span class="mi">400</span><span class="p">,</span>
-            <span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Processed data shapes:&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;X_train:&quot;</span><span class="p">,</span> <span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;y_train:&quot;</span><span class="p">,</span> <span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;X_val:  &quot;</span><span class="p">,</span> <span class="n">X_val</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;y_val:  &quot;</span><span class="p">,</span> <span class="n">y_val</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;X_test: &quot;</span><span class="p">,</span> <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;y_test: &quot;</span><span class="p">,</span> <span class="n">y_test</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">X_dev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;X_dev:  &quot;</span><span class="p">,</span> <span class="n">X_dev</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;y_dev:  &quot;</span><span class="p">,</span> <span class="n">y_dev</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-
-    <span class="n">train_X</span> <span class="o">=</span> <span class="n">X_dev</span> <span class="k">if</span> <span class="n">X_dev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">X_train</span>
-    <span class="n">train_y</span> <span class="o">=</span> <span class="n">y_dev</span> <span class="k">if</span> <span class="n">y_dev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">y_train</span>
-
-
-    <span class="c1">#SVM</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">LinearSVM</span><span class="p">(</span>
-            <span class="n">reg</span> <span class="o">=</span> <span class="mf">1e-4</span><span class="p">,</span>
-            <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">1e-7</span><span class="p">,</span>
-            <span class="n">num_iters</span> <span class="o">=</span> <span class="mi">1500</span><span class="p">,</span>
-            <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span>
-            <span class="n">verbose</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-            <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
-            <span class="n">delta</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
-            <span class="p">)</span>
-
-
-    <span class="c1"># 如果要试 Softmax，就换成这个：</span>
-    <span class="c1"># model = SoftmaxClassifier(</span>
-    <span class="c1">#     reg=1e-4,</span>
-    <span class="c1">#     learning_rate=1e-7,</span>
-    <span class="c1">#     num_iters=1500,</span>
-    <span class="c1">#     batch_size=200,</span>
-    <span class="c1">#     verbose=True,</span>
-    <span class="c1">#     seed=42,</span>
-    <span class="c1"># )</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Training...&quot;</span><span class="p">)</span>
-    <span class="n">loss_history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">train_X</span><span class="p">,</span> <span class="n">train_y</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Evaluating...&quot;</span><span class="p">)</span>
-    <span class="n">train_acc</span> <span class="o">=</span> <span class="n">acc</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_X</span><span class="p">,</span> <span class="n">train_y</span><span class="p">)</span>
-    <span class="n">val_acc</span> <span class="o">=</span> <span class="n">acc</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)</span>
-    <span class="n">test_acc</span> <span class="o">=</span> <span class="n">acc</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Final loss:     </span><span class="si">{</span><span class="n">loss_history</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Train accuracy: </span><span class="si">{</span><span class="n">train_acc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Val accuracy:   </span><span class="si">{</span><span class="n">val_acc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test accuracy:  </span><span class="si">{</span><span class="n">test_acc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">loss_history</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Iteration&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Loss&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Training Loss on CIFAR-10&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span>
 </code></pre></div>
-<p>得到的结果如下：</p>
-<p><img alt="image-20260311224400987" src="../../../images/image-20260311224400987.png" /></p>
-<ul>
-<li>loss明显持续下降，说明前向传播基本没有问题，梯度更新方向也没问题，不需要考虑了</li>
-<li>训练准确率为0.82，验证为0.23，说明样本发生了过拟合，检查一下问题</li>
-</ul>
-<p>应该是拿dev做训练的原因，改为真正的训练集试一下，顺便扩充一下训练集和测试集大小</p>
-<div class="highlight"><pre><span></span><code><span class="n">train_X</span> <span class="o">=</span> <span class="n">X_train</span>
-<span class="n">train_y</span> <span class="o">=</span> <span class="n">y_train</span>
-</code></pre></div>
-<p><img alt="image-20260311225344658" src="../../../images/image-20260311225344658.png" /></p>
-<ul>
-<li>过拟合的问题解决了</li>
-<li>不过loss的变化在意料之中，可以接受</li>
-</ul>
-<h3 id="svm-vs-softmax">SVM vs. Softmax</h3>
-<p>采用了这些参数</p>
-<div class="highlight"><pre><span></span><code><span class="n">learning_rates</span> <span class="o">=</span> <span class="p">[</span><span class="mf">5e-8</span><span class="p">,</span> <span class="mf">1e-7</span><span class="p">,</span> <span class="mf">2e-7</span><span class="p">,</span> <span class="mf">5e-7</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">]</span>
-<span class="n">regs</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e-5</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">]</span>
-</code></pre></div>
-<p>首先是用SVM找到最好的参数</p>
-<p><img alt="image-20260311230219737" src="../../../images/image-20260311230219737.png" /></p>
-<ul>
-<li>可以看到learning_rate(lr)明显提升了训练集的准确率，那么很好，接下来可以继续提高lr进行尝试，在1e-7附近细扫</li>
-</ul>
-<div class="highlight"><pre><span></span><code><span class="n">learning_rates</span> <span class="o">=</span> <span class="p">[</span><span class="mf">7e-8</span><span class="p">,</span> <span class="mf">1e-7</span><span class="p">,</span> <span class="mf">1.5e-7</span><span class="p">,</span> <span class="mf">2e-7</span><span class="p">,</span> <span class="mf">3e-7</span><span class="p">]</span>
-</code></pre></div>
-<ul>
-<li>但是reg的变化似乎毫无影响，说明我们现在搜索的正则化范围过小，也就是正则项在总 loss 里分量太弱，可以把reg搜索范围扩大试试</li>
-</ul>
-<div class="highlight"><pre><span></span><code><span class="n">regs</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e-2</span><span class="p">,</span> <span class="mf">1e-1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]</span>
-</code></pre></div>
-<p><img alt="image-20260311231011494" src="../../../images/image-20260311231011494.png" /></p>
-<p>这一轮reg确实表现出来了影响。但这里1000的reg和我们原本的介绍有些出入：过大的正则应该会导致模型更为胆小和敏锐</p>
-<blockquote>
-<p>个人认为这里固定了学习率、迭代次数、batchsize后，较大的reg可以稳定优化、抑制权重剧烈变化、改善泛化。</p>
-</blockquote>
-<p>接下来就是重复的改参数，看结果，然后再尝试了，不详细分析了。我们回到刚刚的代码中，将这对参数加回去，看看结果</p>
-<p><img alt="image-20260311231543940" src="../../../images/image-20260311231543940.png" /></p>
-<p>结果得到了很明显的改善，不错不错。那么SVM弄完了，看看Softmax怎样</p>
-<p><em>先用一下刚刚SVM的参数范围</em></p>
-<p><img alt="image-20260311231955961" src="../../../images/image-20260311231955961.png" /></p>
-<p>效果已经超过SVM了，就不再细化了，跑一下这个参数的详细过程</p>
-<p><img alt="image-20260311232249140" src="../../../images/image-20260311232249140.png" /></p>
-<p>各方面几乎都超过了SVM。</p>
-<h2 id="_1">实验结论及分析</h2>
-<p><strong>结论</strong>：在 CIFAR-10 原始像素特征上，线性 Softmax 分类器优于线性 SVM 分类器；在当前数据划分与训练设置下，Softmax 取得了更高的验证集与测试集准确率。</p>
-<h3 id="softmax-svm">关于 Softmax 分类器优于线性 SVM 的原因分析</h3>
-<p>在本实验中，基于 CIFAR-10 原始像素特征的线性分类任务表明，Softmax 分类器在验证集与测试集上的表现均优于线性 SVM。具体而言，Softmax 的最佳验证集准确率达到 37.6%，测试集准确率达到 34.7%；相比之下，线性 SVM 的最佳验证集准确率和测试集准确率分别为 35.0% 和 32.6%。这一结果说明，在当前实验设定下，Softmax 所对应的优化目标更适合该数据分布与特征表示。</p>
-<p>从损失函数性质来看，二者的核心差异在于：线性 SVM 采用的是 hinge loss，而 Softmax 采用的是 cross-entropy loss。对于单个样本，SVM 的损失形式可以写为：</p>
-<div class="arithmatex">\[
-L_i^{\text{SVM}}=\sum_{j\neq y_i}\max(0, s_j-s_{y_i}+\Delta)
-\]</div>
-<p>其中，<span class="arithmatex">\(s_{y_i}\)</span> 表示真实类别得分，<span class="arithmatex">\(s_j\)</span> 表示其他类别得分，<span class="arithmatex">\(\Delta\)</span> 为预设间隔。一旦真实类别得分相对于错误类别得分超过该间隔，相关项的损失即变为 0。换言之，SVM 的优化目标本质上是“ <strong>满足间隔即可</strong> ”。在达到这一约束后，模型不会继续推动正确类别与错误类别之间的进一步分离。</p>
-<p>与之不同，Softmax 分类器的单样本损失为：</p>
-<div class="arithmatex">\[
-L_i^{\text{Softmax}}=-\log\frac{e^{s_{y_i}}}{\sum_j e^{s_j}}
-\]</div>
-<p>这一目标并不满足于“正确类别得分略高于错误类别”这一条件，而是持续推动真实类别概率增大、错误类别概率减小。也就是说，Softmax 的优化不是一个“达标即止”的局部约束，而是一种更细粒度的全局概率分布拟合过程。对于 CIFAR-10 这类类别间相似性较强、类内变化较大的自然图像数据，这种持续性的优化压力往往更有利于提升泛化性能。</p>
-<p>从数据特征角度分析，这一现象也具有合理性。CIFAR-10 的输入是未经深层特征提取的原始像素，类别之间存在显著的视觉重叠。例如 automobile 与 truck、cat 与 dog、deer 与 horse 等类别在低层像素空间中并不容易通过单一线性超平面彻底分开。在这种情况下，若采用 SVM 的 margin-based 目标，则模型更倾向于只保证训练样本在当前分类边界下“足够分开”；而 Softmax 则会进一步调整各类别间的相对得分结构，使正确类别在概率意义上获得更强优势。因此，在原始像素这一较弱特征表示下，Softmax 更容易学习到对多类别判别更有利的参数分布。</p>
-<p>此外，从优化过程来看，Softmax 往往能够提供更平滑的训练信号。hinge loss 在满足间隔之后梯度会迅速消失，因此很多样本一旦被“分对且分开”，它们对后续参数更新的贡献就中止了。相比之下，cross-entropy loss 只要预测概率尚未充分集中于真实类别，梯度就依然存在。这意味着 Softmax 在训练中会更持续地利用样本信息，尤其是在类别边界模糊、特征表达不足的情况下，这种更“密集”的梯度反馈通常有助于获得更好的优化结果。</p>
-<p>我们的实验结果也支持这一点。在线性 SVM 中，较大的正则化系数虽能改善验证集准确率，但整体上其最优性能仍低于 Softmax；而在线性 Softmax 中，模型在相似量级的超参数搜索下获得了更高的验证与测试精度。这说明性能差异并非单纯由训练轮数或学习率偶然造成，而更可能反映了两种损失函数在该任务上的适配性差异。</p>
-<p>不过，需要指出的是，这一结论应被理解为 <strong>实验条件下的经验性发现</strong>，而非普遍真理。首先，当前使用的是原始像素特征与线性模型；若引入更强的特征提取方式，例如卷积网络、预训练表示或更丰富的数据增强，则 SVM 与 Softmax 之间的差距可能缩小，甚至发生反转。其次，当前超参数搜索虽然已具有一定覆盖度，但最优点仍可能受搜索范围限制。因此，更准确的表述应当是：<strong>在当前数据划分、预处理方式、模型容量与超参数范围下，Softmax 比线性 SVM 展现出更好的泛化性能。</strong></p>
+<hr />
+<h2 id="_3">致谢</h2>
+<p>本研究作为深度学习课程项目完成。感谢 CIFAR-10 数据集创建者使该基准公开可用。</p>
+<p><strong>作者贡献:</strong> 实现、实验、分析和论文撰写均由作者完成。</p>
+<p><strong>数据可用性:</strong> CIFAR-10 数据集可在 <a href="https://www.cs.toronto.edu/~kriz/cifar.html">https://www.cs.toronto.edu/~kriz/cifar.html</a> 公开获取。</p>
+<p><strong>代码可用性:</strong> 完整实现代码在附录 A 中提供。</p>
 
 
 
