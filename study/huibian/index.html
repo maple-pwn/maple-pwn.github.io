@@ -3754,14 +3754,14 @@
 <p><img alt="image-20260313131353582" src="../../images/image-20260313131353582.png" /></p>
 <p>汇编语言由 3 部分组成：</p>
 <ul>
-<li>汇编指令：有对应机器码，最终会被 CPU 执行</li>
-<li>伪指令：没有对应的机器码，主要写给编译器，由编译器执行</li>
-<li>其他符号：由编译器识别，是编写源程序的时候用来组织表达式的，不是 CPU 直接执行的机器指令</li>
+<li><strong>汇编指令</strong>：有对应机器码，最终会被 CPU 执行</li>
+<li><strong>伪指令</strong>：没有对应的机器码，主要写给编译器，由编译器执行</li>
+<li><strong>其他符号</strong>：由编译器识别，是编写源程序的时候用来组织表达式的，不是 CPU 直接执行的机器指令</li>
 </ul>
-<blockquote>
-<p>[!Note]</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>汇编语言的核心是 <strong>汇编指令</strong>，它决定了汇编语言的特性</p>
-</blockquote>
+</div>
 <hr />
 <h3 id="_3">存储器、指令与数据</h3>
 <p>CPU是计算机的核心，工作时必须有两样内容：<strong>指令</strong>、<strong>数据</strong></p>
@@ -3791,14 +3791,14 @@
 <li><strong>数据总线</strong>：传递数据信息</li>
 <li><strong>控制总线</strong>：传递控制命令</li>
 </ul>
-<p>【读操作过程】</p>
+<p><mark>读操作过程</mark></p>
 <p><img alt="image-20260313153237551" src="../../images/image-20260313153237551.png" /></p>
 <ol>
 <li>CPU通过 <strong>地址总线</strong> 发出地址 <code>3</code></li>
 <li>CPU通过 <strong>控制总线</strong> 发出 <code>读命令</code></li>
 <li>存储器把 3 号单元中的数据，通过 <strong>数据总线</strong> 送回CPU</li>
 </ol>
-<p>【写操作过程】</p>
+<p><mark>写操作过程</mark></p>
 <ul>
 <li>
 <p>CPU 通过 <strong>地址总线</strong> 发出地址 <code>3</code></p>
@@ -3810,7 +3810,7 @@
 <p>CPU 通过 <strong>数据总线</strong> 把数据 <code>8</code> 送到该单元</p>
 </li>
 </ul>
-<p>【汇编视角下的读写操作】</p>
+<p><mark>汇编视角下的读写操作</mark></p>
 <p>按照课本意思，我们可以总结为这些内容：</p>
 <ul>
 <li>机器码负责驱动 CPU 完成这些读写动作</li>
@@ -3819,23 +3819,23 @@
 <p>例如 <code>MOV AX,[3]</code> 的含义就是 <strong>把内存中 3 号单元的内容送入寄存器 AX</strong></p>
 <hr />
 <h3 id="_4">三种总线</h3>
-<p>【地址总线】负责传递地址信息。</p>
+<p><mark>地址总线</mark> 负责传递地址信息。</p>
 <p>如果有一个CPU有 <code>N</code> 根地址线，那么它最多能表示 <span class="arithmatex">\(2^N\)</span> 个不同地址</p>
-<blockquote>
-<p>[!Note]</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>地址总线宽度决定CPU寻址能力</p>
-</blockquote>
+</div>
 <p><img alt="image-20260313154939872" src="../../images/image-20260313154939872.png" /></p>
-<p>【数据总线】负责传递数据</p>
+<p><mark>数据总线</mark> 负责传递数据</p>
 <p>如果有一个CPU有 <code>N</code> 根数据线，那么它一次传递 <code>n bit</code> 数据(注意是位，不是字节)</p>
-<blockquote>
-<p>[!note]</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <ul>
 <li>8088系列CPU：8位数据总线</li>
 <li>8086系列CPU：16位数据总线</li>
 </ul>
 <p>那么对于数据 <code>89D8H</code>，8088CPU需要传2次（由于小端序，所以先传 <code>D8</code>）；8086只需要传1次</p>
-</blockquote>
+</div>
 <table>
 <thead>
 <tr>
@@ -3850,15 +3850,15 @@
 </tr>
 </tbody>
 </table>
-<p>【控制总线】负责传递控制命令</p>
+<p><mark>控制总线</mark> 负责传递控制命令</p>
 <p>如果有一个CPU有 <code>N</code> 根控制总线，那么它能有 <code>n</code> 种控制提供</p>
-<blockquote>
-<p>[!note]</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>控制总线宽度决定了CPU对外部器件的控制能力</p>
-</blockquote>
+</div>
 <hr />
 <h3 id="_5">主板、接口卡与各类存储器芯片</h3>
-<p>【主板】</p>
+<p><mark>主板</mark></p>
 <p>在一台 PC 种，主板上连接着很多部件，这些不见通过总线互相连接</p>
 <ul>
 <li>CPU</li>
@@ -3867,11 +3867,11 @@
 <li>扩展插槽</li>
 <li>各类接口卡</li>
 </ul>
-<p>【接口卡】</p>
+<p><mark>接口卡</mark></p>
 <p>像显示器、音箱、打印机这些外设，CPU 一般**不会直接控制**，而是通过接口卡去控制。即</p>
 <div class="highlight"><pre><span></span><code>CPU -&gt; 总线 -&gt; 接口卡 -&gt; 外设
 </code></pre></div>
-<p>【各类存储芯片】</p>
+<p><mark>各类存储芯片</mark></p>
 <ul>
 <li>RAM：随机存储器</li>
 <li>可读可写，断电后内容丢失</li>
@@ -3887,12 +3887,12 @@
 <hr />
 <h3 id="_6">内存地址空间</h3>
 <p>虽然 RAM、显存、ROM 这些东西在物理上是不同的芯片，但是从CPU的角度来看，它们都挂在总线上，并且都能通过地址访问。于是 CPU 就会把它们统一看成一个逻辑上的大存储器。这个逻辑上的大空间就叫做 <strong>内存地址空间</strong></p>
-<blockquote>
-<p>[!Note]</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>可以这样理解：在物理层面上，这是很多不同的芯片；但是从逻辑层面（也就是数据规定），这是一个统一的地址世界，各个芯片间的地址是紧邻的。如下图所示</p>
 <p><img alt="image-20260313160235221" src="../../images/image-20260313160235221.png" /></p>
-</blockquote>
-<p>【地址空间本质】</p>
+</div>
+<p><mark>地址空间本质</mark></p>
 <p>对于每一块物理存储器，在这个逻辑空间里会占用一段地址范围，如下图所示</p>
 <p><img alt="image-20260313162234408" src="../../images/image-20260313162234408.png" /></p>
 <ul>
@@ -3900,13 +3900,13 @@
 <li>往 <code>B0000H</code> 写数据，实际写入了 显存空间</li>
 <li>往 <code>D0000H</code> 写数据，实际写入了各类 ROM</li>
 </ul>
-<p>【地址空间大小控制】</p>
+<p><mark>地址空间大小控制</mark></p>
 <p>地址空间大小受 <strong>地址总线宽度</strong> 限制。若地址总线宽度为 <code>N</code> ，则最多可以表示 <span class="arithmatex">\(2^N\)</span> 个地址</p>
-<blockquote>
-<p>[!Note]</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>8086系列CPU：20位地址总线，那么最大地址空间为 <span class="arithmatex">\(2^{20}=1 \text{MB}\)</span></p>
 <p>80386系列CPU：32位地址总线，最大地址空间为 <span class="arithmatex">\(2^{32}=4\text{GB}\)</span></p>
-</blockquote>
+</div>
 <hr />
 <h3 id="_7">小结</h3>
 <ul class="task-list">
