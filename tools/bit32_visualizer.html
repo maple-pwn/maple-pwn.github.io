@@ -218,6 +218,10 @@
             <option value="and">A &amp; B</option>
             <option value="or">A | B</option>
             <option value="xor">A ^ B</option>
+            <option value="add">A + B</option>
+            <option value="sub">A - B</option>
+            <option value="mul">A * B</option>
+            <option value="div">A / B</option>
             <option value="not">~A</option>
             <option value="lshift">A &lt;&lt; n</option>
             <option value="rshift">A &gt;&gt; n</option>
@@ -373,7 +377,10 @@
         let r = 0;
         let bBits = "";
         let opText = "";
-        const useB = (op === "and" || op === "or" || op === "xor");
+        const useB = (
+          op === "and" || op === "or" || op === "xor" ||
+          op === "add" || op === "sub" || op === "mul" || op === "div"
+        );
         let bForEditor = 0;
         try {
           bForEditor = parseNum(inputBEl.value);
@@ -417,9 +424,25 @@
           } else if (op === "or") {
             r = (a | b) >>> 0;
             opText = "A | B";
-          } else {
+          } else if (op === "xor") {
             r = (a ^ b) >>> 0;
             opText = "A ^ B";
+          } else if (op === "add") {
+            r = (a + b) >>> 0;
+            opText = "A + B (mod 2^32)";
+          } else if (op === "sub") {
+            r = (a - b) >>> 0;
+            opText = "A - B (mod 2^32)";
+          } else if (op === "mul") {
+            r = Math.imul(a, b) >>> 0;
+            opText = "A * B (low 32 bits)";
+          } else {
+            if (b === 0) throw new Error("除数 B 不能为 0");
+            const sa = toSigned(a);
+            const sb = toSigned(b);
+            const q = sb === 0 ? 0 : Math.trunc(sa / sb);
+            r = (q | 0) >>> 0;
+            opText = "A / B (int32 截断)";
           }
         }
 
@@ -449,7 +472,10 @@
     const opEl = document.getElementById("op");
     function updateMode() {
       const op = opEl.value;
-      const showB = (op === "and" || op === "or" || op === "xor");
+      const showB = (
+        op === "and" || op === "or" || op === "xor" ||
+        op === "add" || op === "sub" || op === "mul" || op === "div"
+      );
       const showN = (op === "lshift" || op === "rshift" || op === "urshift");
       document.getElementById("groupB").style.display = showB ? "block" : "none";
       document.getElementById("groupN").style.display = showN ? "block" : "none";
