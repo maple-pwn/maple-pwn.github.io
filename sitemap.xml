@@ -225,10 +225,6 @@
          <lastmod>2026-03-17</lastmod>
     </url>
     <url>
-         <loc>https://maple-pwn.github.io/pwn/wp/buuctf/</loc>
-         <lastmod>2026-03-17</lastmod>
-    </url>
-    <url>
          <loc>https://maple-pwn.github.io/pwn/wp/ctfshow/</loc>
          <lastmod>2026-03-17</lastmod>
     </url>
@@ -358,6 +354,10 @@
     </url>
     <url>
          <loc>https://maple-pwn.github.io/thinking/pre/</loc>
+         <lastmod>2026-03-17</lastmod>
+    </url>
+    <url>
+         <loc>https://maple-pwn.github.io/tools/bit32_visualizer/</loc>
          <lastmod>2026-03-17</lastmod>
     </url>
 </urlset>
