@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SM4 加解密过程展示</title>
+  <style>
+    :root {
+      --bg: #f6f6f4;
+      --paper: #ffffff;
+      --paper-soft: #fafafa;
+      --ink: #202124;
+      --ink-soft: #5f6368;
+      --line: #dadce0;
+      --line-strong: #c4c7cc;
+      --accent: #3c4043;
+      --accent-soft: #f1f3f4;
+      --error-bg: #fce8e6;
+      --error-ink: #a50e0e;
+      --shadow: 0 1px 2px rgba(32, 33, 36, 0.06);
+      --radius-lg: 10px;
+      --radius-md: 8px;
+      --radius-sm: 6px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+    }
+
+    .page-shell {
+      width: min(1320px, calc(100vw - 32px));
+      margin: 18px auto;
+      padding: 0;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.9fr);
+      gap: 14px;
+    }
+
+    .hero-main,
+    .hero-side,
+    .panel,
+    .summary-card,
+    .trace-panel,
+    .roundkeys-panel,
+    .reading-note {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-main,
+    .hero-side,
+    .panel,
+    .trace-panel,
+    .roundkeys-panel,
+    .reading-note {
+      padding: 18px 20px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+    }
+
+    .hero-main h1 {
+      margin: 0;
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.25;
+    }
+
+    .hero-main p,
+    .hero-side p,
+    .panel-head p,
+    .reading-note p {
+      margin: 12px 0 0;
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--ink-soft);
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 10px;
+      align-content: center;
+    }
+
+    .hero-side h2,
+    .panel-head h2,
+    .trace-panel h2,
+    .roundkeys-panel h2,
+    .reading-note h2 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.35;
+    }
+
+    .mono-block {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--paper-soft);
+      color: var(--ink-soft);
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .panel {
+      margin-top: 14px;
+    }
+
+    .panel-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: end;
+      margin-bottom: 14px;
+    }
+
+    .panel-head p {
+      margin-top: 0;
+    }
+
+    .input-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .field input {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 12px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-md);
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .field input:focus {
+      outline: 2px solid rgba(60, 64, 67, 0.1);
+      border-color: #9aa0a6;
+    }
+
+    .helper {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--accent-soft);
+      color: var(--ink-soft);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .actions {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    button {
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-md);
+      padding: 9px 14px;
+      background: var(--paper);
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      transition: background-color 0.15s ease;
+    }
+
+    button:hover {
+      background: #f8f9fa;
+    }
+
+    .error-box {
+      display: none;
+      margin-top: 12px;
+      padding: 10px 12px;
+      border: 1px solid #f6aea9;
+      border-radius: var(--radius-md);
+      background: var(--error-bg);
+      color: var(--error-ink);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .summary-card {
+      padding: 14px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .summary-card .label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+    }
+
+    .summary-card .value {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .summary-card .meta {
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .roundkeys-panel,
+    .trace-panel {
+      margin-top: 14px;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .table-wrap,
+    .calc-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--paper);
+    }
+
+    table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8f9fa;
+      color: var(--ink);
+    }
+
+    td {
+      color: var(--ink-soft);
+      line-height: 1.55;
+    }
+
+    td code,
+    th code {
+      white-space: nowrap;
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+    }
+
+    details.key-detail,
+    details.round-detail {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--paper);
+    }
+
+    details > summary {
+      cursor: pointer;
+      list-style: none;
+    }
+
+    details > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .detail-summary {
+      padding: 10px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 6px;
+      align-items: flex-start;
+      background: #f8f9fa;
+    }
+
+    .detail-summary span:first-child {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .detail-summary span:last-child {
+      color: var(--ink-soft);
+      font-size: 12px;
+    }
+
+    .detail-body {
+      padding: 10px 12px 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .value-item {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      background: var(--paper-soft);
+      padding: 8px 10px;
+      min-width: 0;
+    }
+
+    .value-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink-soft);
+    }
+
+    .value-mono {
+      margin-top: 4px;
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--ink);
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .calc-table {
+      width: 100%;
+      min-width: 700px;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .calc-table th,
+    .calc-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid #eceff1;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    .calc-table th {
+      width: 150px;
+      background: #f8f9fa;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .calc-table td {
+      color: var(--ink-soft);
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      font-size: 12px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .trace-stack {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .reading-note {
+      margin-top: 14px;
+    }
+
+    @media (max-width: 1180px) {
+      .hero,
+      .summary,
+      .value-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .page-shell {
+        width: min(100vw - 16px, 100%);
+        margin: 8px auto;
+      }
+
+      .hero-main,
+      .hero-side,
+      .panel,
+      .trace-panel,
+      .roundkeys-panel,
+      .reading-note {
+        padding: 14px;
+      }
+
+      .input-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .detail-body {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page-shell" data-sm4-demo>
+    <section class="hero">
+      <div class="hero-main">
+        <p class="eyebrow">SM4 单分组过程演示</p>
+        <h1>SM4 加解密过程</h1>
+        <p>
+          这页把 SM4 的 128 位分组处理拆成可追踪的轮级过程。输入块先写成四个 32 位字
+          `X0, X1, X2, X3`，随后进入 32 轮更新。每一轮都会把 `τ` 非线性变换、线性变换 `L`、
+          以及 `X_{i+4} = X_i xor T(...)` 的结果拆开写出来。解密则共用同一轮函数，只把轮密钥顺序反过来。
+        </p>
+      </div>
+
+      <aside class="hero-side">
+        <h2>默认样例</h2>
+        <p>
+          默认明文和密钥都采用标准测试向量 `0123456789ABCDEFFEDCBA9876543210`。加密输出应为
+          `681EDF34D206965E86B3E94F536E4246`。页面会同时展示轮密钥生成和 32 轮状态更新。
+        </p>
+        <div class="mono-block">明文: 0123456789ABCDEFFEDCBA9876543210
+密钥: 0123456789ABCDEFFEDCBA9876543210
+密文: 681EDF34D206965E86B3E94F536E4246</div>
+      </aside>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>输入区</h2>
+          <p>明文、密钥、密文都使用 32 个十六进制字符，对应 128 位输入。</p>
+        </div>
+      </div>
+
+      <div class="input-grid">
+        <div class="field">
+          <label for="sm4-plaintext">明文</label>
+          <input id="sm4-plaintext" data-role="plaintext" type="text" spellcheck="false" autocomplete="off" value="0123456789ABCDEFFEDCBA9876543210" />
+        </div>
+        <div class="field">
+          <label for="sm4-key">密钥</label>
+          <input id="sm4-key" data-role="key" type="text" spellcheck="false" autocomplete="off" value="0123456789ABCDEFFEDCBA9876543210" />
+        </div>
+        <div class="field">
+          <label for="sm4-ciphertext">密文</label>
+          <input id="sm4-ciphertext" data-role="ciphertext" type="text" spellcheck="false" autocomplete="off" value="681EDF34D206965E86B3E94F536E4246" />
+        </div>
+      </div>
+
+      <div class="helper">
+        完整流程会先生成 32 个轮密钥，再根据明文得到密文，然后把轮密钥反序再跑一遍得到原始明文。
+        单独展开解密流程时，页面会从密文字段直接开始回退。
+      </div>
+
+      <div class="actions">
+        <button type="button" data-action="sample">载入官方样例</button>
+        <button type="button" data-action="full">运行完整流程</button>
+        <button type="button" data-action="decrypt">只看解密流程</button>
+      </div>
+
+      <div class="error-box" data-role="error"></div>
+    </section>
+
+    <section class="summary" data-role="summary"></section>
+    <section class="roundkeys-panel" data-role="roundkeys"></section>
+
+    <section class="trace-stack">
+      <section class="trace-panel" data-role="encrypt"></section>
+      <section class="trace-panel" data-role="decrypt"></section>
+    </section>
+
+    <section class="reading-note">
+      <h2>怎么看这一页</h2>
+      <p>
+        SM4 的轮函数是 `F(X_i, X_{i+1}, X_{i+2}, X_{i+3}, rk_i) = X_i xor T(X_{i+1} xor X_{i+2} xor X_{i+3} xor rk_i)`。
+        这里的 `T` 由 `τ` 和 `L` 组成，`τ` 对 32 位输入按字节查 S 盒，`L` 则做四次循环左移再异或。轮密钥生成使用同样的
+        `τ`，差别在于线性变换换成 `L' = B xor (B <<< 13) xor (B <<< 23)`。
+      </p>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const FK = [0xA3B1BAC6, 0x56AA3350, 0x677D9197, 0xB27022DC];
+      const CK = [
+        0x00070E15, 0x1C232A31, 0x383F464D, 0x545B6269,
+        0x70777E85, 0x8C939AA1, 0xA8AFB6BD, 0xC4CBD2D9,
+        0xE0E7EEF5, 0xFC030A11, 0x181F262D, 0x343B4249,
+        0x50575E65, 0x6C737A81, 0x888F969D, 0xA4ABB2B9,
+        0xC0C7CED5, 0xDCE3EAF1, 0xF8FF060D, 0x141B2229,
+        0x30373E45, 0x4C535A61, 0x686F767D, 0x848B9299,
+        0xA0A7AEB5, 0xBCC3CAD1, 0xD8DFE6ED, 0xF4FB0209,
+        0x10171E25, 0x2C333A41, 0x484F565D, 0x646B7279
+      ];
+      const SBOX = [
+        0xD6, 0x90, 0xE9, 0xFE, 0xCC, 0xE1, 0x3D, 0xB7, 0x16, 0xB6, 0x14, 0xC2, 0x28, 0xFB, 0x2C, 0x05,
+        0x2B, 0x67, 0x9A, 0x76, 0x2A, 0xBE, 0x04, 0xC3, 0xAA, 0x44, 0x13, 0x26, 0x49, 0x86, 0x06, 0x99,
+        0x9C, 0x42, 0x50, 0xF4, 0x91, 0xEF, 0x98, 0x7A, 0x33, 0x54, 0x0B, 0x43, 0xED, 0xCF, 0xAC, 0x62,
+        0xE4, 0xB3, 0x1C, 0xA9, 0xC9, 0x08, 0xE8, 0x95, 0x80, 0xDF, 0x94, 0xFA, 0x75, 0x8F, 0x3F, 0xA6,
+        0x47, 0x07, 0xA7, 0xFC, 0xF3, 0x73, 0x17, 0xBA, 0x83, 0x59, 0x3C, 0x19, 0xE6, 0x85, 0x4F, 0xA8,
+        0x68, 0x6B, 0x81, 0xB2, 0x71, 0x64, 0xDA, 0x8B, 0xF8, 0xEB, 0x0F, 0x4B, 0x70, 0x56, 0x9D, 0x35,
+        0x1E, 0x24, 0x0E, 0x5E, 0x63, 0x58, 0xD1, 0xA2, 0x25, 0x22, 0x7C, 0x3B, 0x01, 0x21, 0x78, 0x87,
+        0xD4, 0x00, 0x46, 0x57, 0x9F, 0xD3, 0x27, 0x52, 0x4C, 0x36, 0x02, 0xE7, 0xA0, 0xC4, 0xC8, 0x9E,
+        0xEA, 0xBF, 0x8A, 0xD2, 0x40, 0xC7, 0x38, 0xB5, 0xA3, 0xF7, 0xF2, 0xCE, 0xF9, 0x61, 0x15, 0xA1,
+        0xE0, 0xAE, 0x5D, 0xA4, 0x9B, 0x34, 0x1A, 0x55, 0xAD, 0x93, 0x32, 0x30, 0xF5, 0x8C, 0xB1, 0xE3,
+        0x1D, 0xF6, 0xE2, 0x2E, 0x82, 0x66, 0xCA, 0x60, 0xC0, 0x29, 0x23, 0xAB, 0x0D, 0x53, 0x4E, 0x6F,
+        0xD5, 0xDB, 0x37, 0x45, 0xDE, 0xFD, 0x8E, 0x2F, 0x03, 0xFF, 0x6A, 0x72, 0x6D, 0x6C, 0x5B, 0x51,
+        0x8D, 0x1B, 0xAF, 0x92, 0xBB, 0xDD, 0xBC, 0x7F, 0x11, 0xD9, 0x5C, 0x41, 0x1F, 0x10, 0x5A, 0xD8,
+        0x0A, 0xC1, 0x31, 0x88, 0xA5, 0xCD, 0x7B, 0xBD, 0x2D, 0x74, 0xD0, 0x12, 0xB8, 0xE5, 0xB4, 0xB0,
+        0x89, 0x69, 0x97, 0x4A, 0x0C, 0x96, 0x77, 0x7E, 0x65, 0xB9, 0xF1, 0x09, 0xC5, 0x6E, 0xC6, 0x84,
+        0x18, 0xF0, 0x7D, 0xEC, 0x3A, 0xDC, 0x4D, 0x20, 0x79, 0xEE, 0x5F, 0x3E, 0xD7, 0xCB, 0x39, 0x48
+      ];
+
+      function normalizeHex(input) {
+        return input.replace(/0x/gi, "").replace(/[\s_]/g, "").toUpperCase();
+      }
+
+      function ensureHex(input, label, lengths) {
+        const cleaned = normalizeHex(input);
+        if (!/^[0-9A-F]*$/.test(cleaned)) {
+          throw new Error(label + "里出现了非十六进制字符。");
+        }
+        if (!lengths.includes(cleaned.length)) {
+          throw new Error(label + "长度需要是 " + lengths.join("、") + " 个十六进制字符。");
+        }
+        return cleaned;
+      }
+
+      function wordHex(word) {
+        return (word >>> 0).toString(16).padStart(8, "0").toUpperCase();
+      }
+
+      function wordsToHex(words) {
+        return words.map(wordHex).join("");
+      }
+
+      function wordsGrouped(words) {
+        return words.map(wordHex).join(" ");
+      }
+
+      function escapeHtml(text) {
+        return String(text)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function hexToWords(hex) {
+        const words = [];
+        for (let i = 0; i < hex.length; i += 8) {
+          words.push(parseInt(hex.slice(i, i + 8), 16) >>> 0);
+        }
+        return words;
+      }
+
+      function rotl32(word, shift) {
+        return ((word << shift) | (word >>> (32 - shift))) >>> 0;
+      }
+
+      function splitBytes(word) {
+        return [
+          (word >>> 24) & 0xFF,
+          (word >>> 16) & 0xFF,
+          (word >>> 8) & 0xFF,
+          word & 0xFF
+        ];
+      }
+
+      function tauWord(word) {
+        const bytes = splitBytes(word);
+        const mapped = bytes.map((value) => SBOX[value]);
+        const result =
+          ((mapped[0] << 24) >>> 0) |
+          ((mapped[1] << 16) >>> 0) |
+          ((mapped[2] << 8) >>> 0) |
+          mapped[3];
+        return {
+          bytes,
+          mapped,
+          value: result >>> 0
+        };
+      }
+
+      function L(word) {
+        return (word ^ rotl32(word, 2) ^ rotl32(word, 10) ^ rotl32(word, 18) ^ rotl32(word, 24)) >>> 0;
+      }
+
+      function LPrime(word) {
+        return (word ^ rotl32(word, 13) ^ rotl32(word, 23)) >>> 0;
+      }
+
+      function tauDetail(tauInfo) {
+        return tauInfo.bytes.map((byte, index) => {
+          return "a" + index + " = " + byte.toString(16).padStart(2, "0").toUpperCase() +
+            " -> S(a" + index + ") = " + tauInfo.mapped[index].toString(16).padStart(2, "0").toUpperCase();
+        }).join("\n");
+      }
+
+      function keySchedule(keyWords) {
+        const initialK = keyWords.map((word, index) => (word ^ FK[index]) >>> 0);
+        const K = initialK.slice();
+        const rounds = [];
+
+        for (let i = 0; i < 32; i += 1) {
+          const mix = (K[i + 1] ^ K[i + 2] ^ K[i + 3] ^ CK[i]) >>> 0;
+          const tauInfo = tauWord(mix);
+          const linear = LPrime(tauInfo.value);
+          const next = (K[i] ^ linear) >>> 0;
+          K.push(next);
+          rounds.push({
+            round: i,
+            mix,
+            tauInfo,
+            linear,
+            rk: next,
+            k0: K[i],
+            k1: K[i + 1],
+            k2: K[i + 2],
+            k3: K[i + 3],
+            ck: CK[i]
+          });
+        }
+
+        return {
+          keyWords,
+          initialK,
+          rounds
+        };
+      }
+
+      function renderCalcTable(rows) {
+        return `
+          <div class="calc-table-wrap">
+            <table class="calc-table">
+              <tbody>
+                ${rows.map((row) => `
+                  <tr>
+                    <th>${escapeHtml(row.label)}</th>
+                    <td>${escapeHtml(row.value)}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      function processBlock(inputWords, roundKeys, mode) {
+        const X = inputWords.slice();
+        const steps = [];
+
+        steps.push({
+          title: "输入分组",
+          meta: "明文或密文直接按 32 位字分成 X0 到 X3。",
+          values: [
+            { label: "X0", value: wordHex(X[0]) },
+            { label: "X1", value: wordHex(X[1]) },
+            { label: "X2", value: wordHex(X[2]) },
+            { label: "X3", value: wordHex(X[3]) }
+          ],
+          calcRows: [
+            {
+              label: mode === "encrypt" ? "输入明文" : "输入密文",
+              value: wordsGrouped(inputWords)
+            },
+            {
+              label: "写入 4 个字",
+              value:
+                "X0 = " + wordHex(X[0]) + "\n" +
+                "X1 = " + wordHex(X[1]) + "\n" +
+                "X2 = " + wordHex(X[2]) + "\n" +
+                "X3 = " + wordHex(X[3])
+            }
+          ]
+        });
+
+        for (let i = 0; i < 32; i += 1) {
+          const x0 = X[i];
+          const x1 = X[i + 1];
+          const x2 = X[i + 2];
+          const x3 = X[i + 3];
+          const roundInfo = roundKeys[i];
+          const mix = (x1 ^ x2 ^ x3 ^ roundInfo.rk) >>> 0;
+          const tauInfo = tauWord(mix);
+          const linear = L(tauInfo.value);
+          const next = (x0 ^ linear) >>> 0;
+          X.push(next);
+
+          steps.push({
+            title: "第 " + (i + 1) + " 轮",
+            meta: "使用 rk_" + roundInfo.round + " 计算 T，再得到 X_" + (i + 4) + "。",
+            values: [
+              { label: "X" + i, value: wordHex(x0) },
+              { label: "X" + (i + 1), value: wordHex(x1) },
+              { label: "X" + (i + 2), value: wordHex(x2) },
+              { label: "X" + (i + 3), value: wordHex(x3) },
+              { label: "rk_" + roundInfo.round, value: wordHex(roundInfo.rk) },
+              { label: "轮输入异或", value: wordHex(mix) },
+              { label: "τ 输出", value: wordHex(tauInfo.value) },
+              { label: "L 输出", value: wordHex(linear) },
+              { label: "X" + (i + 4), value: wordHex(next) }
+            ],
+            calcRows: [
+              {
+                label: "轮输入",
+                value:
+                  "X" + i + " = " + wordHex(x0) + "\n" +
+                  "X" + (i + 1) + " = " + wordHex(x1) + "\n" +
+                  "X" + (i + 2) + " = " + wordHex(x2) + "\n" +
+                  "X" + (i + 3) + " = " + wordHex(x3) + "\n" +
+                  "rk_" + roundInfo.round + " = " + wordHex(roundInfo.rk)
+              },
+              {
+                label: "轮输入异或",
+                value:
+                  wordHex(x1) + " xor " + wordHex(x2) + " xor " + wordHex(x3) +
+                  " xor " + wordHex(roundInfo.rk) + " = " + wordHex(mix)
+              },
+              {
+                label: "τ",
+                value:
+                  tauDetail(tauInfo) + "\n" +
+                  "tau = " + wordHex(tauInfo.value)
+              },
+              {
+                label: "L",
+                value:
+                  "B = " + wordHex(tauInfo.value) + "\n" +
+                  "B<<<2  = " + wordHex(rotl32(tauInfo.value, 2)) + "\n" +
+                  "B<<<10 = " + wordHex(rotl32(tauInfo.value, 10)) + "\n" +
+                  "B<<<18 = " + wordHex(rotl32(tauInfo.value, 18)) + "\n" +
+                  "B<<<24 = " + wordHex(rotl32(tauInfo.value, 24)) + "\n" +
+                  "L(B) = " + wordHex(linear)
+              },
+              {
+                label: "轮输出",
+                value:
+                  "X" + (i + 4) + " = X" + i + " xor L(B)\n" +
+                  wordHex(x0) + " xor " + wordHex(linear) + " = " + wordHex(next)
+              }
+            ]
+          });
+        }
+
+        const output = [X[35], X[34], X[33], X[32]];
+        steps.push({
+          title: "反序变换",
+          meta: "SM4 最终输出是 X35, X34, X33, X32。",
+          values: [
+            { label: "X32", value: wordHex(X[32]) },
+            { label: "X33", value: wordHex(X[33]) },
+            { label: "X34", value: wordHex(X[34]) },
+            { label: "X35", value: wordHex(X[35]) },
+            { label: mode === "encrypt" ? "密文" : "明文", value: wordsGrouped(output) }
+          ],
+          calcRows: [
+            {
+              label: "最后 4 个字",
+              value:
+                "X32 = " + wordHex(X[32]) + "\n" +
+                "X33 = " + wordHex(X[33]) + "\n" +
+                "X34 = " + wordHex(X[34]) + "\n" +
+                "X35 = " + wordHex(X[35])
+            },
+            {
+              label: "反序输出",
+              value:
+                "Y = (X35, X34, X33, X32)\n" +
+                wordsGrouped(output)
+            }
+          ]
+        });
+
+        return {
+          output,
+          steps
+        };
+      }
+
+      function renderSummary(target, data) {
+        const ioLabel = data.mode === "decrypt" ? "当前密文" : "加密输出";
+        const cards = [
+          {
+            label: "算法参数",
+            value: "SM4 / 32 轮",
+            meta: "128 位分组，128 位密钥"
+          },
+          {
+            label: ioLabel,
+            value: wordsGrouped(data.cipherWords),
+            meta: "输出块 = " + data.cipherHex
+          },
+          {
+            label: "解密输出",
+            value: wordsGrouped(data.plainWords),
+            meta: "输出块 = " + data.plainHex
+          },
+          {
+            label: "轮密钥",
+            value: "rk_0 = " + wordHex(data.rk0),
+            meta: "rk_31 = " + wordHex(data.rk31)
+          },
+          {
+            label: "回读校验",
+            value: data.recovered ? "解密结果已经回到输入明文" : (data.hasReference ? "解密结果和输入明文没有对齐" : "当前没有对照明文"),
+            meta: data.hasReference ? "输入明文: " + wordsGrouped(data.inputPlainWords) : "这一轮只展示密文回退。"
+          }
+        ];
+
+        target.innerHTML = cards.map((card) => `
+          <article class="summary-card">
+            <div class="label">${escapeHtml(card.label)}</div>
+            <div class="value">${escapeHtml(card.value)}</div>
+            <div class="meta">${escapeHtml(card.meta)}</div>
+          </article>
+        `).join("");
+      }
+
+      function renderKeySchedule(target, schedule) {
+        const first = schedule.rounds[0];
+        target.innerHTML = `
+          <div class="panel-head">
+            <div>
+              <h2>轮密钥生成</h2>
+              <p>先把主密钥与 FK 异或得到 K0 到 K3，随后每一轮按 <code>K<sub>i+4</sub> = K<sub>i</sub> xor T'(K<sub>i+1</sub> xor K<sub>i+2</sub> xor K<sub>i+3</sub> xor CK<sub>i</sub>)</code> 生成子密钥。</p>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>轮次</th>
+                  <th>CK_i</th>
+                  <th>混合输入</th>
+                  <th>τ 输出</th>
+                  <th>L' 输出</th>
+                  <th>rk_i</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${schedule.rounds.map((round) => `
+                  <tr>
+                    <td>rk_${round.round}</td>
+                    <td><code>${escapeHtml(wordHex(round.ck))}</code></td>
+                    <td><code>${escapeHtml(wordHex(round.mix))}</code></td>
+                    <td><code>${escapeHtml(wordHex(round.tauInfo.value))}</code></td>
+                    <td><code>${escapeHtml(wordHex(round.linear))}</code></td>
+                    <td><code>${escapeHtml(wordHex(round.rk))}</code></td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+          <details class="key-detail">
+            <summary class="detail-summary">
+              <span>展开主密钥和第 1 轮子密钥的推导</span>
+              <span>这里把 FK、CK、τ 和 L' 连起来</span>
+            </summary>
+            <div class="detail-body">
+              <div class="value-grid">
+                <div class="value-item">
+                  <div class="value-label">MK</div>
+                  <div class="value-mono">${escapeHtml(wordsGrouped(schedule.keyWords))}</div>
+                </div>
+                <div class="value-item">
+                  <div class="value-label">FK</div>
+                  <div class="value-mono">${escapeHtml(wordsGrouped(FK))}</div>
+                </div>
+                <div class="value-item">
+                  <div class="value-label">K0 K1 K2 K3</div>
+                  <div class="value-mono">${escapeHtml(wordsGrouped(schedule.initialK))}</div>
+                </div>
+                <div class="value-item">
+                  <div class="value-label">CK0</div>
+                  <div class="value-mono">${escapeHtml(wordHex(CK[0]))}</div>
+                </div>
+              </div>
+              ${renderCalcTable([
+                {
+                  label: "初始异或",
+                  value:
+                    "K0 = MK0 xor FK0 = " + wordHex(schedule.keyWords[0]) + " xor " + wordHex(FK[0]) + " = " + wordHex(schedule.initialK[0]) + "\n" +
+                    "K1 = MK1 xor FK1 = " + wordHex(schedule.keyWords[1]) + " xor " + wordHex(FK[1]) + " = " + wordHex(schedule.initialK[1]) + "\n" +
+                    "K2 = MK2 xor FK2 = " + wordHex(schedule.keyWords[2]) + " xor " + wordHex(FK[2]) + " = " + wordHex(schedule.initialK[2]) + "\n" +
+                    "K3 = MK3 xor FK3 = " + wordHex(schedule.keyWords[3]) + " xor " + wordHex(FK[3]) + " = " + wordHex(schedule.initialK[3])
+                },
+                {
+                  label: "轮输入异或",
+                  value:
+                    "K1 xor K2 xor K3 xor CK0 = " + wordHex(first.k1) + " xor " + wordHex(first.k2) + " xor " + wordHex(first.k3) +
+                    " xor " + wordHex(first.ck) + " = " + wordHex(first.mix)
+                },
+                {
+                  label: "τ",
+                  value:
+                    tauDetail(first.tauInfo) + "\n" +
+                    "tau = " + wordHex(first.tauInfo.value)
+                },
+                {
+                  label: "L'",
+                  value:
+                    "B = " + wordHex(first.tauInfo.value) + "\n" +
+                    "B<<<13 = " + wordHex(rotl32(first.tauInfo.value, 13)) + "\n" +
+                    "B<<<23 = " + wordHex(rotl32(first.tauInfo.value, 23)) + "\n" +
+                    "L'(B) = " + wordHex(first.linear)
+                },
+                {
+                  label: "rk_0",
+                  value:
+                    "K4 = K0 xor L'(B) = " + wordHex(first.k0) + " xor " + wordHex(first.linear) + " = " + wordHex(first.rk) + "\n" +
+                    "rk_0 = K4 = " + wordHex(first.rk)
+                }
+              ])}
+            </div>
+          </details>
+        `;
+      }
+
+      function renderTrace(target, title, description, steps) {
+        target.innerHTML = `
+          <div class="panel-head">
+            <div>
+              <h2>${escapeHtml(title)}</h2>
+              <p>${escapeHtml(description)}</p>
+            </div>
+          </div>
+          ${steps.map((step, index) => `
+            <details class="round-detail" ${index < 2 ? "open" : ""}>
+              <summary class="detail-summary">
+                <span>${escapeHtml(step.title)}</span>
+                <span>${escapeHtml(step.meta)}</span>
+              </summary>
+              <div class="detail-body">
+                <div class="value-grid">
+                  ${step.values.map((item) => `
+                    <div class="value-item">
+                      <div class="value-label">${escapeHtml(item.label)}</div>
+                      <div class="value-mono">${escapeHtml(item.value)}</div>
+                    </div>
+                  `).join("")}
+                </div>
+                ${renderCalcTable(step.calcRows)}
+              </div>
+            </details>
+          `).join("")}
+        `;
+      }
+
+      function collectInputs(root) {
+        return {
+          plaintext: root.querySelector('[data-role="plaintext"]').value,
+          key: root.querySelector('[data-role="key"]').value,
+          ciphertext: root.querySelector('[data-role="ciphertext"]').value
+        };
+      }
+
+      function setError(root, message) {
+        const node = root.querySelector('[data-role="error"]');
+        if (message) {
+          node.style.display = "block";
+          node.textContent = message;
+          return;
+        }
+        node.style.display = "none";
+        node.textContent = "";
+      }
+
+      function runFull(root) {
+        const inputs = collectInputs(root);
+        const plainHex = ensureHex(inputs.plaintext, "明文", [32]);
+        const keyHex = ensureHex(inputs.key, "密钥", [32]);
+        const plainWords = hexToWords(plainHex);
+        const schedule = keySchedule(hexToWords(keyHex));
+        const encryptTrace = processBlock(plainWords, schedule.rounds, "encrypt");
+        const cipherHex = wordsToHex(encryptTrace.output);
+        root.querySelector('[data-role="ciphertext"]').value = cipherHex;
+        const decryptTrace = processBlock(encryptTrace.output, schedule.rounds.slice().reverse(), "decrypt");
+        const recoveredHex = wordsToHex(decryptTrace.output);
+
+        renderSummary(root.querySelector('[data-role="summary"]'), {
+          mode: "full",
+          cipherHex,
+          plainHex: recoveredHex,
+          cipherWords: encryptTrace.output,
+          plainWords: decryptTrace.output,
+          inputPlainWords: plainWords,
+          rk0: schedule.rounds[0].rk,
+          rk31: schedule.rounds[31].rk,
+          recovered: recoveredHex === plainHex,
+          hasReference: true
+        });
+        renderKeySchedule(root.querySelector('[data-role="roundkeys"]'), schedule);
+        renderTrace(root.querySelector('[data-role="encrypt"]'), "加密过程", "明文块先写入 X0 到 X3，随后按 rk_0 到 rk_31 依次更新。", encryptTrace.steps);
+        renderTrace(root.querySelector('[data-role="decrypt"]'), "解密过程", "解密共用同一轮函数，差别只在于轮密钥顺序改成 rk_31 到 rk_0。", decryptTrace.steps);
+        setError(root, "");
+      }
+
+      function runDecryptOnly(root) {
+        const inputs = collectInputs(root);
+        const keyHex = ensureHex(inputs.key, "密钥", [32]);
+        const cipherHex = ensureHex(inputs.ciphertext, "密文", [32]);
+        const schedule = keySchedule(hexToWords(keyHex));
+        const cipherWords = hexToWords(cipherHex);
+        const decryptTrace = processBlock(cipherWords, schedule.rounds.slice().reverse(), "decrypt");
+        const recoveredHex = wordsToHex(decryptTrace.output);
+        const optionalPlain = normalizeHex(inputs.plaintext);
+        const hasReference = optionalPlain.length === 32;
+        const recovered = hasReference ? optionalPlain === recoveredHex : false;
+
+        renderSummary(root.querySelector('[data-role="summary"]'), {
+          mode: "decrypt",
+          cipherHex,
+          plainHex: recoveredHex,
+          cipherWords,
+          plainWords: decryptTrace.output,
+          inputPlainWords: hasReference ? hexToWords(optionalPlain) : [],
+          rk0: schedule.rounds[0].rk,
+          rk31: schedule.rounds[31].rk,
+          recovered,
+          hasReference
+        });
+        renderKeySchedule(root.querySelector('[data-role="roundkeys"]'), schedule);
+        root.querySelector('[data-role="encrypt"]').innerHTML = `
+          <div class="panel-head">
+            <div>
+              <h2>加密过程</h2>
+              <p>这一次只展开解密路径，左侧保持空白，摘要区显示当前密文和解密输出。</p>
+            </div>
+          </div>
+        `;
+        renderTrace(root.querySelector('[data-role="decrypt"]'), "解密过程", "密文块按 rk_31 到 rk_0 的顺序回退，最后再做一次反序输出。", decryptTrace.steps);
+        setError(root, "");
+      }
+
+      function fillSample(root) {
+        root.querySelector('[data-role="plaintext"]').value = "0123456789ABCDEFFEDCBA9876543210";
+        root.querySelector('[data-role="key"]').value = "0123456789ABCDEFFEDCBA9876543210";
+        root.querySelector('[data-role="ciphertext"]').value = "681EDF34D206965E86B3E94F536E4246";
+      }
+
+      function bindDemo(root) {
+        root.querySelectorAll("[data-action]").forEach((button) => {
+          button.addEventListener("click", () => {
+            try {
+              const action = button.getAttribute("data-action");
+              if (action === "sample") {
+                fillSample(root);
+                runFull(root);
+                return;
+              }
+              if (action === "decrypt") {
+                runDecryptOnly(root);
+                return;
+              }
+              runFull(root);
+            } catch (error) {
+              setError(root, error instanceof Error ? error.message : "页面执行时出现了未知错误。");
+            }
+          });
+        });
+
+        fillSample(root);
+        runFull(root);
+      }
+
+      function selfTest() {
+        const plain = hexToWords("0123456789ABCDEFFEDCBA9876543210");
+        const schedule = keySchedule(hexToWords("0123456789ABCDEFFEDCBA9876543210"));
+        const encrypted = processBlock(plain, schedule.rounds, "encrypt");
+        const cipher = wordsToHex(encrypted.output);
+        if (cipher !== "681EDF34D206965E86B3E94F536E4246") {
+          throw new Error("SM4 自检失败，加密结果为 " + cipher + "。");
+        }
+        const decrypted = processBlock(encrypted.output, schedule.rounds.slice().reverse(), "decrypt");
+        const recovered = wordsToHex(decrypted.output);
+        if (recovered !== "0123456789ABCDEFFEDCBA9876543210") {
+          throw new Error("SM4 自检失败，解密结果为 " + recovered + "。");
+        }
+      }
+
+      selfTest();
+
+      if (typeof document !== "undefined") {
+        document.addEventListener("DOMContentLoaded", () => {
+          document.querySelectorAll("[data-sm4-demo]").forEach(bindDemo);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
