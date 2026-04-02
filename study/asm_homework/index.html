@@ -2133,6 +2133,57 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      第二次作业
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第二次作业">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#p94" class="md-nav__link">
+    <span class="md-ellipsis">
+      P94 实验三
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p121" class="md-nav__link">
+    <span class="md-ellipsis">
+      P121 实验四
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p133" class="md-nav__link">
+    <span class="md-ellipsis">
+      P133 实验五
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p160" class="md-nav__link">
+    <span class="md-ellipsis">
+      P160 实验六
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4177,6 +4228,57 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      第二次作业
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第二次作业">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#p94" class="md-nav__link">
+    <span class="md-ellipsis">
+      P94 实验三
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p121" class="md-nav__link">
+    <span class="md-ellipsis">
+      P121 实验四
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p133" class="md-nav__link">
+    <span class="md-ellipsis">
+      P133 实验五
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p160" class="md-nav__link">
+    <span class="md-ellipsis">
+      P160 实验六
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4294,6 +4396,308 @@
 </code></pre></div>
 <p>2）</p>
 <p>因为 <code>push</code> 指令会把数据写入栈顶，而栈段由 <code>SS</code> 指定、栈顶偏移由 <code>SP</code> 指定。本题中 <code>SS=2200H，SP=0100H</code>，执行 <code>push</code> 时，CPU 先将 <code>SP</code> 减 2，再把一个字写入 <code>2200:00FE</code>、<code>2200:00FC</code> 等单元，因此这些内存内容发生变化。<code>pop</code> 只从这些单元取数据并修改 <code>SP</code>，一般不清除原内存内容。</p>
+<h2 id="_2">第二次作业</h2>
+<h3 id="p94">P94 实验三</h3>
+<p><img alt="image-20260402144457337" src="../../images/image-20260402144457337.png" /></p>
+<p>（1）</p>
+<p><img alt="image-20260402144537243" src="../../images/image-20260402144537243.png" /></p>
+<p>（2）</p>
+<p><img alt="image-20260402144743267" src="../../images/image-20260402144743267.png" /></p>
+<p>等等等，具体答案见下：</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>执行后的指令</th>
+<th>AX</th>
+<th>BX</th>
+<th>SS</th>
+<th>SP</th>
+<th>栈顶内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>mov ax,2000H</code></td>
+<td>2000H</td>
+<td>0000H</td>
+<td>0769H</td>
+<td>0000H</td>
+<td>原值</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>mov ss,ax</code>、<code>mov sp,0</code></td>
+<td>2000H</td>
+<td>0000H</td>
+<td>2000H</td>
+<td>0000H</td>
+<td><code>[2000:0000]</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>add sp,10</code></td>
+<td>2000H</td>
+<td>0000H</td>
+<td>2000H</td>
+<td>000AH</td>
+<td>076AH</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>pop ax</code></td>
+<td>076AH</td>
+<td>0000H</td>
+<td>2000H</td>
+<td>000CH</td>
+<td><code>Y</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>pop bx</code></td>
+<td>076AH</td>
+<td><code>Y</code></td>
+<td>2000H</td>
+<td>000EH</td>
+<td><code>Z</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>push ax</code></td>
+<td>076AH</td>
+<td><code>Y</code></td>
+<td>2000H</td>
+<td>000CH</td>
+<td>076AH</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>push bx</code></td>
+<td>076AH</td>
+<td><code>Y</code></td>
+<td>2000H</td>
+<td>000AH</td>
+<td><code>Y</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>pop ax</code></td>
+<td><code>Y</code></td>
+<td><code>Y</code></td>
+<td>2000H</td>
+<td>000CH</td>
+<td>076AH</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>pop bx</code></td>
+<td><code>Y</code></td>
+<td>076AH</td>
+<td>2000H</td>
+<td>000EH</td>
+<td><code>Z</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>mov ax,4C00H</code></td>
+<td>4C00H</td>
+<td>076AH</td>
+<td>2000H</td>
+<td>000EH</td>
+<td><code>Z</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>int 21H</code></td>
+<td>4C00H</td>
+<td>076AH</td>
+<td>2000H</td>
+<td>000EH</td>
+<td><code>Z</code></td>
+</tr>
+</tbody>
+</table>
+<p>（3）</p>
+<p><img alt="image-20260402145323937" src="../../images/image-20260402145323937.png" /></p>
+<h3 id="p121">P121 实验四</h3>
+<p><img alt="image-20260402145404237" src="../../images/image-20260402145404237.png" /><img alt="image-20260402145409571" src="../../images/image-20260402145409571.png" /></p>
+<p>（1）（2）</p>
+<div class="highlight"><pre><span></span><code>assume cs:code
+code segment
+
+    mov ax,0020h
+    mov ds,ax
+    mov bx,0
+    mov cx,40h
+
+s:  mov [bx],bl
+    inc bx
+    loop s
+
+    mov ax,4c00h
+    int 21h
+
+code ends
+end
+</code></pre></div>
+<p>(3)</p>
+<p><img alt="image-20260402150137840" src="../../images/image-20260402150137840.png" /></p>
+<p><img alt="image-20260402150446272" src="../../images/image-20260402150446272.png" /></p>
+<h3 id="p133">P133 实验五</h3>
+<p><img alt="image-20260402150636031" src="../../images/image-20260402150636031.png" /></p>
+<p><img alt="image-20260402151440073" src="../../images/image-20260402151440073.png" /></p>
+<p><img alt="image-20260402151918217" src="../../images/image-20260402151918217.png" /></p>
+<ol>
+<li><code>0123H，0456H，0789H，0ABCH，0DEFH，0FEDH，0CBAH，0987H</code></li>
+<li><code>cs=076Ch、ss=076Bh、ds=076Ah</code></li>
+<li><code>data</code> 的段地址 <code>076Ah</code> ；<code>stack</code> 的段地址 <code>076Bh</code></li>
+</ol>
+<p><img alt="image-20260402152318898" src="../../images/image-20260402152318898.png" /><img alt="image-20260402152325198" src="../../images/image-20260402152325198.png" /><img alt="image-20260402152830638" src="../../images/image-20260402152830638.png" /></p>
+<ol>
+<li>
+<p><code>0123h, 0456h</code></p>
+</li>
+<li>
+<p><code>asm
+   cs = 076Ch
+   ss = 076Bh
+   ds = 076Ah</code></p>
+</li>
+<li>
+<p><code>data 段地址 = 076Ah
+   stack 段地址 = 076Bh</code></p>
+</li>
+<li>
+<p><code>asm
+   ((N + 15) / 16) × 16  字节</code></p>
+</li>
+</ol>
+<p><img alt="image-20260402152903374" src="../../images/image-20260402152903374.png" /><img alt="image-20260402152910302" src="../../images/image-20260402152910302.png" /></p>
+<p><img alt="image-20260402153114681" src="../../images/image-20260402153114681.png" /></p>
+<ol>
+<li><code>0123h, 0456h</code></li>
+<li><code>cs=076Ah，ss=076Eh，ds=076Dh</code></li>
+<li><code>data</code> 段地址为 <code>076Dh</code>，<code>stack</code> 段地址为 <code>076Eh</code></li>
+</ol>
+<p><img alt="image-20260402153210820" src="../../images/image-20260402153210820.png" /></p>
+<p>只有第(3)个程序仍然可以正确执行。因为去掉 <code>start</code> 以后，程序入口不再被显式指定，只有当程序最前面就是代码段，并且段首正好是应执行的指令时，CPU 才能正确从那里开始执行。第(1)、第(2)个程序的最前面都是数据段，CPU 会把数据当作指令执行，所以不能正确运行。</p>
+<p><img alt="image-20260402153340867" src="../../images/image-20260402153340867.png" /></p>
+<div class="highlight"><pre><span></span><code>code segment
+start:
+    mov ax,c
+    mov es,ax
+    mov di,0
+
+    mov cx,8
+    mov bx,0
+
+s:
+    mov ax,a
+    mov ds,ax
+    mov al,[bx]
+
+    mov ax,b
+    mov ds,ax
+    add al,[bx]
+
+    mov es:[di],al
+
+    inc bx
+    inc di
+    loop s
+
+    mov ax,4c00h
+    int 21h
+code ends
+
+end start
+</code></pre></div>
+<p><img alt="image-20260402153530823" src="../../images/image-20260402153530823.png" /></p>
+<div class="highlight"><pre><span></span><code>code segment
+start:
+    mov ax,stack
+    mov ss,ax
+    mov sp,32
+
+    mov ax,a
+    mov ds,ax
+
+    mov bx,0
+    mov cx,8
+
+s1:
+    push word ptr [bx]
+    add bx,2
+    loop s1
+
+    mov ax,b
+    mov ds,ax
+
+    mov bx,0
+    mov cx,8
+
+s2:
+    pop word ptr [bx]
+    add bx,2
+    loop s2
+
+    mov ax,4c00h
+    int 21h
+code ends
+
+end start
+</code></pre></div>
+<h3 id="p160">P160 实验六</h3>
+<p><img alt="image-20260402153649956" src="../../images/image-20260402153649956.png" /></p>
+<p><img alt="image-20260402153703140" src="../../images/image-20260402153703140.png" /></p>
+<ol>
+<li></li>
+</ol>
+<div class="highlight"><pre><span></span><code>assume cs:codesg,ss:stacksg,ds:datasg
+
+stacksg segment
+    dw 0,0,0,0,0,0,0,0
+stacksg ends
+
+datasg segment
+    db &#39;1. display      &#39;
+    db &#39;2. brows        &#39;
+    db &#39;3. replace      &#39;
+    db &#39;4. modify       &#39;
+datasg ends
+
+codesg segment
+start:
+    mov ax,stacksg
+    mov ss,ax
+    mov sp,16
+
+    mov ax,datasg
+    mov ds,ax
+
+    mov bx,3          ; 每行单词的起始偏移
+    mov cx,4          ; 共 4 行
+
+s1:
+    mov si,0
+    mov di,4          ; 每行处理 4 个字母
+
+s2:
+    and byte ptr [bx+si],11011111b
+    inc si
+    dec di
+    jnz s2
+
+    add bx,16         ; 跳到下一行
+    loop s1
+
+    mov ax,4c00h
+    int 21h
+codesg ends
+
+end start
+</code></pre></div>
 
 
 
