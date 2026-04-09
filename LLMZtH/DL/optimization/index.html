@@ -4182,7 +4182,12 @@ $$
 我们注意到，若参数 <span class="arithmatex">\(W\)</span> 的设置能对样本 <span class="arithmatex">\(x_i\)</span> 产生与其真实标签 <span class="arithmatex">\(y_i\)</span> 一致的预测，则该设置对应的损失值 <span class="arithmatex">\(L\)</span> 也会非常低。现在我们引入第三个也就是最后一个关键组成部分：优化——寻找能够最小化损失函数的参数集 <span class="arithmatex">\(W\)</span> 的过程</p>
 <p><strong>预告</strong>：一旦我们理解了这三个核心组件的相互作用，我们将重新审视第一个组件（参数化函数映射），并将其扩展到远比线性映射更复杂的函数：首先是完整的神经网络，然后是卷积神经网络。损失函数和优化过程基本保持不变</p>
 <h2 id="_2">可视化损失函数</h2>
-<p>本课程所讨论的损失函数通常定义在非常高维的空间中（例如CIFAR-10中，线性分类器的权重矩阵大小为 [10*3073]，总共30730个参数）</p>
+<p>本课程所讨论的损失函数通常定义在非常高维的空间中（例如CIFAR-10中，线性分类器的权重矩阵大小为 [10*3073]，总共30730个参数），这会导致他们很难被可视化。然而，我们可以沿射线(1维)或平面(2维)切割高维空间来获得一些直观理解。例如，我们可以生成一个随机权重矩阵 <span class="arithmatex">\(W\)</span>（对应空间中的一个点），然后沿着一条射线前进并记录沿途的损失函数值。也就是说，我们可以生成一个随机方向 <span class="arithmatex">\(W_1\)</span> 并通过计算不同 <span class="arithmatex">\(a\)</span> 值下的 <span class="arithmatex">\(L(W+aW_1)\)</span>。这一过程会生成简单的图标，其中我们令 <span class="arithmatex">\(a\)</span> 的值作为 <span class="arithmatex">\(x\)</span> 轴，损失函数的值作为 <span class="arithmatex">\(y\)</span> 轴。我们还可以通过改变 <span class="arithmatex">\(a,b\)</span> 的值来评估损失 <span class="arithmatex">\(L(W+aW_1+bW_2)\)</span> 从而在二维空间中进行相同的操作。在图表中，<span class="arithmatex">\(a,b\)</span> 可以对应x轴和y轴，损失函数的值可以通过颜色来可视化</p>
+<hr />
+<p><img alt="image-20260403201027007" src="../../../images/image-20260403201027007.png" /></p>
+<p>多分类SVM在CIFAR-10数据集上的损失函数图，分别展示单个样本（左、中）和百个样本（右）的情况左图：仅通过调整 <span class="arithmatex">\(a\)</span> 的值得到的一维损失；右图：二维损失截面。蓝色=低损失，红色=高损失。</p>
+<p>注意到损失函数的分线段性结构。多个样本的损失通过取平均进行合并，因此有图的碗状结构是许多分段线性碗装结构的平均结果（如中图所示）</p>
+<hr />
 
 
 

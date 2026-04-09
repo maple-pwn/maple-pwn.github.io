@@ -7745,145 +7745,395 @@
 </ul>
 <h2 id="2">第2章 关系数据模型</h2>
 <h3 id="21">2.1 关系数据库概述</h3>
-<p>这一节要解决“为什么数据库课程后面的大部分内容都围绕关系模型展开”这个问题。关系模型最重要的特点是概念单一，实体和实体之间的联系都用关系来表示。</p>
-<p>关系模型的三要素是 <mark><code>关系数据结构</code>、<code>关系数据操作</code> 和 <code>关系的完整性约束</code></mark>。在结构上，它把数据统一放进二维表；在操作上，它提供集合运算和专门的关系运算；在约束上，它通过实体完整性、参照完整性和用户自定义完整性维持数据正确性。</p>
-<p>PPT 里提到一句非常关键的话：关系模型中“无论是实体还是实体之间的联系，都用表来表示”。这意味着联系通常通过外键或单独的联系表落在表结构中，用户看到的是统一的数据表示方式。</p>
-<h3 id="22">2.2 关系数据结构</h3>
-<p>这一节要解决关系模型里的基本术语和基本对象。术语发生混乱后，后面的关系代数、SQL 和规范化都会失去支点。</p>
-<p>设有学生和选课数据库：</p>
-<div class="arithmatex">\[
-\begin{aligned}
-S(S\#, SN, SD, SA)\\
-C(C\#, CN, CC)\\
-SC(S\#, C\#, G)
-\end{aligned}
-\]</div>
-<p>其中 <code>S#</code> 表示学号，<code>SN</code> 表示姓名，<code>SD</code> 表示所在系，<code>SA</code> 表示年龄，<code>C#</code> 表示课程号，<code>CN</code> 表示课程名，<code>CC</code> 表示学分，<code>G</code> 表示成绩。</p>
-<p><code>域（domain）</code> 是一组具有相同数据类型和取值范围的值的集合。属性来自域，例如“年龄”来自整数域，“性别”来自有限符号域。</p>
-<p><code>笛卡儿积</code> 是若干域上所有有序组合构成的集合。关系可以看作笛卡儿积上的一个有限子集，因此关系中的每个元组都可看成按属性次序排列的一组分量。</p>
-<p><code>关系（relation）</code> 对应一张表，<code>元组（tuple）</code> 对应一行，<code>属性（attribute）</code> 对应一列，<code>分量</code> 是元组在某个属性位置上的取值。<code>关系模式（relation schema）</code> 描述关系的型，例如 <span class="arithmatex">\(S(S\#, SN, SD, SA)\)</span>；<code>关系</code> 本身描述某一时刻的值。</p>
-<p>教材和 UNIT 2 都强调“型”和“值”的区别。关系模式是稳定结构，关系值是某一时刻的数据内容；数据库模式是若干关系模式的集合，数据库状态是这些关系在某一时刻取值的总和。</p>
-<div class="admonition tip 读表时的对应关系">
-<p class="admonition-title">Tip</p>
+<p>这一章正式进入关系数据库的核心内容。前面第一章已经给出数据库系统的整体框架，这一章开始把关系模型本身拆开，依次讨论它的数据结构、关系操作和完整性约束。</p>
+<p><mark>关系模型的三部分</mark></p>
 <ul>
-<li>一张表对应一个 <code>关系</code>。</li>
-<li>一行对应一个 <code>元组</code>。</li>
-<li>一列对应一个 <code>属性</code>。</li>
-<li>表结构对应 <code>关系模式</code>。</li>
-<li>某一时刻表中的具体内容对应 <code>关系值</code>。</li>
+<li><code>关系数据结构</code> 负责回答数据在逻辑上怎样组织。关系模型在这一层的特点很鲜明，用户看到的是扁平的二维表。</li>
+<li><code>关系操作</code> 负责回答怎样查询和更新这些表。关系模型采用集合操作方式，也就是“一次一集合（set-at-a-time）”。</li>
+<li><code>完整性约束</code> 负责回答哪些关系状态是合法的。课程里最重要的是实体完整性、参照完整性和用户定义完整性。</li>
 </ul>
-</div>
-<p>关系作为一种“合格的表”，通常满足这些性质。</p>
+<p><mark>关系模型为什么重要</mark></p>
 <ul>
-<li>属性名唯一。</li>
-<li>分量取原子值，满足第一范式。</li>
-<li>同一属性上的值来自同一域。</li>
-<li>理论上元组次序和属性次序都不影响关系语义。</li>
-<li>元组不重复。</li>
+<li>关系数据库系统是支持关系模型的数据库系统。</li>
+<li>关系数据库目前仍然是最重要、最流行的一类数据库。20 世纪 80 年代以来，新推出的数据库管理系统产品几乎都以关系数据库为主，许多非关系系统也会提供关系接口。</li>
+<li>这门课后面关于 SQL、数据库编程和关系数据理论的主体内容，都是沿着关系模型展开。</li>
+</ul>
+<p><mark>关系操作的特点</mark></p>
+<ul>
+<li>关系模型的数据结构看上去很简单，实际表达能力很强，能够描述实体以及实体间的多种联系。</li>
+<li>关系操作采用集合操作方式，操作对象和操作结果都是集合，这一点和“一次一记录（record-at-a-time）”的处理方式有明显差别。</li>
+<li>常用操作包括选择、投影、连接、除、并、交、差等查询操作，以及增加、删除、修改等更新操作。</li>
+</ul>
+<p><mark>关系数据语言的三类形式</mark></p>
+<ul>
+<li><code>关系代数</code> 用对关系的运算来表达查询要求。</li>
+<li><code>关系演算</code> 用谓词来表达查询要求，按谓词变元的不同又分成元组关系演算和域关系演算。</li>
+<li><code>SQL</code> 介于代数方式和演算方式之间，既有丰富的查询能力，也有数据定义和数据控制能力。</li>
+<li>这些语言共同的特点是表达能力完整、面向集合、非过程化，并且能够嵌入高级语言中使用。</li>
+</ul>
+<h3 id="22">2.2 关系数据结构</h3>
+<p>这一节要把“关系”这个对象真正说清楚。关系模型虽然以二维表呈现，底层定义却建立在集合论之上，因此这一节先从域、笛卡儿积和关系的形式化定义开始。</p>
+<p><mark>域</mark></p>
+<ul>
+<li><code>域（domain）</code> 是一组具有相同数据类型的值的集合。</li>
+<li>非负整数、整数、实数、长度小于 25 字节的字符串集合、取值范围在 0 到 100 之间的正整数集合，都可以作为域。</li>
+<li>关系中的属性值都来自某个域，理解域之后，后面“同一列值来自同一域”这一条性质才真正站得住。</li>
+</ul>
+<p><mark>笛卡儿积</mark></p>
+<ul>
+<li>给定一组域，这些域可以完全不同，也可以部分或全部相同，它们的笛卡儿积由所有可能的有序组合构成。</li>
+<li>笛卡儿积中的每个元素叫作一个 <span class="arithmatex">\(n\)</span> 元组，也简称元组；元组中的每个值叫作一个分量。</li>
+<li>若各域都是有限集，则笛卡儿积的基数等于各域基数的乘积。</li>
+<li>笛卡儿积可以表示成一张二维表，每一行对应一个元组，每一列对应一个域。</li>
+</ul>
+<p><mark>关系的形式化定义</mark></p>
+<ul>
+<li>在给定域上的笛卡儿积中，任意一个子集都可以称作这些域上的一个 <code>关系（relation）</code>。</li>
+<li>关系中的每个元素就是该关系的元组，通常记作 <span class="arithmatex">\(t\)</span>。</li>
+<li>当关系的目为 1 时，称为单元关系；目为 2 时，称为二元关系。</li>
+<li>关系也是一个二维表，它已经从笛卡儿积中筛出了真正有语义的元组。</li>
+</ul>
+<p><mark>属性、码与主码</mark></p>
+<ul>
+<li>由于多个列可能来自相同的域，因此每一列都要取一个名字，这个名字就是 <code>属性（attribute）</code>。</li>
+<li>若关系中某一属性组的值能够唯一标识一个元组，同时它的任何真子集都做不到这一点，这个属性组就叫 <code>候选码（candidate key）</code>。</li>
+<li>一个关系可能有多个候选码，其中选定的那个叫 <code>主码（primary key）</code>。</li>
+<li>候选码中的属性叫 <code>主属性（prime attribute）</code>。</li>
+<li>不包含在任何候选码中的属性叫 <code>非码属性（non-key attribute）</code>。</li>
+<li>当关系模式的所有属性一起构成候选码时，这个模式属于 <code>全码（all-key）</code> 的情形。</li>
+</ul>
+<p><mark>关系的一个简单例子</mark></p>
+<p>设有三个域：</p>
+<ul>
+<li>导师集合 <span class="arithmatex">\(SUPERVISOR=\{\text{张清玫，刘逸}\}\)</span></li>
+<li>专业集合 <span class="arithmatex">\(SPECIALITY=\{\text{计算机专业，信息专业}\}\)</span></li>
+<li>研究生集合 <span class="arithmatex">\(POSTGRADUATE=\{\text{李勇，刘晨，王名}\}\)</span></li>
+</ul>
+<p>这三个域的笛卡儿积一共有 <span class="arithmatex">\(2\times 2\times 3=12\)</span> 个元组。若从中取出有实际意义的元组，就可以构成关系</p>
+<div class="arithmatex">\[
+SAP(SUPERVISOR, SPECIALITY, POSTGRADUATE)
+\]</div>
+<p>在“一个研究生对应一个导师和一个专业”这一假设下，表中保留下来的元组才具有业务含义。若再附加“研究生姓名不重名”的假设，则 <code>POSTGRADUATE</code> 可以作为这个关系的主码。</p>
+<p><mark>基本关系的六条性质</mark></p>
+<p>教材把基本关系的性质归纳为六条，这六条是把“表”看成“关系”时需要额外注意的地方。</p>
+<ul>
+<li>列是同质的，也就是每列中的分量来自同一个域。</li>
+<li>不同列可以出自同一个域，此时要给这些列取不同的属性名。</li>
+<li>列的顺序无关紧要，交换列次序不改变关系语义。</li>
+<li>任意两个元组都要保持可区分状态，关系中不会出现完全相同的两行。</li>
+<li>行的顺序无关紧要，交换元组次序不改变关系语义。</li>
+<li>每个分量都要取原子值，也就是每个分量都对应不可再分的数据项。</li>
+</ul>
+<p><strong>为什么强调原子值</strong></p>
+<ul>
+<li>关系模型要求关系保持规范化，其中最基础的一条，就是每个分量都要是原子值。</li>
+<li>例如一个导师对应多个研究生时，若把多个研究生姓名直接塞进同一格，就形成了非规范化关系，这种写法在关系数据库中不会直接采用。</li>
+</ul>
+<p><mark>关系模式</mark></p>
+<ul>
+<li>关系模式是对关系的描述，它不只说明“有哪些列”，还要说明这些列来自哪些域，以及属性和域之间的对应关系。</li>
+<li>进一步说，一个关系还带有元组语义和完整性约束，因此关系模式需要能够把这些内容一起描述出来。</li>
+<li>教材给出的形式化表示为</li>
+</ul>
+<div class="arithmatex">\[
+R(U,D,DOM,F)
+\]</div>
+<p>其中：</p>
+<ul>
+<li><span class="arithmatex">\(R\)</span> 表示关系名；</li>
+<li><span class="arithmatex">\(U\)</span> 表示属性名集合；</li>
+<li><span class="arithmatex">\(D\)</span> 表示属性组 <span class="arithmatex">\(U\)</span> 中属性所来自的域；</li>
+<li><span class="arithmatex">\(DOM\)</span> 表示属性到域的映像集合；</li>
+<li><span class="arithmatex">\(F\)</span> 表示属性间数据依赖关系集合。</li>
+</ul>
+<p><strong>关系模式与关系的区别</strong></p>
+<ul>
+<li>关系模式属于“型”，关系属于“值”。</li>
+<li>关系模式是静态、稳定的，关系是动态、随时间变化的。</li>
+<li>实际讨论中常常把二者统称为关系，具体含义需要结合上下文判断。</li>
+</ul>
+<p><mark>关系数据库</mark></p>
+<ul>
+<li>在关系模型中，实体以及实体间的联系都用关系表示，因此一个现实世界领域中的全部相关关系集合，就构成了 <code>关系数据库</code>。</li>
+<li>关系数据库也分成型和值。型通常叫关系数据库模式，值则是这些关系模式在某一时刻对应的关系集合。</li>
+<li>日常语境中常把关系数据库模式和关系数据库统称为关系数据库。</li>
 </ul>
 <h3 id="23">2.3 关系的完整性</h3>
-<p>这一节要解决“什么样的表变化是允许的，什么样的变化会破坏关系模型语义”这个问题。完整性约束正是数据库系统用来回答这个问题的规则集合。</p>
-<p>关系完整性约束可以从对象粒度理解为列级、元组级、关系级，也可以从对象状态理解为静态约束和动态约束。教材第 2 章先给出关系模型最核心的三类约束，后面第 5 章再回到 SQL 层面的完整性控制。</p>
-<p><code>实体完整性</code> 的要求是：主键值唯一，且主键各属性都取非空值。主键承担“唯一标识元组”的职责，所以主键出现空值后，系统就失去区分对象实例的稳定依据。</p>
-<p><code>参照完整性</code> 的要求是：外键值要么为空，要么等于被参照关系中某个主键值。它保证关系之间的联系能够落到真实存在的对象上。</p>
-<p><code>用户定义完整性</code> 则来自具体业务语义。例如“成绩取值范围在 0 到 100 之间”“课程学分取正数”都属于这类约束。</p>
-<p>PPT 还用五条规则概括了关系模型的基本要求：第一范式规则、基于内容存取规则、行唯一性规则、实体完整性规则和参照完整性规则。复习时可以把它们理解为“合格关系”的最小清单。</p>
+<p>这一节讨论关系模型中哪些约束是系统要守住的。关系模型的完整性规则，用来规定关系的合法状态。</p>
+<p><mark>三类完整性</mark></p>
+<ul>
+<li>关系模型中有三类完整性约束：实体完整性、参照完整性和用户定义完整性。</li>
+<li>其中实体完整性和参照完整性是关系模型要满足的约束，教材把它们称为关系的两个不变性。</li>
+<li>用户定义完整性来自具体业务场景，内容随应用而变化。</li>
+</ul>
+<p><mark>实体完整性</mark></p>
+<ul>
+<li>一个基本关系通常对应现实世界中的一个实体集。</li>
+<li>现实世界中的实体能够区分开来，关系模型中承担这项作用的是主码。</li>
+<li>主码中的属性，也就是主属性，需要保持非空。空值表示“不知道”或“无意义”，主属性一旦出现空值，实体的唯一标识就失效了。</li>
+<li>教材把这一条写成规则 2.1：若属性 <span class="arithmatex">\(A\)</span> 是基本关系 <span class="arithmatex">\(R\)</span> 的主属性，则属性 <span class="arithmatex">\(A\)</span> 需要保持非空。</li>
+<li>若主码由多个属性组成，则这些主属性都要保持非空。比如选修关系 <code>选修（学号，课程号，成绩）</code> 中，<code>学号</code> 和 <code>课程号</code> 都要保持非空。</li>
+</ul>
+<p><mark>参照完整性</mark></p>
+<ul>
+<li>现实世界中的实体之间存在联系，在关系模型中，这些联系表现为关系与关系之间的引用。</li>
+<li>例如：</li>
+<li><code>学生（学号，姓名，性别，专业号，年龄）</code> 引用了 <code>专业（专业号，专业名）</code> 中的 <code>专业号</code>；</li>
+<li><code>选修（学号，课程号，成绩）</code> 同时引用了学生关系的 <code>学号</code> 和课程关系的 <code>课程号</code>；</li>
+<li><code>学生2（学号，姓名，性别，专业号，年龄，班长）</code> 中的 <code>班长</code> 还会引用本关系中的 <code>学号</code>。</li>
+</ul>
+<p><mark>外码、参照关系、被参照关系</mark></p>
+<ul>
+<li>设 <span class="arithmatex">\(F\)</span> 是基本关系 <span class="arithmatex">\(R\)</span> 的一个或一组属性，<span class="arithmatex">\(F\)</span> 本身不构成 <span class="arithmatex">\(R\)</span> 的码。</li>
+<li>若 <span class="arithmatex">\(F\)</span> 与基本关系 <span class="arithmatex">\(S\)</span> 的主码 <span class="arithmatex">\(K\)</span> 相对应，则 <span class="arithmatex">\(F\)</span> 称为基本关系 <span class="arithmatex">\(R\)</span> 的 <code>外码（foreign key）</code>。</li>
+<li>这里的 <span class="arithmatex">\(R\)</span> 称为 <code>参照关系（referencing relation）</code>。</li>
+<li>这里的 <span class="arithmatex">\(S\)</span> 称为 <code>被参照关系（referenced relation）</code> 或 <code>目标关系（target relation）</code>。</li>
+<li><span class="arithmatex">\(R\)</span> 和 <span class="arithmatex">\(S\)</span> 可以是同一个关系。</li>
+<li>外码和对应主码要定义在同一个域，或者定义在同一组域上。</li>
+</ul>
+<p><mark>参照完整性规则</mark></p>
+<ul>
+<li>教材把这一条写成规则 2.2：若属性组 <span class="arithmatex">\(F\)</span> 是基本关系 <span class="arithmatex">\(R\)</span> 的外码，并且与基本关系 <span class="arithmatex">\(S\)</span> 的主码 <span class="arithmatex">\(K\)</span> 相对应，则对于 <span class="arithmatex">\(R\)</span> 中每个元组在 <span class="arithmatex">\(F\)</span> 上的值，有两种合法情况。</li>
+<li>第一种情况是 <span class="arithmatex">\(F\)</span> 取空值，也就是 <span class="arithmatex">\(F\)</span> 中每个属性都为空。</li>
+<li>第二种情况是 <span class="arithmatex">\(F\)</span> 的值等于 <span class="arithmatex">\(S\)</span> 中某个元组的主码值。</li>
+</ul>
+<p><strong>怎样理解“可以为空”</strong></p>
+<ul>
+<li>对学生关系中的 <code>专业号</code> 来说，空值表示这个学生尚未被分配专业。</li>
+<li>对选修关系中的 <code>学号</code> 和 <code>课程号</code> 来说，虽然参照完整性允许外码为空，实体完整性又要求主属性非空，因此这里实际只能取被参照关系中已经存在的主码值。</li>
+<li>对 <code>学生2</code> 关系中的 <code>班长</code> 来说，空值表示这个班尚未选出班长；非空值则要对应本关系中某个真实存在的学号。</li>
+</ul>
+<p><mark>用户定义完整性</mark></p>
+<ul>
+<li>用户定义完整性针对的是某个具体关系数据库的语义要求。</li>
+<li>常见形式包括：某个属性保持唯一取值，某个非主属性保持非空，某个属性的值落在固定范围内。</li>
+<li>例如成绩限定在 0 到 100 之间、年龄保持在退休年龄以下，这些都属于用户定义完整性。</li>
+<li>教材强调，关系模型应当提供定义和检验这类完整性的机制，这样系统可以统一处理这些规则。</li>
+</ul>
 <h3 id="24">2.4 关系代数</h3>
-<p>这一节要解决“怎样用形式化的方式表达查询”这个问题。关系代数是后续 SQL 的理论基础之一，也是分析查询逻辑最直接的工具。</p>
-<p>在本节里，用 <code>R</code>、<code>S</code> 表示关系，用 <code>t</code> 表示元组，用 <code>A</code>、<code>B</code> 表示属性。常用记号有：</p>
+<p>关系代数是一种抽象的查询语言，它用“对关系做运算”的方式表达查询要求。后面学习 SQL 时，很多查询结构都可以回到这一层来理解。</p>
+<p><mark>关系代数的三大要素</mark></p>
 <ul>
-<li><span class="arithmatex">\(\sigma_F(R)\)</span>：在关系 <span class="arithmatex">\(R\)</span> 上做选择，条件为 <span class="arithmatex">\(F\)</span>。</li>
-<li><span class="arithmatex">\(\pi_A(R)\)</span>：在关系 <span class="arithmatex">\(R\)</span> 上做投影，保留属性集 <span class="arithmatex">\(A\)</span>。</li>
-<li><span class="arithmatex">\(R \bowtie S\)</span>：连接。</li>
-<li><span class="arithmatex">\(R \div S\)</span>：除法。</li>
+<li>任何一种运算都离不开运算对象、运算符和运算结果。</li>
+<li>在关系代数里，运算对象是关系，运算结果仍然是关系。</li>
+<li>教材把关系代数中的运算符分成四类：集合运算符、专门的关系运算符、算术比较符和逻辑运算符。</li>
 </ul>
-<div class="admonition note 运算直觉">
-<p class="admonition-title">Note</p>
+<p><mark>常用记号</mark></p>
 <ul>
-<li><code>选择</code> 先筛行。</li>
-<li><code>投影</code> 再取列。</li>
-<li><code>连接</code> 按联系拼表。</li>
-<li><code>除法</code> 处理“对所有”这一类全称条件。</li>
+<li>设关系模式为 <span class="arithmatex">\(R(U)\)</span>，关系实例记作 <span class="arithmatex">\(R\)</span>，元组记作 <span class="arithmatex">\(t\)</span>。</li>
+<li>若 <span class="arithmatex">\(A\)</span> 是属性列，则 <span class="arithmatex">\(t[A]\)</span> 表示元组 <span class="arithmatex">\(t\)</span> 在属性列 <span class="arithmatex">\(A\)</span> 上的分量集合。</li>
+<li>若有关系 <span class="arithmatex">\(R(X,Z)\)</span>，当 <span class="arithmatex">\(t[X]=x\)</span> 时，<span class="arithmatex">\(x\)</span> 在 <span class="arithmatex">\(R\)</span> 中关于 <span class="arithmatex">\(Z\)</span> 的象集表示为“所有满足 <span class="arithmatex">\(X=x\)</span> 的元组在 <span class="arithmatex">\(Z\)</span> 上的分量集合”。</li>
+<li>这个象集概念在理解除法时非常关键。</li>
 </ul>
-</div>
 <h4 id="241">2.4.1 传统的集合运算</h4>
-<p>关系代数继承了集合论里的并、交、差和笛卡儿积。对并、交、差这三类运算，参与运算的两个关系需要满足并相容，即属性个数相同、对应属性来自同类域。</p>
-<p>例如，若 <span class="arithmatex">\(R(X,Y)\)</span> 和 <span class="arithmatex">\(S(X,Y)\)</span> 并相容，则：</p>
-<div class="arithmatex">\[
-R \cup S,\quad R \cap S,\quad R - S
-\]</div>
-<p>都仍然是关系。笛卡儿积 <span class="arithmatex">\(R \times S\)</span> 则把两个关系的元组合并成更长的元组，它常作为连接运算的中间结果。</p>
-<h4 id="242">2.4.2 专门的关系运算</h4>
-<p>选择和投影是最基础的单目运算。</p>
+<p>这一部分把关系看成元组的集合，运算主要从“行”的角度展开。</p>
+<p><mark>并、差、交</mark></p>
 <ul>
-<li>选择 <span class="arithmatex">\(\sigma_F(R)\)</span> 负责“按条件取行”。</li>
-<li>投影 <span class="arithmatex">\(\pi_A(R)\)</span> 负责“按属性取列”，并自动消去重复元组。</li>
+<li>传统集合运算包括并、差、交和广义笛卡儿积。</li>
+<li>对并、差、交来说，参与运算的两个关系要满足相同的目，并且对应属性来自同一个域。</li>
+<li>并运算写作</li>
 </ul>
-<p><strong>例</strong></p>
-<p>若要找出计算机系学生的学号和姓名，可以写成</p>
 <div class="arithmatex">\[
-\pi_{S\#,SN}(\sigma_{SD='CS'}(S))
+R\cup S=\{\,t\mid t\in R \lor t\in S\,\}
 \]</div>
-<p>连接运算用于把多个关系按联系条件拼起来。自然连接会把同名且可比的属性作为连接条件，并在结果中消去重复列。</p>
+<ul>
+<li>差运算写作</li>
+</ul>
 <div class="arithmatex">\[
-S \bowtie SC
+R-S=\{\,t\mid t\in R \land t\notin S\,\}
 \]</div>
-<p>可以把学生基本信息和选课信息连起来。</p>
-<p>除法是关系代数里较容易卡住的运算。若 <span class="arithmatex">\(R(X,Y)\)</span> 与 <span class="arithmatex">\(S(Y)\)</span> 参与除法，则 <span class="arithmatex">\(R \div S\)</span> 的结果是所有满足“对 <span class="arithmatex">\(S\)</span> 中每个 <span class="arithmatex">\(Y\)</span> 值都能在 <span class="arithmatex">\(R\)</span> 中找到匹配”的 <span class="arithmatex">\(X\)</span> 值集合。</p>
-<p><code>insight：</code> 除法的关键词是“全称条件”。它要求右边集合里的每个条件都被满足一遍，后面在 SQL 里常用 <code>NOT EXISTS</code> 的双重嵌套来模拟这一层语义。</p>
+<ul>
+<li>交运算写作</li>
+</ul>
+<div class="arithmatex">\[
+R\cap S=\{\,t\mid t\in R \land t\in S\,\}
+\]</div>
+<p><mark>广义笛卡儿积</mark></p>
+<ul>
+<li>若 <span class="arithmatex">\(R\)</span> 是 <span class="arithmatex">\(n\)</span> 目关系，<span class="arithmatex">\(S\)</span> 是 <span class="arithmatex">\(m\)</span> 目关系，则 <span class="arithmatex">\(R\times S\)</span> 的结果是一个 <span class="arithmatex">\((n+m)\)</span> 列元组的集合。</li>
+<li>新元组的前 <span class="arithmatex">\(n\)</span> 个分量来自 <span class="arithmatex">\(R\)</span> 的一个元组，后 <span class="arithmatex">\(m\)</span> 个分量来自 <span class="arithmatex">\(S\)</span> 的一个元组。</li>
+<li>若 <span class="arithmatex">\(R\)</span> 有 <span class="arithmatex">\(r\)</span> 个元组，<span class="arithmatex">\(S\)</span> 有 <span class="arithmatex">\(s\)</span> 个元组，则 <span class="arithmatex">\(R\times S\)</span> 有 <span class="arithmatex">\(r\times s\)</span> 个元组。</li>
+<li>广义笛卡儿积常常作为连接运算的中间基础。</li>
+</ul>
+<h4 id="242">2.4.2 专门的关系运算</h4>
+<p>专门的关系运算同时涉及行和列，是真正把关系模型查询能力展开的部分。</p>
+<p><strong>选择</strong></p>
+<ul>
+<li><code>选择（selection）</code> 也叫限制，它从关系 <span class="arithmatex">\(R\)</span> 中选出满足给定条件 <span class="arithmatex">\(F\)</span> 的元组。</li>
+<li>记作 $ \sigma_F(R) $。</li>
+<li>其中 <span class="arithmatex">\(F\)</span> 是逻辑表达式，可以由比较运算符和逻辑运算符构成。</li>
+<li>选择运算主要从“行”的角度过滤关系。</li>
+</ul>
+<p>教材中的典型例子有：</p>
+<ul>
+<li>查询信息系全体学生：$ \sigma_{Sdept='IS'}(Student) $</li>
+<li>查询年龄小于 20 岁的学生：$ \sigma_{Sage&lt;20}(Student) $</li>
+</ul>
+<p><strong>投影</strong></p>
+<ul>
+<li><code>投影（projection）</code> 从关系 <span class="arithmatex">\(R\)</span> 中选出若干属性列组成新的关系。</li>
+<li>记作 $ \pi_A(R) $，其中 <span class="arithmatex">\(A\)</span> 是属性列集合。</li>
+<li>投影主要从“列”的角度做运算。</li>
+<li>投影之后还要消去重复元组，因此投影的结果元组数可能少于原关系。</li>
+</ul>
+<p>教材中的典型例子有：</p>
+<ul>
+<li>查询学生姓名和所在系：$ \pi_{Sname,Sdept}(Student) $</li>
+<li>查询学生关系中有哪些系：$ \pi_{Sdept}(Student) $</li>
+</ul>
+<p>第二个例子之所以重要，是因为它提醒读者：投影除了删列，还会消去重复行。</p>
+<p><strong>连接</strong></p>
+<ul>
+<li><code>连接（join）</code> 从两个关系的笛卡儿积中，选出属性间满足给定条件的元组。</li>
+<li>一般连接写作</li>
+</ul>
+<div class="arithmatex">\[
+R \bowtie_{A\theta B} S
+\]</div>
+<p>其中 <span class="arithmatex">\(A\)</span> 和 <span class="arithmatex">\(B\)</span> 分别是 <span class="arithmatex">\(R\)</span> 和 <span class="arithmatex">\(S\)</span> 上度数相等且可比的属性组，<span class="arithmatex">\(\theta\)</span> 是比较运算符。</p>
+<ul>
+<li>当 <span class="arithmatex">\(\theta\)</span> 取等号时，得到 <code>等值连接（equi-join）</code>。</li>
+<li>当连接的属性组本身就是相同属性，并且结果中删除重复列时，得到 <code>自然连接（natural join）</code>。</li>
+<li>一般连接主要从行的角度选元组，自然连接还要进一步处理重复列，因此它同时涉及行和列。</li>
+</ul>
+<p><strong>除</strong></p>
+<ul>
+<li><code>除（division）</code> 是关系代数里最难直观把握的运算。</li>
+<li>给定关系 <span class="arithmatex">\(R(X,Y)\)</span> 和 <span class="arithmatex">\(S(Y)\)</span>，<span class="arithmatex">\(R\div S\)</span> 的结果是一个新的关系 <span class="arithmatex">\(P(X)\)</span>。</li>
+<li><span class="arithmatex">\(P\)</span> 中保留的是这样一些 <span class="arithmatex">\(X\)</span> 值：对于 <span class="arithmatex">\(S\)</span> 中出现的每个 <span class="arithmatex">\(Y\)</span> 值，都能在 <span class="arithmatex">\(R\)</span> 中找到与该 <span class="arithmatex">\(X\)</span> 配对的元组。</li>
+</ul>
+<p><strong>为什么除法重要</strong></p>
+<ul>
+<li>除法对应的是“对所有”这类全称条件。</li>
+<li>例如“选修了全部课程的学生”“至少选修了 1 号课程和 3 号课程的学生”，都可以借助除法表达。</li>
+</ul>
+<p>教材中的典型思路包括：</p>
+<ul>
+<li>查询至少选修了 1 号课程和 3 号课程的学生学号，可以先构造临时关系 <span class="arithmatex">\(K=\{1,3\}\)</span>，再在选修关系上做除运算。</li>
+<li>查询选修了全部课程的学生学号和姓名，可以先求 $ \pi_{Sno,Cno}(SC)\div \pi_{Cno}(Course) $，再和学生关系连接取姓名。</li>
+</ul>
+<p><mark>关系代数中的八种运算</mark></p>
+<ul>
+<li>这一节一共介绍了 8 种关系代数运算。</li>
+<li>其中并、差、笛卡儿积、投影、选择属于基本运算。</li>
+<li>交、连接、除都可以用前面的基本运算表达出来。</li>
+<li>引入这些扩展运算不会增加表达能力，作用在于让表达式更简洁。</li>
+</ul>
 <h3 id="25">2.5 关系演算</h3>
-<p>这一节要解决“除了按运算步骤写查询，还能否按结果应满足的性质写查询”这个问题。关系演算给出的就是另一种表达方式。</p>
-<p>关系代数偏向操作式，强调如何一步步得到结果；关系演算偏向说明式，强调结果元组应满足什么条件。两者表达能力在经典关系模型里是等价的。</p>
+<p>这一节从另一条路去表达查询。关系代数强调“通过哪些运算得到结果”，关系演算强调“结果应当满足什么条件”。</p>
+<p><mark>关系演算的基本想法</mark></p>
+<ul>
+<li>关系演算以数理逻辑中的谓词演算为基础。</li>
+<li>按谓词变元的不同，关系演算可分为元组关系演算和域关系演算。</li>
+<li>课程通过 ALPHA 和 QBE 两种语言介绍这两条思路。</li>
+</ul>
 <h4 id="251-alpha">2.5.1 元组关系演算语言 ALPHA</h4>
-<p>元组关系演算以元组变量为基本单位，常见形式是：</p>
+<p><mark>ALPHA 的基本格式</mark></p>
+<ul>
+<li>元组关系演算以元组变量作为谓词变元的基本对象。</li>
+<li>ALPHA 是 E. F. Codd 提出的元组关系演算语言，课程里主要借它来理解元组关系演算的表达方式，后来相关思路进入了 QUEL 等语言。</li>
+<li>ALPHA 的主要语句有 <code>GET</code>、<code>PUT</code>、<code>HOLD</code>、<code>UPDATE</code>、<code>DELETE</code>、<code>DROP</code>。</li>
+<li>教材给出的基本格式是：</li>
+</ul>
 <div class="arithmatex">\[
-\{\, t \mid P(t) \,\}
+\text{操作语句}\ \text{工作空间名}(\text{表达式}) : \text{操作条件}
 \]</div>
-<p>其中 <span class="arithmatex">\(t\)</span> 是元组变量，<span class="arithmatex">\(P(t)\)</span> 是谓词公式。这个表达式的意思是：所有满足条件 <span class="arithmatex">\(P(t)\)</span> 的元组 <span class="arithmatex">\(t\)</span> 构成结果集。</p>
-<p>例如，查找计算机系学生，可写成：</p>
-<div class="arithmatex">\[
-\{\, t \mid t \in S \land t.SD='CS' \,\}
-\]</div>
-<p>ALPHA 是早期基于元组关系演算思想的查询语言，课程里主要把它作为“元组变量视角”的代表来理解。</p>
+<ul>
+<li>表达式说明操作对象，可以是关系名，也可以是属性名。</li>
+<li>操作条件是逻辑表达式，也可以为空。</li>
+</ul>
+<p><mark>检索操作</mark></p>
+<ul>
+<li><code>GET</code> 用来实现检索。</li>
+<li>简单检索可以直接对关系或属性取值，例如查询所有被选修课程的课程号：<code>GET W(SC.Cno)</code>。</li>
+<li>带条件的检索可以在冒号后加逻辑表达式，例如查询信息系中年龄小于 20 岁的学生学号和年龄：</li>
+</ul>
+<div class="highlight"><pre><span></span><code>GET W(Student.Sno, Student.Sage): Student.Sdept=&#39;IS&#39; ∧ Student.Sage&lt;20
+</code></pre></div>
+<ul>
+<li>ALPHA 还支持排序和定额，例如按年龄降序取出前 3 个信息系学生。</li>
+</ul>
+<p><mark>元组变量与量词</mark></p>
+<ul>
+<li>元组变量也叫范围变量，它在某个关系范围内变化。</li>
+<li>元组变量有两项常见作用：一是简化关系名，二是配合存在量词和全称量词表达条件。</li>
+<li>例如设 <code>RANGE Student X</code>，就可以用 <code>X</code> 代替 <code>Student</code>。</li>
+<li>查询选修 2 号课程的学生姓名、查询至少选修一门其先修课为 6 号课程的学生姓名，都要借助存在量词来写。</li>
+<li>查询选修全部课程的学生姓名，则要用到全称量词。</li>
+</ul>
+<p><mark>集函数与更新操作</mark></p>
+<ul>
+<li>ALPHA 中还提供 <code>COUNT</code>、<code>TOTAL</code>、<code>MAX</code>、<code>MIN</code>、<code>AVG</code> 等集函数。</li>
+<li>例如查询学生所在系的数目，可以用 <code>COUNT(Student.Sdept)</code>。</li>
+<li>更新操作分成修改、插入、删除三类。</li>
+<li>修改时先用 <code>HOLD</code> 把元组读到工作空间，再修改，再用 <code>UPDATE</code> 写回。</li>
+<li>插入时先在工作空间中构造新元组，再用 <code>PUT</code> 插入指定关系。</li>
+<li>删除时先 <code>HOLD</code> 目标元组，再用 <code>DELETE</code> 删除。</li>
+<li>教材明确指出：主码值的修改一般通过“先删后插”间接完成。</li>
+</ul>
 <h4 id="252-qbe">2.5.2 域关系演算语言 QBE</h4>
-<p>域关系演算以属性值变量为基本单位，结果通常写成若干域变量的有序组：</p>
-<div class="arithmatex">\[
-\{\, \langle x,y \rangle \mid \exists z \exists w \; S(x,y,z,w) \land z='CS' \,\}
-\]</div>
-<p>它的重点不在“整行元组”，而在“每一列位置上的值变量”。QBE（Query By Example）则把这种思路转成表格式填写方式，让用户在样板表中直接写条件和目标列。</p>
-<p>从复习角度看，这一节记住三件事就够了：元组关系演算按元组变量组织，域关系演算按域变量组织，二者和关系代数在表达能力上处于同一层级。</p>
+<p><mark>QBE 的特点</mark></p>
+<ul>
+<li>域关系演算以域变量作为谓词变元的基本对象。</li>
+<li>QBE 是 <code>query by example</code> 的缩写，它的最大特点是通过表格式界面构造查询。</li>
+<li>用户在屏幕表格中填写示例元素和条件，系统再把这些填写内容解释成查询要求。</li>
+<li>这种方式直观、易学，能够把域关系演算的思想直接呈现在界面上。</li>
+</ul>
+<p><mark>QBE 中的基本记号</mark></p>
+<ul>
+<li>示例如素可以看作域变量。</li>
+<li><code>P.</code> 表示打印，也就是把该列输出到结果中。</li>
+<li>比较条件直接写在对应属性列上，等号通常可以省略。</li>
+<li>相同的示例如素写在不同关系中时，会形成连接条件。</li>
+</ul>
+<p><mark>典型查询方式</mark></p>
+<ul>
+<li>查询信息系全体学生姓名时，可以在 <code>Student</code> 表中让 <code>Sdept</code> 列等于 <code>IS</code>，让 <code>Sname</code> 列前加 <code>P.</code>。</li>
+<li>查询全体学生的全部数据时，可以直接把 <code>P.</code> 作用在关系名上。</li>
+<li>条件查询中，若多个条件写在同一行，表示逻辑“与”；若写在不同行并使用不同示例如素，表示逻辑“或”。</li>
+<li>查询既选修 1 号课程又选修 2 号课程的学生学号时，要写两行，并让两行中的学号示例如素保持相同。</li>
+<li>查询选修 1 号课程的学生姓名时，可以在 <code>SC</code> 和 <code>Student</code> 两个关系中使用相同的连接属性值完成连接。</li>
+<li>查询未选修 1 号课程的学生姓名时，可以在关系名前加负号表示逻辑非。</li>
+</ul>
+<p><mark>集函数、排序与更新</mark></p>
+<ul>
+<li>QBE 也提供 <code>CNT</code>、<code>SUM</code>、<code>AVG</code>、<code>MAX</code>、<code>MIN</code> 等集函数。</li>
+<li>例如查询信息系学生平均年龄，可以在 <code>Sage</code> 列上使用 <code>P.AVG.ALL.</code>。</li>
+<li>对结果排序时，升序写 <code>AO.</code>，降序写 <code>DO.</code>；多列排序时用 <code>AO(i).</code> 或 <code>DO(i).</code> 标明优先级。</li>
+<li>更新操作中，<code>U.</code> 表示修改，<code>I.</code> 表示插入，<code>D.</code> 表示删除。</li>
+<li>教材同样强调：关系的主码不允许直接修改，需要通过删除旧元组、插入新元组的方式实现。</li>
+</ul>
 <h3 id="26">2.6 关系数据库管理系统</h3>
-<p>这一节要解决“什么样的系统才能称作关系数据库管理系统”这个问题。教材在这里给出的是按支持程度划分的视角。</p>
-<p>如果一个系统只把表当成外部表示形式，却还要求用户沿着固定路径访问数据，那么它离真正的关系系统还有距离。按照对关系模型支持的程度，可以把系统分成下面几类。</p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>主要特征</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>表式系统</td>
-<td>只支持表式数据结构，操作能力很弱</td>
-</tr>
-<tr>
-<td>最小关系系统</td>
-<td>支持关系数据结构以及选择、投影、连接等基本操作</td>
-</tr>
-<tr>
-<td>关系完备系统</td>
-<td>支持完整的关系代数能力</td>
-</tr>
-<tr>
-<td>全关系系统</td>
-<td>在关系结构、关系操作和完整性控制上都较完整地支持关系模型</td>
-</tr>
-</tbody>
-</table>
-<p>教材最后落脚到一个判断标准：关系数据库管理系统至少要在数据结构和操作层面真正支持关系模型，并把完整性控制纳入系统内部机制。</p>
-<p><strong>小结</strong></p>
-<p>第 2 章完成了课程主线的第一次收束。关系作为统一数据结构，关系代数和关系演算作为查询理论，完整性作为规则约束，三者合起来才形成后面 SQL 和数据库设计的理论基础。</p>
+<p>这一节回到系统层面，讨论什么样的系统才能称为关系系统。教材在这里给的是“最低要求”和“支持程度分类”。</p>
+<p><mark>关系系统的最低要求</mark></p>
+<ul>
+<li>关系数据库管理系统简称关系系统，是支持关系模型的系统。</li>
+<li>教材对实际系统给出的判断标准，落在两个最低要求上。</li>
+<li>第一，系统要支持关系数据结构。也就是说，从用户观点看，数据库由表构成，并且系统中以表为核心结构。</li>
+<li>第二，系统要支持选择、投影和自然连接这三类最主要的运算，而且这些运算不要求用户定义物理存取路径。</li>
+</ul>
+<p><mark>哪些系统还达不到关系系统要求</mark></p>
+<ul>
+<li>只支持表式数据结构而缺少集合级操作的系统，还达不到关系系统要求。</li>
+<li>只支持表结构，同时缺少选择、投影和连接能力的系统，用户生产率不会真正提高。</li>
+<li>提供选择、投影和连接，同时仍要求用户显式依赖物理存取路径的系统，也会破坏数据的物理独立性。</li>
+</ul>
+<p><mark>关系系统的四类划分</mark></p>
+<ul>
+<li>按照对关系模型支持程度的不同，教材把关系系统分成四类。</li>
+<li><code>表式系统</code>：支持表结构，缺少集合级操作，这一类系统还不算真正的关系系统。</li>
+<li><code>最小关系系统</code>：支持关系数据结构，同时支持选择、投影和连接。</li>
+<li><code>关系完备系统</code>：支持关系数据结构和全部关系代数操作，功能上与关系代数等价。</li>
+<li><code>全关系系统</code>：支持关系模型的全部特征，特别是域的概念、实体完整性和参照完整性。</li>
+</ul>
+<p><mark>关系系统与三级模式结构</mark></p>
+<ul>
+<li>不同关系系统对关系模型支持程度不同，体系结构仍然符合三级模式结构。</li>
+<li>表是关系系统的模式。</li>
+<li>视图对应关系系统的外模式。</li>
+<li>实际存储在磁盘或磁带上的文件对应内模式。</li>
+<li>模式与外模式之间的映像、模式与内模式之间的映像由关系系统自动提供和维护。</li>
+</ul>
 <h2 id="3-sql">第3章 关系数据库标准语言 SQL</h2>
 <div class="admonition note 本章抓手">
 <p class="admonition-title">Note</p>
