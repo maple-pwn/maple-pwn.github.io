@@ -1,0 +1,5585 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://maple-pwn.github.io/study/cry/SHA3/">
+      
+      
+        <link rel="prev" href="../SM4/">
+      
+      
+        <link rel="next" href="../SM3/">
+      
+      
+      <link rel="icon" href="../../../images/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>算法介绍-SHA3 - Maple's blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.e53b48f4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../resources/css/extra.css">
+    
+      <link rel="stylesheet" href="../../../resources/css/tittle.css">
+    
+      <link rel="stylesheet" href="../../../resources/css/read-metrics.css">
+    
+      <link rel="stylesheet" href="../../../resources/css/leftsidebar.css">
+    
+      <link rel="stylesheet" href="https://static.zeoseven.com/zsft/292/main/result.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="Maple&#39;s blog" class="md-header__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+      
+  <img src="../../../images/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Maple's blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              算法介绍-SHA3
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../mysys/pre/" class="md-tabs__link">
+          
+  
+  
+  OS篇
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../LLMZtH/pre/" class="md-tabs__link">
+          
+  
+  
+  AI篇
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../pre/" class="md-tabs__link">
+          
+  
+  
+  校内篇
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../READ/paperread/mHC/" class="md-tabs__link">
+          
+  
+  
+  阅读篇
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../pwn/pre/" class="md-tabs__link">
+          
+  
+  
+  pwn篇
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../thinking/pre/" class="md-tabs__link">
+          
+  
+  
+  论道篇
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../sth/proj/" class="md-tabs__link">
+          
+  
+  
+  杂篇
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://game.oldmaple.top" class="md-tabs__link">
+        
+  
+  
+    
+  
+  🎮 游戏
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Maple&#39;s blog" class="md-nav__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+      
+  <img src="../../../images/logo.svg" alt="logo">
+
+    </a>
+    Maple's blog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    OS篇
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            OS篇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mysys/pre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mysys/01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    实模式
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mysys/02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    保护模式
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mysys/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    内核
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mysys/04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    内存管理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mysys/05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    IO机制
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mysys/06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    扩展文件系统
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    AI篇
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            AI篇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/pre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    AI细碎知识
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            AI细碎知识
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/Agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Agent
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/RAG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RAG
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/LLMWAF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LLM防火墙
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/LLMT10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LLM安全Top10
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    ML学习笔记
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            ML学习笔记
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/ML/1-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基本知识
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/ML/4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第四章 决策树
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/ML/5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第五章 神经网络
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/ML/6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第六章 支持向量机
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/ML/7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第七章 贝叶斯分类器
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/ML/7_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    7 1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/ML/8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第八章 集成学习
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/ML/9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第九章 聚类
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/ML/10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第十章 降维与度量学习
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/ML/11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第十一章 特征选择与稀疏学习
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/ML/12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    后记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    RL学习笔记
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            RL学习笔记
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/RL/1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    DL学习笔记
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            DL学习笔记
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/DL/1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/DL/images-class/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    图像识别翻译
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/DL/images-class-py/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    图像识别实现
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/DL/linear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    线性分类翻译
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/DL/linear-py/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    线性分类实现
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/DL/optimization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    优化-翻译
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../LLMZtH/DL/Backprop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    反向传播-翻译
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    校内篇
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            校内篇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../eda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    数字逻辑
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    大学物理
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            大学物理
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    十二、十三章
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dw2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    十四、十五章
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    概率与统计
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lisan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    离散数学
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    毛中特
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    计算机组成原理
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            计算机组成原理
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs_final/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    部分笔记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs_exam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    部分试卷&重点题目分析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    密码学引论
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            密码学引论
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../crypto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    笔记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../math_base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    数学基础
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法介绍-AES
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SM4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法介绍-SM4
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    算法介绍-SHA3
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法介绍-SHA3
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      海绵结构介绍
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="海绵结构介绍">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#padm-r" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pad(M)：把任意长度消息整理成 r 位分组
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p-p0-pk-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      分组：把填充后的 P 切成 P0 到 Pk-1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pi-s" class="md-nav__link">
+    <span class="md-ellipsis">
+      吸收阶段：每个 Pi 改写一次状态 S
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#s-hash" class="md-nav__link">
+    <span class="md-ellipsis">
+      挤出阶段：从状态 S 读出 Hash
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      完整算法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sha-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      SHA-3算法介绍
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SHA-3算法介绍">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      版本参数
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#padm" class="md-nav__link">
+    <span class="md-ellipsis">
+      输入消息先进入 Pad(M)，然后分组
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="输入消息先进入 Pad(M)，然后分组">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#s-1600" class="md-nav__link">
+    <span class="md-ellipsis">
+      状态 \(S\) 的 1600 位如何组织
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      吸收阶段：消息块进入状态
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keccak-f1600" class="md-nav__link">
+    <span class="md-ellipsis">
+      Keccak-f[1600] 的外层结构
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Keccak-f[1600] 的外层结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#theta" class="md-nav__link">
+    <span class="md-ellipsis">
+      \(\theta\)：按列求校验并扩散到全列
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rho-lane" class="md-nav__link">
+    <span class="md-ellipsis">
+      \(\rho\)：每个 lane 按固定偏移循环移位
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pi-lane" class="md-nav__link">
+    <span class="md-ellipsis">
+      \(\pi\)：把 lane 放到新的平面位置
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chi" class="md-nav__link">
+    <span class="md-ellipsis">
+      \(\chi\)：逐行非线性替代
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iota-a00" class="md-nav__link">
+    <span class="md-ellipsis">
+      \(\iota\)：把轮常数注入 \(A[0,0]\)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      挤出阶段：从状态读出输出
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      伪代码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      算法实现
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SM3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法介绍-SM3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ZUC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法介绍-ZUC
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RSA%26EIGamal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法介绍-RSA&EIGamal
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SM2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法介绍-SM2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../OS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    操作系统概论
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compiler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    编译原理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    数据库
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_11">
+            <span class="md-nav__icon md-icon"></span>
+            数据库
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../db/db_homework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    作业
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../db/db/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    笔记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cs_e/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    计算机设计实验入门指引
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_13" id="__nav_3_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    汇编语言与接口设计
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_13">
+            <span class="md-nav__icon md-icon"></span>
+            汇编语言与接口设计
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../huibian/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    笔记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asm_homework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    作业
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    汇编速通
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hot100/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    hot100
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    阅读篇
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            阅读篇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    论文
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            论文
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../READ/paperread/mHC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    mHC
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../READ/paperread/GCG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GCG越狱论文
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../READ/paperread/cs231n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    cs231n扩展阅读
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    pwn篇
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            pwn篇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/pre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/tricks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    小技巧
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/AI%E5%81%9A%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AI做题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Agent 工作流
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/agent-ppt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Agent 分享
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    栈利用
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_6">
+            <span class="md-nav__icon md-icon"></span>
+            栈利用
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Stack/%E6%B1%87%E7%BC%96%E9%80%9F%E9%80%9A/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    汇编速通
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Stack/ASLR/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ASLR绕过
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Stack/Canary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Canary绕过
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Stack/PIE%E7%BB%95%E8%BF%87/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PIE绕过
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Stack/fmt-all-in-one/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    格式化字符串
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Stack/shellcode-all-in-one/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Shellcode
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Stack/SROP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SROP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    堆利用
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            堆利用
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Heap/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基础知识
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Heap/%E5%90%84%E4%B8%AA%E5%87%BD%E6%95%B0%E5%8E%9F%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    函数原型
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Heap/%E5%A0%86%E6%BA%A2%E5%87%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    堆溢出
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Heap/%E5%A0%86%E6%BA%A2%E5%87%BA%E4%B8%AD%E6%AF%94%E8%BE%83%E9%87%8D%E8%A6%81%E7%9A%84%E6%AD%A5%E9%AA%A4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    堆溢出要点
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Heap/%E5%A0%86%E4%B8%AD%E7%9A%84off-by-one/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Off-by-one
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Heap/%E5%A0%86%E5%90%84%E7%B1%BB%E6%94%BB%E5%87%BB%E6%89%8B%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    攻击手法
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/Heap/%E4%BE%8B%E9%A2%98%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    例题记录
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8" id="__nav_5_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    IO_FILE
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8">
+            <span class="md-nav__icon md-icon"></span>
+            IO_FILE
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/IO_FILE/_IO_FILE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基础知识
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/IO_FILE/IO_FILE%E6%BA%90%E7%A0%81/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    源码分析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/IO_FILE/fopen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    fopen
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/IO_FILE/fread/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    fread
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/IO_FILE/%E5%81%9A%E9%A2%98%E6%8A%80%E5%B7%A7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    做题技巧
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_9" id="__nav_5_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    House系列
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_9">
+            <span class="md-nav__icon md-icon"></span>
+            House系列
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse%20of%20apple1%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Apple1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-apple2%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Apple2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse%20of%20cat%20%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Cat
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-kiwi%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Kiwi
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-botcake%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Botcake
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_10" id="__nav_5_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    CTF Writeups
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_10">
+            <span class="md-nav__icon md-icon"></span>
+            CTF Writeups
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/basectf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    BaseCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/moectf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MoeCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/isctf2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ISCTF2024
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/ghctf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GHCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/xyctf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    XYCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/tgctf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TGCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/NPCCTF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NPCCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/ctfshow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CTFShow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/whuctf2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    WHUCTF2024
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/whuctf2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    WHUCTF2025
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/%E5%BC%BA%E7%BD%91%E6%9D%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    强网杯
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/polarD%26N/polarD%26N/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PolarD&N
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_10_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_10_13" id="__nav_5_10_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    BUUCTF
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_10_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_10_13">
+            <span class="md-nav__icon md-icon"></span>
+            BUUCTF
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%881-20%E9%A2%98%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1-20题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8821-40%E9%A2%98%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    21-40题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8841-60%E9%A2%98%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    41-60题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8861-80%E9%A2%98%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    61-80题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    论道篇
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            论道篇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../thinking/pre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../thinking/I/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    信息时代的我们
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../thinking/AI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AI时代的我们
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    杂篇
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            杂篇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sth/proj/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    proj
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sth/10-min-panda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    十分钟学会panda
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sth/others/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    一些杂七杂八的随手记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools/bit32_visualizer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    32位位运算可视化工具
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_5" id="__nav_7_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    一些事故
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_5">
+            <span class="md-nav__icon md-icon"></span>
+            一些事故
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sth/ssh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ssh配置
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sth/codex/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    codex cli卡死
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://game.oldmaple.top" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🎮 游戏
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      海绵结构介绍
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="海绵结构介绍">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#padm-r" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pad(M)：把任意长度消息整理成 r 位分组
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p-p0-pk-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      分组：把填充后的 P 切成 P0 到 Pk-1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pi-s" class="md-nav__link">
+    <span class="md-ellipsis">
+      吸收阶段：每个 Pi 改写一次状态 S
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#s-hash" class="md-nav__link">
+    <span class="md-ellipsis">
+      挤出阶段：从状态 S 读出 Hash
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      完整算法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sha-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      SHA-3算法介绍
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SHA-3算法介绍">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      版本参数
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#padm" class="md-nav__link">
+    <span class="md-ellipsis">
+      输入消息先进入 Pad(M)，然后分组
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="输入消息先进入 Pad(M)，然后分组">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#s-1600" class="md-nav__link">
+    <span class="md-ellipsis">
+      状态 \(S\) 的 1600 位如何组织
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      吸收阶段：消息块进入状态
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keccak-f1600" class="md-nav__link">
+    <span class="md-ellipsis">
+      Keccak-f[1600] 的外层结构
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Keccak-f[1600] 的外层结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#theta" class="md-nav__link">
+    <span class="md-ellipsis">
+      \(\theta\)：按列求校验并扩散到全列
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rho-lane" class="md-nav__link">
+    <span class="md-ellipsis">
+      \(\rho\)：每个 lane 按固定偏移循环移位
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pi-lane" class="md-nav__link">
+    <span class="md-ellipsis">
+      \(\pi\)：把 lane 放到新的平面位置
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chi" class="md-nav__link">
+    <span class="md-ellipsis">
+      \(\chi\)：逐行非线性替代
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iota-a00" class="md-nav__link">
+    <span class="md-ellipsis">
+      \(\iota\)：把轮常数注入 \(A[0,0]\)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      挤出阶段：从状态读出输出
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      伪代码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      算法实现
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+  
+                  
+
+
+
+  <h1>算法介绍-SHA3</h1>
+
+<h2 id="_1">海绵结构介绍</h2>
+<p><img alt="14be7589-89ab-4617-b7a6-725f3ca9e89b" src="../../../images/14be7589-89ab-4617-b7a6-725f3ca9e89b.png" /></p>
+<p>海绵结构处理的是一串比特。输入消息记为 <span class="arithmatex">\(M\)</span>，消息长度记为 <span class="arithmatex">\(n=|M|\)</span>，目标输出长度记为 <span class="arithmatex">\(l\)</span>。整个结构内部维护一个 <strong>状态变量 <span class="arithmatex">\(S\)</span></strong>，<strong>状态长度</strong> 为 <span class="arithmatex">\(b\)</span> 位。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>SHA-3 标准哈希使用 Keccak-f[1600]，所以状态长度固定为</p>
+<div class="arithmatex">\[
+b=1600
+\]</div>
+</div>
+<p>这个 <span class="arithmatex">\(b\)</span> 位状态被分成前后两段：</p>
+<div class="arithmatex">\[
+b=r+c
+\]</div>
+<p>其中，</p>
+<ul>
+<li>前 <span class="arithmatex">\(r\)</span> 位叫位速率，负责每一轮和外部数据发生交互；</li>
+<li>后 <span class="arithmatex">\(c\)</span> 位叫容量，主要提供安全余量。</li>
+</ul>
+<p>我们可以把状态变量写成</p>
+<div class="arithmatex">\[
+S=S_{0:r}\Vert S_{r:b}
+\]</div>
+<p>其中，</p>
+<ul>
+<li><span class="arithmatex">\(S_{0:r}\)</span> 是前 <span class="arithmatex">\(r\)</span> 位，</li>
+<li><span class="arithmatex">\(S_{r:b}\)</span> 是后 <span class="arithmatex">\(c\)</span> 位。</li>
+</ul>
+<p>海绵结构的全部流程都围绕这个状态展开：先把消息分组写入状态，再从状态前部读出结果。</p>
+<h4 id="padm-r">Pad(M)：把任意长度消息整理成 r 位分组</h4>
+<p>吸收阶段每次处理 <span class="arithmatex">\(r\)</span> 位消息块。原始消息 <span class="arithmatex">\(M\)</span> 的长度 <span class="arithmatex">\(n\)</span> 通常难以刚好被 <span class="arithmatex">\(r\)</span> 整除，因此需要在消息末尾追加填充串。图中使用的多重位速率填充写作</p>
+<div class="arithmatex">\[
+pad10^*1
+\]</div>
+<blockquote>
+<p>这个符号按顺序表示三部分：先追加一个 1，中间追加若干个 0，最后追加一个 1。</p>
+</blockquote>
+<p>于是填充后的消息可以写成</p>
+<div class="arithmatex">\[
+P=M\Vert 1\Vert 0^j\Vert 1
+\]</div>
+<blockquote>
+<p>这里 <span class="arithmatex">\(j\)</span> 是中间 0 的个数。</p>
+</blockquote>
+<p>这里 <span class="arithmatex">\(j\)</span> 的值由一个条件决定：填充后的总长度要成为 <span class="arithmatex">\(r\)</span> 的整数倍。因此需要</p>
+<div class="arithmatex">\[
+n+2+j\equiv 0\pmod r
+\]</div>
+<blockquote>
+<p>其中的 <span class="arithmatex">\(2\)</span> 来自首尾两个 1。</p>
+</blockquote>
+<p>把这个条件整理成可直接计算的形式，就是</p>
+<div class="arithmatex">\[
+j=(r-((n+2)\bmod r))\bmod r
+\]</div>
+<p>算出 <span class="arithmatex">\(j\)</span> 后，Pad(M) 就已经确定。教材图里的 <span class="arithmatex">\(Pad(M)\)</span> 指的就是追加</p>
+<div class="arithmatex">\[
+1\Vert 0^j\Vert 1
+\]</div>
+<p>这一串填充比特。实际 SHA-3 工程编码还带有用途区分后缀；在海绵结构的学习层面，先按图中的 <span class="arithmatex">\(pad10^*1\)</span> 走完整体流程。</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p>举一个小尺寸例子，令 <span class="arithmatex">\(r=8\)</span>，原消息为</p>
+<div class="arithmatex">\[
+M=101100
+\]</div>
+<p>此时</p>
+<div class="arithmatex">\[
+n=6
+\]</div>
+<p>代入公式：</p>
+<div class="arithmatex">\[
+j=(8-((6+2)\bmod 8))\bmod 8=(8-0)\bmod 8=0
+\]</div>
+<p>所以填充串为</p>
+<div class="arithmatex">\[
+1\Vert 0^0\Vert 1=11
+\]</div>
+<p>填充后的消息为</p>
+<div class="arithmatex">\[
+P=10110011
+\]</div>
+<p>它刚好形成一个 8 位分组：</p>
+<div class="arithmatex">\[
+P_0=10110011
+\]</div>
+<hr />
+<p>再有 <span class="arithmatex">\(M=10110010\)</span>，仍取 <span class="arithmatex">\(r=8\)</span>。这时 <span class="arithmatex">\(n=8\)</span>，计算得到</p>
+<div class="arithmatex">\[
+j=(8-((8+2)\bmod 8))\bmod 8=(8-2)\bmod 8=6
+\]</div>
+<p>填充串为</p>
+<div class="arithmatex">\[
+10000001
+\]</div>
+<p>填充后消息为</p>
+<div class="arithmatex">\[
+P=10110010\ 10000001
+\]</div>
+<p>于是切成两个分组：</p>
+<div class="arithmatex">\[
+P_0=10110010,\quad P_1=10000001
+\]</div>
+</div>
+<p>这一步说明，Pad(M) 的任务是保证分组边界清楚，同时让每个输入分组长度都等于 <span class="arithmatex">\(r\)</span>。</p>
+<h4 id="p-p0-pk-1">分组：把填充后的 P 切成 P0 到 Pk-1</h4>
+<p>完成填充后，得到</p>
+<div class="arithmatex">\[
+P=M\Vert Pad(M)
+\]</div>
+<p>由于 <span class="arithmatex">\(|P|\)</span> 已经是 <span class="arithmatex">\(r\)</span> 的整数倍，可以直接切分：</p>
+<div class="arithmatex">\[
+P=P_0\Vert P_1\Vert\cdots\Vert P_{k-1}
+\]</div>
+<p>每个分组满足</p>
+<div class="arithmatex">\[
+|P_i|=r
+\]</div>
+<p>分组数量为</p>
+<div class="arithmatex">\[
+k=\frac{|P|}{r}
+\]</div>
+<p>从这里开始，算法进入吸收阶段。</p>
+<h4 id="pi-s">吸收阶段：每个 Pi 改写一次状态 S</h4>
+<p>吸收阶段开始时，内部状态初始化为全 0：</p>
+<div class="arithmatex">\[
+S=0^b
+\]</div>
+<p>每个消息分组 <span class="arithmatex">\(P_i\)</span> 长度为 <span class="arithmatex">\(r\)</span> 位，状态 <span class="arithmatex">\(S\)</span> 长度为 <span class="arithmatex">\(b=r+c\)</span> 位。<strong>为了把 <span class="arithmatex">\(P_i\)</span> 放到和 <span class="arithmatex">\(S\)</span> 相同长度的比特串中</strong>，需要在 <span class="arithmatex">\(P_i\)</span> 后面接 <span class="arithmatex">\(c\)</span> 个 0：</p>
+<div class="arithmatex">\[
+P_i\Vert 0^c
+\]</div>
+<p>这样它就从 <span class="arithmatex">\(r\)</span> 位扩展成了 <span class="arithmatex">\(b\)</span> 位。第 <span class="arithmatex">\(i\)</span> 轮吸收分两步进行。</p>
+<p><strong>第一步，把扩展后的分组和当前状态异或：</strong></p>
+<div class="arithmatex">\[
+S\leftarrow S\oplus(P_i\Vert 0^c)
+\]</div>
+<ul>
+<li>这一步只会让消息块进入状态的前 <span class="arithmatex">\(r\)</span> 位；</li>
+<li>容量部分对应的是 <span class="arithmatex">\(0^c\)</span>，它在这一轮异或中作为对齐补位。</li>
+</ul>
+<p><strong>第二步，把整个状态送入迭代函数：</strong></p>
+<div class="arithmatex">\[
+S\leftarrow f(S)
+\]</div>
+<blockquote>
+<p>在 SHA-3 中，<span class="arithmatex">\(f\)</span> 就是 Keccak-f[1600] 置换。它处理完整的 1600 位状态，使刚吸收的消息块经过置换后影响状态各个位置。</p>
+</blockquote>
+<p>因此，一轮吸收可以合并写成：</p>
+<div class="arithmatex">\[
+S_i=f(S_{i-1}\oplus(P_i\Vert 0^c))
+\]</div>
+<p>其中 <span class="arithmatex">\(S_{i-1}\)</span> 是上一轮状态，<span class="arithmatex">\(S_i\)</span> 是当前分组处理后的状态。所有分组按顺序执行同样的计算：</p>
+<div class="arithmatex">\[
+P_0\rightarrow S_0,
+\quad
+P_1\rightarrow S_1,
+\quad
+\cdots,
+\quad
+P_{k-1}\rightarrow S_{k-1}
+\]</div>
+<p>最后得到的状态 <span class="arithmatex">\(S_{k-1}\)</span> 就是整条消息经过吸收后的内部状态。</p>
+<h4 id="s-hash">挤出阶段：从状态 S 读出 Hash</h4>
+<p>吸收完成后，消息已经全部进入状态。接下来要产生 <span class="arithmatex">\(l\)</span> 位输出。海绵结构每次从状态 <strong>前 <span class="arithmatex">\(r\)</span> 位</strong> 读出一个输出块，记为</p>
+<div class="arithmatex">\[
+Z_0=S_{0:r}
+\]</div>
+<p>当已经读出的长度达到目标长度 <span class="arithmatex">\(l\)</span> 时，直接截取前 <span class="arithmatex">\(l\)</span> 位作为 Hash：</p>
+<div class="arithmatex">\[
+Hash=Z_{0:l}
+\]</div>
+<p>当目标输出长度超过当前已经读出的长度时，需要继续生成下一块输出。做法是如下：</p>
+<p>一、先更新状态：</p>
+<div class="arithmatex">\[
+S\leftarrow f(S)
+\]</div>
+<p>二、再读取新的状态前 <span class="arithmatex">\(r\)</span> 位：</p>
+<div class="arithmatex">\[
+Z_1=S_{0:r}
+\]</div>
+<p>如此反复，得到</p>
+<div class="arithmatex">\[
+Z=Z_0\Vert Z_1\Vert\cdots\Vert Z_{t-1}
+\]</div>
+<p>当 <span class="arithmatex">\(|Z|\ge l\)</span> 时，最终返回</p>
+<div class="arithmatex">\[
+Hash=Z_{0:l}
+\]</div>
+<p>教材图中把短输出写成从 <span class="arithmatex">\(S\)</span> 前 <span class="arithmatex">\(l\)</span> 位截取。海绵函数通用描述常采用每轮从前 <span class="arithmatex">\(r\)</span> 位读出。由于 SHA3-224、SHA3-256、SHA3-384、SHA3-512 均满足 <span class="arithmatex">\(l\le r\)</span>，这些固定长度算法在流程上都会走到同一个动作：吸收结束后直接截取前 <span class="arithmatex">\(l\)</span> 位。</p>
+<h4 id="_2">完整算法</h4>
+<p>按图中的符号，海绵函数可以写成下面的流程。这里把 <span class="arithmatex">\(f\)</span> 看作已经给定的置换函数。</p>
+<div class="language-python highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">Input</span> <span class="p">:</span> <span class="n">M</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">pad</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">Output</span><span class="p">:</span> <span class="n">l</span><span class="o">-</span><span class="n">bit</span> <span class="n">Hash</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">b</span> <span class="o">=</span> <span class="n">r</span> <span class="o">+</span> <span class="n">c</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># 1. padding</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">n</span> <span class="o">=</span> <span class="o">|</span><span class="n">M</span><span class="o">|</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">j</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="p">((</span><span class="n">n</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="n">mod</span> <span class="n">r</span><span class="p">))</span> <span class="n">mod</span> <span class="n">r</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">P</span> <span class="o">=</span> <span class="n">M</span> <span class="o">||</span> <span class="mi">1</span> <span class="o">||</span> <span class="mi">0</span><span class="o">^</span><span class="n">j</span> <span class="o">||</span> <span class="mi">1</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1"># 2. split</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="n">k</span> <span class="o">=</span> <span class="o">|</span><span class="n">P</span><span class="o">|</span> <span class="o">/</span> <span class="n">r</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="n">split</span> <span class="n">P</span> <span class="n">into</span> <span class="n">P_0</span><span class="p">,</span> <span class="n">P_1</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">P_</span><span class="p">{</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">},</span> <span class="n">each</span> <span class="k">with</span> <span class="n">r</span> <span class="n">bits</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="c1"># 3. absorbing</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="n">S</span> <span class="o">=</span> <span class="mi">0</span><span class="o">^</span><span class="n">b</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="n">X</span> <span class="o">=</span> <span class="n">P_i</span> <span class="o">||</span> <span class="mi">0</span><span class="o">^</span><span class="n">c</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="n">S</span> <span class="o">=</span> <span class="n">S</span> <span class="n">xor</span> <span class="n">X</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    <span class="n">S</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="c1"># 4. squeezing</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="n">Z</span> <span class="o">=</span> <span class="n">empty</span> <span class="n">bit</span> <span class="n">string</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="k">while</span> <span class="o">|</span><span class="n">Z</span><span class="o">|</span> <span class="o">&lt;</span> <span class="n">l</span><span class="p">:</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    <span class="n">Z</span> <span class="o">=</span> <span class="n">Z</span> <span class="o">||</span> <span class="n">first</span> <span class="n">r</span> <span class="n">bits</span> <span class="n">of</span> <span class="n">S</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="k">if</span> <span class="o">|</span><span class="n">Z</span><span class="o">|</span> <span class="o">&gt;=</span> <span class="n">l</span><span class="p">:</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>        <span class="k">break</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    <span class="n">S</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="k">return</span> <span class="n">first</span> <span class="n">l</span> <span class="n">bits</span> <span class="n">of</span> <span class="n">Z</span>
+</code></pre></div>
+<p>这段伪代码对应图中的每个板块：Pad(M) 对应填充框，<span class="arithmatex">\(P_0\)</span> 到 <span class="arithmatex">\(P_{k-1}\)</span> 对应分组框，for 循环对应吸收阶段，while 循环对应挤出阶段，最后的截取对应输出 Hash。</p>
+<h2 id="sha-3">SHA-3算法介绍</h2>
+<p><img alt="4c5d0770-c16d-4be9-84aa-edd06087c43d" src="../../../images/4c5d0770-c16d-4be9-84aa-edd06087c43d.png" /></p>
+<p>先把图中的对象固定下来。SHA-3 处理的是比特串，输入消息记为 <span class="arithmatex">\(M\)</span>，输出长度记为 <span class="arithmatex">\(l\)</span>。当选择 SHA3-224、SHA3-256、SHA3-384 或 SHA3-512 中的某一个版本时，三个核心参数随之确定：位速率 <span class="arithmatex">\(r\)</span>、容量 <span class="arithmatex">\(c\)</span>、状态长度 <span class="arithmatex">\(b\)</span>。它们满足</p>
+<div class="arithmatex">\[
+b=r+c
+\]</div>
+<p>SHA-3 中 <span class="arithmatex">\(b=1600\)</span>。所以算法始终维护一个 1600 位状态 <span class="arithmatex">\(S\)</span>，其中前 <span class="arithmatex">\(r\)</span> 位用于吸收输入和挤出输出，后 <span class="arithmatex">\(c\)</span> 位留在状态内部参与 Keccak-f 置换。整条计算链从 <span class="arithmatex">\(M\)</span> 出发，经过填充、分组、吸收、Keccak-f 迭代、挤出、截取，最后得到固定长度的 Hash 值。</p>
+<h3 id="_3">版本参数</h3>
+<p>下表为四个标准 SHA-3 哈希版本的参数。</p>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>输出长度 <span class="arithmatex">\(l\)</span></th>
+<th>位速率 <span class="arithmatex">\(r\)</span></th>
+<th>容量 <span class="arithmatex">\(c\)</span></th>
+<th>状态长度 <span class="arithmatex">\(b\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SHA3-224</td>
+<td>224</td>
+<td>1152</td>
+<td>448</td>
+<td>1600</td>
+</tr>
+<tr>
+<td>SHA3-256</td>
+<td>256</td>
+<td>1088</td>
+<td>512</td>
+<td>1600</td>
+</tr>
+<tr>
+<td>SHA3-384</td>
+<td>384</td>
+<td>832</td>
+<td>768</td>
+<td>1600</td>
+</tr>
+<tr>
+<td>SHA3-512</td>
+<td>512</td>
+<td>576</td>
+<td>1024</td>
+<td>1600</td>
+</tr>
+</tbody>
+</table>
+<p>以 SHA3-256 为例，后续计算使用</p>
+<div class="arithmatex">\[
+l=256,\quad r=1088,\quad c=512,\quad b=1600
+\]</div>
+<p>这意味着每次吸收 1088 位消息块，每次最多能从状态前部读出 1088 位输出，状态尾部 512 位作为容量参与内部置换。</p>
+<h3 id="padm">输入消息先进入 Pad(M)，然后分组</h3>
+<p>这一部分就不详细说明了，和刚刚介绍的一样</p>
+<h4 id="s-1600">状态 <span class="arithmatex">\(S\)</span> 的 1600 位如何组织</h4>
+<p>把状态画成 <span class="arithmatex">\(5\times5\times64\)</span> 的三维结构。令</p>
+<div class="arithmatex">\[
+A[x,y,z]\\
+x=0,\ldots,4,\quad y=0,\ldots,4,\quad z=0,\ldots,63
+\]</div>
+<p>表示状态中的一个比特，那么总比特数为</p>
+<div class="arithmatex">\[
+5\times5\times64=1600
+\]</div>
+<ul>
+<li>固定 <span class="arithmatex">\((x,y)\)</span> 后，沿 <span class="arithmatex">\(z\)</span> 方向的 64 位称为一个 lane。</li>
+<li>固定 <span class="arithmatex">\(z\)</span> 后，得到一个 <span class="arithmatex">\(5\times5\)</span> 的 plane（也就是一个平面）。</li>
+<li>固定 <span class="arithmatex">\(y\)</span> 和 <span class="arithmatex">\(z\)</span>，令 <span class="arithmatex">\(x\)</span> 变化，得到 row。</li>
+<li>固定 <span class="arithmatex">\(x\)</span> 和 <span class="arithmatex">\(z\)</span>，令 <span class="arithmatex">\(y\)</span> 变化，得到 column。</li>
+</ul>
+<p>常见实现会把每个 lane 看成一个 64 位无符号整数。状态共有 25 个 lane：</p>
+<div class="arithmatex">\[
+25\times64=1600
+\]</div>
+<p>从比特串映射到三维状态时，可按</p>
+<div class="arithmatex">\[
+A[x,y,z]=S[64(5y+x)+z]
+\]</div>
+<p>理解，即类似于 <span class="arithmatex">\(A[1,0,61]=S[64\times(5\times 0+1)+61]=S[125]\)</span></p>
+<blockquote>
+<p>这个映射说明，<span class="arithmatex">\(A[0,0]\)</span> 是最前面的 64 位 lane，接着是 <span class="arithmatex">\(A[1,0]\)</span>、<span class="arithmatex">\(A[2,0]\)</span>，一直到 <span class="arithmatex">\(A[4,4]\)</span>。按字节实现时，每个 64 位 lane 通常按小端序解释。</p>
+</blockquote>
+<h3 id="_4">吸收阶段：消息块进入状态</h3>
+<p>吸收阶段开始时，状态全置为 0：</p>
+<div class="arithmatex">\[
+S=0^{1600}
+\]</div>
+<p>第 <span class="arithmatex">\(i\)</span> 个输入块 <span class="arithmatex">\(P_i\)</span> 长度为 <span class="arithmatex">\(r\)</span> 位。状态长度为 <span class="arithmatex">\(b=r+c\)</span>。为了把 <span class="arithmatex">\(P_i\)</span> 放入状态，需要在 <span class="arithmatex">\(P_i\)</span> 后面拼接 <span class="arithmatex">\(c\)</span> 个 0：</p>
+<div class="arithmatex">\[
+P_i\Vert0^c
+\]</div>
+<p>这样得到一个 1600 位比特串。然后先执行异或：</p>
+<div class="arithmatex">\[
+S\leftarrow S\oplus(P_i\Vert0^c)
+\]</div>
+<p>这一步把 <span class="arithmatex">\(P_i\)</span> 混入状态前 <span class="arithmatex">\(r\)</span> 位。随后执行 Keccak-f[1600]：</p>
+<div class="arithmatex">\[
+S\leftarrow Keccak\text{-}f[1600](S)
+\]</div>
+<p>于是第 <span class="arithmatex">\(i\)</span> 轮吸收可以写成</p>
+<div class="arithmatex">\[
+S_i=Keccak\text{-}f[1600](S_{i-1}\oplus(P_i\Vert0^c))
+\]</div>
+<p>从 <span class="arithmatex">\(P_0\)</span> 到 <span class="arithmatex">\(P_{m-1}\)</span> 都按这个公式处理。每处理一个分组，就完成一次“异或输入块”和一次“24 轮 Keccak-f 置换”。</p>
+<h3 id="keccak-f1600">Keccak-f[1600] 的外层结构</h3>
+<p>Keccak-f[1600] 是一个 1600 位到 1600 位的置换函数。输入是一个状态 <span class="arithmatex">\(A\)</span>，输出仍是一个 1600 位状态。它执行 24 轮，每轮顺序固定：</p>
+<div class="arithmatex">\[
+\theta\rightarrow\rho\rightarrow\pi\rightarrow\chi\rightarrow\iota
+\]</div>
+<p>轮号记为</p>
+<div class="arithmatex">\[
+ir=0,1,\ldots,23
+\]</div>
+<p>这五步分别负责列混合、lane 内循环移位、lane 位置重排、逐行非线性替代、轮常数注入。</p>
+<h4 id="theta"><span class="arithmatex">\(\theta\)</span>：按列求校验并扩散到全列</h4>
+<p><span class="arithmatex">\(\theta\)</span> 的输入是当前状态 <span class="arithmatex">\(A[x,y,z]\)</span>。它先对每个 <span class="arithmatex">\(x,z\)</span> 计算一列的异或值：</p>
+<div class="arithmatex">\[
+C[x,z]=A[x,0,z]\oplus A[x,1,z]\oplus A[x,2,z]\oplus A[x,3,z]\oplus A[x,4,z]
+\]</div>
+<p>这里固定了 <span class="arithmatex">\(x\)</span> 和 <span class="arithmatex">\(z\)</span>，让 <span class="arithmatex">\(y\)</span> 从 0 到 4 变化，所以它是同一 column 上 5 个比特的校验值。</p>
+<p>接着计算</p>
+<div class="arithmatex">\[
+D[x,z]=C[x-1,z]\oplus C[x+1,z-1]
+\]</div>
+<p>下标 <span class="arithmatex">\(x-1\)</span>、<span class="arithmatex">\(x+1\)</span> 按模 5 计算，<span class="arithmatex">\(z-1\)</span> 按模 64 计算。用 lane 记法可写作</p>
+<div class="arithmatex">\[
+D[x]=C[x-1]\oplus ROT(C[x+1],1)
+\]</div>
+<blockquote>
+<p>其中 <span class="arithmatex">\(ROT\)</span> 表示 64 位循环左移。</p>
+</blockquote>
+<p>最后更新每个比特：</p>
+<div class="arithmatex">\[
+A[x,y,z]\leftarrow A[x,y,z]\oplus D[x,z]
+\]</div>
+<p>这一步的作用是让相邻列的校验值影响当前列。一个比特变化会改变所在列的 <span class="arithmatex">\(C\)</span>，进而通过 <span class="arithmatex">\(D\)</span> 影响邻近列，再进入后续轮传播到更多位置。</p>
+<p><img alt="image-20260515133221791" src="../../../images/image-20260515133221791.png" /></p>
+<h4 id="rho-lane"><span class="arithmatex">\(\rho\)</span>：每个 lane 按固定偏移循环移位</h4>
+<p><span class="arithmatex">\(\rho\)</span> 处理每个 64 位 lane。对固定的 <span class="arithmatex">\((x,y)\)</span>，有一个偏移量 <span class="arithmatex">\(r[x,y]\)</span>，然后执行</p>
+<div class="arithmatex">\[
+A[x,y]\leftarrow ROT(A[x,y],r[x,y])
+\]</div>
+<p>其中 <span class="arithmatex">\(ROT\)</span> 表示 64 位循环左移。偏移量表可以写成如下形式，行表示 <span class="arithmatex">\(x\)</span>，列表示 <span class="arithmatex">\(y\)</span>：</p>
+<table>
+<thead>
+<tr>
+<th><span class="arithmatex">\(r[x,y]\)</span></th>
+<th><span class="arithmatex">\(y=0\)</span></th>
+<th><span class="arithmatex">\(y=1\)</span></th>
+<th><span class="arithmatex">\(y=2\)</span></th>
+<th><span class="arithmatex">\(y=3\)</span></th>
+<th><span class="arithmatex">\(y=4\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(x=0\)</span></td>
+<td>0</td>
+<td>36</td>
+<td>3</td>
+<td>41</td>
+<td>18</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(x=1\)</span></td>
+<td>1</td>
+<td>44</td>
+<td>10</td>
+<td>45</td>
+<td>2</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(x=2\)</span></td>
+<td>62</td>
+<td>6</td>
+<td>43</td>
+<td>15</td>
+<td>61</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(x=3\)</span></td>
+<td>28</td>
+<td>55</td>
+<td>25</td>
+<td>21</td>
+<td>56</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(x=4\)</span></td>
+<td>27</td>
+<td>20</td>
+<td>39</td>
+<td>8</td>
+<td>14</td>
+</tr>
+</tbody>
+</table>
+<p><span class="arithmatex">\(\rho\)</span> 改变 lane 内部每个比特的 <span class="arithmatex">\(z\)</span> 坐标。它本身仍是置换操作，后续配合 <span class="arithmatex">\(\pi\)</span> 和 <span class="arithmatex">\(\chi\)</span> 后，会让状态中的比特关系更加充分地展开。</p>
+<p><img alt="image-20260515133231631" src="../../../images/image-20260515133231631.png" /></p>
+<h4 id="pi-lane"><span class="arithmatex">\(\pi\)</span>：把 lane 放到新的平面位置</h4>
+<p><span class="arithmatex">\(\pi\)</span> 负责重排 25 个 lane 的 <span class="arithmatex">\((x,y)\)</span> 位置。公式为</p>
+<div class="arithmatex">\[
+B[y,(2x+3y)\bmod5]=A[x,y]
+\]</div>
+<p>这里 <span class="arithmatex">\(A[x,y]\)</span> 表示一个 64 位 lane。经过 <span class="arithmatex">\(\pi\)</span> 后，lane 内的 64 位作为整体移动到新的平面坐标中。</p>
+<p><span class="arithmatex">\(\rho\)</span> 改变 lane 内部的 <span class="arithmatex">\(z\)</span> 位置，<span class="arithmatex">\(\pi\)</span> 改变 lane 在 <span class="arithmatex">\(5\times5\)</span> 平面中的位置。两者连续执行后，信息在 lane 内部和 lane 之间都完成重新排列。</p>
+<p><img alt="image-20260515133243361" src="../../../images/image-20260515133243361.png" /></p>
+<h4 id="chi"><span class="arithmatex">\(\chi\)</span>：逐行非线性替代</h4>
+<p><span class="arithmatex">\(\chi\)</span> 在每一行上执行。它的公式是</p>
+<div class="arithmatex">\[
+A[x,y,z]\leftarrow B[x,y,z]\oplus((\sim B[x+1,y,z])\land B[x+2,y,z])
+\]</div>
+<blockquote>
+<p>其中 <span class="arithmatex">\(x+1\)</span> 和 <span class="arithmatex">\(x+2\)</span> 按模 5 计算，<span class="arithmatex">\(\sim\)</span> 是按位取反，<span class="arithmatex">\(\land\)</span> 是按位与。</p>
+</blockquote>
+<p>这一式子说明，当前位置的新值同时受本位置、右侧第一个位置、右侧第二个位置影响。由于它包含取反和与运算，状态变化从线性异或关系进入非线性关系。图中标注“唯一非线性步骤”，指的就是 <span class="arithmatex">\(\chi\)</span>。SHA-3 抗线性分析、差分分析等性质，很大程度依赖这一步和其他扩散步骤的配合。</p>
+<p><img alt="image-20260515133251336" src="../../../images/image-20260515133251336.png" /></p>
+<h4 id="iota-a00"><span class="arithmatex">\(\iota\)</span>：把轮常数注入 <span class="arithmatex">\(A[0,0]\)</span></h4>
+<p>最后一步 <span class="arithmatex">\(\iota\)</span> 将当前轮的轮常数 <span class="arithmatex">\(RC[ir]\)</span> 异或到 lane <span class="arithmatex">\(A[0,0]\)</span>：</p>
+<div class="arithmatex">\[
+A[0,0]\leftarrow A[0,0]\oplus RC[ir]
+\]</div>
+<p>轮常数是 64 位常量。24 轮对应 24 个常量：</p>
+<p><span class="arithmatex">\(\iota\)</span> 给每一轮加入轮号相关成分，使每轮置换带有轮次差异。执行完 <span class="arithmatex">\(\iota\)</span> 后，当前轮结束，进入下一轮。24 轮结束后，Keccak-f[1600] 输出新的状态 <span class="arithmatex">\(S\)</span>。</p>
+<h3 id="_5">挤出阶段：从状态读出输出</h3>
+<p>所有消息块吸收完后，状态 <span class="arithmatex">\(S\)</span> 已经由完整输入消息决定。接下来生成输出。先从状态前 <span class="arithmatex">\(r\)</span> 位读出第一块：</p>
+<div class="arithmatex">\[
+Z_0=S[0:r]
+\]</div>
+<p>将其拼到输出串 <span class="arithmatex">\(Z\)</span> 中：</p>
+<div class="arithmatex">\[
+Z=Z_0
+\]</div>
+<p>当 <span class="arithmatex">\(|Z|\)</span> 已经达到输出长度 <span class="arithmatex">\(l\)</span>，取前 <span class="arithmatex">\(l\)</span> 位作为最终 Hash：</p>
+<div class="arithmatex">\[
+Hash=Z[0:l]
+\]</div>
+<p>当还要更多输出时，继续执行一次 Keccak-f[1600]：</p>
+<div class="arithmatex">\[
+S\leftarrow Keccak\text{-}f[1600](S)
+\]</div>
+<p>然后读出下一块：</p>
+<div class="arithmatex">\[
+Z_1=S[0:r]
+\]</div>
+<p>持续拼接：</p>
+<div class="arithmatex">\[
+Z=Z_0\Vert Z_1\Vert Z_2\Vert\cdots
+\]</div>
+<p>直到 <span class="arithmatex">\(|Z|\ge l\)</span>，再截取前 <span class="arithmatex">\(l\)</span> 位。对于 SHA3-224、SHA3-256、SHA3-384、SHA3-512，输出长度 <span class="arithmatex">\(l\)</span> 均小于各自的 <span class="arithmatex">\(r\)</span>，所以固定长度 SHA-3 在吸收完后通常读取一次状态前部并截取即可。</p>
+<h3 id="_6">伪代码</h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Input : message M, selected SHA-3 version
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Output: hash value H
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>根据版本确定 l, r, c
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>b = 1600
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>S = 0^b
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>N = M || 01
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>j = (r - ((|N| + 2) mod r)) mod r
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>P = N || 1 || 0^j || 1
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>把 P 按 r 位切分为 P_0, P_1, ..., P_{m-1}
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>for i = 0 to m-1:
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    S = S xor (P_i || 0^c)
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    S = Keccak_f_1600(S)
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>Z = empty
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>while |Z| &lt; l:
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>    Z = Z || S[0:r]
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>    if |Z| &gt;= l:
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>        break
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>    S = Keccak_f_1600(S)
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>H = Z[0:l]
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>return H
+</code></pre></div>
+<p>然后Keccak_f_1600内部如下：
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Input : 1600-bit state S
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Output: 1600-bit state S
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>把 S 映射为 A[x,y,z]
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>for ir = 0 to 23:
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    θ: 计算每列校验 C[x]，生成 D[x]，A[x,y] ^= D[x]
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    ρ: 每个 lane 按 r[x,y] 循环左移
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    π: 按 B[y, (2x+3y) mod 5] = A[x,y] 重排 lane
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    χ: 按 A[x,y] = B[x,y] ^ ((~B[x+1,y]) &amp; B[x+2,y]) 更新每行
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    ι: A[0,0] ^= RC[ir]
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>把 A[x,y,z] 重新展开为 1600-bit state
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>return S
+</code></pre></div></p>
+<h3 id="_7">算法实现</h3>
+<div class="language-python highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">MASK64</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">64</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># Keccak-f[1600] 的 24 个轮常数 RC[ir]</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">ROUND_CONSTANTS</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="mh">0x0000000000000001</span><span class="p">,</span> <span class="mh">0x0000000000008082</span><span class="p">,</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="mh">0x800000000000808A</span><span class="p">,</span> <span class="mh">0x8000000080008000</span><span class="p">,</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    <span class="mh">0x000000000000808B</span><span class="p">,</span> <span class="mh">0x0000000080000001</span><span class="p">,</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>    <span class="mh">0x8000000080008081</span><span class="p">,</span> <span class="mh">0x8000000000008009</span><span class="p">,</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>    <span class="mh">0x000000000000008A</span><span class="p">,</span> <span class="mh">0x0000000000000088</span><span class="p">,</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    <span class="mh">0x0000000080008009</span><span class="p">,</span> <span class="mh">0x000000008000000A</span><span class="p">,</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>    <span class="mh">0x000000008000808B</span><span class="p">,</span> <span class="mh">0x800000000000008B</span><span class="p">,</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    <span class="mh">0x8000000000008089</span><span class="p">,</span> <span class="mh">0x8000000000008003</span><span class="p">,</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>    <span class="mh">0x8000000000008002</span><span class="p">,</span> <span class="mh">0x8000000000000080</span><span class="p">,</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>    <span class="mh">0x000000000000800A</span><span class="p">,</span> <span class="mh">0x800000008000000A</span><span class="p">,</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>    <span class="mh">0x8000000080008081</span><span class="p">,</span> <span class="mh">0x8000000000008080</span><span class="p">,</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>    <span class="mh">0x0000000080000001</span><span class="p">,</span> <span class="mh">0x8000000080008008</span><span class="p">,</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="p">]</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="c1"># ρ 步骤使用的循环左移偏移量</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="n">ROTATION_OFFSETS</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>    <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>    <span class="mi">28</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>    <span class="mi">27</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>    <span class="mi">62</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="p">]</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>
+<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="c1"># ρ + π 合并实现时使用的 lane 访问顺序</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a><span class="n">PI_LANE</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a>    <span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a>    <span class="mi">5</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a>    <span class="mi">15</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a>    <span class="mi">20</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a><span class="p">]</span>
+<a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a>
+<a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a>
+<a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a><span class="k">def</span><span class="w"> </span><span class="nf">rotl64</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<a id="__codelineno-3-39" name="__codelineno-3-39" href="#__codelineno-3-39"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;64 位循环左移。&quot;&quot;&quot;</span>
+<a id="__codelineno-3-40" name="__codelineno-3-40" href="#__codelineno-3-40"></a>    <span class="n">n</span> <span class="o">%=</span> <span class="mi">64</span>
+<a id="__codelineno-3-41" name="__codelineno-3-41" href="#__codelineno-3-41"></a>    <span class="k">return</span> <span class="p">((</span><span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="n">n</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="p">(</span><span class="mi">64</span> <span class="o">-</span> <span class="n">n</span><span class="p">)))</span> <span class="o">&amp;</span> <span class="n">MASK64</span>
+<a id="__codelineno-3-42" name="__codelineno-3-42" href="#__codelineno-3-42"></a>
+<a id="__codelineno-3-43" name="__codelineno-3-43" href="#__codelineno-3-43"></a>
+<a id="__codelineno-3-44" name="__codelineno-3-44" href="#__codelineno-3-44"></a><span class="k">def</span><span class="w"> </span><span class="nf">keccak_f1600</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<a id="__codelineno-3-45" name="__codelineno-3-45" href="#__codelineno-3-45"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-3-46" name="__codelineno-3-46" href="#__codelineno-3-46"></a><span class="sd">    Keccak-f[1600] 置换函数。</span>
+<a id="__codelineno-3-47" name="__codelineno-3-47" href="#__codelineno-3-47"></a>
+<a id="__codelineno-3-48" name="__codelineno-3-48" href="#__codelineno-3-48"></a><span class="sd">    state 有 25 个 64 位 lane：</span>
+<a id="__codelineno-3-49" name="__codelineno-3-49" href="#__codelineno-3-49"></a><span class="sd">        state[x + 5*y] 对应 A[x, y]</span>
+<a id="__codelineno-3-50" name="__codelineno-3-50" href="#__codelineno-3-50"></a><span class="sd">    总长度为：</span>
+<a id="__codelineno-3-51" name="__codelineno-3-51" href="#__codelineno-3-51"></a><span class="sd">        25 * 64 = 1600 bit</span>
+<a id="__codelineno-3-52" name="__codelineno-3-52" href="#__codelineno-3-52"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-3-53" name="__codelineno-3-53" href="#__codelineno-3-53"></a>    <span class="n">st</span> <span class="o">=</span> <span class="n">state</span><span class="p">[:]</span>
+<a id="__codelineno-3-54" name="__codelineno-3-54" href="#__codelineno-3-54"></a>
+<a id="__codelineno-3-55" name="__codelineno-3-55" href="#__codelineno-3-55"></a>    <span class="k">for</span> <span class="n">rc</span> <span class="ow">in</span> <span class="n">ROUND_CONSTANTS</span><span class="p">:</span>
+<a id="__codelineno-3-56" name="__codelineno-3-56" href="#__codelineno-3-56"></a>        <span class="c1"># ------------------------------------------------------------</span>
+<a id="__codelineno-3-57" name="__codelineno-3-57" href="#__codelineno-3-57"></a>        <span class="c1"># 1. θ step：按列混合</span>
+<a id="__codelineno-3-58" name="__codelineno-3-58" href="#__codelineno-3-58"></a>        <span class="c1"># C[x] = A[x,0] ^ A[x,1] ^ A[x,2] ^ A[x,3] ^ A[x,4]</span>
+<a id="__codelineno-3-59" name="__codelineno-3-59" href="#__codelineno-3-59"></a>        <span class="c1"># D[x] = C[x-1] ^ ROT(C[x+1], 1)</span>
+<a id="__codelineno-3-60" name="__codelineno-3-60" href="#__codelineno-3-60"></a>        <span class="c1"># A[x,y] = A[x,y] ^ D[x]</span>
+<a id="__codelineno-3-61" name="__codelineno-3-61" href="#__codelineno-3-61"></a>        <span class="c1"># ------------------------------------------------------------</span>
+<a id="__codelineno-3-62" name="__codelineno-3-62" href="#__codelineno-3-62"></a>        <span class="n">c</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-3-63" name="__codelineno-3-63" href="#__codelineno-3-63"></a>            <span class="n">st</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">^</span> <span class="n">st</span><span class="p">[</span><span class="n">x</span> <span class="o">+</span> <span class="mi">5</span><span class="p">]</span> <span class="o">^</span> <span class="n">st</span><span class="p">[</span><span class="n">x</span> <span class="o">+</span> <span class="mi">10</span><span class="p">]</span> <span class="o">^</span> <span class="n">st</span><span class="p">[</span><span class="n">x</span> <span class="o">+</span> <span class="mi">15</span><span class="p">]</span> <span class="o">^</span> <span class="n">st</span><span class="p">[</span><span class="n">x</span> <span class="o">+</span> <span class="mi">20</span><span class="p">]</span>
+<a id="__codelineno-3-64" name="__codelineno-3-64" href="#__codelineno-3-64"></a>            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<a id="__codelineno-3-65" name="__codelineno-3-65" href="#__codelineno-3-65"></a>        <span class="p">]</span>
+<a id="__codelineno-3-66" name="__codelineno-3-66" href="#__codelineno-3-66"></a>
+<a id="__codelineno-3-67" name="__codelineno-3-67" href="#__codelineno-3-67"></a>        <span class="n">d</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-3-68" name="__codelineno-3-68" href="#__codelineno-3-68"></a>            <span class="n">c</span><span class="p">[(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">5</span><span class="p">]</span> <span class="o">^</span> <span class="n">rotl64</span><span class="p">(</span><span class="n">c</span><span class="p">[(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">5</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-3-69" name="__codelineno-3-69" href="#__codelineno-3-69"></a>            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<a id="__codelineno-3-70" name="__codelineno-3-70" href="#__codelineno-3-70"></a>        <span class="p">]</span>
+<a id="__codelineno-3-71" name="__codelineno-3-71" href="#__codelineno-3-71"></a>
+<a id="__codelineno-3-72" name="__codelineno-3-72" href="#__codelineno-3-72"></a>        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+<a id="__codelineno-3-73" name="__codelineno-3-73" href="#__codelineno-3-73"></a>            <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+<a id="__codelineno-3-74" name="__codelineno-3-74" href="#__codelineno-3-74"></a>                <span class="n">st</span><span class="p">[</span><span class="n">x</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">st</span><span class="p">[</span><span class="n">x</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">y</span><span class="p">]</span> <span class="o">^</span> <span class="n">d</span><span class="p">[</span><span class="n">x</span><span class="p">])</span> <span class="o">&amp;</span> <span class="n">MASK64</span>
+<a id="__codelineno-3-75" name="__codelineno-3-75" href="#__codelineno-3-75"></a>
+<a id="__codelineno-3-76" name="__codelineno-3-76" href="#__codelineno-3-76"></a>        <span class="c1"># ------------------------------------------------------------</span>
+<a id="__codelineno-3-77" name="__codelineno-3-77" href="#__codelineno-3-77"></a>        <span class="c1"># 2. ρ step + 3. π step：lane 内循环移位，然后重排 lane 位置</span>
+<a id="__codelineno-3-78" name="__codelineno-3-78" href="#__codelineno-3-78"></a>        <span class="c1"># 这里采用 Keccak 常见的合并写法。</span>
+<a id="__codelineno-3-79" name="__codelineno-3-79" href="#__codelineno-3-79"></a>        <span class="c1"># ------------------------------------------------------------</span>
+<a id="__codelineno-3-80" name="__codelineno-3-80" href="#__codelineno-3-80"></a>        <span class="n">t</span> <span class="o">=</span> <span class="n">st</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-3-81" name="__codelineno-3-81" href="#__codelineno-3-81"></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">24</span><span class="p">):</span>
+<a id="__codelineno-3-82" name="__codelineno-3-82" href="#__codelineno-3-82"></a>            <span class="n">j</span> <span class="o">=</span> <span class="n">PI_LANE</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<a id="__codelineno-3-83" name="__codelineno-3-83" href="#__codelineno-3-83"></a>            <span class="n">temp</span> <span class="o">=</span> <span class="n">st</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+<a id="__codelineno-3-84" name="__codelineno-3-84" href="#__codelineno-3-84"></a>            <span class="n">st</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">rotl64</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">ROTATION_OFFSETS</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<a id="__codelineno-3-85" name="__codelineno-3-85" href="#__codelineno-3-85"></a>            <span class="n">t</span> <span class="o">=</span> <span class="n">temp</span>
+<a id="__codelineno-3-86" name="__codelineno-3-86" href="#__codelineno-3-86"></a>
+<a id="__codelineno-3-87" name="__codelineno-3-87" href="#__codelineno-3-87"></a>        <span class="c1"># ------------------------------------------------------------</span>
+<a id="__codelineno-3-88" name="__codelineno-3-88" href="#__codelineno-3-88"></a>        <span class="c1"># 4. χ step：逐行非线性替代</span>
+<a id="__codelineno-3-89" name="__codelineno-3-89" href="#__codelineno-3-89"></a>        <span class="c1"># A[x,y] = A[x,y] ^ ((~A[x+1,y]) &amp; A[x+2,y])</span>
+<a id="__codelineno-3-90" name="__codelineno-3-90" href="#__codelineno-3-90"></a>        <span class="c1"># ------------------------------------------------------------</span>
+<a id="__codelineno-3-91" name="__codelineno-3-91" href="#__codelineno-3-91"></a>        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+<a id="__codelineno-3-92" name="__codelineno-3-92" href="#__codelineno-3-92"></a>            <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="n">st</span><span class="p">[</span><span class="n">x</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">y</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+<a id="__codelineno-3-93" name="__codelineno-3-93" href="#__codelineno-3-93"></a>            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+<a id="__codelineno-3-94" name="__codelineno-3-94" href="#__codelineno-3-94"></a>                <span class="n">st</span><span class="p">[</span><span class="n">x</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+<a id="__codelineno-3-95" name="__codelineno-3-95" href="#__codelineno-3-95"></a>                    <span class="n">row</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">^</span> <span class="p">((</span><span class="o">~</span><span class="n">row</span><span class="p">[(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">5</span><span class="p">])</span> <span class="o">&amp;</span> <span class="n">row</span><span class="p">[(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="o">%</span> <span class="mi">5</span><span class="p">])</span>
+<a id="__codelineno-3-96" name="__codelineno-3-96" href="#__codelineno-3-96"></a>                <span class="p">)</span> <span class="o">&amp;</span> <span class="n">MASK64</span>
+<a id="__codelineno-3-97" name="__codelineno-3-97" href="#__codelineno-3-97"></a>
+<a id="__codelineno-3-98" name="__codelineno-3-98" href="#__codelineno-3-98"></a>        <span class="c1"># ------------------------------------------------------------</span>
+<a id="__codelineno-3-99" name="__codelineno-3-99" href="#__codelineno-3-99"></a>        <span class="c1"># 5. ι step：注入轮常数</span>
+<a id="__codelineno-3-100" name="__codelineno-3-100" href="#__codelineno-3-100"></a>        <span class="c1"># A[0,0] = A[0,0] ^ RC[ir]</span>
+<a id="__codelineno-3-101" name="__codelineno-3-101" href="#__codelineno-3-101"></a>        <span class="c1"># ------------------------------------------------------------</span>
+<a id="__codelineno-3-102" name="__codelineno-3-102" href="#__codelineno-3-102"></a>        <span class="n">st</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">st</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">^</span> <span class="n">rc</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">MASK64</span>
+<a id="__codelineno-3-103" name="__codelineno-3-103" href="#__codelineno-3-103"></a>
+<a id="__codelineno-3-104" name="__codelineno-3-104" href="#__codelineno-3-104"></a>    <span class="k">return</span> <span class="n">st</span>
+<a id="__codelineno-3-105" name="__codelineno-3-105" href="#__codelineno-3-105"></a>
+<a id="__codelineno-3-106" name="__codelineno-3-106" href="#__codelineno-3-106"></a>
+<a id="__codelineno-3-107" name="__codelineno-3-107" href="#__codelineno-3-107"></a><span class="k">def</span><span class="w"> </span><span class="nf">absorb_block</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">block</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">rate_bytes</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<a id="__codelineno-3-108" name="__codelineno-3-108" href="#__codelineno-3-108"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-3-109" name="__codelineno-3-109" href="#__codelineno-3-109"></a><span class="sd">    吸收一个 rate 大小的数据块。</span>
+<a id="__codelineno-3-110" name="__codelineno-3-110" href="#__codelineno-3-110"></a>
+<a id="__codelineno-3-111" name="__codelineno-3-111" href="#__codelineno-3-111"></a><span class="sd">    block 长度为 rate_bytes。</span>
+<a id="__codelineno-3-112" name="__codelineno-3-112" href="#__codelineno-3-112"></a><span class="sd">    每 8 个字节按小端序转成一个 64 位 lane，</span>
+<a id="__codelineno-3-113" name="__codelineno-3-113" href="#__codelineno-3-113"></a><span class="sd">    然后异或进 state 的前 rate_bytes 区域。</span>
+<a id="__codelineno-3-114" name="__codelineno-3-114" href="#__codelineno-3-114"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-3-115" name="__codelineno-3-115" href="#__codelineno-3-115"></a>    <span class="n">st</span> <span class="o">=</span> <span class="n">state</span><span class="p">[:]</span>
+<a id="__codelineno-3-116" name="__codelineno-3-116" href="#__codelineno-3-116"></a>
+<a id="__codelineno-3-117" name="__codelineno-3-117" href="#__codelineno-3-117"></a>    <span class="k">for</span> <span class="n">offset</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">rate_bytes</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span>
+<a id="__codelineno-3-118" name="__codelineno-3-118" href="#__codelineno-3-118"></a>        <span class="n">lane_index</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">//</span> <span class="mi">8</span>
+<a id="__codelineno-3-119" name="__codelineno-3-119" href="#__codelineno-3-119"></a>        <span class="n">lane_value</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">block</span><span class="p">[</span><span class="n">offset</span><span class="p">:</span><span class="n">offset</span> <span class="o">+</span> <span class="mi">8</span><span class="p">],</span> <span class="s2">&quot;little&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-120" name="__codelineno-3-120" href="#__codelineno-3-120"></a>        <span class="n">st</span><span class="p">[</span><span class="n">lane_index</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">st</span><span class="p">[</span><span class="n">lane_index</span><span class="p">]</span> <span class="o">^</span> <span class="n">lane_value</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">MASK64</span>
+<a id="__codelineno-3-121" name="__codelineno-3-121" href="#__codelineno-3-121"></a>
+<a id="__codelineno-3-122" name="__codelineno-3-122" href="#__codelineno-3-122"></a>    <span class="k">return</span> <span class="n">keccak_f1600</span><span class="p">(</span><span class="n">st</span><span class="p">)</span>
+<a id="__codelineno-3-123" name="__codelineno-3-123" href="#__codelineno-3-123"></a>
+<a id="__codelineno-3-124" name="__codelineno-3-124" href="#__codelineno-3-124"></a>
+<a id="__codelineno-3-125" name="__codelineno-3-125" href="#__codelineno-3-125"></a><span class="k">def</span><span class="w"> </span><span class="nf">sha3</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">digest_bits</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<a id="__codelineno-3-126" name="__codelineno-3-126" href="#__codelineno-3-126"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-3-127" name="__codelineno-3-127" href="#__codelineno-3-127"></a><span class="sd">    计算 SHA3-224 / SHA3-256 / SHA3-384 / SHA3-512。</span>
+<a id="__codelineno-3-128" name="__codelineno-3-128" href="#__codelineno-3-128"></a>
+<a id="__codelineno-3-129" name="__codelineno-3-129" href="#__codelineno-3-129"></a><span class="sd">    参数：</span>
+<a id="__codelineno-3-130" name="__codelineno-3-130" href="#__codelineno-3-130"></a><span class="sd">        data        : 输入消息，字节串形式</span>
+<a id="__codelineno-3-131" name="__codelineno-3-131" href="#__codelineno-3-131"></a><span class="sd">        digest_bits : 输出长度，可取 224、256、384、512</span>
+<a id="__codelineno-3-132" name="__codelineno-3-132" href="#__codelineno-3-132"></a>
+<a id="__codelineno-3-133" name="__codelineno-3-133" href="#__codelineno-3-133"></a><span class="sd">    返回：</span>
+<a id="__codelineno-3-134" name="__codelineno-3-134" href="#__codelineno-3-134"></a><span class="sd">        Hash 结果，字节串形式</span>
+<a id="__codelineno-3-135" name="__codelineno-3-135" href="#__codelineno-3-135"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-3-136" name="__codelineno-3-136" href="#__codelineno-3-136"></a>    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-3-137" name="__codelineno-3-137" href="#__codelineno-3-137"></a>        <span class="mi">224</span><span class="p">:</span> <span class="p">(</span><span class="mi">144</span><span class="p">,</span> <span class="mi">28</span><span class="p">),</span>  <span class="c1"># rate = 1152 bit = 144 byte, output = 28 byte</span>
+<a id="__codelineno-3-138" name="__codelineno-3-138" href="#__codelineno-3-138"></a>        <span class="mi">256</span><span class="p">:</span> <span class="p">(</span><span class="mi">136</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span>  <span class="c1"># rate = 1088 bit = 136 byte, output = 32 byte</span>
+<a id="__codelineno-3-139" name="__codelineno-3-139" href="#__codelineno-3-139"></a>        <span class="mi">384</span><span class="p">:</span> <span class="p">(</span><span class="mi">104</span><span class="p">,</span> <span class="mi">48</span><span class="p">),</span>  <span class="c1"># rate = 832  bit = 104 byte, output = 48 byte</span>
+<a id="__codelineno-3-140" name="__codelineno-3-140" href="#__codelineno-3-140"></a>        <span class="mi">512</span><span class="p">:</span> <span class="p">(</span><span class="mi">72</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span>   <span class="c1"># rate = 576  bit = 72  byte, output = 64 byte</span>
+<a id="__codelineno-3-141" name="__codelineno-3-141" href="#__codelineno-3-141"></a>    <span class="p">}</span>
+<a id="__codelineno-3-142" name="__codelineno-3-142" href="#__codelineno-3-142"></a>
+<a id="__codelineno-3-143" name="__codelineno-3-143" href="#__codelineno-3-143"></a>    <span class="k">if</span> <span class="n">digest_bits</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+<a id="__codelineno-3-144" name="__codelineno-3-144" href="#__codelineno-3-144"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;digest_bits must be one of 224, 256, 384, 512&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-145" name="__codelineno-3-145" href="#__codelineno-3-145"></a>
+<a id="__codelineno-3-146" name="__codelineno-3-146" href="#__codelineno-3-146"></a>    <span class="n">rate_bytes</span><span class="p">,</span> <span class="n">digest_bytes</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="n">digest_bits</span><span class="p">]</span>
+<a id="__codelineno-3-147" name="__codelineno-3-147" href="#__codelineno-3-147"></a>
+<a id="__codelineno-3-148" name="__codelineno-3-148" href="#__codelineno-3-148"></a>    <span class="c1"># 状态长度 b = 1600 bit = 25 个 64 位 lane</span>
+<a id="__codelineno-3-149" name="__codelineno-3-149" href="#__codelineno-3-149"></a>    <span class="n">state</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">25</span>
+<a id="__codelineno-3-150" name="__codelineno-3-150" href="#__codelineno-3-150"></a>
+<a id="__codelineno-3-151" name="__codelineno-3-151" href="#__codelineno-3-151"></a>    <span class="c1"># ------------------------------------------------------------</span>
+<a id="__codelineno-3-152" name="__codelineno-3-152" href="#__codelineno-3-152"></a>    <span class="c1"># 一、吸收完整 rate 块</span>
+<a id="__codelineno-3-153" name="__codelineno-3-153" href="#__codelineno-3-153"></a>    <span class="c1"># ------------------------------------------------------------</span>
+<a id="__codelineno-3-154" name="__codelineno-3-154" href="#__codelineno-3-154"></a>    <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-3-155" name="__codelineno-3-155" href="#__codelineno-3-155"></a>    <span class="k">while</span> <span class="n">pos</span> <span class="o">+</span> <span class="n">rate_bytes</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<a id="__codelineno-3-156" name="__codelineno-3-156" href="#__codelineno-3-156"></a>        <span class="n">block</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">pos</span><span class="p">:</span><span class="n">pos</span> <span class="o">+</span> <span class="n">rate_bytes</span><span class="p">]</span>
+<a id="__codelineno-3-157" name="__codelineno-3-157" href="#__codelineno-3-157"></a>        <span class="n">state</span> <span class="o">=</span> <span class="n">absorb_block</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">rate_bytes</span><span class="p">)</span>
+<a id="__codelineno-3-158" name="__codelineno-3-158" href="#__codelineno-3-158"></a>        <span class="n">pos</span> <span class="o">+=</span> <span class="n">rate_bytes</span>
+<a id="__codelineno-3-159" name="__codelineno-3-159" href="#__codelineno-3-159"></a>
+<a id="__codelineno-3-160" name="__codelineno-3-160" href="#__codelineno-3-160"></a>    <span class="c1"># ------------------------------------------------------------</span>
+<a id="__codelineno-3-161" name="__codelineno-3-161" href="#__codelineno-3-161"></a>    <span class="c1"># 二、处理最后一个块，并完成 SHA-3 填充</span>
+<a id="__codelineno-3-162" name="__codelineno-3-162" href="#__codelineno-3-162"></a>    <span class="c1">#</span>
+<a id="__codelineno-3-163" name="__codelineno-3-163" href="#__codelineno-3-163"></a>    <span class="c1"># SHA-3 固定长度哈希的领域分离后缀为 0x06。</span>
+<a id="__codelineno-3-164" name="__codelineno-3-164" href="#__codelineno-3-164"></a>    <span class="c1"># 最后一个 rate 块末尾异或 0x80，对应 pad10*1 的末尾 1。</span>
+<a id="__codelineno-3-165" name="__codelineno-3-165" href="#__codelineno-3-165"></a>    <span class="c1"># ------------------------------------------------------------</span>
+<a id="__codelineno-3-166" name="__codelineno-3-166" href="#__codelineno-3-166"></a>    <span class="n">block</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">rate_bytes</span><span class="p">)</span>
+<a id="__codelineno-3-167" name="__codelineno-3-167" href="#__codelineno-3-167"></a>
+<a id="__codelineno-3-168" name="__codelineno-3-168" href="#__codelineno-3-168"></a>    <span class="n">remain</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">pos</span><span class="p">:]</span>
+<a id="__codelineno-3-169" name="__codelineno-3-169" href="#__codelineno-3-169"></a>    <span class="n">block</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">remain</span><span class="p">)]</span> <span class="o">=</span> <span class="n">remain</span>
+<a id="__codelineno-3-170" name="__codelineno-3-170" href="#__codelineno-3-170"></a>
+<a id="__codelineno-3-171" name="__codelineno-3-171" href="#__codelineno-3-171"></a>    <span class="c1"># 0x06 = SHA-3 后缀 01 + pad10*1 起始位</span>
+<a id="__codelineno-3-172" name="__codelineno-3-172" href="#__codelineno-3-172"></a>    <span class="n">block</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">remain</span><span class="p">)]</span> <span class="o">^=</span> <span class="mh">0x06</span>
+<a id="__codelineno-3-173" name="__codelineno-3-173" href="#__codelineno-3-173"></a>
+<a id="__codelineno-3-174" name="__codelineno-3-174" href="#__codelineno-3-174"></a>    <span class="c1"># 0x80 = 当前 rate 块最高位写入 pad10*1 末尾位</span>
+<a id="__codelineno-3-175" name="__codelineno-3-175" href="#__codelineno-3-175"></a>    <span class="n">block</span><span class="p">[</span><span class="n">rate_bytes</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">^=</span> <span class="mh">0x80</span>
+<a id="__codelineno-3-176" name="__codelineno-3-176" href="#__codelineno-3-176"></a>
+<a id="__codelineno-3-177" name="__codelineno-3-177" href="#__codelineno-3-177"></a>    <span class="n">state</span> <span class="o">=</span> <span class="n">absorb_block</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">block</span><span class="p">),</span> <span class="n">rate_bytes</span><span class="p">)</span>
+<a id="__codelineno-3-178" name="__codelineno-3-178" href="#__codelineno-3-178"></a>
+<a id="__codelineno-3-179" name="__codelineno-3-179" href="#__codelineno-3-179"></a>    <span class="c1"># ------------------------------------------------------------</span>
+<a id="__codelineno-3-180" name="__codelineno-3-180" href="#__codelineno-3-180"></a>    <span class="c1"># 三、挤出输出</span>
+<a id="__codelineno-3-181" name="__codelineno-3-181" href="#__codelineno-3-181"></a>    <span class="c1">#</span>
+<a id="__codelineno-3-182" name="__codelineno-3-182" href="#__codelineno-3-182"></a>    <span class="c1"># 从 state 前 rate_bytes 个字节读取输出；</span>
+<a id="__codelineno-3-183" name="__codelineno-3-183" href="#__codelineno-3-183"></a>    <span class="c1"># 输出长度达到 digest_bytes 后截取。</span>
+<a id="__codelineno-3-184" name="__codelineno-3-184" href="#__codelineno-3-184"></a>    <span class="c1"># ------------------------------------------------------------</span>
+<a id="__codelineno-3-185" name="__codelineno-3-185" href="#__codelineno-3-185"></a>    <span class="n">output</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+<a id="__codelineno-3-186" name="__codelineno-3-186" href="#__codelineno-3-186"></a>
+<a id="__codelineno-3-187" name="__codelineno-3-187" href="#__codelineno-3-187"></a>    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">digest_bytes</span><span class="p">:</span>
+<a id="__codelineno-3-188" name="__codelineno-3-188" href="#__codelineno-3-188"></a>        <span class="k">for</span> <span class="n">offset</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">rate_bytes</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span>
+<a id="__codelineno-3-189" name="__codelineno-3-189" href="#__codelineno-3-189"></a>            <span class="n">lane_index</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">//</span> <span class="mi">8</span>
+<a id="__codelineno-3-190" name="__codelineno-3-190" href="#__codelineno-3-190"></a>            <span class="n">output</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="n">lane_index</span><span class="p">]</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;little&quot;</span><span class="p">))</span>
+<a id="__codelineno-3-191" name="__codelineno-3-191" href="#__codelineno-3-191"></a>
+<a id="__codelineno-3-192" name="__codelineno-3-192" href="#__codelineno-3-192"></a>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">digest_bytes</span><span class="p">:</span>
+<a id="__codelineno-3-193" name="__codelineno-3-193" href="#__codelineno-3-193"></a>                <span class="k">break</span>
+<a id="__codelineno-3-194" name="__codelineno-3-194" href="#__codelineno-3-194"></a>
+<a id="__codelineno-3-195" name="__codelineno-3-195" href="#__codelineno-3-195"></a>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">digest_bytes</span><span class="p">:</span>
+<a id="__codelineno-3-196" name="__codelineno-3-196" href="#__codelineno-3-196"></a>            <span class="n">state</span> <span class="o">=</span> <span class="n">keccak_f1600</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<a id="__codelineno-3-197" name="__codelineno-3-197" href="#__codelineno-3-197"></a>
+<a id="__codelineno-3-198" name="__codelineno-3-198" href="#__codelineno-3-198"></a>    <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">output</span><span class="p">[:</span><span class="n">digest_bytes</span><span class="p">])</span>
+<a id="__codelineno-3-199" name="__codelineno-3-199" href="#__codelineno-3-199"></a>
+<a id="__codelineno-3-200" name="__codelineno-3-200" href="#__codelineno-3-200"></a>
+<a id="__codelineno-3-201" name="__codelineno-3-201" href="#__codelineno-3-201"></a><span class="k">def</span><span class="w"> </span><span class="nf">sha3_224</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<a id="__codelineno-3-202" name="__codelineno-3-202" href="#__codelineno-3-202"></a>    <span class="k">return</span> <span class="n">sha3</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">224</span><span class="p">)</span>
+<a id="__codelineno-3-203" name="__codelineno-3-203" href="#__codelineno-3-203"></a>
+<a id="__codelineno-3-204" name="__codelineno-3-204" href="#__codelineno-3-204"></a>
+<a id="__codelineno-3-205" name="__codelineno-3-205" href="#__codelineno-3-205"></a><span class="k">def</span><span class="w"> </span><span class="nf">sha3_256</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<a id="__codelineno-3-206" name="__codelineno-3-206" href="#__codelineno-3-206"></a>    <span class="k">return</span> <span class="n">sha3</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+<a id="__codelineno-3-207" name="__codelineno-3-207" href="#__codelineno-3-207"></a>
+<a id="__codelineno-3-208" name="__codelineno-3-208" href="#__codelineno-3-208"></a>
+<a id="__codelineno-3-209" name="__codelineno-3-209" href="#__codelineno-3-209"></a><span class="k">def</span><span class="w"> </span><span class="nf">sha3_384</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<a id="__codelineno-3-210" name="__codelineno-3-210" href="#__codelineno-3-210"></a>    <span class="k">return</span> <span class="n">sha3</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">384</span><span class="p">)</span>
+<a id="__codelineno-3-211" name="__codelineno-3-211" href="#__codelineno-3-211"></a>
+<a id="__codelineno-3-212" name="__codelineno-3-212" href="#__codelineno-3-212"></a>
+<a id="__codelineno-3-213" name="__codelineno-3-213" href="#__codelineno-3-213"></a><span class="k">def</span><span class="w"> </span><span class="nf">sha3_512</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<a id="__codelineno-3-214" name="__codelineno-3-214" href="#__codelineno-3-214"></a>    <span class="k">return</span> <span class="n">sha3</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">512</span><span class="p">)</span>
+<a id="__codelineno-3-215" name="__codelineno-3-215" href="#__codelineno-3-215"></a>
+<a id="__codelineno-3-216" name="__codelineno-3-216" href="#__codelineno-3-216"></a>
+<a id="__codelineno-3-217" name="__codelineno-3-217" href="#__codelineno-3-217"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<a id="__codelineno-3-218" name="__codelineno-3-218" href="#__codelineno-3-218"></a>    <span class="n">msg</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;请输入消息：&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-219" name="__codelineno-3-219" href="#__codelineno-3-219"></a>
+<a id="__codelineno-3-220" name="__codelineno-3-220" href="#__codelineno-3-220"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SHA3-224:&quot;</span><span class="p">,</span> <span class="n">sha3_224</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="o">.</span><span class="n">hex</span><span class="p">())</span>
+<a id="__codelineno-3-221" name="__codelineno-3-221" href="#__codelineno-3-221"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SHA3-256:&quot;</span><span class="p">,</span> <span class="n">sha3_256</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="o">.</span><span class="n">hex</span><span class="p">())</span>
+<a id="__codelineno-3-222" name="__codelineno-3-222" href="#__codelineno-3-222"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SHA3-384:&quot;</span><span class="p">,</span> <span class="n">sha3_384</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="o">.</span><span class="n">hex</span><span class="p">())</span>
+<a id="__codelineno-3-223" name="__codelineno-3-223" href="#__codelineno-3-223"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SHA3-512:&quot;</span><span class="p">,</span> <span class="n">sha3_512</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="o">.</span><span class="n">hex</span><span class="p">())</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="md-typeset" style="margin-top: 2rem;">
+  
+    <nav class="post-nav" aria-label="文章分页导航">
+      
+        <a class="post-nav__link post-nav__link--prev" href="../SM4/">
+          <span class="post-nav__label">上一篇</span>
+          <span class="post-nav__title">算法介绍-SM4</span>
+        </a>
+      
+      
+        <a class="post-nav__link post-nav__link--next" href="../SM3/">
+          <span class="post-nav__label">下一篇</span>
+          <span class="post-nav__title">算法介绍-SM3</span>
+        </a>
+      
+    </nav>
+  
+
+  <h2 id="__comments">评论</h2>
+  
+  <script>
+    var giscusTheme = document.body.getAttribute("data-md-color-scheme") === "slate" ? "dark_dimmed" : "light";
+    
+    var giscusScript = document.createElement("script");
+    giscusScript.src = "https://giscus.app/client.js";
+    giscusScript.setAttribute("data-repo", "maple-pwn/maple-pwn.github.io");
+    giscusScript.setAttribute("data-repo-id", "R_kgDOP5uLTQ");
+    giscusScript.setAttribute("data-category", "Comments");
+    giscusScript.setAttribute("data-category-id", "DIC_kwDOP5uLTc4C130e");
+    giscusScript.setAttribute("data-mapping", "pathname");
+    giscusScript.setAttribute("data-strict", "0");
+    giscusScript.setAttribute("data-reactions-enabled", "1");
+    giscusScript.setAttribute("data-emit-metadata", "0");
+    giscusScript.setAttribute("data-input-position", "bottom");
+    giscusScript.setAttribute("data-theme", giscusTheme);
+    giscusScript.setAttribute("data-lang", "zh-CN");
+    giscusScript.setAttribute("data-loading", "lazy");
+    giscusScript.setAttribute("crossorigin", "anonymous");
+    giscusScript.async = true;
+    
+    document.getElementById("__comments").insertAdjacentElement("afterend", giscusScript);
+    
+    // Theme sync
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.attributeName === "data-md-color-scheme") {
+          var theme = document.body.getAttribute("data-md-color-scheme") === "slate" ? "dark_dimmed" : "light";
+          var iframe = document.querySelector(".giscus-frame");
+          if (iframe) {
+            iframe.contentWindow.postMessage(
+              { giscus: { setConfig: { theme: theme } } },
+              "https://giscus.app"
+            );
+          }
+        }
+      });
+    });
+    observer.observe(document.body, { attributes: true });
+  </script>
+</div>
+
+                
+
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.titles", "navigation.tabs", "navigation.top"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="../../../resources/js/mathjax-config.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../../resources/js/read-metrics.js"></script>
+      
+        <script src="../../../resources/js/sidebar-resize.js"></script>
+      
+    
+  </body>
+</html>

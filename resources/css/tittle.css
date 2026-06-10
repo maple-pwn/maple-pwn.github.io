@@ -1,0 +1,133 @@
+/* H2 */
+.md-sidebar--secondary > .md-nav > .md-nav__list > .md-nav__item > .md-nav__link {
+  color: #333 !important;
+  font-weight: 600;
+}
+
+/* H3 */
+.md-sidebar--secondary nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > .md-nav__link {
+  color: #555 !important;
+}
+
+/* H4 */
+.md-sidebar--secondary nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > .md-nav__link {
+  color: #777 !important;
+}
+
+/* H5 */
+.md-sidebar--secondary nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > .md-nav__link {
+  color: #999 !important;
+}
+
+/* 加入平滑过渡动画（所有标题） */
+.md-sidebar--secondary .md-nav__link {
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+/* H2 hover */
+.md-sidebar--secondary > .md-nav > .md-nav__list > .md-nav__item > .md-nav__link:hover {
+  color: #ff6b6b !important; /* 更亮的红色 */
+  transform: scale(1.05);
+}
+
+/* H3 hover */
+.md-sidebar--secondary nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > .md-nav__link:hover {
+  color: #ffb347 !important; /* 更亮的橙色 */
+  transform: scale(1.05);
+}
+
+/* H4 hover */
+.md-sidebar--secondary nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > .md-nav__link:hover {
+  color: #5dade2 !important; /* 更亮的蓝色 */
+  transform: scale(1.05);
+}
+
+
+
+/* 给所有目录链接一个定位（伪元素才能显示） */
+.md-sidebar--secondary .md-nav__link {
+  position: relative;
+}
+
+/* 当前激活标题的彩条 */
+.md-sidebar--secondary .md-nav__link--active::before,
+.md-sidebar--secondary .md-nav__item--active > .md-nav__link::before,
+.md-sidebar--secondary .md-nav__item--current > .md-nav__link::before {
+  content: "";
+  position: absolute;
+  left: -0.8rem;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #e74c3c, #f39c12);
+  border-radius: 2px;
+}
+
+
+.md-sidebar--secondary .md-nav__item > .md-nav__link { padding-left: 0.4rem; }
+.md-sidebar--secondary .md-nav__item > nav .md-nav__link { padding-left: 1.2rem; }
+.md-sidebar--secondary .md-nav__item > nav > ul > li > nav .md-nav__link { padding-left: 2rem; }
+
+.md-sidebar--secondary .md-nav__link {
+  border-radius: 6px;
+  transition: all 0.25s ease;
+}
+
+.md-sidebar--secondary .md-nav__link:hover {
+  background: rgba(52, 152, 219, 0.08);
+  padding-left: 0.6rem;
+}
+
+.md-sidebar--secondary::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: var(--scroll-progress, 0%);
+  background: linear-gradient(180deg, #e74c3c, #3498db);
+  transition: height 0.3s ease;
+}
+
+/* One Dark Pro dark mode overrides for secondary sidebar */
+[data-md-color-scheme="slate"] .md-sidebar--secondary > .md-nav > .md-nav__list > .md-nav__item > .md-nav__link {
+  color: #e6e6e6 !important;
+}
+
+[data-md-color-scheme="slate"] .md-sidebar--secondary nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > .md-nav__link {
+  color: #abb2bf !important;
+}
+
+[data-md-color-scheme="slate"] .md-sidebar--secondary nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > .md-nav__link {
+  color: #7f848e !important;
+}
+
+[data-md-color-scheme="slate"] .md-sidebar--secondary nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > .md-nav__link {
+  color: #5c6370 !important;
+}
+
+[data-md-color-scheme="slate"] .md-sidebar--secondary > .md-nav > .md-nav__list > .md-nav__item > .md-nav__link:hover {
+  color: #e06c75 !important;
+}
+
+[data-md-color-scheme="slate"] .md-sidebar--secondary nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > .md-nav__link:hover {
+  color: #d19a66 !important;
+}
+
+[data-md-color-scheme="slate"] .md-sidebar--secondary nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > nav.md-nav > .md-nav__list > .md-nav__item > .md-nav__link:hover {
+  color: #61afef !important;
+}
+
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__link:hover {
+  background: rgba(97, 175, 239, 0.08);
+}
+
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__link--active::before,
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__item--active > .md-nav__link::before,
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__item--current > .md-nav__link::before {
+  background: linear-gradient(180deg, #e06c75, #d19a66);
+}
+
+[data-md-color-scheme="slate"] .md-sidebar--secondary::before {
+  background: linear-gradient(180deg, #e06c75, #61afef);
+}

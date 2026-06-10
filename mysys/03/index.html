@@ -1,0 +1,5466 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://maple-pwn.github.io/mysys/03/">
+      
+      
+        <link rel="prev" href="../02/">
+      
+      
+        <link rel="next" href="../04/">
+      
+      
+      <link rel="icon" href="../../images/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>内核 - Maple's blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../resources/css/extra.css">
+    
+      <link rel="stylesheet" href="../../resources/css/tittle.css">
+    
+      <link rel="stylesheet" href="../../resources/css/read-metrics.css">
+    
+      <link rel="stylesheet" href="../../resources/css/leftsidebar.css">
+    
+      <link rel="stylesheet" href="https://static.zeoseven.com/zsft/292/main/result.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Maple&#39;s blog" class="md-header__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Maple's blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              内核
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../pre/" class="md-tabs__link">
+          
+  
+  
+  OS篇
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../LLMZtH/pre/" class="md-tabs__link">
+          
+  
+  
+  AI篇
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../study/pre/" class="md-tabs__link">
+          
+  
+  
+  校内篇
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../READ/paperread/mHC/" class="md-tabs__link">
+          
+  
+  
+  阅读篇
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../pwn/pre/" class="md-tabs__link">
+          
+  
+  
+  pwn篇
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../thinking/pre/" class="md-tabs__link">
+          
+  
+  
+  论道篇
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../sth/proj/" class="md-tabs__link">
+          
+  
+  
+  杂篇
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://game.oldmaple.top" class="md-tabs__link">
+        
+  
+  
+    
+  
+  🎮 游戏
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Maple&#39;s blog" class="md-nav__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    Maple's blog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    OS篇
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            OS篇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    实模式
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    保护模式
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    内核
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    内核
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0x06" class="md-nav__link">
+    <span class="md-ellipsis">
+      0x06 载入初始内核
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0x06 载入初始内核">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0x06-00" class="md-nav__link">
+    <span class="md-ellipsis">
+      0x06 00 基础知识
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#0x06-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      0x06 01 实现初始内核
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x07" class="md-nav__link">
+    <span class="md-ellipsis">
+      0x07 特权级
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0x07 特权级">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tss" class="md-nav__link">
+    <span class="md-ellipsis">
+      TSS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpldpl" class="md-nav__link">
+    <span class="md-ellipsis">
+      CPL和DPL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rpl" class="md-nav__link">
+    <span class="md-ellipsis">
+      门、调用门、RPL序
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      调用门的过程保护
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      总结
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="总结">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-elf" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. ELF文件格式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 特权级机制
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 中断机制
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      关键结论
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    内存管理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    IO机制
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    扩展文件系统
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    AI篇
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            AI篇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/pre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    AI细碎知识
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            AI细碎知识
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/Agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Agent
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/RAG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RAG
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/LLMWAF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LLM防火墙
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/LLMT10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LLM安全Top10
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    ML学习笔记
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            ML学习笔记
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/ML/1-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基本知识
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/ML/4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第四章 决策树
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/ML/5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第五章 神经网络
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/ML/6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第六章 支持向量机
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/ML/7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第七章 贝叶斯分类器
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/ML/7_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    7 1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/ML/8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第八章 集成学习
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/ML/9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第九章 聚类
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/ML/10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第十章 降维与度量学习
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/ML/11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第十一章 特征选择与稀疏学习
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/ML/12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    后记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    RL学习笔记
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            RL学习笔记
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/RL/1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    DL学习笔记
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            DL学习笔记
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/DL/1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/DL/images-class/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    图像识别翻译
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/DL/images-class-py/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    图像识别实现
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/DL/linear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    线性分类翻译
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/DL/linear-py/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    线性分类实现
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/DL/optimization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    优化-翻译
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LLMZtH/DL/Backprop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    反向传播-翻译
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    校内篇
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            校内篇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/pre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/eda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    数字逻辑
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    大学物理
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            大学物理
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/dw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    十二、十三章
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/dw2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    十四、十五章
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/gt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    概率与统计
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/lisan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    离散数学
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/mao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    毛中特
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    计算机组成原理
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            计算机组成原理
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/cs_final/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    部分笔记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/cs_exam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    部分试卷&重点题目分析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    密码学引论
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            密码学引论
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/cry/crypto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    笔记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/cry/math_base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    数学基础
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/cry/AES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法介绍-AES
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/cry/SM4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法介绍-SM4
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/cry/SHA3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法介绍-SHA3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/cry/SM3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法介绍-SM3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/cry/ZUC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法介绍-ZUC
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/cry/RSA%26EIGamal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法介绍-RSA&EIGamal
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/cry/SM2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法介绍-SM2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/OS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    操作系统概论
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/compiler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    编译原理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    数据库
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_11">
+            <span class="md-nav__icon md-icon"></span>
+            数据库
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/db/db_homework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    作业
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/db/db/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    笔记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/cs_e/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    计算机设计实验入门指引
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_13" id="__nav_3_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    汇编语言与接口设计
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_13">
+            <span class="md-nav__icon md-icon"></span>
+            汇编语言与接口设计
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/huibian/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    笔记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/asm_homework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    作业
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/asm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    汇编速通
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../study/hot100/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    hot100
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    阅读篇
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            阅读篇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    论文
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            论文
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../READ/paperread/mHC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    mHC
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../READ/paperread/GCG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GCG越狱论文
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../READ/paperread/cs231n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    cs231n扩展阅读
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    pwn篇
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            pwn篇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/pre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/tricks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    小技巧
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/AI%E5%81%9A%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AI做题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/Agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Agent 工作流
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/agent-ppt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Agent 分享
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    栈利用
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_6">
+            <span class="md-nav__icon md-icon"></span>
+            栈利用
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/Stack/%E6%B1%87%E7%BC%96%E9%80%9F%E9%80%9A/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    汇编速通
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/Stack/ASLR/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ASLR绕过
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/Stack/Canary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Canary绕过
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/Stack/PIE%E7%BB%95%E8%BF%87/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PIE绕过
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/Stack/fmt-all-in-one/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    格式化字符串
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/Stack/shellcode-all-in-one/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Shellcode
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/Stack/SROP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SROP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    堆利用
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            堆利用
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/Heap/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基础知识
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/Heap/%E5%90%84%E4%B8%AA%E5%87%BD%E6%95%B0%E5%8E%9F%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    函数原型
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/Heap/%E5%A0%86%E6%BA%A2%E5%87%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    堆溢出
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/Heap/%E5%A0%86%E6%BA%A2%E5%87%BA%E4%B8%AD%E6%AF%94%E8%BE%83%E9%87%8D%E8%A6%81%E7%9A%84%E6%AD%A5%E9%AA%A4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    堆溢出要点
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/Heap/%E5%A0%86%E4%B8%AD%E7%9A%84off-by-one/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Off-by-one
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/Heap/%E5%A0%86%E5%90%84%E7%B1%BB%E6%94%BB%E5%87%BB%E6%89%8B%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    攻击手法
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/Heap/%E4%BE%8B%E9%A2%98%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    例题记录
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8" id="__nav_5_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    IO_FILE
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8">
+            <span class="md-nav__icon md-icon"></span>
+            IO_FILE
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/IO_FILE/_IO_FILE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基础知识
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/IO_FILE/IO_FILE%E6%BA%90%E7%A0%81/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    源码分析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/IO_FILE/fopen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    fopen
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/IO_FILE/fread/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    fread
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/IO_FILE/%E5%81%9A%E9%A2%98%E6%8A%80%E5%B7%A7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    做题技巧
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_9" id="__nav_5_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    House系列
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_9">
+            <span class="md-nav__icon md-icon"></span>
+            House系列
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse%20of%20apple1%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Apple1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-apple2%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Apple2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse%20of%20cat%20%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Cat
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-kiwi%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Kiwi
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-botcake%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    House of Botcake
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_10" id="__nav_5_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    CTF Writeups
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_10">
+            <span class="md-nav__icon md-icon"></span>
+            CTF Writeups
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/wp/basectf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    BaseCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/wp/moectf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MoeCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/wp/isctf2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ISCTF2024
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/wp/ghctf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GHCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/wp/xyctf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    XYCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/wp/tgctf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TGCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/wp/NPCCTF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NPCCTF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/wp/ctfshow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CTFShow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/wp/whuctf2024/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    WHUCTF2024
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/wp/whuctf2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    WHUCTF2025
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/wp/%E5%BC%BA%E7%BD%91%E6%9D%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    强网杯
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/wp/polarD%26N/polarD%26N/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PolarD&N
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_10_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_10_13" id="__nav_5_10_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    BUUCTF
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_10_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_10_13">
+            <span class="md-nav__icon md-icon"></span>
+            BUUCTF
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%881-20%E9%A2%98%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1-20题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8821-40%E9%A2%98%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    21-40题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8841-60%E9%A2%98%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    41-60题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8861-80%E9%A2%98%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    61-80题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    论道篇
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            论道篇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../thinking/pre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../thinking/I/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    信息时代的我们
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../thinking/AI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AI时代的我们
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    杂篇
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            杂篇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sth/proj/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    proj
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sth/10-min-panda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    十分钟学会panda
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sth/others/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    一些杂七杂八的随手记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/bit32_visualizer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    32位位运算可视化工具
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_5" id="__nav_7_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    一些事故
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_5">
+            <span class="md-nav__icon md-icon"></span>
+            一些事故
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sth/ssh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ssh配置
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sth/codex/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    codex cli卡死
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://game.oldmaple.top" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🎮 游戏
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0x06" class="md-nav__link">
+    <span class="md-ellipsis">
+      0x06 载入初始内核
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0x06 载入初始内核">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0x06-00" class="md-nav__link">
+    <span class="md-ellipsis">
+      0x06 00 基础知识
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#0x06-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      0x06 01 实现初始内核
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x07" class="md-nav__link">
+    <span class="md-ellipsis">
+      0x07 特权级
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0x07 特权级">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tss" class="md-nav__link">
+    <span class="md-ellipsis">
+      TSS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpldpl" class="md-nav__link">
+    <span class="md-ellipsis">
+      CPL和DPL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rpl" class="md-nav__link">
+    <span class="md-ellipsis">
+      门、调用门、RPL序
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      调用门的过程保护
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      总结
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="总结">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-elf" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. ELF文件格式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 特权级机制
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 中断机制
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      关键结论
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+  
+                  
+
+
+
+<h1 id="_1">内核</h1>
+<h2 id="0x06">0x06 载入初始内核</h2>
+<h3 id="0x06-00">0x06 00 基础知识</h3>
+<p><strong>ELF文件</strong></p>
+<p>每个文件都存在一个文件头，这个文件头里存放着包含这个文件的各种信息。</p>
+<p>目标文件既会参与程序连接又会参与程序执行。处于方便性和效率考虑，根据过程的不同，目标文件格式提供了有其内容的两种并行视图</p>
+<p><img alt="object_file_format" src="../../images/object_file_format.png" /></p>
+<p>首先是**ELF heafer**部分</p>
+<div class="language-carbon highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="err">#</span><span class="nx">define</span><span class="w"> </span><span class="nx">EI_NIDENT</span><span class="w">   </span><span class="mi">16</span><span class="w"> </span><span class="nx">typedef</span><span class="w"> </span><span class="nx">struct</span><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nx">unsigned</span><span class="w"> </span><span class="nx">char</span><span class="w"> </span><span class="nx">e_ident</span><span class="p">[</span><span class="nx">EI_NIDENT</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="p">];</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">//Magic number（前4字节）；ELF文件内容如何解码等信息</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nx">ELF32_Half</span><span class="w"> </span><span class="nx">e_type</span><span class="p">;</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1">//描述了ELF文件的类型</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nx">ELF32_Half</span><span class="w"> </span><span class="nx">e_machine</span><span class="p">;</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1">//描述了文件面向的架构</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="nx">ELF32_Word</span><span class="w"> </span><span class="nx">e_version</span><span class="p">;</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1">//描述了ELF文件的版本号</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="nx">ELF32_Addr</span><span class="w"> </span><span class="nx">e_entry</span><span class="p">;</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="c1">//执行入口点，如果文件没有入口点，这个域保持0（4字节）</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="nx">ELF32_Off</span><span class="w"> </span><span class="nx">e_phoff</span><span class="p">;</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1">//*program header table*的offset，如果没有PH,则这个值是0</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="nx">ELF32_Off</span><span class="w"> </span><span class="nx">e_shoff</span><span class="p">;</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="c1">//section header table的offset,如果没有SH，则这个值是0</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="nx">ELF32_Word</span><span class="w"> </span><span class="nx">e_flags</span><span class="p">;</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="c1">//特定于处理器的标志，Intel架构一般都是0</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="nx">ELF32_Half</span><span class="w"> </span><span class="nx">e_ehsize</span><span class="p">;</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="c1">//ELF header的大小，32位的ELF是52字节，64位是64字节</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="nx">ELF32_Half</span><span class="w"> </span><span class="nx">e_phentsize</span><span class="p">;</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="c1">//program header table中每个入口的大小</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="nx">ELF32_Half</span><span class="w"> </span><span class="nx">e_phnum</span><span class="p">;</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="c1">//e_phentsize*e_phnum得到整个program header table的大小</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="nx">ELF32_Half</span><span class="w"> </span><span class="nx">e_shentsize</span><span class="p">;</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="c1">//section header table中entry的大小，即每个section header占多少字节</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="nx">ELF32_Half</span><span class="w"> </span><span class="nx">e_shnum</span><span class="p">;</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="c1">//同e_phnum</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="nx">ELF32_Half</span><span class="w"> </span><span class="nx">e_shstrndx</span><span class="p">;</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="c1">//section header string table index. 包含了section header table中section name string table。如果没有section name string table,e_shstrndx的值是SHN_UNDEF} Elf32_Ehdr;</span>
+</code></pre></div>
+<p>这里可以用<code class="language-text highlight">readelf -h &lt;elffile&gt;</code>来读取文件头，例如下图</p>
+<p><img alt="image-20250630163211305" src="../../images/image-20250630163211305.png" /></p>
+<p>接下来是**程序头表（Program Header Table)**部分</p>
+<div class="language-c highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">ELF32_Word</span><span class="w"> </span><span class="n">p_type</span><span class="p">;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">//表示该段的类型</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">ELF32_Off</span><span class="w"> </span><span class="n">p_offset</span><span class="p">;</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">//表示本段在文件中的偏移地址</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">ELF32_Addr</span><span class="w"> </span><span class="n">p_vaddr</span><span class="p">;</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1">//表示本段正在虚拟内存中的起始地址</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">ELF32_Addr</span><span class="w"> </span><span class="n">p_paddr</span><span class="p">;</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1">//仅用于与物理地址相关的系统中，因为System V忽略用户程序中所有的物理地址</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="n">ELF32_Word</span><span class="w"> </span><span class="n">p_filesz</span><span class="p">;</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="c1">//表示本段在文件中的大小</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">ELF32_Word</span><span class="w"> </span><span class="n">p_memsz</span><span class="p">;</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1">//表示本段子内存中的大小</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="n">ELF32_Word</span><span class="w"> </span><span class="n">p_flags</span><span class="p">;</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="c1">//指明本段的标志类型</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="n">ELF32_Word</span><span class="w"> </span><span class="n">p_align</span><span class="p">;</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="c1">//对齐方式} Elf32_Phdr;</span>
+</code></pre></div>
+<p>同样的可以使用<code class="language-text highlight">readelf -l &lt;file&gt;</code>来读取程序头，如下</p>
+<p><img alt="image-20250630164046587" src="../../images/image-20250630164046587.png" /></p>
+<h3 id="0x06-01">0x06 01 实现初始内核</h3>
+<p>略去了就</p>
+<h2 id="0x07">0x07 特权级</h2>
+<p>计算机里的一系列指令执行等操作都可以被认为是某个访问者来访问受访者。这里房屋内者和受访者都有属于自己的**特权级**，而特权级较低的访问者是不允许访问特权级较高的受访者。如下图，数字越小，特权级越高</p>
+<p><img alt="image-20250630165008026" src="../../images/image-20250630165008026.png" /></p>
+<p>其中，**操作系统**位于最内环的0级特权，他控制硬件，掌控各种核心数据。**系统程序**分别位于1级特权和2级特权，运行在这两层的程序一般是虚拟机、驱动程序等系统服务。**用户程序**在最外层，为3级特权</p>
+<h4 id="tss">TSS</h4>
+<p>即Task State Segment：任务状态段，它是每个任务都有的结构。其功能是**任务切换和任务管理**。结构如下：</p>
+<p><img alt="image-20250707105817635" src="../../images/image-20250707105817635-1751857114382-1.png" /></p>
+<div class="language-c highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">TSS</span><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">prev_tss</span><span class="p">;</span><span class="w"> </span><span class="c1">// 前一个任务的 TSS 链接（用于嵌套任务）</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">esp0</span><span class="p">;</span><span class="w"> </span><span class="c1">// Ring 0 的堆栈指针（用户态切换到内核态时用）</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">ss0</span><span class="p">;</span><span class="w"> </span><span class="c1">// Ring 0 的堆栈段选择子</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">esp1</span><span class="p">,</span><span class="w"> </span><span class="n">ss1</span><span class="p">;</span><span class="w"> </span><span class="c1">// Ring 1（不常用）</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">esp2</span><span class="p">,</span><span class="w"> </span><span class="n">ss2</span><span class="p">;</span><span class="w"> </span><span class="c1">// Ring 2（不常用）</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">cr3</span><span class="p">;</span><span class="w"> </span><span class="c1">// 页目录基址（页表）</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">eip</span><span class="p">;</span><span class="w"> </span><span class="c1">// 程序计数器</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">eflags</span><span class="p">;</span><span class="w"> </span><span class="c1">// 状态寄存器</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">eax</span><span class="p">,</span><span class="w"> </span><span class="n">ecx</span><span class="p">,</span><span class="w"> </span><span class="n">edx</span><span class="p">,</span><span class="w"> </span><span class="n">ebx</span><span class="p">;</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">esp</span><span class="p">,</span><span class="w"> </span><span class="n">ebp</span><span class="p">,</span><span class="w"> </span><span class="n">esi</span><span class="p">,</span><span class="w"> </span><span class="n">edi</span><span class="p">;</span><span class="w"> </span><span class="c1">// 通用寄存器</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">es</span><span class="p">,</span><span class="w"> </span><span class="n">cs</span><span class="p">,</span><span class="w"> </span><span class="n">ss</span><span class="p">,</span><span class="w"> </span><span class="n">ds</span><span class="p">,</span><span class="w"> </span><span class="n">fs</span><span class="p">,</span><span class="w"> </span><span class="n">gs</span><span class="p">;</span><span class="w"> </span><span class="c1">// 段寄存器</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">ldt</span><span class="p">;</span><span class="w"> </span><span class="c1">// LDT 段选择子</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">trap</span><span class="p">;</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">iomap_base</span><span class="p">;</span><span class="w"> </span><span class="c1">// IO 权限位图起始偏移 };</span>
+</code></pre></div>
+<p>上面的结构图告诉我们有三个栈顶<code class="language-text highlight">esp0、esp1、esp2</code>，分别对应3个特权级，用来保存相关的内容。而3号特权级栈，也即用户栈，它的切换是通过保存上下文来进行的</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>**进程**是程序的一次执行实例，是操作系统进行资源分配和调度的基本单位</p>
+</div>
+<ul>
+<li>拥有独立的地址空间</li>
+<li>拥有自己的代码段、数据段、堆、栈</li>
+<li>有用系统资源（文件描述符、内存、信号量等）</li>
+<li>每个进程都有一个唯一的PID</li>
+</ul>
+<p>**任务**是一个更加广义的术语，在不同上下文中含义不太一样</p>
+<table>
+<thead>
+<tr>
+<th>上下文</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linux内核</td>
+<td>任务 ≈ 一个执行单元，可能是进程或者线程</td>
+</tr>
+<tr>
+<td>x86架构</td>
+<td>指的是一个TSS表示的活动实体</td>
+</tr>
+<tr>
+<td>一般语境</td>
+<td>抽象的工作单元，比如某个需要执行的功能</td>
+</tr>
+</tbody>
+</table>
+<p><strong>任务vs进程（Linux角度）</strong></p>
+<table>
+<thead>
+<tr>
+<th>比较项</th>
+<th>任务（Task）</th>
+<th>进程（Process）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>定义</td>
+<td>内核中的调度单元，使用 <code class="language-scdoc highlight">task_struct</code> 表示</td>
+<td>程序的执行实例，使用 PID 区分</td>
+</tr>
+<tr>
+<td>范围</td>
+<td>包含进程和线程</td>
+<td>严格指拥有独立资源的执行体</td>
+</tr>
+<tr>
+<td>地址空间</td>
+<td>可共享（线程）或不共享（进程）</td>
+<td>拥有独立地址空间</td>
+</tr>
+<tr>
+<td>资源管理单位</td>
+<td>否（线程间共享资源）</td>
+<td>是（进程独立拥有资源）</td>
+</tr>
+<tr>
+<td>调度单位</td>
+<td>是</td>
+<td>是（本质上由 <code class="language-scdoc highlight">task_struct</code> 支持）</td>
+</tr>
+</tbody>
+</table>
+<p>特权级在变化的时候，需要用到不同特权级下的栈，当处理器进入不同特权级时，他会自动在TSS中找同特权级的栈</p>
+<div class="admonition note">
+<p class="admonition-title">举个例子（从用户态中断进入内核态）</p>
+<p>假设现在的情况是：Ring3遭遇触发中断,则变化过程如下：</p>
+<p>```mermaid
+flowchart
+  A[CPU检测特权级变化R3-&gt;0]:::step1
+  B[从当前 GDT 中 TSS 描述符找到 TSS 地址]:::step2
+  C[加载 TSS 中的 ESP0 和 SS0]:::step3
+  D[切换堆栈为内核栈，并在其上压入旧的用户态 SS、ESP、EFLAGS、CS、EIP]:::step4
+  E[跳转到中断处理程序执行]:::step5
+  F[内核结束后通过 IRET 返回用户态]:::step6</p>
+<p>A --&gt; B
+  B --&gt; C
+  C --&gt; D
+  D --&gt; E
+  E --&gt; F</p>
+<p>classDef step1 fill:#FF6347,stroke:#D32F2F,stroke-width:2px,color:white;
+  classDef step2 fill:#FFD700,stroke:#F57C00,stroke-width:2px,color:white;
+  classDef step3 fill:#1E90FF,stroke:#1976D2,stroke-width:2px,color:white;
+  classDef step4 fill:#8A2BE2,stroke:#6A1B9A,stroke-width:2px,color:white;
+  classDef step5 fill:#FF4500,stroke:#FF8C00,stroke-width:2px,color:white;
+  classDef step6 fill:#228B22,stroke:#388E3C,stroke-width:2px,color:white;</p>
+</div>
+<p>当然了，TSS和GDT一样是个数据结构，也自然如GDT一样需要相关的找到他的数据结构，GDT有GDTR，TSS有TR寄存器</p>
+<h4 id="cpldpl">CPL和DPL</h4>
+<p>PL（Privilege Level）也就是CPU用来记录特权级高低的标识</p>
+<p>RPL(Requestor Privilege Level)也就是**请求特权级**。它表示请求该段的程序的特权级，通常由段选择符中的特权级指定的</p>
+<p>CPL(Current Privilege Level)也就是**当前特权级**。CPL的值由当前执行代码段的段选择符的特权级决定，通常会影响CPU如何执行指令和响应外部事件</p>
+<p>DPL(Descriptor Privilege Level)也就是**描述符特权级**。每个段都有一个描述符，这些描述符包含了访问该段时所需的特权级要求。DPL的值决定了该段能否被具有相应CPL的程序访问。</p>
+<blockquote>
+<p>例如：某个段的DPL值为1，那么只有CPL&lt;=1的程序才可以访问该段</p>
+</blockquote>
+<p>总而言之，CPL 代表当前正在执行的代码的特权级，而 DPL 代表段的特权级。通过这两个机制，操作系统可以有效地隔离不同权限级别的代码和数据，确保系统的安全性</p>
+<div class="admonition note">
+<p class="admonition-title">三者的访问规则&amp;&amp;例子</p>
+<div class="language-scdoc highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">-</span> **有效访问**：当程序要访问一个段时，必须满足以下两个条件：
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  1. **CPL &lt;= DPL**：即程序的当前特权级（CPL）不能高于段描述符的特权级（DPL），否则会导致特权级错误。
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>  2. **RPL &lt;= DPL**：即请求特权级（RPL）也不能高于段的描述符要求的特权级（DPL），否则也会触发错误。
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="k">-</span> **限制访问**：如果 **CPL &gt; DPL** 或 **RPL &gt; DPL**，则访问该段会失败，触发特权错误（如 #GP 异常）。
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>--------------
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>**举个例子**
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>假设有一个段描述符，其 **DPL** 为 0（内核模式）。有两个程序，它们的 **CPL** 和 **RPL** 如下：
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>1. 程序 A 的 **CPL** 为 0（内核模式），**RPL** 为 3（用户模式），请求访问该段。
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>2. 程序 B 的 **CPL** 为 3（用户模式），**RPL** 为 2（中间权限），请求访问该段。
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>   在这种情况下：
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>   <span class="k">-</span> 程序 A 可以访问该段，因为 **CPL (0)** &lt;= **DPL (0)** 且 **RPL (3)** &lt;= **DPL (0)**。
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>   <span class="k">-</span> 程序 B 无法访问该段，因为 **CPL (3)** &gt; **DPL (0)**，即它的当前特权级低于该段描述符所要求的特权级。
+</code></pre></div>
+</div>
+<p>但是这样存在一个问题：某一特权级的代码段，低它一级的没法运行，高它一级的不让运行。<strong>因此受访者为代码段的时候，一般情况下，只能平级访问</strong></p>
+<p>但这样会导致另一个问题，我们低特权级下的指令真的想要用高特权级的指令，怎么办呢？于是给出了**一致性代码**这一东西</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>一致性代码段也称为依从代码段。用来实现从低特权级的代码向高特权级的代码转移。</p>
+</div>
+<p>一致性代码段是指如果自己是转移后的目标段，自己的特权级（DLR）一定要大于等于转移前的CPL,即**数值上CPL&gt;=DPL** / <strong>一致性代码段的DPL是权限的上限</strong>，任何在此权限之下的特权级都可以转到此代码段上执行</p>
+<p>一致性代码段的一大特点是转移后的特权级不与自己的特权级（DPL）为主，而是与转移前的低特权级一致，听从、依从转移前的低特权级。也就是说，处理器遇到目标端为一致性代码段的时候，并不会将CPL用该目标段的DPL替换</p>
+<p>因此这一代码的转移并没有提升特权级，只是在特权级更高的地方执行指令，并未产生因特权级升高而产生潜在危险</p>
+<p>但我们总不能一直这样运行，因为有的代码他不会标识为一致性代码，所以我们就需要其它机制来使得我们向高特权级转化</p>
+<h4 id="rpl">门、调用门、RPL序</h4>
+<p>首先了解一下**门结构**：它是记录一段程序起始地址的描述符，用来描述一段程序，<strong>进入这个门结构之后，处理器就可以转移到更高的特权上</strong></p>
+<table>
+<thead>
+<tr>
+<th><img alt="" src="../../images/image-20250707151405434.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>任务门描述符</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/image-20250707151420903.png" /></td>
+</tr>
+<tr>
+<td>中断门描述符</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/image-20250707151439713.png" /></td>
+</tr>
+<tr>
+<td>陷阱门描述符</td>
+</tr>
+<tr>
+<td><img alt="" src="../../images/image-20250707151511334.png" /></td>
+</tr>
+<tr>
+<td>调用门描述符</td>
+</tr>
+</tbody>
+</table>
+<p>除任务门之外，他们与段描述符最大的不同在于：这些门都是对应到一段例程之中，即对应一段函数，而不是像段描述符一样对应的是一片内存区域。由于任何程序都属于某个内存段，所以程序确切的地址必须用“代码段选择子+段内偏移量”来描述。可见门描述符基于段描述符，所以门描述符中记录的是选择子和偏移量的原因</p>
+<p>任务门描述符可以放在GDT、LDT和IDT（中断描述表）中，调用门可以位于GDT、LDT中，中断门和陷阱门仅位于IDT中</p>
+<p>此外，由于任务门、调用门都直接位于描述符表中，所以这两个门都可以直接用call、jmp指令直接使用；陷阱门和中断门位于IDT中，所以这两个门只能由中断信号触发</p>
+<p>下面分别说下每个门的适用范围：</p>
+<ul>
+<li><strong>调用门</strong>：call和jmp指令后接调用门选择子为参数实现系统调用，call指令使用调用门可以实现向高特权级代码转移，jmp使用调用门只能实现平级代码转移</li>
+<li><strong>中断门</strong>：以int指令主动发中断的形式实现从低特权级到高特权级转移</li>
+<li><strong>陷阱门</strong>：以int3指令主动发中的的形式实现低特权级向高特权级转移，这一般是编译器在调式时用</li>
+<li><strong>任务门</strong>：任务以状态段TSS为单位，用来实现任务切换，它可以借助中断或指令发起。当中断发生时，如果对应的中断向量号是任务门，则会发起任务切换。也可以像调用门那样，用call或jmp指令后接任务门的选择子或任务TSS的选择子</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><img alt="" src="../../images/image-20250707153822851.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>为什么可以使用门的结构进入高特权级，这个图太形象了</td>
+</tr>
+</tbody>
+</table>
+<p>门的特权级是一定要低于我们访问者的特权级的，这样才能保证我们能过调用门，而受访者的特权级一定得高于访问者者，不然没有意义了</p>
+<div class="admonition note">
+<p class="admonition-title">调用门的内部执行结构：点击查看更多</p>
+<p>```</p>
+<p><img alt="image-20250707154417052" src="../../images/image-20250707154417052.png" /></p>
+<p>从调用门选择子到或许到内核代码的地址，共经历了5个步骤。</p>
+<p><strong>用户程序调用调用门选择子</strong></p>
+<p>在用户程序中有一句代码<code class="language-text highlight">call 调用门选择子</code>,call指令可以使用调用门，参数就是调用门的选择子，该选择子指向GDT或LDT中的某个门描述符。</p>
+<p><strong>处理器查找门描述符地址</strong></p>
+<p>处理器用门描述符选择子的高13位（索引位）乘以8作为该描述符在GDT中的偏移量，再加上寄存器GDTR中的GDT基地址，最终找到了门描述符的地址，它位于GDT中从0起的第3个描述符位置。</p>
+</div>
+<p><strong>获取内核例程地址</strong></p>
+<p>在该描述符中记录的是内核例程的地址。我们知道，在保护模式下描述某个内存地址是离不开选择子和偏移量的，所以，门描述符中记录的是内核例程所在代码段的选择子及偏移量</p>
+<p><strong>处理器查找内核代码段描述符地址</strong></p>
+<p>处理器用代码段选择子的高13位索引值乘以8，加上GDT基址，得到内核代码段描述符地址</p>
+<p><strong>最终获取内核例程起始地址</strong></p>
+<p>用已经得到的内核代码段描述符地址，我们就可以最终得到内核例程的起始地址</p>
+<h4 id="_2">调用门的过程保护</h4>
+<p>调用门涉及两个特权级，先是转移前的低特权级，这是程序调用“调用门”时的CPL；再就是转移后的目标特权级，这是由门描述符中选择子对应的目标代码段的DPL决定的。</p>
+<p>接下来，假设用户进程要调用某个调用门，该门描述符中的参数个数是2，也就是说用户进程需要为该调用门提供2个参数才行。调用前的当前特权级为3，调用后的新特权级为0，所以调用门转移前用的是3特权级栈，调用后用的是0特权级栈</p>
+<p>现在为此特权门提供2个参数，这是在使用调用门前完成的，目前是在3特权级，所以要在特权级栈中压入参数，分别是参数1和参数2</p>
+<p><img alt="image-20250708214702630" src="../../images/image-20250708214702630.png" /></p>
+<p>接下来确定新栈，这一步中我们根据门描述符中所寻找到的选择子来确定目的代码段的DPL值，这将作为我们日后的CPL值存在，同时我们会通过TSS来确定相对应的DPL站地址，也就是栈段选择子SS和栈指针ESP，这里记作SS_NEW、ESP_NEW</p>
+<p>如果转移后的代码段特权提升，我们就需要换到新栈，此时旧段选择子我们记为SS_OLD、ESP_OLD,由于我们这俩值需要保存到新栈中，这是为了方便日后使用retf等指令进行返回旧栈，此时我们需要将SS_OLD、ESP_OLD放到某个地方进行保存，例如其他的一些寄存器，然后当我们将SS_NEW和ESP_NEW载入到SS和ESP寄存器后，咱们再将他俩压入新栈就行了</p>
+<p>然后再将用户栈中保存的参数压入新栈</p>
+<p>由于调用门描述符中记录的是某个段选择子和偏移，所以此时我们的cs寄存器需要用这个选择子重新加载，所以我们需要将旧的CS和EIP保存到栈上，然后重新加载两个寄存器</p>
+<p><img alt="image-20250708215241870" src="../../images/image-20250708215241870.png" /></p>
+<p>之后就是按照CS：EIP指示来运行内核例程从而实现特权级从3到0.</p>
+<p><strong>但是总归是要回到原本的特权级，这里就是高特权级到低特权级了——retf指令：</strong></p>
+<ol>
+<li>首先进行检查，检查之前栈中保存的旧CS选择子，判断其中的RPL，来决定是否需要进行权限变换</li>
+<li>然后弹出CS_OLD和EIP_OLD,目前为止ESP就会指向最后压的那个参数</li>
+<li>此时我们需要跳过参数，所以得到将ESP_NEW的值加上一定偏移，使得他刚好指向ESP_OLD</li>
+<li>若第一步中确定需要进行权限变换，此时再次pop两次，这样就恢复了之前的SS和ESP了</li>
+</ol>
+<blockquote>
+<p>书中作者举了一个相当生动形象的例子：</p>
+<p>不知道大伙儿学车了没有，报考驾校也要有个年龄限制，即使考 C本B本也要分年龄的。假如某个
+小学生A（用户进程）特别喜欢开车，他就是想考个驾照，可驾校的门卫（调用门〉一看他年龄太小都不让他进门，连填写报名登记表的机会都没有，怎么办？于是他就求他的长辈B（内核〉帮他去报名，长辈的年龄肯定够了，门卫对他放行，他来到驾校招生办公室后，对招生人员说要帮别人报名。人家招生人员对B说，好吧，帮别人代报名需要出示对方的身份证（RPL)，于是长辈B就把小学生A的身份证（现在小孩子就可以申请身份证，只是年龄越小有效期越短，因为小孩子长得快嘛）拿出来了，招生人员一看，年纪这么小啊，不到法制学车年纪呢，拒绝接收。这时候驾校招生人员的安全意识开始泛滥了，以纵容小孩子危险驾驶为名把长辈B批评了一顿（引发异常）</p>
+</blockquote>
+<div class="language-scdoc highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="gu">##</span> 0x08 实现打印函数
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>这一段更多的是实操相关，没什么值得记录的知识点
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="gu">##</span> 0x09 实现中断机制
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="gu">##</span># 基础知识
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>\*\*中断\*\*是计算机系统中的一种机制，用于打断正在执行的程序流程，以便处理更紧急或更高优先级的事件。和特权模式的切换息息相关
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>中断按照来源一般分为两种类型：**外部中断\*\*和\*\*内部中断**
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="gu">##</span>## **外部中断**
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>![image-20250709111137093](../../images/image-20250709111137093.png)
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>CPU为了接受外部设备的中断信号请求，设置了两条信号线INTR、NMI。
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>其中INTR收到的信号都是不影响系统运行的，可以随时处理，甚至可以不处理，因为它不影响CPU的运行；而只要从NMI引脚收到的中断，那必须要处理，因为这个是\*\*灾难性错误\*\*
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>**可屏蔽中断**
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>这指的是可以通过软件设置来屏蔽或允许的外部中断请求。在中断控制器中，CPU可以选择暂时忽略被这类中断，直至它准备好接受。
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>在x86架构中，是否响应可屏蔽中断由\*\*eflags寄存器的IF位\*\*将所有这些外部设备的中断屏蔽
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>**不可屏蔽中断**
+<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>
+<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a>他是由NMI线传递的中断信号，只要这里传递了中断，计算机就说明遭到了严重的问题，必须立刻处理。此时上述eflags寄存器的IF位对他也毫无影响
+<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a>
+<a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a>
+<a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a><span class="gu">##</span>## 内部中断
+<a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a>
+<a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a>内部中断又可划分为\*\*软中断\*\*和\*\*异常\*\*
+<a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a>
+<a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a>**软中断**
+<a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a>
+<a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a>也就是软件发起的中断，它是操作系统或应用程序通过指令或者系统调用发出的中断信号，通常用于请求操作系统执行某些特权操作，如文件操作、进程调度、内存管理等。
+<a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a>
+<a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a>**异常**
+<a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a>
+<a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a>异常是程序运行时出现的错误，他同样不受eflags寄存器中的标志位影响（不可屏蔽）。大致分为下面3种
+<a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a>
+<a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a><span class="k">-</span> Fault：故障，可修复，如缺页异常
+<a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a><span class="k">-</span> Trap：陷阱，自己想陷入中断，所以中断返回后执行下一条指令
+<a id="__codelineno-4-49" name="__codelineno-4-49" href="#__codelineno-4-49"></a><span class="k">-</span> Abort：终止，无法修复，操作系统为了自保，只能把该程序从进程表移除
+<a id="__codelineno-4-50" name="__codelineno-4-50" href="#__codelineno-4-50"></a>
+<a id="__codelineno-4-51" name="__codelineno-4-51" href="#__codelineno-4-51"></a>
+<a id="__codelineno-4-52" name="__codelineno-4-52" href="#__codelineno-4-52"></a><span class="gu">##</span>## 中断描述表
+<a id="__codelineno-4-53" name="__codelineno-4-53" href="#__codelineno-4-53"></a>
+<a id="__codelineno-4-54" name="__codelineno-4-54" href="#__codelineno-4-54"></a>是操作系统用于处理和管理中断的一种数据结构，它存储了中断服务例程地址，以及中断处理的相关信息。
+<a id="__codelineno-4-55" name="__codelineno-4-55" href="#__codelineno-4-55"></a>
+<a id="__codelineno-4-56" name="__codelineno-4-56" href="#__codelineno-4-56"></a>其中不止有中断描述符，还有任务门描述符和陷阱门描述符，且这些描述符均指向了一段程序
+<a id="__codelineno-4-57" name="__codelineno-4-57" href="#__codelineno-4-57"></a>
+<a id="__codelineno-4-58" name="__codelineno-4-58" href="#__codelineno-4-58"></a><span class="k">-</span> 任务门：配合TSS使用实现特权级切换，可以存放在GDT、LDT、IDT中，描述符中任务门的tyoe字段二进制为0101
+<a id="__codelineno-4-59" name="__codelineno-4-59" href="#__codelineno-4-59"></a><span class="k">-</span> 中断门：包含中断处理程序所在段的段选择子以及偏移，当通过此方式进入中断之后，eflags寄存器的IF位自动置0，也就是关中断，防止中断嵌套
+<a id="__codelineno-4-60" name="__codelineno-4-60" href="#__codelineno-4-60"></a><span class="k">-</span> 陷阱门：类似于中断门，区别就是IF位不会置0，只允许放在IDT中.
+<a id="__codelineno-4-61" name="__codelineno-4-61" href="#__codelineno-4-61"></a><span class="k">-</span> 调用门：提供用户进程进入特权0级，其DPL为3，只能用call和jmp指令调用，可以安装在GDT和LDT中。
+<a id="__codelineno-4-62" name="__codelineno-4-62" href="#__codelineno-4-62"></a>
+<a id="__codelineno-4-63" name="__codelineno-4-63" href="#__codelineno-4-63"></a>同理于GDT，我们需要一个寄存器来存放IDT的物理地址，这个寄存器就是IDTR
+</code></pre></div>
+<p>typedef</p>
+<p>struct</p>
+<p>{</p>
+<p>uint16_t</p>
+<p>limit
+;</p>
+<p>// IDT 的大小（16 位）</p>
+<p>uint32_t</p>
+<p>base
+;</p>
+<p>// IDT 的基址（32 位）</p>
+<p>}</p>
+<p>IDTR
+;</p>
+<p>// 64 位模式下表示 IDTR 的结构体</p>
+<p>typedef</p>
+<p>struct</p>
+<p>{</p>
+<p>uint16_t</p>
+<p>limit
+;</p>
+<p>// IDT 的大小（16 位）</p>
+<p>uint32_t</p>
+<p>base_low
+;</p>
+<p>// 基址的低 32 位</p>
+<p>uint32_t</p>
+<p>base_high
+;</p>
+<p>// 基址的高 32 位</p>
+<p>}</p>
+<p>IDTR
+;</p>
+<div class="language-matlab highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>####<span class="w"> </span>中断处理过程及保护
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>中断过程分为<span class="n">CPU外和CPU内两个部分</span>。
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="o">-</span><span class="w"> </span><span class="n">CPU外</span>：外部设备的1中断由中断代理芯片接收，处理后将该中断的中断向量号发送到<span class="n">CPU</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="o">-</span><span class="w"> </span><span class="n">CPU内</span>：<span class="n">CPU执行该中断向量号对应的中断处理程序</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">先讨论处理器内部的内容</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="s">1.</span><span class="w"> </span><span class="s">处理器根据中断向量号定位中断门描述符</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="mf">2.</span><span class="w"> </span>处理器进行特权级检查
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>由于中断是通过中断向量号通知到处理器的，中断向量号只是个整数，其中并不包含<span class="n">RPL</span>，所以在对由中断引起的特权级转移做特权级检查中不会涉及<span class="n">RPL</span>。中断门的特权级检查同调用门类似，对于软件主动发起的软中断，当前特权级<span class="n">CPL必须在门描述符和目标代码段DPL之间</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="o">-</span><span class="w"> </span>若是由软中断<span class="n">int</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="n">int3</span><span class="p">,</span><span class="w"> </span><span class="n">into引发的中断</span>，这些是由用户自主发起的，所以处理器要检查当前特权级和门描述符<span class="n">DPL</span>，这是检查进门的特权下限，乳山市检查通过，也就是<span class="n">CPL特权级是高于门DPL的</span>，那么将进入下一步“门框”的检查，否则处理器将会报出异常
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="o">-</span><span class="w"> </span>这一步检查特权级的上限“门框”，处理器要检查当前特权级<span class="n">CPL和门描述符中所记录选择子对应的目标代码段DPL</span>，若<span class="n">CPL特权级小于目标代码段的DPL</span>，则检查通过哦，否则处理器引发异常
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="o">-</span><span class="w"> </span>若中断是由外部设备和异常引起的，则只检查<span class="n">CPL和目标代码段的DPL</span>，若<span class="n">CPL小于目标代码段特权</span>，则检查通过，否则处理器引发异常
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="o">-</span><span class="w"> </span>执行中断处理程序
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>特权级检查通过后，将门描述符目标代码段选择子加载到代码段寄存器<span class="n">cs中</span>，把嗯描述符中的偏移地址加载到<span class="n">EIP中</span>，然后执行中断处理程序
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="sx">![image-20250710145101369](../../images/image-20250710145101369.png)</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>中断发生后，<span class="n">eflags中的NT位和TF位会被置零</span>，若中断对应的是中断门，则在进入中断门后<span class="n">eflags的IF会自动置0以此来防止中断嵌套</span>。
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>处理器提供了一个修改<span class="n">IF位的指令</span>：<span class="n">cli和sti</span>。其中<span class="n">cli指令使得IF位为0</span>，<span class="n">sti指令使得IF为1</span>。分别称之为关中断和开中断
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>
+<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="n">IF位只能限制外部设备中断</span>，而对其它影响系统正常运行的中断都无效。
+<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>
+<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a><span class="n">TF</span>（<span class="n">Trap</span><span class="w"> </span><span class="n">Flag</span>），陷阱标志位，这用在调式环境中，当<span class="n">TF为0表示禁止单步执行</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a>
+<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a><span class="n">NT</span><span class="p">(</span><span class="n">Nest</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="n">Flag</span><span class="p">),</span>任务嵌套位，用来标记任务嵌套调用情况。
+<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a>
+<a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a><span class="sx">!!! note</span>
+<a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a><span class="w">    </span>任务嵌套调用就是指<span class="n">CPU挂起当前的任务转而去执行另一个任务</span>，待到该任务执行完再回去执行之前的任务。
+<a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a>
+<a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a><span class="n">CPU之所以可以如此运行是因为他会执行以下操作</span>：
+<a id="__codelineno-5-38" name="__codelineno-5-38" href="#__codelineno-5-38"></a>
+<a id="__codelineno-5-39" name="__codelineno-5-39" href="#__codelineno-5-39"></a><span class="mf">1.</span><span class="w"> </span>将旧任务的<span class="n">TSS段选择子写到新任务TSS中的</span>“上一个任务<span class="n">TSS的指针</span>”字段中
+<a id="__codelineno-5-40" name="__codelineno-5-40" href="#__codelineno-5-40"></a><span class="mf">2.</span><span class="w"> </span>将新任务<span class="n">eflags寄存器中NT置为1</span>，表示新任务之所以能够执行是因为有别的任务调用了他
+<a id="__codelineno-5-41" name="__codelineno-5-41" href="#__codelineno-5-41"></a>
+<a id="__codelineno-5-42" name="__codelineno-5-42" href="#__codelineno-5-42"></a>而<span class="n">CPU从新任务返回到旧任务是通过iret指令</span>，他又两个功能，一个是中断返回，一个是返回旧任务，所以这里就需要用到<span class="n">NT位</span>，因为执行<span class="n">iret的时候会去检查NT位的值</span>，若为1则说明当前任务是嵌套执行的，若为0则说明是在中断处理环境下，于是执行正常的中断退出流程
+<a id="__codelineno-5-43" name="__codelineno-5-43" href="#__codelineno-5-43"></a>
+<a id="__codelineno-5-44" name="__codelineno-5-44" href="#__codelineno-5-44"></a>
+<a id="__codelineno-5-45" name="__codelineno-5-45" href="#__codelineno-5-45"></a>####<span class="w"> </span>中断压栈
+<a id="__codelineno-5-46" name="__codelineno-5-46" href="#__codelineno-5-46"></a>
+<a id="__codelineno-5-47" name="__codelineno-5-47" href="#__codelineno-5-47"></a>当中断发生时，处理器收到一个中断向量，根据改中断向量号在<span class="n">IDT中的偏移</span>，然后找到对应的门然后通过其中的选择子，然后将该选择子移入<span class="n">CS中</span>，再将门描述符中的偏移字段移入<span class="n">EIP</span>。这时由于<span class="n">CS和EIP会被刷新</span>，所以处理器会将被中断的程序的<span class="n">CS和EIP保存到当前中断处理程序使用的栈当中</span>。但由于中断在任何特权级下都有可能发生，所以中断处理程序使用的栈不确定，这就导致我们除了保存<span class="n">CS</span>、<span class="n">EIP外还需要保存EFLAGS</span>；如果涉及到特权级变化，还要压入<span class="n">SS和ESP寄存器</span>。
+<a id="__codelineno-5-48" name="__codelineno-5-48" href="#__codelineno-5-48"></a>
+<a id="__codelineno-5-49" name="__codelineno-5-49" href="#__codelineno-5-49"></a><span class="o">**</span>寄存器入栈情况及其顺序<span class="o">**</span>
+<a id="__codelineno-5-50" name="__codelineno-5-50" href="#__codelineno-5-50"></a>
+<a id="__codelineno-5-51" name="__codelineno-5-51" href="#__codelineno-5-51"></a><span class="sx">![image-20250711164312477](../../images/image-20250711164312477.png)</span>
+<a id="__codelineno-5-52" name="__codelineno-5-52" href="#__codelineno-5-52"></a>
+<a id="__codelineno-5-53" name="__codelineno-5-53" href="#__codelineno-5-53"></a><span class="mf">1.</span><span class="w"> </span>当处理器通过中断向量找到对应的中断描述符后，比较<span class="n">CPL和中断门描述符中选择子对应目标代码段的DPL对比</span>，若发现向高特权级转移，则需要切换到高特权级的栈，这也意味着当我们执行完中断处理程序后需要恢复旧栈才行。因此处理器先临时保存旧<span class="n">SS和ESP值</span>，记作<span class="n">SS</span><span class="o">\</span><span class="n">_old和ESP</span><span class="o">\</span><span class="n">_old</span>，然后在<span class="n">TSS中寻找到对应目标代码段同特权级的栈加载到寄存器SS和ESP中</span>，记作<span class="n">SS</span><span class="o">\</span><span class="n">_new和ESP</span><span class="o">\</span><span class="n">_new</span>，再将临时保存的<span class="n">SS</span><span class="o">\</span><span class="n">_old和ESP</span><span class="o">\</span><span class="n">_old压栈备份</span>
+<a id="__codelineno-5-54" name="__codelineno-5-54" href="#__codelineno-5-54"></a><span class="mf">2.</span><span class="w"> </span>在新栈中压入<span class="n">EFLAGS寄存器</span>
+<a id="__codelineno-5-55" name="__codelineno-5-55" href="#__codelineno-5-55"></a><span class="mf">3.</span><span class="w"> </span>因为要切换到目标代码段，对于这种段间转移，要将<span class="n">CS和EIP保存到当前栈中备份</span>，记作<span class="n">CS</span><span class="o">\</span><span class="n">_old和EIP</span><span class="o">\</span><span class="n">_old</span>，用于在中断结束后恢复被中断的进程
+<a id="__codelineno-5-56" name="__codelineno-5-56" href="#__codelineno-5-56"></a><span class="mf">4.</span><span class="w"> </span>某些异常会爆出错误码，这个错误是用于报告异常是在哪个段上发生的，也就是发生异常的位置，所以错误码中包含选择子等信息，他一般紧跟<span class="n">EIP后入栈</span>，记为<span class="n">ERROR</span><span class="o">\</span><span class="n">_CODE</span>
+<a id="__codelineno-5-57" name="__codelineno-5-57" href="#__codelineno-5-57"></a>
+<a id="__codelineno-5-58" name="__codelineno-5-58" href="#__codelineno-5-58"></a>处理器执行完中断处理程序后需要返回到被中断进程，也就是使用<span class="n">iret指令进行弹栈</span>，这里需要保证上述顺序，如果说有中断错误码且处理器并不知道，这就需要我们手动将其跳过，也就是说当我们准备用<span class="n">iret指令返回时</span>，当前栈指针必须得指向栈中备份的<span class="n">EIP</span><span class="o">\</span><span class="n">_old所在的位置</span>
+<a id="__codelineno-5-59" name="__codelineno-5-59" href="#__codelineno-5-59"></a>
+<a id="__codelineno-5-60" name="__codelineno-5-60" href="#__codelineno-5-60"></a>
+<a id="__codelineno-5-61" name="__codelineno-5-61" href="#__codelineno-5-61"></a>####<span class="w"> </span>可编程中断控制器8259<span class="n">A</span>
+<a id="__codelineno-5-62" name="__codelineno-5-62" href="#__codelineno-5-62"></a>
+<a id="__codelineno-5-63" name="__codelineno-5-63" href="#__codelineno-5-63"></a>这个控制器比较古老了，现代中断控制器基本都是<span class="n">APIC类了</span><span class="p">,</span>这里简单看一下工作流程就行
+<a id="__codelineno-5-64" name="__codelineno-5-64" href="#__codelineno-5-64"></a>
+<a id="__codelineno-5-65" name="__codelineno-5-65" href="#__codelineno-5-65"></a>
+<a id="__codelineno-5-66" name="__codelineno-5-66" href="#__codelineno-5-66"></a>```<span class="n">mermaid</span>
+<a id="__codelineno-5-67" name="__codelineno-5-67" href="#__codelineno-5-67"></a>
+<a id="__codelineno-5-68" name="__codelineno-5-68" href="#__codelineno-5-68"></a><span class="n">flowchart</span><span class="w"> </span><span class="s">TD</span>
+<a id="__codelineno-5-69" name="__codelineno-5-69" href="#__codelineno-5-69"></a><span class="w">    </span><span class="c">%% 外设部分</span>
+<a id="__codelineno-5-70" name="__codelineno-5-70" href="#__codelineno-5-70"></a><span class="w">    </span><span class="nb">subgraph</span><span class="w"> </span>外设
+<a id="__codelineno-5-71" name="__codelineno-5-71" href="#__codelineno-5-71"></a><span class="w">        </span><span class="n">A</span><span class="p">[</span><span class="s">&quot;外设发出中断信号并发送至8259A对应IRQ接口&quot;</span><span class="p">]</span>
+<a id="__codelineno-5-72" name="__codelineno-5-72" href="#__codelineno-5-72"></a><span class="w">    </span><span class="k">end</span>
+<a id="__codelineno-5-73" name="__codelineno-5-73" href="#__codelineno-5-73"></a>
+<a id="__codelineno-5-74" name="__codelineno-5-74" href="#__codelineno-5-74"></a><span class="w">    </span><span class="c">%% 8259A内部处理</span>
+<a id="__codelineno-5-75" name="__codelineno-5-75" href="#__codelineno-5-75"></a><span class="w">    </span><span class="nb">subgraph</span><span class="w"> </span>8259<span class="n">A处理</span>
+<a id="__codelineno-5-76" name="__codelineno-5-76" href="#__codelineno-5-76"></a><span class="w">        </span><span class="n">B1</span><span class="p">{</span><span class="s">&quot;检查IMR对应位&quot;</span><span class="p">}</span>
+<a id="__codelineno-5-77" name="__codelineno-5-77" href="#__codelineno-5-77"></a><span class="w">        </span><span class="n">B2</span><span class="p">[</span><span class="s">&quot;若屏蔽，丢弃&quot;</span><span class="p">]</span>
+<a id="__codelineno-5-78" name="__codelineno-5-78" href="#__codelineno-5-78"></a><span class="w">        </span><span class="n">B3</span><span class="p">[</span><span class="s">&quot;若未屏蔽，置IRR对应bit=1，等待处理&quot;</span><span class="p">]</span>
+<a id="__codelineno-5-79" name="__codelineno-5-79" href="#__codelineno-5-79"></a><span class="w">        </span><span class="n">B4</span><span class="p">[</span><span class="s">&quot;优先级解析选最高IRQ，发中断信号给CPU&quot;</span><span class="p">]</span>
+<a id="__codelineno-5-80" name="__codelineno-5-80" href="#__codelineno-5-80"></a><span class="w">        </span><span class="n">B5</span><span class="p">[</span><span class="s">&quot;CPU响应中断（INTA），ISR置位，IRR清零&quot;</span><span class="p">]</span>
+<a id="__codelineno-5-81" name="__codelineno-5-81" href="#__codelineno-5-81"></a><span class="w">        </span><span class="n">B6</span><span class="p">[</span><span class="s">&quot;CPU再次请求中断向量，8259A发送给CPU&quot;</span><span class="p">]</span>
+<a id="__codelineno-5-82" name="__codelineno-5-82" href="#__codelineno-5-82"></a><span class="w">    </span><span class="k">end</span>
+<a id="__codelineno-5-83" name="__codelineno-5-83" href="#__codelineno-5-83"></a>
+<a id="__codelineno-5-84" name="__codelineno-5-84" href="#__codelineno-5-84"></a><span class="w">    </span><span class="c">%% CPU处理</span>
+<a id="__codelineno-5-85" name="__codelineno-5-85" href="#__codelineno-5-85"></a><span class="w">    </span><span class="nb">subgraph</span><span class="w"> </span><span class="n">CPU处理</span>
+<a id="__codelineno-5-86" name="__codelineno-5-86" href="#__codelineno-5-86"></a><span class="w">        </span><span class="n">C1</span><span class="p">[</span><span class="s">&quot;CPU进入中断处理程序&quot;</span><span class="p">]</span>
+<a id="__codelineno-5-87" name="__codelineno-5-87" href="#__codelineno-5-87"></a><span class="w">        </span><span class="n">C2</span><span class="p">{</span><span class="s">&quot;EOI通知模式&quot;</span><span class="p">}</span>
+<a id="__codelineno-5-88" name="__codelineno-5-88" href="#__codelineno-5-88"></a><span class="w">        </span><span class="n">C3</span><span class="p">[</span><span class="s">&quot;手动模式：CPU发送EOI，ISR清零&quot;</span><span class="p">]</span>
+<a id="__codelineno-5-89" name="__codelineno-5-89" href="#__codelineno-5-89"></a><span class="w">        </span><span class="n">C4</span><span class="p">[</span><span class="s">&quot;自动模式：第二次INTA自动清零ISR&quot;</span><span class="p">]</span>
+<a id="__codelineno-5-90" name="__codelineno-5-90" href="#__codelineno-5-90"></a><span class="w">    </span><span class="k">end</span>
+<a id="__codelineno-5-91" name="__codelineno-5-91" href="#__codelineno-5-91"></a>
+<a id="__codelineno-5-92" name="__codelineno-5-92" href="#__codelineno-5-92"></a><span class="w">    </span><span class="c">%% 流程连接</span>
+<a id="__codelineno-5-93" name="__codelineno-5-93" href="#__codelineno-5-93"></a><span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">B1</span>
+<a id="__codelineno-5-94" name="__codelineno-5-94" href="#__codelineno-5-94"></a><span class="w">    </span><span class="n">B1</span><span class="w"> </span><span class="o">--</span><span class="w"> </span>屏蔽<span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">B2</span>
+<a id="__codelineno-5-95" name="__codelineno-5-95" href="#__codelineno-5-95"></a><span class="w">    </span><span class="n">B1</span><span class="w"> </span><span class="o">--</span><span class="w"> </span>未屏蔽<span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">B3</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">B4</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">B5</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">B6</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C1</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C2</span>
+<a id="__codelineno-5-96" name="__codelineno-5-96" href="#__codelineno-5-96"></a><span class="w">    </span><span class="n">C2</span><span class="w"> </span><span class="o">--</span><span class="w"> </span>手动<span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C3</span>
+<a id="__codelineno-5-97" name="__codelineno-5-97" href="#__codelineno-5-97"></a><span class="w">    </span><span class="n">C2</span><span class="w"> </span><span class="o">--</span><span class="w"> </span>自动<span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C4</span>
+<a id="__codelineno-5-98" name="__codelineno-5-98" href="#__codelineno-5-98"></a>
+<a id="__codelineno-5-99" name="__codelineno-5-99" href="#__codelineno-5-99"></a><span class="w">    </span><span class="c">%% 样式定义</span>
+<a id="__codelineno-5-100" name="__codelineno-5-100" href="#__codelineno-5-100"></a><span class="w">    </span><span class="n">classDef</span><span class="w"> </span><span class="n">ext</span><span class="w"> </span><span class="nb">fill</span><span class="p">:</span>#<span class="n">fef7d7</span><span class="p">,</span><span class="n">stroke</span><span class="p">:</span>#<span class="n">f5d300</span><span class="p">,</span><span class="n">stroke</span><span class="o">-</span><span class="nb">width</span><span class="p">:</span>2<span class="n">px</span><span class="p">,</span><span class="n">color</span><span class="p">:</span>#5<span class="n">a5a00</span><span class="p">;</span>
+<a id="__codelineno-5-101" name="__codelineno-5-101" href="#__codelineno-5-101"></a><span class="w">    </span><span class="n">classDef</span><span class="w"> </span><span class="s">pic</span><span class="w"> </span><span class="s">fill:#d8f0ff,stroke:#0c87c4,stroke-width:2px,color:#034a6d</span><span class="p">;</span>
+<a id="__codelineno-5-102" name="__codelineno-5-102" href="#__codelineno-5-102"></a><span class="w">    </span><span class="n">classDef</span><span class="w"> </span><span class="s">cpu</span><span class="w"> </span><span class="s">fill:#fde3e1,stroke:#d94a4a,stroke-width:2px,color:#660000</span><span class="p">;</span>
+<a id="__codelineno-5-103" name="__codelineno-5-103" href="#__codelineno-5-103"></a><span class="w">    </span><span class="n">classDef</span><span class="w"> </span><span class="s">decision</span><span class="w"> </span><span class="s">fill:#fff0b8,stroke:#e1a800,stroke-width:2px,color:#6b4b00,font-weight:bold</span><span class="p">;</span>
+<a id="__codelineno-5-104" name="__codelineno-5-104" href="#__codelineno-5-104"></a>
+<a id="__codelineno-5-105" name="__codelineno-5-105" href="#__codelineno-5-105"></a><span class="w">    </span><span class="c">%% 应用样式</span>
+<a id="__codelineno-5-106" name="__codelineno-5-106" href="#__codelineno-5-106"></a><span class="w">    </span><span class="nb">class</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">ext</span><span class="p">;</span>
+<a id="__codelineno-5-107" name="__codelineno-5-107" href="#__codelineno-5-107"></a><span class="w">    </span><span class="n">class</span><span class="w"> </span><span class="s">B1,B2,B3,B4,B5,B6</span><span class="w"> </span><span class="s">pic</span><span class="p">;</span>
+<a id="__codelineno-5-108" name="__codelineno-5-108" href="#__codelineno-5-108"></a><span class="w">    </span><span class="n">class</span><span class="w"> </span><span class="s">C1,C3,C4</span><span class="w"> </span><span class="s">cpu</span><span class="p">;</span>
+<a id="__codelineno-5-109" name="__codelineno-5-109" href="#__codelineno-5-109"></a><span class="w">    </span><span class="n">class</span><span class="w"> </span><span class="s">C2</span><span class="w"> </span><span class="s">decision</span><span class="p">;</span>
+</code></pre></div>
+<div class="language-tsql highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">flowchart</span><span class="w"> </span><span class="n">TB</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="o">%%</span><span class="w"> </span><span class="n">外设输入</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">subgraph</span><span class="w"> </span><span class="ss">&quot;外设中断输入&quot;</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="n">IRQ0</span><span class="o">[</span><span class="n">IRQ0</span><span class="o">]</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="n">IRQ1</span><span class="o">[</span><span class="n">IRQ1</span><span class="o">]</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="n">IRQ2</span><span class="o">[</span><span class="n">IRQ2</span><span class="o">]</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="n">IRQ3</span><span class="o">[</span><span class="n">IRQ3</span><span class="o">]</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">    </span><span class="n">IRQ4</span><span class="o">[</span><span class="n">IRQ4</span><span class="o">]</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">    </span><span class="n">IRQ5</span><span class="o">[</span><span class="n">IRQ5</span><span class="o">]</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">    </span><span class="n">IRQ6</span><span class="o">[</span><span class="n">IRQ6</span><span class="o">]</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">    </span><span class="n">IRQ7</span><span class="o">[</span><span class="n">IRQ7</span><span class="o">]</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="k">end</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="n">IRQ0</span><span class="w"> </span><span class="c1">--&gt; IRR</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="n">IRQ1</span><span class="w"> </span><span class="c1">--&gt; IRR</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="n">IRQ2</span><span class="w"> </span><span class="c1">--&gt; IRR</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="n">IRQ3</span><span class="w"> </span><span class="c1">--&gt; IRR</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="n">IRQ4</span><span class="w"> </span><span class="c1">--&gt; IRR</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="n">IRQ5</span><span class="w"> </span><span class="c1">--&gt; IRR</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="n">IRQ6</span><span class="w"> </span><span class="c1">--&gt; IRR</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="n">IRQ7</span><span class="w"> </span><span class="c1">--&gt; IRR</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="o">%%</span><span class="w"> </span><span class="n">主结构</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a><span class="n">subgraph</span><span class="w"> </span><span class="ss">&quot;8259A 主结构&quot;</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a><span class="w">    </span><span class="n">IRR</span><span class="o">[</span><span class="n">&quot;🟡 IRR&lt;br&gt;中断请求寄存器&quot;</span><span class="o">]</span>
+<a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a><span class="w">    </span><span class="n">Priority</span><span class="o">[</span><span class="n">&quot;🔼 优先级解析器&quot;</span><span class="o">]</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a><span class="w">    </span><span class="n">GateCtrl</span><span class="o">[</span><span class="n">&quot;🟩 中断门控制逻辑&quot;</span><span class="o">]</span>
+<a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a><span class="w">    </span><span class="n">ISR</span><span class="o">[</span><span class="n">&quot;🔴 ISR&lt;br&gt;中断服务寄存器&quot;</span><span class="o">]</span>
+<a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a><span class="w">    </span><span class="n">IMR</span><span class="o">[</span><span class="n">&quot;⚪ IMR&lt;br&gt;中断屏蔽寄存器&quot;</span><span class="o">]</span>
+<a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a>
+<a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a><span class="w">    </span><span class="n">IRR</span><span class="w"> </span><span class="c1">--&gt; Priority</span>
+<a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a><span class="w">    </span><span class="n">Priority</span><span class="w"> </span><span class="c1">--&gt; GateCtrl</span>
+<a id="__codelineno-6-34" name="__codelineno-6-34" href="#__codelineno-6-34"></a><span class="w">    </span><span class="n">GateCtrl</span><span class="w"> </span><span class="c1">--&gt; ISR</span>
+<a id="__codelineno-6-35" name="__codelineno-6-35" href="#__codelineno-6-35"></a><span class="w">    </span><span class="n">IMR</span><span class="w"> </span><span class="c1">--&gt; GateCtrl</span>
+<a id="__codelineno-6-36" name="__codelineno-6-36" href="#__codelineno-6-36"></a><span class="k">end</span>
+<a id="__codelineno-6-37" name="__codelineno-6-37" href="#__codelineno-6-37"></a>
+<a id="__codelineno-6-38" name="__codelineno-6-38" href="#__codelineno-6-38"></a><span class="n">ISR</span><span class="w"> </span><span class="c1">--&gt; INT[&quot;➡️ 发出中断信号&lt;br&gt;INT 向 CPU&quot;]</span>
+<a id="__codelineno-6-39" name="__codelineno-6-39" href="#__codelineno-6-39"></a>
+<a id="__codelineno-6-40" name="__codelineno-6-40" href="#__codelineno-6-40"></a><span class="o">%%</span><span class="w"> </span><span class="n">CPU</span><span class="w"> </span><span class="n">接口</span>
+<a id="__codelineno-6-41" name="__codelineno-6-41" href="#__codelineno-6-41"></a><span class="n">subgraph</span><span class="w"> </span><span class="ss">&quot;CPU 接口&quot;</span>
+<a id="__codelineno-6-42" name="__codelineno-6-42" href="#__codelineno-6-42"></a><span class="w">    </span><span class="nc">INT</span><span class="w"> </span><span class="c1">--&gt; CPU[&quot;🧠 CPU 接收中断&quot;]</span>
+<a id="__codelineno-6-43" name="__codelineno-6-43" href="#__codelineno-6-43"></a><span class="w">    </span><span class="n">CPU</span><span class="w"> </span><span class="c1">--&gt; EOI[发送 EOI]</span>
+<a id="__codelineno-6-44" name="__codelineno-6-44" href="#__codelineno-6-44"></a><span class="w">    </span><span class="n">EOI</span><span class="w"> </span><span class="c1">--&gt; ISR</span>
+<a id="__codelineno-6-45" name="__codelineno-6-45" href="#__codelineno-6-45"></a><span class="k">end</span>
+<a id="__codelineno-6-46" name="__codelineno-6-46" href="#__codelineno-6-46"></a>
+<a id="__codelineno-6-47" name="__codelineno-6-47" href="#__codelineno-6-47"></a><span class="o">%%</span><span class="w"> </span><span class="n">控制配置</span>
+<a id="__codelineno-6-48" name="__codelineno-6-48" href="#__codelineno-6-48"></a><span class="n">subgraph</span><span class="w"> </span><span class="ss">&quot;控制与配置&quot;</span>
+<a id="__codelineno-6-49" name="__codelineno-6-49" href="#__codelineno-6-49"></a><span class="w">    </span><span class="n">CMD</span><span class="o">[</span><span class="n">控制命令&lt;br&gt;ICW/OCW</span><span class="o">]</span>
+<a id="__codelineno-6-50" name="__codelineno-6-50" href="#__codelineno-6-50"></a><span class="w">    </span><span class="n">CMD</span><span class="w"> </span><span class="c1">--&gt; IRR</span>
+<a id="__codelineno-6-51" name="__codelineno-6-51" href="#__codelineno-6-51"></a><span class="w">    </span><span class="n">CMD</span><span class="w"> </span><span class="c1">--&gt; IMR</span>
+<a id="__codelineno-6-52" name="__codelineno-6-52" href="#__codelineno-6-52"></a><span class="w">    </span><span class="n">CMD</span><span class="w"> </span><span class="c1">--&gt; ISR</span>
+<a id="__codelineno-6-53" name="__codelineno-6-53" href="#__codelineno-6-53"></a><span class="k">end</span>
+<a id="__codelineno-6-54" name="__codelineno-6-54" href="#__codelineno-6-54"></a>
+<a id="__codelineno-6-55" name="__codelineno-6-55" href="#__codelineno-6-55"></a><span class="o">%%</span><span class="w"> </span><span class="n">使用</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="n">定义样式</span>
+<a id="__codelineno-6-56" name="__codelineno-6-56" href="#__codelineno-6-56"></a><span class="n">classDef</span><span class="w"> </span><span class="n">yellow</span><span class="w"> </span><span class="nl">fill</span><span class="p">:</span><span class="n">#fff3b0</span><span class="p">,</span><span class="nl">stroke</span><span class="p">:</span><span class="n">#c9a600</span><span class="p">,</span><span class="n">stroke</span><span class="o">-</span><span class="nl">width</span><span class="p">:</span><span class="mi">2</span><span class="n">px</span><span class="p">;</span>
+<a id="__codelineno-6-57" name="__codelineno-6-57" href="#__codelineno-6-57"></a><span class="n">classDef</span><span class="w"> </span><span class="n">red</span><span class="w"> </span><span class="nl">fill</span><span class="p">:</span><span class="n">#ffd6d6</span><span class="p">,</span><span class="nl">stroke</span><span class="p">:</span><span class="n">#d22b2b</span><span class="p">,</span><span class="n">stroke</span><span class="o">-</span><span class="nl">width</span><span class="p">:</span><span class="mi">2</span><span class="n">px</span><span class="p">;</span>
+<a id="__codelineno-6-58" name="__codelineno-6-58" href="#__codelineno-6-58"></a><span class="n">classDef</span><span class="w"> </span><span class="n">green</span><span class="w"> </span><span class="nl">fill</span><span class="p">:</span><span class="n">#ccffd8</span><span class="p">,</span><span class="nl">stroke</span><span class="p">:</span><span class="n">#339933</span><span class="p">,</span><span class="n">stroke</span><span class="o">-</span><span class="nl">width</span><span class="p">:</span><span class="mi">2</span><span class="n">px</span><span class="p">;</span>
+<a id="__codelineno-6-59" name="__codelineno-6-59" href="#__codelineno-6-59"></a><span class="n">classDef</span><span class="w"> </span><span class="n">blue</span><span class="w"> </span><span class="nl">fill</span><span class="p">:</span><span class="n">#d0f0ff</span><span class="p">,</span><span class="nl">stroke</span><span class="p">:</span><span class="n">#107dac</span><span class="p">,</span><span class="n">stroke</span><span class="o">-</span><span class="nl">width</span><span class="p">:</span><span class="mi">2</span><span class="n">px</span><span class="p">;</span>
+<a id="__codelineno-6-60" name="__codelineno-6-60" href="#__codelineno-6-60"></a><span class="n">classDef</span><span class="w"> </span><span class="n">gray</span><span class="w"> </span><span class="nl">fill</span><span class="p">:</span><span class="n">#f0f0f0</span><span class="p">,</span><span class="nl">stroke</span><span class="p">:</span><span class="n">#999</span><span class="p">,</span><span class="n">stroke</span><span class="o">-</span><span class="nl">width</span><span class="p">:</span><span class="mi">2</span><span class="n">px</span><span class="p">;</span>
+<a id="__codelineno-6-61" name="__codelineno-6-61" href="#__codelineno-6-61"></a><span class="n">classDef</span><span class="w"> </span><span class="n">purple</span><span class="w"> </span><span class="nl">fill</span><span class="p">:</span><span class="n">#f0e5ff</span><span class="p">,</span><span class="nl">stroke</span><span class="p">:</span><span class="n">#9457eb</span><span class="p">,</span><span class="n">stroke</span><span class="o">-</span><span class="nl">width</span><span class="p">:</span><span class="mi">2</span><span class="n">px</span><span class="p">;</span>
+<a id="__codelineno-6-62" name="__codelineno-6-62" href="#__codelineno-6-62"></a><span class="n">classDef</span><span class="w"> </span><span class="n">signal</span><span class="w"> </span><span class="nl">fill</span><span class="p">:</span><span class="n">#fef3c7</span><span class="p">,</span><span class="nl">stroke</span><span class="p">:</span><span class="n">#facc15</span><span class="p">,</span><span class="n">stroke</span><span class="o">-</span><span class="nl">width</span><span class="p">:</span><span class="mi">2</span><span class="n">px</span><span class="p">;</span>
+<a id="__codelineno-6-63" name="__codelineno-6-63" href="#__codelineno-6-63"></a><span class="n">classDef</span><span class="w"> </span><span class="n">control</span><span class="w"> </span><span class="nl">fill</span><span class="p">:</span><span class="n">#fde2ff</span><span class="p">,</span><span class="nl">stroke</span><span class="p">:</span><span class="n">#d946ef</span><span class="p">,</span><span class="n">stroke</span><span class="o">-</span><span class="nl">width</span><span class="p">:</span><span class="mi">2</span><span class="n">px</span><span class="p">;</span>
+<a id="__codelineno-6-64" name="__codelineno-6-64" href="#__codelineno-6-64"></a>
+<a id="__codelineno-6-65" name="__codelineno-6-65" href="#__codelineno-6-65"></a><span class="o">%%</span><span class="w"> </span><span class="n">应用样式</span>
+<a id="__codelineno-6-66" name="__codelineno-6-66" href="#__codelineno-6-66"></a><span class="k">class</span><span class="w"> </span><span class="n">IRR</span><span class="w"> </span><span class="n">yellow</span><span class="p">;</span>
+<a id="__codelineno-6-67" name="__codelineno-6-67" href="#__codelineno-6-67"></a><span class="k">class</span><span class="w"> </span><span class="n">ISR</span><span class="w"> </span><span class="n">red</span><span class="p">;</span>
+<a id="__codelineno-6-68" name="__codelineno-6-68" href="#__codelineno-6-68"></a><span class="k">class</span><span class="w"> </span><span class="n">GateCtrl</span><span class="w"> </span><span class="n">green</span><span class="p">;</span>
+<a id="__codelineno-6-69" name="__codelineno-6-69" href="#__codelineno-6-69"></a><span class="k">class</span><span class="w"> </span><span class="n">IMR</span><span class="w"> </span><span class="n">blue</span><span class="p">;</span>
+<a id="__codelineno-6-70" name="__codelineno-6-70" href="#__codelineno-6-70"></a><span class="k">class</span><span class="w"> </span><span class="n">Priority</span><span class="w"> </span><span class="n">gray</span><span class="p">;</span>
+<a id="__codelineno-6-71" name="__codelineno-6-71" href="#__codelineno-6-71"></a><span class="k">class</span><span class="w"> </span><span class="n">CPU</span><span class="w"> </span><span class="n">purple</span><span class="p">;</span>
+<a id="__codelineno-6-72" name="__codelineno-6-72" href="#__codelineno-6-72"></a><span class="k">class</span><span class="w"> </span><span class="n">EOI</span><span class="w"> </span><span class="n">blue</span><span class="p">;</span>
+<a id="__codelineno-6-73" name="__codelineno-6-73" href="#__codelineno-6-73"></a><span class="k">class</span><span class="w"> </span><span class="nc">INT</span><span class="w"> </span><span class="n">signal</span><span class="p">;</span>
+<a id="__codelineno-6-74" name="__codelineno-6-74" href="#__codelineno-6-74"></a><span class="k">class</span><span class="w"> </span><span class="n">CMD</span><span class="w"> </span><span class="n">control</span><span class="p">;</span>
+<a id="__codelineno-6-75" name="__codelineno-6-75" href="#__codelineno-6-75"></a>
+<a id="__codelineno-6-76" name="__codelineno-6-76" href="#__codelineno-6-76"></a><span class="o">%%</span><span class="w"> </span><span class="n">默认线</span>
+<a id="__codelineno-6-77" name="__codelineno-6-77" href="#__codelineno-6-77"></a><span class="n">linkStyle</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nl">stroke</span><span class="p">:</span><span class="n">#444</span><span class="p">,</span><span class="n">stroke</span><span class="o">-</span><span class="nl">width</span><span class="p">:</span><span class="mf">1.5</span><span class="n">px</span><span class="p">;</span>
+</code></pre></div>
+<h2 id="_3">总结</h2>
+<h4 id="1-elf"><strong>1. ELF文件格式</strong></h4>
+<p>ELF（Executable and Linkable Format）是Unix/Linux系统的标准可执行文件格式，包含程序加载和执行所需的所有信息。</p>
+<p><strong>ELF文件结构：</strong></p>
+<div class="language-objective-c highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">graph</span><span class="w"> </span><span class="n">TD</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="n">A</span><span class="p">[</span><span class="n">ELF</span><span class="w"> </span><span class="n">Header</span><span class="p">]</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">Program</span><span class="w"> </span><span class="n">Header</span><span class="w"> </span><span class="n">Table</span><span class="p">]</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C</span><span class="p">[</span><span class="n">Sections</span><span class="p">]</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">D</span><span class="p">[</span><span class="n">Section</span><span class="w"> </span><span class="n">Header</span><span class="w"> </span><span class="n">Table</span><span class="p">]</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="n">B</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">E</span><span class="p">[</span><span class="n">Segments</span><span class="p">]</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="n">C</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">F</span><span class="p">[.</span><span class="n">text</span><span class="o">&lt;</span><span class="n">br</span><span class="o">&gt;</span><span class="n">代码段</span><span class="p">]</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span><span class="n">C</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">G</span><span class="p">[.</span><span class="n">data</span><span class="o">&lt;</span><span class="n">br</span><span class="o">&gt;</span><span class="n">数据段</span><span class="p">]</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="n">C</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">H</span><span class="p">[.</span><span class="n">rodata</span><span class="o">&lt;</span><span class="n">br</span><span class="o">&gt;</span><span class="n">只读数据</span><span class="p">]</span>
+</code></pre></div>
+<p><strong>关键数据结构：</strong>
+1. <strong>ELF Header（<code class="language-scdoc highlight">Elf32_Ehdr</code>）</strong>：
+- 魔数（<code class="language-scdoc highlight">e_ident</code>）
+- 入口地址（<code class="language-scdoc highlight">e_entry</code>）
+- 程序头表偏移（<code class="language-scdoc highlight">e_phoff</code>）
+- 节头表偏移（<code class="language-scdoc highlight">e_shoff</code>）
+- 使用命令：<code class="language-text highlight">readelf -h &lt;file&gt;</code></p>
+<ol>
+<li><strong>Program Header（<code class="language-scdoc highlight">Elf32_Phdr</code>）</strong>：</li>
+<li>段类型（<code class="language-carbon highlight"><span class="nx">p_type</span></code>）</li>
+<li>文件偏移（<code class="language-scdoc highlight">p_offset</code>）</li>
+<li>虚拟地址（<code class="language-carbon highlight"><span class="nx">p_vaddr</span></code>）</li>
+<li>文件大小（<code class="language-scdoc highlight">p_filesz</code>）</li>
+<li>内存大小（<code class="language-scdoc highlight">p_memsz</code>）</li>
+<li>使用命令：<code class="language-text highlight">readelf -l &lt;file&gt;</code></li>
+</ol>
+<hr />
+<h4 id="2"><strong>2. 特权级机制</strong></h4>
+<p>x86架构通过特权级（0-3级）实现硬件级安全隔离：</p>
+<p><div class="language-ecl highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nf">graph</span><span class="w"> </span><span class="n">LR</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="n">A</span><span class="p">[</span><span class="n">Ring</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">OS内核</span><span class="o">|</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="err">最高权限</span><span class="p">]</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="n">C</span><span class="p">[</span><span class="n">Ring</span><span class="w"> </span><span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">--&gt;|</span><span class="err">驱动</span><span class="o">/</span><span class="err">虚拟机</span><span class="o">|</span><span class="w"> </span><span class="n">D</span><span class="p">[</span><span class="err">系统服务</span><span class="p">]</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="n">E</span><span class="p">[</span><span class="n">Ring</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">--&gt;|</span><span class="err">应用程序</span><span class="o">|</span><span class="w"> </span><span class="n">F</span><span class="p">[</span><span class="err">最低权限</span><span class="p">]</span>
+</code></pre></div>
+<strong>关键机制：</strong>
+1. <strong>TSS（任务状态段）</strong>：
+- 存储任务上下文（寄存器/栈指针）
+- 特权级切换时自动更新<code class="language-text highlight">esp0/ss0</code>
+<div class="language-scdoc highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>struct
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>TSS
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>{
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>uint32_t
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>esp0
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>;
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>// Ring 0栈指针
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>uint32_t
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>ss0
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>;
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>// Ring 0栈段
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a>
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a>
+<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>uint32_t
+<a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a>
+<a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a>cr3
+<a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a>;
+<a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a>
+<a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a>// 页目录基址
+<a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a>
+<a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a>
+<a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a>//... 其他寄存器
+<a id="__codelineno-9-33" name="__codelineno-9-33" href="#__codelineno-9-33"></a>
+<a id="__codelineno-9-34" name="__codelineno-9-34" href="#__codelineno-9-34"></a>};
+</code></pre></div></p>
+<ol>
+<li><strong>特权级检查规则</strong>：</li>
+<li><strong>数据访问</strong>：CPL ≤ DPL 且 RPL ≤ DPL</li>
+<li>
+<p><strong>代码跳转</strong>：</p>
+</li>
+<li>
+<p>非一致代码：CPL == DPL</p>
+</li>
+<li>一致代码：CPL ≥ DPL（特权级不变）</li>
+<li><strong>门描述符</strong>：
+   | 类型 | 安装位置 | 触发方式 |
+   | ------ | ----------- | ---------------- |
+   | 调用门 | GDT/LDT | CALL/JMP |
+   | 中断门 | IDT | INT指令/硬件中断 |
+   | 陷阱门 | IDT | INT3调试 |
+   | 任务门 | GDT/LDT/IDT | CALL/JMP/中断 |</li>
+</ol>
+<hr />
+<h4 id="3"><strong>3. 中断机制</strong></h4>
+<p>中断是CPU响应外部事件的核心机制，分为：
+- <strong>外部中断</strong>：INTR（可屏蔽）、NMI（不可屏蔽）
+- <strong>内部中断</strong>：异常（Fault/Trap/Abort）、软中断（INT n）</p>
+<p><strong>中断处理流程：</strong></p>
+<p><div class="language-ecl highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">sequenceDiagram</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="n">participant</span><span class="w"> </span><span class="n">CPU</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="n">participant</span><span class="w"> </span><span class="n">IDT</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span><span class="n">participant</span><span class="w"> </span><span class="n">Stack</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span><span class="n">participant</span><span class="w"> </span><span class="n">Handler</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">    </span><span class="n">Note</span><span class="w"> </span><span class="n">over</span><span class="w"> </span><span class="n">CPU</span><span class="o">:</span><span class="w"> </span><span class="err">中断发生</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">    </span><span class="n">CPU</span><span class="o">-&gt;&gt;</span><span class="n">IDT</span><span class="o">:</span><span class="w"> </span><span class="err">根据向量号查找门描述符</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">    </span><span class="n">CPU</span><span class="o">-&gt;&gt;</span><span class="n">Stack</span><span class="o">:</span><span class="w"> </span><span class="err">压入</span><span class="n">EFLAGS</span><span class="o">/</span><span class="n">CS</span><span class="o">/</span><span class="n">EIP</span><span class="o">/</span><span class="err">错误码</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">    </span><span class="n">alt</span><span class="w"> </span><span class="err">特权级变化</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">        </span><span class="n">CPU</span><span class="o">-&gt;&gt;</span><span class="n">TSS</span><span class="o">:</span><span class="w"> </span><span class="err">加载新</span><span class="n">SS</span><span class="o">/</span><span class="n">ESP</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">        </span><span class="n">CPU</span><span class="o">-&gt;&gt;</span><span class="n">Stack</span><span class="o">:</span><span class="w"> </span><span class="err">压入旧</span><span class="n">SS</span><span class="o">/</span><span class="n">ESP</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">    </span><span class="kd">end</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="w">    </span><span class="n">CPU</span><span class="o">-&gt;&gt;</span><span class="n">Handler</span><span class="o">:</span><span class="w"> </span><span class="err">跳转执行中断程序</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="w">    </span><span class="n">Handler</span><span class="o">--&gt;&gt;</span><span class="n">CPU</span><span class="o">:</span><span class="w"> </span><span class="n">IRET返回</span>
+</code></pre></div>
+<strong>关键组件：</strong>
+1. <strong>IDT（中断描述表）</strong>：
+- 通过<code class="language-text highlight">LIDT</code>指令加载
+- 包含256个门描述符 1. <strong>8259A中断控制器</strong>：
+<div class="language-ecl highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">flowchart</span><span class="w"> </span><span class="n">LR</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="n">IRQ</span><span class="p">[</span><span class="n">IRQ0</span><span class="o">-</span><span class="mi">7</span><span class="p">]</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">IRR</span><span class="p">[</span><span class="err">中断请求寄存器</span><span class="p">]</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="n">IRR</span><span class="w"> </span><span class="o">--&gt;|</span><span class="err">优先级</span><span class="o">|</span><span class="w"> </span><span class="n">PR</span><span class="p">[</span><span class="err">优先级解析器</span><span class="p">]</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="n">PR</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">INT</span><span class="o">|</span><span class="w"> </span><span class="n">CPU</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">    </span><span class="n">CPU</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">INTA</span><span class="o">|</span><span class="w"> </span><span class="n">ISR</span><span class="p">[</span><span class="err">中断服务寄存器</span><span class="p">]</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">    </span><span class="n">CPU</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">EOI</span><span class="o">|</span><span class="w"> </span><span class="n">ISR</span>
+</code></pre></div></p>
+<ol>
+<li><strong>中断上下文保存</strong>：</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>High Address
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>| ...          |
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>| 旧SS         | ← 特权级变化时
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>| 旧ESP        |
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>| EFLAGS       |
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>| 旧CS         |
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>| 旧EIP        |
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>| 错误码       | ← 部分异常
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>Low Address
+</code></pre></div>
+<hr />
+<h3 id="_4"><strong>关键结论</strong></h3>
+<ol>
+<li><strong>系统启动流程</strong>：BIOS → Bootloader → 加载ELF内核 → 跳转到<code class="language-scdoc highlight">e_entry</code></li>
+<li><strong>特权级隔离</strong>：通过CPL/DPL/RPL实现硬件级安全控制</li>
+<li><strong>中断核心作用</strong>：</li>
+<li>处理硬件事件</li>
+<li>实现系统调用（如INT 0x80）</li>
+<li>处理程序异常</li>
+<li><strong>现代演进</strong>：</li>
+<li>8259A → APIC（多核支持）</li>
+<li>硬件虚拟化扩展（VT-x）优化特权切换</li>
+</ol>
+<blockquote>
+<p>完整实现需结合：页表管理（CR3）、任务调度（TSS）、系统调用门（调用门/中断门）</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="md-typeset" style="margin-top: 2rem;">
+  
+    <nav class="post-nav" aria-label="文章分页导航">
+      
+        <a class="post-nav__link post-nav__link--prev" href="../02/">
+          <span class="post-nav__label">上一篇</span>
+          <span class="post-nav__title">保护模式</span>
+        </a>
+      
+      
+        <a class="post-nav__link post-nav__link--next" href="../04/">
+          <span class="post-nav__label">下一篇</span>
+          <span class="post-nav__title">内存管理</span>
+        </a>
+      
+    </nav>
+  
+
+  <h2 id="__comments">评论</h2>
+  
+  <script>
+    var giscusTheme = document.body.getAttribute("data-md-color-scheme") === "slate" ? "dark_dimmed" : "light";
+    
+    var giscusScript = document.createElement("script");
+    giscusScript.src = "https://giscus.app/client.js";
+    giscusScript.setAttribute("data-repo", "maple-pwn/maple-pwn.github.io");
+    giscusScript.setAttribute("data-repo-id", "R_kgDOP5uLTQ");
+    giscusScript.setAttribute("data-category", "Comments");
+    giscusScript.setAttribute("data-category-id", "DIC_kwDOP5uLTc4C130e");
+    giscusScript.setAttribute("data-mapping", "pathname");
+    giscusScript.setAttribute("data-strict", "0");
+    giscusScript.setAttribute("data-reactions-enabled", "1");
+    giscusScript.setAttribute("data-emit-metadata", "0");
+    giscusScript.setAttribute("data-input-position", "bottom");
+    giscusScript.setAttribute("data-theme", giscusTheme);
+    giscusScript.setAttribute("data-lang", "zh-CN");
+    giscusScript.setAttribute("data-loading", "lazy");
+    giscusScript.setAttribute("crossorigin", "anonymous");
+    giscusScript.async = true;
+    
+    document.getElementById("__comments").insertAdjacentElement("afterend", giscusScript);
+    
+    // Theme sync
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.attributeName === "data-md-color-scheme") {
+          var theme = document.body.getAttribute("data-md-color-scheme") === "slate" ? "dark_dimmed" : "light";
+          var iframe = document.querySelector(".giscus-frame");
+          if (iframe) {
+            iframe.contentWindow.postMessage(
+              { giscus: { setConfig: { theme: theme } } },
+              "https://giscus.app"
+            );
+          }
+        }
+      });
+    });
+    observer.observe(document.body, { attributes: true });
+  </script>
+</div>
+
+                
+
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.titles", "navigation.tabs", "navigation.top"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="../../resources/js/mathjax-config.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../resources/js/read-metrics.js"></script>
+      
+        <script src="../../resources/js/sidebar-resize.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AES 加解密完整过程展示</title>
+  <style>
+    :root {
+      --bg: #f6f6f4;
+      --paper: #ffffff;
+      --paper-soft: #fafafa;
+      --ink: #202124;
+      --ink-soft: #5f6368;
+      --line: #dadce0;
+      --line-strong: #c4c7cc;
+      --accent: #3c4043;
+      --accent-soft: #f1f3f4;
+      --gold: #5f6368;
+      --gold-soft: #f1f3f4;
+      --error-bg: #fce8e6;
+      --error-ink: #a50e0e;
+      --shadow: 0 1px 2px rgba(32, 33, 36, 0.06);
+      --radius-xl: 14px;
+      --radius-lg: 10px;
+      --radius-md: 8px;
+      --radius-sm: 6px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    .page-shell {
+      width: min(1320px, calc(100vw - 32px));
+      margin: 18px auto;
+      padding: 0;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.9fr);
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .hero-main,
+    .hero-side,
+    .panel,
+    .summary-card,
+    .roundkeys-panel,
+    .trace-panel,
+    .state-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-main {
+      padding: 20px 22px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+    }
+
+    .hero-main h1 {
+      margin: 0;
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .hero-main p {
+      margin: 12px 0 0;
+      color: var(--ink-soft);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .hero-side {
+      padding: 18px 20px;
+      display: grid;
+      gap: 10px;
+      align-content: center;
+      background: var(--paper);
+    }
+
+    .hero-side h2 {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    .hero-side p {
+      margin: 0;
+      color: var(--ink-soft);
+      line-height: 1.75;
+      font-size: 14px;
+    }
+
+    .mono-block {
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--paper-soft);
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      word-break: break-word;
+    }
+
+    .panel {
+      margin-top: 14px;
+      padding: 18px 20px;
+    }
+
+    .panel-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: end;
+      margin-bottom: 14px;
+    }
+
+    .panel-head h2,
+    .roundkeys-panel h2,
+    .trace-panel h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .panel-head p,
+    .roundkeys-panel p,
+    .trace-panel p {
+      margin: 0;
+      color: var(--ink-soft);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .input-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .field input {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 12px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .field input:focus {
+      outline: 2px solid rgba(60, 64, 67, 0.1);
+      border-color: #9aa0a6;
+    }
+
+    .helper {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--accent-soft);
+      color: var(--ink-soft);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .actions {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    button {
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      padding: 9px 14px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+    }
+
+    button:hover {
+      background: #f8f9fa;
+    }
+
+    .btn-light {
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .btn-accent {
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .btn-gold {
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .error-box {
+      display: none;
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #f6aea9;
+      background: var(--error-bg);
+      color: var(--error-ink);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .summary-card {
+      padding: 14px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .summary-card .label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .summary-card .value {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.55;
+      word-break: break-word;
+    }
+
+    .summary-card .meta {
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      word-break: break-word;
+    }
+
+    .roundkeys-panel,
+    .trace-panel {
+      margin-top: 14px;
+      padding: 18px 20px;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+    }
+
+    table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--ink);
+      background: #f8f9fa;
+    }
+
+    td {
+      color: var(--ink-soft);
+      line-height: 1.55;
+    }
+
+    td code,
+    th code {
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      white-space: nowrap;
+    }
+
+    details.key-detail,
+    details.round-detail {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--paper);
+      min-width: 0;
+    }
+
+    details > summary {
+      cursor: pointer;
+      list-style: none;
+    }
+
+    details > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .key-summary,
+    .round-summary {
+      padding: 10px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 6px;
+      align-items: flex-start;
+      background: #f8f9fa;
+    }
+
+    .key-summary span:first-child,
+    .round-summary span:first-child {
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .key-summary span:last-child,
+    .round-summary span:last-child {
+      color: var(--ink-soft);
+      font-size: 12px;
+    }
+
+    .trace-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .state-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      padding: 12px;
+    }
+
+    .state-card {
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+      background: var(--paper);
+      min-width: 0;
+    }
+
+    .state-card.key-card {
+      border-color: var(--line);
+      background: var(--paper-soft);
+    }
+
+    .state-head {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      min-width: 0;
+    }
+
+    .state-index {
+      min-width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink-soft);
+      background: #f1f3f4;
+      border: 1px solid var(--line);
+      flex: none;
+    }
+
+    .key-card .state-index {
+      color: var(--ink-soft);
+      background: #f1f3f4;
+    }
+
+    .state-head h3 {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.4;
+      min-width: 0;
+      word-break: break-word;
+    }
+
+    .state-note {
+      margin: 0;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      font-size: 13px;
+    }
+
+    .matrix {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 4px;
+    }
+
+    .matrix td {
+      width: 25%;
+      padding: 7px 0;
+      border: none;
+      border-radius: 6px;
+      text-align: center;
+      background: #f8f9fa;
+      border: 1px solid #eceff1;
+      color: var(--ink);
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .key-card .matrix td {
+      background: #f8f9fa;
+    }
+
+    .state-hex {
+      padding: 8px 10px;
+      border-radius: 6px;
+      background: #f8f9fa;
+      border: 1px solid #eceff1;
+      color: var(--ink-soft);
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      font-size: 12px;
+      line-height: 1.55;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .calc-detail {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--paper);
+      overflow: hidden;
+    }
+
+    .calc-summary {
+      padding: 8px 10px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 6px;
+      align-items: center;
+      background: #f8f9fa;
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .calc-summary span:last-child {
+      color: var(--ink-soft);
+      font-weight: 500;
+    }
+
+    .calc-body {
+      padding: 8px 10px 10px;
+    }
+
+    .calc-table-wrap {
+      overflow-x: auto;
+      border: 1px solid #eceff1;
+      border-radius: 6px;
+    }
+
+    .calc-table {
+      width: 100%;
+      min-width: 540px;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .calc-table th,
+    .calc-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid #eceff1;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    .calc-table th {
+      width: 150px;
+      background: #f8f9fa;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .calc-table td {
+      color: var(--ink-soft);
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      font-size: 12px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .reading-note {
+      margin-top: 14px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--paper);
+      line-height: 1.75;
+      color: var(--ink-soft);
+      box-shadow: var(--shadow);
+    }
+
+    .reading-note h2 {
+      margin: 0 0 10px;
+      color: var(--ink);
+      font-size: 18px;
+    }
+
+    @media (max-width: 1180px) {
+      .hero,
+      .summary,
+      .trace-grid,
+      .state-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .page-shell {
+        width: min(100vw - 16px, 100%);
+        margin: 8px auto;
+      }
+
+      .hero-main,
+      .hero-side,
+      .panel,
+      .roundkeys-panel,
+      .trace-panel,
+      .reading-note {
+        padding: 14px;
+      }
+
+      .input-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .state-grid {
+        padding: 10px;
+      }
+
+      .matrix {
+        border-spacing: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page-shell" data-aes-demo>
+    <section class="hero">
+      <div class="hero-main">
+        <p class="eyebrow">AES 单分组过程演示</p>
+        <h1>AES 加解密过程</h1>
+        <p>
+          页面把 `AES` 的单分组加解密拆成连续的中间状态。输入使用十六进制，先把 16 字节按列优先顺序写入状态矩阵，
+          再继续展示轮密钥扩展、逐轮加密和逐轮解密。默认样例来自 `FIPS 197`。
+        </p>
+      </div>
+
+      <aside class="hero-side">
+        <h2>状态矩阵写入顺序</h2>
+        <p>
+          所有矩阵都沿用 AES 的列优先表示。前四个字节先写入第一列，随后再进入第二列。矩阵中的位置和十六进制串的展开顺序也是按这个规则对应。
+        </p>
+        <div class="mono-block">00 11 22 33 | 44 55 66 77 | 88 99 AA BB | CC DD EE FF</div>
+      </aside>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>输入区</h2>
+          <p>明文和密文固定为 16 字节，密钥长度可以是 16、24、32 字节，页面会自动切换到对应的 AES 版本。</p>
+        </div>
+      </div>
+
+      <div class="input-grid">
+        <div class="field">
+          <label for="plaintext">明文</label>
+          <input id="plaintext" data-role="plaintext" type="text" spellcheck="false" autocomplete="off" value="00112233445566778899AABBCCDDEEFF" />
+        </div>
+        <div class="field">
+          <label for="key">密钥</label>
+          <input id="key" data-role="key" type="text" spellcheck="false" autocomplete="off" value="000102030405060708090A0B0C0D0E0F" />
+        </div>
+        <div class="field">
+          <label for="ciphertext">密文</label>
+          <input id="ciphertext" data-role="ciphertext" type="text" spellcheck="false" autocomplete="off" value="69C4E0D86A7B0430D8CDB78070B4C55A" />
+        </div>
+      </div>
+
+      <div class="helper">
+        页面会在完整流程里先根据明文和密钥计算密文，然后立即用同一组轮密钥把结果解回去。单独展开解密流程时，
+        页面会从密文字段出发，直接展示状态怎样一步步回到明文。
+      </div>
+
+      <div class="actions">
+        <button class="btn-light" type="button" data-action="sample">载入官方样例</button>
+        <button class="btn-accent" type="button" data-action="full">运行完整流程</button>
+        <button class="btn-gold" type="button" data-action="decrypt">只看解密流程</button>
+      </div>
+
+      <div class="error-box" data-role="error"></div>
+    </section>
+
+    <section class="summary" data-role="summary"></section>
+    <section class="roundkeys-panel" data-role="roundkeys"></section>
+
+    <section class="trace-grid">
+      <section class="trace-panel" data-role="encrypt"></section>
+      <section class="trace-panel" data-role="decrypt"></section>
+    </section>
+
+    <section class="reading-note">
+      <h2>怎么看这一页</h2>
+      <p>
+        加密过程从初始 `AddRoundKey` 开始，中间各轮依次经过 `SubBytes`、`ShiftRows`、`MixColumns` 和 `AddRoundKey`，
+        最后一轮省去 `MixColumns`。解密过程从最后一轮轮密钥开始回退，依次执行 `InvShiftRows`、`InvSubBytes`、
+        `AddRoundKey` 和 `InvMixColumns`。每一步旁边都保留了矩阵和展平后的十六进制串，因此你可以同时看清楚位置变化和字节变化。
+      </p>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const S_BOX = [
+        0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
+        0xca, 0x82, 0xc9, 0x7d, 0xfa, 0x59, 0x47, 0xf0, 0xad, 0xd4, 0xa2, 0xaf, 0x9c, 0xa4, 0x72, 0xc0,
+        0xb7, 0xfd, 0x93, 0x26, 0x36, 0x3f, 0xf7, 0xcc, 0x34, 0xa5, 0xe5, 0xf1, 0x71, 0xd8, 0x31, 0x15,
+        0x04, 0xc7, 0x23, 0xc3, 0x18, 0x96, 0x05, 0x9a, 0x07, 0x12, 0x80, 0xe2, 0xeb, 0x27, 0xb2, 0x75,
+        0x09, 0x83, 0x2c, 0x1a, 0x1b, 0x6e, 0x5a, 0xa0, 0x52, 0x3b, 0xd6, 0xb3, 0x29, 0xe3, 0x2f, 0x84,
+        0x53, 0xd1, 0x00, 0xed, 0x20, 0xfc, 0xb1, 0x5b, 0x6a, 0xcb, 0xbe, 0x39, 0x4a, 0x4c, 0x58, 0xcf,
+        0xd0, 0xef, 0xaa, 0xfb, 0x43, 0x4d, 0x33, 0x85, 0x45, 0xf9, 0x02, 0x7f, 0x50, 0x3c, 0x9f, 0xa8,
+        0x51, 0xa3, 0x40, 0x8f, 0x92, 0x9d, 0x38, 0xf5, 0xbc, 0xb6, 0xda, 0x21, 0x10, 0xff, 0xf3, 0xd2,
+        0xcd, 0x0c, 0x13, 0xec, 0x5f, 0x97, 0x44, 0x17, 0xc4, 0xa7, 0x7e, 0x3d, 0x64, 0x5d, 0x19, 0x73,
+        0x60, 0x81, 0x4f, 0xdc, 0x22, 0x2a, 0x90, 0x88, 0x46, 0xee, 0xb8, 0x14, 0xde, 0x5e, 0x0b, 0xdb,
+        0xe0, 0x32, 0x3a, 0x0a, 0x49, 0x06, 0x24, 0x5c, 0xc2, 0xd3, 0xac, 0x62, 0x91, 0x95, 0xe4, 0x79,
+        0xe7, 0xc8, 0x37, 0x6d, 0x8d, 0xd5, 0x4e, 0xa9, 0x6c, 0x56, 0xf4, 0xea, 0x65, 0x7a, 0xae, 0x08,
+        0xba, 0x78, 0x25, 0x2e, 0x1c, 0xa6, 0xb4, 0xc6, 0xe8, 0xdd, 0x74, 0x1f, 0x4b, 0xbd, 0x8b, 0x8a,
+        0x70, 0x3e, 0xb5, 0x66, 0x48, 0x03, 0xf6, 0x0e, 0x61, 0x35, 0x57, 0xb9, 0x86, 0xc1, 0x1d, 0x9e,
+        0xe1, 0xf8, 0x98, 0x11, 0x69, 0xd9, 0x8e, 0x94, 0x9b, 0x1e, 0x87, 0xe9, 0xce, 0x55, 0x28, 0xdf,
+        0x8c, 0xa1, 0x89, 0x0d, 0xbf, 0xe6, 0x42, 0x68, 0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16
+      ];
+
+      const INV_S_BOX = [
+        0x52, 0x09, 0x6a, 0xd5, 0x30, 0x36, 0xa5, 0x38, 0xbf, 0x40, 0xa3, 0x9e, 0x81, 0xf3, 0xd7, 0xfb,
+        0x7c, 0xe3, 0x39, 0x82, 0x9b, 0x2f, 0xff, 0x87, 0x34, 0x8e, 0x43, 0x44, 0xc4, 0xde, 0xe9, 0xcb,
+        0x54, 0x7b, 0x94, 0x32, 0xa6, 0xc2, 0x23, 0x3d, 0xee, 0x4c, 0x95, 0x0b, 0x42, 0xfa, 0xc3, 0x4e,
+        0x08, 0x2e, 0xa1, 0x66, 0x28, 0xd9, 0x24, 0xb2, 0x76, 0x5b, 0xa2, 0x49, 0x6d, 0x8b, 0xd1, 0x25,
+        0x72, 0xf8, 0xf6, 0x64, 0x86, 0x68, 0x98, 0x16, 0xd4, 0xa4, 0x5c, 0xcc, 0x5d, 0x65, 0xb6, 0x92,
+        0x6c, 0x70, 0x48, 0x50, 0xfd, 0xed, 0xb9, 0xda, 0x5e, 0x15, 0x46, 0x57, 0xa7, 0x8d, 0x9d, 0x84,
+        0x90, 0xd8, 0xab, 0x00, 0x8c, 0xbc, 0xd3, 0x0a, 0xf7, 0xe4, 0x58, 0x05, 0xb8, 0xb3, 0x45, 0x06,
+        0xd0, 0x2c, 0x1e, 0x8f, 0xca, 0x3f, 0x0f, 0x02, 0xc1, 0xaf, 0xbd, 0x03, 0x01, 0x13, 0x8a, 0x6b,
+        0x3a, 0x91, 0x11, 0x41, 0x4f, 0x67, 0xdc, 0xea, 0x97, 0xf2, 0xcf, 0xce, 0xf0, 0xb4, 0xe6, 0x73,
+        0x96, 0xac, 0x74, 0x22, 0xe7, 0xad, 0x35, 0x85, 0xe2, 0xf9, 0x37, 0xe8, 0x1c, 0x75, 0xdf, 0x6e,
+        0x47, 0xf1, 0x1a, 0x71, 0x1d, 0x29, 0xc5, 0x89, 0x6f, 0xb7, 0x62, 0x0e, 0xaa, 0x18, 0xbe, 0x1b,
+        0xfc, 0x56, 0x3e, 0x4b, 0xc6, 0xd2, 0x79, 0x20, 0x9a, 0xdb, 0xc0, 0xfe, 0x78, 0xcd, 0x5a, 0xf4,
+        0x1f, 0xdd, 0xa8, 0x33, 0x88, 0x07, 0xc7, 0x31, 0xb1, 0x12, 0x10, 0x59, 0x27, 0x80, 0xec, 0x5f,
+        0x60, 0x51, 0x7f, 0xa9, 0x19, 0xb5, 0x4a, 0x0d, 0x2d, 0xe5, 0x7a, 0x9f, 0x93, 0xc9, 0x9c, 0xef,
+        0xa0, 0xe0, 0x3b, 0x4d, 0xae, 0x2a, 0xf5, 0xb0, 0xc8, 0xeb, 0xbb, 0x3c, 0x83, 0x53, 0x99, 0x61,
+        0x17, 0x2b, 0x04, 0x7e, 0xba, 0x77, 0xd6, 0x26, 0xe1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0c, 0x7d
+      ];
+
+      const RCON = [
+        0x00,
+        0x01, 0x02, 0x04, 0x08, 0x10,
+        0x20, 0x40, 0x80, 0x1b, 0x36,
+        0x6c, 0xd8, 0xab, 0x4d, 0x9a
+      ];
+
+      function normalizeHex(input) {
+        return input.replace(/0x/gi, "").replace(/[\s_]/g, "").toUpperCase();
+      }
+
+      function ensureHex(input, label, allowedLengths) {
+        const cleaned = normalizeHex(input);
+        if (!/^[0-9A-F]*$/.test(cleaned)) {
+          throw new Error(label + "里出现了非十六进制字符。");
+        }
+        if (!allowedLengths.includes(cleaned.length)) {
+          throw new Error(label + "长度需要是 " + allowedLengths.join("、") + " 个十六进制字符。");
+        }
+        return cleaned;
+      }
+
+      function hexToBytes(hex) {
+        const bytes = [];
+        for (let i = 0; i < hex.length; i += 2) {
+          bytes.push(parseInt(hex.slice(i, i + 2), 16));
+        }
+        return bytes;
+      }
+
+      function byteHex(byte) {
+        return byte.toString(16).padStart(2, "0").toUpperCase();
+      }
+
+      function bytesToHex(bytes) {
+        return bytes.map(byteHex).join("");
+      }
+
+      function chunkHex(hex) {
+        const groups = hex.match(/.{1,8}/g) || [];
+        return groups.join(" ");
+      }
+
+      function escapeHtml(text) {
+        return String(text)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function bytesToAscii(bytes) {
+        return bytes.map(function (byte) {
+          return byte >= 32 && byte <= 126 ? String.fromCharCode(byte) : ".";
+        }).join("");
+      }
+
+      function cloneState(state) {
+        return state.map(function (row) {
+          return row.slice();
+        });
+      }
+
+      function bytesToState(bytes) {
+        const state = [
+          [0, 0, 0, 0],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0]
+        ];
+
+        for (let col = 0; col < 4; col += 1) {
+          for (let row = 0; row < 4; row += 1) {
+            state[row][col] = bytes[col * 4 + row];
+          }
+        }
+
+        return state;
+      }
+
+      function stateToBytes(state) {
+        const bytes = [];
+        for (let col = 0; col < 4; col += 1) {
+          for (let row = 0; row < 4; row += 1) {
+            bytes.push(state[row][col]);
+          }
+        }
+        return bytes;
+      }
+
+      function stateToHex(state) {
+        return bytesToHex(stateToBytes(state));
+      }
+
+      function xorWord(left, right) {
+        return left.map(function (value, index) {
+          return value ^ right[index];
+        });
+      }
+
+      function rotWord(word) {
+        return [word[1], word[2], word[3], word[0]];
+      }
+
+      function subWord(word) {
+        return word.map(function (byte) {
+          return S_BOX[byte];
+        });
+      }
+
+      function xtime(byte) {
+        const shifted = (byte << 1) & 0xff;
+        return byte & 0x80 ? shifted ^ 0x1b : shifted;
+      }
+
+      function gfMul(left, right) {
+        let a = left;
+        let b = right;
+        let product = 0;
+
+        for (let i = 0; i < 8; i += 1) {
+          if (b & 1) {
+            product ^= a;
+          }
+          a = xtime(a);
+          b >>= 1;
+        }
+
+        return product;
+      }
+
+      function addRoundKey(state, roundKeyBytes) {
+        for (let col = 0; col < 4; col += 1) {
+          for (let row = 0; row < 4; row += 1) {
+            state[row][col] ^= roundKeyBytes[col * 4 + row];
+          }
+        }
+      }
+
+      function subBytes(state) {
+        for (let row = 0; row < 4; row += 1) {
+          for (let col = 0; col < 4; col += 1) {
+            state[row][col] = S_BOX[state[row][col]];
+          }
+        }
+      }
+
+      function invSubBytes(state) {
+        for (let row = 0; row < 4; row += 1) {
+          for (let col = 0; col < 4; col += 1) {
+            state[row][col] = INV_S_BOX[state[row][col]];
+          }
+        }
+      }
+
+      function shiftRows(state) {
+        for (let row = 1; row < 4; row += 1) {
+          state[row] = state[row].slice(row).concat(state[row].slice(0, row));
+        }
+      }
+
+      function invShiftRows(state) {
+        for (let row = 1; row < 4; row += 1) {
+          state[row] = state[row].slice(4 - row).concat(state[row].slice(0, 4 - row));
+        }
+      }
+
+      function mixColumns(state) {
+        for (let col = 0; col < 4; col += 1) {
+          const s0 = state[0][col];
+          const s1 = state[1][col];
+          const s2 = state[2][col];
+          const s3 = state[3][col];
+
+          state[0][col] = gfMul(s0, 0x02) ^ gfMul(s1, 0x03) ^ s2 ^ s3;
+          state[1][col] = s0 ^ gfMul(s1, 0x02) ^ gfMul(s2, 0x03) ^ s3;
+          state[2][col] = s0 ^ s1 ^ gfMul(s2, 0x02) ^ gfMul(s3, 0x03);
+          state[3][col] = gfMul(s0, 0x03) ^ s1 ^ s2 ^ gfMul(s3, 0x02);
+        }
+      }
+
+      function invMixColumns(state) {
+        for (let col = 0; col < 4; col += 1) {
+          const s0 = state[0][col];
+          const s1 = state[1][col];
+          const s2 = state[2][col];
+          const s3 = state[3][col];
+
+          state[0][col] = gfMul(s0, 0x0e) ^ gfMul(s1, 0x0b) ^ gfMul(s2, 0x0d) ^ gfMul(s3, 0x09);
+          state[1][col] = gfMul(s0, 0x09) ^ gfMul(s1, 0x0e) ^ gfMul(s2, 0x0b) ^ gfMul(s3, 0x0d);
+          state[2][col] = gfMul(s0, 0x0d) ^ gfMul(s1, 0x09) ^ gfMul(s2, 0x0e) ^ gfMul(s3, 0x0b);
+          state[3][col] = gfMul(s0, 0x0b) ^ gfMul(s1, 0x0d) ^ gfMul(s2, 0x09) ^ gfMul(s3, 0x0e);
+        }
+      }
+
+      function positionLabel(row, col) {
+        return "s[" + row + "," + col + "]";
+      }
+
+      function rowHex(row) {
+        return row.map(byteHex).join(" ");
+      }
+
+      function renderCalcDetails(sections) {
+        if (!sections || !sections.length) {
+          return "";
+        }
+
+        const rows = sections.map(function (section) {
+          return section.lines.map(function (line, index) {
+            return "<tr>" +
+              (index === 0 ? '<th rowspan="' + section.lines.length + '">' + escapeHtml(section.title) + "</th>" : "") +
+              "<td>" + escapeHtml(line) + "</td>" +
+            "</tr>";
+          }).join("");
+        }).join("");
+
+        return '<details class="calc-detail">' +
+          '<summary class="calc-summary"><span>展开计算过程</span><span>把这一块的推导连续列出来</span></summary>' +
+          '<div class="calc-body">' +
+            '<div class="calc-table-wrap">' +
+              '<table class="calc-table"><tbody>' + rows + '</tbody></table>' +
+            '</div>' +
+          '</div>' +
+        '</details>';
+      }
+
+      function placementSections(bytes, sourceLabel) {
+        const lines = [];
+        for (let col = 0; col < 4; col += 1) {
+          for (let row = 0; row < 4; row += 1) {
+            const index = col * 4 + row;
+            lines.push(sourceLabel + "[" + index + "] = " + byteHex(bytes[index]) + " -> " + positionLabel(row, col));
+          }
+        }
+
+        return [{
+          title: sourceLabel + "按列写入状态矩阵",
+          lines: lines
+        }];
+      }
+
+      function flattenSections(state, outputLabel) {
+        const lines = [];
+        for (let col = 0; col < 4; col += 1) {
+          for (let row = 0; row < 4; row += 1) {
+            const index = col * 4 + row;
+            lines.push(positionLabel(row, col) + " = " + byteHex(state[row][col]) + " -> " + outputLabel + "[" + index + "]");
+          }
+        }
+
+        return [{
+          title: "把状态矩阵按列展开成" + outputLabel,
+          lines: lines
+        }];
+      }
+
+      function subBytesSections(before, inverse) {
+        const boxName = inverse ? "InvS" : "S";
+        const box = inverse ? INV_S_BOX : S_BOX;
+        const lines = [];
+
+        for (let row = 0; row < 4; row += 1) {
+          for (let col = 0; col < 4; col += 1) {
+            const input = before[row][col];
+            const output = box[input];
+            const hex = byteHex(input);
+            lines.push(positionLabel(row, col) + ": " + boxName + "[" + hex[0] + "," + hex[1] + "] = " + byteHex(output));
+          }
+        }
+
+        return [{
+          title: inverse ? "逐字节查逆 S 盒" : "逐字节查 S 盒",
+          lines: lines
+        }];
+      }
+
+      function shiftRowsSections(before, after, inverse) {
+        const lines = [];
+        for (let row = 0; row < 4; row += 1) {
+          const shift = row;
+          const direction = inverse ? "右移" : "左移";
+          lines.push(
+            "row " + row + ": " + rowHex(before[row]) + " -> " + rowHex(after[row]) +
+            " (" + direction + " " + shift + " 格)"
+          );
+        }
+
+        return [{
+          title: inverse ? "按行循环右移" : "按行循环左移",
+          lines: lines
+        }];
+      }
+
+      function addRoundKeySections(before, roundKeyBytes, after) {
+        const keyState = bytesToState(roundKeyBytes);
+        const lines = [];
+
+        for (let col = 0; col < 4; col += 1) {
+          for (let row = 0; row < 4; row += 1) {
+            lines.push(
+              positionLabel(row, col) + ": " +
+              byteHex(before[row][col]) + " XOR " +
+              byteHex(keyState[row][col]) + " = " +
+              byteHex(after[row][col])
+            );
+          }
+        }
+
+        return [{
+          title: "逐字节与轮密钥异或",
+          lines: lines
+        }];
+      }
+
+      function mixColumnsSections(before, after, inverse) {
+        const coeffs = inverse
+          ? [
+              [0x0e, 0x0b, 0x0d, 0x09],
+              [0x09, 0x0e, 0x0b, 0x0d],
+              [0x0d, 0x09, 0x0e, 0x0b],
+              [0x0b, 0x0d, 0x09, 0x0e]
+            ]
+          : [
+              [0x02, 0x03, 0x01, 0x01],
+              [0x01, 0x02, 0x03, 0x01],
+              [0x01, 0x01, 0x02, 0x03],
+              [0x03, 0x01, 0x01, 0x02]
+            ];
+        const sections = [];
+
+        for (let col = 0; col < 4; col += 1) {
+          const input = [before[0][col], before[1][col], before[2][col], before[3][col]];
+          const lines = ["输入列 = [" + input.map(byteHex).join(" ") + "]"];
+
+          for (let outRow = 0; outRow < 4; outRow += 1) {
+            const terms = coeffs[outRow].map(function (coef, index) {
+              return byteHex(coef) + "*" + byteHex(input[index]) + "=" + byteHex(gfMul(input[index], coef));
+            });
+            lines.push(
+              "b" + outRow + " = " + terms.join(" XOR ") + " = " + byteHex(after[outRow][col])
+            );
+          }
+
+          sections.push({
+            title: "第 " + col + " 列" + (inverse ? "逆列混合" : "列混合"),
+            lines: lines
+          });
+        }
+
+        return sections;
+      }
+
+      function snapshot(title, state, note, kind, detailHtml) {
+        return {
+          title: title,
+          state: cloneState(state),
+          hex: stateToHex(state),
+          note: note || "",
+          kind: kind || "state",
+          detailHtml: detailHtml || ""
+        };
+      }
+
+      function keySnapshot(title, roundKeyBytes, note, detailHtml) {
+        return {
+          title: title,
+          state: bytesToState(roundKeyBytes),
+          hex: bytesToHex(roundKeyBytes),
+          note: note || "",
+          kind: "key",
+          detailHtml: detailHtml || ""
+        };
+      }
+
+      function expandKey(keyBytes) {
+        const Nk = keyBytes.length / 4;
+        const Nr = Nk + 6;
+        const totalWords = 4 * (Nr + 1);
+        const words = [];
+        const trace = [];
+
+        for (let i = 0; i < Nk; i += 1) {
+          const word = keyBytes.slice(i * 4, i * 4 + 4);
+          words.push(word);
+          trace.push({
+            index: i,
+            mode: "initial",
+            base: "",
+            prev: "",
+            temp: bytesToHex(word),
+            result: bytesToHex(word),
+            rotated: "",
+            substituted: "",
+            rcon: ""
+          });
+        }
+
+        for (let i = Nk; i < totalWords; i += 1) {
+          let temp = words[i - 1].slice();
+          const entry = {
+            index: i,
+            mode: "xor",
+            base: bytesToHex(words[i - Nk]),
+            prev: bytesToHex(words[i - 1]),
+            temp: "",
+            result: "",
+            rotated: "",
+            substituted: "",
+            rcon: ""
+          };
+
+          if (i % Nk === 0) {
+            const rotated = rotWord(temp);
+            const substituted = subWord(rotated);
+            const rconWord = [RCON[i / Nk], 0x00, 0x00, 0x00];
+            temp = xorWord(substituted, rconWord);
+            entry.mode = "core";
+            entry.rotated = bytesToHex(rotated);
+            entry.substituted = bytesToHex(substituted);
+            entry.rcon = bytesToHex(rconWord);
+          } else if (Nk > 6 && i % Nk === 4) {
+            temp = subWord(temp);
+            entry.mode = "subword";
+            entry.substituted = bytesToHex(temp);
+          }
+
+          entry.temp = bytesToHex(temp);
+          const result = xorWord(words[i - Nk], temp);
+          words.push(result);
+          entry.result = bytesToHex(result);
+          trace.push(entry);
+        }
+
+        const roundKeys = [];
+        for (let round = 0; round <= Nr; round += 1) {
+          const roundBytes = [];
+          for (let wordIndex = 0; wordIndex < 4; wordIndex += 1) {
+            roundBytes.push.apply(roundBytes, words[round * 4 + wordIndex]);
+          }
+          roundKeys.push(roundBytes);
+        }
+
+        return { Nk: Nk, Nr: Nr, words: words, trace: trace, roundKeys: roundKeys };
+      }
+
+      function encryptTrace(plainBytes, expanded) {
+        const state = bytesToState(plainBytes);
+        const rounds = [];
+
+        const initial = {
+          title: "初始轮",
+          meta: "先把明文状态和第 0 轮轮密钥异或。",
+          steps: [
+            snapshot(
+              "明文写入状态",
+              state,
+              "输入字节按列优先写入状态矩阵。",
+              "state",
+              renderCalcDetails(placementSections(plainBytes, "明文字节"))
+            ),
+            keySnapshot("第 0 轮轮密钥", expanded.roundKeys[0], "这一轮轮密钥直接来自原始密钥。")
+          ]
+        };
+
+        const beforeInitialAdd = cloneState(state);
+        addRoundKey(state, expanded.roundKeys[0]);
+        initial.steps.push(
+          snapshot(
+            "AddRoundKey 后",
+            state,
+            "状态从这里进入后续迭代。",
+            "state",
+            renderCalcDetails(addRoundKeySections(beforeInitialAdd, expanded.roundKeys[0], state))
+          )
+        );
+        rounds.push(initial);
+
+        for (let round = 1; round < expanded.Nr; round += 1) {
+          const steps = [];
+          const beforeSub = cloneState(state);
+          subBytes(state);
+          steps.push(
+            snapshot(
+              "第 " + round + " 轮 SubBytes",
+              state,
+              "每个字节都经过同一张 S 盒。",
+              "state",
+              renderCalcDetails(subBytesSections(beforeSub, false))
+            )
+          );
+          const beforeShift = cloneState(state);
+          shiftRows(state);
+          steps.push(
+            snapshot(
+              "第 " + round + " 轮 ShiftRows",
+              state,
+              "第 1、2、3 行分别左移 1、2、3 格。",
+              "state",
+              renderCalcDetails(shiftRowsSections(beforeShift, state, false))
+            )
+          );
+          const beforeMix = cloneState(state);
+          mixColumns(state);
+          steps.push(
+            snapshot(
+              "第 " + round + " 轮 MixColumns",
+              state,
+              "每一列都在 GF(2^8) 上做线性混合。",
+              "state",
+              renderCalcDetails(mixColumnsSections(beforeMix, state, false))
+            )
+          );
+          steps.push(keySnapshot("第 " + round + " 轮轮密钥", expanded.roundKeys[round], "这一轮使用扩展后的轮密钥。"));
+          const beforeAdd = cloneState(state);
+          addRoundKey(state, expanded.roundKeys[round]);
+          steps.push(
+            snapshot(
+              "第 " + round + " 轮 AddRoundKey",
+              state,
+              "轮密钥注入之后进入下一轮。",
+              "state",
+              renderCalcDetails(addRoundKeySections(beforeAdd, expanded.roundKeys[round], state))
+            )
+          );
+
+          rounds.push({
+            title: "第 " + round + " 轮",
+            meta: "标准轮包含四步变换。",
+            steps: steps
+          });
+        }
+
+        const finalSteps = [];
+        const beforeFinalSub = cloneState(state);
+        subBytes(state);
+        finalSteps.push(
+          snapshot(
+            "第 " + expanded.Nr + " 轮 SubBytes",
+            state,
+            "最后一轮继续保留字节代换。",
+            "state",
+            renderCalcDetails(subBytesSections(beforeFinalSub, false))
+          )
+        );
+        const beforeFinalShift = cloneState(state);
+        shiftRows(state);
+        finalSteps.push(
+          snapshot(
+            "第 " + expanded.Nr + " 轮 ShiftRows",
+            state,
+            "最后一轮仍然执行行移位。",
+            "state",
+            renderCalcDetails(shiftRowsSections(beforeFinalShift, state, false))
+          )
+        );
+        finalSteps.push(keySnapshot("第 " + expanded.Nr + " 轮轮密钥", expanded.roundKeys[expanded.Nr], "最后一轮使用终轮轮密钥。"));
+        const beforeFinalAdd = cloneState(state);
+        addRoundKey(state, expanded.roundKeys[expanded.Nr]);
+        finalSteps.push(
+          snapshot(
+            "输出密文",
+            state,
+            "最后一轮结束后直接得到密文。",
+            "state",
+            renderCalcDetails(
+              addRoundKeySections(beforeFinalAdd, expanded.roundKeys[expanded.Nr], state).concat(
+                flattenSections(state, "密文字节")
+              )
+            )
+          )
+        );
+
+        rounds.push({
+          title: "第 " + expanded.Nr + " 轮",
+          meta: "最后一轮保留 SubBytes、ShiftRows 和 AddRoundKey。",
+          steps: finalSteps
+        });
+
+        return {
+          output: stateToBytes(state),
+          rounds: rounds
+        };
+      }
+
+      function decryptTrace(cipherBytes, expanded) {
+        const state = bytesToState(cipherBytes);
+        const rounds = [];
+
+        const initial = {
+          title: "解密起点",
+          meta: "先把密文状态和最后一轮轮密钥异或。",
+          steps: [
+            snapshot(
+              "密文写入状态",
+              state,
+              "输入密文同样按列优先写入。",
+              "state",
+              renderCalcDetails(placementSections(cipherBytes, "密文字节"))
+            ),
+            keySnapshot("第 " + expanded.Nr + " 轮轮密钥", expanded.roundKeys[expanded.Nr], "解密从最后一轮轮密钥开始回退。")
+          ]
+        };
+
+        const beforeInitialAdd = cloneState(state);
+        addRoundKey(state, expanded.roundKeys[expanded.Nr]);
+        initial.steps.push(
+          snapshot(
+            "初始 AddRoundKey 后",
+            state,
+            "状态从这里进入逆向轮函数。",
+            "state",
+            renderCalcDetails(addRoundKeySections(beforeInitialAdd, expanded.roundKeys[expanded.Nr], state))
+          )
+        );
+        rounds.push(initial);
+
+        for (let round = expanded.Nr - 1; round >= 1; round -= 1) {
+          const steps = [];
+          const beforeInvShift = cloneState(state);
+          invShiftRows(state);
+          steps.push(
+            snapshot(
+              "第 " + round + " 轮 InvShiftRows",
+              state,
+              "后三行分别右移 1、2、3 格。",
+              "state",
+              renderCalcDetails(shiftRowsSections(beforeInvShift, state, true))
+            )
+          );
+          const beforeInvSub = cloneState(state);
+          invSubBytes(state);
+          steps.push(
+            snapshot(
+              "第 " + round + " 轮 InvSubBytes",
+              state,
+              "每个字节经过逆 S 盒。",
+              "state",
+              renderCalcDetails(subBytesSections(beforeInvSub, true))
+            )
+          );
+          steps.push(keySnapshot("第 " + round + " 轮轮密钥", expanded.roundKeys[round], "逆向回退时使用对应轮密钥。"));
+          const beforeAdd = cloneState(state);
+          addRoundKey(state, expanded.roundKeys[round]);
+          steps.push(
+            snapshot(
+              "第 " + round + " 轮 AddRoundKey",
+              state,
+              "轮密钥加之后再做逆列混合。",
+              "state",
+              renderCalcDetails(addRoundKeySections(beforeAdd, expanded.roundKeys[round], state))
+            )
+          );
+          const beforeInvMix = cloneState(state);
+          invMixColumns(state);
+          steps.push(
+            snapshot(
+              "第 " + round + " 轮 InvMixColumns",
+              state,
+              "每一列乘上逆矩阵，撤销列扩散。",
+              "state",
+              renderCalcDetails(mixColumnsSections(beforeInvMix, state, true))
+            )
+          );
+
+          rounds.push({
+            title: "第 " + round + " 轮",
+            meta: "中间各轮按逆变换顺序回退。",
+            steps: steps
+          });
+        }
+
+        const finalSteps = [];
+        const beforeLastShift = cloneState(state);
+        invShiftRows(state);
+        finalSteps.push(
+          snapshot(
+            "最终 InvShiftRows",
+            state,
+            "回到最后一个待还原状态。",
+            "state",
+            renderCalcDetails(shiftRowsSections(beforeLastShift, state, true))
+          )
+        );
+        const beforeLastSub = cloneState(state);
+        invSubBytes(state);
+        finalSteps.push(
+          snapshot(
+            "最终 InvSubBytes",
+            state,
+            "逆 S 盒撤销字节代换。",
+            "state",
+            renderCalcDetails(subBytesSections(beforeLastSub, true))
+          )
+        );
+        finalSteps.push(keySnapshot("第 0 轮轮密钥", expanded.roundKeys[0], "最后使用第 0 轮轮密钥。"));
+        const beforeLastAdd = cloneState(state);
+        addRoundKey(state, expanded.roundKeys[0]);
+        finalSteps.push(
+          snapshot(
+            "恢复出的明文",
+            state,
+            "解密流程在这里回到原始明文。",
+            "state",
+            renderCalcDetails(
+              addRoundKeySections(beforeLastAdd, expanded.roundKeys[0], state).concat(
+                flattenSections(state, "明文字节")
+              )
+            )
+          )
+        );
+
+        rounds.push({
+          title: "最终轮",
+          meta: "最后一轮回到最初输入的明文状态。",
+          steps: finalSteps
+        });
+
+        return {
+          output: stateToBytes(state),
+          rounds: rounds
+        };
+      }
+
+      function aesName(expanded) {
+        return "AES-" + expanded.Nk * 32;
+      }
+
+      function renderSummary(target, data) {
+        const ioLabel = data.mode === "decrypt" ? "当前密文" : "加密输出";
+        const checkValue = data.recovered
+          ? "解密结果已经回到输入明文"
+          : (data.hasReference ? "解密结果和输入明文没有对齐" : "当前没有对照明文");
+        const checkMeta = data.hasReference
+          ? "输入明文: " + chunkHex(data.inputPlainHex)
+          : "这一次展示从密文直接回退，摘要区没有加入明文对照。";
+
+        const cards = [
+          {
+            label: "算法参数",
+            value: aesName(data.expanded) + " / " + data.expanded.Nr + " 轮",
+            meta: data.expanded.Nk + " 个初始字，" + (data.expanded.Nr + 1) + " 组轮密钥"
+          },
+          {
+            label: ioLabel,
+            value: chunkHex(data.cipherHex),
+            meta: "ASCII 预览: " + bytesToAscii(data.encryptOutput)
+          },
+          {
+            label: "解密输出",
+            value: chunkHex(data.plainHex),
+            meta: "ASCII 预览: " + bytesToAscii(data.decryptOutput)
+          },
+          {
+            label: "回读校验",
+            value: checkValue,
+            meta: checkMeta
+          }
+        ];
+
+        target.innerHTML = cards.map(function (card) {
+          return '<article class="summary-card">' +
+            '<div class="label">' + escapeHtml(card.label) + '</div>' +
+            '<div class="value">' + escapeHtml(card.value) + '</div>' +
+            '<div class="meta">' + escapeHtml(card.meta) + '</div>' +
+          '</article>';
+        }).join("");
+      }
+
+      function keyTraceDescription(item, expanded) {
+        if (item.mode === "initial") {
+          return {
+            source: "原始密钥",
+            transform: "这一字直接来自输入密钥。"
+          };
+        }
+
+        if (item.mode === "core") {
+          return {
+            source: "w_" + (item.index - expanded.Nk) + " 与 w_" + (item.index - 1),
+            transform: "RotWord(" + item.prev + ") = " + item.rotated + "，SubWord = " + item.substituted + "，再与 Rcon " + item.rcon + " 异或得到 " + item.temp + "。"
+          };
+        }
+
+        if (item.mode === "subword") {
+          return {
+            source: "w_" + (item.index - expanded.Nk) + " 与 w_" + (item.index - 1),
+            transform: "对 " + item.prev + " 做 SubWord，得到 " + item.temp + "。"
+          };
+        }
+
+        return {
+          source: "w_" + (item.index - expanded.Nk) + " 与 w_" + (item.index - 1),
+          transform: "临时字保持为 " + item.temp + "，再与 " + item.base + " 异或生成结果。"
+        };
+      }
+
+      function renderRoundKeys(target, expanded) {
+        const roundRows = expanded.roundKeys.map(function (roundKey, round) {
+          return "<tr>" +
+            "<td>第 " + round + " 轮</td>" +
+            "<td><code>" + escapeHtml(chunkHex(bytesToHex(roundKey))) + "</code></td>" +
+            "<td><code>" + escapeHtml(roundKey.slice(0, 4).map(byteHex).join(" ")) + "</code></td>" +
+            "<td><code>" + escapeHtml(roundKey.slice(4, 8).map(byteHex).join(" ")) + "</code></td>" +
+            "<td><code>" + escapeHtml(roundKey.slice(8, 12).map(byteHex).join(" ")) + "</code></td>" +
+            "<td><code>" + escapeHtml(roundKey.slice(12, 16).map(byteHex).join(" ")) + "</code></td>" +
+          "</tr>";
+        }).join("");
+
+        const wordRows = expanded.trace.map(function (item) {
+          const description = keyTraceDescription(item, expanded);
+          return "<tr>" +
+            "<td><code>w_" + item.index + "</code></td>" +
+            "<td>" + escapeHtml(description.source) + "</td>" +
+            "<td>" + escapeHtml(description.transform) + "</td>" +
+            "<td><code>" + escapeHtml(chunkHex(item.result)) + "</code></td>" +
+          "</tr>";
+        }).join("");
+
+        target.innerHTML =
+          '<div class="panel-head">' +
+            '<div>' +
+              '<h2>轮密钥扩展</h2>' +
+              '<p>' + escapeHtml(aesName(expanded) + " 会生成 " + (expanded.Nr + 1) + " 组轮密钥。上表先给出整轮结果，下面再把逐词扩展过程展开。") + '</p>' +
+            '</div>' +
+          '</div>' +
+          '<div class="table-wrap">' +
+            '<table>' +
+              '<thead>' +
+                '<tr>' +
+                  '<th>轮次</th>' +
+                  '<th>整轮密钥</th>' +
+                  '<th>字 0</th>' +
+                  '<th>字 1</th>' +
+                  '<th>字 2</th>' +
+                  '<th>字 3</th>' +
+                '</tr>' +
+              '</thead>' +
+              '<tbody>' + roundRows + '</tbody>' +
+            '</table>' +
+          '</div>' +
+          '<details class="key-detail">' +
+            '<summary class="key-summary"><span>展开逐词扩展过程</span><span>把 RotWord、SubWord 和 Rcon 都单独写出来</span></summary>' +
+            '<div class="table-wrap">' +
+              '<table>' +
+                '<thead>' +
+                  '<tr>' +
+                    '<th>字</th>' +
+                    '<th>来源</th>' +
+                    '<th>变换</th>' +
+                    '<th>结果</th>' +
+                  '</tr>' +
+                '</thead>' +
+                '<tbody>' + wordRows + '</tbody>' +
+              '</table>' +
+            '</div>' +
+          '</details>';
+      }
+
+      function renderStateCard(step, index) {
+        const rows = step.state.map(function (row) {
+          return "<tr>" + row.map(function (byte) {
+            return "<td>" + byteHex(byte) + "</td>";
+          }).join("") + "</tr>";
+        }).join("");
+
+        return '<article class="state-card ' + (step.kind === "key" ? "key-card" : "") + '">' +
+          '<div class="state-head">' +
+            '<span class="state-index">' + (index + 1) + '</span>' +
+            '<h3>' + escapeHtml(step.title) + '</h3>' +
+          '</div>' +
+          (step.note ? '<p class="state-note">' + escapeHtml(step.note) + '</p>' : "") +
+          '<table class="matrix"><tbody>' + rows + '</tbody></table>' +
+          '<div class="state-hex">' + escapeHtml(chunkHex(step.hex)) + '</div>' +
+          (step.detailHtml || "") +
+        '</article>';
+      }
+
+      function renderTrace(target, title, description, rounds) {
+        target.innerHTML =
+          '<div class="panel-head">' +
+            '<div>' +
+              '<h2>' + escapeHtml(title) + '</h2>' +
+              '<p>' + escapeHtml(description) + '</p>' +
+            '</div>' +
+          '</div>' +
+          rounds.map(function (round, index) {
+            return '<details class="round-detail" ' + (index < 2 ? "open" : "") + '>' +
+              '<summary class="round-summary">' +
+                '<span>' + escapeHtml(round.title) + '</span>' +
+                '<span>' + escapeHtml(round.meta) + '</span>' +
+              '</summary>' +
+              '<div class="state-grid">' +
+                round.steps.map(renderStateCard).join("") +
+              '</div>' +
+            '</details>';
+          }).join("");
+      }
+
+      function collectInputs(root) {
+        return {
+          plaintext: root.querySelector('[data-role="plaintext"]').value,
+          key: root.querySelector('[data-role="key"]').value,
+          ciphertext: root.querySelector('[data-role="ciphertext"]').value
+        };
+      }
+
+      function setError(root, message) {
+        const node = root.querySelector('[data-role="error"]');
+        if (message) {
+          node.style.display = "block";
+          node.textContent = message;
+          return;
+        }
+        node.style.display = "none";
+        node.textContent = "";
+      }
+
+      function runFull(root) {
+        const inputs = collectInputs(root);
+        const plainHex = ensureHex(inputs.plaintext, "明文", [32]);
+        const keyHex = ensureHex(inputs.key, "密钥", [32, 48, 64]);
+        const plainBytes = hexToBytes(plainHex);
+        const keyBytes = hexToBytes(keyHex);
+        const expanded = expandKey(keyBytes);
+        const encrypted = encryptTrace(plainBytes, expanded);
+        const cipherHex = bytesToHex(encrypted.output);
+        root.querySelector('[data-role="ciphertext"]').value = cipherHex;
+        const decrypted = decryptTrace(encrypted.output, expanded);
+        const recoveredPlain = bytesToHex(decrypted.output);
+
+        renderSummary(root.querySelector('[data-role="summary"]'), {
+          mode: "full",
+          expanded: expanded,
+          cipherHex: cipherHex,
+          plainHex: recoveredPlain,
+          inputPlainHex: plainHex,
+          encryptOutput: encrypted.output,
+          decryptOutput: decrypted.output,
+          recovered: recoveredPlain === plainHex,
+          hasReference: true
+        });
+        renderRoundKeys(root.querySelector('[data-role="roundkeys"]'), expanded);
+        renderTrace(root.querySelector('[data-role="encrypt"]'), "加密过程", "状态从明文出发，逐轮推进到最终密文。", encrypted.rounds);
+        renderTrace(root.querySelector('[data-role="decrypt"]'), "解密过程", "状态从刚刚得到的密文回退，最后回到原始明文。", decrypted.rounds);
+        setError(root, "");
+      }
+
+      function runDecryptOnly(root) {
+        const inputs = collectInputs(root);
+        const keyHex = ensureHex(inputs.key, "密钥", [32, 48, 64]);
+        const cipherHex = ensureHex(inputs.ciphertext, "密文", [32]);
+        const keyBytes = hexToBytes(keyHex);
+        const cipherBytes = hexToBytes(cipherHex);
+        const expanded = expandKey(keyBytes);
+        const decrypted = decryptTrace(cipherBytes, expanded);
+        const recoveredPlain = bytesToHex(decrypted.output);
+        const optionalPlain = normalizeHex(inputs.plaintext);
+        const hasReference = optionalPlain.length === 32;
+        const recovered = hasReference ? optionalPlain === recoveredPlain : false;
+
+        renderSummary(root.querySelector('[data-role="summary"]'), {
+          mode: "decrypt",
+          expanded: expanded,
+          cipherHex: cipherHex,
+          plainHex: recoveredPlain,
+          inputPlainHex: optionalPlain,
+          encryptOutput: cipherBytes,
+          decryptOutput: decrypted.output,
+          recovered: recovered,
+          hasReference: hasReference
+        });
+        renderRoundKeys(root.querySelector('[data-role="roundkeys"]'), expanded);
+        root.querySelector('[data-role="encrypt"]').innerHTML =
+          '<div class="panel-head">' +
+            '<div>' +
+              '<h2>加密过程</h2>' +
+              '<p>这次只展开解密路径，因此左侧没有重新计算加密轮。摘要区保持当前密文和解密输出。</p>' +
+            '</div>' +
+          '</div>';
+        renderTrace(root.querySelector('[data-role="decrypt"]'), "解密过程", "状态从当前密文出发，逐轮回退到明文。", decrypted.rounds);
+        setError(root, "");
+      }
+
+      function fillSample(root) {
+        root.querySelector('[data-role="plaintext"]').value = "00112233445566778899AABBCCDDEEFF";
+        root.querySelector('[data-role="key"]').value = "000102030405060708090A0B0C0D0E0F";
+        root.querySelector('[data-role="ciphertext"]').value = "69C4E0D86A7B0430D8CDB78070B4C55A";
+      }
+
+      function bindDemo(root) {
+        root.querySelectorAll("[data-action]").forEach(function (button) {
+          button.addEventListener("click", function () {
+            try {
+              const action = button.getAttribute("data-action");
+              if (action === "sample") {
+                fillSample(root);
+                runFull(root);
+                return;
+              }
+              if (action === "decrypt") {
+                runDecryptOnly(root);
+                return;
+              }
+              runFull(root);
+            } catch (error) {
+              setError(root, error instanceof Error ? error.message : "页面执行时出现了未知错误。");
+            }
+          });
+        });
+
+        fillSample(root);
+        runFull(root);
+      }
+
+      function selfTest() {
+        const plain = hexToBytes("00112233445566778899AABBCCDDEEFF");
+        const key = hexToBytes("000102030405060708090A0B0C0D0E0F");
+        const expanded = expandKey(key);
+        const encrypted = encryptTrace(plain, expanded);
+        const cipher = bytesToHex(encrypted.output);
+        if (cipher !== "69C4E0D86A7B0430D8CDB78070B4C55A") {
+          throw new Error("AES 自检失败，加密结果为 " + cipher + "。");
+        }
+        const decrypted = decryptTrace(encrypted.output, expanded);
+        const recovered = bytesToHex(decrypted.output);
+        if (recovered !== "00112233445566778899AABBCCDDEEFF") {
+          throw new Error("AES 自检失败，解密结果为 " + recovered + "。");
+        }
+      }
+
+      selfTest();
+
+      if (typeof document !== "undefined") {
+        document.addEventListener("DOMContentLoaded", function () {
+          document.querySelectorAll("[data-aes-demo]").forEach(bindDemo);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

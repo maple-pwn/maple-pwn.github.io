@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DES 加解密过程展示</title>
+  <style>
+    :root {
+      --bg: #f6f6f4;
+      --paper: #ffffff;
+      --paper-soft: #fafafa;
+      --ink: #202124;
+      --ink-soft: #5f6368;
+      --line: #dadce0;
+      --line-strong: #c4c7cc;
+      --accent: #3c4043;
+      --accent-soft: #f1f3f4;
+      --error-bg: #fce8e6;
+      --error-ink: #a50e0e;
+      --shadow: 0 1px 2px rgba(32, 33, 36, 0.06);
+      --radius-lg: 10px;
+      --radius-md: 8px;
+      --radius-sm: 6px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+    }
+
+    .page-shell {
+      width: min(1320px, calc(100vw - 32px));
+      margin: 18px auto;
+      padding: 0;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.9fr);
+      gap: 14px;
+    }
+
+    .hero-main,
+    .hero-side,
+    .panel,
+    .summary-card,
+    .trace-panel,
+    .roundkeys-panel,
+    .reading-note {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-main,
+    .hero-side,
+    .panel,
+    .trace-panel,
+    .roundkeys-panel,
+    .reading-note {
+      padding: 18px 20px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+    }
+
+    .hero-main h1 {
+      margin: 0;
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.25;
+    }
+
+    .hero-main p,
+    .hero-side p,
+    .panel-head p,
+    .reading-note p {
+      margin: 12px 0 0;
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--ink-soft);
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 10px;
+      align-content: center;
+    }
+
+    .hero-side h2,
+    .panel-head h2,
+    .trace-panel h2,
+    .roundkeys-panel h2,
+    .reading-note h2 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.35;
+    }
+
+    .mono-block {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--paper-soft);
+      color: var(--ink-soft);
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .panel {
+      margin-top: 14px;
+    }
+
+    .panel-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: end;
+      margin-bottom: 14px;
+    }
+
+    .panel-head p {
+      margin-top: 0;
+    }
+
+    .input-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .field input {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 12px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-md);
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .field input:focus {
+      outline: 2px solid rgba(60, 64, 67, 0.1);
+      border-color: #9aa0a6;
+    }
+
+    .helper {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--accent-soft);
+      color: var(--ink-soft);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .actions {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    button {
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-md);
+      padding: 9px 14px;
+      background: var(--paper);
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      transition: background-color 0.15s ease;
+    }
+
+    button:hover {
+      background: #f8f9fa;
+    }
+
+    .error-box {
+      display: none;
+      margin-top: 12px;
+      padding: 10px 12px;
+      border: 1px solid #f6aea9;
+      border-radius: var(--radius-md);
+      background: var(--error-bg);
+      color: var(--error-ink);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .summary-card {
+      padding: 14px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .summary-card .label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+    }
+
+    .summary-card .value {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .summary-card .meta {
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .roundkeys-panel,
+    .trace-panel {
+      margin-top: 14px;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .table-wrap,
+    .calc-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--paper);
+    }
+
+    table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8f9fa;
+      color: var(--ink);
+    }
+
+    td {
+      color: var(--ink-soft);
+      line-height: 1.55;
+    }
+
+    td code,
+    th code {
+      white-space: nowrap;
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+    }
+
+    details.key-detail,
+    details.round-detail {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--paper);
+    }
+
+    details > summary {
+      cursor: pointer;
+      list-style: none;
+    }
+
+    details > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .detail-summary {
+      padding: 10px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 6px;
+      align-items: flex-start;
+      background: #f8f9fa;
+    }
+
+    .detail-summary span:first-child {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .detail-summary span:last-child {
+      color: var(--ink-soft);
+      font-size: 12px;
+    }
+
+    .detail-body {
+      padding: 10px 12px 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .value-item {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      background: var(--paper-soft);
+      padding: 8px 10px;
+      min-width: 0;
+    }
+
+    .value-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink-soft);
+    }
+
+    .value-mono {
+      margin-top: 4px;
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--ink);
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .calc-table {
+      width: 100%;
+      min-width: 680px;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .calc-table th,
+    .calc-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid #eceff1;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    .calc-table th {
+      width: 150px;
+      background: #f8f9fa;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .calc-table td {
+      color: var(--ink-soft);
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      font-size: 12px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .trace-stack {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .reading-note {
+      margin-top: 14px;
+    }
+
+    @media (max-width: 1180px) {
+      .hero,
+      .summary,
+      .value-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .page-shell {
+        width: min(100vw - 16px, 100%);
+        margin: 8px auto;
+      }
+
+      .hero-main,
+      .hero-side,
+      .panel,
+      .trace-panel,
+      .roundkeys-panel,
+      .reading-note {
+        padding: 14px;
+      }
+
+      .input-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .detail-body {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page-shell" data-des-demo>
+    <section class="hero">
+      <div class="hero-main">
+        <p class="eyebrow">DES 单分组过程演示</p>
+        <h1>DES 加解密过程</h1>
+        <p>
+          页面把 DES 的 64 位分组处理拆成可追踪的步骤。输入先经过初始置换，再分成左右两半进入 16 轮
+          Feistel 结构。你可以在轮密钥区查看 `PC-1`、循环左移和 `PC-2` 的结果，在逐轮过程里继续追到
+          `E` 扩展、与子密钥异或、`S` 盒代替、`P` 置换以及左右半部怎样更新。
+        </p>
+      </div>
+
+      <aside class="hero-side">
+        <h2>默认样例</h2>
+        <p>
+          默认明文、密钥和密文采用 DES 最常用的标准测试向量。密钥输入保持 16 个十六进制字符，其中 8 位奇偶校验位会在 `PC-1`
+          里被丢弃，真正参与轮运算的是 56 位有效密钥。
+        </p>
+        <div class="mono-block">
+          明文: 0123456789ABCDEF
+          密钥: 133457799BBCDFF1
+          密文: 85E813540F0AB405
+        </div>
+      </aside>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>输入区</h2>
+          <p>明文、密钥、密文都使用 16 个十六进制字符，对应 64 位分组。</p>
+        </div>
+      </div>
+
+      <div class="input-grid">
+        <div class="field">
+          <label for="des-plaintext">明文</label>
+          <input id="des-plaintext" data-role="plaintext" type="text" spellcheck="false" autocomplete="off" value="0123456789ABCDEF" />
+        </div>
+        <div class="field">
+          <label for="des-key">密钥</label>
+          <input id="des-key" data-role="key" type="text" spellcheck="false" autocomplete="off" value="133457799BBCDFF1" />
+        </div>
+        <div class="field">
+          <label for="des-ciphertext">密文</label>
+          <input id="des-ciphertext" data-role="ciphertext" type="text" spellcheck="false" autocomplete="off" value="85E813540F0AB405" />
+        </div>
+      </div>
+
+      <div class="helper">
+        完整流程会先根据明文和密钥生成密文，再用反向子密钥顺序把结果解回去。只看解密流程时，页面会从密文直接开始，
+        继续展示 `IP`、16 轮 Feistel 和末置换。
+      </div>
+
+      <div class="actions">
+        <button type="button" data-action="sample">载入官方样例</button>
+        <button type="button" data-action="full">运行完整流程</button>
+        <button type="button" data-action="decrypt">只看解密流程</button>
+      </div>
+
+      <div class="error-box" data-role="error"></div>
+    </section>
+
+    <section class="summary" data-role="summary"></section>
+    <section class="roundkeys-panel" data-role="roundkeys"></section>
+
+    <section class="trace-stack">
+      <section class="trace-panel" data-role="encrypt"></section>
+      <section class="trace-panel" data-role="decrypt"></section>
+    </section>
+
+    <section class="reading-note">
+      <h2>怎么看这一页</h2>
+      <p>
+        DES 是 Feistel 结构，因此加密和解密共享同一套轮函数，差别落在子密钥使用顺序。加密时按 `K1` 到 `K16`，
+        解密时按 `K16` 到 `K1`。每一轮都会先计算 `f(R, K)`，再令新的左半部等于旧的右半部，新的右半部等于旧的左半部和 `f` 输出异或。
+      </p>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const IP = [
+        58, 50, 42, 34, 26, 18, 10, 2,
+        60, 52, 44, 36, 28, 20, 12, 4,
+        62, 54, 46, 38, 30, 22, 14, 6,
+        64, 56, 48, 40, 32, 24, 16, 8,
+        57, 49, 41, 33, 25, 17, 9, 1,
+        59, 51, 43, 35, 27, 19, 11, 3,
+        61, 53, 45, 37, 29, 21, 13, 5,
+        63, 55, 47, 39, 31, 23, 15, 7
+      ];
+
+      const FP = [
+        40, 8, 48, 16, 56, 24, 64, 32,
+        39, 7, 47, 15, 55, 23, 63, 31,
+        38, 6, 46, 14, 54, 22, 62, 30,
+        37, 5, 45, 13, 53, 21, 61, 29,
+        36, 4, 44, 12, 52, 20, 60, 28,
+        35, 3, 43, 11, 51, 19, 59, 27,
+        34, 2, 42, 10, 50, 18, 58, 26,
+        33, 1, 41, 9, 49, 17, 57, 25
+      ];
+
+      const E = [
+        32, 1, 2, 3, 4, 5,
+        4, 5, 6, 7, 8, 9,
+        8, 9, 10, 11, 12, 13,
+        12, 13, 14, 15, 16, 17,
+        16, 17, 18, 19, 20, 21,
+        20, 21, 22, 23, 24, 25,
+        24, 25, 26, 27, 28, 29,
+        28, 29, 30, 31, 32, 1
+      ];
+
+      const P = [
+        16, 7, 20, 21,
+        29, 12, 28, 17,
+        1, 15, 23, 26,
+        5, 18, 31, 10,
+        2, 8, 24, 14,
+        32, 27, 3, 9,
+        19, 13, 30, 6,
+        22, 11, 4, 25
+      ];
+
+      const PC1 = [
+        57, 49, 41, 33, 25, 17, 9,
+        1, 58, 50, 42, 34, 26, 18,
+        10, 2, 59, 51, 43, 35, 27,
+        19, 11, 3, 60, 52, 44, 36,
+        63, 55, 47, 39, 31, 23, 15,
+        7, 62, 54, 46, 38, 30, 22,
+        14, 6, 61, 53, 45, 37, 29,
+        21, 13, 5, 28, 20, 12, 4
+      ];
+
+      const PC2 = [
+        14, 17, 11, 24, 1, 5,
+        3, 28, 15, 6, 21, 10,
+        23, 19, 12, 4, 26, 8,
+        16, 7, 27, 20, 13, 2,
+        41, 52, 31, 37, 47, 55,
+        30, 40, 51, 45, 33, 48,
+        44, 49, 39, 56, 34, 53,
+        46, 42, 50, 36, 29, 32
+      ];
+
+      const SHIFTS = [1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1];
+
+      const S_BOXES = [
+        [
+          [14, 4, 13, 1, 2, 15, 11, 8, 3, 10, 6, 12, 5, 9, 0, 7],
+          [0, 15, 7, 4, 14, 2, 13, 1, 10, 6, 12, 11, 9, 5, 3, 8],
+          [4, 1, 14, 8, 13, 6, 2, 11, 15, 12, 9, 7, 3, 10, 5, 0],
+          [15, 12, 8, 2, 4, 9, 1, 7, 5, 11, 3, 14, 10, 0, 6, 13]
+        ],
+        [
+          [15, 1, 8, 14, 6, 11, 3, 4, 9, 7, 2, 13, 12, 0, 5, 10],
+          [3, 13, 4, 7, 15, 2, 8, 14, 12, 0, 1, 10, 6, 9, 11, 5],
+          [0, 14, 7, 11, 10, 4, 13, 1, 5, 8, 12, 6, 9, 3, 2, 15],
+          [13, 8, 10, 1, 3, 15, 4, 2, 11, 6, 7, 12, 0, 5, 14, 9]
+        ],
+        [
+          [10, 0, 9, 14, 6, 3, 15, 5, 1, 13, 12, 7, 11, 4, 2, 8],
+          [13, 7, 0, 9, 3, 4, 6, 10, 2, 8, 5, 14, 12, 11, 15, 1],
+          [13, 6, 4, 9, 8, 15, 3, 0, 11, 1, 2, 12, 5, 10, 14, 7],
+          [1, 10, 13, 0, 6, 9, 8, 7, 4, 15, 14, 3, 11, 5, 2, 12]
+        ],
+        [
+          [7, 13, 14, 3, 0, 6, 9, 10, 1, 2, 8, 5, 11, 12, 4, 15],
+          [13, 8, 11, 5, 6, 15, 0, 3, 4, 7, 2, 12, 1, 10, 14, 9],
+          [10, 6, 9, 0, 12, 11, 7, 13, 15, 1, 3, 14, 5, 2, 8, 4],
+          [3, 15, 0, 6, 10, 1, 13, 8, 9, 4, 5, 11, 12, 7, 2, 14]
+        ],
+        [
+          [2, 12, 4, 1, 7, 10, 11, 6, 8, 5, 3, 15, 13, 0, 14, 9],
+          [14, 11, 2, 12, 4, 7, 13, 1, 5, 0, 15, 10, 3, 9, 8, 6],
+          [4, 2, 1, 11, 10, 13, 7, 8, 15, 9, 12, 5, 6, 3, 0, 14],
+          [11, 8, 12, 7, 1, 14, 2, 13, 6, 15, 0, 9, 10, 4, 5, 3]
+        ],
+        [
+          [12, 1, 10, 15, 9, 2, 6, 8, 0, 13, 3, 4, 14, 7, 5, 11],
+          [10, 15, 4, 2, 7, 12, 9, 5, 6, 1, 13, 14, 0, 11, 3, 8],
+          [9, 14, 15, 5, 2, 8, 12, 3, 7, 0, 4, 10, 1, 13, 11, 6],
+          [4, 3, 2, 12, 9, 5, 15, 10, 11, 14, 1, 7, 6, 0, 8, 13]
+        ],
+        [
+          [4, 11, 2, 14, 15, 0, 8, 13, 3, 12, 9, 7, 5, 10, 6, 1],
+          [13, 0, 11, 7, 4, 9, 1, 10, 14, 3, 5, 12, 2, 15, 8, 6],
+          [1, 4, 11, 13, 12, 3, 7, 14, 10, 15, 6, 8, 0, 5, 9, 2],
+          [6, 11, 13, 8, 1, 4, 10, 7, 9, 5, 0, 15, 14, 2, 3, 12]
+        ],
+        [
+          [13, 2, 8, 4, 6, 15, 11, 1, 10, 9, 3, 14, 5, 0, 12, 7],
+          [1, 15, 13, 8, 10, 3, 7, 4, 12, 5, 6, 11, 0, 14, 9, 2],
+          [7, 11, 4, 1, 9, 12, 14, 2, 0, 6, 10, 13, 15, 3, 5, 8],
+          [2, 1, 14, 7, 4, 10, 8, 13, 15, 12, 9, 0, 3, 5, 6, 11]
+        ]
+      ];
+
+      function normalizeHex(input) {
+        return input.replace(/0x/gi, "").replace(/[\s_]/g, "").toUpperCase();
+      }
+
+      function ensureHex(input, label, lengths) {
+        const cleaned = normalizeHex(input);
+        if (!/^[0-9A-F]*$/.test(cleaned)) {
+          throw new Error(label + "里出现了非十六进制字符。");
+        }
+        if (!lengths.includes(cleaned.length)) {
+          throw new Error(label + "长度需要是 " + lengths.join("、") + " 个十六进制字符。");
+        }
+        return cleaned;
+      }
+
+      function hexToBits(hex) {
+        return hex.split("").flatMap((char) => {
+          const value = parseInt(char, 16);
+          return [3, 2, 1, 0].map((bit) => (value >> bit) & 1);
+        });
+      }
+
+      function bitsToHex(bits) {
+        let output = "";
+        for (let i = 0; i < bits.length; i += 4) {
+          const value = (bits[i] << 3) | (bits[i + 1] << 2) | (bits[i + 2] << 1) | bits[i + 3];
+          output += value.toString(16).toUpperCase();
+        }
+        return output;
+      }
+
+      function bitsToBinary(bits) {
+        return bits.join("");
+      }
+
+      function groupString(text, size) {
+        const groups = [];
+        for (let i = 0; i < text.length; i += size) {
+          groups.push(text.slice(i, i + size));
+        }
+        return groups.join(" ");
+      }
+
+      function groupBits(bits, size) {
+        return groupString(bitsToBinary(bits), size);
+      }
+
+      function groupHex(hex, size) {
+        return groupString(hex, size);
+      }
+
+      function escapeHtml(text) {
+        return String(text)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function permute(bits, table) {
+        return table.map((position) => bits[position - 1]);
+      }
+
+      function xorBits(left, right) {
+        return left.map((bit, index) => bit ^ right[index]);
+      }
+
+      function leftRotate(bits, count) {
+        return bits.slice(count).concat(bits.slice(0, count));
+      }
+
+      function cloneBits(bits) {
+        return bits.slice();
+      }
+
+      function numberToBits(value, width) {
+        const bits = [];
+        for (let i = width - 1; i >= 0; i -= 1) {
+          bits.push((value >> i) & 1);
+        }
+        return bits;
+      }
+
+      function permutationDetailLines(inputBits, table, inputLabel, outputLabel, groupSize) {
+        const lines = [];
+        for (let start = 0; start < table.length; start += groupSize) {
+          const positions = table.slice(start, start + groupSize);
+          const selected = positions.map((position) => inputBits[position - 1]).join("");
+          lines.push(
+            outputLabel + "[" + (start + 1) + "-" + (start + positions.length) + "] <- " +
+            inputLabel + "[" + positions.join(" ") + "] = " + selected
+          );
+        }
+        return lines;
+      }
+
+      function parityBitsText(keyBits) {
+        const lines = [];
+        for (let i = 0; i < 8; i += 1) {
+          const byte = keyBits.slice(i * 8, i * 8 + 8);
+          lines.push("byte" + (i + 1) + ": " + byte.join("") + "，校验位 = 第 8 位");
+        }
+        return lines.join("\n");
+      }
+
+      function feistelFunction(rightBits, subkeyBits) {
+        const expanded = permute(rightBits, E);
+        const xored = xorBits(expanded, subkeyBits);
+        const sboxOutput = [];
+        const sboxDetails = [];
+
+        for (let boxIndex = 0; boxIndex < 8; boxIndex += 1) {
+          const block = xored.slice(boxIndex * 6, boxIndex * 6 + 6);
+          const row = (block[0] << 1) | block[5];
+          const col = (block[1] << 3) | (block[2] << 2) | (block[3] << 1) | block[4];
+          const value = S_BOXES[boxIndex][row][col];
+          const bits4 = numberToBits(value, 4);
+          sboxOutput.push(...bits4);
+          sboxDetails.push({
+            box: boxIndex + 1,
+            input: cloneBits(block),
+            row,
+            col,
+            value,
+            output: bits4
+          });
+        }
+
+        const permuted = permute(sboxOutput, P);
+        return {
+          expanded,
+          xored,
+          sboxOutput,
+          sboxDetails,
+          permuted
+        };
+      }
+
+      function buildKeySchedule(keyBits) {
+        const pc1 = permute(keyBits, PC1);
+        let c = pc1.slice(0, 28);
+        let d = pc1.slice(28);
+        const rounds = [];
+
+        for (let round = 0; round < 16; round += 1) {
+          c = leftRotate(c, SHIFTS[round]);
+          d = leftRotate(d, SHIFTS[round]);
+          const cd = c.concat(d);
+          const subkey = permute(cd, PC2);
+          rounds.push({
+            round: round + 1,
+            shift: SHIFTS[round],
+            c: cloneBits(c),
+            d: cloneBits(d),
+            cd,
+            subkey
+          });
+        }
+
+        return {
+          keyBits,
+          pc1,
+          c0: pc1.slice(0, 28),
+          d0: pc1.slice(28),
+          rounds
+        };
+      }
+
+      function renderCalcTable(rows) {
+        return `
+          <div class="calc-table-wrap">
+            <table class="calc-table">
+              <tbody>
+                ${rows.map((row) => `
+                  <tr>
+                    <th>${escapeHtml(row.label)}</th>
+                    <td>${escapeHtml(row.value)}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      function processTrace(inputBits, roundSequence, mode) {
+        const steps = [];
+        const inputLabel = mode === "encrypt" ? "明文块" : "密文块";
+        const outputLabel = mode === "encrypt" ? "密文块" : "明文块";
+        const permuted = permute(inputBits, IP);
+        let left = permuted.slice(0, 32);
+        let right = permuted.slice(32);
+
+        steps.push({
+          title: "初始置换",
+          meta: inputLabel + "先经过 IP，再分成左右两半。",
+          values: [
+            { label: inputLabel, value: groupHex(bitsToHex(inputBits), 4) },
+            { label: "IP 输出", value: groupHex(bitsToHex(permuted), 4) },
+            { label: "L0", value: bitsToHex(left) },
+            { label: "R0", value: bitsToHex(right) }
+          ],
+          calcRows: [
+            {
+              label: inputLabel,
+              value: bitsToHex(inputBits) + " | " + groupBits(inputBits, 4)
+            },
+            {
+              label: "IP",
+              value:
+                "IP(" + inputLabel + ") = " + bitsToHex(permuted) + " | " + groupBits(permuted, 4) + "\n" +
+                permutationDetailLines(inputBits, IP, inputLabel, "IP", 8).join("\n")
+            },
+            {
+              label: "分裂",
+              value:
+                "L0 = " + bitsToHex(left) + "\n" +
+                "R0 = " + bitsToHex(right)
+            }
+          ]
+        });
+
+        for (let index = 0; index < 16; index += 1) {
+          const leftPrev = cloneBits(left);
+          const rightPrev = cloneBits(right);
+          const keyEntry = roundSequence[index];
+          const f = feistelFunction(rightPrev, keyEntry.subkey);
+          left = rightPrev;
+          right = xorBits(leftPrev, f.permuted);
+
+          const sboxLines = f.sboxDetails.map((item) => {
+            return "S" + item.box + ": " +
+              bitsToBinary(item.input) +
+              " -> row " + item.row +
+              ", col " + item.col +
+              " -> " + bitsToBinary(item.output) +
+              " (" + item.value.toString(16).toUpperCase() + ")";
+          }).join("\n");
+
+          steps.push({
+            title: "第 " + (index + 1) + " 轮",
+            meta: "使用 K" + keyEntry.round + " 计算 f(R, K)，再更新左右半部。",
+            values: [
+              { label: "使用子密钥", value: "K" + keyEntry.round + " = " + bitsToHex(keyEntry.subkey) },
+              { label: "L" + index, value: bitsToHex(leftPrev) },
+              { label: "R" + index, value: bitsToHex(rightPrev) },
+              { label: "E(R)", value: bitsToHex(f.expanded) },
+              { label: "S 输出", value: bitsToHex(f.sboxOutput) },
+              { label: "P 输出", value: bitsToHex(f.permuted) },
+              { label: "L" + (index + 1), value: bitsToHex(left) },
+              { label: "R" + (index + 1), value: bitsToHex(right) }
+            ],
+            calcRows: [
+              {
+                label: "轮输入",
+                value:
+                  "L" + index + " = " + bitsToHex(leftPrev) + "\n" +
+                  "R" + index + " = " + bitsToHex(rightPrev)
+              },
+              {
+                label: "E 扩展",
+                value:
+                  "E(R" + index + ") = " + bitsToHex(f.expanded) + " | " + groupBits(f.expanded, 6) + "\n" +
+                  permutationDetailLines(rightPrev, E, "R" + index, "E", 6).join("\n")
+              },
+              {
+                label: "与 K" + keyEntry.round + " 异或",
+                value:
+                  groupBits(f.expanded, 6) + "\n" +
+                  "XOR " + groupBits(keyEntry.subkey, 6) + "\n" +
+                  "=   " + groupBits(f.xored, 6)
+              },
+              {
+                label: "S 盒代替",
+                value:
+                  sboxLines + "\n" +
+                  "S 输出 = " + bitsToHex(f.sboxOutput) + " | " + groupBits(f.sboxOutput, 4)
+              },
+              {
+                label: "P 置换",
+                value:
+                  "P = " + bitsToHex(f.permuted) + " | " + groupBits(f.permuted, 4) + "\n" +
+                  permutationDetailLines(f.sboxOutput, P, "S", "P", 8).join("\n")
+              },
+              {
+                label: "Feistel 合并",
+                value:
+                  "L" + (index + 1) + " = R" + index + " = " + bitsToHex(left) + "\n" +
+                  "R" + (index + 1) + " = L" + index + " XOR P = " +
+                  bitsToHex(leftPrev) + " XOR " + bitsToHex(f.permuted) + " = " + bitsToHex(right)
+              }
+            ]
+          });
+        }
+
+        const preoutput = right.concat(left);
+        const outputBits = permute(preoutput, FP);
+        steps.push({
+          title: "末置换",
+          meta: "先交换左右半部，再经过 FP 得到" + outputLabel + "。",
+          values: [
+            { label: "R16 || L16", value: groupHex(bitsToHex(preoutput), 4) },
+            { label: outputLabel, value: groupHex(bitsToHex(outputBits), 4) }
+          ],
+          calcRows: [
+            {
+              label: "末轮交换",
+              value: "R16 || L16 = " + bitsToHex(preoutput) + " | " + groupBits(preoutput, 4)
+            },
+            {
+              label: "FP",
+              value:
+                outputLabel + " = " + bitsToHex(outputBits) + " | " + groupBits(outputBits, 4) + "\n" +
+                permutationDetailLines(preoutput, FP, "R16||L16", "FP", 8).join("\n")
+            }
+          ]
+        });
+
+        return {
+          output: outputBits,
+          steps
+        };
+      }
+
+      function renderSummary(target, data) {
+        const ioLabel = data.mode === "decrypt" ? "当前密文" : "加密输出";
+        const cards = [
+          {
+            label: "算法参数",
+            value: "DES / 16 轮",
+            meta: "64 位分组，56 位有效密钥"
+          },
+          {
+            label: ioLabel,
+            value: groupHex(data.cipherHex, 4),
+            meta: "输出块 = " + data.cipherHex
+          },
+          {
+            label: "解密输出",
+            value: groupHex(data.plainHex, 4),
+            meta: "输出块 = " + data.plainHex
+          },
+          {
+            label: "轮密钥",
+            value: "K1 = " + data.k1,
+            meta: "K16 = " + data.k16
+          },
+          {
+            label: "回读校验",
+            value: data.recovered ? "解密结果已经回到输入明文" : (data.hasReference ? "解密结果和输入明文没有对齐" : "当前没有对照明文"),
+            meta: data.hasReference ? "输入明文: " + groupHex(data.inputPlainHex, 4) : "这一轮只展示密文回退。"
+          }
+        ];
+
+        target.innerHTML = cards.map((card) => `
+          <article class="summary-card">
+            <div class="label">${escapeHtml(card.label)}</div>
+            <div class="value">${escapeHtml(card.value)}</div>
+            <div class="meta">${escapeHtml(card.meta)}</div>
+          </article>
+        `).join("");
+      }
+
+      function renderKeySchedule(target, schedule) {
+        const keyBits = schedule.keyBits;
+        const pc1 = schedule.pc1;
+        const firstRound = schedule.rounds[0];
+        const pc1Lines = permutationDetailLines(keyBits, PC1, "K", "PC1", 7).join("\n");
+        const pc2Lines = permutationDetailLines(firstRound.cd, PC2, "C1||D1", "PC2", 6).join("\n");
+        const shiftLine = SHIFTS.map((shift, index) => "r" + (index + 1) + ":" + shift).join("  ");
+
+        target.innerHTML = `
+          <div class="panel-head">
+            <div>
+              <h2>子密钥生成</h2>
+              <p>密钥先经过 PC-1 丢弃 8 位校验位，再把 56 位结果分成 C、D 两半，每轮循环左移之后经过 PC-2 取出 48 位子密钥。</p>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>轮次</th>
+                  <th>左移</th>
+                  <th>C<sub>i</sub></th>
+                  <th>D<sub>i</sub></th>
+                  <th>K<sub>i</sub></th>
+                </tr>
+              </thead>
+              <tbody>
+                ${schedule.rounds.map((round) => `
+                  <tr>
+                    <td>第 ${round.round} 轮</td>
+                    <td>${round.shift}</td>
+                    <td><code>${escapeHtml(bitsToHex(round.c))}</code></td>
+                    <td><code>${escapeHtml(bitsToHex(round.d))}</code></td>
+                    <td><code>${escapeHtml(groupHex(bitsToHex(round.subkey), 6))}</code></td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+          <details class="key-detail">
+            <summary class="detail-summary">
+              <span>展开 PC-1、左移和 PC-2 的说明</span>
+              <span>这里把校验位、置换和第一轮的取位过程连起来</span>
+            </summary>
+            <div class="detail-body">
+              <div class="value-grid">
+                <div class="value-item">
+                  <div class="value-label">输入密钥</div>
+                  <div class="value-mono">${escapeHtml(groupHex(bitsToHex(keyBits), 4))}</div>
+                </div>
+                <div class="value-item">
+                  <div class="value-label">PC-1 后</div>
+                  <div class="value-mono">${escapeHtml(bitsToHex(pc1))}</div>
+                </div>
+                <div class="value-item">
+                  <div class="value-label">C0</div>
+                  <div class="value-mono">${escapeHtml(bitsToHex(schedule.c0))}</div>
+                </div>
+                <div class="value-item">
+                  <div class="value-label">D0</div>
+                  <div class="value-mono">${escapeHtml(bitsToHex(schedule.d0))}</div>
+                </div>
+              </div>
+              ${renderCalcTable([
+                {
+                  label: "校验位说明",
+                  value: parityBitsText(keyBits)
+                },
+                {
+                  label: "PC-1",
+                  value:
+                    "PC-1(K) = " + bitsToHex(pc1) + " | " + groupBits(pc1, 7) + "\n" +
+                    pc1Lines
+                },
+                {
+                  label: "左移计划",
+                  value: shiftLine
+                },
+                {
+                  label: "第 1 轮左移",
+                  value:
+                    "C1 = leftShift(C0, 1) = " + bitsToHex(firstRound.c) + "\n" +
+                    "D1 = leftShift(D0, 1) = " + bitsToHex(firstRound.d)
+                },
+                {
+                  label: "PC-2",
+                  value:
+                    "K1 = " + bitsToHex(firstRound.subkey) + " | " + groupBits(firstRound.subkey, 6) + "\n" +
+                    pc2Lines
+                }
+              ])}
+            </div>
+          </details>
+        `;
+      }
+
+      function renderTrace(target, title, description, steps) {
+        target.innerHTML = `
+          <div class="panel-head">
+            <div>
+              <h2>${escapeHtml(title)}</h2>
+              <p>${escapeHtml(description)}</p>
+            </div>
+          </div>
+          ${steps.map((step, index) => `
+            <details class="round-detail" ${index < 2 ? "open" : ""}>
+              <summary class="detail-summary">
+                <span>${escapeHtml(step.title)}</span>
+                <span>${escapeHtml(step.meta)}</span>
+              </summary>
+              <div class="detail-body">
+                <div class="value-grid">
+                  ${step.values.map((item) => `
+                    <div class="value-item">
+                      <div class="value-label">${escapeHtml(item.label)}</div>
+                      <div class="value-mono">${escapeHtml(item.value)}</div>
+                    </div>
+                  `).join("")}
+                </div>
+                ${renderCalcTable(step.calcRows)}
+              </div>
+            </details>
+          `).join("")}
+        `;
+      }
+
+      function collectInputs(root) {
+        return {
+          plaintext: root.querySelector('[data-role="plaintext"]').value,
+          key: root.querySelector('[data-role="key"]').value,
+          ciphertext: root.querySelector('[data-role="ciphertext"]').value
+        };
+      }
+
+      function setError(root, message) {
+        const node = root.querySelector('[data-role="error"]');
+        if (message) {
+          node.style.display = "block";
+          node.textContent = message;
+          return;
+        }
+        node.style.display = "none";
+        node.textContent = "";
+      }
+
+      function buildRuntime(keyHex) {
+        const keyBits = hexToBits(keyHex);
+        const schedule = buildKeySchedule(keyBits);
+        return schedule;
+      }
+
+      function runFull(root) {
+        const inputs = collectInputs(root);
+        const plainHex = ensureHex(inputs.plaintext, "明文", [16]);
+        const keyHex = ensureHex(inputs.key, "密钥", [16]);
+        const plainBits = hexToBits(plainHex);
+        const schedule = buildRuntime(keyHex);
+        const encryptTrace = processTrace(
+          plainBits,
+          schedule.rounds.map((round) => ({ round: round.round, subkey: round.subkey })),
+          "encrypt"
+        );
+        const cipherHex = bitsToHex(encryptTrace.output);
+        root.querySelector('[data-role="ciphertext"]').value = cipherHex;
+        const decryptTrace = processTrace(
+          encryptTrace.output,
+          schedule.rounds.slice().reverse().map((round) => ({ round: round.round, subkey: round.subkey })),
+          "decrypt"
+        );
+        const recoveredPlain = bitsToHex(decryptTrace.output);
+
+        renderSummary(root.querySelector('[data-role="summary"]'), {
+          mode: "full",
+          cipherHex,
+          plainHex: recoveredPlain,
+          inputPlainHex: plainHex,
+          k1: bitsToHex(schedule.rounds[0].subkey),
+          k16: bitsToHex(schedule.rounds[15].subkey),
+          recovered: recoveredPlain === plainHex,
+          hasReference: true
+        });
+        renderKeySchedule(root.querySelector('[data-role="roundkeys"]'), schedule);
+        renderTrace(root.querySelector('[data-role="encrypt"]'), "加密过程", "明文先经过 IP，再进入 16 轮 Feistel 结构，最后经过 FP。", encryptTrace.steps);
+        renderTrace(root.querySelector('[data-role="decrypt"]'), "解密过程", "解密共用同一轮函数，差别在于子密钥使用顺序反过来。", decryptTrace.steps);
+        setError(root, "");
+      }
+
+      function runDecryptOnly(root) {
+        const inputs = collectInputs(root);
+        const keyHex = ensureHex(inputs.key, "密钥", [16]);
+        const cipherHex = ensureHex(inputs.ciphertext, "密文", [16]);
+        const schedule = buildRuntime(keyHex);
+        const cipherBits = hexToBits(cipherHex);
+        const decryptTrace = processTrace(
+          cipherBits,
+          schedule.rounds.slice().reverse().map((round) => ({ round: round.round, subkey: round.subkey })),
+          "decrypt"
+        );
+        const recoveredPlain = bitsToHex(decryptTrace.output);
+        const optionalPlain = normalizeHex(inputs.plaintext);
+        const hasReference = optionalPlain.length === 16;
+        const recovered = hasReference ? optionalPlain === recoveredPlain : false;
+
+        renderSummary(root.querySelector('[data-role="summary"]'), {
+          mode: "decrypt",
+          cipherHex,
+          plainHex: recoveredPlain,
+          inputPlainHex: optionalPlain,
+          k1: bitsToHex(schedule.rounds[0].subkey),
+          k16: bitsToHex(schedule.rounds[15].subkey),
+          recovered,
+          hasReference
+        });
+        renderKeySchedule(root.querySelector('[data-role="roundkeys"]'), schedule);
+        root.querySelector('[data-role="encrypt"]').innerHTML = `
+          <div class="panel-head">
+            <div>
+              <h2>加密过程</h2>
+              <p>这一次只展开解密路径，左侧保持空白，摘要区显示当前密文和解密输出。</p>
+            </div>
+          </div>
+        `;
+        renderTrace(root.querySelector('[data-role="decrypt"]'), "解密过程", "密文先经过 IP，再按 K16 到 K1 的顺序回退。", decryptTrace.steps);
+        setError(root, "");
+      }
+
+      function fillSample(root) {
+        root.querySelector('[data-role="plaintext"]').value = "0123456789ABCDEF";
+        root.querySelector('[data-role="key"]').value = "133457799BBCDFF1";
+        root.querySelector('[data-role="ciphertext"]').value = "85E813540F0AB405";
+      }
+
+      function bindDemo(root) {
+        root.querySelectorAll("[data-action]").forEach((button) => {
+          button.addEventListener("click", () => {
+            try {
+              const action = button.getAttribute("data-action");
+              if (action === "sample") {
+                fillSample(root);
+                runFull(root);
+                return;
+              }
+              if (action === "decrypt") {
+                runDecryptOnly(root);
+                return;
+              }
+              runFull(root);
+            } catch (error) {
+              setError(root, error instanceof Error ? error.message : "页面执行时出现了未知错误。");
+            }
+          });
+        });
+
+        fillSample(root);
+        runFull(root);
+      }
+
+      function selfTest() {
+        const plainBits = hexToBits("0123456789ABCDEF");
+        const schedule = buildRuntime("133457799BBCDFF1");
+        const encrypted = processTrace(
+          plainBits,
+          schedule.rounds.map((round) => ({ round: round.round, subkey: round.subkey })),
+          "encrypt"
+        );
+        const cipher = bitsToHex(encrypted.output);
+        if (cipher !== "85E813540F0AB405") {
+          throw new Error("DES 自检失败，加密结果为 " + cipher + "。");
+        }
+        const decrypted = processTrace(
+          encrypted.output,
+          schedule.rounds.slice().reverse().map((round) => ({ round: round.round, subkey: round.subkey })),
+          "decrypt"
+        );
+        const recovered = bitsToHex(decrypted.output);
+        if (recovered !== "0123456789ABCDEF") {
+          throw new Error("DES 自检失败，解密结果为 " + recovered + "。");
+        }
+      }
+
+      selfTest();
+
+      if (typeof document !== "undefined") {
+        document.addEventListener("DOMContentLoaded", () => {
+          document.querySelectorAll("[data-des-demo]").forEach(bindDemo);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
