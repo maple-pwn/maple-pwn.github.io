@@ -81,126 +81,17 @@ CIFAR-10 数据集划分如下:
 基础 1-NN 实现采用双层循环结构:
 
 
-```
+```python
+def predict(self, X):
+    num_test = X.shape[0]
+    Ypred = np.zeros(num_test, dtype=self.y_train.dtype)
 
-def
+    for i in range(num_test):
+        distances = np.sum(np.abs(self.X_train - X[i, :]), axis=1)
+        min_index = np.argmin(distances)
+        Ypred[i] = self.y_train[min_index]
 
-predict
-(
-self
-,
-
-X
-):
-
-
-num_test
-
-=
-
-X
-.
-shape
-[
-0
-]
-
-
-Ypred
-
-=
-
-np
-.
-zeros
-(
-num_test
-,
-
-dtype
-=
-self
-.
-y_train
-.
-dtype
-)
-
-
-for
-
-i
-
-in
-
-range
-(
-num_test
-):
-
-
-distances
-
-=
-
-np
-.
-sum
-(
-np
-.
-abs
-(
-self
-.
-X_train
-
--
-
-X
-[
-i
-,
-
-:]),
-
-axis
-=
-1
-)
-
-
-min_index
-
-=
-
-np
-.
-argmin
-(
-distances
-)
-
-
-Ypred
-[
-i
-]
-
-=
-
-self
-.
-y_train
-[
-min_index
-]
-
-
-return
-
-Ypred
-
+    return Ypred
 ```
 
 该实现在 500 测试样本上的执行时间为 26.39 秒,平均每样本 52.78 毫秒。
@@ -211,141 +102,17 @@ Ypred
 k-NN 实现引入多数投票机制:
 
 
-```
+```python
+def predict(self, X, k=1):
+    num_test = X.shape[0]
+    Ypred = np.zeros(num_test, dtype=self.y_train.dtype)
 
-def
+    for i in range(num_test):
+        distances = np.sum(np.abs(self.X_train - X[i, :]), axis=1)
+        closest_y = self.y_train[np.argsort(distances)[:k]]
+        Ypred[i] = np.argmax(np.bincount(closest_y))
 
-predict
-(
-self
-,
-
-X
-,
-
-k
-=
-1
-):
-
-
-num_test
-
-=
-
-X
-.
-shape
-[
-0
-]
-
-
-Ypred
-
-=
-
-np
-.
-zeros
-(
-num_test
-,
-
-dtype
-=
-self
-.
-y_train
-.
-dtype
-)
-
-
-for
-
-i
-
-in
-
-range
-(
-num_test
-):
-
-
-distances
-
-=
-
-np
-.
-sum
-(
-np
-.
-abs
-(
-self
-.
-X_train
-
--
-
-X
-[
-i
-,
-
-:]),
-
-axis
-=
-1
-)
-
-
-closest_y
-
-=
-
-self
-.
-y_train
-[
-np
-.
-argsort
-(
-distances
-)[:
-k
-]]
-
-
-Ypred
-[
-i
-]
-
-=
-
-np
-.
-argmax
-(
-np
-.
-bincount
-(
-closest_y
-))
-
-
-return
-
-Ypred
-
+    return Ypred
 ```
 
 在 k=5 配置下,500 测试样本的准确率为 27.4%,执行时间为 26.54 秒。
@@ -361,188 +128,23 @@ Ypred
 采用 CuPy 库实现 GPU 并行计算:
 
 
-```
+```python
+import cupy as cp
 
-import
+def predict_gpu(self, X, k=1):
+    X_gpu = cp.asarray(X)
+    X_train_gpu = cp.asarray(self.X_train)
+    y_train_gpu = cp.asarray(self.y_train)
 
-cupy
+    num_test = X.shape[0]
+    Ypred = cp.zeros(num_test, dtype=y_train_gpu.dtype)
 
-as
+    for i in range(num_test):
+        distances = cp.sum(cp.abs(X_train_gpu - X_gpu[i, :]), axis=1)
+        closest_y = y_train_gpu[cp.argsort(distances)[:k]]
+        Ypred[i] = cp.argmax(cp.bincount(closest_y))
 
-cp
-
-def
-
-predict_gpu
-(
-self
-,
-
-X
-,
-
-k
-=
-1
-):
-
-
-X_gpu
-
-=
-
-cp
-.
-asarray
-(
-X
-)
-
-
-X_train_gpu
-
-=
-
-cp
-.
-asarray
-(
-self
-.
-X_train
-)
-
-
-y_train_gpu
-
-=
-
-cp
-.
-asarray
-(
-self
-.
-y_train
-)
-
-
-num_test
-
-=
-
-X
-.
-shape
-[
-0
-]
-
-
-Ypred
-
-=
-
-cp
-.
-zeros
-(
-num_test
-,
-
-dtype
-=
-y_train_gpu
-.
-dtype
-)
-
-
-for
-
-i
-
-in
-
-range
-(
-num_test
-):
-
-
-distances
-
-=
-
-cp
-.
-sum
-(
-cp
-.
-abs
-(
-X_train_gpu
-
--
-
-X_gpu
-[
-i
-,
-
-:]),
-
-axis
-=
-1
-)
-
-
-closest_y
-
-=
-
-y_train_gpu
-[
-cp
-.
-argsort
-(
-distances
-)[:
-k
-]]
-
-
-Ypred
-[
-i
-]
-
-=
-
-cp
-.
-argmax
-(
-cp
-.
-bincount
-(
-closest_y
-))
-
-
-return
-
-cp
-.
-asnumpy
-(
-Ypred
-)
-
+    return cp.asnumpy(Ypred)
 ```
 
 
@@ -570,38 +172,9 @@ GPU 实现相对 CPU 实现获得了 11.1 倍的加速,同时保持了相同的�
 在使用 uint8 数据类型时,观察到准确率异常下降至 26.7%。通过数据类型检查发现:
 
 
-```
-
-print
-(
-f
-"X_train dtype:
-{
-X_train
-.
-dtype
-}
-"
-)
-
-
-# uint8
-
-print
-(
-f
-"X_test dtype:
-{
-X_test
-.
-dtype
-}
-"
-)
-
-
-# uint8
-
+```python
+print(f"X_train dtype: {X_train.dtype}")  # uint8
+print(f"X_test dtype: {X_test.dtype}")    # uint8
 ```
 
 ![数据类型检查](../../../images/dtype.png)
@@ -612,26 +185,7 @@ uint8 类型的取值范围为 [0, 255]。在计算差值时:
 
 
 ```
-
-diff
-
-=
-
-X_train
-[
-i
-]
-
--
-
-X_test
-[
-j
-]
-
-
-# 可能产生负值
-
+diff = X_train[i] - X_test[j]  # 可能产生负值
 ```
 
 当 `X_train[i] < X_test[j]` 时,差值为负,但 uint8 类型无法表示负数,发生下溢(underflow),负值被转换为大正数(如 -1 → 255)。这导致距离计算错误,进而影响分类准确率。
@@ -643,33 +197,8 @@ j
 
 
 ```
-
-X_train
-
-=
-
-X_train
-.
-astype
-(
-np
-.
-int8
-)
-
-X_test
-
-=
-
-X_test
-.
-astype
-(
-np
-.
-int8
-)
-
+X_train = X_train.astype(np.int8)
+X_test = X_test.astype(np.int8)
 ```
 
 int8 类型的取值范围为 [-128, 127],可以正确表示负数差值。
@@ -807,307 +336,35 @@ k-NN 算法作为基础分类方法,在 CIFAR-10 上的性能受限于原始像�
 ## 附录 A: 数据加载工具
 
 
-```
-
-import
-
-pickle
-
-import
-
-numpy
-
-as
-
-np
-
-import
-
-os
-
-def
-
-load_CIFAR_batch
-(
-filename
-):
-
-
-"""加载单个 CIFAR-10 批次文件"""
-
-
-with
-
-open
-(
-filename
-,
-
-'rb'
-)
-
-as
-
-f
-:
-
-
-datadict
-
-=
-
-pickle
-.
-load
-(
-f
-,
-
-encoding
-=
-'bytes'
-)
-
-
-X
-
-=
-
-datadict
-[
-b
-'data'
-]
-
-
-Y
-
-=
-
-datadict
-[
-b
-'labels'
-]
-
-
-X
-
-=
-
-X
-.
-reshape
-(
-10000
-,
-
-3
-,
-
-32
-,
-
-32
-)
-.
-transpose
-(
-0
-,
-
-2
-,
-
-3
-,
-
-1
-)
-.
-astype
-(
-"uint8"
-)
-
-
-Y
-
-=
-
-np
-.
-array
-(
-Y
-)
-
-
-return
-
-X
-,
-
-Y
-
-def
-
-load_CIFAR10
-(
-ROOT
-):
-
-
-"""加载完整 CIFAR-10 数据集"""
-
-
-xs
-
-=
-
-[]
-
-
-ys
-
-=
-
-[]
-
-
-for
-
-b
-
-in
-
-range
-(
-1
-,
-
-6
-):
-
-
-f
-
-=
-
-os
-.
-path
-.
-join
-(
-ROOT
-,
-
-f
-'data_batch_
-{
-b
-}
-'
-)
-
-
-X
-,
-
-Y
-
-=
-
-load_CIFAR_batch
-(
-f
-)
-
-
-xs
-.
-append
-(
-X
-)
-
-
-ys
-.
-append
-(
-Y
-)
-
-
-Xtr
-
-=
-
-np
-.
-concatenate
-(
-xs
-)
-
-
-Ytr
-
-=
-
-np
-.
-concatenate
-(
-ys
-)
-
-
-del
-
-X
-,
-
-Y
-
-
-Xte
-,
-
-Yte
-
-=
-
-load_CIFAR_batch
-(
-os
-.
-path
-.
-join
-(
-ROOT
-,
-
-'test_batch'
-))
-
-
-return
-
-Xtr
-,
-
-Ytr
-,
-
-Xte
-,
-
-Yte
-
+```python
+import pickle
+import numpy as np
+import os
+
+def load_CIFAR_batch(filename):
+    """加载单个 CIFAR-10 批次文件"""
+    with open(filename, 'rb') as f:
+        datadict = pickle.load(f, encoding='bytes')
+        X = datadict[b'data']
+        Y = datadict[b'labels']
+        X = X.reshape(10000, 3, 32, 32).transpose(0, 2, 3, 1).astype("uint8")
+        Y = np.array(Y)
+        return X, Y
+
+def load_CIFAR10(ROOT):
+    """加载完整 CIFAR-10 数据集"""
+    xs = []
+    ys = []
+    for b in range(1, 6):
+        f = os.path.join(ROOT, f'data_batch_{b}')
+        X, Y = load_CIFAR_batch(f)
+        xs.append(X)
+        ys.append(Y)
+    Xtr = np.concatenate(xs)
+    Ytr = np.concatenate(ys)
+    del X, Y
+    Xte, Yte = load_CIFAR_batch(os.path.join(ROOT, 'test_batch'))
+    return Xtr, Ytr, Xte, Yte
 ```
 
 ---

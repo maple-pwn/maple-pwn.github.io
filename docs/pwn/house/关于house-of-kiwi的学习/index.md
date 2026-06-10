@@ -12,170 +12,28 @@
 如下：
 
 
-```
-
-static
-
-inline
-
-const
-
-struct
-
-_IO_jump_t
-
-*
-
-IO_validate_vtable
-
-(
-const
-
-struct
-
-_IO_jump_t
-
-*
-vtable
-)
-
+```python
+static inline const struct _IO_jump_t *
+IO_validate_vtable (const struct _IO_jump_t *vtable)
 {
-
-
-/* 快速路径：检查 vtable 指针是否位于 __libc_IO_vtables 段内。*/
-
-
-uintptr_t
-
-section_length
-
-=
-
-__stop___libc_IO_vtables
-
--
-
-__start___libc_IO_vtables
-;
-
-
-uintptr_t
-
-ptr
-
-=
-
-(
-uintptr_t
-)
-
-vtable
-;
-
-
-uintptr_t
-
-offset
-
-=
-
-ptr
-
--
-
-(
-uintptr_t
-)
-
-__start___libc_IO_vtables
-;
-
-
-if
-
-(
-__glibc_unlikely
-
-(
-offset
-
->=
-
-section_length
-))
-
-
-/* 如果 vtable 指针不在预期的段内，就走慢路径。 慢路径会在必要时终止进程。*/
-
-
-_IO_vtable_check
-
-();
-
-
-return
-
-vtable
-;
-
+  /* 快速路径：检查 vtable 指针是否位于 __libc_IO_vtables 段内。*/
+  uintptr_t section_length = __stop___libc_IO_vtables - __start___libc_IO_vtables;
+  uintptr_t ptr = (uintptr_t) vtable;
+  uintptr_t offset = ptr - (uintptr_t) __start___libc_IO_vtables;
+  if (__glibc_unlikely (offset >= section_length))
+    /* 如果 vtable 指针不在预期的段内，就走慢路径。 慢路径会在必要时终止进程。*/
+    _IO_vtable_check ();
+  return vtable;
 }
-
 /* 只有当 vtable 指针位于 __io_vtables 段内时，才算“合法”，否则进入慢路径进一步检查或 abort() */
-
-void
-
-_IO_vtable_check
-(
-void
-)
-
+void _IO_vtable_check(void)
 {
-
-
-/* Shared glibc 中，如果 accept flag 被设置为 __IO_vtable_check 本身，则跳过 */
-
-
-if
-
-(
-flag
-
-==
-
-&
-_IO_vtable_check
-)
-
-return
-;
-
-
-/* 或者跨 namespace 使用动态加载，也可能绕过 */
-
-
-if
-
-(
-within
-
-dlopen
-
-context
-)
-
-return
-;
-
-
-__libc_fatal
-(
-"Fatal error: glibc detected an invalid stdio handle
-\n
-"
-);
-
+  /* Shared glibc 中，如果 accept flag 被设置为 __IO_vtable_check 本身，则跳过 */
+  if (flag == &_IO_vtable_check) return;
+  /* 或者跨 namespace 使用动态加载，也可能绕过 */
+  if (within dlopen context) return;
+  __libc_fatal("Fatal error: glibc detected an invalid stdio handle\n");
 }
-
 ```
 
 自此，我们再也无法轻易通过写入/伪造`vtable`来劫持程序执行流。
@@ -206,25 +64,11 @@ FSOP全称为`File Stream Oriented Programming`，即利用函数触发IO操作�
 
 
 ```
-
 exit
-
-
-└───►
-fcloseall
-
-
-└───►
-_IO_cleanup
-
-
-└───►
-_IO_flush_all_lockp
-
-
-└───►
-_IO_OVERFLOW
-
+   └───►fcloseall
+           └───►_IO_cleanup
+                      └───►_IO_flush_all_lockp
+                                     └───►_IO_OVERFLOW
 ```
 
 **利用原理如下**：
@@ -248,136 +92,20 @@ _IO_OVERFLOW
 
 
 ```
-
 // malloc.c ( #include <assert.h> )
-
-
 # define __assert_fail(assertion, file, line, function)            \
-
      __malloc_assert(assertion, file, line, function)
 
-static
-
-void
-
-__malloc_assert
-
-(
-const
-
-char
-
-*
-assertion
-,
-
-const
-
-char
-
-*
-file
-,
-
-unsigned
-
-int
-
-line
-,
-
-const
-
-char
-
-*
-function
-)
-
+static void __malloc_assert (const char *assertion, const char *file, unsigned int line, const char *function)
 {
-
-
-(
-void
-)
-
-__fxprintf
-
-(
-NULL
-,
-
-"%s%s%s:%u: %s%sAssertion `%s' failed.
-\n
-"
-,
-
-
-__progname
-,
-
-__progname
-[
-0
-]
-
-?
-
-": "
-
-:
-
-""
-,
-
-
-file
-,
-
-line
-,
-
-
-function
-
-?
-
-function
-
-:
-
-""
-,
-
-function
-
-?
-
-": "
-
-:
-
-""
-,
-
-
-assertion
-);
-
-
-fflush
-
-(
-stderr
-);
-
-
-abort
-
-();
-
+  (void) __fxprintf (NULL, "%s%s%s:%u: %s%sAssertion `%s' failed.\n",
+             __progname, __progname[0] ? ": " : "",
+             file, line,
+             function ? function : "", function ? ": " : "",
+             assertion);
+  fflush (stderr);
+  abort ();
 }
-
 ```
 
 该函数调用了`fflush`并接受了IO结构体`stderr`作为参数。我们知道`stderr`有如下性质
@@ -392,35 +120,11 @@ abort
 
 
 ```
-
 _int_malloc
-
-
-└───►
-sysmalloc
-
-
-└───►
-
-__malloc_assert
-
-
-└───►
-
-fflush
-(
-stderr
-)
-
-
-└───►
-
-_IO_file_sync
-
-(
-_IO_new_file_sync
-)
-
+     └───►sysmalloc
+              └───► __malloc_assert
+                         └───► fflush(stderr)
+                                   └───► _IO_file_sync (_IO_new_file_sync)
 ```
 
 > **此时寄存器 `rdx` 的值将始终为 `_IO_helper_jumps`。**
@@ -430,189 +134,17 @@ _IO_new_file_sync
 >
 
 ```
-
-...
-
-
-0x77d08a450c0d
-
-<setcontext+61>
-
-mov
-
-rsp,
-
-qword
-
-ptr
-
-[
-rdx
-
-+
-
-0xa0
-]
-
-
-0x77d08a450c14
-
-<setcontext+68>
-
-mov
-
-rbx,
-
-qword
-
-ptr
-
-[
-rdx
-
-+
-
-0x80
-]
-
-
-0x77d08a450c1b
-
-<setcontext+75>
-
-mov
-
-rbp,
-
-qword
-
-ptr
-
-[
-rdx
-
-+
-
-0x78
-]
-
-
-0x77d08a450c1f
-
-<setcontext+79>
-
-mov
-
-r12,
-
-qword
-
-ptr
-
-[
-rdx
-
-+
-
-0x48
-]
-
-
-0x77d08a450c23
-
-<setcontext+83>
-
-mov
-
-r13,
-
-qword
-
-ptr
-
-[
-rdx
-
-+
-
-0x50
-]
-
-
-0x77d08a450c27
-
-<setcontext+87>
-
-mov
-
-r14,
-
-qword
-
-ptr
-
-[
-rdx
-
-+
-
-0x58
-]
-
-
-0x77d08a450c2b
-
-<setcontext+91>
-
-mov
-
-r15,
-
-qword
-
-ptr
-
-[
-rdx
-
-+
-
-0x60
-]
-
-
-0x77d08a450c2f
-
-<setcontext+95>
-
-test
-
-dword
-
-ptr
-
-fs:
-[
-0x48
-]
-,
-
-2
-
-
-0x77d08a450c3b
-
-<setcontext+107>
-
-je
-
-setcontext+294
-
-<setcontext+294>
-
-
-...
-
+    ...
+    0x77d08a450c0d <setcontext+61>     mov    rsp, qword ptr [rdx + 0xa0]
+    0x77d08a450c14 <setcontext+68>     mov    rbx, qword ptr [rdx + 0x80]
+    0x77d08a450c1b <setcontext+75>     mov    rbp, qword ptr [rdx + 0x78]
+    0x77d08a450c1f <setcontext+79>     mov    r12, qword ptr [rdx + 0x48]
+    0x77d08a450c23 <setcontext+83>     mov    r13, qword ptr [rdx + 0x50]
+    0x77d08a450c27 <setcontext+87>     mov    r14, qword ptr [rdx + 0x58]
+    0x77d08a450c2b <setcontext+91>     mov    r15, qword ptr [rdx + 0x60]
+    0x77d08a450c2f <setcontext+95>     test   dword ptr fs:[0x48], 2
+    0x77d08a450c3b <setcontext+107>    je     setcontext+294              <setcontext+294>
+    ...
 ```
 
 此外，`IO_file_sync`函数是一个全局跳转表，有\*\*写\*\*的权限，可以任意地址写来劫持
@@ -621,39 +153,13 @@ setcontext+294
 
 
 ```
-
 _int_malloc
-
-
-└───►
-
-sysmalloc
-
-
-└───►
-
-__malloc_assert
-
-
-└───►
-
-__fxprintf
-
-
-└───►
-
-__vfxprintf
-
-
-└───►
-
-__vfxprintf_internal
-
-
-└───►
-
-_IO_file_xsputn
-
+   └───► sysmalloc
+            └───► __malloc_assert
+                        └───► __fxprintf
+                                   └───► __vfxprintf
+                                              └───► __vfxprintf_internal
+                                                          └───► _IO_file_xsputn
 ```
 
 这条链比前一条链更早触发，因此我们想攻击`setcontext`的时候需要合理安排`sigreturnFrame`数据为合法指针
@@ -669,158 +175,21 @@ _IO_file_xsputn
 
 
 ```
-
-for
-
-(
-bin
-
-=
-
-bin_at
-(
-av
-,
-
-idx
-);
-
-(
-victim
-
-=
-
-last
-(
-bin
-))
-
-!=
-
-bin
-;
-
-)
-
-{
-
-
-bck
-
-=
-
-victim
-->
-bk
-;
-
-
-assert
-(
-chunk_main_arena
-(
-bck
-->
-bk
-));
-
-// 断言
-
-
-unlink
-(
-victim
-,
-
-bck
-,
-
-fwd
-);
-
+for (bin = bin_at(av, idx); (victim = last(bin)) != bin; ) {
+    bck = victim->bk;
+    assert(chunk_main_arena(bck->bk)); // 断言
+    unlink(victim, bck, fwd);
 }
-
 ```
 
 或者通过修改`top chunk`使得其不合法，从而在`sysmalloc`中触发assert：
 
 
 ```
-
-assert
-
-((
-old_top
-
-==
-
-initial_top
-
-(
-av
-)
-
-&&
-
-old_size
-
-==
-
-0
-)
-
-||
-
-
-((
-unsigned
-
-long
-)
-
-(
-old_size
-)
-
->=
-
-MINSIZE
-
-&&
-
-
-prev_inuse
-
-(
-old_top
-)
-
-&&
-
-
-((
-unsigned
-
-long
-)
-
-old_end
-
-&
-
-(
-pagesize
-
--
-
-1
-))
-
-==
-
-0
-));
-
+assert ((old_top == initial_top (av) && old_size == 0) ||
+        ((unsigned long) (old_size) >= MINSIZE &&
+         prev_inuse (old_top) &&
+         ((unsigned long) old_end & (pagesize - 1)) == 0));
 ```
 
 这个触发比较好实现，如下任意条件满足即可：

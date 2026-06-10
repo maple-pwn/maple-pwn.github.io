@@ -21,25 +21,15 @@
 
 
 ```
-
-codex
-
-exec
-
---skip-git-repo-check
-
-"say hi"
-
+codex exec --skip-git-repo-check "say hi"
 ```
 
 终端停在：
 
 
 ```
-
 connecting to websocket:
 wss://chatgpt.com/backend-api/codex/responses
-
 ```
 
 之后没有任何输出。
@@ -48,20 +38,16 @@ wss://chatgpt.com/backend-api/codex/responses
 
 
 ```
-
 Ctrl+C
 Ctrl+C
 Ctrl+C
-
 ```
 
 终端只会打印：
 
 
 ```
-
 ^C^C^C
-
 ```
 
 但 **进程不会退出**。
@@ -77,27 +63,15 @@ Ctrl+C
 首先测试 HTTPS：
 
 
-```
-
-curl
-
--I
-
---connect-timeout
-
-5
-
-https://chatgpt.com
-
+```bash
+curl -I --connect-timeout 5 https://chatgpt.com
 ```
 
 结果：
 
 
 ```
-
 curl: (28) Failed to connect to chatgpt.com port 443
-
 ```
 
 说明：
@@ -112,23 +86,15 @@ curl: (28) Failed to connect to chatgpt.com port 443
 Codex 使用 WebSocket，因此测试：
 
 
-```
-
-websocat
-
--v
-
-wss://chatgpt.com/backend-api/codex/responses
-
+```bash
+websocat -v wss://chatgpt.com/backend-api/codex/responses
 ```
 
 结果：
 
 
 ```
-
 Failure during connecting TCP: Operation timed out
-
 ```
 
 说明：
@@ -144,80 +110,32 @@ Failure during connecting TCP: Operation timed out
 
 
 ```
-
 127.0.0.1:7897
-
 ```
 
 设置代理：
 
 
 ```
-
-export
-
-HTTPS_PROXY
-=
-http://127.0.0.1:7897
-
-export
-
-HTTP_PROXY
-=
-http://127.0.0.1:7897
-
-export
-
-ALL_PROXY
-=
-http://127.0.0.1:7897
-
+export HTTPS_PROXY=http://127.0.0.1:7897
+export HTTP_PROXY=http://127.0.0.1:7897
+export ALL_PROXY=http://127.0.0.1:7897
 ```
 
 再次测试：
 
 
 ```
-
-codex
-
-exec
-
---skip-git-repo-check
-
---json
-
-"say hi"
-
+codex exec --skip-git-repo-check --json "say hi"
 ```
 
 成功返回：
 
 
-```
-
-{
-"type"
-:
-"thread.started"
-}
-
-{
-"type"
-:
-"turn.started"
-}
-
-{
-"type"
-:
-"item.completed"
-,
-"text"
-:
-"hi"
-}
-
+```json
+{"type":"thread.started"}
+{"type":"turn.started"}
+{"type":"item.completed","text":"hi"}
 ```
 
 问题解决。
@@ -231,79 +149,35 @@ exec
 
 
 ```
-
-
 # proxy
+export HTTP_PROXY="http://127.0.0.1:7897"
+export HTTPS_PROXY="http://127.0.0.1:7897"
+export ALL_PROXY="http://127.0.0.1:7897"
 
-export
-
-HTTP_PROXY
-=
-"http://127.0.0.1:7897"
-
-export
-
-HTTPS_PROXY
-=
-"http://127.0.0.1:7897"
-
-export
-
-ALL_PROXY
-=
-"http://127.0.0.1:7897"
-
-export
-
-http_proxy
-=
-$HTTP_PROXY
-
-export
-
-https_proxy
-=
-$HTTPS_PROXY
-
-export
-
-all_proxy
-=
-$ALL_PROXY
-
+export http_proxy=$HTTP_PROXY
+export https_proxy=$HTTPS_PROXY
+export all_proxy=$ALL_PROXY
 ```
 
 重新加载：
 
 
-```
-
-source
-
-~/.zshrc
-
+```bash
+source ~/.zshrc
 ```
 
 测试：
 
 
-```
-
-curl
-
--I
-
-https://chatgpt.com
-
+```bash
+curl -I https://chatgpt.com
 ```
 
 返回：
 
 
 ```
-
 HTTP/2 403
-
 ```
 
 说明代理已经生效（403 来自 Cloudflare）。
@@ -319,9 +193,7 @@ HTTP/2 403
 
 
 ```
-
 SIGINT
-
 ```
 
 程序需要：
@@ -334,9 +206,7 @@ SIGINT
 
 
 ```
-
 connect()
-
 ```
 
 系统调用可能会 **无法被信号中断**。
@@ -345,7 +215,6 @@ connect()
 
 
 ```
-
 codex
   ↓
 connect(chatgpt.com:443)
@@ -355,16 +224,13 @@ connect(chatgpt.com:443)
 TCP SYN retry
   ↓
 系统等待超时
-
 ```
 
 在这种情况下：
 
 
 ```
-
 Ctrl+C → SIGINT
-
 ```
 
 信号虽然被收到，但 **connect() 没返回**。
@@ -373,11 +239,9 @@ Ctrl+C → SIGINT
 
 
 ```
-
 ^C
 ^C
 ^C
-
 ```
 
 但仍然卡住。
@@ -391,13 +255,11 @@ Ctrl+C → SIGINT
 
 
 ```
-
 Codex
   ↓
 chatgpt.com
   ↓
 网络阻断
-
 ```
 
 连接失败。
@@ -406,7 +268,6 @@ chatgpt.com
 
 
 ```
-
 Codex
   ↓
 127.0.0.1:7897
@@ -414,16 +275,13 @@ Codex
 代理服务器
   ↓
 chatgpt.com
-
 ```
 
 本地连接：
 
 
 ```
-
 127.0.0.1
-
 ```
 
 几乎是瞬间完成。
@@ -441,19 +299,15 @@ chatgpt.com
 
 
 ```
-
 codex exec "say hi"
-
 ```
 
 输出：
 
 
 ```
-
 codex
 hi
-
 ```
 
 说明 CLI 已恢复正常。
@@ -467,7 +321,6 @@ hi
 
 
 ```
-
 网络无法直连 chatgpt.com
         ↓
 WebSocket 连接卡死
@@ -477,7 +330,6 @@ connect() 阻塞
 Ctrl+C 无法终止
         ↓
 配置代理解决
-
 ```
 
 看似是 **Codex CLI Bug**，其实是 **网络问题**，真难蚌哦。

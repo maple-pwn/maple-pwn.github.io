@@ -22,243 +22,43 @@ Linux为了避免用户空间程序操作文件时仍需要考虑不同文件系
 
 >
 
-```
-
-struct
-
-file_system_type
-
-{
-
-
-const
-
-char
-
-*
-name
-;
-
-
-int
-
-fs_flags
-;
-
+```asm
+struct file_system_type {
+    const char *name;
+    int fs_flags;
 #define FS_REQUIRES_DEV     1
-
 #define FS_BINARY_MOUNTDATA 2
-
 #define FS_HAS_SUBTYPE      4
-
-#define FS_USERNS_MOUNT     8
-/* Can be mounted by userns root */
-
-#define FS_DISALLOW_NOTIFY_PERM 16
-/* Disable fanotify permission events */
-
-#define FS_ALLOW_IDMAP         32
-/* FS has been updated to handle vfs idmappings. */
-
-#define FS_RENAME_DOES_D_MOVE   32768
-/* FS will handle d_move() during rename() internally. */
-
-
-int
-
-(
-*
-init_fs_context
-)(
-struct
-
-fs_context
-
-*
-);
-
-
-const
-
-struct
-
-fs_parameter_spec
-
-*
-parameters
-;
-
-
-struct
-
-dentry
-
-*
-(
-*
-mount
-)
-
-(
-struct
-
-file_system_type
-
-*
-,
-
-int
-,
-
-
-const
-
-char
-
-*
-,
-
-void
-
-*
-);
-
-
-void
-
-(
-*
-kill_sb
-)
-
-(
-struct
-
-super_block
-
-*
-);
-
-
-struct
-
-module
-
-*
-owner
-;
-
-
-struct
-
-file_system_type
-
-*
-
-next
-;
-
-
-struct
-
-hlist_head
-
-fs_supers
-;
-
-
-
-
-struct
-
-lock_class_key
-
-s_lock_key
-;
-
-
-struct
-
-lock_class_key
-
-s_umount_key
-;
-
-
-struct
-
-lock_class_key
-
-s_vfs_rename_key
-;
-
-
-struct
-
-lock_class_key
-
-s_writers_key
-[
-SB_FREEZE_LEVELS
-];
-
-
-
-
-struct
-
-lock_class_key
-
-i_lock_key
-;
-
-
-struct
-
-lock_class_key
-
-i_mutex_key
-;
-
-
-struct
-
-lock_class_key
-
-invalidate_lock_key
-;
-
-
-struct
-
-lock_class_key
-
-i_mutex_dir_key
-;
-
+#define FS_USERNS_MOUNT     8   /* Can be mounted by userns root */
+#define FS_DISALLOW_NOTIFY_PERM 16  /* Disable fanotify permission events */
+#define FS_ALLOW_IDMAP         32      /* FS has been updated to handle vfs idmappings. */
+#define FS_RENAME_DOES_D_MOVE   32768   /* FS will handle d_move() during rename() internally. */
+    int (*init_fs_context)(struct fs_context *);
+    const struct fs_parameter_spec *parameters;
+    struct dentry *(*mount) (struct file_system_type *, int,
+               const char *, void *);
+    void (*kill_sb) (struct super_block *);
+    struct module *owner;
+    struct file_system_type * next;
+    struct hlist_head fs_supers;
+ 
+    struct lock_class_key s_lock_key;
+    struct lock_class_key s_umount_key;
+    struct lock_class_key s_vfs_rename_key;
+    struct lock_class_key s_writers_key[SB_FREEZE_LEVELS];
+ 
+    struct lock_class_key i_lock_key;
+    struct lock_class_key i_mutex_key;
+    struct lock_class_key invalidate_lock_key;
+    struct lock_class_key i_mutex_dir_key;
 };
-
 ```
 
 Linux内文件系统需要设置`file_system_type`信息，然后将设置好的信息提交给`register_filesystem`函数进行注册，只有完成注册的文件系统才能被VFS操控
 
 
 ```
-
-extern
-
-int
-
-register_filesystem
-
-(
-struct
-
-file_system_type
-
-*
-);
-
+extern int register_filesystem (struct file_system_type *);
 ```
 
 `file_system_type`本身比较简单，主要就是定义获取和删除`super_block`的接口及属性信息，不同文件系统间的`file_system_type`之间通过链接进行管理
@@ -267,284 +67,49 @@ file_system_type
 >
 >
 
-```
-
-struct
-
-super_block
-
-{
-
-
-struct
-
-list_head
-
-s_list
-;
-
-/* Keep this first */
-
-
-dev_t
-
-s_dev
-;
-
-/* search index; _not_ kdev_t */
-
-
-unsigned
-
-char
-
-s_blocksize_bits
-;
-
-
-unsigned
-
-long
-
-s_blocksize
-;
-
-
-loff_t
-
-s_maxbytes
-;
-
-/* Max file size */
-
-
-struct
-
-file_system_type
-
-*
-s_type
-;
-
-
-const
-
-struct
-
-super_operations
-
-*
-s_op
-;
-
-
-const
-
-struct
-
-dquot_operations
-
-*
-dq_op
-;
-
-
-const
-
-struct
-
-quotactl_ops
-
-*
-s_qcop
-;
-
-
-const
-
-struct
-
-export_operations
-
-*
-s_export_op
-;
-
-
-unsigned
-
-long
-
-s_flags
-;
-
-
-unsigned
-
-long
-
-s_iflags
-;
-
-/* internal SB_I_* flags */
-
-
-unsigned
-
-long
-
-s_magic
-;
-
-
-struct
-
-dentry
-
-*
-s_root
-;
-
-
-struct
-
-rw_semaphore
-
-s_umount
-;
-
-
-int
-
-s_count
-;
-
-
-atomic_t
-
-s_active
-;
-
-
-......
-
-
-spinlock_t
-
-s_inode_wblist_lock
-;
-
-
-struct
-
-list_head
-
-s_inodes_wb
-;
-
-/* writeback inodes */
-
-}
-
-__randomize_layout
-;
-
+```asm
+struct super_block {
+    struct list_head    s_list;     /* Keep this first */
+    dev_t           s_dev;      /* search index; _not_ kdev_t */
+    unsigned char       s_blocksize_bits;
+    unsigned long       s_blocksize;
+    loff_t          s_maxbytes; /* Max file size */
+    struct file_system_type *s_type;
+    const struct super_operations   *s_op;
+    const struct dquot_operations   *dq_op;
+    const struct quotactl_ops   *s_qcop;
+    const struct export_operations *s_export_op;
+    unsigned long       s_flags;
+    unsigned long       s_iflags;   /* internal SB_I_* flags */
+    unsigned long       s_magic;
+    struct dentry       *s_root;
+    struct rw_semaphore s_umount;
+    int         s_count;
+    atomic_t        s_active;
+    ......
+    spinlock_t      s_inode_wblist_lock;
+    struct list_head    s_inodes_wb;    /* writeback inodes */
+} __randomize_layout;
 ```
 
 而下面展示了`proc`文件系统的注册过程
 
 >
 
-```
-
-static
-
-struct
-
-file_system_type
-
-proc_fs_type
-
-=
-
-{
-
-
-.
-name
-
-=
-
-"proc"
-,
-
-
-.
-init_fs_context
-
-=
-
-proc_init_fs_context
-,
-
-
-.
-parameters
-
-=
-
-proc_fs_parameters
-,
-
-
-.
-kill_sb
-
-=
-
-proc_kill_sb
-,
-
-
-.
-fs_flags
-
-=
-
-FS_USERNS_MOUNT
-
-|
-
-FS_DISALLOW_NOTIFY_PERM
-,
-
+```c
+static struct file_system_type proc_fs_type = {
+    .name           = "proc",
+    .init_fs_context    = proc_init_fs_context,
+    .parameters     = proc_fs_parameters,
+    .kill_sb        = proc_kill_sb,
+    .fs_flags       = FS_USERNS_MOUNT | FS_DISALLOW_NOTIFY_PERM,
 };
-
-
-
-void
-
-__init
-
-proc_root_init
-(
-void
-)
-
+ 
+void __init proc_root_init(void)
 {
-
-
-......
-
-
-register_filesystem
-(
-&
-proc_fs_type
-);
-
+    ......
+    register_filesystem(&proc_fs_type);
 }
-
 ```
 
 `proc`是进程文件系统，属于Linux中伪文件系统中的一种，它没有对应真实的磁盘或硬盘，而是提供给用户空间便利的使用Linux系统资源的接口。常见的伪文件系统有`proc`,`sys`,`dev`等。`proc`可以方便的查看进程信息，比如进程的内存布局，CPU信息等
@@ -558,364 +123,60 @@ proc_fs_type
 
 >
 
-```
-
-#include
-
-<linux/proc_fs.h>
-
-
-
-static
-
-struct
-
-proc_dir_entry
-*
-
-lde_proc_entry
-
-=
-
-NULL
-;
-
-
-
-static
-
-ssize_t
-
-lde_proc_read
-(
-struct
-
-file
-*
-
-file
-,
-
-char
-
-__user
-*
-
-ubuf
-,
-
-size_t
-
-count
-,
-
-loff_t
-*
-
-data
-)
-
+```python
+#include <linux/proc_fs.h>
+ 
+static struct proc_dir_entry* lde_proc_entry = NULL;
+ 
+static ssize_t lde_proc_read(struct file* file, char __user* ubuf, size_t count, loff_t* data)
 {
-
-
-printk
-(
-KERN_INFO
-
-"%s called file 0x%px, buffer 0x%px count 0x%lx off 0x%llx
-\n
-"
-,
-
-
-__func__
-,
-
-file
-,
-
-ubuf
-,
-
-count
-,
-
-*
-data
-);
-
-
-
-
-return
-
-0
-;
-
+    printk(KERN_INFO "%s called file 0x%px, buffer 0x%px count 0x%lx off 0x%llx\n",
+        __func__, file, ubuf, count, *data);
+ 
+    return 0;
 }
-
-
-
-static
-
-ssize_t
-
-lde_proc_write
-(
-struct
-
-file
-*
-
-file
-,
-
-const
-
-char
-
-__user
-*
-
-ubuf
-,
-
-size_t
-
-count
-,
-
-loff_t
-*
-
-data
-)
-
+ 
+static ssize_t lde_proc_write(struct file* file, const char __user* ubuf, size_t count, loff_t* data)
 {
-
-
-printk
-(
-KERN_INFO
-
-"%s called legnth 0x%lx, 0x%px
-\n
-"
-,
-
-
-__func__
-,
-
-count
-,
-
-ubuf
-);
-
-
-
-
-return
-
-count
-;
-
+    printk(KERN_INFO "%s called legnth 0x%lx, 0x%px\n",
+        __func__, count, ubuf);
+ 
+    return count;
 }
-
-
-
-static
-
-struct
-
-proc_ops
-
-lde_proc_ops
-
-=
-
-{
-
-
-.
-proc_read
-
-=
-
-lde_proc_read
-,
-
-
-.
-proc_write
-
-=
-
-lde_proc_write
-
+ 
+static struct proc_ops lde_proc_ops = {
+    .proc_read = lde_proc_read,
+    .proc_write = lde_proc_write
 };
-
-
-
-int
-
-lde_proc_create
-(
-void
-)
-
+ 
+int lde_proc_create(void)
 {
-
-
-int
-
-ret
-;
-
-
-
-
-ret
-
-=
-
-SUCCEED
-;
-
-
-
-
-lde_proc_entry
-
-=
-
-proc_create
-(
-"lde_proc"
-,
-
-0
-,
-
-NULL
-,
-
-&
-lde_proc_ops
-);
-
-
-if
-
-(
-!
-lde_proc_entry
-)
-
+    int ret;
+ 
+    ret = SUCCEED;
+ 
+    lde_proc_entry = proc_create("lde_proc", 0, NULL, &lde_proc_ops);
+    if (!lde_proc_entry) {
+        printk(KERN_ERR "%s create proc entry failed\n", __func__);
+ 
+        ret = PROC_CREATE_FAILED;
+    }
+ 
+    return ret;
+}
+ 
+void lde_proc_remove(void)
 {
-
-
-printk
-(
-KERN_ERR
-
-"%s create proc entry failed
-\n
-"
-,
-
-__func__
-);
-
-
-
-
-ret
-
-=
-
-PROC_CREATE_FAILED
-;
-
-
+    if (lde_proc_entry == NULL) {
+        printk(KERN_INFO "%s proc not exists\n", __func__);
+        goto TAG_RETURN;
+    }
+ 
+    proc_remove(lde_proc_entry);
+ 
+TAG_RETURN:
+    return;
 }
-
-
-
-
-return
-
-ret
-;
-
-}
-
-
-
-void
-
-lde_proc_remove
-(
-void
-)
-
-{
-
-
-if
-
-(
-lde_proc_entry
-
-==
-
-NULL
-)
-
-{
-
-
-printk
-(
-KERN_INFO
-
-"%s proc not exists
-\n
-"
-,
-
-__func__
-);
-
-
-goto
-
-TAG_RETURN
-;
-
-
-}
-
-
-
-
-proc_remove
-(
-lde_proc_entry
-);
-
-
-
-TAG_RETURN
-:
-
-
-return
-;
-
-}
-
 ```
 
 通过读写虚文件，可以在`dmesg`中看到相关的打印信息
@@ -923,97 +184,13 @@ return
 >
 
 ```
-
-cat
-
-/proc/lde_proc
-
-echo
-
-test
-
-|
-
-sudo
-
-tee
-
--a
-
-/proc/lde_proc
-
-
-
-[
-
-440
-.396298
-]
-
-starting
-
-from
-
-0xffffffffc0af6090
-
-...
-
-[
-
-446
-.024481
-]
-
-lde_proc_read
-
-called
-
-file
-
-0xffff9626c2931400,
-
-buffer
-
-0x000077aeb6db8000
-
-count
-
-0x40000
-
-off
-
-0x0
-
-[
-
-459
-.392387
-]
-
-lde_proc_write
-
-called
-
-legnth
-
-0x5,
-
-0x00007fff783f3090
-
-[
-
-476
-.345011
-]
-
-exiting
-
-from
-
-0xffffffffc0af60f0
-
-...
-
+cat /proc/lde_proc
+echo test | sudo tee -a /proc/lde_proc
+ 
+[  440.396298] starting from 0xffffffffc0af6090 ...
+[  446.024481] lde_proc_read called file 0xffff9626c2931400, buffer 0x000077aeb6db8000 count 0x40000 off 0x0
+[  459.392387] lde_proc_write called legnth 0x5, 0x00007fff783f3090
+[  476.345011] exiting from 0xffffffffc0af60f0 ...
 ```
 
 
@@ -1028,84 +205,19 @@ from
 >
 
 ```
-
-static
-
-struct
-
-ctl_table
-
-kern_table
-[]
-
-=
-
-{
-
+static struct ctl_table kern_table[] = {
 ......
-
 #if defined(CONFIG_MMU)
-
-
-{
-
-
-.
-procname
-
-=
-
-"randomize_va_space"
-,
-
-
-.
-data
-
-=
-
-&
-randomize_va_space
-,
-
-
-.
-maxlen
-
-=
-
-sizeof
-(
-int
-),
-
-
-.
-mode
-
-=
-
-0644
-,
-
-
-.
-proc_handler
-
-=
-
-proc_dointvec
-,
-
-
-},
-
+    {
+        .procname   = "randomize_va_space",
+        .data       = &randomize_va_space,
+        .maxlen     = sizeof(int),
+        .mode       = 0644,
+        .proc_handler   = proc_dointvec,
+    },
 #endif
-
 ......
-
 }
-
 ```
 
 
@@ -1116,443 +228,66 @@ proc_dointvec
 >
 
 ```
-
-static
-
-int
-
-load_elf_binary
-(
-struct
-
-linux_binprm
-
-*
-bprm
-)
-
+static int load_elf_binary(struct linux_binprm *bprm)
 {
-
-
-......
-
-
-if
-
-(
-!
-(
-current
-->
-personality
-
-&
-
-ADDR_NO_RANDOMIZE
-)
-
-&&
-
-randomize_va_space
-)
-
-
-current
-->
-flags
-
-|=
-
-PF_RANDOMIZE
-;
-
-
-setup_new_exec
-(
-bprm
-);
-
-
-
+    ......
+    if (!(current->personality & ADDR_NO_RANDOMIZE) && randomize_va_space)
+       current->flags |= PF_RANDOMIZE;
+    setup_new_exec(bprm);
+ 
 /* Do this so that we can load the interpreter, if need be.  We will
-
    change some of these later */
-
-retval
-
-=
-
-setup_arg_pages
-(
-bprm
-,
-
-randomize_stack_top
-(
-STACK_TOP
-),
-
-
-executable_stack
-);
-
+retval = setup_arg_pages(bprm, randomize_stack_top(STACK_TOP),
+             executable_stack);
 ......
-
-mm
-
-=
-
-current
-->
-mm
-;
-
-mm
-->
-end_code
-
-=
-
-end_code
-;
-
-mm
-->
-start_code
-
-=
-
-start_code
-;
-
-mm
-->
-start_data
-
-=
-
-start_data
-;
-
-mm
-->
-end_data
-
-=
-
-end_data
-;
-
-mm
-->
-start_stack
-
-=
-
-bprm
-->
-p
-;
-
-
-
+mm = current->mm;
+mm->end_code = end_code;
+mm->start_code = start_code;
+mm->start_data = start_data;
+mm->end_data = end_data;
+mm->start_stack = bprm->p;
+ 
 ......
-
-
-
-if
-
-(
-!
-first_pt_load
-)
-
-{
-
-
-elf_flags
-
-|=
-
-MAP_FIXED
-;
-
-
-}
-
-else
-
-if
-
-(
-elf_ex
-->
-e_type
-
-==
-
-ET_EXEC
-)
-
-{
-
-
-elf_flags
-
-|=
-
-MAP_FIXED_NOREPLACE
-;
-
-
-}
-
-else
-
-if
-
-(
-elf_ex
-->
-e_type
-
-==
-
-ET_DYN
-)
-
-{
-
-
-if
-
-(
-interpreter
-)
-
-{
-
-
-load_bias
-
-=
-
-ELF_ET_DYN_BASE
-;
-
-
-if
-
-(
-current
-->
-flags
-
-&
-
-PF_RANDOMIZE
-)
-
-
-load_bias
-
-+=
-
-arch_mmap_rnd
-();
-
-
-alignment
-
-=
-
-maximum_alignment
-(
-elf_phdata
-,
-
-elf_ex
-->
-e_phnum
-);
-
-
-if
-
-(
-alignment
-)
-
-
-load_bias
-
-&=
-
-~
-(
-alignment
-
--
-
-1
-);
-
-
-elf_flags
-
-|=
-
-MAP_FIXED_NOREPLACE
-;
-
-
-}
-
-else
-
-
-load_bias
-
-=
-
-0
-;
-
+ 
+if (!first_pt_load) {
+        elf_flags |= MAP_FIXED;
+    } else if (elf_ex->e_type == ET_EXEC) {
+        elf_flags |= MAP_FIXED_NOREPLACE;
+    } else if (elf_ex->e_type == ET_DYN) {
+        if (interpreter) {
+            load_bias = ELF_ET_DYN_BASE;
+            if (current->flags & PF_RANDOMIZE)
+                load_bias += arch_mmap_rnd();
+            alignment = maximum_alignment(elf_phdata, elf_ex->e_phnum);
+            if (alignment)
+                load_bias &= ~(alignment - 1);
+            elf_flags |= MAP_FIXED_NOREPLACE;
+        } else
+            load_bias = 0;
 ......
-
 }
-
-
-
+ 
 ......
-
-
-
-if
-
-((
-current
-->
-flags
-
-&
-
-PF_RANDOMIZE
-)
-
-&&
-
-(
-randomize_va_space
-
->
-
-1
-))
-
-{
-
-
-/*
-
+ 
+if ((current->flags & PF_RANDOMIZE) && (randomize_va_space > 1)) {
+    /*
      * For architectures with ELF randomization, when executing
-
      * a loader directly (i.e. no interpreter listed in ELF
-
      * headers), move the brk area out of the mmap region
-
      * (since it grows up, and may collide early with the stack
-
      * growing down), and into the unused ELF_ET_DYN_BASE region.
-
      */
-
-
-if
-
-(
-IS_ENABLED
-(
-CONFIG_ARCH_HAS_ELF_RANDOMIZE
-)
-
-&&
-
-elf_ex
-->
-e_type
-
-==
-
-ET_DYN
-
-&&
-
-!
-interpreter
-)
-
-
-
-{
-
-
-mm
-->
-brk
-
-=
-
-mm
-->
-start_brk
-
-=
-
-ELF_ET_DYN_BASE
-;
-
-
-}
-
-
-mm
-->
-brk
-
-=
-
-mm
-->
-start_brk
-
-=
-
-arch_randomize_brk
-(
-mm
-);
-
-
-#ifdef compat_brk_randomized
-
-current
-->
-brk_randomized
-
-=
-
-1
-;
-
+    if (IS_ENABLED(CONFIG_ARCH_HAS_ELF_RANDOMIZE) && elf_ex->e_type == ET_DYN && !interpreter) 
+    {
+        mm->brk = mm->start_brk = ELF_ET_DYN_BASE;
+    }
+    mm->brk = mm->start_brk = arch_randomize_brk(mm);
+    #ifdef compat_brk_randomized
+current->brk_randomized = 1;
 #endif
-
 }
-
 ......
-
 }
-
 ```
 
 *看不懂没事，因为看不懂也能做题*
@@ -1564,181 +299,30 @@ brk_randomized
 
 >
 
-```
-
-void
-
-setup_new_exec
-(
-struct
-
-linux_binprm
-
-*
-
-bprm
-)
-
+```c
+void setup_new_exec(struct linux_binprm * bprm)
 {
-
-
-......
-
-
-arch_pick_mmap_layout
-(
-me
-->
-mm
-,
-
-&
-bprm
-->
-rlim_stack
-);
-
-
-......
-
+    ......
+    arch_pick_mmap_layout(me->mm, &bprm->rlim_stack);
+    ......
 }
-
-EXPORT_SYMBOL
-(
-setup_new_exec
-);
-
-
-
-void
-
-arch_pick_mmap_layout
-(
-struct
-
-mm_struct
-
-*
-mm
-,
-
-struct
-
-rlimit
-
-*
-rlim_stack
-)
-
+EXPORT_SYMBOL(setup_new_exec);
+ 
+void arch_pick_mmap_layout(struct mm_struct *mm, struct rlimit *rlim_stack)
 {
-
-
-......
-
-
-arch_pick_mmap_base
-(
-&
-mm
-->
-mmap_base
-,
-
-&
-mm
-->
-mmap_legacy_base
-,
-
-
-arch_rnd
-(
-mmap64_rnd_bits
-),
-
-task_size_64bit
-(
-0
-),
-
-
-rlim_stack
-);
-
-
-......
-
+    ......
+    arch_pick_mmap_base(&mm->mmap_base, &mm->mmap_legacy_base,
+            arch_rnd(mmap64_rnd_bits), task_size_64bit(0),
+            rlim_stack);
+    ......
 }
-
-
-
-static
-
-unsigned
-
-long
-
-arch_rnd
-(
-unsigned
-
-int
-
-rndbits
-)
-
+ 
+static unsigned long arch_rnd(unsigned int rndbits)
 {
-
-
-if
-
-(
-!
-(
-current
-->
-flags
-
-&
-
-PF_RANDOMIZE
-))
-
-
-return
-
-0
-;
-
-
-return
-
-(
-get_random_long
-()
-
-&
-
-((
-1UL
-
-<<
-
-rndbits
-)
-
--
-
-1
-))
-
-<<
-
-PAGE_SHIFT
-;
-
+    if (!(current->flags & PF_RANDOMIZE))
+        return 0;
+    return (get_random_long() & ((1UL << rndbits) - 1)) << PAGE_SHIFT;
 }
-
 ```
 
 
@@ -1748,403 +332,61 @@ PAGE_SHIFT
 
 >
 
-```
-
-unsigned
-
-long
-
-randomize_stack_top
-(
-unsigned
-
-long
-
-stack_top
-)
-
+```asm
+unsigned long randomize_stack_top(unsigned long stack_top)
 {
-
-
-unsigned
-
-long
-
-random_variable
-
-=
-
-0
-;
-
-
-
-
-if
-
-(
-current
-->
-flags
-
-&
-
-PF_RANDOMIZE
-)
-
-{
-
-
-random_variable
-
-=
-
-get_random_long
-();
-
-
-random_variable
-
-&=
-
-STACK_RND_MASK
-;
-
-
-random_variable
-
-<<=
-
-PAGE_SHIFT
-;
-
-
-}
-
+    unsigned long random_variable = 0;
+ 
+    if (current->flags & PF_RANDOMIZE) {
+        random_variable = get_random_long();
+        random_variable &= STACK_RND_MASK;
+        random_variable <<= PAGE_SHIFT;
+    }
 #ifdef CONFIG_STACK_GROWSUP
-
-
-return
-
-PAGE_ALIGN
-(
-stack_top
-)
-
-+
-
-random_variable
-;
-
+    return PAGE_ALIGN(stack_top) + random_variable;
 #else
-
-
-return
-
-PAGE_ALIGN
-(
-stack_top
-)
-
--
-
-random_variable
-;
-
+    return PAGE_ALIGN(stack_top) - random_variable;
 #endif
-
 }
-
-
-
-int
-
-setup_arg_pages
-(
-struct
-
-linux_binprm
-
-*
-bprm
-,
-
-
-unsigned
-
-long
-
-stack_top
-,
-
-
-int
-
-executable_stack
-)
-
+ 
+int setup_arg_pages(struct linux_binprm *bprm,
+            unsigned long stack_top,
+            int executable_stack)
 {
-
-
-......
-
+    ......
 #ifdef CONFIG_STACK_GROWSUP
-
-
-/* Limit stack size */
-
-
-stack_base
-
-=
-
-bprm
-->
-rlim_stack
-.
-rlim_max
-;
-
-
-
-
-stack_base
-
-=
-
-calc_max_stack_size
-(
-stack_base
-);
-
-
-
-
-/* Add space for stack randomization. */
-
-
-stack_base
-
-+=
-
-(
-STACK_RND_MASK
-
-<<
-
-PAGE_SHIFT
-);
-
-
-
-
-/* Make sure we didn't let the argument array grow too large. */
-
-
-if
-
-(
-vma
-->
-vm_end
-
--
-
-vma
-->
-vm_start
-
->
-
-stack_base
-)
-
-
-return
-
--
-ENOMEM
-;
-
-
-
-
-stack_base
-
-=
-
-PAGE_ALIGN
-(
-stack_top
-
--
-
-stack_base
-);
-
-
-
-
-stack_shift
-
-=
-
-vma
-->
-vm_start
-
--
-
-stack_base
-;
-
-
-mm
-->
-arg_start
-
-=
-
-bprm
-->
-p
-
--
-
-stack_shift
-;
-
-
-bprm
-->
-p
-
-=
-
-vma
-->
-vm_end
-
--
-
-stack_shift
-;
-
+    /* Limit stack size */
+    stack_base = bprm->rlim_stack.rlim_max;
+ 
+    stack_base = calc_max_stack_size(stack_base);
+ 
+    /* Add space for stack randomization. */
+    stack_base += (STACK_RND_MASK << PAGE_SHIFT);
+ 
+    /* Make sure we didn't let the argument array grow too large. */
+    if (vma->vm_end - vma->vm_start > stack_base)
+        return -ENOMEM;
+ 
+    stack_base = PAGE_ALIGN(stack_top - stack_base);
+ 
+    stack_shift = vma->vm_start - stack_base;
+    mm->arg_start = bprm->p - stack_shift;
+    bprm->p = vma->vm_end - stack_shift;
 #else
-
-
-stack_top
-
-=
-
-arch_align_stack
-(
-stack_top
-);
-
-
-stack_top
-
-=
-
-PAGE_ALIGN
-(
-stack_top
-);
-
-
-
-
-if
-
-(
-unlikely
-(
-stack_top
-
-<
-
-mmap_min_addr
-)
-
-||
-
-
-unlikely
-(
-vma
-->
-vm_end
-
--
-
-vma
-->
-vm_start
-
->=
-
-stack_top
-
--
-
-mmap_min_addr
-))
-
-
-return
-
--
-ENOMEM
-;
-
-
-
-
-stack_shift
-
-=
-
-vma
-->
-vm_end
-
--
-
-stack_top
-;
-
-
-
-
-bprm
-->
-p
-
--=
-
-stack_shift
-;
-
-
-mm
-->
-arg_start
-
-=
-
-bprm
-->
-p
-;
-
+    stack_top = arch_align_stack(stack_top);
+    stack_top = PAGE_ALIGN(stack_top);
+ 
+    if (unlikely(stack_top < mmap_min_addr) ||
+        unlikely(vma->vm_end - vma->vm_start >= stack_top - mmap_min_addr))
+        return -ENOMEM;
+ 
+    stack_shift = vma->vm_end - stack_top;
+ 
+    bprm->p -= stack_shift;
+    mm->arg_start = bprm->p;
 #endif
-
-
-......
-
+    ......
 }
-
 ```
 
 一般来说，栈是向下增长的，如果支持栈向上增长，那么可以通过`CONFIG_STACK_GROWSUP`对内核进行配置。处理栈空间的地址时，如果不使用`CONFIG_STACK_GROWSUP`功能，那么栈顶地址会通过`arch_align_stack`再次进行偏移，然后将低4比特设置为0，进行对齐。
@@ -2164,285 +406,40 @@ p
 
 >
 
-```
-
-static
-
-unsigned
-
-long
-
-arch_rnd
-(
-unsigned
-
-int
-
-rndbits
-)
-
+```python
+static unsigned long arch_rnd(unsigned int rndbits)
 {
-
-
-if
-
-(
-!
-(
-current
-->
-flags
-
-&
-
-PF_RANDOMIZE
-))
-
-
-return
-
-0
-;
-
-
-return
-
-(
-get_random_long
-()
-
-&
-
-((
-1UL
-
-<<
-
-rndbits
-)
-
--
-
-1
-))
-
-<<
-
-PAGE_SHIFT
-;
-
+    if (!(current->flags & PF_RANDOMIZE))
+        return 0;
+    return (get_random_long() & ((1UL << rndbits) - 1)) << PAGE_SHIFT;
 }
-
-
-
-unsigned
-
-long
-
-arch_mmap_rnd
-(
-void
-)
-
+ 
+unsigned long arch_mmap_rnd(void)
 {
-
-
-return
-
-arch_rnd
-(
-mmap_is_ia32
-()
-
-?
-
-mmap32_rnd_bits
-
-:
-
-mmap64_rnd_bits
-);
-
+    return arch_rnd(mmap_is_ia32() ? mmap32_rnd_bits : mmap64_rnd_bits);
 }
-
-
-
-load_elf_binary
-{
-
-
-......
-
-
-if
-
-(
-!
-first_pt_load
-)
-
-{
-
-
-elf_flags
-
-|=
-
-MAP_FIXED
-;
-
-
+ 
+load_elf_binary{
+    ......
+    if (!first_pt_load) {
+        elf_flags |= MAP_FIXED;
+    } else if (elf_ex->e_type == ET_EXEC) {
+        elf_flags |= MAP_FIXED_NOREPLACE;
+    } else if (elf_ex->e_type == ET_DYN) {
+        if (interpreter) {
+            load_bias = ELF_ET_DYN_BASE;
+            if (current->flags & PF_RANDOMIZE)
+                load_bias += arch_mmap_rnd();
+            alignment = maximum_alignment(elf_phdata, elf_ex->e_phnum);
+            if (alignment)
+                load_bias &= ~(alignment - 1);
+            elf_flags |= MAP_FIXED_NOREPLACE;
+        } else
+            load_bias = 0;
+        ......
+    }
+    ......
 }
-
-else
-
-if
-
-(
-elf_ex
-->
-e_type
-
-==
-
-ET_EXEC
-)
-
-{
-
-
-elf_flags
-
-|=
-
-MAP_FIXED_NOREPLACE
-;
-
-
-}
-
-else
-
-if
-
-(
-elf_ex
-->
-e_type
-
-==
-
-ET_DYN
-)
-
-{
-
-
-if
-
-(
-interpreter
-)
-
-{
-
-
-load_bias
-
-=
-
-ELF_ET_DYN_BASE
-;
-
-
-if
-
-(
-current
-->
-flags
-
-&
-
-PF_RANDOMIZE
-)
-
-
-load_bias
-
-+=
-
-arch_mmap_rnd
-();
-
-
-alignment
-
-=
-
-maximum_alignment
-(
-elf_phdata
-,
-
-elf_ex
-->
-e_phnum
-);
-
-
-if
-
-(
-alignment
-)
-
-
-load_bias
-
-&=
-
-~
-(
-alignment
-
--
-
-1
-);
-
-
-elf_flags
-
-|=
-
-MAP_FIXED_NOREPLACE
-;
-
-
-}
-
-else
-
-
-load_bias
-
-=
-
-0
-;
-
-
-......
-
-
-}
-
-
-......
-
-}
-
 ```
 
 
@@ -2456,47 +453,17 @@ load_bias
 
 >
 
-```
-
+```c
 #define PAGE_SHIFT      12
-
-
-
-static
-
-inline
-
-unsigned
-
-long
-
-get_random_long
-(
-void
-)
-
+ 
+static inline unsigned long get_random_long(void)
 {
-
 #if BITS_PER_LONG == 64
-
-
-return
-
-get_random_u64
-();
-
+    return get_random_u64();
 #else
-
-
-return
-
-get_random_u32
-();
-
+    return get_random_u32();
 #endif
-
 }
-
 ```
 
 mmap、动态链接库的解释
@@ -2504,50 +471,9 @@ mmap、动态链接库的解释
 >
 
 ```
-
-rndbits
-
-=
-
-mmap64_rnd_bit
-
-=
-
-mmap_rnd_bits
-
-=
-
-CONFIG_ARCH_MMAP_RND_BITS
-
-=
-
-32
-
-
-
-(
-get_random_long
-()
-
-&
-
-((
-1UL
-
-<<
-
-rndbits
-)
-
--
-
-1
-))
-
-<<
-
-PAGE_SHIFT
-
+rndbits = mmap64_rnd_bit = mmap_rnd_bits = CONFIG_ARCH_MMAP_RND_BITS = 32
+ 
+(get_random_long() & ((1UL << rndbits) - 1)) << PAGE_SHIFT
 ```
 
 >
@@ -2558,34 +484,12 @@ PAGE_SHIFT
 >
 
 ```
-
 #define __STACK_RND_MASK(is32bit) ((is32bit) ? 0x7ff : 0x3fffff)
-
 #define STACK_RND_MASK __STACK_RND_MASK(mmap_is_ia32())
-
-
-
-random_variable
-
-=
-
-get_random_long
-();
-
-random_variable
-
-&=
-
-STACK_RND_MASK
-;
-
-random_variable
-
-<<=
-
-PAGE_SHIFT
-;
-
+ 
+random_variable = get_random_long();
+random_variable &= STACK_RND_MASK;
+random_variable <<= PAGE_SHIFT;
 ```
 
 >

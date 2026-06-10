@@ -18,151 +18,36 @@
 
 
 ```
-
-#define EI_NIDENT   16
-
-typedef
-
-struct
-
-{
-
-
-unsigned
-
-char
-
-e_ident
-[
-EI_NIDENT
+#define EI_NIDENT   16 typedef struct{
+unsigned char e_ident[EI_NIDENT
 ];
-
-
-
 //Magic number（前4字节）；ELF文件内容如何解码等信息
-
-
-ELF32_Half
-
-e_type
-;
-
-
+ELF32_Half e_type;
 //描述了ELF文件的类型
-
-
-ELF32_Half
-
-e_machine
-;
-
-
+ELF32_Half e_machine;
 //描述了文件面向的架构
-
-
-ELF32_Word
-
-e_version
-;
-
-
+ELF32_Word e_version;
 //描述了ELF文件的版本号
-
-
-ELF32_Addr
-
-e_entry
-;
-
-
+ELF32_Addr e_entry;
 //执行入口点，如果文件没有入口点，这个域保持0（4字节）
-
-
-ELF32_Off
-
-e_phoff
-;
-
-
+ELF32_Off e_phoff;
 //*program header table*的offset，如果没有PH,则这个值是0
-
-
-ELF32_Off
-
-e_shoff
-;
-
-
+ELF32_Off e_shoff;
 //section header table的offset,如果没有SH，则这个值是0
-
-
-ELF32_Word
-
-e_flags
-;
-
-
+ELF32_Word e_flags;
 //特定于处理器的标志，Intel架构一般都是0
-
-
-ELF32_Half
-
-e_ehsize
-;
-
-
+ELF32_Half e_ehsize;
 //ELF header的大小，32位的ELF是52字节，64位是64字节
-
-
-ELF32_Half
-
-e_phentsize
-;
-
-
+ELF32_Half e_phentsize;
 //program header table中每个入口的大小
-
-
-ELF32_Half
-
-e_phnum
-;
-
-
+ELF32_Half e_phnum;
 //e_phentsize*e_phnum得到整个program header table的大小
-
-
-ELF32_Half
-
-e_shentsize
-;
-
-
+ELF32_Half e_shentsize;
 //section header table中entry的大小，即每个section header占多少字节
-
-
-ELF32_Half
-
-e_shnum
-;
-
-
+ELF32_Half e_shnum;
 //同e_phnum
-
-
-ELF32_Half
-
-e_shstrndx
-;
-
-
-//section header string table index. 包含了section header table中section name string table。如果没有section name string table,e_shstrndx的值是SHN_UNDEF
-
-}
-
-Elf32_Ehdr
-;
-
+ELF32_Half e_shstrndx;
+//section header string table index. 包含了section header table中section name string table。如果没有section name string table,e_shstrndx的值是SHN_UNDEF} Elf32_Ehdr;
 ```
 
 这里可以用`readelf -h <elffile>`来读取文件头，例如下图
@@ -172,91 +57,24 @@ Elf32_Ehdr
 接下来是\*\*程序头表（Program Header Table)\*\*部分
 
 
-```
-
-typedef
-
-struct
-
-{
-
-
-ELF32_Word
-
-p_type
-;
-
-
+```c
+typedef struct{
+ELF32_Word p_type;
 //表示该段的类型
-
-
-ELF32_Off
-
-p_offset
-;
-
-
+ELF32_Off p_offset;
 //表示本段在文件中的偏移地址
-
-
-ELF32_Addr
-
-p_vaddr
-;
-
-
+ELF32_Addr p_vaddr;
 //表示本段正在虚拟内存中的起始地址
-
-
-ELF32_Addr
-
-p_paddr
-;
-
-
+ELF32_Addr p_paddr;
 //仅用于与物理地址相关的系统中，因为System V忽略用户程序中所有的物理地址
-
-
-ELF32_Word
-
-p_filesz
-;
-
-
+ELF32_Word p_filesz;
 //表示本段在文件中的大小
-
-
-ELF32_Word
-
-p_memsz
-;
-
-
+ELF32_Word p_memsz;
 //表示本段子内存中的大小
-
-
-ELF32_Word
-
-p_flags
-;
-
-
+ELF32_Word p_flags;
 //指明本段的标志类型
-
-
-ELF32_Word
-
-p_align
-;
-
-
-//对齐方式
-
-}
-
-Elf32_Phdr
-;
-
+ELF32_Word p_align;
+//对齐方式} Elf32_Phdr;
 ```
 
 同样的可以使用`readelf -l <file>`来读取程序头，如下
@@ -285,170 +103,28 @@ Elf32_Phdr
 ![image-20250707105817635](../../images/image-20250707105817635-1751857114382-1.png)
 
 
-```
-
-struct
-
-TSS
-
-{
-
-
-uint32_t
-
-prev_tss
-;
-
-// 前一个任务的 TSS 链接（用于嵌套任务）
-
-
-uint32_t
-
-esp0
-;
-
-// Ring 0 的堆栈指针（用户态切换到内核态时用）
-
-
-uint32_t
-
-ss0
-;
-
-// Ring 0 的堆栈段选择子
-
-
-uint32_t
-
-esp1
-,
-
-ss1
-;
-
-// Ring 1（不常用）
-
-
-uint32_t
-
-esp2
-,
-
-ss2
-;
-
-// Ring 2（不常用）
-
-
-uint32_t
-
-cr3
-;
-
-// 页目录基址（页表）
-
-
-uint32_t
-
-eip
-;
-
-// 程序计数器
-
-
-uint32_t
-
-eflags
-;
-
-// 状态寄存器
-
-
-uint32_t
-
-eax
-,
-
-ecx
-,
-
-edx
-,
-
-ebx
-;
-
-
-uint32_t
-
-esp
-,
-
-ebp
-,
-
-esi
-,
-
-edi
-;
-
-// 通用寄存器
-
-
-uint32_t
-
-es
-,
-
-cs
-,
-
-ss
-,
-
-ds
-,
-
-fs
-,
-
-gs
-;
-
-// 段寄存器
-
-
-uint32_t
-
-ldt
-;
-
-// LDT 段选择子
-
-
-uint16_t
-
-trap
-;
-
-
-uint16_t
-
-iomap_base
-;
-
-// IO 权限位图起始偏移
-
-};
-
+```c
+struct TSS{
+uint32_t prev_tss; // 前一个任务的 TSS 链接（用于嵌套任务）
+uint32_t esp0; // Ring 0 的堆栈指针（用户态切换到内核态时用）
+uint32_t ss0; // Ring 0 的堆栈段选择子
+uint32_t esp1, ss1; // Ring 1（不常用）
+uint32_t esp2, ss2; // Ring 2（不常用）
+uint32_t cr3; // 页目录基址（页表）
+uint32_t eip; // 程序计数器
+uint32_t eflags; // 状态寄存器
+uint32_t eax, ecx, edx, ebx;
+uint32_t esp, ebp, esi, edi; // 通用寄存器
+uint32_t es, cs, ss, ds, fs, gs; // 段寄存器
+uint32_t ldt; // LDT 段选择子
+uint16_t trap;
+uint16_t iomap_base; // IO 权限位图起始偏移 };
 ```
 
 上面的结构图告诉我们有三个栈顶`esp0、esp1、esp2`，分别对应3个特权级，用来保存相关的内容。而3号特权级栈，也即用户栈，它的切换是通过保存上下文来进行的
 
-Note
-
-\*\*进程\*\*是程序的一次执行实例，是操作系统进行资源分配和调度的基本单位
+!!! note
+    \*\*进程\*\*是程序的一次执行实例，是操作系统进行资源分配和调度的基本单位
 
 - 拥有独立的地址空间
 - 拥有自己的代码段、数据段、堆、栈
@@ -475,40 +151,37 @@ Note
 
 特权级在变化的时候，需要用到不同特权级下的栈，当处理器进入不同特权级时，他会自动在TSS中找同特权级的栈
 
-!!!note 举个例子（从用户态中断进入内核态）
+!!! note "举个例子（从用户态中断进入内核态）"
 
 
-```
 
-假设现在的情况是：Ring3遭遇触发中断,则变化过程如下：
-
-
-```mermaid
-flowchart
-  A[CPU检测特权级变化R3->0]:::step1
-  B[从当前 GDT 中 TSS 描述符找到 TSS 地址]:::step2
-  C[加载 TSS 中的 ESP0 和 SS0]:::step3
-  D[切换堆栈为内核栈，并在其上压入旧的用户态 SS、ESP、EFLAGS、CS、EIP]:::step4
-  E[跳转到中断处理程序执行]:::step5
-  F[内核结束后通过 IRET 返回用户态]:::step6
-
-  A --> B
-  B --> C
-  C --> D
-  D --> E
-  E --> F
-
-  classDef step1 fill:#FF6347,stroke:#D32F2F,stroke-width:2px,color:white;
-  classDef step2 fill:#FFD700,stroke:#F57C00,stroke-width:2px,color:white;
-  classDef step3 fill:#1E90FF,stroke:#1976D2,stroke-width:2px,color:white;
-  classDef step4 fill:#8A2BE2,stroke:#6A1B9A,stroke-width:2px,color:white;
-  classDef step5 fill:#FF4500,stroke:#FF8C00,stroke-width:2px,color:white;
-  classDef step6 fill:#228B22,stroke:#388E3C,stroke-width:2px,color:white;
+    假设现在的情况是：Ring3遭遇触发中断,则变化过程如下：
 
 
-```
+    ```mermaid
+    flowchart
+      A[CPU检测特权级变化R3->0]:::step1
+      B[从当前 GDT 中 TSS 描述符找到 TSS 地址]:::step2
+      C[加载 TSS 中的 ESP0 和 SS0]:::step3
+      D[切换堆栈为内核栈，并在其上压入旧的用户态 SS、ESP、EFLAGS、CS、EIP]:::step4
+      E[跳转到中断处理程序执行]:::step5
+      F[内核结束后通过 IRET 返回用户态]:::step6
 
-```
+      A --> B
+      B --> C
+      C --> D
+      D --> E
+      E --> F
+
+      classDef step1 fill:#FF6347,stroke:#D32F2F,stroke-width:2px,color:white;
+      classDef step2 fill:#FFD700,stroke:#F57C00,stroke-width:2px,color:white;
+      classDef step3 fill:#1E90FF,stroke:#1976D2,stroke-width:2px,color:white;
+      classDef step4 fill:#8A2BE2,stroke:#6A1B9A,stroke-width:2px,color:white;
+      classDef step5 fill:#FF4500,stroke:#FF8C00,stroke-width:2px,color:white;
+      classDef step6 fill:#228B22,stroke:#388E3C,stroke-width:2px,color:white;
+
+
+
 
 当然了，TSS和GDT一样是个数据结构，也自然如GDT一样需要相关的找到他的数据结构，GDT有GDTR，TSS有TR寄存器
 
@@ -527,43 +200,42 @@ DPL(Descriptor Privilege Level)也就是\*\*描述符特权级\*\*。每个段�
 
 总而言之，CPL 代表当前正在执行的代码的特权级，而 DPL 代表段的特权级。通过这两个机制，操作系统可以有效地隔离不同权限级别的代码和数据，确保系统的安全性
 
-!!!note 三者的访问规则&&例子
+!!! note "三者的访问规则&&例子"
 
 
-```
+    ```
 
-- **有效访问**：当程序要访问一个段时，必须满足以下两个条件：
+    - **有效访问**：当程序要访问一个段时，必须满足以下两个条件：
 
-  1. **CPL <= DPL**：即程序的当前特权级（CPL）不能高于段描述符的特权级（DPL），否则会导致特权级错误。
+      1. **CPL <= DPL**：即程序的当前特权级（CPL）不能高于段描述符的特权级（DPL），否则会导致特权级错误。
 
-  2. **RPL <= DPL**：即请求特权级（RPL）也不能高于段的描述符要求的特权级（DPL），否则也会触发错误。
+      2. **RPL <= DPL**：即请求特权级（RPL）也不能高于段的描述符要求的特权级（DPL），否则也会触发错误。
 
-- **限制访问**：如果 **CPL > DPL** 或 **RPL > DPL**，则访问该段会失败，触发特权错误（如 #GP 异常）。
+    - **限制访问**：如果 **CPL > DPL** 或 **RPL > DPL**，则访问该段会失败，触发特权错误（如 #GP 异常）。
 
---------------
+    --------------
 
-**举个例子**
+    **举个例子**
 
-假设有一个段描述符，其 **DPL** 为 0（内核模式）。有两个程序，它们的 **CPL** 和 **RPL** 如下：
+    假设有一个段描述符，其 **DPL** 为 0（内核模式）。有两个程序，它们的 **CPL** 和 **RPL** 如下：
 
-1. 程序 A 的 **CPL** 为 0（内核模式），**RPL** 为 3（用户模式），请求访问该段。
+    1. 程序 A 的 **CPL** 为 0（内核模式），**RPL** 为 3（用户模式），请求访问该段。
 
-2. 程序 B 的 **CPL** 为 3（用户模式），**RPL** 为 2（中间权限），请求访问该段。
+    2. 程序 B 的 **CPL** 为 3（用户模式），**RPL** 为 2（中间权限），请求访问该段。
 
-   在这种情况下：
+       在这种情况下：
 
-   - 程序 A 可以访问该段，因为 **CPL (0)** <= **DPL (0)** 且 **RPL (3)** <= **DPL (0)**。
-   - 程序 B 无法访问该段，因为 **CPL (3)** > **DPL (0)**，即它的当前特权级低于该段描述符所要求的特权级。
+       - 程序 A 可以访问该段，因为 **CPL (0)** <= **DPL (0)** 且 **RPL (3)** <= **DPL (0)**。
+       - 程序 B 无法访问该段，因为 **CPL (3)** > **DPL (0)**，即它的当前特权级低于该段描述符所要求的特权级。
 
-```
+    ```
 
 但是这样存在一个问题：某一特权级的代码段，低它一级的没法运行，高它一级的不让运行。**因此受访者为代码段的时候，一般情况下，只能平级访问**
 
 但这样会导致另一个问题，我们低特权级下的指令真的想要用高特权级的指令，怎么办呢？于是给出了\*\*一致性代码\*\*这一东西
 
-Note
-
-一致性代码段也称为依从代码段。用来实现从低特权级的代码向高特权级的代码转移。
+!!! note
+    一致性代码段也称为依从代码段。用来实现从低特权级的代码向高特权级的代码转移。
 
 一致性代码段是指如果自己是转移后的目标段，自己的特权级（DLR）一定要大于等于转移前的CPL,即\*\*数值上CPL>=DPL\*\* / **一致性代码段的DPL是权限的上限**，任何在此权限之下的特权级都可以转到此代码段上执行
 
@@ -578,14 +250,14 @@ Note
 
 首先了解一下\*\*门结构\*\*：它是记录一段程序起始地址的描述符，用来描述一段程序，**进入这个门结构之后，处理器就可以转移到更高的特权上**
 
-| image-20250707151405434 |
+| ![](../../images/image-20250707151405434.png) |
 | --- |
 | 任务门描述符 |
-| image-20250707151420903 |
+| ![](../../images/image-20250707151420903.png) |
 | 中断门描述符 |
-| image-20250707151439713 |
+| ![](../../images/image-20250707151439713.png) |
 | 陷阱门描述符 |
-| image-20250707151511334 |
+| ![](../../images/image-20250707151511334.png) |
 | 调用门描述符 |
 
 除任务门之外，他们与段描述符最大的不同在于：这些门都是对应到一段例程之中，即对应一段函数，而不是像段描述符一样对应的是一片内存区域。由于任何程序都属于某个内存段，所以程序确切的地址必须用“代码段选择子+段内偏移量”来描述。可见门描述符基于段描述符，所以门描述符中记录的是选择子和偏移量的原因
@@ -601,28 +273,28 @@ Note
 - **陷阱门**：以int3指令主动发中的的形式实现低特权级向高特权级转移，这一般是编译器在调式时用
 - **任务门**：任务以状态段TSS为单位，用来实现任务切换，它可以借助中断或指令发起。当中断发生时，如果对应的中断向量号是任务门，则会发起任务切换。也可以像调用门那样，用call或jmp指令后接任务门的选择子或任务TSS的选择子
 
-| image-20250707153822851 |
+| ![](../../images/image-20250707153822851.png) |
 | --- |
 | 为什么可以使用门的结构进入高特权级，这个图太形象了 |
 
 门的特权级是一定要低于我们访问者的特权级的，这样才能保证我们能过调用门，而受访者的特权级一定得高于访问者者，不然没有意义了
 
-!!!note 调用门的内部执行结构：点击查看更多
+!!! note "调用门的内部执行结构：点击查看更多"
 
 
-```
+    ```
 
-![image-20250707154417052](../../images/image-20250707154417052.png)
+    ![image-20250707154417052](../../images/image-20250707154417052.png)
 
-从调用门选择子到或许到内核代码的地址，共经历了5个步骤。
+    从调用门选择子到或许到内核代码的地址，共经历了5个步骤。
 
-**用户程序调用调用门选择子**
+    **用户程序调用调用门选择子**
 
-在用户程序中有一句代码`call 调用门选择子`,call指令可以使用调用门，参数就是调用门的选择子，该选择子指向GDT或LDT中的某个门描述符。
+    在用户程序中有一句代码`call 调用门选择子`,call指令可以使用调用门，参数就是调用门的选择子，该选择子指向GDT或LDT中的某个门描述符。
 
-**处理器查找门描述符地址**
+    **处理器查找门描述符地址**
 
-处理器用门描述符选择子的高13位（索引位）乘以8作为该描述符在GDT中的偏移量，再加上寄存器GDTR中的GDT基地址，最终找到了门描述符的地址，它位于GDT中从0起的第3个描述符位置。
+    处理器用门描述符选择子的高13位（索引位）乘以8作为该描述符在GDT中的偏移量，再加上寄存器GDTR中的GDT基地址，最终找到了门描述符的地址，它位于GDT中从0起的第3个描述符位置。
 
 **获取内核例程地址**
 
@@ -841,9 +513,8 @@ TF（Trap Flag），陷阱标志位，这用在调式环境中，当TF为0表示
 
 NT(Nest Task Flag),任务嵌套位，用来标记任务嵌套调用情况。
 
-Note
-
-任务嵌套调用就是指CPU挂起当前的任务转而去执行另一个任务，待到该任务执行完再回去执行之前的任务。
+!!! note
+    任务嵌套调用就是指CPU挂起当前的任务转而去执行另一个任务，待到该任务执行完再回去执行之前的任务。
 
 CPU之所以可以如此运行是因为他会执行以下操作：
 
@@ -874,7 +545,7 @@ CPU之所以可以如此运行是因为他会执行以下操作：
 这个控制器比较古老了，现代中断控制器基本都是APIC类了,这里简单看一下工作流程就行
 
 
-```
+```mermaid
 
 flowchart TD
     %% 外设部分
@@ -922,7 +593,7 @@ flowchart TD
 ```
 
 
-```
+```mermaid
 
 flowchart TB
 
@@ -1015,7 +686,7 @@ ELF（Executable and Linkable Format）是Unix/Linux系统的标准可执行文�
 **ELF文件结构：**
 
 
-```
+```mermaid
 
 graph TD
     A[ELF Header] --> B[Program Header Table]
@@ -1052,7 +723,7 @@ graph TD
 x86架构通过特权级（0-3级）实现硬件级安全隔离：
 
 
-```
+```mermaid
 
 graph LR
     A[Ring 0] -->|OS内核| B[最高权限]
@@ -1060,13 +731,10 @@ graph LR
     E[Ring 3] -->|应用程序| F[最低权限]
 
 ```
-
 **关键机制：**
 1. **TSS（任务状态段）**：
 - 存储任务上下文（寄存器/栈指针）
 - 特权级切换时自动更新`esp0/ss0`
-
-
 ```
 
 struct
@@ -1132,7 +800,7 @@ cr3
 **中断处理流程：**
 
 
-```
+```mermaid
 
 sequenceDiagram
     participant CPU
@@ -1151,17 +819,11 @@ sequenceDiagram
     Handler-->>CPU: IRET返回
 
 ```
-
 **关键组件：**
 1. **IDT（中断描述表）**：
 - 通过`LIDT`指令加载
-- 包含256个门描述符
-
-1. **8259A中断控制器**：
-
-
-
-```
+- 包含256个门描述符 1. **8259A中断控制器**：
+```mermaid
 
 flowchart LR
     IRQ[IRQ0-7] --> IRR[中断请求寄存器]

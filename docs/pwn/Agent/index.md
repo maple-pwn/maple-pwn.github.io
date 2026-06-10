@@ -10,8 +10,7 @@
 分享会沿着一条连续的逻辑链推进。先讲 CLI，是因为命令行界面（Command-Line Interface，CLI）把文件、命令、环境、日志和产物放在同一个操作表面上，网络攻防里最关键的动作几乎都能在这里接住。随后进入 Agent，因为只要任务跨过单轮问答，系统就必须具备规划、执行、观察和状态延续。再往下，function calling 把“调用什么工具、传什么参数”从自由文本收束成结构化请求；工具一多，MCP（Model Context Protocol）把接入关系整理成统一协议；重复任务积累起来，skills 把经验封装成可复用工作流；任务进入长周期后，harness 负责运行约束、轨迹记录、结果校验和复现实验；知识来源继续扩展时，RAG（Retrieval-Augmented Generation）再把最相关的材料送回当前窗口。最后再回到 Web 题、逆向题和日志研判题，让前面每一个部件都落进同一条求解链路里。
 
 
-```
-
+```mermaid
 flowchart LR
     U[授权实验任务] --> CLI[CLI 工作台]
     CLI --> A[Agent 主循环]
@@ -23,7 +22,6 @@ flowchart LR
     M --> T[Shell 文件系统 代码库 知识库]
     H --> L[轨迹 约束 判分 导出]
     R --> K[题解 协议 手册 历史经验]
-
 ```
 
 
@@ -64,177 +62,27 @@ $$
 一个最小 Agent 循环通常长成下面这样：
 
 
-```
+```python
+task = load_task()
+state = init_state(task)
 
-task
+for step in range(MAX_STEPS):
+    context = build_context(task=task, state=state)
+    decision = model.generate(context, tools=tool_schemas) //plan以下一步的形式出现
 
-=
-
-load_task
-()
-
-state
-
-=
-
-init_state
-(
-task
-)
-
-for
-
-step
-
-in
-
-range
-(
-MAX_STEPS
-):
-
-
-context
-
-=
-
-build_context
-(
-task
-=
-task
-,
-
-state
-=
-state
-)
-
-
-decision
-
-=
-
-model
-.
-generate
-(
-context
-,
-
-tools
-=
-tool_schemas
-)
-
-//
-plan以下一步的形式出现
-
-
-if
-
-decision
-.
-type
-
-==
-
-"tool_call"
-:
-
-
-'''
-
-        act 位于 executor.run(...); observe 则是 observation 回流进状态更新
-
-        memory 既可以落在 memory_store
-
+    if decision.type == "tool_call":
         '''
+        act 位于 executor.run(...); observe 则是 observation 回流进状态更新
+        memory 既可以落在 memory_store
+        '''
+        observation = executor.run(decision.name, decision.arguments)
+        state = update_state(state, decision, observation)
+        memory_store.write(step=step, decision=decision, observation=observation)
+        continue
 
-
-observation
-
-=
-
-executor
-.
-run
-(
-decision
-.
-name
-,
-
-decision
-.
-arguments
-)
-
-
-state
-
-=
-
-update_state
-(
-state
-,
-
-decision
-,
-
-observation
-)
-
-
-memory_store
-.
-write
-(
-step
-=
-step
-,
-
-decision
-=
-decision
-,
-
-observation
-=
-observation
-)
-
-
-continue
-
-
-if
-
-decision
-.
-type
-
-==
-
-"final_answer"
-:
-
-
-export_answer
-(
-decision
-.
-content
-,
-
-state
-)
-
-
-break
-
+    if decision.type == "final_answer":
+        export_answer(decision.content, state)
+        break
 ```
 
 这段伪代码里，plan 常常以“下一步要做什么”的形式出现在 `decision` 中；act 位于 `executor.run(...)`；observe 则是 `observation` 回流进状态更新；memory 既可以落在 `memory_store`，也可以落在外部文件、数据库、检索模块和 artifact 目录。真正需要强调的是，Agent 主循环关注的核心对象始终是状态演化。每走一步，系统都在问同一件事：当前已知事实是什么，下一步最有信息增益的动作是什么。
@@ -257,165 +105,32 @@ CLI 的第二个价值来自可复现性。命令、参数、工作目录、环�
 举几个具体例子，这一点会更直观。处理一份 Web 题附件时，Agent 可以先扫目录、读说明、跑启动命令，再把产物送回模型做下一步决策：
 
 
-```
-
-tree
-
--L
-
-2
-
-./challenge
-sed
-
--n
-
-'1,160p'
-
-./challenge/README.md
-docker
-
-compose
-
--f
-
-./challenge/docker-compose.yml
-
-up
-
--d
-curl
-
--sS
-
-http://127.0.0.1:8080/
-
--D
-
-/tmp/headers.txt
-
--o
-
-/tmp/index.html
-python
-
-./scripts/route_map.py
-
-./challenge/app
-
+```bash
+tree -L 2 ./challenge
+sed -n '1,160p' ./challenge/README.md
+docker compose -f ./challenge/docker-compose.yml up -d
+curl -sS http://127.0.0.1:8080/ -D /tmp/headers.txt -o /tmp/index.html
+python ./scripts/route_map.py ./challenge/app
 ```
 
 分析一份逆向样本时，CLI 又能把反汇编器、调试器和静态检查命令接起来：
 
 
-```
-
-file
-
-./chall
-checksec
-
---file
-=
-./chall
-strings
-
--a
-
--n
-
-6
-
-./chall
-
-|
-
-head
-
--n
-
-40
-
-objdump
-
--d
-
-./chall
-
-|
-
-sed
-
--n
-
-'1,200p'
-
-gdb
-
--q
-
-./chall
-
--ex
-
-'start'
-
--ex
-
-'info functions'
-
--ex
-
-'quit'
-
+```bash
+file ./chall
+checksec --file=./chall
+strings -a -n 6 ./chall | head -n 40
+objdump -d ./chall | sed -n '1,200p'
+gdb -q ./chall -ex 'start' -ex 'info functions' -ex 'quit'
 ```
 
 处理流量与日志时，同样如此：
 
 
-```
-
-tshark
-
--r
-
-capture.pcapng
-
--Y
-
-http.request
-
--T
-
-fields
-
--e
-
-http.host
-
--e
-
-http.request.uri
-grep
-
-'Failed password'
-
-./logs/auth.log
-
-|
-
-tail
-
--n
-
-50
-
-python
-
-./scripts/build_timeline.py
-
-./logs/auth.log
-
+```bash
+tshark -r capture.pcapng -Y http.request -T fields -e http.host -e http.request.uri
+grep 'Failed password' ./logs/auth.log | tail -n 50
+python ./scripts/build_timeline.py ./logs/auth.log
 ```
 
 在这些例子里，模型真正依赖的关键能力有三项。第一项是把输出收束成对下一步有用的摘要，例如从 `tree` 结果里提炼项目结构，从 `curl` 响应里提炼状态码、头部与异常字段，从 `checksec` 结果里提炼保护信息。第二项是把一轮执行的产物继续送回模型，让它依据新观察做下一步决策。第三项是把关键 artifact 落盘，形成可读、可查、可复放的工作痕迹。CLI 在这三项上都非常强，因为它天然擅长把数据流与控制流摆在明处。
@@ -432,423 +147,98 @@ function calling 的核心工作，就是给模型一条结构化调用通道。
 先看一个最小工具集。假设系统只暴露两个工具：`read_file` 与 `run_command`。
 
 
-```
-
+```json
 [
-
-
-{
-
-
-"type"
-:
-
-"function"
-,
-
-
-"name"
-:
-
-"read_file"
-,
-
-
-"description"
-:
-
-"读取工作目录中的文本文件"
-,
-
-
-"parameters"
-:
-
-{
-
-
-"type"
-:
-
-"object"
-,
-
-
-"properties"
-:
-
-{
-
-
-"path"
-:
-
-{
-"type"
-:
-
-"string"
-},
-
-
-"max_lines"
-:
-
-{
-"type"
-:
-
-"integer"
-,
-
-"minimum"
-:
-
-1
-,
-
-"maximum"
-:
-
-400
-}
-
-
-},
-
-
-"required"
-:
-
-[
-"path"
-],
-
-
-"additionalProperties"
-:
-
-false
-
-
-}
-
-
-},
-
-
-{
-
-
-"type"
-:
-
-"function"
-,
-
-
-"name"
-:
-
-"run_command"
-,
-
-
-"description"
-:
-
-"在受控目录内执行只读命令并返回摘要输出"
-,
-
-
-"parameters"
-:
-
-{
-
-
-"type"
-:
-
-"object"
-,
-
-
-"properties"
-:
-
-{
-
-
-"command"
-:
-
-{
-"type"
-:
-
-"string"
-},
-
-
-"timeout_sec"
-:
-
-{
-"type"
-:
-
-"integer"
-,
-
-"minimum"
-:
-
-1
-,
-
-"maximum"
-:
-
-30
-}
-
-
-},
-
-
-"required"
-:
-
-[
-"command"
-],
-
-
-"additionalProperties"
-:
-
-false
-
-
-}
-
-
-}
-
+  {
+    "type": "function",
+    "name": "read_file",
+    "description": "读取工作目录中的文本文件",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "path": {"type": "string"},
+        "max_lines": {"type": "integer", "minimum": 1, "maximum": 400}
+      },
+      "required": ["path"],
+      "additionalProperties": false
+    }
+  },
+  {
+    "type": "function",
+    "name": "run_command",
+    "description": "在受控目录内执行只读命令并返回摘要输出",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "command": {"type": "string"},
+        "timeout_sec": {"type": "integer", "minimum": 1, "maximum": 30}
+      },
+      "required": ["command"],
+      "additionalProperties": false
+    }
+  }
 ]
-
 ```
 
 接着沿着一次完整调用过程走一遍。用户输入：“请先看看这道 Web 实验题的说明，再判断服务怎样启动。” 模型看到工具模式描述后，第一步很可能生成下面这条调用意图：
 
 
-```
-
+```json
 {
-
-
-"type"
-:
-
-"tool_call"
-,
-
-
-"name"
-:
-
-"read_file"
-,
-
-
-"arguments"
-:
-
-{
-
-
-"path"
-:
-
-"README.md"
-,
-
-
-"max_lines"
-:
-
-120
-
-
+  "type": "tool_call",
+  "name": "read_file",
+  "arguments": {
+    "path": "README.md",
+    "max_lines": 120
+  }
 }
-
-}
-
 ```
 
 外部执行器收到这条请求以后，读取 `README.md`，把结果包装成工具输出：
 
 
-```
-
+```json
 {
-
-
-"type"
-:
-
-"tool_result"
-,
-
-
-"name"
-:
-
-"read_file"
-,
-
-
-"content"
-:
-
-{
-
-
-"path"
-:
-
-"README.md"
-,
-
-
-"preview"
-:
-
-[
-
-
-"# Lab"
-,
-
-
-"Use docker compose up -d to start the app"
-,
-
-
-"The service listens on 127.0.0.1:8080"
-
-
-]
-
-
+  "type": "tool_result",
+  "name": "read_file",
+  "content": {
+    "path": "README.md",
+    "preview": [
+      "# Lab",
+      "Use docker compose up -d to start the app",
+      "The service listens on 127.0.0.1:8080"
+    ]
+  }
 }
-
-}
-
 ```
 
 模型拿到这一观察结果后，第二步可能继续发起命令调用：
 
 
-```
-
+```json
 {
-
-
-"type"
-:
-
-"tool_call"
-,
-
-
-"name"
-:
-
-"run_command"
-,
-
-
-"arguments"
-:
-
-{
-
-
-"command"
-:
-
-"docker compose up -d"
-,
-
-
-"timeout_sec"
-:
-
-20
-
-
+  "type": "tool_call",
+  "name": "run_command",
+  "arguments": {
+    "command": "docker compose up -d",
+    "timeout_sec": 20
+  }
 }
-
-}
-
 ```
 
 执行器再将命令结果回填，例如：
 
 
-```
-
+```json
 {
-
-
-"type"
-:
-
-"tool_result"
-,
-
-
-"name"
-:
-
-"run_command"
-,
-
-
-"content"
-:
-
-{
-
-
-"exit_code"
-:
-
-0
-,
-
-
-"stdout_summary"
-:
-
-"2 services started"
-,
-
-
-"artifacts"
-:
-
-[
-"docker-compose.log"
-]
-
-
+  "type": "tool_result",
+  "name": "run_command",
+  "content": {
+    "exit_code": 0,
+    "stdout_summary": "2 services started",
+    "artifacts": ["docker-compose.log"]
+  }
 }
-
-}
-
 ```
 
 此时模型才开始整合结果，生成“服务已启动，监听地址为 `127.0.0.1:8080`，下一步建议用 `curl` 访问首页并检查响应头”的回答。整个过程中，分析与执行被稳定地接在了一起。
@@ -873,8 +263,7 @@ MCP 把这件事整理成了协议层。它的基本角色可以分成三类。h
 下面这个时序图可以把交互关系讲得更直观一些：
 
 
-```
-
+```mermaid
 sequenceDiagram
     participant H as Host
     participant C as MCP Client
@@ -886,7 +275,6 @@ sequenceDiagram
     C->>S: JSON-RPC 请求
     S-->>C: 工具结果
     C-->>H: 结构化观察结果
-
 ```
 
 对于 Agent 工程来说，MCP 的价值集中在四点。第一，它把工具、资源与提示模板放进统一接口，host 端的接入复杂度会显著下降。第二，它让能力发现变成显式过程，模型可以先看到“系统里现在有哪些可用能力”，再决定要用哪一个。第三，它让本地能力与外部数据源拥有同样的暴露方式，文件系统和知识库因此可以进入同一张能力地图。第四，它为权限、认证、审计与可观测性留下了标准化插口。
@@ -896,63 +284,20 @@ sequenceDiagram
 放到一个贴近 CLI 的最小示例里，配置通常会长成下面这样：
 
 
-```
-
-
+```yaml
 # ~/.codex/config.toml
 
 [mcp_servers.filesystem]
-
-command
-
-=
-
-"npx"
-
-args
-
-=
-
-[
-"-y"
-,
-
-"@modelcontextprotocol/server-filesystem"
-,
-
-"/labs/web-lab"
-]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-filesystem", "/labs/web-lab"]
 
 [mcp_servers.challenge_kb]
-
-command
-
-=
-
-"python"
-
-args
-
-=
-
-[
-"./servers/challenge_kb_server.py"
-]
+command = "python"
+args = ["./servers/challenge_kb_server.py"]
 
 [mcp_servers.challenge_kb.env]
-
-KB_PATH
-
-=
-
-"/labs/kb"
-
-KB_COLLECTION
-
-=
-
-"ctf-notes"
-
+KB_PATH = "/labs/kb"
+KB_COLLECTION = "ctf-notes"
 ```
 
 这个配置片段表达的语义很直接。host 启动后会拉起两个 MCP server，一个暴露 `/labs/web-lab` 目录下的文件系统能力，一个暴露本地知识库能力。client 完成协议初始化以后，host 就能枚举 `read_file`、`list_dir`、`kb_search`、`get_note` 这类工具与资源。模型随后在同一条调用链里使用它们，外层执行器继续负责权限、日志和错误处理。
@@ -971,8 +316,7 @@ skills 的工程意义，就在于把这类可复用流程沉淀为工作单元�
 按当前主流 CLI Agent 生态的习惯，一个 skill 的最小结构可以写成这样：
 
 
-```
-
+```yaml
 web-initial-recon/
 ├── SKILL.md
 ├── references/
@@ -983,7 +327,6 @@ web-initial-recon/
 │   └── response_digest.py
 └── assets/
     └── recon-report-template.md
-
 ```
 
 `SKILL.md` 是入口文件，它需要承担五项职责。第一，写清触发条件，例如“当目录中出现 Web 项目结构、容器编排文件或实验说明时触发”。第二，写清任务边界，例如“只做初始侦察与证据整理，深入利用阶段交给后续 skill 或人工确认”。第三，写清执行步骤，例如先读说明、再启动服务、再枚举目录、再抓响应、再生成首轮报告。第四，写清输入输出约定，例如输入目录、基础 URL、运行约束，输出 `recon-report.md` 与若干 artifact。第五，写清常见失败点，例如服务启动延迟、动态路由遗漏、重定向链遮蔽真实入口、登录前置逻辑影响页面可见性。
@@ -993,77 +336,25 @@ web-initial-recon/
 拿一个与网络攻防直接相关的 skill 例子来看，这个结构会更清楚。下面是一份“Web 题目初始侦察” skill 的关键片段：
 
 
-```
-
+```yaml
 ---
 name: web-initial-recon
-
 description: 针对课程实验、CTF 与授权测试中的 Web 项目执行初始侦察。适用场景包括读取题目说明、启动本地服务、枚举目录与路由、提炼认证与模板线索、生成首轮侦察报告。
-
 ---
-
 
 # 工作流程
 
-1.
- 读取
-`README.md`
-、
-`docker-compose.yml`
-、
-`requirements.txt`
-、
-`package.json`
-。
-
-2.
- 启动本地服务，记录端口、环境变量与关键容器日志。
-
-3.
- 调用
-`scripts/route_map.py`
- 生成路由摘要。
-
-4.
- 访问首页、登录页与健康检查端点，调用
-`scripts/response_digest.py`
- 提炼状态码、头部、重定向与关键字段。
-
-5.
- 若框架特征明显，按需读取
-`references/`
- 中对应笔记。
-
-6.
- 输出
-`recon-report.md`
-，内容包括：
-
-
--
-
-服务启动方式
-
-
--
-
-路由摘要
-
-
--
-
-认证相关线索
-
-
--
-
-模板与渲染相关线索
-
-
--
-
-下一步建议
-
+1. 读取 `README.md`、`docker-compose.yml`、`requirements.txt`、`package.json`。
+2. 启动本地服务，记录端口、环境变量与关键容器日志。
+3. 调用 `scripts/route_map.py` 生成路由摘要。
+4. 访问首页、登录页与健康检查端点，调用 `scripts/response_digest.py` 提炼状态码、头部、重定向与关键字段。
+5. 若框架特征明显，按需读取 `references/` 中对应笔记。
+6. 输出 `recon-report.md`，内容包括：
+   - 服务启动方式
+   - 路由摘要
+   - 认证相关线索
+   - 模板与渲染相关线索
+   - 下一步建议
 ```
 
 显式调用与隐式匹配在工程上也有分工。显式调用适合课堂演示、批处理与标准流程明确的场景，使用者可以直接说“先跑 `web-initial-recon`”；隐式匹配适合日常协作，系统根据技能描述和当前任务上下文自动判断是否触发。前者强调控制感，后者强调流畅度。两种方式都很有价值，关键在于任务阶段与团队习惯。
@@ -1088,207 +379,55 @@ harness 与简单脚本、benchmark、评测平台之间也有清楚边界。简
 下面是一份最小 harness 设计草图，场景放在一类 Web 安全实验题上：
 
 
-```
-
-task_id
-:
-
-web-lab-ssti-01
-
-input
-:
-
-
-prompt_file
-:
-
-problem.md
-
-
-attachments
-:
-
-
--
-
-app.zip
-
-
--
-
-docker-compose.yml
-
-
-base_url
-:
-
-http://127.0.0.1:8080
-
-environment
-:
-
-
-workspace
-:
-
-/labs/web-lab-ssti-01
-
-
-setup
-:
-
-
--
-
-unzip app.zip -d /labs/web-lab-ssti-01
-
-
--
-
-docker compose up -d
-
-tools
-:
-
-
-mcp_servers
-:
-
-
--
-
-filesystem
-
-
--
-
-challenge_kb
-
-
-allowed_commands
-:
-
-
--
-
-ls
-
-
--
-
-sed
-
-
--
-
-grep
-
-
--
-
-curl
-
-
--
-
-python
-
-
--
-
-docker
-
-constraints
-:
-
-
-max_steps
-:
-
-20
-
-
-wall_clock_minutes
-:
-
-25
-
-
-writable_paths
-:
-
-
--
-
-/labs/web-lab-ssti-01/artifacts
-
-
-network_scope
-:
-
-
--
-
-127.0.0.1:8080
-
-logging
-:
-
-
-trace_file
-:
-
-traces/run.jsonl
-
-
-artifact_dir
-:
-
-artifacts/
-
-success
-:
-
-
-answer_pattern
-:
-
-"flag\\{[^\\n]+\\}"
-
-
-required_artifacts
-:
-
-
--
-
-artifacts/recon-report.md
-
-
--
-
-artifacts/request-response.md
-
-
--
-
-artifacts/final-analysis.md
-
-export
-:
-
-
-summary_file
-:
-
-result.json
-
-
-replay_script
-:
-
-replay.sh
-
+```yaml
+task_id: web-lab-ssti-01
+input:
+  prompt_file: problem.md
+  attachments:
+    - app.zip
+    - docker-compose.yml
+  base_url: http://127.0.0.1:8080
+
+environment:
+  workspace: /labs/web-lab-ssti-01
+  setup:
+    - unzip app.zip -d /labs/web-lab-ssti-01
+    - docker compose up -d
+
+tools:
+  mcp_servers:
+    - filesystem
+    - challenge_kb
+  allowed_commands:
+    - ls
+    - sed
+    - grep
+    - curl
+    - python
+    - docker
+
+constraints:
+  max_steps: 20
+  wall_clock_minutes: 25
+  writable_paths:
+    - /labs/web-lab-ssti-01/artifacts
+  network_scope:
+    - 127.0.0.1:8080
+
+logging:
+  trace_file: traces/run.jsonl
+  artifact_dir: artifacts/
+
+success:
+  answer_pattern: "flag\\{[^\\n]+\\}"
+  required_artifacts:
+    - artifacts/recon-report.md
+    - artifacts/request-response.md
+    - artifacts/final-analysis.md
+
+export:
+  summary_file: result.json
+  replay_script: replay.sh
 ```
 
 这份草图里最关键的 insight 在于，harness 与 Agent 的分工非常清楚。Agent 仍然负责在任务里做决定；harness 负责给这些决定提供可执行、可限制、可记录和可评测的壳层。也正因为这样，很多只有一次演示的视频或截图，看起来已经完成了任务，真正想复放时却很快失去抓手。走到 harness 这一层，系统才开始拥有严肃实验的形状。
@@ -1307,6 +446,7 @@ RAG 的完整链条，正是为了解决这一类问题。先把知识切分成�
 查询为 $q$，候选片段集合为 $D=\{d_1,d_2,\dots,d_n\}$。稠密检索得分记为 $s_{\text{dense}}(d_i,q)$，关键词检索得分记为 $s_{\text{sparse}}(d_i,q)$，重排模型得分记为 $s_{\text{rerank}}(d_i,q)$。
 
 一个常见的综合评分形式可以写成
+
 $$
 S(d\_i, q) = \alpha s\_{\text{dense}}(d\_i,q) + \beta s\_{\text{sparse}}(d\_i,q) + \gamma s\_{\text{rerank}}(d\_i,q)
 $$

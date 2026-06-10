@@ -273,6 +273,7 @@ $$
 > 令式 $(3.5)$ 等于 0，有
 >
 >
+
 $$
 0=w\sum_{i=1}^mx_i^2-\sum_{i=1}^{m}(y_i-b)x_i\Rightarrow w\sum_{i=1}^mx_i^2=\sum_{i=1}^{m}(y_i-b)x_i
 $$
@@ -281,6 +282,7 @@ $$
 > 再由 $(3.6)$ 等于 0 得到 $b=\displaystyle\dfrac{1}{m}\sum_{i=1}^{m}(y_i-wx_i)$,又因为 $\displaystyle\dfrac{1}{m}\sum_{i=1}^{m}y_i=\bar y$ 并且 $\displaystyle\dfrac{1}{m}\sum_{i=1}^{m}x_i=\bar x$ ,则 $b=\bar y-w\bar x$,代入上式，可得
 >
 >
+
 $$
 w\sum_{i=1}^{m}x_i^2=\sum_{i=1}^{m}y_ix_i-\bar y\sum_{i=1}^{m}x_i+w\bar x\sum_{i=1}^{m}x_i
 $$
@@ -289,6 +291,7 @@ $$
 > 可以整理出
 >
 >
+
 $$
 w=\dfrac{\sum_{i=1}^my_ix_i-\bar y\sum_{i=1}^mx_i}{\sum_{i=1}^mx_i^2-\bar x\sum_{i=1}^mx_i}
 $$
@@ -297,6 +300,7 @@ $$
 > 然后我们把 $\bar x$ 和 $\bar y$ 的计算代入到上式，得到
 >
 >
+
 $$
 w=\dfrac{\sum_{i=1}^{m}y_i(x_i-\bar x)}{\sum_{i=1}^{m}x^2_i-\dfrac{1}{m}\left(\sum_{i=1}^{m}x_i\right)^2}
 $$
@@ -305,6 +309,7 @@ $$
 > 然后我们把 $\bar x$ 和 $\bar y$ 的计算代入到上式，得到
 >
 >
+
 $$
 w=\dfrac{\sum_{i=1}^{m}y_i(x_i-\bar x)}{\sum_{i=1}^{m}x^2_i-\dfrac{1}{m}\left(\sum_{i=1}^{m}x_i\right)^2}
 $$
@@ -313,6 +318,7 @@ $$
 > 然后我们把 $\bar x$ 和 $\bar y$ 的计算代入到上式，得到
 >
 >
+
 $$
 w=\dfrac{\displaystyle\sum_{i=1}^{m}y_i(x_i-\bar x)}{\displaystyle\sum_{i=1}^{m}x^2_i-\dfrac{1}{m}\left(\displaystyle\sum_{i=1}^{m}x_i\right)^2}\tag{3.7}
 $$
@@ -352,9 +358,8 @@ $$
 
 进而对 $E_{\boldsymbol{w}} = (\boldsymbol{y} - \mathbf{X}\boldsymbol{w})^T (\boldsymbol{y} - \mathbf{X}\boldsymbol{w})$ 求导，得到 $\bar w$ 最优解的闭式解
 
-Note
-
-本节的最后提出了广义线性模型，如下
+!!! note
+    本节的最后提出了广义线性模型，如下
 
 $$
 y=g^{-1}(w^T+b)
@@ -433,750 +438,87 @@ $$
 代码如下：
 
 
-```
-
-import
-
-numpy
-
-as
-
-np
-
-import
-
-matplotlib.pyplot
-
-as
-
-plt
-
+```python
+import numpy as np
+import matplotlib.pyplot as plt
 
 # =========================
-
-
 # 1. 生成二维二分类数据
+# =========================
+np.random.seed(42)
+n_samples = 200
 
+X = np.random.randn(n_samples, 2)
+true_w = np.array([2.0, -3.0])
+y = (X @ true_w > 0).astype(int)
 
 # =========================
-
-np
-.
-random
-.
-seed
-(
-42
-)
-
-n_samples
-
-=
-
-200
-
-X
-
-=
-
-np
-.
-random
-.
-randn
-(
-n_samples
-,
-
-2
-)
-
-true_w
-
-=
-
-np
-.
-array
-([
-2.0
-,
-
--
-3.0
-])
-
-y
-
-=
-
-(
-X
-
-@
-
-true_w
-
->
-
-0
-)
-.
-astype
-(
-int
-)
-
-
-# =========================
-
-
 # 2. 划分训练集 / 测试集
+# =========================
+idx = np.random.permutation(n_samples)
+train_idx = idx[:140]
+test_idx = idx[140:]
 
+X_train, y_train = X[train_idx], y[train_idx]
+X_test, y_test = X[test_idx], y[test_idx]
 
 # =========================
-
-idx
-
-=
-
-np
-.
-random
-.
-permutation
-(
-n_samples
-)
-
-train_idx
-
-=
-
-idx
-[:
-140
-]
-
-test_idx
-
-=
-
-idx
-[
-140
-:]
-
-X_train
-,
-
-y_train
-
-=
-
-X
-[
-train_idx
-],
-
-y
-[
-train_idx
-]
-
-X_test
-,
-
-y_test
-
-=
-
-X
-[
-test_idx
-],
-
-y
-[
-test_idx
-]
-
-
-# =========================
-
-
 # 3. 逻辑回归
-
-
 # =========================
-
-def
-
-sigmoid
-(
-z
-):
-
-
-return
-
-1
-
-/
-
-(
-1
-
-+
-
-np
-.
-exp
-(
--
-z
-))
-
+def sigmoid(z):
+    return 1 / (1 + np.exp(-z))
 
 # 加偏置项
+Xb_train = np.c_[np.ones(len(X_train)), X_train]
+Xb_test = np.c_[np.ones(len(X_test)), X_test]
 
-Xb_train
+w = np.zeros(3)
+lr = 0.2
+n_iter = 2000
 
-=
-
-np
-.
-c_
-[
-np
-.
-ones
-(
-len
-(
-X_train
-)),
-
-X_train
-]
-
-Xb_test
-
-=
-
-np
-.
-c_
-[
-np
-.
-ones
-(
-len
-(
-X_test
-)),
-
-X_test
-]
-
-w
-
-=
-
-np
-.
-zeros
-(
-3
-)
-
-lr
-
-=
-
-0.2
-
-n_iter
-
-=
-
-2000
-
-for
-
-_
-
-in
-
-range
-(
-n_iter
-):
-
-
-p
-
-=
-
-sigmoid
-(
-Xb_train
-
-@
-
-w
-)
-
-
-grad
-
-=
-
-Xb_train
-.
-T
-
-@
-
-(
-p
-
--
-
-y_train
-)
-
-/
-
-len
-(
-y_train
-)
-
-
-w
-
--=
-
-lr
-
-*
-
-grad
-
+for _ in range(n_iter):
+    p = sigmoid(Xb_train @ w)
+    grad = Xb_train.T @ (p - y_train) / len(y_train)
+    w -= lr * grad
 
 # =========================
-
-
 # 4. 预测与评估
+# =========================
+def predict(X):
+    Xb = np.c_[np.ones(len(X)), X]
+    return (sigmoid(Xb @ w) >= 0.5).astype(int)
 
+train_acc = (predict(X_train) == y_train).mean()
+test_acc = (predict(X_test) == y_test).mean()
+
+print("Train accuracy:", train_acc)
+print("Test accuracy :", test_acc)
+print("Model weights :", w)
 
 # =========================
-
-def
-
-predict
-(
-X
-):
-
-
-Xb
-
-=
-
-np
-.
-c_
-[
-np
-.
-ones
-(
-len
-(
-X
-)),
-
-X
-]
-
-
-return
-
-(
-sigmoid
-(
-Xb
-
-@
-
-w
-)
-
->=
-
-0.5
-)
-.
-astype
-(
-int
-)
-
-train_acc
-
-=
-
-(
-predict
-(
-X_train
-)
-
-==
-
-y_train
-)
-.
-mean
-()
-
-test_acc
-
-=
-
-(
-predict
-(
-X_test
-)
-
-==
-
-y_test
-)
-.
-mean
-()
-
-print
-(
-"Train accuracy:"
-,
-
-train_acc
-)
-
-print
-(
-"Test accuracy :"
-,
-
-test_acc
-)
-
-print
-(
-"Model weights :"
-,
-
-w
-)
-
-
-# =========================
-
-
 # 5. 可视化（数据 + 决策边界）
-
-
 # =========================
-
-plt
-.
-figure
-()
-
+plt.figure()
 
 # 训练集
-
-plt
-.
-scatter
-(
-X_train
-[
-y_train
-==
-0
-,
-
-0
-],
-
-X_train
-[
-y_train
-==
-0
-,
-
-1
-],
-
-marker
-=
-'o'
-,
-
-label
-=
-'Train y=0'
-)
-
-plt
-.
-scatter
-(
-X_train
-[
-y_train
-==
-1
-,
-
-0
-],
-
-X_train
-[
-y_train
-==
-1
-,
-
-1
-],
-
-marker
-=
-'o'
-,
-
-label
-=
-'Train y=1'
-)
-
+plt.scatter(X_train[y_train==0, 0], X_train[y_train==0, 1], marker='o', label='Train y=0')
+plt.scatter(X_train[y_train==1, 0], X_train[y_train==1, 1], marker='o', label='Train y=1')
 
 # 测试集
-
-plt
-.
-scatter
-(
-X_test
-[
-y_test
-==
-0
-,
-
-0
-],
-
-X_test
-[
-y_test
-==
-0
-,
-
-1
-],
-
-marker
-=
-'x'
-,
-
-label
-=
-'Test y=0'
-)
-
-plt
-.
-scatter
-(
-X_test
-[
-y_test
-==
-1
-,
-
-0
-],
-
-X_test
-[
-y_test
-==
-1
-,
-
-1
-],
-
-marker
-=
-'x'
-,
-
-label
-=
-'Test y=1'
-)
-
+plt.scatter(X_test[y_test==0, 0], X_test[y_test==0, 1], marker='x', label='Test y=0')
+plt.scatter(X_test[y_test==1, 0], X_test[y_test==1, 1], marker='x', label='Test y=1')
 
 # 决策边界 w0 + w1*x1 + w2*x2 = 0
+x1 = np.linspace(X[:,0].min(), X[:,0].max(), 100)
+x2 = -(w[0] + w[1]*x1) / w[2]
+plt.plot(x1, x2, label='Decision boundary')
 
-x1
-
-=
-
-np
-.
-linspace
-(
-X
-[:,
-0
-]
-.
-min
-(),
-
-X
-[:,
-0
-]
-.
-max
-(),
-
-100
-)
-
-x2
-
-=
-
--
-(
-w
-[
-0
-]
-
-+
-
-w
-[
-1
-]
-*
-x1
-)
-
-/
-
-w
-[
-2
-]
-
-plt
-.
-plot
-(
-x1
-,
-
-x2
-,
-
-label
-=
-'Decision boundary'
-)
-
-plt
-.
-xlabel
-(
-"x1"
-)
-
-plt
-.
-ylabel
-(
-"x2"
-)
-
-plt
-.
-title
-(
-f
-"Logistic Regression
-\n
-Train acc=
-{
-train_acc
-:
-.2f
-}
-, Test acc=
-{
-test_acc
-:
-.2f
-}
-"
-)
-
-plt
-.
-legend
-()
-
-plt
-.
-savefig
-(
-"logistic_regression.png"
-,
-
-dpi
-=
-150
-,
-
-bbox_inches
-=
-"tight"
-)
-
-print
-(
-"图已保存为 logistic_regression.png"
-)
-
+plt.xlabel("x1")
+plt.ylabel("x2")
+plt.title(f"Logistic Regression\nTrain acc={train_acc:.2f}, Test acc={test_acc:.2f}")
+plt.legend()
+plt.savefig("logistic_regression.png", dpi=150, bbox_inches="tight")
+print("图已保存为 logistic_regression.png")
 ```
 
 随机数种子为 42，生成 200 数据，真实边界 `[-3,2]`。
@@ -1214,623 +556,58 @@ $$
 接下来就是 $w$ 的计算，书上的推导挺完善了，不加赘述了
 
 
-```
-
-
+```python
 # Plot data clusters (covariance ellipses) and mean vector m = mu1 - mu0
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Ellipse
 
-import
-
-numpy
-
-as
-
-np
-
-import
-
-matplotlib.pyplot
-
-as
-
-plt
-
-from
-
-matplotlib.patches
-
-import
-
-Ellipse
-
-np
-.
-random
-.
-seed
-(
-1
-)
-
-X0
-
-=
-
-np
-.
-random
-.
-randn
-(
-50
-,
-
-2
-)
-
-+
-
-np
-.
-array
-([
-0
-,
-
-0
-])
-
-X1
-
-=
-
-np
-.
-random
-.
-randn
-(
-50
-,
-
-2
-)
-
-+
-
-np
-.
-array
-([
-3
-,
-
-2
-])
-
+np.random.seed(1)
+X0 = np.random.randn(50, 2) + np.array([0, 0])
+X1 = np.random.randn(50, 2) + np.array([3, 2])
 
 # Means and covariances
-
-mu0
-
-=
-
-X0
-.
-mean
-(
-axis
-=
-0
-)
-
-mu1
-
-=
-
-X1
-.
-mean
-(
-axis
-=
-0
-)
-
-Sigma0
-
-=
-
-np
-.
-cov
-(
-X0
-,
-
-rowvar
-=
-False
-)
-
-Sigma1
-
-=
-
-np
-.
-cov
-(
-X1
-,
-
-rowvar
-=
-False
-)
-
-m
-
-=
-
-mu1
-
--
-
-mu0
-
-
-# mean difference vector
-
-def
-
-draw_ellipse
-(
-mean
-,
-
-cov
-,
-
-n_std
-=
-2.0
-):
-
-
-vals
-,
-
-vecs
-
-=
-
-np
-.
-linalg
-.
-eigh
-(
-cov
-)
-
-
-order
-
-=
-
-vals
-.
-argsort
-()[::
--
-1
-]
-
-
-vals
-,
-
-vecs
-
-=
-
-vals
-[
-order
-],
-
-vecs
-[:,
-
-order
-]
-
-
-angle
-
-=
-
-np
-.
-degrees
-(
-np
-.
-arctan2
-(
-vecs
-[
-1
-,
-0
-],
-
-vecs
-[
-0
-,
-0
-]))
-
-
-width
-,
-
-height
-
-=
-
-2
-
-*
-
-n_std
-
-*
-
-np
-.
-sqrt
-(
-vals
-)
-
-
-return
-
-Ellipse
-(
-mean
-,
-
-width
-,
-
-height
-,
-
-angle
-=
-angle
-,
-
-fill
-=
-False
-)
-
-plt
-.
-figure
-()
-
+mu0 = X0.mean(axis=0)
+mu1 = X1.mean(axis=0)
+Sigma0 = np.cov(X0, rowvar=False)
+Sigma1 = np.cov(X1, rowvar=False)
+
+m = mu1 - mu0  # mean difference vector
+
+def draw_ellipse(mean, cov, n_std=2.0):
+    vals, vecs = np.linalg.eigh(cov)
+    order = vals.argsort()[::-1]
+    vals, vecs = vals[order], vecs[:, order]
+    angle = np.degrees(np.arctan2(vecs[1,0], vecs[0,0]))
+    width, height = 2 * n_std * np.sqrt(vals)
+    return Ellipse(mean, width, height, angle=angle, fill=False)
+
+plt.figure()
 
 # Data points
-
-plt
-.
-scatter
-(
-X0
-[:,
-0
-],
-
-X0
-[:,
-1
-],
-
-label
-=
-"Class 0"
-)
-
-plt
-.
-scatter
-(
-X1
-[:,
-0
-],
-
-X1
-[:,
-1
-],
-
-label
-=
-"Class 1"
-)
-
+plt.scatter(X0[:,0], X0[:,1], label="Class 0")
+plt.scatter(X1[:,0], X1[:,1], label="Class 1")
 
 # Covariance ellipses (data clusters)
-
-plt
-.
-gca
-()
-.
-add_patch
-(
-draw_ellipse
-(
-mu0
-,
-
-Sigma0
-))
-
-plt
-.
-gca
-()
-.
-add_patch
-(
-draw_ellipse
-(
-mu1
-,
-
-Sigma1
-))
-
+plt.gca().add_patch(draw_ellipse(mu0, Sigma0))
+plt.gca().add_patch(draw_ellipse(mu1, Sigma1))
 
 # Means
-
-plt
-.
-scatter
-(
-mu0
-[
-0
-],
-
-mu0
-[
-1
-],
-
-marker
-=
-'x'
-,
-
-s
-=
-120
-)
-
-plt
-.
-scatter
-(
-mu1
-[
-0
-],
-
-mu1
-[
-1
-],
-
-marker
-=
-'x'
-,
-
-s
-=
-120
-)
-
-plt
-.
-text
-(
-mu0
-[
-0
-],
-
-mu0
-[
-1
-],
-
-r
-'$\mu_0$'
-,
-
-fontsize
-=
-12
-)
-
-plt
-.
-text
-(
-mu1
-[
-0
-],
-
-mu1
-[
-1
-],
-
-r
-'$\mu_1$'
-,
-
-fontsize
-=
-12
-)
-
+plt.scatter(mu0[0], mu0[1], marker='x', s=120)
+plt.scatter(mu1[0], mu1[1], marker='x', s=120)
+plt.text(mu0[0], mu0[1], r'$\mu_0$', fontsize=12)
+plt.text(mu1[0], mu1[1], r'$\mu_1$', fontsize=12)
 
 # Mean difference vector m
+plt.quiver(mu0[0], mu0[1], m[0], m[1], angles='xy', scale_units='xy', scale=1)
+plt.text(mu0[0] + m[0]/2, mu0[1] + m[1]/2, r'$m=\mu_1-\mu_0$', fontsize=12)
 
-plt
-.
-quiver
-(
-mu0
-[
-0
-],
-
-mu0
-[
-1
-],
-
-m
-[
-0
-],
-
-m
-[
-1
-],
-
-angles
-=
-'xy'
-,
-
-scale_units
-=
-'xy'
-,
-
-scale
-=
-1
-)
-
-plt
-.
-text
-(
-mu0
-[
-0
-]
-
-+
-
-m
-[
-0
-]
-/
-2
-,
-
-mu0
-[
-1
-]
-
-+
-
-m
-[
-1
-]
-/
-2
-,
-
-r
-'$m=\mu_1-\mu_0$'
-,
-
-fontsize
-=
-12
-)
-
-plt
-.
-xlabel
-(
-"x1"
-)
-
-plt
-.
-ylabel
-(
-"x2"
-)
-
-plt
-.
-title
-(
-"Data Clusters and Mean Vector m"
-)
-
-plt
-.
-axis
-(
-'equal'
-)
-
-plt
-.
-savefig
-(
-"LDA.png"
-,
-
-dpi
-=
-150
-,
-
-bbox_inches
-=
-"tight"
-)
-
-print
-(
-"图已保存为 LDA.png"
-)
-
+plt.xlabel("x1")
+plt.ylabel("x2")
+plt.title("Data Clusters and Mean Vector m")
+plt.axis('equal')
+plt.savefig("LDA.png", dpi=150, bbox_inches="tight")
+print("图已保存为 LDA.png")
 ```
 
 ![](../../../images/Pasted%20image%2020260126225614.png)

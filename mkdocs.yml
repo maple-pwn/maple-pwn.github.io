@@ -11,170 +11,195 @@ theme:
   favicon: images/logo.svg
   custom_dir: overrides
   features:
-  - content.code.copy
-  - content.code.select
-  - content.code.annotate
-  - navigation.titles
-  - navigation.tabs
-  - navigation.indexes
-  - navigation.top
+    - content.code.copy
+    - content.code.select
+    - content.code.annotate
+    - navigation.titles
+    - navigation.tabs
+    - navigation.top
   palette:
-  - media: '(prefers-color-scheme: light)'
-    scheme: default
-    primary: indigo
-    accent: indigo
-    toggle:
-      icon: material/weather-sunny
-      name: 切换到深色模式
-  - media: '(prefers-color-scheme: dark)'
-    scheme: slate
-    primary: indigo
-    accent: indigo
-    toggle:
-      icon: material/weather-night
-      name: 切换到浅色模式
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: 切换到深色模式
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: 切换到浅色模式
 markdown_extensions:
-- tables
-- attr_list
-- md_in_html
-- pymdownx.arithmatex:
-    generic: true
+  - admonition
+  - tables
+  - attr_list
+  - md_in_html
+  - pymdownx.highlight:
+      anchor_linenums: true
+      auto_title: false
+      guess_lang: true
+      linenums: false
+      pygments_lang_class: true
+      use_pygments: true
+  - pymdownx.inlinehilite
+  - pymdownx.mark
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.details
+  - pymdownx.superfences
 extra_css:
-- resources/css/extra.css
-- resources/css/tittle.css
-- resources/css/read-metrics.css
-- resources/css/leftsidebar.css
-- https://static.zeoseven.com/zsft/292/main/result.css
+  - resources/css/extra.css
+  - resources/css/tittle.css
+  - resources/css/read-metrics.css
+  - resources/css/leftsidebar.css
+  - https://static.zeoseven.com/zsft/292/main/result.css
 extra_javascript:
-- resources/js/mathjax-config.js
-- https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
-- resources/js/read-metrics.js
-- resources/js/sidebar-resize.js
+  - resources/js/mathjax-config.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - resources/js/read-metrics.js
+  - resources/js/sidebar-resize.js
 plugins: []
 nav:
-- 首页: index.md
-- OS篇:
-  - 前言: mysys/pre/index.md
-  - 实模式: mysys/01/index.md
-  - 保护模式: mysys/02/index.md
-  - 内核: mysys/03/index.md
-  - 内存管理: mysys/04/index.md
-  - IO机制: mysys/05/index.md
-  - 扩展文件系统: mysys/06/index.md
-- AI篇:
-  - 前言: LLMZtH/pre/index.md
-  - ML学习笔记:
-    - 基本知识: LLMZtH/ML/1-3/index.md
-    - 第四章 决策树: LLMZtH/ML/4/index.md
-    - 第五章 神经网络: LLMZtH/ML/5/index.md
-    - 第六章 支持向量机: LLMZtH/ML/6/index.md
-    - 第七章 贝叶斯分类器: LLMZtH/ML/7/index.md
-    - '7 1': LLMZtH/ML/7_1/index.md
-    - 第八章 集成学习: LLMZtH/ML/8/index.md
-    - 第九章 聚类: LLMZtH/ML/9/index.md
-    - 第十章 降维与度量学习: LLMZtH/ML/10/index.md
-    - 第十一章 特征选择与稀疏学习: LLMZtH/ML/11/index.md
-    - 后记: LLMZtH/ML/12/index.md
-  - RL学习笔记:
-    - '1': LLMZtH/RL/1/index.md
-  - DL学习笔记:
-    - 前言: LLMZtH/DL/1/index.md
-    - 图像识别翻译: LLMZtH/DL/images-class/index.md
-    - 图像识别实现: LLMZtH/DL/images-class-py/index.md
-    - 线性分类翻译: LLMZtH/DL/linear/index.md
-    - 线性分类实现: LLMZtH/DL/linear-py/index.md
-    - 优化翻译: LLMZtH/DL/optimization/index.md
-- 校内篇:
-  - 前言: study/pre/index.md
-  - '3': study/3/index.md
-  - 数字逻辑: study/eda/index.md
-  - 大学物理:
-    - 十二、十三章: study/dw/index.md
-    - 十四、十五章: study/dw2/index.md
-  - 概率与统计: study/gt/index.md
-  - 离散数学: study/lisan/index.md
-  - 毛中特: study/mao/index.md
-  - 计算机组成原理:
-    - 部分笔记: study/cs_final/index.md
-    - 部分试卷&重点题目分析: study/cs_exam/index.md
-  - 密码学引论:
-    - 笔记: study/cry/crypto/index.md
-    - 算法介绍-表: study/cry/outer/index.md
-    - 算法介绍-里: study/cry/inner/index.md
-  - 操作系统概论: study/OS/index.md
-  - 编译原理: study/compiler/index.md
-  - 数据库:
-    - 作业: study/db/db_homework/index.md
-    - 笔记: study/db/db/index.md
-  - 计算机设计实验入门指引: study/cs_e/index.md
-  - 汇编语言与接口设计:
-    - 笔记: study/huibian/index.md
-    - 作业: study/asm_homework/index.md
-    - 汇编速通: study/asm/index.md
-  - hot100: study/hot100/index.md
-- 阅读篇:
-  - 论文:
-    - mHC: READ/paperread/mHC/index.md
-    - cs231n扩展阅读: READ/paperread/cs231n/index.md
-- pwn篇:
-  - 前言: pwn/pre/index.md
-  - 小技巧: pwn/tricks/index.md
-  - AI做题: pwn/AI做题/index.md
-  - Agent 工作流: pwn/Agent/index.md
-  - Agent 分享: pwn/agent-ppt/index.md
-  - 栈利用:
-    - 汇编速通: pwn/Stack/汇编速通/index.md
-    - ASLR绕过: pwn/Stack/ASLR/index.md
-    - Canary绕过: pwn/Stack/Canary/index.md
-    - PIE绕过: pwn/Stack/PIE绕过/index.md
-    - 格式化字符串: pwn/Stack/fmt-all-in-one/index.md
-    - Shellcode: pwn/Stack/shellcode-all-in-one/index.md
-    - SROP: pwn/Stack/SROP/index.md
-  - 堆利用:
-    - 基础知识: pwn/Heap/基础知识/index.md
-    - 函数原型: pwn/Heap/各个函数原型/index.md
-    - 堆溢出: pwn/Heap/堆溢出/index.md
-    - 堆溢出要点: pwn/Heap/堆溢出中比较重要的步骤/index.md
-    - Off-by-one: pwn/Heap/堆中的off-by-one/index.md
-    - 攻击手法: pwn/Heap/堆各类攻击手法/index.md
-    - 例题记录: pwn/Heap/例题记录/index.md
-  - IO_FILE:
-    - 基础知识: pwn/IO_FILE/_IO_FILE基础知识/index.md
-    - 源码分析: pwn/IO_FILE/IO_FILE源码/index.md
-    - fopen: pwn/IO_FILE/fopen/index.md
-    - fread: pwn/IO_FILE/fread/index.md
-    - 做题技巧: pwn/IO_FILE/做题技巧/index.md
-  - House系列:
-    - House of Apple1: pwn/house/关于house of apple1的研究/index.md
-    - House of Apple2: pwn/house/关于house-of-apple2的学习/index.md
-    - House of Cat: pwn/house/关于house of cat 的学习/index.md
-    - House of Kiwi: pwn/house/关于house-of-kiwi的学习/index.md
-    - House of Botcake: pwn/house/关于house-of-botcake的研究/index.md
-  - CTF Writeups:
-    - BaseCTF: pwn/wp/basectf/index.md
-    - MoeCTF: pwn/wp/moectf/index.md
-    - ISCTF2024: pwn/wp/isctf2024/index.md
-    - GHCTF: pwn/wp/ghctf/index.md
-    - XYCTF: pwn/wp/xyctf/index.md
-    - TGCTF: pwn/wp/tgctf/index.md
-    - NPCCTF: pwn/wp/NPCCTF/index.md
-    - CTFShow: pwn/wp/ctfshow/index.md
-    - WHUCTF2024: pwn/wp/whuctf2024/index.md
-    - WHUCTF2025: pwn/wp/whuctf2025/index.md
-    - 强网杯: pwn/wp/强网杯/index.md
-    - PolarD&N: pwn/wp/polarD&N/polarD&N/index.md
-    - BUUCTF:
-      - 1-20题: pwn/wp/buuctf/buuctf刷题记录（1-20题）/index.md
-      - 21-40题: pwn/wp/buuctf/buuctf刷题记录（21-40题）/index.md
-      - 41-60题: pwn/wp/buuctf/buuctf刷题记录（41-60题）/index.md
-      - 61-80题: pwn/wp/buuctf/buuctf刷题记录（61-80题）/index.md
-- 论道篇:
-  - 前言: thinking/pre/index.md
-  - 信息时代的我们: thinking/I/index.md
-  - AI时代的我们: thinking/AI/index.md
-- 杂篇:
-  - proj: sth/proj/index.md
-  - 32位位运算可视化工具: tools/bit32_visualizer/index.md
-  - 一些事故:
-    - ssh配置: sth/ssh/index.md
-    - codex cli卡死: sth/codex/index.md
+  - OS篇:
+      - 前言: mysys/pre/index.md
+      - 实模式: mysys/01/index.md
+      - 保护模式: mysys/02/index.md
+      - 内核: mysys/03/index.md
+      - 内存管理: mysys/04/index.md
+      - IO机制: mysys/05/index.md
+      - 扩展文件系统: mysys/06/index.md
+  - AI篇:
+      - 前言: LLMZtH/pre/index.md
+      - AI细碎知识:
+          - Agent: LLMZtH/Agent/index.md
+          - RAG: LLMZtH/RAG/index.md
+          - LLM防火墙: LLMZtH/LLMWAF/index.md
+          - LLM安全Top10: LLMZtH/LLMT10/index.md
+      - ML学习笔记:
+          - 基本知识: LLMZtH/ML/1-3/index.md
+          - 第四章 决策树: LLMZtH/ML/4/index.md
+          - 第五章 神经网络: LLMZtH/ML/5/index.md
+          - 第六章 支持向量机: LLMZtH/ML/6/index.md
+          - 第七章 贝叶斯分类器: LLMZtH/ML/7/index.md
+          - "7 1": LLMZtH/ML/7_1/index.md
+          - 第八章 集成学习: LLMZtH/ML/8/index.md
+          - 第九章 聚类: LLMZtH/ML/9/index.md
+          - 第十章 降维与度量学习: LLMZtH/ML/10/index.md
+          - 第十一章 特征选择与稀疏学习: LLMZtH/ML/11/index.md
+          - 后记: LLMZtH/ML/12/index.md
+      - RL学习笔记:
+          - "1": LLMZtH/RL/1/index.md
+      - DL学习笔记:
+          - 前言: LLMZtH/DL/1/index.md
+          - 图像识别翻译: LLMZtH/DL/images-class/index.md
+          - 图像识别实现: LLMZtH/DL/images-class-py/index.md
+          - 线性分类翻译: LLMZtH/DL/linear/index.md
+          - 线性分类实现: LLMZtH/DL/linear-py/index.md
+          - 优化-翻译: LLMZtH/DL/optimization/index.md
+          - 反向传播-翻译: LLMZtH/DL/Backprop/index.md
+  - 校内篇:
+      - 前言: study/pre/index.md
+      - 数字逻辑: study/eda/index.md
+      - 大学物理:
+          - 十二、十三章: study/dw/index.md
+          - 十四、十五章: study/dw2/index.md
+      - 概率与统计: study/gt/index.md
+      - 离散数学: study/lisan/index.md
+      - 毛中特: study/mao/index.md
+      - 计算机组成原理:
+          - 部分笔记: study/cs_final/index.md
+          - 部分试卷&重点题目分析: study/cs_exam/index.md
+      - 密码学引论:
+          - 笔记: study/cry/crypto/index.md
+          - 数学基础: study/cry/math_base.md
+          - 算法介绍-AES: study/cry/AES.md
+          - 算法介绍-SM4: study/cry/SM4.md
+          - 算法介绍-SHA3: study/cry/SHA3.md
+          - 算法介绍-SM3: study/cry/SM3.md
+          - 算法介绍-ZUC: study/cry/ZUC.md
+          - 算法介绍-RSA&EIGamal: study/cry/RSA&EIGamal.md
+          - 算法介绍-SM2: study/cry/SM2.md
+      - 操作系统概论: study/OS/index.md
+      - 编译原理: study/compiler/index.md
+      - 数据库:
+          - 作业: study/db/db_homework/index.md
+          - 笔记: study/db/db/index.md
+      - 计算机设计实验入门指引: study/cs_e/index.md
+      - 汇编语言与接口设计:
+          - 笔记: study/huibian/index.md
+          - 作业: study/asm_homework/index.md
+          - 汇编速通: study/asm/index.md
+      - hot100: study/hot100/index.md
+  - 阅读篇:
+      - 论文:
+          - mHC: READ/paperread/mHC/index.md
+          - GCG越狱论文: READ/paperread/GCG/index.md
+          - cs231n扩展阅读: READ/paperread/cs231n/index.md
+  - pwn篇:
+      - 前言: pwn/pre/index.md
+      - 小技巧: pwn/tricks/index.md
+      - AI做题: pwn/AI做题/index.md
+      - Agent 工作流: pwn/Agent/index.md
+      - Agent 分享: pwn/agent-ppt/index.md
+      - 栈利用:
+          - 汇编速通: pwn/Stack/汇编速通/index.md
+          - ASLR绕过: pwn/Stack/ASLR/index.md
+          - Canary绕过: pwn/Stack/Canary/index.md
+          - PIE绕过: pwn/Stack/PIE绕过/index.md
+          - 格式化字符串: pwn/Stack/fmt-all-in-one/index.md
+          - Shellcode: pwn/Stack/shellcode-all-in-one/index.md
+          - SROP: pwn/Stack/SROP/index.md
+      - 堆利用:
+          - 基础知识: pwn/Heap/基础知识/index.md
+          - 函数原型: pwn/Heap/各个函数原型/index.md
+          - 堆溢出: pwn/Heap/堆溢出/index.md
+          - 堆溢出要点: pwn/Heap/堆溢出中比较重要的步骤/index.md
+          - Off-by-one: pwn/Heap/堆中的off-by-one/index.md
+          - 攻击手法: pwn/Heap/堆各类攻击手法/index.md
+          - 例题记录: pwn/Heap/例题记录/index.md
+      - IO_FILE:
+          - 基础知识: pwn/IO_FILE/_IO_FILE基础知识/index.md
+          - 源码分析: pwn/IO_FILE/IO_FILE源码/index.md
+          - fopen: pwn/IO_FILE/fopen/index.md
+          - fread: pwn/IO_FILE/fread/index.md
+          - 做题技巧: pwn/IO_FILE/做题技巧/index.md
+      - House系列:
+          - House of Apple1: pwn/house/关于house of apple1的研究/index.md
+          - House of Apple2: pwn/house/关于house-of-apple2的学习/index.md
+          - House of Cat: pwn/house/关于house of cat 的学习/index.md
+          - House of Kiwi: pwn/house/关于house-of-kiwi的学习/index.md
+          - House of Botcake: pwn/house/关于house-of-botcake的研究/index.md
+      - CTF Writeups:
+          - BaseCTF: pwn/wp/basectf/index.md
+          - MoeCTF: pwn/wp/moectf/index.md
+          - ISCTF2024: pwn/wp/isctf2024/index.md
+          - GHCTF: pwn/wp/ghctf/index.md
+          - XYCTF: pwn/wp/xyctf/index.md
+          - TGCTF: pwn/wp/tgctf/index.md
+          - NPCCTF: pwn/wp/NPCCTF/index.md
+          - CTFShow: pwn/wp/ctfshow/index.md
+          - WHUCTF2024: pwn/wp/whuctf2024/index.md
+          - WHUCTF2025: pwn/wp/whuctf2025/index.md
+          - 强网杯: pwn/wp/强网杯/index.md
+          - PolarD&N: pwn/wp/polarD&N/polarD&N/index.md
+          - BUUCTF:
+              - 1-20题: pwn/wp/buuctf/buuctf刷题记录（1-20题）/index.md
+              - 21-40题: pwn/wp/buuctf/buuctf刷题记录（21-40题）/index.md
+              - 41-60题: pwn/wp/buuctf/buuctf刷题记录（41-60题）/index.md
+              - 61-80题: pwn/wp/buuctf/buuctf刷题记录（61-80题）/index.md
+  - 论道篇:
+      - 前言: thinking/pre/index.md
+      - 信息时代的我们: thinking/I/index.md
+      - AI时代的我们: thinking/AI/index.md
+  - 杂篇:
+      - proj: sth/proj/index.md
+      - 十分钟学会panda: sth/10-min-panda/index.md
+      - 一些杂七杂八的随手记: sth/others/index.md
+      - 32位位运算可视化工具: tools/bit32_visualizer/index.md
+      - 一些事故:
+          - ssh配置: sth/ssh/index.md
+          - codex cli卡死: sth/codex/index.md
+  - 🎮 游戏: https://game.oldmaple.top

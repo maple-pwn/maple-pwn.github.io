@@ -13,7 +13,6 @@
 
 
 ```
-
 ./
 ├── demo/           # CPU 实现（仿真 + FPGA）
 │   ├── plcpu_sim/  # 流水线 CPU 仿真
@@ -22,7 +21,6 @@
 └── testcode/       # 汇编测试程序
     ├── demo/       # 演示程序
     └── task/       # 任务测试
-
 ```
 
 
@@ -197,55 +195,9 @@
 
 
 ```
-
-for
-
-{
-set
-
-i
-
-0
+for {set i 0} {$i < 32} {incr i} {
+  echo [format "x%0d = %s" $i [examine -hex /sccomp_tb/sccomp/U_SCCPU/U_RF/rf($i)]]
 }
-
-{
-$i
-
-<
-
-32
-}
-
-{
-incr
-
-i
-}
-
-{
-
-
-echo
-
-[
-format
-
-"x%0d = %s"
-
-$i
-
-[
-examine
-
--hex
-
-/sccomp_tb/sccomp/U_SCCPU/U_RF/rf
-(
-$i
-)]]
-
-}
-
 ```
 
 ![image-20260304235840154](../../images/image-20260304235840154.png)
@@ -254,47 +206,9 @@ $i
 
 
 ```
-
-for
-
-{
-set
-
-i
-
-0
+for {set i 0} {$i < 32} {incr i} {
+  add wave -hex /sccomp_tb/sccomp/U_SCCPU/U_RF/rf($i)
 }
-
-{
-$i
-
-<
-
-32
-}
-
-{
-incr
-
-i
-}
-
-{
-
-
-add
-
-wave
-
--hex
-
-/sccomp_tb/sccomp/U_SCCPU/U_RF/rf
-(
-$i
-)
-
-}
-
 ```
 
 Debug环节
@@ -302,104 +216,26 @@ Debug环节
 笔者的室友在运行这个指令的时候出现了如下报错：
 
 
-```
-
-for
-
-{
-set
-
-i
-
-0
+```python
+for {set i 0} {$i < 32} {incr i} {
+    echo [format "x%0d = %s" $i [examine -hex /sccomp_tb/sccomp/U_SCCPU/U_RF/rf($i)]]
 }
-
-{
-$i
-
-<
-
-32
-}
-
-{
-incr
-
-i
-}
-
-{
-
-
-echo
-
-[
-format
-
-"x%0d = %s"
-
-$i
-
-[
-examine
-
--hex
-
-/sccomp_tb/sccomp/U_SCCPU/U_RF/rf
-(
-$i
-)]]
-
-}
-
 
 # evaluating expression "rf(0)"
-
-
 # No object found matching "rf".
-
-
 # ** Error: (vish-4014) No objects found matching '/sccomp_tb/sccomp/U_SCCPU/U_RF/rf(0)'.
-
 ```
 
 这个是由于仿真优化把内部 memory 隐藏了，按顺序执行下面的指令就可以了
 
 
 ```
-
-
 # 先重新启动，保留内部对象可见性
-
-vsim
-
--voptargs
-=
-+acc
-
-work.sccomp_tb
-
-
+vsim -voptargs=+acc work.sccomp_tb
 # 确认路径下有哪些信号
-
-find
-
-signals
-
-/sccomp_tb/sccomp/U_SCCPU/U_RF/*
-
-
+find signals /sccomp_tb/sccomp/U_SCCPU/U_RF/*
 # 再读寄存器数组进行测试
-
-examine
-
--hex
-
-/sccomp_tb/sccomp/U_SCCPU/U_RF/rf
-(
-5
-)
-
+examine -hex /sccomp_tb/sccomp/U_SCCPU/U_RF/rf(5)
 ```
 
 至此，ModelSim所需要的操作都结束了，接下来我们介绍 Rars.jar
@@ -420,11 +256,7 @@ examine
 
 
 ```
-
-java
-
--version
-
+java -version
 ```
 
 笔者这里先把java卸载了，显示如下：
@@ -439,18 +271,8 @@ java
 
 
 ```
-
-winget
-
-search
-
-OpenJDK
-winget
-
-search
-
-Temurin
-
+winget search OpenJDK
+winget search Temurin
 ```
 
 > 结果挺多的，笔者就不截图了，大家自己看看就行
@@ -459,17 +281,7 @@ Temurin
 
 
 ```
-
-winget
-
-install
-
--e
-
---id
-
-EclipseAdoptium.Temurin.21.JDK
-
+winget install -e --id EclipseAdoptium.Temurin.21.JDK
 ```
 
 然后等待即可，什么都不用管了

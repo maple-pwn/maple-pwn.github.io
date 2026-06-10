@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760">
+  <rect width="1280" height="760" fill="#f7f4ed"/>
+  <text x="60" y="64" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#1d2a38">LLM Firewall Deployment in an AI Application</text>
+  <text x="60" y="98" font-family="Arial, sans-serif" font-size="18" fill="#4c5a67">A system view across input, context assembly, runtime control, tools, output, and audit</text>
+
+  <rect x="70" y="160" width="160" height="76" rx="16" fill="#d8ecff" stroke="#3676b8" stroke-width="2"/>
+  <text x="150" y="206" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#133b66">Users</text>
+
+  <rect x="70" y="284" width="160" height="90" rx="16" fill="#fde2e0" stroke="#bf5b52" stroke-width="2"/>
+  <text x="150" y="328" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#6e221b">External Data</text>
+  <text x="150" y="354" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#6e221b">web / docs / email</text>
+
+  <rect x="300" y="150" width="240" height="240" rx="24" fill="#fff8db" stroke="#b89a1d" stroke-width="3"/>
+  <text x="420" y="188" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#6a5300">LLM Firewall</text>
+  <rect x="326" y="210" width="188" height="44" rx="10" fill="#fffef5" stroke="#d7c061"/>
+  <text x="420" y="238" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#5d4d13">Input detection</text>
+  <rect x="326" y="266" width="188" height="44" rx="10" fill="#fffef5" stroke="#d7c061"/>
+  <text x="420" y="294" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#5d4d13">Context trust tiers</text>
+  <rect x="326" y="322" width="188" height="44" rx="10" fill="#fffef5" stroke="#d7c061"/>
+  <text x="420" y="350" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#5d4d13">Tool / output policy</text>
+
+  <rect x="610" y="150" width="250" height="240" rx="24" fill="#eef3ff" stroke="#4b67c9" stroke-width="3"/>
+  <text x="735" y="188" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#1e347a">App / Agent Runtime</text>
+  <rect x="638" y="214" width="194" height="42" rx="10" fill="#fbfcff" stroke="#91a7f2"/>
+  <text x="735" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#23396e">Prompt assembly</text>
+  <rect x="638" y="270" width="194" height="42" rx="10" fill="#fbfcff" stroke="#91a7f2"/>
+  <text x="735" y="296" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#23396e">Memory / plan / policy</text>
+  <rect x="638" y="326" width="194" height="42" rx="10" fill="#fbfcff" stroke="#91a7f2"/>
+  <text x="735" y="352" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#23396e">Model + orchestrator</text>
+
+  <rect x="930" y="150" width="270" height="112" rx="20" fill="#e5faef" stroke="#2e8b57" stroke-width="3"/>
+  <text x="1065" y="192" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#155635">Tools</text>
+  <text x="1065" y="222" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#155635">email / browser / db / MCP</text>
+
+  <rect x="930" y="278" width="270" height="112" rx="20" fill="#ffe9d7" stroke="#c46e1f" stroke-width="3"/>
+  <text x="1065" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#7a3f06">RAG / Memory</text>
+  <text x="1065" y="350" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#7a3f06">retrieval / cache / long-term state</text>
+
+  <rect x="300" y="480" width="280" height="150" rx="22" fill="#fff1f6" stroke="#c24d80" stroke-width="3"/>
+  <text x="440" y="522" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#7d1644">Output Control</text>
+  <text x="440" y="556" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#7d1644">moderation / DLP / policy checks</text>
+  <text x="440" y="586" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#7d1644">before response leaves the app</text>
+
+  <rect x="660" y="480" width="360" height="150" rx="22" fill="#eef7fa" stroke="#2a7d93" stroke-width="3"/>
+  <text x="840" y="522" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#165465">Audit and Governance</text>
+  <text x="840" y="556" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#165465">trace / SIEM / IAM / DLP / KMS</text>
+  <text x="840" y="586" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#165465">alerts / forensics / policy versioning</text>
+
+  <path d="M230 198 H300" stroke="#2e5b88" stroke-width="4" fill="none"/>
+  <polygon points="300,198 286,191 286,205" fill="#2e5b88"/>
+  <path d="M230 328 H300" stroke="#9d3d34" stroke-width="4" fill="none"/>
+  <polygon points="300,328 286,321 286,335" fill="#9d3d34"/>
+  <path d="M540 270 H610" stroke="#7e6a15" stroke-width="4" fill="none"/>
+  <polygon points="610,270 596,263 596,277" fill="#7e6a15"/>
+  <path d="M860 206 H930" stroke="#3d5abf" stroke-width="4" fill="none"/>
+  <polygon points="930,206 916,199 916,213" fill="#3d5abf"/>
+  <path d="M860 334 H930" stroke="#3d5abf" stroke-width="4" fill="none"/>
+  <polygon points="930,334 916,327 916,341" fill="#3d5abf"/>
+  <path d="M735 390 V480" stroke="#4059b7" stroke-width="4" fill="none"/>
+  <polygon points="735,480 728,466 742,466" fill="#4059b7"/>
+  <path d="M540 560 H660" stroke="#8e4065" stroke-width="4" fill="none"/>
+  <polygon points="660,560 646,553 646,567" fill="#8e4065"/>
+
+  <text x="70" y="700" font-family="Arial, sans-serif" font-size="17" fill="#55636f">Author-drawn summary based on NIST, OWASP, Microsoft Prompt Shields, OpenAI, NVIDIA NeMo Guardrails, and enterprise runtime security product docs.</text>
+</svg>

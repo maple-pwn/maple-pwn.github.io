@@ -41,9 +41,8 @@
 
 在计算机当中，信号量就是个0以上的整数值，当为0时表示已无可用信号，是一种\*\*同步机制\*\*
 
-Note
-
-同步一般是指合作单位之间为协作完成某项工作而共同遵守的工作步调，强调的是配合时序，就像十字路口的红绿灯，只有在绿灯亮起的情况下司机才能前进，这就是一种同步。
+!!! note
+    同步一般是指合作单位之间为协作完成某项工作而共同遵守的工作步调，强调的是配合时序，就像十字路口的红绿灯，只有在绿灯亮起的情况下司机才能前进，这就是一种同步。
 
 简单来说，同步是指不能随时随意工作，工作必须在某种条件具备的情况下才能开始，工作条件具备的时间顺序就是时序。
 
@@ -75,9 +74,8 @@ Note
 3. 当线程 A 从临界区出来后执行 V 操作释放锁，此时信号量的值重新变为 1 ，之后线程 A 将线程 B 唤醒
 4. 线程 B 醒来后获得了锁，进入临界区
 
-Note
-
-**阻塞**
+!!! note
+    **阻塞**
 
 调度器并不决定线程是否可以运行，只是决定了运行的时机，线程可否运行是由线程自己把控的。当线程被换上处理器运行后，在其时间片内，线程将主宰自己的命运。
 
@@ -108,173 +106,52 @@ Note
 
 虽然我们没有真正的多控制台，但是我们把终端当成设备来对待，终端就是我们的标准输出设备，因此我们本节要构造一个终端设备，通过它实现以后的打印输出
 
-Note
-
-
-```
-
-//console.c
-
-#include
-
-"console.h"
-
-#include
-
-"print.h"
-
-#include
-
-"stdint.h"
-
-#include
-
-"sync.h"
-
-#include
-
-"thread.h"
-
-static
-
-struct
-
-lock
-
-console_lock
-;
-
-//控制台锁
-
-/* 初始化终端 */
-
-void
-
-console_init
-(){
-
-
-lock_init
-(
-console_lock
-);
-
-}
-
-/* 获取终端 */
-
-void
-
-console_acquire
-(){
-
-
-lock_acquire
-(
-&
-console_lock
-);
-
-}
-
-/* 释放终端 */
-
-void
-
-console_release
-(){
-
-
-lock_release
-(
-&
-console_lock
-);
-
-}
-
-/* 终端输出字符串 */
-
-void
-
-console_put_str
-(
-char
-*
-
-str
-){
-
-
-console_acquire
-();
-
-
-put_str
-(
-str
-);
-
-
-console_release
-();
-
-}
-
-/* 终端输出字符 */
-
-void
-
-console_put_char
-(
-uint8_t
-
-char_asci
-){
-
-
-console_acquire
-();
-
-
-put_char
-(
-char_asci
-);
-
-
-console_release
-();
-
-}
-
-/* 终端输出十六进制整数 */
-
-void
-
-console_put_int
-(
-uint32_t
-
-num
-){
-
-
-console_acquire
-();
-
-
-put_int
-(
-num
-);
-
-
-console_release
-();
-
-}
-
+!!! note
+    ```c
+    //console.c
+    #include "console.h"
+    #include "print.h"
+    #include "stdint.h"
+    #include "sync.h"
+    #include "thread.h"
+
+    static struct lock console_lock;    //控制台锁
+
+    /* 初始化终端 */
+    void console_init(){
+      lock_init(console_lock);
+    }
+
+    /* 获取终端 */
+    void console_acquire(){
+      lock_acquire(&console_lock);
+    }
+
+    /* 释放终端 */
+    void console_release(){
+      lock_release(&console_lock);
+    }
+
+    /* 终端输出字符串 */
+    void console_put_str(char* str){
+      console_acquire();
+      put_str(str);
+      console_release();
+    }
+
+    /* 终端输出字符 */
+    void console_put_char(uint8_t char_asci){
+      console_acquire();
+      put_char(char_asci);
+      console_release();
+    }
+
+    /* 终端输出十六进制整数 */
+    void console_put_int(uint32_t num){
+      console_acquire();
+      put_int(num);
+      console_release();
+    }
 ```
 
 其实就是封装了锁处理，此后用main输出的时候用console\_put\_str等函数即可，内部实现互斥机制
@@ -305,17 +182,15 @@ console_release
 
 这里的\*\*扫描码\*\*又分为两类，一个叫做\*\*通码\*\*，指的是按下按键产生的扫描码；另一个是\*\*断码\*\*，指的是松开按键产生的扫描码
 
-Note
-
-注意我们只能得到键的扫描码，并不会得到键的ASCII码，扫描码是硬件提供的编码集，ASCII是软件中约定的编码集，这两个是不同的编码方案。
+!!! note
+    注意我们只能得到键的扫描码，并不会得到键的ASCII码，扫描码是硬件提供的编码集，ASCII是软件中约定的编码集，这两个是不同的编码方案。
 
 假如我们在键盘上按下了空格键，我们在键盘中断处理程序中只能得到空格键的扫描码，该扫描码是 0x39 而不是空格键的 ASCII 码 0x20
 
 键盘的中断处理程序便充当了字符处理程序，将对应字符的扫描码转换为ASCII码输出
 
-Note
-
-![image-20250802133123244](../../images/image-20250802133123244.png)
+!!! note
+    ![image-20250802133123244](../../images/image-20250802133123244.png)
 
 ![image-20250802133136623](../../images/image-20250802133136623.png)
 
@@ -335,9 +210,8 @@ Note
 
 这里我们定义两个指针来指向其中的头和尾，但注意我们这里的环形是指逻辑上的环形，在物理内存上我们仍然是线性的，不过我们用以下方式来使得其从逻辑上来看是环形队列，那就是头指针用来写数据，尾指针用来读数据，这里当我们指针位置加1导致越过了缓冲区范围的时候会进行取余来重新指向缓冲区的开头，这样就形成了环形的错觉。
 
-Note
-
-我们知道，在计算机中可以并行多个线程，当它们之间相互合作时，必然会存在共享资源的问题，这是通过“线程同步”来实现的
+!!! note
+    我们知道，在计算机中可以并行多个线程，当它们之间相互合作时，必然会存在共享资源的问题，这是通过“线程同步”来实现的
 
 诠释“线程同步”最典型的例子就是“生产者与消费者问题”
 
@@ -433,9 +307,8 @@ TSS 和其它段一样，本质上是一片存储数据的内存区域，Intel �
 
 \*\*TSS 描述符\*\*属于系统段描述符，因此S 为0，在S 为0 的情况下，TYPE 的值为10B1。我们这里关注一下B 位，B 表示busy 位，B 位为0 时，表示任务不繁忙，B 位为1 时，表示任务繁忙。
 
-Note
-
-任务繁忙有两方面的含义：
+!!! note
+    任务繁忙有两方面的含义：
 
 - 一方面就是指此任务是否为当前正在CPU 上运行的任务。
 - 另一方面是指此任务嵌套调用了新的任务，CPU 正在执行新任务，此任务暂时挂起，等新任务执行完成后CPU 会回到此任务继续执行，所以此任务马上就会被调度执行了。
@@ -472,9 +345,7 @@ TSS 和 LDT 一样，必须要在 GDT 中注册才行，*这也是为了在引�
 
 
 ```
-
 ltr "16位通用寄存器" 或 "16位内存单元"
-
 ```
 
 第一个任务的 TSS 手工加载之后，CPU会自动地把当前任务地资源状态保存到该任务对应的 TSS 中（由寄存器TR指定）
@@ -515,9 +386,8 @@ Linux 系统调用是用中断门来实现的，通过软中断指令 int 来主
 
 我们之前实现的内存管理形式过于粗糙，分配的内存是以4KB大小的页框为单位，所以我们需要实现一种小内存快的管理，可以满足任意内存大小的分配。
 
-Note
-
-**`arena`**，一种内存管理概念，将大块内存划分为多个小块，每个小块之间互不干涉，可以分别管理，就叫做`arena`
+!!! note
+    **`arena`**，一种内存管理概念，将大块内存划分为多个小块，每个小块之间互不干涉，可以分别管理，就叫做`arena`
 
 我们可以认为`arena`是由“一大块内存”被划分成无数“小内存块”的内存仓库。`arena`的这一大块内存就是通过`malloc_page`获得以 4KB 为粒度的内存，根据请求的内存量的大小， `arena`的大小也许是一个页框，也可能是多个页框，随后再平均拆分成多个小内存块。
 

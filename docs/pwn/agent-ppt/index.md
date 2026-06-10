@@ -41,56 +41,14 @@
 # CLI 里到底能接住什么
 
 
-```
-
-tree
-
--L
-
-2
-
-./challenge
-sed
-
--n
-
-'1,160p'
-
-./README.md
-docker
-
-compose
-
-up
-
--d
-curl
-
--sS
-
-http://127.0.0.1:8080/
-python
-
-./scripts/route_map.py
-checksec
-
---file
-=
-./chall
-gdb
-
--q
-
-./chall
-
--ex
-
-'start'
-
--ex
-
-'quit'
-
+```bash
+tree -L 2 ./challenge
+sed -n '1,160p' ./README.md
+docker compose up -d
+curl -sS http://127.0.0.1:8080/
+python ./scripts/route_map.py
+checksec --file=./chall
+gdb -q ./chall -ex 'start' -ex 'quit'
 ```
 
 - 读题目说明
@@ -160,153 +118,23 @@ Agent 可以理解成：
 # Agent 主循环
 
 
-```
+```python
+task = load_task()
+state = init_state(task)
 
-task
+for step in range(MAX_STEPS):
+    context = build_context(task, state)
+    decision = model.generate(context, tools=tool_schemas)
 
-=
+    if decision.type == "tool_call":
+        observation = executor.run(decision.name, decision.arguments)
+        state = update_state(state, decision, observation)
+        save_trace(step, decision, observation)
+        continue
 
-load_task
-()
-
-state
-
-=
-
-init_state
-(
-task
-)
-
-for
-
-step
-
-in
-
-range
-(
-MAX_STEPS
-):
-
-
-context
-
-=
-
-build_context
-(
-task
-,
-
-state
-)
-
-
-decision
-
-=
-
-model
-.
-generate
-(
-context
-,
-
-tools
-=
-tool_schemas
-)
-
-
-if
-
-decision
-.
-type
-
-==
-
-"tool_call"
-:
-
-
-observation
-
-=
-
-executor
-.
-run
-(
-decision
-.
-name
-,
-
-decision
-.
-arguments
-)
-
-
-state
-
-=
-
-update_state
-(
-state
-,
-
-decision
-,
-
-observation
-)
-
-
-save_trace
-(
-step
-,
-
-decision
-,
-
-observation
-)
-
-
-continue
-
-
-if
-
-decision
-.
-type
-
-==
-
-"final_answer"
-:
-
-
-export_answer
-(
-decision
-.
-content
-,
-
-state
-)
-
-
-break
-
+    if decision.type == "final_answer":
+        export_answer(decision.content, state)
+        break
 ```
 
 ---
@@ -358,145 +186,33 @@ break
 # function calling 最小例子
 
 
-```
-
+```json
 {
-
-
-"name"
-:
-
-"read_file"
-,
-
-
-"parameters"
-:
-
-{
-
-
-"type"
-:
-
-"object"
-,
-
-
-"properties"
-:
-
-{
-
-
-"path"
-:
-
-{
-"type"
-:
-
-"string"
-},
-
-
-"max_lines"
-:
-
-{
-"type"
-:
-
-"integer"
+  "name": "read_file",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "path": {"type": "string"},
+      "max_lines": {"type": "integer"}
+    },
+    "required": ["path"]
+  }
 }
-
-
-},
-
-
-"required"
-:
-
-[
-"path"
-]
-
-
-}
-
-}
-
 ```
 
 
-```
-
+```json
 {
-
-
-"name"
-:
-
-"run_command"
-,
-
-
-"parameters"
-:
-
-{
-
-
-"type"
-:
-
-"object"
-,
-
-
-"properties"
-:
-
-{
-
-
-"command"
-:
-
-{
-"type"
-:
-
-"string"
-},
-
-
-"timeout_sec"
-:
-
-{
-"type"
-:
-
-"integer"
+  "name": "run_command",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "command": {"type": "string"},
+      "timeout_sec": {"type": "integer"}
+    },
+    "required": ["command"]
+  }
 }
-
-
-},
-
-
-"required"
-:
-
-[
-"command"
-]
-
-
-}
-
-}
-
 ```
 
 ---
@@ -506,7 +222,6 @@ break
 
 
 ```
-
 用户问题
   ↓
 模型读取工具 schema
@@ -518,7 +233,6 @@ break
 返回 tool_result
   ↓
 模型继续分析并决定下一步
-
 ```
 
 这一层的关键在于“模型生成结构化调用意图，执行权限仍然在系统外层”。
@@ -580,60 +294,18 @@ MCP 的作用就是把“工具接入”整理成协议层。
 # 一个贴近 CLI 的 MCP 配置
 
 
-```
-
+```yaml
 [mcp_servers.filesystem]
-
-command
-
-=
-
-"npx"
-
-args
-
-=
-
-[
-"-y"
-,
-
-"@modelcontextprotocol/server-filesystem"
-,
-
-"/labs/web-lab"
-]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-filesystem", "/labs/web-lab"]
 
 [mcp_servers.challenge_kb]
-
-command
-
-=
-
-"python"
-
-args
-
-=
-
-[
-"./servers/challenge_kb_server.py"
-]
+command = "python"
+args = ["./servers/challenge_kb_server.py"]
 
 [mcp_servers.challenge_kb.env]
-
-KB_PATH
-
-=
-
-"/labs/kb"
-
-KB_COLLECTION
-
-=
-
-"ctf-notes"
-
+KB_PATH = "/labs/kb"
+KB_COLLECTION = "ctf-notes"
 ```
 
 这类配置最适合拿来讲“系统怎样发现并接入能力”。
@@ -660,8 +332,7 @@ skills 的作用是把这类经验整理成可复用工作流单元。
 # 一个 skill 的最小结构
 
 
-```
-
+```yaml
 web-initial-recon/
 ├── SKILL.md
 ├── references/
@@ -672,7 +343,6 @@ web-initial-recon/
 │   └── response_digest.py
 └── assets/
     └── recon-report-template.md
-
 ```
 
 - `SKILL.md`：触发条件、任务边界、执行步骤、输入输出约定、常见失败点
@@ -686,26 +356,15 @@ web-initial-recon/
 # skill 示例：Web 初始侦察
 
 
-```
-
+```yaml
 name: web-initial-recon
 description: 针对 Web 实验题执行初始侦察
 
-1.
- 读取 README、compose、依赖文件
-
-2.
- 启动服务并记录端口与日志
-
-3.
- 生成路由摘要
-
-4.
- 访问首页、登录页、健康检查端点
-
-5.
- 输出 recon-report.md
-
+1. 读取 README、compose、依赖文件
+2. 启动服务并记录端口与日志
+3. 生成路由摘要
+4. 访问首页、登录页、健康检查端点
+5. 输出 recon-report.md
 ```
 
 这一层的重点是：
@@ -747,101 +406,22 @@ harness 让系统从“能跑”走向：
 # 最小 harness 草图
 
 
-```
-
-task_id
-:
-
-web-lab-ssti-01
-
-input
-:
-
-
-prompt_file
-:
-
-problem.md
-
-
-attachments
-:
-
-[
-app.zip
-,
-
-docker-compose.yml
-]
-
-environment
-:
-
-
-workspace
-:
-
-/labs/web-lab-ssti-01
-
-tools
-:
-
-
-allowed_commands
-:
-
-[
-ls
-,
-
-sed
-,
-
-grep
-,
-
-curl
-,
-
-python
-,
-
-docker
-]
-
-constraints
-:
-
-
-max_steps
-:
-
-20
-
-
-wall_clock_minutes
-:
-
-25
-
-logging
-:
-
-
-trace_file
-:
-
-traces/run.jsonl
-
-success
-:
-
-
-answer_pattern
-:
-
-"flag\\{[^\\n]+\\}"
-
+```yaml
+task_id: web-lab-ssti-01
+input:
+  prompt_file: problem.md
+  attachments: [app.zip, docker-compose.yml]
+environment:
+  workspace: /labs/web-lab-ssti-01
+tools:
+  allowed_commands: [ls, sed, grep, curl, python, docker]
+constraints:
+  max_steps: 20
+  wall_clock_minutes: 25
+logging:
+  trace_file: traces/run.jsonl
+success:
+  answer_pattern: "flag\\{[^\\n]+\\}"
 ```
 
 ---
@@ -869,7 +449,6 @@ RAG 解决的是“当前轮次最需要哪几段材料”。
 
 
 ```
-
 原始资料
   ↓
 切分
@@ -883,7 +462,6 @@ RAG 解决的是“当前轮次最需要哪几段材料”。
 拼接上下文
   ↓
 返回引用
-
 ```
 
 它负责补充外部知识，外部动作仍然交给工具层处理。
@@ -914,7 +492,6 @@ RAG 解决的是“当前轮次最需要哪几段材料”。
 
 
 ```
-
 用户任务
   ↓
 CLI 工作台
@@ -927,7 +504,6 @@ Agent 主循环
   └─ 在 harness 约束下持续运行
   ↓
 答案 + 证据 + 可复放结果
-
 ```
 
 ---

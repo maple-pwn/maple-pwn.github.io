@@ -16,121 +16,23 @@ OpenAI 的 function calling 文档给出了很清楚的定义：开发者用 JSO
 再看一个日志分析场景，function calling 的作用会更直观。假设终端里有一份 `auth.log`，你给模型接入一个日志过滤工具：
 
 
-```
-
+```json
 {
-
-
-"name"
-:
-
-"filter_auth_logs"
-,
-
-
-"description"
-:
-
-"筛选指定时间段的认证失败记录"
-,
-
-
-"parameters"
-:
-
-{
-
-
-"type"
-:
-
-"object"
-,
-
-
-"properties"
-:
-
-{
-
-
-"path"
-:
-
-{
-"type"
-:
-
-"string"
-},
-
-
-"start_time"
-:
-
-{
-"type"
-:
-
-"string"
-},
-
-
-"end_time"
-:
-
-{
-"type"
-:
-
-"string"
-},
-
-
-"keyword"
-:
-
-{
-"type"
-:
-
-"string"
+  "name": "filter_auth_logs",
+  "description": "筛选指定时间段的认证失败记录",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "path": {"type": "string"},
+      "start_time": {"type": "string"},
+      "end_time": {"type": "string"},
+      "keyword": {"type": "string"}
+    },
+    "required": ["path", "start_time", "end_time"],
+    "additionalProperties": false
+  },
+  "strict": true
 }
-
-
-},
-
-
-"required"
-:
-
-[
-"path"
-,
-
-"start_time"
-,
-
-"end_time"
-],
-
-
-"additionalProperties"
-:
-
-false
-
-
-},
-
-
-"strict"
-:
-
-true
-
-}
-
 ```
 
 模型随后可以直接生成一份调用请求，宿主程序根据参数完成筛选，再把结果作为结构化记录返回。这样一来，时间范围、目标文件和关键词都会进入稳定的数据流。后续若要做时间线整理、异常聚类或字段解释，模型读取的是结构化结果，后续推理可以直接建立在这些字段上。对 CLI 而言，这种稳定的数据流十分关键，因为终端任务常常由多轮工具调用串起来，前一步输出的形状会直接影响后续推理质量。
@@ -161,7 +63,6 @@ OpenAI 的技能文档和 Cookbook 将 skill 描述为一个可复用文件包�
 
 
 ```
-
 pwn-elf-firstlook/
 ├── SKILL.md
 ├── scripts/
@@ -172,7 +73,6 @@ pwn-elf-firstlook/
 └── references/
     ├── elf_mitigations.md
     └── calling_conventions.md
-
 ```
 
 这里的关键文件始终是 `SKILL.md`。一份写得好的 `SKILL.md` 通常会把四件事交代清楚：什么条件下触发；进入后按什么顺序工作；每一步调用哪些脚本或资源；最终要产出什么结构化结果。比如你可以写明：当目录中存在 ELF 且出现本地 `libc.so.6` 时，优先触发本 skill；依次运行保护检查、符号摘要、入口点附近反编译摘要；最终生成 `firstlook.md`，其中要写入保护情况、可疑函数、下一步待验证假设。这样一来，经验就从个人头脑里的操作习惯，转成了 agent 在运行时可以直接调度的工作结构。([OpenAI开发者](https://developers.openai.com/cookbook/examples/skills_in_api/?utm_source=chatgpt.com))

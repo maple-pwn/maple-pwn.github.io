@@ -492,10 +492,9 @@ $$
 
 用样本矩估计同阶的总体矩，用样本矩的函数估计总体矩的函数，这种估计方法称为参数的 **矩估计**
 
-Note
-
-步骤
-估计 k 个位置参数 $\theta_1,\theta_2,\cdots,\theta_n$ $X_1,X_2,\cdots,X_n$ 为来自总体 $X$ 的样本，令
+!!! note
+    步骤
+    估计 k 个位置参数 $\theta_1,\theta_2,\cdots,\theta_n$ $X_1,X_2,\cdots,X_n$ 为来自总体 $X$ 的样本，令
 
 $$
 \dfrac{1}{n}\displaystyle\sum_{i=1}^{n}X_i^l=E(X^l)(l=1,2,\cdots,k)
@@ -503,11 +502,10 @@ $$
 
 解得 $\hat\theta_l=\theta(X_1,\cdots,X_n)$
 
-Tip
-
-1. 矩估计使用前提是有总体矩的存在
-2. 用样本一阶原点矩 $\bar X$ 估计期望 $E(X)$
-3. 用样本二阶中心矩 $\dfrac{1}{n}\displaystyle\sum_{i=1}^{n}(X_i-\bar X)^2$ 估计方差 $D(X)$
+!!! tip
+    1. 矩估计使用前提是有总体矩的存在
+    2. 用样本一阶原点矩 $\bar X$ 估计期望 $E(X)$
+    3. 用样本二阶中心矩 $\dfrac{1}{n}\displaystyle\sum_{i=1}^{n}(X_i-\bar X)^2$ 估计方差 $D(X)$
 
 
 ### 最大似然估计法
@@ -536,12 +534,11 @@ $$
 
 > 设总体 $X\sim N(\mu,\sigma^2)$（$\mu,\sigma^2$ 都未知），则 $EX=\mu$ 的最大似然估计为 $\bar X$, $DX=\sigma^2$ 的最大似然估计为 $\frac{1}{n}\sum_{i=1}^{n}(X_i-\bar X)^2$。
 
-Note
-
-步骤（以连续性总体 $X\sim f(x;\theta)$ 为例）
-1. 构造似然函数 $L(\theta)=L(x_1,\cdots,x_n;\theta)=\displaystyle\prod_{i=1}^{n}f(x_i;\theta)$
-2. 取对数 $\ln L(\theta)=L(x_1,\cdots,x_n;\theta)=\displaystyle\sum_{i=1}^{n}\ln f(x_i;\theta)$
-3. 解方程 $\displaystyle\dfrac{\mathrm{d}[\ln L(\theta)]}{\mathrm{d}\theta}=0$
+!!! note
+    步骤（以连续性总体 $X\sim f(x;\theta)$ 为例）
+    1. 构造似然函数 $L(\theta)=L(x_1,\cdots,x_n;\theta)=\displaystyle\prod_{i=1}^{n}f(x_i;\theta)$
+    2. 取对数 $\ln L(\theta)=L(x_1,\cdots,x_n;\theta)=\displaystyle\sum_{i=1}^{n}\ln f(x_i;\theta)$
+    3. 解方程 $\displaystyle\dfrac{\mathrm{d}[\ln L(\theta)]}{\mathrm{d}\theta}=0$
 
 
 ## 第八章 区间估计
@@ -563,9 +560,8 @@ x服从指数为1的指数分布，Y=e^{-x},问Y>2\3的概率
 
 ![pasted-image-20260109200614.png](../../images/Pasted%20image%2020260109200614.png) **常数A的取值范围**
 
-Note
-
-解析
+!!! note
+    解析
 
 
 # 分布函数性质
@@ -588,9 +584,8 @@ Note
    2. 当 $0\le y <1$，由于 $X\ge0$，则有 $X^2\le y\Leftrightarrow X\le \sqrt{y}$。因此 $F_Y(y)=P(X\le \sqrt{y})=F(\sqrt{y})=A\sqrt{y}$
    3. 当 $y\ge 1$，则有 $F_Y(y)=1$
 
-Note
-
-随机变量函数的分布（核心方法）
+!!! note
+    随机变量函数的分布（核心方法）
 
 
 # 随机变量函数的分布
@@ -749,9 +744,8 @@ $$
 
 *第二步：用卡方的均值方差*
 
-Note
-
-若 $U\sim\chi^2_\nu$，则
+!!! note
+    若 $U\sim\chi^2_\nu$，则
 
 $$
 E(U)=\nu,\qquad \operatorname{D}(U)=2\nu.
@@ -854,32 +848,32 @@ $$
 \operatorname{D}\left(\frac1{n-1}\sum_{i=1}^n Z_i^2\right)=\frac{2\sigma^4}{n-1}.}
 $$
 
-Note
+!!! note
 
-$$
-X_i \sim N(\mu,\sigma^2), \quad i=1,2,\dots,n
-\bar X=\frac{1}{n}\sum_{i=1}^n X_i
-Y_i = X_i - \mu
-Z_i = X_i - \bar X
-\operatorname{cov}(X_i,X_j)=0 \quad (i\neq j)
-\operatorname{D}(X_i)=\sigma^2
-\operatorname{cov}(X_i,\bar X)=\frac{\sigma^2}{n}
-\operatorname{D}(\bar X)=\frac{\sigma^2}{n}
-\operatorname{cov}(Z_1,Z_2)=\operatorname{cov}(X_1-\bar X,\;X_2-\bar X)
-\operatorname{cov}(Z_1,Z_2)=\operatorname{cov}(X_1,X_2)
--\operatorname{cov}(X_1,\bar X)
--\operatorname{cov}(\bar X,X_2)
-+\operatorname{D}(\bar X)
-\operatorname{cov}(Z_1,Z_2)=-\frac{\sigma^2}{n}
-\frac{Y_i}{\sigma}\sim N(0,1)
-\sum_{i=1}^n \left(\frac{Y_i}{\sigma}\right)^2
-=\frac{1}{\sigma^2}\sum_{i=1}^n Y_i^2
-\sim \chi^2_n
-E(\chi^2_n)=n
-\operatorname{D}(\chi^2_n)=2n
-E\!\left(\sum_{i=1}^n Y_i^2\right)=n\sigma^2
-\operatorname{D}\!\left(\sum_{i=1}^n Y_i^2\right)=2n\sigma^4
-$$
+    $$
+    X_i \sim N(\mu,\sigma^2), \quad i=1,2,\dots,n
+    \bar X=\frac{1}{n}\sum_{i=1}^n X_i
+    Y_i = X_i - \mu
+    Z_i = X_i - \bar X
+    \operatorname{cov}(X_i,X_j)=0 \quad (i\neq j)
+    \operatorname{D}(X_i)=\sigma^2
+    \operatorname{cov}(X_i,\bar X)=\frac{\sigma^2}{n}
+    \operatorname{D}(\bar X)=\frac{\sigma^2}{n}
+    \operatorname{cov}(Z_1,Z_2)=\operatorname{cov}(X_1-\bar X,\;X_2-\bar X)
+    \operatorname{cov}(Z_1,Z_2)=\operatorname{cov}(X_1,X_2)
+    -\operatorname{cov}(X_1,\bar X)
+    -\operatorname{cov}(\bar X,X_2)
+    +\operatorname{D}(\bar X)
+    \operatorname{cov}(Z_1,Z_2)=-\frac{\sigma^2}{n}
+    \frac{Y_i}{\sigma}\sim N(0,1)
+    \sum_{i=1}^n \left(\frac{Y_i}{\sigma}\right)^2
+    =\frac{1}{\sigma^2}\sum_{i=1}^n Y_i^2
+    \sim \chi^2_n
+    E(\chi^2_n)=n
+    \operatorname{D}(\chi^2_n)=2n
+    E\!\left(\sum_{i=1}^n Y_i^2\right)=n\sigma^2
+    \operatorname{D}\!\left(\sum_{i=1}^n Y_i^2\right)=2n\sigma^4
+    $$
 
 ![pasted-image-20260111175554.png](../../images/Pasted%20image%2020260111175554.png)
 
@@ -938,6 +932,7 @@ $$
 t=\frac{\bar X-\mu\_0}{S/\sqrt{n}}\sim t(n-1)\quad (\text{在 }H\_0\text{ 下})
 }
 $$
+
 其中$\mu_0=30$。代入样本数据：
 
 $$

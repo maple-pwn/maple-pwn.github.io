@@ -1,0 +1,3068 @@
+- generic [active] [ref=e1]:
+  - link "跳转至" [ref=e2] [cursor=pointer]:
+    - /url: "#_1"
+  - banner [ref=e3]:
+    - navigation "页眉" [ref=e4]:
+      - img [ref=e6] [cursor=pointer]
+      - generic [ref=e9]:
+        - generic [ref=e11]: Maple's blog
+        - generic:
+          - generic: 第五章 神经网络
+      - generic [ref=e12]:
+        - radio "切换到深色模式"
+        - generic "切换到深色模式" [ref=e13] [cursor=pointer]:
+          - img [ref=e14]
+        - radio "切换到浅色模式"
+  - generic [ref=e16]:
+    - main [ref=e17]:
+      - generic [ref=e18]:
+        - navigation "导航栏" [ref=e21]:
+          - generic [ref=e22] [cursor=pointer]:
+            - link "Maple's blog" [ref=e23]:
+              - /url: ../../..
+              - img "logo" [ref=e24]
+            - text: Maple's blog
+          - list [ref=e25]:
+            - listitem [ref=e26]:
+              - generic [ref=e28]: OS篇
+              - navigation "OS篇" [ref=e30]:
+                - generic [ref=e31] [cursor=pointer]: OS篇
+                - list [ref=e33]:
+                  - listitem [ref=e34]:
+                    - link "前言" [ref=e35] [cursor=pointer]:
+                      - /url: ../../../mysys/pre/
+                      - generic [ref=e36]: 前言
+                  - listitem [ref=e37]:
+                    - link "实模式" [ref=e38] [cursor=pointer]:
+                      - /url: ../../../mysys/01/
+                      - generic [ref=e39]: 实模式
+                  - listitem [ref=e40]:
+                    - link "保护模式" [ref=e41] [cursor=pointer]:
+                      - /url: ../../../mysys/02/
+                      - generic [ref=e42]: 保护模式
+                  - listitem [ref=e43]:
+                    - link "内核" [ref=e44] [cursor=pointer]:
+                      - /url: ../../../mysys/03/
+                      - generic [ref=e45]: 内核
+                  - listitem [ref=e46]:
+                    - link "内存管理" [ref=e47] [cursor=pointer]:
+                      - /url: ../../../mysys/04/
+                      - generic [ref=e48]: 内存管理
+                  - listitem [ref=e49]:
+                    - link "IO机制" [ref=e50] [cursor=pointer]:
+                      - /url: ../../../mysys/05/
+                      - generic [ref=e51]: IO机制
+                  - listitem [ref=e52]:
+                    - link "扩展文件系统" [ref=e53] [cursor=pointer]:
+                      - /url: ../../../mysys/06/
+                      - generic [ref=e54]: 扩展文件系统
+            - listitem [ref=e55]:
+              - generic [ref=e57]: AI篇
+              - navigation "AI篇" [ref=e59]:
+                - generic [ref=e60] [cursor=pointer]: AI篇
+                - list [ref=e62]:
+                  - listitem [ref=e63]:
+                    - link "前言" [ref=e64] [cursor=pointer]:
+                      - /url: ../../pre/
+                      - generic [ref=e65]: 前言
+                  - listitem [ref=e66]:
+                    - generic [ref=e68]: AI细碎知识
+                    - navigation "AI细碎知识" [ref=e70]:
+                      - generic [ref=e71] [cursor=pointer]: AI细碎知识
+                      - list [ref=e73]:
+                        - listitem [ref=e74]:
+                          - link "Agent" [ref=e75] [cursor=pointer]:
+                            - /url: ../../Agent/
+                            - generic [ref=e76]: Agent
+                        - listitem [ref=e77]:
+                          - link "RAG" [ref=e78] [cursor=pointer]:
+                            - /url: ../../RAG/
+                            - generic [ref=e79]: RAG
+                        - listitem [ref=e80]:
+                          - link "LLM防火墙" [ref=e81] [cursor=pointer]:
+                            - /url: ../../LLMWAF/
+                            - generic [ref=e82]: LLM防火墙
+                        - listitem [ref=e83]:
+                          - link "LLM安全Top10" [ref=e84] [cursor=pointer]:
+                            - /url: ../../LLMT10/
+                            - generic [ref=e85]: LLM安全Top10
+                  - listitem [ref=e86]:
+                    - generic [ref=e88]: ML学习笔记
+                    - navigation "ML学习笔记" [ref=e90]:
+                      - generic [ref=e91] [cursor=pointer]: ML学习笔记
+                      - list [ref=e93]:
+                        - listitem [ref=e94]:
+                          - link "基本知识" [ref=e95] [cursor=pointer]:
+                            - /url: ../1-3/
+                            - generic [ref=e96]: 基本知识
+                        - listitem [ref=e97]:
+                          - link "第四章 决策树" [ref=e98] [cursor=pointer]:
+                            - /url: ../4/
+                            - generic [ref=e99]: 第四章 决策树
+                        - listitem [ref=e100]:
+                          - link "第五章 神经网络" [ref=e101] [cursor=pointer]:
+                            - /url: ./
+                            - generic [ref=e102]: 第五章 神经网络
+                        - listitem [ref=e103]:
+                          - link "第六章 支持向量机" [ref=e104] [cursor=pointer]:
+                            - /url: ../6/
+                            - generic [ref=e105]: 第六章 支持向量机
+                        - listitem [ref=e106]:
+                          - link "第七章 贝叶斯分类器" [ref=e107] [cursor=pointer]:
+                            - /url: ../7/
+                            - generic [ref=e108]: 第七章 贝叶斯分类器
+                        - listitem [ref=e109]:
+                          - link "7 1" [ref=e110] [cursor=pointer]:
+                            - /url: ../7_1/
+                            - generic [ref=e111]: 7 1
+                        - listitem [ref=e112]:
+                          - link "第八章 集成学习" [ref=e113] [cursor=pointer]:
+                            - /url: ../8/
+                            - generic [ref=e114]: 第八章 集成学习
+                        - listitem [ref=e115]:
+                          - link "第九章 聚类" [ref=e116] [cursor=pointer]:
+                            - /url: ../9/
+                            - generic [ref=e117]: 第九章 聚类
+                        - listitem [ref=e118]:
+                          - link "第十章 降维与度量学习" [ref=e119] [cursor=pointer]:
+                            - /url: ../10/
+                            - generic [ref=e120]: 第十章 降维与度量学习
+                        - listitem [ref=e121]:
+                          - link "第十一章 特征选择与稀疏学习" [ref=e122] [cursor=pointer]:
+                            - /url: ../11/
+                            - generic [ref=e123]: 第十一章 特征选择与稀疏学习
+                        - listitem [ref=e124]:
+                          - link "后记" [ref=e125] [cursor=pointer]:
+                            - /url: ../12/
+                            - generic [ref=e126]: 后记
+                  - listitem [ref=e127]:
+                    - generic [ref=e129]: RL学习笔记
+                    - navigation "RL学习笔记" [ref=e131]:
+                      - generic [ref=e132] [cursor=pointer]: RL学习笔记
+                      - list [ref=e134]:
+                        - listitem [ref=e135]:
+                          - link "1" [ref=e136] [cursor=pointer]:
+                            - /url: ../../RL/1/
+                            - generic [ref=e137]: "1"
+                  - listitem [ref=e138]:
+                    - generic [ref=e140]: DL学习笔记
+                    - navigation "DL学习笔记" [ref=e142]:
+                      - generic [ref=e143] [cursor=pointer]: DL学习笔记
+                      - list [ref=e145]:
+                        - listitem [ref=e146]:
+                          - link "前言" [ref=e147] [cursor=pointer]:
+                            - /url: ../../DL/1/
+                            - generic [ref=e148]: 前言
+                        - listitem [ref=e149]:
+                          - link "图像识别翻译" [ref=e150] [cursor=pointer]:
+                            - /url: ../../DL/images-class/
+                            - generic [ref=e151]: 图像识别翻译
+                        - listitem [ref=e152]:
+                          - link "图像识别实现" [ref=e153] [cursor=pointer]:
+                            - /url: ../../DL/images-class-py/
+                            - generic [ref=e154]: 图像识别实现
+                        - listitem [ref=e155]:
+                          - link "线性分类翻译" [ref=e156] [cursor=pointer]:
+                            - /url: ../../DL/linear/
+                            - generic [ref=e157]: 线性分类翻译
+                        - listitem [ref=e158]:
+                          - link "线性分类实现" [ref=e159] [cursor=pointer]:
+                            - /url: ../../DL/linear-py/
+                            - generic [ref=e160]: 线性分类实现
+                        - listitem [ref=e161]:
+                          - link "优化-翻译" [ref=e162] [cursor=pointer]:
+                            - /url: ../../DL/optimization/
+                            - generic [ref=e163]: 优化-翻译
+                        - listitem [ref=e164]:
+                          - link "反向传播-翻译" [ref=e165] [cursor=pointer]:
+                            - /url: ../../DL/Backprop/
+                            - generic [ref=e166]: 反向传播-翻译
+            - listitem [ref=e167]:
+              - generic [ref=e169]: 校内篇
+              - navigation "校内篇" [ref=e171]:
+                - generic [ref=e172] [cursor=pointer]: 校内篇
+                - list [ref=e174]:
+                  - listitem [ref=e175]:
+                    - link "前言" [ref=e176] [cursor=pointer]:
+                      - /url: ../../../study/pre/
+                      - generic [ref=e177]: 前言
+                  - listitem [ref=e178]:
+                    - link "数字逻辑" [ref=e179] [cursor=pointer]:
+                      - /url: ../../../study/eda/
+                      - generic [ref=e180]: 数字逻辑
+                  - listitem [ref=e181]:
+                    - generic [ref=e183]: 大学物理
+                    - navigation "大学物理" [ref=e185]:
+                      - generic [ref=e186] [cursor=pointer]: 大学物理
+                      - list [ref=e188]:
+                        - listitem [ref=e189]:
+                          - link "十二、十三章" [ref=e190] [cursor=pointer]:
+                            - /url: ../../../study/dw/
+                            - generic [ref=e191]: 十二、十三章
+                        - listitem [ref=e192]:
+                          - link "十四、十五章" [ref=e193] [cursor=pointer]:
+                            - /url: ../../../study/dw2/
+                            - generic [ref=e194]: 十四、十五章
+                  - listitem [ref=e195]:
+                    - link "概率与统计" [ref=e196] [cursor=pointer]:
+                      - /url: ../../../study/gt/
+                      - generic [ref=e197]: 概率与统计
+                  - listitem [ref=e198]:
+                    - link "离散数学" [ref=e199] [cursor=pointer]:
+                      - /url: ../../../study/lisan/
+                      - generic [ref=e200]: 离散数学
+                  - listitem [ref=e201]:
+                    - link "毛中特" [ref=e202] [cursor=pointer]:
+                      - /url: ../../../study/mao/
+                      - generic [ref=e203]: 毛中特
+                  - listitem [ref=e204]:
+                    - generic [ref=e206]: 计算机组成原理
+                    - navigation "计算机组成原理" [ref=e208]:
+                      - generic [ref=e209] [cursor=pointer]: 计算机组成原理
+                      - list [ref=e211]:
+                        - listitem [ref=e212]:
+                          - link "部分笔记" [ref=e213] [cursor=pointer]:
+                            - /url: ../../../study/cs_final/
+                            - generic [ref=e214]: 部分笔记
+                        - listitem [ref=e215]:
+                          - link "部分试卷&重点题目分析" [ref=e216] [cursor=pointer]:
+                            - /url: ../../../study/cs_exam/
+                            - generic [ref=e217]: 部分试卷&重点题目分析
+                  - listitem [ref=e218]:
+                    - generic [ref=e220]: 密码学引论
+                    - navigation "密码学引论" [ref=e222]:
+                      - generic [ref=e223] [cursor=pointer]: 密码学引论
+                      - list [ref=e225]:
+                        - listitem [ref=e226]:
+                          - link "笔记" [ref=e227] [cursor=pointer]:
+                            - /url: ../../../study/cry/crypto/
+                            - generic [ref=e228]: 笔记
+                        - listitem [ref=e229]:
+                          - link "数学基础" [ref=e230] [cursor=pointer]:
+                            - /url: ../../../study/cry/math_base/
+                            - generic [ref=e231]: 数学基础
+                        - listitem [ref=e232]:
+                          - link "算法介绍-AES" [ref=e233] [cursor=pointer]:
+                            - /url: ../../../study/cry/AES/
+                            - generic [ref=e234]: 算法介绍-AES
+                        - listitem [ref=e235]:
+                          - link "算法介绍-SM4" [ref=e236] [cursor=pointer]:
+                            - /url: ../../../study/cry/SM4/
+                            - generic [ref=e237]: 算法介绍-SM4
+                        - listitem [ref=e238]:
+                          - link "算法介绍-SHA3" [ref=e239] [cursor=pointer]:
+                            - /url: ../../../study/cry/SHA3/
+                            - generic [ref=e240]: 算法介绍-SHA3
+                        - listitem [ref=e241]:
+                          - link "算法介绍-SM3" [ref=e242] [cursor=pointer]:
+                            - /url: ../../../study/cry/SM3/
+                            - generic [ref=e243]: 算法介绍-SM3
+                        - listitem [ref=e244]:
+                          - link "算法介绍-ZUC" [ref=e245] [cursor=pointer]:
+                            - /url: ../../../study/cry/ZUC/
+                            - generic [ref=e246]: 算法介绍-ZUC
+                        - listitem [ref=e247]:
+                          - link "算法介绍-RSA&EIGamal" [ref=e248] [cursor=pointer]:
+                            - /url: ../../../study/cry/RSA%26EIGamal/
+                            - generic [ref=e249]: 算法介绍-RSA&EIGamal
+                        - listitem [ref=e250]:
+                          - link "算法介绍-SM2" [ref=e251] [cursor=pointer]:
+                            - /url: ../../../study/cry/SM2/
+                            - generic [ref=e252]: 算法介绍-SM2
+                  - listitem [ref=e253]:
+                    - link "操作系统概论" [ref=e254] [cursor=pointer]:
+                      - /url: ../../../study/OS/
+                      - generic [ref=e255]: 操作系统概论
+                  - listitem [ref=e256]:
+                    - link "编译原理" [ref=e257] [cursor=pointer]:
+                      - /url: ../../../study/compiler/
+                      - generic [ref=e258]: 编译原理
+                  - listitem [ref=e259]:
+                    - generic [ref=e261]: 数据库
+                    - navigation "数据库" [ref=e263]:
+                      - generic [ref=e264] [cursor=pointer]: 数据库
+                      - list [ref=e266]:
+                        - listitem [ref=e267]:
+                          - link "作业" [ref=e268] [cursor=pointer]:
+                            - /url: ../../../study/db/db_homework/
+                            - generic [ref=e269]: 作业
+                        - listitem [ref=e270]:
+                          - link "笔记" [ref=e271] [cursor=pointer]:
+                            - /url: ../../../study/db/db/
+                            - generic [ref=e272]: 笔记
+                  - listitem [ref=e273]:
+                    - link "计算机设计实验入门指引" [ref=e274] [cursor=pointer]:
+                      - /url: ../../../study/cs_e/
+                      - generic [ref=e275]: 计算机设计实验入门指引
+                  - listitem [ref=e276]:
+                    - generic [ref=e278]: 汇编语言与接口设计
+                    - navigation "汇编语言与接口设计" [ref=e280]:
+                      - generic [ref=e281] [cursor=pointer]: 汇编语言与接口设计
+                      - list [ref=e283]:
+                        - listitem [ref=e284]:
+                          - link "笔记" [ref=e285] [cursor=pointer]:
+                            - /url: ../../../study/huibian/
+                            - generic [ref=e286]: 笔记
+                        - listitem [ref=e287]:
+                          - link "作业" [ref=e288] [cursor=pointer]:
+                            - /url: ../../../study/asm_homework/
+                            - generic [ref=e289]: 作业
+                        - listitem [ref=e290]:
+                          - link "汇编速通" [ref=e291] [cursor=pointer]:
+                            - /url: ../../../study/asm/
+                            - generic [ref=e292]: 汇编速通
+                  - listitem [ref=e293]:
+                    - link "hot100" [ref=e294] [cursor=pointer]:
+                      - /url: ../../../study/hot100/
+                      - generic [ref=e295]: hot100
+            - listitem [ref=e296]:
+              - generic [ref=e298]: 阅读篇
+              - navigation "阅读篇" [ref=e300]:
+                - generic [ref=e301] [cursor=pointer]: 阅读篇
+                - list [ref=e303]:
+                  - listitem [ref=e304]:
+                    - generic [ref=e306]: 论文
+                    - navigation "论文" [ref=e308]:
+                      - generic [ref=e309] [cursor=pointer]: 论文
+                      - list [ref=e311]:
+                        - listitem [ref=e312]:
+                          - link "mHC" [ref=e313] [cursor=pointer]:
+                            - /url: ../../../READ/paperread/mHC/
+                            - generic [ref=e314]: mHC
+                        - listitem [ref=e315]:
+                          - link "GCG越狱论文" [ref=e316] [cursor=pointer]:
+                            - /url: ../../../READ/paperread/GCG/
+                            - generic [ref=e317]: GCG越狱论文
+                        - listitem [ref=e318]:
+                          - link "cs231n扩展阅读" [ref=e319] [cursor=pointer]:
+                            - /url: ../../../READ/paperread/cs231n/
+                            - generic [ref=e320]: cs231n扩展阅读
+            - listitem [ref=e321]:
+              - generic [ref=e323]: pwn篇
+              - navigation "pwn篇" [ref=e325]:
+                - generic [ref=e326] [cursor=pointer]: pwn篇
+                - list [ref=e328]:
+                  - listitem [ref=e329]:
+                    - link "前言" [ref=e330] [cursor=pointer]:
+                      - /url: ../../../pwn/pre/
+                      - generic [ref=e331]: 前言
+                  - listitem [ref=e332]:
+                    - link "小技巧" [ref=e333] [cursor=pointer]:
+                      - /url: ../../../pwn/tricks/
+                      - generic [ref=e334]: 小技巧
+                  - listitem [ref=e335]:
+                    - link "AI做题" [ref=e336] [cursor=pointer]:
+                      - /url: ../../../pwn/AI%E5%81%9A%E9%A2%98/
+                      - generic [ref=e337]: AI做题
+                  - listitem [ref=e338]:
+                    - link "Agent 工作流" [ref=e339] [cursor=pointer]:
+                      - /url: ../../../pwn/Agent/
+                      - generic [ref=e340]: Agent 工作流
+                  - listitem [ref=e341]:
+                    - link "Agent 分享" [ref=e342] [cursor=pointer]:
+                      - /url: ../../../pwn/agent-ppt/
+                      - generic [ref=e343]: Agent 分享
+                  - listitem [ref=e344]:
+                    - generic [ref=e346]: 栈利用
+                    - navigation "栈利用" [ref=e348]:
+                      - generic [ref=e349] [cursor=pointer]: 栈利用
+                      - list [ref=e351]:
+                        - listitem [ref=e352]:
+                          - link "汇编速通" [ref=e353] [cursor=pointer]:
+                            - /url: ../../../pwn/Stack/%E6%B1%87%E7%BC%96%E9%80%9F%E9%80%9A/
+                            - generic [ref=e354]: 汇编速通
+                        - listitem [ref=e355]:
+                          - link "ASLR绕过" [ref=e356] [cursor=pointer]:
+                            - /url: ../../../pwn/Stack/ASLR/
+                            - generic [ref=e357]: ASLR绕过
+                        - listitem [ref=e358]:
+                          - link "Canary绕过" [ref=e359] [cursor=pointer]:
+                            - /url: ../../../pwn/Stack/Canary/
+                            - generic [ref=e360]: Canary绕过
+                        - listitem [ref=e361]:
+                          - link "PIE绕过" [ref=e362] [cursor=pointer]:
+                            - /url: ../../../pwn/Stack/PIE%E7%BB%95%E8%BF%87/
+                            - generic [ref=e363]: PIE绕过
+                        - listitem [ref=e364]:
+                          - link "格式化字符串" [ref=e365] [cursor=pointer]:
+                            - /url: ../../../pwn/Stack/fmt-all-in-one/
+                            - generic [ref=e366]: 格式化字符串
+                        - listitem [ref=e367]:
+                          - link "Shellcode" [ref=e368] [cursor=pointer]:
+                            - /url: ../../../pwn/Stack/shellcode-all-in-one/
+                            - generic [ref=e369]: Shellcode
+                        - listitem [ref=e370]:
+                          - link "SROP" [ref=e371] [cursor=pointer]:
+                            - /url: ../../../pwn/Stack/SROP/
+                            - generic [ref=e372]: SROP
+                  - listitem [ref=e373]:
+                    - generic [ref=e375]: 堆利用
+                    - navigation "堆利用" [ref=e377]:
+                      - generic [ref=e378] [cursor=pointer]: 堆利用
+                      - list [ref=e380]:
+                        - listitem [ref=e381]:
+                          - link "基础知识" [ref=e382] [cursor=pointer]:
+                            - /url: ../../../pwn/Heap/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/
+                            - generic [ref=e383]: 基础知识
+                        - listitem [ref=e384]:
+                          - link "函数原型" [ref=e385] [cursor=pointer]:
+                            - /url: ../../../pwn/Heap/%E5%90%84%E4%B8%AA%E5%87%BD%E6%95%B0%E5%8E%9F%E5%9E%8B/
+                            - generic [ref=e386]: 函数原型
+                        - listitem [ref=e387]:
+                          - link "堆溢出" [ref=e388] [cursor=pointer]:
+                            - /url: ../../../pwn/Heap/%E5%A0%86%E6%BA%A2%E5%87%BA/
+                            - generic [ref=e389]: 堆溢出
+                        - listitem [ref=e390]:
+                          - link "堆溢出要点" [ref=e391] [cursor=pointer]:
+                            - /url: ../../../pwn/Heap/%E5%A0%86%E6%BA%A2%E5%87%BA%E4%B8%AD%E6%AF%94%E8%BE%83%E9%87%8D%E8%A6%81%E7%9A%84%E6%AD%A5%E9%AA%A4/
+                            - generic [ref=e392]: 堆溢出要点
+                        - listitem [ref=e393]:
+                          - link "Off-by-one" [ref=e394] [cursor=pointer]:
+                            - /url: ../../../pwn/Heap/%E5%A0%86%E4%B8%AD%E7%9A%84off-by-one/
+                            - generic [ref=e395]: Off-by-one
+                        - listitem [ref=e396]:
+                          - link "攻击手法" [ref=e397] [cursor=pointer]:
+                            - /url: ../../../pwn/Heap/%E5%A0%86%E5%90%84%E7%B1%BB%E6%94%BB%E5%87%BB%E6%89%8B%E6%B3%95/
+                            - generic [ref=e398]: 攻击手法
+                        - listitem [ref=e399]:
+                          - link "例题记录" [ref=e400] [cursor=pointer]:
+                            - /url: ../../../pwn/Heap/%E4%BE%8B%E9%A2%98%E8%AE%B0%E5%BD%95/
+                            - generic [ref=e401]: 例题记录
+                  - listitem [ref=e402]:
+                    - generic [ref=e404]: IO_FILE
+                    - navigation "IO_FILE" [ref=e406]:
+                      - generic [ref=e407] [cursor=pointer]: IO_FILE
+                      - list [ref=e409]:
+                        - listitem [ref=e410]:
+                          - link "基础知识" [ref=e411] [cursor=pointer]:
+                            - /url: ../../../pwn/IO_FILE/_IO_FILE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/
+                            - generic [ref=e412]: 基础知识
+                        - listitem [ref=e413]:
+                          - link "源码分析" [ref=e414] [cursor=pointer]:
+                            - /url: ../../../pwn/IO_FILE/IO_FILE%E6%BA%90%E7%A0%81/
+                            - generic [ref=e415]: 源码分析
+                        - listitem [ref=e416]:
+                          - link "fopen" [ref=e417] [cursor=pointer]:
+                            - /url: ../../../pwn/IO_FILE/fopen/
+                            - generic [ref=e418]: fopen
+                        - listitem [ref=e419]:
+                          - link "fread" [ref=e420] [cursor=pointer]:
+                            - /url: ../../../pwn/IO_FILE/fread/
+                            - generic [ref=e421]: fread
+                        - listitem [ref=e422]:
+                          - link "做题技巧" [ref=e423] [cursor=pointer]:
+                            - /url: ../../../pwn/IO_FILE/%E5%81%9A%E9%A2%98%E6%8A%80%E5%B7%A7/
+                            - generic [ref=e424]: 做题技巧
+                  - listitem [ref=e425]:
+                    - generic [ref=e427]: House系列
+                    - navigation "House系列" [ref=e429]:
+                      - generic [ref=e430] [cursor=pointer]: House系列
+                      - list [ref=e432]:
+                        - listitem [ref=e433]:
+                          - link "House of Apple1" [ref=e434] [cursor=pointer]:
+                            - /url: ../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse%20of%20apple1%E7%9A%84%E7%A0%94%E7%A9%B6/
+                            - generic [ref=e435]: House of Apple1
+                        - listitem [ref=e436]:
+                          - link "House of Apple2" [ref=e437] [cursor=pointer]:
+                            - /url: ../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-apple2%E7%9A%84%E5%AD%A6%E4%B9%A0/
+                            - generic [ref=e438]: House of Apple2
+                        - listitem [ref=e439]:
+                          - link "House of Cat" [ref=e440] [cursor=pointer]:
+                            - /url: ../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse%20of%20cat%20%E7%9A%84%E5%AD%A6%E4%B9%A0/
+                            - generic [ref=e441]: House of Cat
+                        - listitem [ref=e442]:
+                          - link "House of Kiwi" [ref=e443] [cursor=pointer]:
+                            - /url: ../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-kiwi%E7%9A%84%E5%AD%A6%E4%B9%A0/
+                            - generic [ref=e444]: House of Kiwi
+                        - listitem [ref=e445]:
+                          - link "House of Botcake" [ref=e446] [cursor=pointer]:
+                            - /url: ../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-botcake%E7%9A%84%E7%A0%94%E7%A9%B6/
+                            - generic [ref=e447]: House of Botcake
+                  - listitem [ref=e448]:
+                    - generic [ref=e450]: CTF Writeups
+                    - navigation "CTF Writeups" [ref=e452]:
+                      - generic [ref=e453] [cursor=pointer]: CTF Writeups
+                      - list [ref=e455]:
+                        - listitem [ref=e456]:
+                          - link "BaseCTF" [ref=e457] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/basectf/
+                            - generic [ref=e458]: BaseCTF
+                        - listitem [ref=e459]:
+                          - link "MoeCTF" [ref=e460] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/moectf/
+                            - generic [ref=e461]: MoeCTF
+                        - listitem [ref=e462]:
+                          - link "ISCTF2024" [ref=e463] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/isctf2024/
+                            - generic [ref=e464]: ISCTF2024
+                        - listitem [ref=e465]:
+                          - link "GHCTF" [ref=e466] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/ghctf/
+                            - generic [ref=e467]: GHCTF
+                        - listitem [ref=e468]:
+                          - link "XYCTF" [ref=e469] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/xyctf/
+                            - generic [ref=e470]: XYCTF
+                        - listitem [ref=e471]:
+                          - link "TGCTF" [ref=e472] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/tgctf/
+                            - generic [ref=e473]: TGCTF
+                        - listitem [ref=e474]:
+                          - link "NPCCTF" [ref=e475] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/NPCCTF/
+                            - generic [ref=e476]: NPCCTF
+                        - listitem [ref=e477]:
+                          - link "CTFShow" [ref=e478] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/ctfshow/
+                            - generic [ref=e479]: CTFShow
+                        - listitem [ref=e480]:
+                          - link "WHUCTF2024" [ref=e481] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/whuctf2024/
+                            - generic [ref=e482]: WHUCTF2024
+                        - listitem [ref=e483]:
+                          - link "WHUCTF2025" [ref=e484] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/whuctf2025/
+                            - generic [ref=e485]: WHUCTF2025
+                        - listitem [ref=e486]:
+                          - link "强网杯" [ref=e487] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/%E5%BC%BA%E7%BD%91%E6%9D%AF/
+                            - generic [ref=e488]: 强网杯
+                        - listitem [ref=e489]:
+                          - link "PolarD&N" [ref=e490] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/polarD%26N/polarD%26N/
+                            - generic [ref=e491]: PolarD&N
+                        - listitem [ref=e492]:
+                          - generic [ref=e494]: BUUCTF
+                          - navigation "BUUCTF" [ref=e496]:
+                            - generic [ref=e497] [cursor=pointer]: BUUCTF
+                            - list [ref=e499]:
+                              - listitem [ref=e500]:
+                                - link "1-20题" [ref=e501] [cursor=pointer]:
+                                  - /url: ../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%881-20%E9%A2%98%EF%BC%89/
+                                  - generic [ref=e502]: 1-20题
+                              - listitem [ref=e503]:
+                                - link "21-40题" [ref=e504] [cursor=pointer]:
+                                  - /url: ../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8821-40%E9%A2%98%EF%BC%89/
+                                  - generic [ref=e505]: 21-40题
+                              - listitem [ref=e506]:
+                                - link "41-60题" [ref=e507] [cursor=pointer]:
+                                  - /url: ../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8841-60%E9%A2%98%EF%BC%89/
+                                  - generic [ref=e508]: 41-60题
+                              - listitem [ref=e509]:
+                                - link "61-80题" [ref=e510] [cursor=pointer]:
+                                  - /url: ../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8861-80%E9%A2%98%EF%BC%89/
+                                  - generic [ref=e511]: 61-80题
+            - listitem [ref=e512]:
+              - generic [ref=e514]: 论道篇
+              - navigation "论道篇" [ref=e516]:
+                - generic [ref=e517] [cursor=pointer]: 论道篇
+                - list [ref=e519]:
+                  - listitem [ref=e520]:
+                    - link "前言" [ref=e521] [cursor=pointer]:
+                      - /url: ../../../thinking/pre/
+                      - generic [ref=e522]: 前言
+                  - listitem [ref=e523]:
+                    - link "信息时代的我们" [ref=e524] [cursor=pointer]:
+                      - /url: ../../../thinking/I/
+                      - generic [ref=e525]: 信息时代的我们
+                  - listitem [ref=e526]:
+                    - link "AI时代的我们" [ref=e527] [cursor=pointer]:
+                      - /url: ../../../thinking/AI/
+                      - generic [ref=e528]: AI时代的我们
+            - listitem [ref=e529]:
+              - generic [ref=e531]: 杂篇
+              - navigation "杂篇" [ref=e533]:
+                - generic [ref=e534] [cursor=pointer]: 杂篇
+                - list [ref=e536]:
+                  - listitem [ref=e537]:
+                    - link "proj" [ref=e538] [cursor=pointer]:
+                      - /url: ../../../sth/proj/
+                      - generic [ref=e539]: proj
+                  - listitem [ref=e540]:
+                    - link "十分钟学会panda" [ref=e541] [cursor=pointer]:
+                      - /url: ../../../sth/10-min-panda/
+                      - generic [ref=e542]: 十分钟学会panda
+                  - listitem [ref=e543]:
+                    - link "一些杂七杂八的随手记" [ref=e544] [cursor=pointer]:
+                      - /url: ../../../sth/others/
+                      - generic [ref=e545]: 一些杂七杂八的随手记
+                  - listitem [ref=e546]:
+                    - link "32位位运算可视化工具" [ref=e547] [cursor=pointer]:
+                      - /url: ../../../tools/bit32_visualizer/
+                      - generic [ref=e548]: 32位位运算可视化工具
+                  - listitem [ref=e549]:
+                    - generic [ref=e551]: 一些事故
+                    - navigation "一些事故" [ref=e553]:
+                      - generic [ref=e554] [cursor=pointer]: 一些事故
+                      - list [ref=e556]:
+                        - listitem [ref=e557]:
+                          - link "ssh配置" [ref=e558] [cursor=pointer]:
+                            - /url: ../../../sth/ssh/
+                            - generic [ref=e559]: ssh配置
+                        - listitem [ref=e560]:
+                          - link "codex cli卡死" [ref=e561] [cursor=pointer]:
+                            - /url: ../../../sth/codex/
+                            - generic [ref=e562]: codex cli卡死
+        - navigation "目录" [ref=e566]:
+          - generic [ref=e567]: 目录
+          - list [ref=e568]:
+            - listitem [ref=e569]:
+              - link "感知机与多层网络" [ref=e570] [cursor=pointer]:
+                - /url: "#_2"
+                - generic [ref=e571]: 感知机与多层网络
+            - listitem [ref=e572]:
+              - link "误差逆传播算法(BP)" [ref=e573] [cursor=pointer]:
+                - /url: "#bp"
+                - generic [ref=e574]: 误差逆传播算法(BP)
+            - listitem [ref=e575]:
+              - link "全局最小与局部极小" [ref=e576] [cursor=pointer]:
+                - /url: "#_3"
+                - generic [ref=e577]: 全局最小与局部极小
+            - listitem [ref=e578]:
+              - link "深度学习" [ref=e579] [cursor=pointer]:
+                - /url: "#_4"
+                - generic [ref=e580]: 深度学习
+        - article [ref=e582]:
+          - heading "第五章 神经网络" [level=1] [ref=e583]
+          - generic [ref=e584]:
+            - generic [ref=e585]: 阅读时长 10 分钟
+            - generic [ref=e586]: 字数 2829
+          - paragraph [ref=e587]: 神经网络是由具有适应性的简单单元组成的广泛并行互连的网络，它的组织能够模拟生物神经系统对真实世界物体所做出的交互反应
+          - paragraph [ref=e588]:
+            - text: 神经网络中最基本的成分是
+            - strong [ref=e589]: 神经元模型
+            - text: ，也就是上述定义中的“简单单元”
+          - blockquote [ref=e590]:
+            - paragraph [ref=e591]: 在生物神经网络中，每个神经元与其它神经元相连，当它“兴奋”时，就会像相连的神经元发送化学物质，从而改变这些神经元内的点位。如果某个神经元的电位超过了“阈值“，那么它就会被激活。
+          - paragraph [ref=e592]: 我们可以抽象出如下图所示的简单模型，即”M-P神经元模型“。
+          - paragraph [ref=e593]:
+            - img "image-20260210174909258" [ref=e594]
+          - paragraph [ref=e595]:
+            - text: 在这个模型中，神经元接收到来自
+            - generic [ref=e597]:
+              - generic [ref=e600]: "n"
+              - math [ref=e602]:
+                - generic [ref=e603]: "n"
+            - text: 个其它神经元传递过来的输入信号，这些输入信号通过连带权重的连接进行传递，神经元接收到的总输入值与神经元的阈值及逆行比较，然后通过“激活函数”处理以产生神经元的输出。
+          - generic [ref=e604]:
+            - paragraph [ref=e605]: Note
+            - paragraph [ref=e606]:
+              - text: 激活函数常见的是 Sigmoid函数，
+              - generic [ref=e608]:
+                - generic [ref=e609]:
+                  - generic [ref=e611]: s
+                  - generic [ref=e613]: i
+                  - generic [ref=e615]: g
+                  - generic [ref=e617]: m
+                  - generic [ref=e619]: o
+                  - generic [ref=e621]: i
+                  - generic [ref=e623]: d
+                  - generic [ref=e625]: (
+                  - generic [ref=e627]: x
+                  - generic [ref=e629]: )
+                  - generic [ref=e631]: =
+                  - generic [ref=e634]:
+                    - generic [ref=e637]: "1"
+                    - generic [ref=e643]:
+                      - generic [ref=e645]: "1"
+                      - generic [ref=e647]: +
+                      - generic [ref=e648]:
+                        - generic [ref=e650]: e
+                        - generic [ref=e652]:
+                          - generic [ref=e654]: −
+                          - generic [ref=e656]: x
+                - math [ref=e658]:
+                  - generic [ref=e659]: s
+                  - generic [ref=e660]: i
+                  - generic [ref=e661]: g
+                  - generic [ref=e662]: m
+                  - generic [ref=e663]: o
+                  - generic [ref=e664]: i
+                  - generic [ref=e665]: d
+                  - generic [ref=e666]: (
+                  - generic [ref=e667]: x
+                  - generic [ref=e668]: )
+                  - generic [ref=e669]: =
+                  - generic [ref=e671]:
+                    - generic [ref=e672]: "1"
+                    - generic [ref=e673]:
+                      - generic [ref=e674]: "1"
+                      - generic [ref=e675]: +
+                      - generic [ref=e676]:
+                        - generic [ref=e677]: e
+                        - generic [ref=e678]:
+                          - generic [ref=e679]: −
+                          - generic [ref=e680]: x
+              - text: ，图像如下
+          - paragraph [ref=e681]:
+            - img "image-20260210175535141" [ref=e682]
+          - paragraph [ref=e683]: 将许多这样的神经元按一定层次结构连接起来，就得到了神经网络
+          - blockquote [ref=e684]:
+            - paragraph [ref=e685]: 从数学的角度来看，神经网络其实就是包含了很多参数的数学模型进行相互嵌套
+          - heading "感知机与多层网络" [level=3] [ref=e686]
+          - paragraph [ref=e687]:
+            - strong [ref=e688]: 感知机
+            - text: 由两层神经元组成，输入层接收外界输入信号后传递给输出层，输出层是阈值逻辑单元（M-P神经元），如下图，
+            - generic [ref=e690]:
+              - generic [ref=e691]:
+                - generic [ref=e693]: "y"
+                - generic [ref=e695]: =
+                - generic [ref=e697]: f
+                - generic [ref=e699]: (
+                - generic [ref=e700]:
+                  - generic [ref=e702]: ∑
+                  - generic [ref=e705]: i
+                - generic [ref=e706]:
+                  - generic [ref=e708]: w
+                  - generic [ref=e711]: i
+                - generic [ref=e712]:
+                  - generic [ref=e714]: x
+                  - generic [ref=e717]: i
+                - generic [ref=e719]: −
+                - generic [ref=e721]: θ
+                - generic [ref=e723]: )
+              - math [ref=e725]:
+                - generic [ref=e726]: "y"
+                - generic [ref=e727]: =
+                - generic [ref=e728]: f
+                - generic [ref=e729]: (
+                - generic [ref=e730]:
+                  - generic [ref=e731]: ∑
+                  - generic [ref=e732]: i
+                - generic [ref=e733]:
+                  - generic [ref=e734]: w
+                  - generic [ref=e735]: i
+                - generic [ref=e736]:
+                  - generic [ref=e737]: x
+                  - generic [ref=e738]: i
+                - generic [ref=e739]: −
+                - generic [ref=e740]: θ
+                - generic [ref=e741]: )
+            - text: ",假定"
+            - generic [ref=e743]:
+              - generic [ref=e746]: f
+              - math [ref=e748]:
+                - generic [ref=e749]: f
+            - text: 是阶跃函数
+            - generic [ref=e751]:
+              - generic [ref=e752]:
+                - generic [ref=e754]:
+                  - generic [ref=e755]: s
+                  - generic [ref=e756]: g
+                  - generic [ref=e757]: "n"
+                - generic [ref=e759]: (
+                - generic [ref=e761]: x
+                - generic [ref=e763]: )
+                - generic [ref=e765]: =
+                - generic [ref=e766]:
+                  - generic [ref=e768]: "{"
+                  - generic [ref=e771]:
+                    - generic [ref=e772]:
+                      - generic [ref=e773]:
+                        - generic [ref=e775]: "1"
+                        - generic [ref=e777]: ","
+                      - generic [ref=e778]:
+                        - generic [ref=e780]: x
+                        - generic [ref=e782]: ≥
+                        - generic [ref=e784]: "0"
+                        - generic [ref=e786]: ;
+                    - generic [ref=e787]:
+                      - generic [ref=e788]:
+                        - generic [ref=e790]: "0"
+                        - generic [ref=e792]: ","
+                      - generic [ref=e793]:
+                        - generic [ref=e795]: x
+                        - generic [ref=e797]: <
+                        - generic [ref=e798]:
+                          - generic [ref=e799]: "0"
+                          - generic [ref=e800]: .
+              - math [ref=e802]:
+                - generic [ref=e804]: sgn
+                - generic [ref=e805]: (
+                - generic [ref=e806]: x
+                - generic [ref=e807]: )
+                - generic [ref=e808]: =
+                - generic [ref=e809]:
+                  - generic [ref=e810]: "{"
+                  - generic [ref=e811]:
+                    - generic [ref=e812]:
+                      - generic [ref=e813]:
+                        - generic [ref=e814]: "1"
+                        - generic [ref=e815]: ","
+                      - generic [ref=e816]:
+                        - generic [ref=e817]: x
+                        - generic [ref=e818]: ≥
+                        - generic [ref=e819]: "0"
+                        - generic [ref=e820]: ;
+                    - generic [ref=e821]:
+                      - generic [ref=e822]:
+                        - generic [ref=e823]: "0"
+                        - generic [ref=e824]: ","
+                      - generic [ref=e825]:
+                        - generic [ref=e826]: x
+                        - generic [ref=e827]: <
+                        - generic [ref=e828]: "0."
+            - text: 。
+          - paragraph [ref=e829]:
+            - img "image-20260210200055535" [ref=e830]
+          - paragraph [ref=e831]:
+            - strong [ref=e832]:
+              - text: 当我们给定训练数据集时，权重
+              - generic [ref=e834]:
+                - generic [ref=e836]:
+                  - generic [ref=e838]: w
+                  - generic [ref=e841]: i
+                - math [ref=e843]:
+                  - generic [ref=e844]:
+                    - generic [ref=e845]: w
+                    - generic [ref=e846]: i
+              - text: 以及阈值
+              - generic [ref=e848]:
+                - generic [ref=e851]: θ
+                - math [ref=e853]:
+                  - generic [ref=e854]: θ
+              - text: 可通过学习得到。
+            - text: 阈值
+            - generic [ref=e856]:
+              - generic [ref=e859]: θ
+              - math [ref=e861]:
+                - generic [ref=e862]: θ
+            - text: 可以看作一个固定输入为 -1.0 的“哑节点”所对应的连接权重
+            - generic [ref=e864]:
+              - generic [ref=e866]:
+                - generic [ref=e868]: w
+                - generic [ref=e870]:
+                  - generic [ref=e872]: "n"
+                  - generic [ref=e874]: +
+                  - generic [ref=e876]: "1"
+              - math [ref=e878]:
+                - generic [ref=e879]:
+                  - generic [ref=e880]: w
+                  - generic [ref=e881]:
+                    - generic [ref=e882]: "n"
+                    - generic [ref=e883]: +
+                    - generic [ref=e884]: "1"
+            - text: 。这样的话权重和阈值的学习就可以统一为权重的学习
+          - blockquote [ref=e885]:
+            - paragraph [ref=e886]:
+              - strong [ref=e887]: 哑节点
+            - paragraph [ref=e888]:
+              - text: 标准感知机判别式为
+              - generic [ref=e890]:
+                - generic [ref=e892]:
+                  - generic [ref=e893]:
+                    - generic [ref=e897]: "n"
+                    - generic [ref=e899]:
+                      - generic [ref=e903]: ∑
+                      - generic [ref=e906]:
+                        - generic [ref=e908]: i
+                        - generic [ref=e910]: =
+                        - generic [ref=e912]: "1"
+                  - generic [ref=e913]:
+                    - generic [ref=e915]: w
+                    - generic [ref=e918]: i
+                  - generic [ref=e919]:
+                    - generic [ref=e921]: x
+                    - generic [ref=e924]: i
+                  - generic [ref=e926]: ≥
+                  - generic [ref=e928]: θ
+                - math [ref=e930]:
+                  - generic [ref=e931]:
+                    - generic [ref=e932]:
+                      - generic [ref=e933]: ∑
+                      - generic [ref=e934]:
+                        - generic [ref=e935]: i
+                        - generic [ref=e936]: =
+                        - generic [ref=e937]: "1"
+                      - generic [ref=e939]: "n"
+                    - generic [ref=e940]:
+                      - generic [ref=e941]: w
+                      - generic [ref=e942]: i
+                    - generic [ref=e943]:
+                      - generic [ref=e944]: x
+                      - generic [ref=e945]: i
+                    - generic [ref=e946]: ≥
+                    - generic [ref=e947]: θ
+              - text: 这里面由两个参数，形式上是分离的
+            - paragraph [ref=e948]:
+              - text: 然后我们可以新增一个虚拟的输入
+              - generic [ref=e950]:
+                - generic [ref=e951]:
+                  - generic [ref=e952]:
+                    - generic [ref=e954]: x
+                    - generic [ref=e956]:
+                      - generic [ref=e958]: "n"
+                      - generic [ref=e960]: +
+                      - generic [ref=e962]: "1"
+                  - generic [ref=e964]: =
+                  - generic [ref=e966]: −
+                  - generic [ref=e968]: "1"
+                - math [ref=e970]:
+                  - generic [ref=e971]:
+                    - generic [ref=e972]: x
+                    - generic [ref=e973]:
+                      - generic [ref=e974]: "n"
+                      - generic [ref=e975]: +
+                      - generic [ref=e976]: "1"
+                  - generic [ref=e977]: =
+                  - generic [ref=e978]: −
+                  - generic [ref=e979]: "1"
+              - text: ，对应的权重设为
+              - generic [ref=e981]:
+                - generic [ref=e982]:
+                  - generic [ref=e983]:
+                    - generic [ref=e985]: w
+                    - generic [ref=e987]:
+                      - generic [ref=e989]: "n"
+                      - generic [ref=e991]: +
+                      - generic [ref=e993]: "1"
+                  - generic [ref=e995]: =
+                  - generic [ref=e997]: θ
+                - math [ref=e999]:
+                  - generic [ref=e1000]:
+                    - generic [ref=e1001]: w
+                    - generic [ref=e1002]:
+                      - generic [ref=e1003]: "n"
+                      - generic [ref=e1004]: +
+                      - generic [ref=e1005]: "1"
+                  - generic [ref=e1006]: =
+                  - generic [ref=e1007]: θ
+              - text: ，可以将原本的不等式换为
+            - paragraph [ref=e1008]:
+              - generic [ref=e1010]:
+                - generic [ref=e1012]:
+                  - generic [ref=e1013]:
+                    - generic [ref=e1017]: "n"
+                    - generic [ref=e1019]:
+                      - generic [ref=e1023]: ∑
+                      - generic [ref=e1026]:
+                        - generic [ref=e1028]: i
+                        - generic [ref=e1030]: =
+                        - generic [ref=e1032]: "1"
+                  - generic [ref=e1033]:
+                    - generic [ref=e1035]: w
+                    - generic [ref=e1038]: i
+                  - generic [ref=e1039]:
+                    - generic [ref=e1041]: x
+                    - generic [ref=e1044]: i
+                  - generic [ref=e1046]: +
+                  - generic [ref=e1047]:
+                    - generic [ref=e1049]: w
+                    - generic [ref=e1051]:
+                      - generic [ref=e1053]: "n"
+                      - generic [ref=e1055]: +
+                      - generic [ref=e1057]: "1"
+                  - generic [ref=e1059]: (
+                  - generic [ref=e1061]: −
+                  - generic [ref=e1063]: "1"
+                  - generic [ref=e1065]: )
+                  - generic [ref=e1067]: ≥
+                  - generic [ref=e1069]: "0"
+                - math [ref=e1071]:
+                  - generic [ref=e1072]:
+                    - generic [ref=e1073]:
+                      - generic [ref=e1074]: ∑
+                      - generic [ref=e1075]:
+                        - generic [ref=e1076]: i
+                        - generic [ref=e1077]: =
+                        - generic [ref=e1078]: "1"
+                      - generic [ref=e1080]: "n"
+                    - generic [ref=e1081]:
+                      - generic [ref=e1082]: w
+                      - generic [ref=e1083]: i
+                    - generic [ref=e1084]:
+                      - generic [ref=e1085]: x
+                      - generic [ref=e1086]: i
+                    - generic [ref=e1087]: +
+                    - generic [ref=e1088]:
+                      - generic [ref=e1089]: w
+                      - generic [ref=e1090]:
+                        - generic [ref=e1091]: "n"
+                        - generic [ref=e1092]: +
+                        - generic [ref=e1093]: "1"
+                    - generic [ref=e1094]: (
+                    - generic [ref=e1095]: −
+                    - generic [ref=e1096]: "1"
+                    - generic [ref=e1097]: )
+                    - generic [ref=e1098]: ≥
+                    - generic [ref=e1099]: "0"
+              - text: ，即
+              - generic [ref=e1101]:
+                - generic [ref=e1108]:
+                  - generic [ref=e1109]:
+                    - generic [ref=e1111]:
+                      - generic [ref=e1113]: "n"
+                      - generic [ref=e1115]: +
+                      - generic [ref=e1117]: "1"
+                    - generic [ref=e1119]:
+                      - generic [ref=e1123]: ∑
+                      - generic [ref=e1126]:
+                        - generic [ref=e1128]: i
+                        - generic [ref=e1130]: =
+                        - generic [ref=e1132]: "1"
+                  - generic [ref=e1133]:
+                    - generic [ref=e1135]: w
+                    - generic [ref=e1138]: i
+                  - generic [ref=e1139]:
+                    - generic [ref=e1141]: x
+                    - generic [ref=e1144]: i
+                  - generic [ref=e1146]: ≥
+                  - generic [ref=e1148]: "0"
+                - math [ref=e1150]:
+                  - generic [ref=e1155]:
+                    - generic [ref=e1156]:
+                      - generic [ref=e1157]: ∑
+                      - generic [ref=e1158]:
+                        - generic [ref=e1159]: i
+                        - generic [ref=e1160]: =
+                        - generic [ref=e1161]: "1"
+                      - generic [ref=e1162]:
+                        - generic [ref=e1163]: "n"
+                        - generic [ref=e1164]: +
+                        - generic [ref=e1165]: "1"
+                    - generic [ref=e1166]:
+                      - generic [ref=e1167]: w
+                      - generic [ref=e1168]: i
+                    - generic [ref=e1169]:
+                      - generic [ref=e1170]: x
+                      - generic [ref=e1171]: i
+                    - generic [ref=e1172]: ≥
+                    - generic [ref=e1173]: "0"
+          - paragraph [ref=e1174]:
+            - text: 感知机的学习规则比较简单：对于训练样例
+            - generic [ref=e1176]:
+              - generic [ref=e1177]:
+                - generic [ref=e1179]: (
+                - generic [ref=e1181]: x
+                - generic [ref=e1183]: ","
+                - generic [ref=e1185]: "y"
+                - generic [ref=e1187]: )
+              - math [ref=e1189]:
+                - generic [ref=e1190]: (
+                - generic [ref=e1191]: x
+                - generic [ref=e1192]: ","
+                - generic [ref=e1193]: "y"
+                - generic [ref=e1194]: )
+            - text: ",若当前感知机的输出为"
+            - generic [ref=e1196]:
+              - generic [ref=e1199]:
+                - generic [ref=e1201]: ^
+                - generic [ref=e1204]: "y"
+              - math [ref=e1206]:
+                - generic [ref=e1208]:
+                  - generic [ref=e1209]: "y"
+                  - generic [ref=e1210]: ^
+            - text: ，那么感知机权重将按照如下方式调整：
+          - generic [ref=e1212]:
+            - generic [ref=e1214]:
+              - generic [ref=e1216]:
+                - generic [ref=e1218]:
+                  - generic [ref=e1219]:
+                    - generic [ref=e1221]: w
+                    - generic [ref=e1224]: i
+                  - generic [ref=e1226]: ←
+                  - generic [ref=e1227]:
+                    - generic [ref=e1229]: w
+                    - generic [ref=e1232]: i
+                  - generic [ref=e1234]: +
+                  - generic [ref=e1236]: Δ
+                  - generic [ref=e1237]:
+                    - generic [ref=e1239]: w
+                    - generic [ref=e1242]: i
+                - generic [ref=e1244]:
+                  - generic [ref=e1246]: Δ
+                  - generic [ref=e1247]:
+                    - generic [ref=e1249]: w
+                    - generic [ref=e1252]: i
+                  - generic [ref=e1254]: =
+                  - generic [ref=e1256]: η
+                  - generic [ref=e1258]: (
+                  - generic [ref=e1260]: "y"
+                  - generic [ref=e1262]: −
+                  - generic [ref=e1264]:
+                    - generic [ref=e1266]: ^
+                    - generic [ref=e1269]: "y"
+                  - generic [ref=e1271]: )
+                  - generic [ref=e1272]:
+                    - generic [ref=e1274]: x
+                    - generic [ref=e1277]: i
+              - generic [ref=e1278]:
+                - generic [ref=e1281]:
+                  - generic [ref=e1282]: (
+                  - generic [ref=e1283]: "5"
+                  - generic [ref=e1284]: .
+                  - generic [ref=e1285]: "1"
+                  - generic [ref=e1286]: )
+                - generic [ref=e1289]:
+                  - generic [ref=e1290]: (
+                  - generic [ref=e1291]: "5"
+                  - generic [ref=e1292]: .
+                  - generic [ref=e1293]: "2"
+                  - generic [ref=e1294]: )
+            - math [ref=e1296]:
+              - generic [ref=e1297]:
+                - generic [ref=e1298]:
+                  - generic [ref=e1300]: (5.1)
+                  - generic [ref=e1301]:
+                    - generic [ref=e1302]:
+                      - generic [ref=e1303]: w
+                      - generic [ref=e1304]: i
+                    - generic [ref=e1305]: ←
+                    - generic [ref=e1306]:
+                      - generic [ref=e1307]: w
+                      - generic [ref=e1308]: i
+                    - generic [ref=e1309]: +
+                    - generic [ref=e1310]: Δ
+                    - generic [ref=e1311]:
+                      - generic [ref=e1312]: w
+                      - generic [ref=e1313]: i
+                - generic [ref=e1314]:
+                  - generic [ref=e1316]: (5.2)
+                  - generic [ref=e1317]:
+                    - generic [ref=e1318]: Δ
+                    - generic [ref=e1319]:
+                      - generic [ref=e1320]: w
+                      - generic [ref=e1321]: i
+                    - generic [ref=e1322]: =
+                    - generic [ref=e1323]: η
+                    - generic [ref=e1324]: (
+                    - generic [ref=e1325]: "y"
+                    - generic [ref=e1326]: −
+                    - generic [ref=e1328]:
+                      - generic [ref=e1329]: "y"
+                      - generic [ref=e1330]: ^
+                    - generic [ref=e1331]: )
+                    - generic [ref=e1332]:
+                      - generic [ref=e1333]: x
+                      - generic [ref=e1334]: i
+          - blockquote [ref=e1335]:
+            - paragraph [ref=e1336]:
+              - generic [ref=e1338]:
+                - generic [ref=e1339]:
+                  - generic [ref=e1341]: η
+                  - generic [ref=e1343]: ∈
+                  - generic [ref=e1345]: (
+                  - generic [ref=e1347]: "0"
+                  - generic [ref=e1349]: ","
+                  - generic [ref=e1351]: "1"
+                  - generic [ref=e1353]: )
+                - math [ref=e1355]:
+                  - generic [ref=e1356]: η
+                  - generic [ref=e1357]: ∈
+                  - generic [ref=e1358]: (
+                  - generic [ref=e1359]: "0"
+                  - generic [ref=e1360]: ","
+                  - generic [ref=e1361]: "1"
+                  - generic [ref=e1362]: )
+              - text: 称为学习率。
+          - paragraph [ref=e1363]:
+            - text: 由上式可知，若
+            - generic [ref=e1365]:
+              - generic [ref=e1366]:
+                - generic [ref=e1368]:
+                  - generic [ref=e1370]: ^
+                  - generic [ref=e1373]: "y"
+                - generic [ref=e1375]: =
+                - generic [ref=e1377]: "y"
+              - math [ref=e1379]:
+                - generic [ref=e1381]:
+                  - generic [ref=e1382]: "y"
+                  - generic [ref=e1383]: ^
+                - generic [ref=e1384]: =
+                - generic [ref=e1385]: "y"
+            - text: 那么感知机不发生变化，否则将根据错误的程度进行权重调整
+          - paragraph [ref=e1386]:
+            - text: 不过，感知机只有一层
+            - strong [ref=e1387]: 功能神经元
+            - text: （进行激活函数处理的神经元），只能解决线性可分的问题而无法解决非线性可分（如下图所示）
+          - paragraph [ref=e1388]:
+            - img "image-20260210201932861" [ref=e1389]
+          - paragraph [ref=e1390]:
+            - text: 所以提出多层功能神经元，其中输出层和输入层之间的一层神经元称为
+            - strong [ref=e1391]: 隐含层
+            - text: ，隐含层和输出层神经元都是拥有激活函数的功能神经元。
+          - paragraph [ref=e1392]: 而若每层神经元与下一层神经元全互连，神经元之间不存在同层连接，也不存在跨层连接，这样的神经网络结构称为 “多层前馈神经网络”（如下图）
+          - paragraph [ref=e1393]:
+            - img "image-20260210202427415" [ref=e1394]
+          - paragraph [ref=e1395]:
+            - text: 神经网络的学习过程，
+            - strong [ref=e1396]: 就是根据训练数据来调整神经元之间的连接权以及每个功能神经元的阈值
+          - heading "误差逆传播算法(BP)" [level=3] [ref=e1397]
+          - paragraph [ref=e1398]: BP算法(误差逆传播算法)是用来训练多层网络的算法，如下：
+          - list [ref=e1399]:
+            - listitem [ref=e1400]:
+              - text: 给定训练集
+              - generic [ref=e1402]:
+                - generic [ref=e1403]:
+                  - generic [ref=e1405]: D
+                  - generic [ref=e1407]: =
+                  - generic [ref=e1409]: "{"
+                  - generic [ref=e1411]: (
+                  - generic [ref=e1412]:
+                    - generic [ref=e1414]: x
+                    - generic [ref=e1417]: "1"
+                  - generic [ref=e1419]: ","
+                  - generic [ref=e1420]:
+                    - generic [ref=e1422]: "y"
+                    - generic [ref=e1425]: "1"
+                  - generic [ref=e1427]: )
+                  - generic [ref=e1429]: ","
+                  - generic [ref=e1431]: (
+                  - generic [ref=e1432]:
+                    - generic [ref=e1434]: x
+                    - generic [ref=e1437]: "2"
+                  - generic [ref=e1439]: ","
+                  - generic [ref=e1440]:
+                    - generic [ref=e1442]: "y"
+                    - generic [ref=e1445]: "2"
+                  - generic [ref=e1447]: )
+                  - generic [ref=e1449]: ","
+                  - generic [ref=e1451]: …
+                  - generic [ref=e1453]: ","
+                  - generic [ref=e1455]: (
+                  - generic [ref=e1456]:
+                    - generic [ref=e1458]: x
+                    - generic [ref=e1461]: m
+                  - generic [ref=e1463]: ","
+                  - generic [ref=e1464]:
+                    - generic [ref=e1466]: "y"
+                    - generic [ref=e1469]: m
+                  - generic [ref=e1471]: )
+                  - generic [ref=e1473]: "}"
+                  - generic [ref=e1475]: ","
+                  - generic [ref=e1476]:
+                    - generic [ref=e1478]: x
+                    - generic [ref=e1481]: i
+                  - generic [ref=e1483]: ∈
+                  - generic [ref=e1484]:
+                    - generic [ref=e1487]: R
+                    - generic [ref=e1490]: d
+                  - generic [ref=e1492]: ","
+                  - generic [ref=e1493]:
+                    - generic [ref=e1495]: "y"
+                    - generic [ref=e1498]: i
+                  - generic [ref=e1500]: ∈
+                  - generic [ref=e1501]:
+                    - generic [ref=e1504]: R
+                    - generic [ref=e1507]: l
+                - math [ref=e1509]:
+                  - generic [ref=e1510]: D
+                  - generic [ref=e1511]: =
+                  - generic [ref=e1512]: "{"
+                  - generic [ref=e1513]: (
+                  - generic [ref=e1514]:
+                    - generic [ref=e1515]: x
+                    - generic [ref=e1516]: "1"
+                  - generic [ref=e1517]: ","
+                  - generic [ref=e1518]:
+                    - generic [ref=e1519]: "y"
+                    - generic [ref=e1520]: "1"
+                  - generic [ref=e1521]: )
+                  - generic [ref=e1522]: ","
+                  - generic [ref=e1523]: (
+                  - generic [ref=e1524]:
+                    - generic [ref=e1525]: x
+                    - generic [ref=e1526]: "2"
+                  - generic [ref=e1527]: ","
+                  - generic [ref=e1528]:
+                    - generic [ref=e1529]: "y"
+                    - generic [ref=e1530]: "2"
+                  - generic [ref=e1531]: )
+                  - generic [ref=e1532]: ","
+                  - generic [ref=e1533]: …
+                  - generic [ref=e1534]: ","
+                  - generic [ref=e1535]: (
+                  - generic [ref=e1536]:
+                    - generic [ref=e1537]: x
+                    - generic [ref=e1538]: m
+                  - generic [ref=e1539]: ","
+                  - generic [ref=e1540]:
+                    - generic [ref=e1541]: "y"
+                    - generic [ref=e1542]: m
+                  - generic [ref=e1543]: )
+                  - generic [ref=e1544]: "}"
+                  - generic [ref=e1545]: ","
+                  - generic [ref=e1546]:
+                    - generic [ref=e1547]: x
+                    - generic [ref=e1548]: i
+                  - generic [ref=e1549]: ∈
+                  - generic [ref=e1550]:
+                    - generic [ref=e1552]: R
+                    - generic [ref=e1553]: d
+                  - generic [ref=e1554]: ","
+                  - generic [ref=e1555]:
+                    - generic [ref=e1556]: "y"
+                    - generic [ref=e1557]: i
+                  - generic [ref=e1558]: ∈
+                  - generic [ref=e1559]:
+                    - generic [ref=e1561]: R
+                    - generic [ref=e1562]: l
+              - text: （输入示例由
+              - generic [ref=e1564]:
+                - generic [ref=e1567]: d
+                - math [ref=e1569]:
+                  - generic [ref=e1570]: d
+              - text: 个属性描述，输出
+              - generic [ref=e1572]:
+                - generic [ref=e1575]: l
+                - math [ref=e1577]:
+                  - generic [ref=e1578]: l
+              - text: 维实值向量。
+            - listitem [ref=e1579]:
+              - text: 假定一个拥有
+              - generic [ref=e1581]:
+                - generic [ref=e1584]: d
+                - math [ref=e1586]:
+                  - generic [ref=e1587]: d
+              - text: 个输入神经元，
+              - generic [ref=e1589]:
+                - generic [ref=e1592]: l
+                - math [ref=e1594]:
+                  - generic [ref=e1595]: l
+              - text: 个输出神经元、
+              - generic [ref=e1597]:
+                - generic [ref=e1600]: q
+                - math [ref=e1602]:
+                  - generic [ref=e1603]: q
+              - text: 个隐层神经元的多层前馈网络结构。
+            - listitem [ref=e1604]: 其中我们记：
+            - listitem [ref=e1605]:
+              - text: 输出层第
+              - generic [ref=e1607]:
+                - generic [ref=e1610]: j
+                - math [ref=e1612]:
+                  - generic [ref=e1613]: j
+              - text: 个神经元的阈值为
+              - generic [ref=e1615]:
+                - generic [ref=e1617]:
+                  - generic [ref=e1619]: θ
+                  - generic [ref=e1622]: j
+                - math [ref=e1624]:
+                  - generic [ref=e1625]:
+                    - generic [ref=e1626]: θ
+                    - generic [ref=e1627]: j
+            - listitem [ref=e1628]:
+              - text: 隐层第
+              - generic [ref=e1630]:
+                - generic [ref=e1633]: h
+                - math [ref=e1635]:
+                  - generic [ref=e1636]: h
+              - text: h神经元的阈值为
+              - generic [ref=e1638]:
+                - generic [ref=e1640]:
+                  - generic [ref=e1642]: γ
+                  - generic [ref=e1645]: h
+                - math [ref=e1647]:
+                  - generic [ref=e1648]:
+                    - generic [ref=e1649]: γ
+                    - generic [ref=e1650]: h
+            - listitem [ref=e1651]:
+              - text: 输入层第
+              - generic [ref=e1653]:
+                - generic [ref=e1656]: i
+                - math [ref=e1658]:
+                  - generic [ref=e1659]: i
+              - text: 个神经元与隐层第
+              - generic [ref=e1661]:
+                - generic [ref=e1664]: h
+                - math [ref=e1666]:
+                  - generic [ref=e1667]: h
+              - text: 个神经原之间的连接权为
+              - generic [ref=e1669]:
+                - generic [ref=e1671]:
+                  - generic [ref=e1673]: v
+                  - generic [ref=e1675]:
+                    - generic [ref=e1677]: i
+                    - generic [ref=e1679]: h
+                - math [ref=e1681]:
+                  - generic [ref=e1682]:
+                    - generic [ref=e1683]: v
+                    - generic [ref=e1684]:
+                      - generic [ref=e1685]: i
+                      - generic [ref=e1686]: h
+            - listitem [ref=e1687]:
+              - text: 隐层第
+              - generic [ref=e1689]:
+                - generic [ref=e1692]: h
+                - math [ref=e1694]:
+                  - generic [ref=e1695]: h
+              - text: 个神经元与输出层第
+              - generic [ref=e1697]:
+                - generic [ref=e1700]: j
+                - math [ref=e1702]:
+                  - generic [ref=e1703]: j
+              - text: 个神经元之间的连接权为
+              - generic [ref=e1705]:
+                - generic [ref=e1707]:
+                  - generic [ref=e1709]: w
+                  - generic [ref=e1711]:
+                    - generic [ref=e1713]: h
+                    - generic [ref=e1715]: j
+                - math [ref=e1717]:
+                  - generic [ref=e1718]:
+                    - generic [ref=e1719]: w
+                    - generic [ref=e1720]:
+                      - generic [ref=e1721]: h
+                      - generic [ref=e1722]: j
+            - listitem [ref=e1723]:
+              - text: 隐层第
+              - generic [ref=e1725]:
+                - generic [ref=e1728]: h
+                - math [ref=e1730]:
+                  - generic [ref=e1731]: h
+              - text: 个神经元接收到的输入为
+              - generic [ref=e1733]:
+                - generic [ref=e1734]:
+                  - generic [ref=e1735]:
+                    - generic [ref=e1737]: α
+                    - generic [ref=e1740]: h
+                  - generic [ref=e1742]: =
+                  - generic [ref=e1743]:
+                    - generic [ref=e1745]: ∑
+                    - generic [ref=e1746]:
+                      - generic [ref=e1749]: d
+                      - generic [ref=e1750]:
+                        - generic [ref=e1752]: i
+                        - generic [ref=e1754]: =
+                        - generic [ref=e1756]: "1"
+                  - generic [ref=e1757]:
+                    - generic [ref=e1759]: v
+                    - generic [ref=e1761]:
+                      - generic [ref=e1763]: i
+                      - generic [ref=e1765]: h
+                  - generic [ref=e1766]:
+                    - generic [ref=e1768]: x
+                    - generic [ref=e1771]: i
+                - math [ref=e1773]:
+                  - generic [ref=e1774]:
+                    - generic [ref=e1775]: α
+                    - generic [ref=e1776]: h
+                  - generic [ref=e1777]: =
+                  - generic [ref=e1778]:
+                    - generic [ref=e1779]: ∑
+                    - generic [ref=e1780]:
+                      - generic [ref=e1781]: i
+                      - generic [ref=e1782]: =
+                      - generic [ref=e1783]: "1"
+                    - generic [ref=e1785]: d
+                  - generic [ref=e1786]:
+                    - generic [ref=e1787]: v
+                    - generic [ref=e1788]:
+                      - generic [ref=e1789]: i
+                      - generic [ref=e1790]: h
+                  - generic [ref=e1791]:
+                    - generic [ref=e1792]: x
+                    - generic [ref=e1793]: i
+            - listitem [ref=e1794]:
+              - text: 输出层第
+              - generic [ref=e1796]:
+                - generic [ref=e1799]: j
+                - math [ref=e1801]:
+                  - generic [ref=e1802]: j
+              - text: 个神经元接收到的输入为
+              - generic [ref=e1804]:
+                - generic [ref=e1805]:
+                  - generic [ref=e1806]:
+                    - generic [ref=e1808]: β
+                    - generic [ref=e1811]: j
+                  - generic [ref=e1813]: =
+                  - generic [ref=e1814]:
+                    - generic [ref=e1816]: ∑
+                    - generic [ref=e1817]:
+                      - generic [ref=e1820]: q
+                      - generic [ref=e1821]:
+                        - generic [ref=e1823]: h
+                        - generic [ref=e1825]: =
+                        - generic [ref=e1827]: "1"
+                  - generic [ref=e1828]:
+                    - generic [ref=e1830]: w
+                    - generic [ref=e1832]:
+                      - generic [ref=e1834]: h
+                      - generic [ref=e1836]: j
+                  - generic [ref=e1837]:
+                    - generic [ref=e1839]: b
+                    - generic [ref=e1842]: h
+                - math [ref=e1844]:
+                  - generic [ref=e1845]:
+                    - generic [ref=e1846]: β
+                    - generic [ref=e1847]: j
+                  - generic [ref=e1848]: =
+                  - generic [ref=e1849]:
+                    - generic [ref=e1850]: ∑
+                    - generic [ref=e1851]:
+                      - generic [ref=e1852]: h
+                      - generic [ref=e1853]: =
+                      - generic [ref=e1854]: "1"
+                    - generic [ref=e1856]: q
+                  - generic [ref=e1857]:
+                    - generic [ref=e1858]: w
+                    - generic [ref=e1859]:
+                      - generic [ref=e1860]: h
+                      - generic [ref=e1861]: j
+                  - generic [ref=e1862]:
+                    - generic [ref=e1863]: b
+                    - generic [ref=e1864]: h
+              - text: (
+              - generic [ref=e1866]:
+                - generic [ref=e1868]:
+                  - generic [ref=e1870]: b
+                  - generic [ref=e1873]: h
+                - math [ref=e1875]:
+                  - generic [ref=e1876]:
+                    - generic [ref=e1877]: b
+                    - generic [ref=e1878]: h
+              - text: 为隐层第
+              - generic [ref=e1880]:
+                - generic [ref=e1883]: h
+                - math [ref=e1885]:
+                  - generic [ref=e1886]: h
+              - text: 个神经元的输出)
+          - paragraph [ref=e1887]:
+            - img "image-20260210204647595" [ref=e1888]
+          - paragraph [ref=e1889]:
+            - text: 对训练样例
+            - generic [ref=e1891]:
+              - generic [ref=e1892]:
+                - generic [ref=e1894]: (
+                - generic [ref=e1895]:
+                  - generic [ref=e1897]: x
+                  - generic [ref=e1900]: k
+                - generic [ref=e1902]: ","
+                - generic [ref=e1903]:
+                  - generic [ref=e1905]: "y"
+                  - generic [ref=e1908]: k
+                - generic [ref=e1910]: )
+              - math [ref=e1912]:
+                - generic [ref=e1913]: (
+                - generic [ref=e1914]:
+                  - generic [ref=e1915]: x
+                  - generic [ref=e1916]: k
+                - generic [ref=e1917]: ","
+                - generic [ref=e1918]:
+                  - generic [ref=e1919]: "y"
+                  - generic [ref=e1920]: k
+                - generic [ref=e1921]: )
+            - text: ，假定神经网络的输出为
+            - generic [ref=e1923]:
+              - generic [ref=e1924]:
+                - generic [ref=e1925]:
+                  - generic [ref=e1927]:
+                    - generic [ref=e1929]: ^
+                    - generic [ref=e1932]: "y"
+                  - generic [ref=e1935]: k
+                - generic [ref=e1937]: =
+                - generic [ref=e1939]: (
+                - generic [ref=e1940]:
+                  - generic [ref=e1942]:
+                    - generic [ref=e1944]: ^
+                    - generic [ref=e1947]: "y"
+                  - generic [ref=e1948]:
+                    - generic [ref=e1952]: k
+                    - generic [ref=e1954]: "1"
+                - generic [ref=e1956]: ","
+                - generic [ref=e1958]:
+                  - generic [ref=e1960]:
+                    - generic [ref=e1962]: ^
+                    - generic [ref=e1965]: "y"
+                  - generic [ref=e1966]:
+                    - generic [ref=e1970]: k
+                    - generic [ref=e1972]: "2"
+                - generic [ref=e1974]: ","
+                - generic [ref=e1977]: …
+                - generic [ref=e1979]: ","
+                - generic [ref=e1981]:
+                  - generic [ref=e1983]:
+                    - generic [ref=e1985]: ^
+                    - generic [ref=e1988]: "y"
+                  - generic [ref=e1989]:
+                    - generic [ref=e1993]: k
+                    - generic [ref=e1995]: ℓ
+                - generic [ref=e1997]: )
+              - math [ref=e1999]:
+                - generic [ref=e2000]:
+                  - generic [ref=e2002]:
+                    - generic [ref=e2003]: "y"
+                    - generic [ref=e2004]: ^
+                  - generic [ref=e2005]: k
+                - generic [ref=e2006]: =
+                - generic [ref=e2007]: (
+                - generic [ref=e2008]:
+                  - generic [ref=e2010]:
+                    - generic [ref=e2011]: "y"
+                    - generic [ref=e2012]: ^
+                  - generic [ref=e2013]: "1"
+                  - generic [ref=e2015]: k
+                - generic [ref=e2016]: ","
+                - generic [ref=e2017]:
+                  - generic [ref=e2019]:
+                    - generic [ref=e2020]: "y"
+                    - generic [ref=e2021]: ^
+                  - generic [ref=e2022]: "2"
+                  - generic [ref=e2024]: k
+                - generic [ref=e2025]: ","
+                - generic [ref=e2026]: …
+                - generic [ref=e2027]: ","
+                - generic [ref=e2028]:
+                  - generic [ref=e2030]:
+                    - generic [ref=e2031]: "y"
+                    - generic [ref=e2032]: ^
+                  - generic [ref=e2033]: ℓ
+                  - generic [ref=e2035]: k
+                - generic [ref=e2036]: )
+            - text: ",即"
+          - generic [ref=e2038]:
+            - generic [ref=e2040]:
+              - generic [ref=e2044]:
+                - generic [ref=e2045]:
+                  - generic [ref=e2047]:
+                    - generic [ref=e2049]: ^
+                    - generic [ref=e2052]: "y"
+                  - generic [ref=e2053]:
+                    - generic [ref=e2057]: k
+                    - generic [ref=e2059]: j
+                - generic [ref=e2061]: =
+                - generic [ref=e2063]: f
+                - generic [ref=e2065]: (
+                - generic [ref=e2066]:
+                  - generic [ref=e2068]: β
+                  - generic [ref=e2071]: j
+                - generic [ref=e2073]: −
+                - generic [ref=e2074]:
+                  - generic [ref=e2076]: θ
+                  - generic [ref=e2079]: j
+                - generic [ref=e2081]: )
+                - generic [ref=e2083]: ","
+              - generic [ref=e2087]:
+                - generic [ref=e2088]: (
+                - generic [ref=e2089]: "5"
+                - generic [ref=e2090]: .
+                - generic [ref=e2091]: "3"
+                - generic [ref=e2092]: )
+            - math [ref=e2094]:
+              - generic [ref=e2096]:
+                - generic [ref=e2098]: (5.3)
+                - generic [ref=e2099]:
+                  - generic [ref=e2100]:
+                    - generic [ref=e2102]:
+                      - generic [ref=e2103]: "y"
+                      - generic [ref=e2104]: ^
+                    - generic [ref=e2105]: j
+                    - generic [ref=e2107]: k
+                  - generic [ref=e2108]: =
+                  - generic [ref=e2109]: f
+                  - generic [ref=e2110]: (
+                  - generic [ref=e2111]:
+                    - generic [ref=e2112]: β
+                    - generic [ref=e2113]: j
+                  - generic [ref=e2114]: −
+                  - generic [ref=e2115]:
+                    - generic [ref=e2116]: θ
+                    - generic [ref=e2117]: j
+                  - generic [ref=e2118]: )
+                  - generic [ref=e2119]: ","
+          - paragraph [ref=e2120]:
+            - text: 那么网络在
+            - generic [ref=e2122]:
+              - generic [ref=e2123]:
+                - generic [ref=e2125]: (
+                - generic [ref=e2126]:
+                  - generic [ref=e2128]: x
+                  - generic [ref=e2131]: k
+                - generic [ref=e2133]: ","
+                - generic [ref=e2134]:
+                  - generic [ref=e2136]: "y"
+                  - generic [ref=e2139]: k
+                - generic [ref=e2141]: )
+              - math [ref=e2143]:
+                - generic [ref=e2144]: (
+                - generic [ref=e2145]:
+                  - generic [ref=e2146]: x
+                  - generic [ref=e2147]: k
+                - generic [ref=e2148]: ","
+                - generic [ref=e2149]:
+                  - generic [ref=e2150]: "y"
+                  - generic [ref=e2151]: k
+                - generic [ref=e2152]: )
+            - text: 上的均方误差为
+          - generic [ref=e2154]:
+            - generic [ref=e2156]:
+              - generic [ref=e2160]:
+                - generic [ref=e2161]:
+                  - generic [ref=e2163]: E
+                  - generic [ref=e2166]: k
+                - generic [ref=e2168]: =
+                - generic [ref=e2171]:
+                  - generic [ref=e2174]: "1"
+                  - generic [ref=e2181]: "2"
+                - generic [ref=e2182]:
+                  - generic [ref=e2186]: l
+                  - generic [ref=e2188]:
+                    - generic [ref=e2192]: ∑
+                    - generic [ref=e2195]:
+                      - generic [ref=e2197]: j
+                      - generic [ref=e2199]: =
+                      - generic [ref=e2201]: "1"
+                - generic [ref=e2203]: (
+                - generic [ref=e2204]:
+                  - generic [ref=e2206]:
+                    - generic [ref=e2208]: ^
+                    - generic [ref=e2211]: "y"
+                  - generic [ref=e2212]:
+                    - generic [ref=e2214]: k
+                    - generic [ref=e2216]: j
+                - generic [ref=e2218]: −
+                - generic [ref=e2219]:
+                  - generic [ref=e2221]: "y"
+                  - generic [ref=e2222]:
+                    - generic [ref=e2224]: k
+                    - generic [ref=e2226]: j
+                - generic [ref=e2227]:
+                  - generic [ref=e2229]: )
+                  - generic [ref=e2232]: "2"
+              - generic [ref=e2236]:
+                - generic [ref=e2237]: (
+                - generic [ref=e2238]: "5"
+                - generic [ref=e2239]: .
+                - generic [ref=e2240]: "4"
+                - generic [ref=e2241]: )
+            - math [ref=e2243]:
+              - generic [ref=e2245]:
+                - generic [ref=e2247]: (5.4)
+                - generic [ref=e2248]:
+                  - generic [ref=e2249]:
+                    - generic [ref=e2250]: E
+                    - generic [ref=e2251]: k
+                  - generic [ref=e2252]: =
+                  - generic [ref=e2254]:
+                    - generic [ref=e2255]: "1"
+                    - generic [ref=e2256]: "2"
+                  - generic [ref=e2257]:
+                    - generic [ref=e2258]: ∑
+                    - generic [ref=e2259]:
+                      - generic [ref=e2260]: j
+                      - generic [ref=e2261]: =
+                      - generic [ref=e2262]: "1"
+                    - generic [ref=e2264]: l
+                  - generic [ref=e2265]: (
+                  - generic [ref=e2266]:
+                    - generic [ref=e2268]:
+                      - generic [ref=e2269]: "y"
+                      - generic [ref=e2270]: ^
+                    - generic [ref=e2271]: j
+                    - generic [ref=e2272]: k
+                  - generic [ref=e2273]: −
+                  - generic [ref=e2274]:
+                    - generic [ref=e2275]: "y"
+                    - generic [ref=e2276]: j
+                    - generic [ref=e2277]: k
+                  - generic [ref=e2278]:
+                    - generic [ref=e2279]: )
+                    - generic [ref=e2280]: "2"
+          - paragraph [ref=e2281]:
+            - text: 简单观察，我们可以发现图5.7的网络有
+            - generic [ref=e2283]:
+              - generic [ref=e2284]:
+                - generic [ref=e2286]: (
+                - generic [ref=e2288]: d
+                - generic [ref=e2290]: +
+                - generic [ref=e2292]: l
+                - generic [ref=e2294]: +
+                - generic [ref=e2296]: "1"
+                - generic [ref=e2298]: )
+                - generic [ref=e2300]: q
+                - generic [ref=e2302]: +
+                - generic [ref=e2304]: l
+              - math [ref=e2306]:
+                - generic [ref=e2307]: (
+                - generic [ref=e2308]: d
+                - generic [ref=e2309]: +
+                - generic [ref=e2310]: l
+                - generic [ref=e2311]: +
+                - generic [ref=e2312]: "1"
+                - generic [ref=e2313]: )
+                - generic [ref=e2314]: q
+                - generic [ref=e2315]: +
+                - generic [ref=e2316]: l
+            - text: 个参数需要确定，课本以
+            - generic [ref=e2318]:
+              - generic [ref=e2320]:
+                - generic [ref=e2322]: w
+                - generic [ref=e2324]:
+                  - generic [ref=e2326]: h
+                  - generic [ref=e2328]: j
+              - math [ref=e2330]:
+                - generic [ref=e2331]:
+                  - generic [ref=e2332]: w
+                  - generic [ref=e2333]:
+                    - generic [ref=e2334]: h
+                    - generic [ref=e2335]: j
+            - text: 为例进行推导
+          - generic [ref=e2336]:
+            - paragraph [ref=e2337]: Note
+            - paragraph [ref=e2338]: 1️⃣ 基本思想：梯度下降
+          - paragraph [ref=e2339]:
+            - text: BP 算法基于
+            - strong [ref=e2340]: 梯度下降（gradient descent）策略，沿着误差函数对参数的负梯度方向
+            - text: 更新权重。
+          - paragraph [ref=e2341]:
+            - text: 对于第
+            - generic [ref=e2343]:
+              - generic [ref=e2346]: k
+              - math [ref=e2348]:
+                - generic [ref=e2349]: k
+            - text: 个样本的误差
+            - generic [ref=e2351]:
+              - generic [ref=e2353]:
+                - generic [ref=e2355]: E
+                - generic [ref=e2358]: k
+              - math [ref=e2360]:
+                - generic [ref=e2361]:
+                  - generic [ref=e2362]: E
+                  - generic [ref=e2363]: k
+            - text: ，学习率为
+            - generic [ref=e2365]:
+              - generic [ref=e2368]: η
+              - math [ref=e2370]:
+                - generic [ref=e2371]: η
+            - text: ，权重
+            - generic [ref=e2373]:
+              - generic [ref=e2375]:
+                - generic [ref=e2377]: w
+                - generic [ref=e2379]:
+                  - generic [ref=e2381]: h
+                  - generic [ref=e2383]: j
+              - math [ref=e2385]:
+                - generic [ref=e2386]:
+                  - generic [ref=e2387]: w
+                  - generic [ref=e2388]:
+                    - generic [ref=e2389]: h
+                    - generic [ref=e2390]: j
+            - text: 的更新规则为：
+          - generic [ref=e2392]:
+            - generic [ref=e2394]:
+              - generic [ref=e2398]:
+                - generic [ref=e2400]: Δ
+                - generic [ref=e2401]:
+                  - generic [ref=e2403]: w
+                  - generic [ref=e2405]:
+                    - generic [ref=e2407]: h
+                    - generic [ref=e2409]: j
+                - generic [ref=e2411]: =
+                - generic [ref=e2413]: −
+                - generic [ref=e2415]: η
+                - generic [ref=e2418]:
+                  - generic [ref=e2420]:
+                    - generic [ref=e2422]: ∂
+                    - generic [ref=e2423]:
+                      - generic [ref=e2425]: E
+                      - generic [ref=e2428]: k
+                  - generic [ref=e2434]:
+                    - generic [ref=e2436]: ∂
+                    - generic [ref=e2437]:
+                      - generic [ref=e2439]: w
+                      - generic [ref=e2441]:
+                        - generic [ref=e2443]: h
+                        - generic [ref=e2445]: j
+              - generic [ref=e2449]:
+                - generic [ref=e2450]: (
+                - generic [ref=e2451]: "5"
+                - generic [ref=e2452]: .
+                - generic [ref=e2453]: "6"
+                - generic [ref=e2454]: )
+            - math [ref=e2456]:
+              - generic [ref=e2458]:
+                - generic [ref=e2460]: (5.6)
+                - generic [ref=e2461]:
+                  - generic [ref=e2462]: Δ
+                  - generic [ref=e2463]:
+                    - generic [ref=e2464]: w
+                    - generic [ref=e2465]:
+                      - generic [ref=e2466]: h
+                      - generic [ref=e2467]: j
+                  - generic [ref=e2468]: =
+                  - generic [ref=e2469]: −
+                  - generic [ref=e2470]: η
+                  - generic [ref=e2472]:
+                    - generic [ref=e2473]:
+                      - generic [ref=e2474]: ∂
+                      - generic [ref=e2475]:
+                        - generic [ref=e2476]: E
+                        - generic [ref=e2477]: k
+                    - generic [ref=e2478]:
+                      - generic [ref=e2479]: ∂
+                      - generic [ref=e2480]:
+                        - generic [ref=e2481]: w
+                        - generic [ref=e2482]:
+                          - generic [ref=e2483]: h
+                          - generic [ref=e2484]: j
+          - separator [ref=e2485]
+          - paragraph [ref=e2486]: 2️⃣ 链式法则
+          - paragraph [ref=e2487]:
+            - text: 权重
+            - generic [ref=e2489]:
+              - generic [ref=e2491]:
+                - generic [ref=e2493]: w
+                - generic [ref=e2495]:
+                  - generic [ref=e2497]: h
+                  - generic [ref=e2499]: j
+              - math [ref=e2501]:
+                - generic [ref=e2502]:
+                  - generic [ref=e2503]: w
+                  - generic [ref=e2504]:
+                    - generic [ref=e2505]: h
+                    - generic [ref=e2506]: j
+            - text: 的变化路径为：
+          - generic [ref=e2508]:
+            - generic [ref=e2509]:
+              - generic [ref=e2510]:
+                - generic [ref=e2512]: w
+                - generic [ref=e2514]:
+                  - generic [ref=e2516]: h
+                  - generic [ref=e2518]: j
+              - generic [ref=e2520]: →
+              - generic [ref=e2521]:
+                - generic [ref=e2523]: β
+                - generic [ref=e2526]: j
+              - generic [ref=e2528]: →
+              - generic [ref=e2529]:
+                - generic [ref=e2531]:
+                  - generic [ref=e2533]: ^
+                  - generic [ref=e2536]: "y"
+                - generic [ref=e2537]:
+                  - generic [ref=e2539]: k
+                  - generic [ref=e2541]: j
+              - generic [ref=e2543]: →
+              - generic [ref=e2544]:
+                - generic [ref=e2546]: E
+                - generic [ref=e2549]: k
+            - math [ref=e2551]:
+              - generic [ref=e2552]:
+                - generic [ref=e2553]: w
+                - generic [ref=e2554]:
+                  - generic [ref=e2555]: h
+                  - generic [ref=e2556]: j
+              - generic [ref=e2557]: →
+              - generic [ref=e2558]:
+                - generic [ref=e2559]: β
+                - generic [ref=e2560]: j
+              - generic [ref=e2561]: →
+              - generic [ref=e2562]:
+                - generic [ref=e2564]:
+                  - generic [ref=e2565]: "y"
+                  - generic [ref=e2566]: ^
+                - generic [ref=e2567]: j
+                - generic [ref=e2568]: k
+              - generic [ref=e2569]: →
+              - generic [ref=e2570]:
+                - generic [ref=e2571]: E
+                - generic [ref=e2572]: k
+          - paragraph [ref=e2573]: 那么根据链式法则可以得到：
+          - generic [ref=e2575]:
+            - generic [ref=e2577]:
+              - generic [ref=e2581]:
+                - generic [ref=e2584]:
+                  - generic [ref=e2586]:
+                    - generic [ref=e2588]: ∂
+                    - generic [ref=e2589]:
+                      - generic [ref=e2591]: E
+                      - generic [ref=e2594]: k
+                  - generic [ref=e2600]:
+                    - generic [ref=e2602]: ∂
+                    - generic [ref=e2603]:
+                      - generic [ref=e2605]: w
+                      - generic [ref=e2607]:
+                        - generic [ref=e2609]: h
+                        - generic [ref=e2611]: j
+                - generic [ref=e2613]: =
+                - generic [ref=e2616]:
+                  - generic [ref=e2618]:
+                    - generic [ref=e2620]: ∂
+                    - generic [ref=e2621]:
+                      - generic [ref=e2623]: E
+                      - generic [ref=e2626]: k
+                  - generic [ref=e2632]:
+                    - generic [ref=e2634]: ∂
+                    - generic [ref=e2635]:
+                      - generic [ref=e2637]:
+                        - generic [ref=e2639]: ^
+                        - generic [ref=e2642]: "y"
+                      - generic [ref=e2644]:
+                        - generic [ref=e2646]: j
+                        - generic [ref=e2648]: k
+                - generic [ref=e2650]: ⋅
+                - generic [ref=e2653]:
+                  - generic [ref=e2655]:
+                    - generic [ref=e2657]: ∂
+                    - generic [ref=e2658]:
+                      - generic [ref=e2660]:
+                        - generic [ref=e2662]: ^
+                        - generic [ref=e2665]: "y"
+                      - generic [ref=e2666]:
+                        - generic [ref=e2668]: k
+                        - generic [ref=e2670]: j
+                  - generic [ref=e2676]:
+                    - generic [ref=e2678]: ∂
+                    - generic [ref=e2679]:
+                      - generic [ref=e2681]: β
+                      - generic [ref=e2684]: j
+                - generic [ref=e2686]: ⋅
+                - generic [ref=e2689]:
+                  - generic [ref=e2691]:
+                    - generic [ref=e2693]: ∂
+                    - generic [ref=e2694]:
+                      - generic [ref=e2696]: β
+                      - generic [ref=e2699]: j
+                  - generic [ref=e2705]:
+                    - generic [ref=e2707]: ∂
+                    - generic [ref=e2708]:
+                      - generic [ref=e2710]: w
+                      - generic [ref=e2712]:
+                        - generic [ref=e2714]: h
+                        - generic [ref=e2716]: j
+              - generic [ref=e2720]:
+                - generic [ref=e2721]: (
+                - generic [ref=e2722]: "5"
+                - generic [ref=e2723]: .
+                - generic [ref=e2724]: "7"
+                - generic [ref=e2725]: )
+            - math [ref=e2727]:
+              - generic [ref=e2729]:
+                - generic [ref=e2731]: (5.7)
+                - generic [ref=e2732]:
+                  - generic [ref=e2734]:
+                    - generic [ref=e2735]:
+                      - generic [ref=e2736]: ∂
+                      - generic [ref=e2737]:
+                        - generic [ref=e2738]: E
+                        - generic [ref=e2739]: k
+                    - generic [ref=e2740]:
+                      - generic [ref=e2741]: ∂
+                      - generic [ref=e2742]:
+                        - generic [ref=e2743]: w
+                        - generic [ref=e2744]:
+                          - generic [ref=e2745]: h
+                          - generic [ref=e2746]: j
+                  - generic [ref=e2747]: =
+                  - generic [ref=e2749]:
+                    - generic [ref=e2750]:
+                      - generic [ref=e2751]: ∂
+                      - generic [ref=e2752]:
+                        - generic [ref=e2753]: E
+                        - generic [ref=e2754]: k
+                    - generic [ref=e2755]:
+                      - generic [ref=e2756]: ∂
+                      - generic [ref=e2757]:
+                        - generic [ref=e2759]:
+                          - generic [ref=e2760]: "y"
+                          - generic [ref=e2761]: ^
+                        - generic [ref=e2762]:
+                          - generic [ref=e2763]: j
+                          - generic [ref=e2764]: k
+                  - generic [ref=e2765]: ⋅
+                  - generic [ref=e2767]:
+                    - generic [ref=e2768]:
+                      - generic [ref=e2769]: ∂
+                      - generic [ref=e2770]:
+                        - generic [ref=e2772]:
+                          - generic [ref=e2773]: "y"
+                          - generic [ref=e2774]: ^
+                        - generic [ref=e2775]: j
+                        - generic [ref=e2776]: k
+                    - generic [ref=e2777]:
+                      - generic [ref=e2778]: ∂
+                      - generic [ref=e2779]:
+                        - generic [ref=e2780]: β
+                        - generic [ref=e2781]: j
+                  - generic [ref=e2782]: ⋅
+                  - generic [ref=e2784]:
+                    - generic [ref=e2785]:
+                      - generic [ref=e2786]: ∂
+                      - generic [ref=e2787]:
+                        - generic [ref=e2788]: β
+                        - generic [ref=e2789]: j
+                    - generic [ref=e2790]:
+                      - generic [ref=e2791]: ∂
+                      - generic [ref=e2792]:
+                        - generic [ref=e2793]: w
+                        - generic [ref=e2794]:
+                          - generic [ref=e2795]: h
+                          - generic [ref=e2796]: j
+          - separator [ref=e2797]
+          - paragraph [ref=e2798]: 3️⃣ 各项偏导数计算
+          - paragraph [ref=e2799]:
+            - strong [ref=e2800]: (1) 加权输入项
+          - paragraph [ref=e2801]:
+            - text: 根据定义
+            - generic [ref=e2803]:
+              - generic [ref=e2804]:
+                - generic [ref=e2805]:
+                  - generic [ref=e2807]: β
+                  - generic [ref=e2810]: j
+                - generic [ref=e2812]: =
+                - generic [ref=e2813]:
+                  - generic [ref=e2814]:
+                    - generic [ref=e2818]: ∑
+                    - generic [ref=e2822]: h
+                  - generic [ref=e2823]:
+                    - generic [ref=e2825]: w
+                    - generic [ref=e2827]:
+                      - generic [ref=e2829]: h
+                      - generic [ref=e2831]: j
+                  - generic [ref=e2832]:
+                    - generic [ref=e2834]: b
+                    - generic [ref=e2837]: h
+                  - generic [ref=e2839]: −
+                  - generic [ref=e2840]:
+                    - generic [ref=e2842]: θ
+                    - generic [ref=e2845]: j
+              - math [ref=e2847]:
+                - generic [ref=e2848]:
+                  - generic [ref=e2849]: β
+                  - generic [ref=e2850]: j
+                - generic [ref=e2851]: =
+                - generic [ref=e2852]:
+                  - generic [ref=e2853]:
+                    - generic [ref=e2854]: ∑
+                    - generic [ref=e2855]: h
+                  - generic [ref=e2856]:
+                    - generic [ref=e2857]: w
+                    - generic [ref=e2858]:
+                      - generic [ref=e2859]: h
+                      - generic [ref=e2860]: j
+                  - generic [ref=e2861]:
+                    - generic [ref=e2862]: b
+                    - generic [ref=e2863]: h
+                  - generic [ref=e2864]: −
+                  - generic [ref=e2865]:
+                    - generic [ref=e2866]: θ
+                    - generic [ref=e2867]: j
+            - text: ，因此可得
+          - generic [ref=e2869]:
+            - generic [ref=e2871]:
+              - generic [ref=e2875]:
+                - generic [ref=e2878]:
+                  - generic [ref=e2880]:
+                    - generic [ref=e2882]: ∂
+                    - generic [ref=e2883]:
+                      - generic [ref=e2885]: β
+                      - generic [ref=e2888]: j
+                  - generic [ref=e2894]:
+                    - generic [ref=e2896]: ∂
+                    - generic [ref=e2897]:
+                      - generic [ref=e2899]: w
+                      - generic [ref=e2901]:
+                        - generic [ref=e2903]: h
+                        - generic [ref=e2905]: j
+                - generic [ref=e2907]: =
+                - generic [ref=e2908]:
+                  - generic [ref=e2910]: b
+                  - generic [ref=e2913]: h
+              - generic [ref=e2917]:
+                - generic [ref=e2918]: (
+                - generic [ref=e2919]: "5"
+                - generic [ref=e2920]: .
+                - generic [ref=e2921]: "8"
+                - generic [ref=e2922]: )
+            - math [ref=e2924]:
+              - generic [ref=e2926]:
+                - generic [ref=e2928]: (5.8)
+                - generic [ref=e2929]:
+                  - generic [ref=e2931]:
+                    - generic [ref=e2932]:
+                      - generic [ref=e2933]: ∂
+                      - generic [ref=e2934]:
+                        - generic [ref=e2935]: β
+                        - generic [ref=e2936]: j
+                    - generic [ref=e2937]:
+                      - generic [ref=e2938]: ∂
+                      - generic [ref=e2939]:
+                        - generic [ref=e2940]: w
+                        - generic [ref=e2941]:
+                          - generic [ref=e2942]: h
+                          - generic [ref=e2943]: j
+                  - generic [ref=e2944]: =
+                  - generic [ref=e2945]:
+                    - generic [ref=e2946]: b
+                    - generic [ref=e2947]: h
+          - paragraph [ref=e2948]:
+            - strong [ref=e2949]: (2) 激活函数性质
+          - paragraph [ref=e2950]: Sigmoid 函数有性质如下
+          - generic [ref=e2952]:
+            - generic [ref=e2954]:
+              - generic [ref=e2958]:
+                - generic [ref=e2959]:
+                  - generic [ref=e2961]: f
+                  - generic [ref=e2964]: ′
+                - generic [ref=e2966]: (
+                - generic [ref=e2968]: x
+                - generic [ref=e2970]: )
+                - generic [ref=e2972]: =
+                - generic [ref=e2974]: f
+                - generic [ref=e2976]: (
+                - generic [ref=e2978]: x
+                - generic [ref=e2980]: )
+                - generic [ref=e2982]: (
+                - generic [ref=e2984]: "1"
+                - generic [ref=e2986]: −
+                - generic [ref=e2988]: f
+                - generic [ref=e2990]: (
+                - generic [ref=e2992]: x
+                - generic [ref=e2994]: )
+                - generic [ref=e2996]: )
+              - generic [ref=e3000]:
+                - generic [ref=e3001]: (
+                - generic [ref=e3002]: "5"
+                - generic [ref=e3003]: .
+                - generic [ref=e3004]: "9"
+                - generic [ref=e3005]: )
+            - math [ref=e3007]:
+              - generic [ref=e3009]:
+                - generic [ref=e3011]: (5.9)
+                - generic [ref=e3012]:
+                  - generic [ref=e3013]:
+                    - generic [ref=e3014]: f
+                    - generic [ref=e3015]: ′
+                  - generic [ref=e3016]: (
+                  - generic [ref=e3017]: x
+                  - generic [ref=e3018]: )
+                  - generic [ref=e3019]: =
+                  - generic [ref=e3020]: f
+                  - generic [ref=e3021]: (
+                  - generic [ref=e3022]: x
+                  - generic [ref=e3023]: )
+                  - generic [ref=e3024]: (
+                  - generic [ref=e3025]: "1"
+                  - generic [ref=e3026]: −
+                  - generic [ref=e3027]: f
+                  - generic [ref=e3028]: (
+                  - generic [ref=e3029]: x
+                  - generic [ref=e3030]: )
+                  - generic [ref=e3031]: )
+          - paragraph [ref=e3032]:
+            - strong [ref=e3033]: (3) 输出误差项
+          - paragraph [ref=e3034]: 由误差函数(5.4)和输出定义(5.3)，我们可以定义输出层误差信号：
+          - generic [ref=e3036]:
+            - generic [ref=e3037]:
+              - generic [ref=e3038]:
+                - generic [ref=e3040]: g
+                - generic [ref=e3043]: j
+              - generic [ref=e3045]: =
+              - generic [ref=e3047]: −
+              - generic [ref=e3050]:
+                - generic [ref=e3052]:
+                  - generic [ref=e3054]: ∂
+                  - generic [ref=e3055]:
+                    - generic [ref=e3057]: E
+                    - generic [ref=e3060]: k
+                - generic [ref=e3066]:
+                  - generic [ref=e3068]: ∂
+                  - generic [ref=e3069]:
+                    - generic [ref=e3071]:
+                      - generic [ref=e3073]: ^
+                      - generic [ref=e3076]: "y"
+                    - generic [ref=e3077]:
+                      - generic [ref=e3079]: k
+                      - generic [ref=e3081]: j
+              - generic [ref=e3084]:
+                - generic [ref=e3086]:
+                  - generic [ref=e3088]: ∂
+                  - generic [ref=e3089]:
+                    - generic [ref=e3091]:
+                      - generic [ref=e3093]: ^
+                      - generic [ref=e3096]: "y"
+                    - generic [ref=e3097]:
+                      - generic [ref=e3099]: k
+                      - generic [ref=e3101]: j
+                - generic [ref=e3107]:
+                  - generic [ref=e3109]: ∂
+                  - generic [ref=e3110]:
+                    - generic [ref=e3112]: β
+                    - generic [ref=e3115]: j
+            - math [ref=e3117]:
+              - generic [ref=e3118]:
+                - generic [ref=e3119]: g
+                - generic [ref=e3120]: j
+              - generic [ref=e3121]: =
+              - generic [ref=e3122]: −
+              - generic [ref=e3124]:
+                - generic [ref=e3125]:
+                  - generic [ref=e3126]: ∂
+                  - generic [ref=e3127]:
+                    - generic [ref=e3128]: E
+                    - generic [ref=e3129]: k
+                - generic [ref=e3130]:
+                  - generic [ref=e3131]: ∂
+                  - generic [ref=e3132]:
+                    - generic [ref=e3134]:
+                      - generic [ref=e3135]: "y"
+                      - generic [ref=e3136]: ^
+                    - generic [ref=e3137]: j
+                    - generic [ref=e3138]: k
+              - generic [ref=e3140]:
+                - generic [ref=e3141]:
+                  - generic [ref=e3142]: ∂
+                  - generic [ref=e3143]:
+                    - generic [ref=e3145]:
+                      - generic [ref=e3146]: "y"
+                      - generic [ref=e3147]: ^
+                    - generic [ref=e3148]: j
+                    - generic [ref=e3149]: k
+                - generic [ref=e3150]:
+                  - generic [ref=e3151]: ∂
+                  - generic [ref=e3152]:
+                    - generic [ref=e3153]: β
+                    - generic [ref=e3154]: j
+          - paragraph [ref=e3155]: 带入得到
+          - generic [ref=e3157]:
+            - generic [ref=e3159]:
+              - generic [ref=e3161]:
+                - generic [ref=e3162]:
+                  - generic [ref=e3164]:
+                    - generic [ref=e3166]: g
+                    - generic [ref=e3169]: j
+                  - generic [ref=e3170]:
+                    - generic [ref=e3172]: =
+                    - generic [ref=e3174]: −
+                    - generic [ref=e3176]: (
+                    - generic [ref=e3177]:
+                      - generic [ref=e3179]:
+                        - generic [ref=e3181]: ^
+                        - generic [ref=e3184]: "y"
+                      - generic [ref=e3185]:
+                        - generic [ref=e3187]: k
+                        - generic [ref=e3189]: j
+                    - generic [ref=e3191]: −
+                    - generic [ref=e3192]:
+                      - generic [ref=e3194]: "y"
+                      - generic [ref=e3195]:
+                        - generic [ref=e3197]: k
+                        - generic [ref=e3199]: j
+                    - generic [ref=e3201]: )
+                    - generic [ref=e3202]:
+                      - generic [ref=e3204]: f
+                      - generic [ref=e3207]: ′
+                    - generic [ref=e3209]: (
+                    - generic [ref=e3210]:
+                      - generic [ref=e3212]: β
+                      - generic [ref=e3215]: j
+                    - generic [ref=e3217]: −
+                    - generic [ref=e3218]:
+                      - generic [ref=e3220]: θ
+                      - generic [ref=e3223]: j
+                    - generic [ref=e3225]: )
+                - generic [ref=e3228]:
+                  - generic [ref=e3230]: =
+                  - generic [ref=e3231]:
+                    - generic [ref=e3233]:
+                      - generic [ref=e3235]: ^
+                      - generic [ref=e3238]: "y"
+                    - generic [ref=e3239]:
+                      - generic [ref=e3241]: k
+                      - generic [ref=e3243]: j
+                  - generic [ref=e3245]: (
+                  - generic [ref=e3247]: "1"
+                  - generic [ref=e3249]: −
+                  - generic [ref=e3250]:
+                    - generic [ref=e3252]:
+                      - generic [ref=e3254]: ^
+                      - generic [ref=e3257]: "y"
+                    - generic [ref=e3258]:
+                      - generic [ref=e3260]: k
+                      - generic [ref=e3262]: j
+                  - generic [ref=e3264]: )
+                  - generic [ref=e3266]: (
+                  - generic [ref=e3267]:
+                    - generic [ref=e3269]: "y"
+                    - generic [ref=e3270]:
+                      - generic [ref=e3272]: k
+                      - generic [ref=e3274]: j
+                  - generic [ref=e3276]: −
+                  - generic [ref=e3277]:
+                    - generic [ref=e3279]:
+                      - generic [ref=e3281]: ^
+                      - generic [ref=e3284]: "y"
+                    - generic [ref=e3285]:
+                      - generic [ref=e3287]: k
+                      - generic [ref=e3289]: j
+                  - generic [ref=e3291]: )
+              - generic [ref=e3296]:
+                - generic [ref=e3297]: (
+                - generic [ref=e3298]: "5"
+                - generic [ref=e3299]: .
+                - generic [ref=e3300]: "1"
+                - generic [ref=e3301]: "0"
+                - generic [ref=e3302]: )
+            - math [ref=e3304]:
+              - generic [ref=e3305]:
+                - generic [ref=e3306]:
+                  - generic [ref=e3308]:
+                    - generic [ref=e3309]: g
+                    - generic [ref=e3310]: j
+                  - generic [ref=e3311]:
+                    - generic [ref=e3312]: =
+                    - generic [ref=e3313]: −
+                    - generic [ref=e3314]: (
+                    - generic [ref=e3315]:
+                      - generic [ref=e3317]:
+                        - generic [ref=e3318]: "y"
+                        - generic [ref=e3319]: ^
+                      - generic [ref=e3320]: j
+                      - generic [ref=e3321]: k
+                    - generic [ref=e3322]: −
+                    - generic [ref=e3323]:
+                      - generic [ref=e3324]: "y"
+                      - generic [ref=e3325]: j
+                      - generic [ref=e3326]: k
+                    - generic [ref=e3327]: )
+                    - generic [ref=e3328]:
+                      - generic [ref=e3329]: f
+                      - generic [ref=e3330]: ′
+                    - generic [ref=e3331]: (
+                    - generic [ref=e3332]:
+                      - generic [ref=e3333]: β
+                      - generic [ref=e3334]: j
+                    - generic [ref=e3335]: −
+                    - generic [ref=e3336]:
+                      - generic [ref=e3337]: θ
+                      - generic [ref=e3338]: j
+                    - generic [ref=e3339]: )
+                - generic [ref=e3340]:
+                  - generic [ref=e3342]: (5.10)
+                  - generic [ref=e3344]:
+                    - generic [ref=e3345]: =
+                    - generic [ref=e3346]:
+                      - generic [ref=e3348]:
+                        - generic [ref=e3349]: "y"
+                        - generic [ref=e3350]: ^
+                      - generic [ref=e3351]: j
+                      - generic [ref=e3352]: k
+                    - generic [ref=e3353]: (
+                    - generic [ref=e3354]: "1"
+                    - generic [ref=e3355]: −
+                    - generic [ref=e3356]:
+                      - generic [ref=e3358]:
+                        - generic [ref=e3359]: "y"
+                        - generic [ref=e3360]: ^
+                      - generic [ref=e3361]: j
+                      - generic [ref=e3362]: k
+                    - generic [ref=e3363]: )
+                    - generic [ref=e3364]: (
+                    - generic [ref=e3365]:
+                      - generic [ref=e3366]: "y"
+                      - generic [ref=e3367]: j
+                      - generic [ref=e3368]: k
+                    - generic [ref=e3369]: −
+                    - generic [ref=e3370]:
+                      - generic [ref=e3372]:
+                        - generic [ref=e3373]: "y"
+                        - generic [ref=e3374]: ^
+                      - generic [ref=e3375]: j
+                      - generic [ref=e3376]: k
+                    - generic [ref=e3377]: )
+          - blockquote [ref=e3378]:
+            - paragraph [ref=e3379]:
+              - text: 这里
+              - generic [ref=e3381]:
+                - generic [ref=e3383]:
+                  - generic [ref=e3385]: g
+                  - generic [ref=e3388]: j
+                - math [ref=e3390]:
+                  - generic [ref=e3391]:
+                    - generic [ref=e3392]: g
+                    - generic [ref=e3393]: j
+              - text: 其实是将式子(5.7)链式法则提取出来前两项，没有特别含义
+          - paragraph [ref=e3394]:
+            - strong [ref=e3395]: (4) 输出层权重更新公式
+          - paragraph [ref=e3396]: 将式子(5.10)(5.8)带入(5.7)，再代入(5.6)，得到
+          - generic [ref=e3398]:
+            - generic [ref=e3400]:
+              - generic [ref=e3409]:
+                - generic [ref=e3411]: Δ
+                - generic [ref=e3412]:
+                  - generic [ref=e3414]: w
+                  - generic [ref=e3416]:
+                    - generic [ref=e3418]: h
+                    - generic [ref=e3420]: j
+                - generic [ref=e3422]: =
+                - generic [ref=e3424]: η
+                - generic [ref=e3425]:
+                  - generic [ref=e3427]: g
+                  - generic [ref=e3430]: j
+                - generic [ref=e3431]:
+                  - generic [ref=e3433]: b
+                  - generic [ref=e3436]: h
+              - generic [ref=e3440]:
+                - generic [ref=e3441]: (
+                - generic [ref=e3442]: "5"
+                - generic [ref=e3443]: .
+                - generic [ref=e3444]: "1"
+                - generic [ref=e3445]: "1"
+                - generic [ref=e3446]: )
+            - math [ref=e3448]:
+              - generic [ref=e3450]:
+                - generic [ref=e3452]: (5.11)
+                - generic [ref=e3457]:
+                  - generic [ref=e3458]: Δ
+                  - generic [ref=e3459]:
+                    - generic [ref=e3460]: w
+                    - generic [ref=e3461]:
+                      - generic [ref=e3462]: h
+                      - generic [ref=e3463]: j
+                  - generic [ref=e3464]: =
+                  - generic [ref=e3465]: η
+                  - generic [ref=e3466]:
+                    - generic [ref=e3467]: g
+                    - generic [ref=e3468]: j
+                  - generic [ref=e3469]:
+                    - generic [ref=e3470]: b
+                    - generic [ref=e3471]: h
+          - separator [ref=e3472]
+          - paragraph [ref=e3473]: 5️⃣ 其他参数的更新
+          - paragraph [ref=e3474]:
+            - strong [ref=e3475]: 输出层阈值
+            - text: ：
+          - generic [ref=e3477]:
+            - generic [ref=e3479]:
+              - generic [ref=e3483]:
+                - generic [ref=e3485]: Δ
+                - generic [ref=e3486]:
+                  - generic [ref=e3488]: θ
+                  - generic [ref=e3491]: j
+                - generic [ref=e3493]: =
+                - generic [ref=e3495]: −
+                - generic [ref=e3497]: η
+                - generic [ref=e3498]:
+                  - generic [ref=e3500]: g
+                  - generic [ref=e3503]: j
+              - generic [ref=e3507]:
+                - generic [ref=e3508]: (
+                - generic [ref=e3509]: "5"
+                - generic [ref=e3510]: .
+                - generic [ref=e3511]: "1"
+                - generic [ref=e3512]: "2"
+                - generic [ref=e3513]: )
+            - math [ref=e3515]:
+              - generic [ref=e3517]:
+                - generic [ref=e3519]: (5.12)
+                - generic [ref=e3520]:
+                  - generic [ref=e3521]: Δ
+                  - generic [ref=e3522]:
+                    - generic [ref=e3523]: θ
+                    - generic [ref=e3524]: j
+                  - generic [ref=e3525]: =
+                  - generic [ref=e3526]: −
+                  - generic [ref=e3527]: η
+                  - generic [ref=e3528]:
+                    - generic [ref=e3529]: g
+                    - generic [ref=e3530]: j
+          - paragraph [ref=e3531]:
+            - strong [ref=e3532]: 隐层权重
+            - text: ：
+          - generic [ref=e3534]:
+            - generic [ref=e3536]:
+              - generic [ref=e3540]:
+                - generic [ref=e3542]: Δ
+                - generic [ref=e3543]:
+                  - generic [ref=e3545]: v
+                  - generic [ref=e3547]:
+                    - generic [ref=e3549]: i
+                    - generic [ref=e3551]: h
+                - generic [ref=e3553]: =
+                - generic [ref=e3555]: η
+                - generic [ref=e3556]:
+                  - generic [ref=e3558]: e
+                  - generic [ref=e3561]: h
+                - generic [ref=e3562]:
+                  - generic [ref=e3564]: x
+                  - generic [ref=e3567]: i
+              - generic [ref=e3571]:
+                - generic [ref=e3572]: (
+                - generic [ref=e3573]: "5"
+                - generic [ref=e3574]: .
+                - generic [ref=e3575]: "1"
+                - generic [ref=e3576]: "3"
+                - generic [ref=e3577]: )
+            - math [ref=e3579]:
+              - generic [ref=e3581]:
+                - generic [ref=e3583]: (5.13)
+                - generic [ref=e3584]:
+                  - generic [ref=e3585]: Δ
+                  - generic [ref=e3586]:
+                    - generic [ref=e3587]: v
+                    - generic [ref=e3588]:
+                      - generic [ref=e3589]: i
+                      - generic [ref=e3590]: h
+                  - generic [ref=e3591]: =
+                  - generic [ref=e3592]: η
+                  - generic [ref=e3593]:
+                    - generic [ref=e3594]: e
+                    - generic [ref=e3595]: h
+                  - generic [ref=e3596]:
+                    - generic [ref=e3597]: x
+                    - generic [ref=e3598]: i
+          - paragraph [ref=e3599]:
+            - strong [ref=e3600]: 隐层阈值
+            - text: ":"
+          - generic [ref=e3602]:
+            - generic [ref=e3604]:
+              - generic [ref=e3608]:
+                - generic [ref=e3610]: Δ
+                - generic [ref=e3611]:
+                  - generic [ref=e3613]: γ
+                  - generic [ref=e3616]: h
+                - generic [ref=e3618]: =
+                - generic [ref=e3620]: −
+                - generic [ref=e3622]: η
+                - generic [ref=e3623]:
+                  - generic [ref=e3625]: e
+                  - generic [ref=e3628]: h
+              - generic [ref=e3632]:
+                - generic [ref=e3633]: (
+                - generic [ref=e3634]: "5"
+                - generic [ref=e3635]: .
+                - generic [ref=e3636]: "1"
+                - generic [ref=e3637]: "4"
+                - generic [ref=e3638]: )
+            - math [ref=e3640]:
+              - generic [ref=e3642]:
+                - generic [ref=e3644]: (5.14)
+                - generic [ref=e3645]:
+                  - generic [ref=e3646]: Δ
+                  - generic [ref=e3647]:
+                    - generic [ref=e3648]: γ
+                    - generic [ref=e3649]: h
+                  - generic [ref=e3650]: =
+                  - generic [ref=e3651]: −
+                  - generic [ref=e3652]: η
+                  - generic [ref=e3653]:
+                    - generic [ref=e3654]: e
+                    - generic [ref=e3655]: h
+          - paragraph [ref=e3656]:
+            - strong [ref=e3657]:
+              - generic [ref=e3659]:
+                - generic [ref=e3661]:
+                  - generic [ref=e3663]: e
+                  - generic [ref=e3666]: h
+                - math [ref=e3668]:
+                  - generic [ref=e3669]:
+                    - generic [ref=e3670]: e
+                    - generic [ref=e3671]: h
+              - text: 为隐层神经元的误差信号
+            - text: ，计算如下：
+          - generic [ref=e3673]:
+            - generic [ref=e3675]:
+              - generic [ref=e3677]:
+                - generic [ref=e3678]:
+                  - generic [ref=e3680]:
+                    - generic [ref=e3682]: e
+                    - generic [ref=e3685]: h
+                  - generic [ref=e3686]:
+                    - generic [ref=e3688]: =
+                    - generic [ref=e3690]: −
+                    - generic [ref=e3692]:
+                      - generic [ref=e3694]:
+                        - generic [ref=e3696]: ∂
+                        - generic [ref=e3697]:
+                          - generic [ref=e3699]: E
+                          - generic [ref=e3702]: k
+                      - generic [ref=e3708]:
+                        - generic [ref=e3710]: ∂
+                        - generic [ref=e3711]:
+                          - generic [ref=e3713]: b
+                          - generic [ref=e3716]: h
+                    - generic [ref=e3718]:
+                      - generic [ref=e3720]:
+                        - generic [ref=e3722]: ∂
+                        - generic [ref=e3723]:
+                          - generic [ref=e3725]: b
+                          - generic [ref=e3728]: h
+                      - generic [ref=e3734]:
+                        - generic [ref=e3736]: ∂
+                        - generic [ref=e3737]:
+                          - generic [ref=e3739]: α
+                          - generic [ref=e3742]: h
+                - generic [ref=e3745]:
+                  - generic [ref=e3747]: =
+                  - generic [ref=e3749]: −
+                  - generic [ref=e3750]:
+                    - generic [ref=e3754]: ℓ
+                    - generic [ref=e3756]:
+                      - generic [ref=e3760]: ∑
+                      - generic [ref=e3763]:
+                        - generic [ref=e3765]: j
+                        - generic [ref=e3767]: =
+                        - generic [ref=e3769]: "1"
+                  - generic [ref=e3771]:
+                    - generic [ref=e3773]:
+                      - generic [ref=e3775]: ∂
+                      - generic [ref=e3776]:
+                        - generic [ref=e3778]: E
+                        - generic [ref=e3781]: k
+                    - generic [ref=e3787]:
+                      - generic [ref=e3789]: ∂
+                      - generic [ref=e3790]:
+                        - generic [ref=e3792]: β
+                        - generic [ref=e3795]: j
+                  - generic [ref=e3797]:
+                    - generic [ref=e3799]:
+                      - generic [ref=e3801]: ∂
+                      - generic [ref=e3802]:
+                        - generic [ref=e3804]: β
+                        - generic [ref=e3807]: j
+                    - generic [ref=e3813]:
+                      - generic [ref=e3815]: ∂
+                      - generic [ref=e3816]:
+                        - generic [ref=e3818]: b
+                        - generic [ref=e3821]: h
+                  - generic [ref=e3822]:
+                    - generic [ref=e3824]: f
+                    - generic [ref=e3827]: ′
+                  - generic [ref=e3829]: (
+                  - generic [ref=e3830]:
+                    - generic [ref=e3832]: α
+                    - generic [ref=e3835]: h
+                  - generic [ref=e3837]: −
+                  - generic [ref=e3838]:
+                    - generic [ref=e3840]: γ
+                    - generic [ref=e3843]: h
+                  - generic [ref=e3845]: )
+                - generic [ref=e3848]:
+                  - generic [ref=e3850]: =
+                  - generic [ref=e3851]:
+                    - generic [ref=e3855]: ℓ
+                    - generic [ref=e3857]:
+                      - generic [ref=e3861]: ∑
+                      - generic [ref=e3864]:
+                        - generic [ref=e3866]: j
+                        - generic [ref=e3868]: =
+                        - generic [ref=e3870]: "1"
+                  - generic [ref=e3871]:
+                    - generic [ref=e3873]: w
+                    - generic [ref=e3875]:
+                      - generic [ref=e3877]: h
+                      - generic [ref=e3879]: j
+                  - generic [ref=e3881]:
+                    - generic [ref=e3883]: g
+                    - generic [ref=e3886]: j
+                  - generic [ref=e3888]:
+                    - generic [ref=e3890]: f
+                    - generic [ref=e3893]: ′
+                  - generic [ref=e3895]: (
+                  - generic [ref=e3896]:
+                    - generic [ref=e3898]: α
+                    - generic [ref=e3901]: h
+                  - generic [ref=e3903]: −
+                  - generic [ref=e3904]:
+                    - generic [ref=e3906]: γ
+                    - generic [ref=e3909]: h
+                  - generic [ref=e3911]: )
+                - generic [ref=e3914]:
+                  - generic [ref=e3916]: =
+                  - generic [ref=e3917]:
+                    - generic [ref=e3919]: b
+                    - generic [ref=e3922]: h
+                  - generic [ref=e3924]: (
+                  - generic [ref=e3926]: "1"
+                  - generic [ref=e3928]: −
+                  - generic [ref=e3929]:
+                    - generic [ref=e3931]: b
+                    - generic [ref=e3934]: h
+                  - generic [ref=e3936]: )
+                  - generic [ref=e3937]:
+                    - generic [ref=e3941]: ℓ
+                    - generic [ref=e3943]:
+                      - generic [ref=e3947]: ∑
+                      - generic [ref=e3950]:
+                        - generic [ref=e3952]: j
+                        - generic [ref=e3954]: =
+                        - generic [ref=e3956]: "1"
+                  - generic [ref=e3957]:
+                    - generic [ref=e3959]: w
+                    - generic [ref=e3961]:
+                      - generic [ref=e3963]: h
+                      - generic [ref=e3965]: j
+                  - generic [ref=e3967]:
+                    - generic [ref=e3969]: g
+                    - generic [ref=e3972]: j
+                  - generic [ref=e3974]: .
+              - generic [ref=e3979]:
+                - generic [ref=e3980]: (
+                - generic [ref=e3981]: "5"
+                - generic [ref=e3982]: .
+                - generic [ref=e3983]: "1"
+                - generic [ref=e3984]: "5"
+                - generic [ref=e3985]: )
+            - math [ref=e3987]:
+              - generic [ref=e3988]:
+                - generic [ref=e3989]:
+                  - generic [ref=e3991]:
+                    - generic [ref=e3992]: e
+                    - generic [ref=e3993]: h
+                  - generic [ref=e3994]:
+                    - generic [ref=e3995]: =
+                    - generic [ref=e3996]: −
+                    - generic [ref=e3997]:
+                      - generic [ref=e3998]:
+                        - generic [ref=e3999]: ∂
+                        - generic [ref=e4000]:
+                          - generic [ref=e4001]: E
+                          - generic [ref=e4002]: k
+                      - generic [ref=e4003]:
+                        - generic [ref=e4004]: ∂
+                        - generic [ref=e4005]:
+                          - generic [ref=e4006]: b
+                          - generic [ref=e4007]: h
+                    - generic [ref=e4008]:
+                      - generic [ref=e4009]:
+                        - generic [ref=e4010]: ∂
+                        - generic [ref=e4011]:
+                          - generic [ref=e4012]: b
+                          - generic [ref=e4013]: h
+                      - generic [ref=e4014]:
+                        - generic [ref=e4015]: ∂
+                        - generic [ref=e4016]:
+                          - generic [ref=e4017]: α
+                          - generic [ref=e4018]: h
+                - generic [ref=e4021]:
+                  - generic [ref=e4022]: =
+                  - generic [ref=e4023]: −
+                  - generic [ref=e4024]:
+                    - generic [ref=e4025]: ∑
+                    - generic [ref=e4026]:
+                      - generic [ref=e4027]: j
+                      - generic [ref=e4028]: =
+                      - generic [ref=e4029]: "1"
+                    - generic [ref=e4031]: ℓ
+                  - generic [ref=e4032]:
+                    - generic [ref=e4033]:
+                      - generic [ref=e4034]: ∂
+                      - generic [ref=e4035]:
+                        - generic [ref=e4036]: E
+                        - generic [ref=e4037]: k
+                    - generic [ref=e4038]:
+                      - generic [ref=e4039]: ∂
+                      - generic [ref=e4040]:
+                        - generic [ref=e4041]: β
+                        - generic [ref=e4042]: j
+                  - generic [ref=e4043]:
+                    - generic [ref=e4044]:
+                      - generic [ref=e4045]: ∂
+                      - generic [ref=e4046]:
+                        - generic [ref=e4047]: β
+                        - generic [ref=e4048]: j
+                    - generic [ref=e4049]:
+                      - generic [ref=e4050]: ∂
+                      - generic [ref=e4051]:
+                        - generic [ref=e4052]: b
+                        - generic [ref=e4053]: h
+                  - generic [ref=e4054]:
+                    - generic [ref=e4055]: f
+                    - generic [ref=e4056]: ′
+                  - generic [ref=e4057]: (
+                  - generic [ref=e4058]:
+                    - generic [ref=e4059]: α
+                    - generic [ref=e4060]: h
+                  - generic [ref=e4061]: −
+                  - generic [ref=e4062]:
+                    - generic [ref=e4063]: γ
+                    - generic [ref=e4064]: h
+                  - generic [ref=e4065]: )
+                - generic [ref=e4068]:
+                  - generic [ref=e4069]: =
+                  - generic [ref=e4070]:
+                    - generic [ref=e4071]: ∑
+                    - generic [ref=e4072]:
+                      - generic [ref=e4073]: j
+                      - generic [ref=e4074]: =
+                      - generic [ref=e4075]: "1"
+                    - generic [ref=e4077]: ℓ
+                  - generic [ref=e4078]:
+                    - generic [ref=e4079]: w
+                    - generic [ref=e4080]:
+                      - generic [ref=e4081]: h
+                      - generic [ref=e4082]: j
+                  - generic [ref=e4083]:
+                    - generic [ref=e4084]: g
+                    - generic [ref=e4085]: j
+                  - generic [ref=e4086]:
+                    - generic [ref=e4087]: f
+                    - generic [ref=e4088]: ′
+                  - generic [ref=e4089]: (
+                  - generic [ref=e4090]:
+                    - generic [ref=e4091]: α
+                    - generic [ref=e4092]: h
+                  - generic [ref=e4093]: −
+                  - generic [ref=e4094]:
+                    - generic [ref=e4095]: γ
+                    - generic [ref=e4096]: h
+                  - generic [ref=e4097]: )
+                - generic [ref=e4098]:
+                  - generic [ref=e4100]: (5.15)
+                  - generic [ref=e4102]:
+                    - generic [ref=e4103]: =
+                    - generic [ref=e4104]:
+                      - generic [ref=e4105]: b
+                      - generic [ref=e4106]: h
+                    - generic [ref=e4107]: (
+                    - generic [ref=e4108]: "1"
+                    - generic [ref=e4109]: −
+                    - generic [ref=e4110]:
+                      - generic [ref=e4111]: b
+                      - generic [ref=e4112]: h
+                    - generic [ref=e4113]: )
+                    - generic [ref=e4114]:
+                      - generic [ref=e4115]: ∑
+                      - generic [ref=e4116]:
+                        - generic [ref=e4117]: j
+                        - generic [ref=e4118]: =
+                        - generic [ref=e4119]: "1"
+                      - generic [ref=e4121]: ℓ
+                    - generic [ref=e4122]:
+                      - generic [ref=e4123]: w
+                      - generic [ref=e4124]:
+                        - generic [ref=e4125]: h
+                        - generic [ref=e4126]: j
+                    - generic [ref=e4127]:
+                      - generic [ref=e4128]: g
+                      - generic [ref=e4129]: j
+                    - generic [ref=e4130]: .
+          - blockquote [ref=e4131]:
+            - paragraph [ref=e4132]:
+              - generic [ref=e4134]:
+                - generic [ref=e4136]:
+                  - generic [ref=e4138]: e
+                  - generic [ref=e4141]: h
+                - math [ref=e4143]:
+                  - generic [ref=e4144]:
+                    - generic [ref=e4145]: e
+                    - generic [ref=e4146]: h
+              - text: 表示对隐层神经元
+              - generic [ref=e4148]:
+                - generic [ref=e4151]: h
+                - math [ref=e4153]:
+                  - generic [ref=e4154]: h
+              - text: 的加权输入
+              - generic [ref=e4156]:
+                - generic [ref=e4158]:
+                  - generic [ref=e4160]: α
+                  - generic [ref=e4163]: h
+                - math [ref=e4165]:
+                  - generic [ref=e4166]:
+                    - generic [ref=e4167]: α
+                    - generic [ref=e4168]: h
+              - text: 的负梯度，即
+              - generic [ref=e4170]:
+                - generic [ref=e4171]:
+                  - generic [ref=e4172]:
+                    - generic [ref=e4174]: e
+                    - generic [ref=e4177]: h
+                  - generic [ref=e4179]: =
+                  - generic [ref=e4182]:
+                    - generic [ref=e4184]:
+                      - generic [ref=e4186]: ∂
+                      - generic [ref=e4187]:
+                        - generic [ref=e4189]: E
+                        - generic [ref=e4192]: k
+                    - generic [ref=e4198]:
+                      - generic [ref=e4200]: ∂
+                      - generic [ref=e4201]:
+                        - generic [ref=e4203]: α
+                        - generic [ref=e4206]: h
+                - math [ref=e4208]:
+                  - generic [ref=e4209]:
+                    - generic [ref=e4210]: e
+                    - generic [ref=e4211]: h
+                  - generic [ref=e4212]: =
+                  - generic [ref=e4214]:
+                    - generic [ref=e4215]:
+                      - generic [ref=e4216]: ∂
+                      - generic [ref=e4217]:
+                        - generic [ref=e4218]: E
+                        - generic [ref=e4219]: k
+                    - generic [ref=e4220]:
+                      - generic [ref=e4221]: ∂
+                      - generic [ref=e4222]:
+                        - generic [ref=e4223]: α
+                        - generic [ref=e4224]: h
+              - text: ，然后链式法则展开
+            - paragraph [ref=e4225]:
+              - text: 学习率
+              - generic [ref=e4227]:
+                - generic [ref=e4228]:
+                  - generic [ref=e4230]: η
+                  - generic [ref=e4232]: ∈
+                  - generic [ref=e4234]: (
+                  - generic [ref=e4236]: "0"
+                  - generic [ref=e4238]: ","
+                  - generic [ref=e4240]: "1"
+                  - generic [ref=e4242]: )
+                - math [ref=e4244]:
+                  - generic [ref=e4245]: η
+                  - generic [ref=e4246]: ∈
+                  - generic [ref=e4247]: (
+                  - generic [ref=e4248]: "0"
+                  - generic [ref=e4249]: ","
+                  - generic [ref=e4250]: "1"
+                  - generic [ref=e4251]: )
+              - text: 控制着算法每一轮迭代中的更新步长，若太大则容易振荡，太小则收敛速度过慢。
+          - paragraph [ref=e4252]: 核心算法如下：
+          - paragraph [ref=e4253]:
+            - img "image-20260210212600173" [ref=e4254]
+          - blockquote [ref=e4255]:
+            - paragraph [ref=e4256]: 简单来说就是：输入示例提供给输入层神经元，然后信号直到传递到输出层，然后计算出输出层的误差逆向传播至隐层神经元，最后根据隐层神经元的误差来对连接权和阈值进行调整
+          - heading "全局最小与局部极小" [level=3] [ref=e4257]
+          - paragraph [ref=e4258]: 这一部分主要是介绍了梯度下降的相关内容，没有涉及计算，三种“跳出”局部极小接近全局最小的方法：
+          - list [ref=e4259]:
+            - listitem [ref=e4260]: 随机梯度下降：在梯度计算中引入随机扰动
+            - listitem [ref=e4261]: “模拟退火”技术，即可以接受“次优解”
+            - listitem [ref=e4262]: 多次随机初始化：用不同的初始权值和阈值多次训练
+          - heading "深度学习" [level=3] [ref=e4263]
+          - paragraph [ref=e4264]: 随着计算能力的升级，以“深度学习”为代表的复杂模型开始受到人们的关注。而典型的深度学习模型就是很深层的神经网络。
+          - paragraph [ref=e4265]: 隐层多了，相应的神经元连接权、阈值等参数就会更多。模型复杂度页可通过单纯增加隐层神经元的数目更加有效，因为增加隐层数不仅增加了拥有激活函数的神经元数目，还增加了激活函数嵌套的层数。
+          - paragraph [ref=e4266]: 然而，多隐层神经网络难以直接用经典算法进行训练，因为误差在多隐层内逆传播时，往往会发散而不能收敛到稳定状态
+          - paragraph [ref=e4267]:
+            - text: 于是提出了
+            - strong [ref=e4268]: 无监督逐层训练
+            - text: 作为多隐层网络训练的有效手段
+          - generic [ref=e4269]:
+            - paragraph [ref=e4270]: Note
+            - paragraph [ref=e4271]:
+              - text: 无监督逐层训练的主要思想是：每次训练一层隐节点，训练时将上一层隐节点的输出作为输入，而本层隐节点的输出作为下一层隐节点的输入，这称为
+              - strong [ref=e4272]: 预训练
+          - paragraph [ref=e4273]:
+            - text: 在预训练全部完成后，对整个网络进行
+            - strong [ref=e4274]: 微调训练
+          - paragraph [ref=e4275]: 实际上，”预训练+微调“的做法可以视为将大量参数分组，对每组先找到局部看起来比较好的设置，然后再基于这些局部较优的结果联合起来进行全局寻优
+          - paragraph [ref=e4276]:
+            - text: 另一种节省训练开销的策略是
+            - strong [ref=e4277]: 权共享
+            - text: ，即让一组神经元使用相同的连接权，在卷积神经网络(CNN)中用处发挥重大作用，如下，CNN符合多个“卷积层”和“采样层”对输入信号进行加工，然后在连接层实现与输出目标之间的映射
+          - paragraph [ref=e4278]:
+            - img "image-20260210221024649" [ref=e4279]
+          - generic [ref=e4280]:
+            - paragraph [ref=e4281]: Tip
+            - paragraph [ref=e4282]: 从另一个角度来理解深度学习的话，很多算法均采用隐层堆叠、每层对上一层的输出进行处理的机制
+          - paragraph [ref=e4283]: 可以看作是在对输入信号进行逐层加工，从而把初始的、与输出目标之间联系不太密切的输入表示，转化成与输出目标联系更加密切的表示、使得原来仅基于最后一层输出映射难以完成的任务成为可能
+          - paragraph [ref=e4284]: 换句话说：通过多层处理，将初始的“低层”特征表示转化为“高层”特征表示后，用“简单模型”完成复杂的分类等学习任务
+          - blockquote [ref=e4285]:
+            - paragraph [ref=e4286]: 抽象层是计算机的伟大概念
+          - generic [ref=e4287]:
+            - navigation "文章分页导航" [ref=e4288]:
+              - link "上一篇 第四章 决策树" [ref=e4289] [cursor=pointer]:
+                - /url: ../4/
+                - generic [ref=e4290]: 上一篇
+                - generic [ref=e4291]: 第四章 决策树
+              - link "下一篇 第六章 支持向量机" [ref=e4292] [cursor=pointer]:
+                - /url: ../6/
+                - generic [ref=e4293]: 下一篇
+                - generic [ref=e4294]: 第六章 支持向量机
+            - heading "评论" [level=2] [ref=e4295]
+            - iframe [ref=e4297]
+      - button "回到页面顶部":
+        - img
+        - text: 回到页面顶部
+    - contentinfo [ref=e4298]:
+      - generic [ref=e4301]:
+        - text: Made with
+        - link "Material for MkDocs" [ref=e4302] [cursor=pointer]:
+          - /url: https://squidfunk.github.io/mkdocs-material/

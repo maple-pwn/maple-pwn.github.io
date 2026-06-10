@@ -361,1425 +361,175 @@ Softmax 通过持续细化概率分布来解决这个问题。即使在实现正
 ### A.1 基础线性分类器
 
 
-```
-
-class
-
-LinearClassifier
-:
-
-
-def
-
-__init__
-(
-self
-,
-
-reg
-=
-1e-4
-,
-
-learning_rate
-=
-1e-7
-,
-
-num_iters
-=
-1500
-,
-
-
-batch_size
-=
-200
-,
-
-verbose
-=
-False
-,
-
-seed
-=
-None
-):
-
-
-self
-.
-reg
-
-=
-
-reg
-
-
-self
-.
-learning_rate
-
-=
-
-learning_rate
-
-
-self
-.
-num_iters
-
-=
-
-num_iters
-
-
-self
-.
-batch_size
-
-=
-
-batch_size
-
-
-self
-.
-verbose
-
-=
-
-verbose
-
-
-self
-.
-seed
-
-=
-
-seed
-
-
-self
-.
-W
-
-=
-
-None
-
-
-self
-.
-b
-
-=
-
-None
-
-
-def
-
-train
-(
-self
-,
-
-X
-,
-
-y
-):
-
-
-"""训练线性分类器"""
-
-
-num_train
-,
-
-dim
-
-=
-
-X
-.
-shape
-
-
-num_classes
-
-=
-
-np
-.
-max
-(
-y
-)
-
-+
-
-1
-
-
-
-# 初始化权重
-
-
-if
-
-self
-.
-W
-
-is
-
-None
-:
-
-
-rng
-
-=
-
-np
-.
-random
-.
-default_rng
-(
-self
-.
-seed
-)
-
-
-self
-.
-W
-
-=
-
-rng
-.
-normal
-(
-0
-,
-
-0.001
-,
-
-(
-dim
-,
-
-num_classes
-))
-
-
-self
-.
-b
-
-=
-
-np
-.
-zeros
-(
-num_classes
-)
-
-
-loss_history
-
-=
-
-[]
-
-
-for
-
-it
-
-in
-
-range
-(
-self
-.
-num_iters
-):
-
-
-
-# 小批量采样
-
-
-batch_indices
-
-=
-
-np
-.
-random
-.
-choice
-(
-num_train
-,
-
-self
-.
-batch_size
-)
-
-
-X_batch
-
-=
-
-X
-[
-batch_indices
-]
-
-
-y_batch
-
-=
-
-y
-[
-batch_indices
-]
-
-
-
-# 计算损失和梯度
-
-
-loss
-,
-
-dW
-,
-
-db
-
-=
-
-self
-.
-loss
-(
-X_batch
-,
-
-y_batch
-)
-
-
-loss_history
-.
-append
-(
-loss
-)
-
-
-
-# 参数更新
-
-
-self
-.
-W
-
--=
-
-self
-.
-learning_rate
-
-*
-
-dW
-
-
-self
-.
-b
-
--=
-
-self
-.
-learning_rate
-
-*
-
-db
-
-
-if
-
-self
-.
-verbose
-
-and
-
-it
-
-%
-
-100
-
-==
-
-0
-:
-
-
-print
-(
-f
-'iteration
-{
-it
-}
- /
-{
-self
-.
-num_iters
-}
-: loss
-{
-loss
-}
-'
-)
-
-
-return
-
-loss_history
-
-
-def
-
-predict
-(
-self
-,
-
-X
-):
-
-
-"""预测类别"""
-
-
-scores
-
-=
-
-X
-.
-dot
-(
-self
-.
-W
-)
-
-+
-
-self
-.
-b
-
-
-y_pred
-
-=
-
-np
-.
-argmax
-(
-scores
-,
-
-axis
-=
-1
-)
-
-
-return
-
-y_pred
-
-
-def
-
-loss
-(
-self
-,
-
-X
-,
-
-y
-):
-
-
-"""计算损失和梯度(由子类实现)"""
-
-
-raise
-
-NotImplementedError
-
+```python
+class LinearClassifier:
+    def __init__(self, reg=1e-4, learning_rate=1e-7, num_iters=1500,
+                 batch_size=200, verbose=False, seed=None):
+        self.reg = reg
+        self.learning_rate = learning_rate
+        self.num_iters = num_iters
+        self.batch_size = batch_size
+        self.verbose = verbose
+        self.seed = seed
+        self.W = None
+        self.b = None
+
+    def train(self, X, y):
+        """训练线性分类器"""
+        num_train, dim = X.shape
+        num_classes = np.max(y) + 1
+
+        # 初始化权重
+        if self.W is None:
+            rng = np.random.default_rng(self.seed)
+            self.W = rng.normal(0, 0.001, (dim, num_classes))
+            self.b = np.zeros(num_classes)
+
+        loss_history = []
+
+        for it in range(self.num_iters):
+            # 小批量采样
+            batch_indices = np.random.choice(num_train, self.batch_size)
+            X_batch = X[batch_indices]
+            y_batch = y[batch_indices]
+
+            # 计算损失和梯度
+            loss, dW, db = self.loss(X_batch, y_batch)
+            loss_history.append(loss)
+
+            # 参数更新
+            self.W -= self.learning_rate * dW
+            self.b -= self.learning_rate * db
+
+            if self.verbose and it % 100 == 0:
+                print(f'iteration {it} / {self.num_iters}: loss {loss}')
+
+        return loss_history
+
+    def predict(self, X):
+        """预测类别"""
+        scores = X.dot(self.W) + self.b
+        y_pred = np.argmax(scores, axis=1)
+        return y_pred
+
+    def loss(self, X, y):
+        """计算损失和梯度(由子类实现)"""
+        raise NotImplementedError
 ```
 
 
 ### A.2 SVM 实现
 
 
-```
-
-class
-
-LinearSVM
-(
-LinearClassifier
-):
-
-
-def
-
-__init__
-(
-self
-,
-
-delta
-=
-1.0
-,
-
-**
-kwargs
-):
-
-
-super
-()
-.
-__init__
-(
-**
-kwargs
-)
-
-
-self
-.
-delta
-
-=
-
-delta
-
-
-def
-
-loss
-(
-self
-,
-
-X
-,
-
-y
-):
-
-
-"""计算 SVM 损失和梯度"""
-
-
-num_train
-
-=
-
-X
-.
-shape
-[
-0
-]
-
-
-
-# 前向传播
-
-
-scores
-
-=
-
-X
-.
-dot
-(
-self
-.
-W
-)
-
-+
-
-self
-.
-b
-
-
-correct_class_scores
-
-=
-
-scores
-[
-np
-.
-arange
-(
-num_train
-),
-
-y
-]
-
-
-margins
-
-=
-
-np
-.
-maximum
-(
-0
-,
-
-scores
-
--
-
-correct_class_scores
-[:,
-
-np
-.
-newaxis
-]
-
-+
-
-self
-.
-delta
-)
-
-
-margins
-[
-np
-.
-arange
-(
-num_train
-),
-
-y
-]
-
-=
-
-0
-
-
-
-# 损失
-
-
-loss
-
-=
-
-np
-.
-sum
-(
-margins
-)
-
-/
-
-num_train
-
-
-loss
-
-+=
-
-self
-.
-reg
-
-*
-
-np
-.
-sum
-(
-self
-.
-W
-
-*
-
-self
-.
-W
-)
-
-
-
-# 梯度
-
-
-binary
-
-=
-
-margins
-
-
-binary
-[
-margins
-
->
-
-0
-]
-
-=
-
-1
-
-
-row_sum
-
-=
-
-np
-.
-sum
-(
-binary
-,
-
-axis
-=
-1
-)
-
-
-binary
-[
-np
-.
-arange
-(
-num_train
-),
-
-y
-]
-
-=
-
--
-row_sum
-
-
-dW
-
-=
-
-X
-.
-T
-.
-dot
-(
-binary
-)
-
-/
-
-num_train
-
-
-dW
-
-+=
-
-2
-
-*
-
-self
-.
-reg
-
-*
-
-self
-.
-W
-
-
-db
-
-=
-
-np
-.
-sum
-(
-binary
-,
-
-axis
-=
-0
-)
-
-/
-
-num_train
-
-
-return
-
-loss
-,
-
-dW
-,
-
-db
-
+```python
+class LinearSVM(LinearClassifier):
+    def __init__(self, delta=1.0, **kwargs):
+        super().__init__(**kwargs)
+        self.delta = delta
+
+    def loss(self, X, y):
+        """计算 SVM 损失和梯度"""
+        num_train = X.shape[0]
+
+        # 前向传播
+        scores = X.dot(self.W) + self.b
+        correct_class_scores = scores[np.arange(num_train), y]
+        margins = np.maximum(0, scores - correct_class_scores[:, np.newaxis] + self.delta)
+        margins[np.arange(num_train), y] = 0
+
+        # 损失
+        loss = np.sum(margins) / num_train
+        loss += self.reg * np.sum(self.W * self.W)
+
+        # 梯度
+        binary = margins
+        binary[margins > 0] = 1
+        row_sum = np.sum(binary, axis=1)
+        binary[np.arange(num_train), y] = -row_sum
+
+        dW = X.T.dot(binary) / num_train
+        dW += 2 * self.reg * self.W
+
+        db = np.sum(binary, axis=0) / num_train
+
+        return loss, dW, db
 ```
 
 
 ### A.3 Softmax 实现
 
 
-```
+```python
+class SoftmaxClassifier(LinearClassifier):
+    def loss(self, X, y):
+        """计算 Softmax 损失和梯度"""
+        num_train = X.shape[0]
 
-class
+        # 前向传播
+        scores = X.dot(self.W) + self.b
 
-SoftmaxClassifier
-(
-LinearClassifier
-):
+        # 数值稳定性
+        scores -= np.max(scores, axis=1, keepdims=True)
 
+        # Softmax
+        exp_scores = np.exp(scores)
+        probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)
 
-def
+        # 损失
+        correct_logprobs = -np.log(probs[np.arange(num_train), y])
+        loss = np.sum(correct_logprobs) / num_train
+        loss += self.reg * np.sum(self.W * self.W)
 
-loss
-(
-self
-,
+        # 梯度
+        dscores = probs.copy()
+        dscores[np.arange(num_train), y] -= 1
+        dscores /= num_train
 
-X
-,
+        dW = X.T.dot(dscores)
+        dW += 2 * self.reg * self.W
 
-y
-):
+        db = np.sum(dscores, axis=0)
 
-
-"""计算 Softmax 损失和梯度"""
-
-
-num_train
-
-=
-
-X
-.
-shape
-[
-0
-]
-
-
-
-# 前向传播
-
-
-scores
-
-=
-
-X
-.
-dot
-(
-self
-.
-W
-)
-
-+
-
-self
-.
-b
-
-
-
-# 数值稳定性
-
-
-scores
-
--=
-
-np
-.
-max
-(
-scores
-,
-
-axis
-=
-1
-,
-
-keepdims
-=
-True
-)
-
-
-
-# Softmax
-
-
-exp_scores
-
-=
-
-np
-.
-exp
-(
-scores
-)
-
-
-probs
-
-=
-
-exp_scores
-
-/
-
-np
-.
-sum
-(
-exp_scores
-,
-
-axis
-=
-1
-,
-
-keepdims
-=
-True
-)
-
-
-
-# 损失
-
-
-correct_logprobs
-
-=
-
--
-np
-.
-log
-(
-probs
-[
-np
-.
-arange
-(
-num_train
-),
-
-y
-])
-
-
-loss
-
-=
-
-np
-.
-sum
-(
-correct_logprobs
-)
-
-/
-
-num_train
-
-
-loss
-
-+=
-
-self
-.
-reg
-
-*
-
-np
-.
-sum
-(
-self
-.
-W
-
-*
-
-self
-.
-W
-)
-
-
-
-# 梯度
-
-
-dscores
-
-=
-
-probs
-.
-copy
-()
-
-
-dscores
-[
-np
-.
-arange
-(
-num_train
-),
-
-y
-]
-
--=
-
-1
-
-
-dscores
-
-/=
-
-num_train
-
-
-dW
-
-=
-
-X
-.
-T
-.
-dot
-(
-dscores
-)
-
-
-dW
-
-+=
-
-2
-
-*
-
-self
-.
-reg
-
-*
-
-self
-.
-W
-
-
-db
-
-=
-
-np
-.
-sum
-(
-dscores
-,
-
-axis
-=
-0
-)
-
-
-return
-
-loss
-,
-
-dW
-,
-
-db
-
+        return loss, dW, db
 ```
 
 
 ### A.4 数据预处理
 
 
-```
-
-def
-
-preprocess_cifar10
-(
-X_train
-,
-
-y_train
-,
-
-X_test
-,
-
-y_test
-,
-
-
-num_training
-=
-49000
-,
-
-num_validation
-=
-1000
-,
-
-
-num_test
-=
-1000
-,
-
-seed
-=
-42
-):
-
-
-"""
-
-    预处理流程:
-
-    1. 划分 train/val/test
-
-    2. 展平图像
-
-    3. 转换为 float32
-
-    4. 减去均值
-
+```python
+def preprocess_cifar10(X_train, y_train, X_test, y_test,
+                       num_training=49000, num_validation=1000,
+                       num_test=1000, seed=42):
     """
-
-
-
-# 划分训练/验证
-
-
-X_val
-
-=
-
-X_train
-[
-num_training
-:
-num_training
-
-+
-
-num_validation
-]
-
-
-y_val
-
-=
-
-y_train
-[
-num_training
-:
-num_training
-
-+
-
-num_validation
-]
-
-
-X_train
-
-=
-
-X_train
-[:
-num_training
-]
-
-
-y_train
-
-=
-
-y_train
-[:
-num_training
-]
-
-
-X_test
-
-=
-
-X_test
-[:
-num_test
-]
-
-
-y_test
-
-=
-
-y_test
-[:
-num_test
-]
-
-
-
-# 展平: (N,32,32,3) -> (N,3072)
-
-
-X_train
-
-=
-
-X_train
-.
-reshape
-(
-X_train
-.
-shape
-[
-0
-],
-
--
-1
-)
-.
-astype
-(
-np
-.
-float32
-)
-
-
-X_val
-
-=
-
-X_val
-.
-reshape
-(
-X_val
-.
-shape
-[
-0
-],
-
--
-1
-)
-.
-astype
-(
-np
-.
-float32
-)
-
-
-X_test
-
-=
-
-X_test
-.
-reshape
-(
-X_test
-.
-shape
-[
-0
-],
-
--
-1
-)
-.
-astype
-(
-np
-.
-float32
-)
-
-
-
-# 减去训练集均值
-
-
-mean_image
-
-=
-
-np
-.
-mean
-(
-X_train
-,
-
-axis
-=
-0
-)
-
-
-X_train
-
--=
-
-mean_image
-
-
-X_val
-
--=
-
-mean_image
-
-
-X_test
-
--=
-
-mean_image
-
-
-return
-
-X_train
-,
-
-y_train
-,
-
-X_val
-,
-
-y_val
-,
-
-X_test
-,
-
-y_test
-
+    预处理流程:
+    1. 划分 train/val/test
+    2. 展平图像
+    3. 转换为 float32
+    4. 减去均值
+    """
+    # 划分训练/验证
+    X_val = X_train[num_training:num_training + num_validation]
+    y_val = y_train[num_training:num_training + num_validation]
+
+    X_train = X_train[:num_training]
+    y_train = y_train[:num_training]
+
+    X_test = X_test[:num_test]
+    y_test = y_test[:num_test]
+
+    # 展平: (N,32,32,3) -> (N,3072)
+    X_train = X_train.reshape(X_train.shape[0], -1).astype(np.float32)
+    X_val = X_val.reshape(X_val.shape[0], -1).astype(np.float32)
+    X_test = X_test.reshape(X_test.shape[0], -1).astype(np.float32)
+
+    # 减去训练集均值
+    mean_image = np.mean(X_train, axis=0)
+    X_train -= mean_image
+    X_val -= mean_image
+    X_test -= mean_image
+
+    return X_train, y_train, X_val, y_val, X_test, y_test
 ```
 
 ---

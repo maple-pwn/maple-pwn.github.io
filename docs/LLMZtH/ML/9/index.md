@@ -433,10 +433,12 @@ $$
 接下来，我们 **计算混合分布**：
 
 取 $\alpha_i$ 为混合系数，它满足 $\alpha_i>0,\sum_i{\alpha_i}=1$。对于高斯分布 $x_i\sim N(\mu_i,\Sigma_i)$ ，我们先按 $\alpha$ 选一个成分 $i$ ,再从高斯分布 $N(\mu_i,\Sigma_i)$ 中采样出来 $x$ ，可以得到 **高斯混合分布** 为
+
 $$
 p\_{\mathcal{M}}(x)=\sum\_{i=1}^{k}\alpha\_i\cdot p(x\mid\mu\_i,\Sigma\_i)
 \tag{9.29}
 $$
+
 于是我们可以来 **计算后验概率**，即这个点来自哪个成分的概率：
 
 引入隐变量 $z_j$ 表示第 $j$ 个样本来自哪个成分，给定 $x_j$ ，它属于第 $i$ 个成分的后验概率如下式，记作 $\gamma_{ji}$
@@ -464,12 +466,15 @@ $$
 接下来进一步扩展，我们加入簇标签：
 
 当高斯混合分布(9.29)已知，高斯混合聚类把样本集 $D$ 划分成 $k$ 个簇 $\mathcal{C}=\{C_1,C_2,\dots,C_k\}$ ，每个样本 $x_j$ 的簇标记 $\lambda_i$ 按照下式确定：
+
 $$
 \lambda\_j=\arg\max\_{i\in{1,2,\dots,k}}\gamma\_{ji}\tag{9.31}
 $$
+
 计算
 
 我们完成了一系列定义内容，接下来就是计算了，给定数据集 $D$ ，模型参数是 $\{(\alpha_i,\mu_i,\Sigma_i)\}$。我们希望“模型最能解释数据”，也就是最大化似然（等价最大化对数似然）
+
 $$
 \begin{align}
 LL(D)
@@ -478,9 +483,11 @@ LL(D)
 \tag{9.32}
 \end{align}
 $$
+
 采用7.6中介绍的 EM 算法(E+M交替计算，迭代出优化值)，详细过程如下：
 
 若参数 $\{(\alpha_i,\mu_i,\Sigma_i)\mid1\le i\le k\}$ 可以使式(9.32)最大化，则由 $\dfrac{\partial LL(D)}{\partial\mu_i}=0$ 有
+
 $$
 \sum\_{j=1}^{m}
 \frac{
@@ -492,7 +499,9 @@ $$
 = 0
 \tag{9.33}
 $$
+
 接下来把 $\gamma_{ji}$ (9.30)带入进来，得到有
+
 $$
 \mu\_i
 =
@@ -506,6 +515,7 @@ $$
 > 每个点按“属于成分i的概率”当权重求平均，比较更柔和一些
 
 同样的，对于协方差，我们让 $\dfrac{\partial LL(D)}{\partial \Sigma_i}=0$ 可得
+
 $$
 \Sigma\_i = \frac{\sum\_{j=1}^{m} \gamma\_{ji} (x\_j - \mu\_i)(x\_j - \mu\_i)^{\mathrm T}}{\sum\_{j=1}^{m} \gamma\_{ji}} \tag{9.35}
 $$
@@ -513,14 +523,19 @@ $$
 > 也就是责任度加权的“离均值散布程度”
 
 而对于混合系数 $\alpha_i$ ，除了要最大化 $LL(D)$ ，我们还需要满足一些条件：$\alpha_i\ge0,\sum_{i=1}^{k}\alpha_i=1$。于是引入拉格朗日：
+
 $$
 LL(D)+\lambda\left(\sum\_{i=1}^k\alpha\_i-1\right)\tag{9.36}
 $$
+
 接下来对 $\alpha_i$ 求导，得到条件如下
+
 $$
 \sum\_{j=1}^{m} \frac{p(x\_j \mid \mu\_i, \Sigma\_i)}{\sum\_{l=1}^{k} \alpha\_l\, p(x\_j \mid \mu\_l, \Sigma\_l)} + \lambda = 0\tag{9.37}
 $$
+
 整理后可以得到一个很优雅的式子
+
 $$
 \alpha\_i=\dfrac{1}{m}\sum\_{j=1}^{m}\gamma\_{ji}\tag{9.38}
 $$
@@ -575,6 +590,7 @@ $$
 DBSCAN 通过刚刚介绍的“可达/相连”关系把簇定义出来。有一些性质如下：
 
 给定邻域参数 $(\epsilon,MinPts)$ ，簇 $C\subseteq D$ 是满足以下性质的非空样本子集
+
 $$
 连接性：x\_i\in C,x\_j\in C\Rightarrow x\_i与x\_j密度相连\tag{9.39}
 $$

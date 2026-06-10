@@ -1,0 +1,4106 @@
+- generic [active] [ref=e1]:
+  - link "跳转至" [ref=e2] [cursor=pointer]:
+    - /url: "#aesrijndael"
+  - banner [ref=e3]:
+    - navigation "页眉" [ref=e4]:
+      - img [ref=e6] [cursor=pointer]
+      - generic [ref=e9]:
+        - generic [ref=e11]: Maple's blog
+        - generic:
+          - generic: 算法介绍-AES
+      - generic [ref=e12]:
+        - radio "切换到深色模式"
+        - generic "切换到深色模式" [ref=e13] [cursor=pointer]:
+          - img [ref=e14]
+        - radio "切换到浅色模式"
+  - generic [ref=e16]:
+    - main [ref=e17]:
+      - generic [ref=e18]:
+        - navigation "导航栏" [ref=e21]:
+          - generic [ref=e22] [cursor=pointer]:
+            - link "Maple's blog" [ref=e23]:
+              - /url: ../../..
+              - img "logo" [ref=e24]
+            - text: Maple's blog
+          - list [ref=e25]:
+            - listitem [ref=e26]:
+              - generic [ref=e28]: OS篇
+              - navigation "OS篇" [ref=e30]:
+                - generic [ref=e31] [cursor=pointer]: OS篇
+                - list [ref=e33]:
+                  - listitem [ref=e34]:
+                    - link "前言" [ref=e35] [cursor=pointer]:
+                      - /url: ../../../mysys/pre/
+                      - generic [ref=e36]: 前言
+                  - listitem [ref=e37]:
+                    - link "实模式" [ref=e38] [cursor=pointer]:
+                      - /url: ../../../mysys/01/
+                      - generic [ref=e39]: 实模式
+                  - listitem [ref=e40]:
+                    - link "保护模式" [ref=e41] [cursor=pointer]:
+                      - /url: ../../../mysys/02/
+                      - generic [ref=e42]: 保护模式
+                  - listitem [ref=e43]:
+                    - link "内核" [ref=e44] [cursor=pointer]:
+                      - /url: ../../../mysys/03/
+                      - generic [ref=e45]: 内核
+                  - listitem [ref=e46]:
+                    - link "内存管理" [ref=e47] [cursor=pointer]:
+                      - /url: ../../../mysys/04/
+                      - generic [ref=e48]: 内存管理
+                  - listitem [ref=e49]:
+                    - link "IO机制" [ref=e50] [cursor=pointer]:
+                      - /url: ../../../mysys/05/
+                      - generic [ref=e51]: IO机制
+                  - listitem [ref=e52]:
+                    - link "扩展文件系统" [ref=e53] [cursor=pointer]:
+                      - /url: ../../../mysys/06/
+                      - generic [ref=e54]: 扩展文件系统
+            - listitem [ref=e55]:
+              - generic [ref=e57]: AI篇
+              - navigation "AI篇" [ref=e59]:
+                - generic [ref=e60] [cursor=pointer]: AI篇
+                - list [ref=e62]:
+                  - listitem [ref=e63]:
+                    - link "前言" [ref=e64] [cursor=pointer]:
+                      - /url: ../../../LLMZtH/pre/
+                      - generic [ref=e65]: 前言
+                  - listitem [ref=e66]:
+                    - generic [ref=e68]: AI细碎知识
+                    - navigation "AI细碎知识" [ref=e70]:
+                      - generic [ref=e71] [cursor=pointer]: AI细碎知识
+                      - list [ref=e73]:
+                        - listitem [ref=e74]:
+                          - link "Agent" [ref=e75] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/Agent/
+                            - generic [ref=e76]: Agent
+                        - listitem [ref=e77]:
+                          - link "RAG" [ref=e78] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/RAG/
+                            - generic [ref=e79]: RAG
+                        - listitem [ref=e80]:
+                          - link "LLM防火墙" [ref=e81] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/LLMWAF/
+                            - generic [ref=e82]: LLM防火墙
+                        - listitem [ref=e83]:
+                          - link "LLM安全Top10" [ref=e84] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/LLMT10/
+                            - generic [ref=e85]: LLM安全Top10
+                  - listitem [ref=e86]:
+                    - generic [ref=e88]: ML学习笔记
+                    - navigation "ML学习笔记" [ref=e90]:
+                      - generic [ref=e91] [cursor=pointer]: ML学习笔记
+                      - list [ref=e93]:
+                        - listitem [ref=e94]:
+                          - link "基本知识" [ref=e95] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/ML/1-3/
+                            - generic [ref=e96]: 基本知识
+                        - listitem [ref=e97]:
+                          - link "第四章 决策树" [ref=e98] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/ML/4/
+                            - generic [ref=e99]: 第四章 决策树
+                        - listitem [ref=e100]:
+                          - link "第五章 神经网络" [ref=e101] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/ML/5/
+                            - generic [ref=e102]: 第五章 神经网络
+                        - listitem [ref=e103]:
+                          - link "第六章 支持向量机" [ref=e104] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/ML/6/
+                            - generic [ref=e105]: 第六章 支持向量机
+                        - listitem [ref=e106]:
+                          - link "第七章 贝叶斯分类器" [ref=e107] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/ML/7/
+                            - generic [ref=e108]: 第七章 贝叶斯分类器
+                        - listitem [ref=e109]:
+                          - link "7 1" [ref=e110] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/ML/7_1/
+                            - generic [ref=e111]: 7 1
+                        - listitem [ref=e112]:
+                          - link "第八章 集成学习" [ref=e113] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/ML/8/
+                            - generic [ref=e114]: 第八章 集成学习
+                        - listitem [ref=e115]:
+                          - link "第九章 聚类" [ref=e116] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/ML/9/
+                            - generic [ref=e117]: 第九章 聚类
+                        - listitem [ref=e118]:
+                          - link "第十章 降维与度量学习" [ref=e119] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/ML/10/
+                            - generic [ref=e120]: 第十章 降维与度量学习
+                        - listitem [ref=e121]:
+                          - link "第十一章 特征选择与稀疏学习" [ref=e122] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/ML/11/
+                            - generic [ref=e123]: 第十一章 特征选择与稀疏学习
+                        - listitem [ref=e124]:
+                          - link "后记" [ref=e125] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/ML/12/
+                            - generic [ref=e126]: 后记
+                  - listitem [ref=e127]:
+                    - generic [ref=e129]: RL学习笔记
+                    - navigation "RL学习笔记" [ref=e131]:
+                      - generic [ref=e132] [cursor=pointer]: RL学习笔记
+                      - list [ref=e134]:
+                        - listitem [ref=e135]:
+                          - link "1" [ref=e136] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/RL/1/
+                            - generic [ref=e137]: "1"
+                  - listitem [ref=e138]:
+                    - generic [ref=e140]: DL学习笔记
+                    - navigation "DL学习笔记" [ref=e142]:
+                      - generic [ref=e143] [cursor=pointer]: DL学习笔记
+                      - list [ref=e145]:
+                        - listitem [ref=e146]:
+                          - link "前言" [ref=e147] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/DL/1/
+                            - generic [ref=e148]: 前言
+                        - listitem [ref=e149]:
+                          - link "图像识别翻译" [ref=e150] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/DL/images-class/
+                            - generic [ref=e151]: 图像识别翻译
+                        - listitem [ref=e152]:
+                          - link "图像识别实现" [ref=e153] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/DL/images-class-py/
+                            - generic [ref=e154]: 图像识别实现
+                        - listitem [ref=e155]:
+                          - link "线性分类翻译" [ref=e156] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/DL/linear/
+                            - generic [ref=e157]: 线性分类翻译
+                        - listitem [ref=e158]:
+                          - link "线性分类实现" [ref=e159] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/DL/linear-py/
+                            - generic [ref=e160]: 线性分类实现
+                        - listitem [ref=e161]:
+                          - link "优化-翻译" [ref=e162] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/DL/optimization/
+                            - generic [ref=e163]: 优化-翻译
+                        - listitem [ref=e164]:
+                          - link "反向传播-翻译" [ref=e165] [cursor=pointer]:
+                            - /url: ../../../LLMZtH/DL/Backprop/
+                            - generic [ref=e166]: 反向传播-翻译
+            - listitem [ref=e167]:
+              - generic [ref=e169]: 校内篇
+              - navigation "校内篇" [ref=e171]:
+                - generic [ref=e172] [cursor=pointer]: 校内篇
+                - list [ref=e174]:
+                  - listitem [ref=e175]:
+                    - link "前言" [ref=e176] [cursor=pointer]:
+                      - /url: ../../pre/
+                      - generic [ref=e177]: 前言
+                  - listitem [ref=e178]:
+                    - link "数字逻辑" [ref=e179] [cursor=pointer]:
+                      - /url: ../../eda/
+                      - generic [ref=e180]: 数字逻辑
+                  - listitem [ref=e181]:
+                    - generic [ref=e183]: 大学物理
+                    - navigation "大学物理" [ref=e185]:
+                      - generic [ref=e186] [cursor=pointer]: 大学物理
+                      - list [ref=e188]:
+                        - listitem [ref=e189]:
+                          - link "十二、十三章" [ref=e190] [cursor=pointer]:
+                            - /url: ../../dw/
+                            - generic [ref=e191]: 十二、十三章
+                        - listitem [ref=e192]:
+                          - link "十四、十五章" [ref=e193] [cursor=pointer]:
+                            - /url: ../../dw2/
+                            - generic [ref=e194]: 十四、十五章
+                  - listitem [ref=e195]:
+                    - link "概率与统计" [ref=e196] [cursor=pointer]:
+                      - /url: ../../gt/
+                      - generic [ref=e197]: 概率与统计
+                  - listitem [ref=e198]:
+                    - link "离散数学" [ref=e199] [cursor=pointer]:
+                      - /url: ../../lisan/
+                      - generic [ref=e200]: 离散数学
+                  - listitem [ref=e201]:
+                    - link "毛中特" [ref=e202] [cursor=pointer]:
+                      - /url: ../../mao/
+                      - generic [ref=e203]: 毛中特
+                  - listitem [ref=e204]:
+                    - generic [ref=e206]: 计算机组成原理
+                    - navigation "计算机组成原理" [ref=e208]:
+                      - generic [ref=e209] [cursor=pointer]: 计算机组成原理
+                      - list [ref=e211]:
+                        - listitem [ref=e212]:
+                          - link "部分笔记" [ref=e213] [cursor=pointer]:
+                            - /url: ../../cs_final/
+                            - generic [ref=e214]: 部分笔记
+                        - listitem [ref=e215]:
+                          - link "部分试卷&重点题目分析" [ref=e216] [cursor=pointer]:
+                            - /url: ../../cs_exam/
+                            - generic [ref=e217]: 部分试卷&重点题目分析
+                  - listitem [ref=e218]:
+                    - generic [ref=e220]: 密码学引论
+                    - navigation "密码学引论" [ref=e222]:
+                      - generic [ref=e223] [cursor=pointer]: 密码学引论
+                      - list [ref=e225]:
+                        - listitem [ref=e226]:
+                          - link "笔记" [ref=e227] [cursor=pointer]:
+                            - /url: ../crypto/
+                            - generic [ref=e228]: 笔记
+                        - listitem [ref=e229]:
+                          - link "数学基础" [ref=e230] [cursor=pointer]:
+                            - /url: ../math_base/
+                            - generic [ref=e231]: 数学基础
+                        - listitem [ref=e232]:
+                          - link "算法介绍-AES" [ref=e233] [cursor=pointer]:
+                            - /url: ./
+                            - generic [ref=e234]: 算法介绍-AES
+                          - text: N r − 1
+                        - listitem [ref=e235]:
+                          - link "算法介绍-SM4" [ref=e236] [cursor=pointer]:
+                            - /url: ../SM4/
+                            - generic [ref=e237]: 算法介绍-SM4
+                        - listitem [ref=e238]:
+                          - link "算法介绍-SHA3" [ref=e239] [cursor=pointer]:
+                            - /url: ../SHA3/
+                            - generic [ref=e240]: 算法介绍-SHA3
+                        - listitem [ref=e241]:
+                          - link "算法介绍-SM3" [ref=e242] [cursor=pointer]:
+                            - /url: ../SM3/
+                            - generic [ref=e243]: 算法介绍-SM3
+                        - listitem [ref=e244]:
+                          - link "算法介绍-ZUC" [ref=e245] [cursor=pointer]:
+                            - /url: ../ZUC/
+                            - generic [ref=e246]: 算法介绍-ZUC
+                        - listitem [ref=e247]:
+                          - link "算法介绍-RSA&EIGamal" [ref=e248] [cursor=pointer]:
+                            - /url: ../RSA%26EIGamal/
+                            - generic [ref=e249]: 算法介绍-RSA&EIGamal
+                        - listitem [ref=e250]:
+                          - link "算法介绍-SM2" [ref=e251] [cursor=pointer]:
+                            - /url: ../SM2/
+                            - generic [ref=e252]: 算法介绍-SM2
+                  - listitem [ref=e253]:
+                    - link "操作系统概论" [ref=e254] [cursor=pointer]:
+                      - /url: ../../OS/
+                      - generic [ref=e255]: 操作系统概论
+                  - listitem [ref=e256]:
+                    - link "编译原理" [ref=e257] [cursor=pointer]:
+                      - /url: ../../compiler/
+                      - generic [ref=e258]: 编译原理
+                  - listitem [ref=e259]:
+                    - generic [ref=e261]: 数据库
+                    - navigation "数据库" [ref=e263]:
+                      - generic [ref=e264] [cursor=pointer]: 数据库
+                      - list [ref=e266]:
+                        - listitem [ref=e267]:
+                          - link "作业" [ref=e268] [cursor=pointer]:
+                            - /url: ../../db/db_homework/
+                            - generic [ref=e269]: 作业
+                        - listitem [ref=e270]:
+                          - link "笔记" [ref=e271] [cursor=pointer]:
+                            - /url: ../../db/db/
+                            - generic [ref=e272]: 笔记
+                  - listitem [ref=e273]:
+                    - link "计算机设计实验入门指引" [ref=e274] [cursor=pointer]:
+                      - /url: ../../cs_e/
+                      - generic [ref=e275]: 计算机设计实验入门指引
+                  - listitem [ref=e276]:
+                    - generic [ref=e278]: 汇编语言与接口设计
+                    - navigation "汇编语言与接口设计" [ref=e280]:
+                      - generic [ref=e281] [cursor=pointer]: 汇编语言与接口设计
+                      - list [ref=e283]:
+                        - listitem [ref=e284]:
+                          - link "笔记" [ref=e285] [cursor=pointer]:
+                            - /url: ../../huibian/
+                            - generic [ref=e286]: 笔记
+                        - listitem [ref=e287]:
+                          - link "作业" [ref=e288] [cursor=pointer]:
+                            - /url: ../../asm_homework/
+                            - generic [ref=e289]: 作业
+                        - listitem [ref=e290]:
+                          - link "汇编速通" [ref=e291] [cursor=pointer]:
+                            - /url: ../../asm/
+                            - generic [ref=e292]: 汇编速通
+                  - listitem [ref=e293]:
+                    - link "hot100" [ref=e294] [cursor=pointer]:
+                      - /url: ../../hot100/
+                      - generic [ref=e295]: hot100
+            - listitem [ref=e296]:
+              - generic [ref=e298]: 阅读篇
+              - navigation "阅读篇" [ref=e300]:
+                - generic [ref=e301] [cursor=pointer]: 阅读篇
+                - list [ref=e303]:
+                  - listitem [ref=e304]:
+                    - generic [ref=e306]: 论文
+                    - navigation "论文" [ref=e308]:
+                      - generic [ref=e309] [cursor=pointer]: 论文
+                      - list [ref=e311]:
+                        - listitem [ref=e312]:
+                          - link "mHC" [ref=e313] [cursor=pointer]:
+                            - /url: ../../../READ/paperread/mHC/
+                            - generic [ref=e314]: mHC
+                        - listitem [ref=e315]:
+                          - link "GCG越狱论文" [ref=e316] [cursor=pointer]:
+                            - /url: ../../../READ/paperread/GCG/
+                            - generic [ref=e317]: GCG越狱论文
+                        - listitem [ref=e318]:
+                          - link "cs231n扩展阅读" [ref=e319] [cursor=pointer]:
+                            - /url: ../../../READ/paperread/cs231n/
+                            - generic [ref=e320]: cs231n扩展阅读
+            - listitem [ref=e321]:
+              - generic [ref=e323]: pwn篇
+              - navigation "pwn篇" [ref=e325]:
+                - generic [ref=e326] [cursor=pointer]: pwn篇
+                - list [ref=e328]:
+                  - listitem [ref=e329]:
+                    - link "前言" [ref=e330] [cursor=pointer]:
+                      - /url: ../../../pwn/pre/
+                      - generic [ref=e331]: 前言
+                  - listitem [ref=e332]:
+                    - link "小技巧" [ref=e333] [cursor=pointer]:
+                      - /url: ../../../pwn/tricks/
+                      - generic [ref=e334]: 小技巧
+                  - listitem [ref=e335]:
+                    - link "AI做题" [ref=e336] [cursor=pointer]:
+                      - /url: ../../../pwn/AI%E5%81%9A%E9%A2%98/
+                      - generic [ref=e337]: AI做题
+                  - listitem [ref=e338]:
+                    - link "Agent 工作流" [ref=e339] [cursor=pointer]:
+                      - /url: ../../../pwn/Agent/
+                      - generic [ref=e340]: Agent 工作流
+                  - listitem [ref=e341]:
+                    - link "Agent 分享" [ref=e342] [cursor=pointer]:
+                      - /url: ../../../pwn/agent-ppt/
+                      - generic [ref=e343]: Agent 分享
+                  - listitem [ref=e344]:
+                    - generic [ref=e346]: 栈利用
+                    - navigation "栈利用" [ref=e348]:
+                      - generic [ref=e349] [cursor=pointer]: 栈利用
+                      - list [ref=e351]:
+                        - listitem [ref=e352]:
+                          - link "汇编速通" [ref=e353] [cursor=pointer]:
+                            - /url: ../../../pwn/Stack/%E6%B1%87%E7%BC%96%E9%80%9F%E9%80%9A/
+                            - generic [ref=e354]: 汇编速通
+                        - listitem [ref=e355]:
+                          - link "ASLR绕过" [ref=e356] [cursor=pointer]:
+                            - /url: ../../../pwn/Stack/ASLR/
+                            - generic [ref=e357]: ASLR绕过
+                        - listitem [ref=e358]:
+                          - link "Canary绕过" [ref=e359] [cursor=pointer]:
+                            - /url: ../../../pwn/Stack/Canary/
+                            - generic [ref=e360]: Canary绕过
+                        - listitem [ref=e361]:
+                          - link "PIE绕过" [ref=e362] [cursor=pointer]:
+                            - /url: ../../../pwn/Stack/PIE%E7%BB%95%E8%BF%87/
+                            - generic [ref=e363]: PIE绕过
+                        - listitem [ref=e364]:
+                          - link "格式化字符串" [ref=e365] [cursor=pointer]:
+                            - /url: ../../../pwn/Stack/fmt-all-in-one/
+                            - generic [ref=e366]: 格式化字符串
+                        - listitem [ref=e367]:
+                          - link "Shellcode" [ref=e368] [cursor=pointer]:
+                            - /url: ../../../pwn/Stack/shellcode-all-in-one/
+                            - generic [ref=e369]: Shellcode
+                        - listitem [ref=e370]:
+                          - link "SROP" [ref=e371] [cursor=pointer]:
+                            - /url: ../../../pwn/Stack/SROP/
+                            - generic [ref=e372]: SROP
+                  - listitem [ref=e373]:
+                    - generic [ref=e375]: 堆利用
+                    - navigation "堆利用" [ref=e377]:
+                      - generic [ref=e378] [cursor=pointer]: 堆利用
+                      - list [ref=e380]:
+                        - listitem [ref=e381]:
+                          - link "基础知识" [ref=e382] [cursor=pointer]:
+                            - /url: ../../../pwn/Heap/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/
+                            - generic [ref=e383]: 基础知识
+                        - listitem [ref=e384]:
+                          - link "函数原型" [ref=e385] [cursor=pointer]:
+                            - /url: ../../../pwn/Heap/%E5%90%84%E4%B8%AA%E5%87%BD%E6%95%B0%E5%8E%9F%E5%9E%8B/
+                            - generic [ref=e386]: 函数原型
+                        - listitem [ref=e387]:
+                          - link "堆溢出" [ref=e388] [cursor=pointer]:
+                            - /url: ../../../pwn/Heap/%E5%A0%86%E6%BA%A2%E5%87%BA/
+                            - generic [ref=e389]: 堆溢出
+                        - listitem [ref=e390]:
+                          - link "堆溢出要点" [ref=e391] [cursor=pointer]:
+                            - /url: ../../../pwn/Heap/%E5%A0%86%E6%BA%A2%E5%87%BA%E4%B8%AD%E6%AF%94%E8%BE%83%E9%87%8D%E8%A6%81%E7%9A%84%E6%AD%A5%E9%AA%A4/
+                            - generic [ref=e392]: 堆溢出要点
+                        - listitem [ref=e393]:
+                          - link "Off-by-one" [ref=e394] [cursor=pointer]:
+                            - /url: ../../../pwn/Heap/%E5%A0%86%E4%B8%AD%E7%9A%84off-by-one/
+                            - generic [ref=e395]: Off-by-one
+                        - listitem [ref=e396]:
+                          - link "攻击手法" [ref=e397] [cursor=pointer]:
+                            - /url: ../../../pwn/Heap/%E5%A0%86%E5%90%84%E7%B1%BB%E6%94%BB%E5%87%BB%E6%89%8B%E6%B3%95/
+                            - generic [ref=e398]: 攻击手法
+                        - listitem [ref=e399]:
+                          - link "例题记录" [ref=e400] [cursor=pointer]:
+                            - /url: ../../../pwn/Heap/%E4%BE%8B%E9%A2%98%E8%AE%B0%E5%BD%95/
+                            - generic [ref=e401]: 例题记录
+                  - listitem [ref=e402]:
+                    - generic [ref=e404]: IO_FILE
+                    - navigation "IO_FILE" [ref=e406]:
+                      - generic [ref=e407] [cursor=pointer]: IO_FILE
+                      - list [ref=e409]:
+                        - listitem [ref=e410]:
+                          - link "基础知识" [ref=e411] [cursor=pointer]:
+                            - /url: ../../../pwn/IO_FILE/_IO_FILE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/
+                            - generic [ref=e412]: 基础知识
+                        - listitem [ref=e413]:
+                          - link "源码分析" [ref=e414] [cursor=pointer]:
+                            - /url: ../../../pwn/IO_FILE/IO_FILE%E6%BA%90%E7%A0%81/
+                            - generic [ref=e415]: 源码分析
+                        - listitem [ref=e416]:
+                          - link "fopen" [ref=e417] [cursor=pointer]:
+                            - /url: ../../../pwn/IO_FILE/fopen/
+                            - generic [ref=e418]: fopen
+                        - listitem [ref=e419]:
+                          - link "fread" [ref=e420] [cursor=pointer]:
+                            - /url: ../../../pwn/IO_FILE/fread/
+                            - generic [ref=e421]: fread
+                        - listitem [ref=e422]:
+                          - link "做题技巧" [ref=e423] [cursor=pointer]:
+                            - /url: ../../../pwn/IO_FILE/%E5%81%9A%E9%A2%98%E6%8A%80%E5%B7%A7/
+                            - generic [ref=e424]: 做题技巧
+                  - listitem [ref=e425]:
+                    - generic [ref=e427]: House系列
+                    - navigation "House系列" [ref=e429]:
+                      - generic [ref=e430] [cursor=pointer]: House系列
+                      - list [ref=e432]:
+                        - listitem [ref=e433]:
+                          - link "House of Apple1" [ref=e434] [cursor=pointer]:
+                            - /url: ../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse%20of%20apple1%E7%9A%84%E7%A0%94%E7%A9%B6/
+                            - generic [ref=e435]: House of Apple1
+                        - listitem [ref=e436]:
+                          - link "House of Apple2" [ref=e437] [cursor=pointer]:
+                            - /url: ../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-apple2%E7%9A%84%E5%AD%A6%E4%B9%A0/
+                            - generic [ref=e438]: House of Apple2
+                        - listitem [ref=e439]:
+                          - link "House of Cat" [ref=e440] [cursor=pointer]:
+                            - /url: ../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse%20of%20cat%20%E7%9A%84%E5%AD%A6%E4%B9%A0/
+                            - generic [ref=e441]: House of Cat
+                        - listitem [ref=e442]:
+                          - link "House of Kiwi" [ref=e443] [cursor=pointer]:
+                            - /url: ../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-kiwi%E7%9A%84%E5%AD%A6%E4%B9%A0/
+                            - generic [ref=e444]: House of Kiwi
+                        - listitem [ref=e445]:
+                          - link "House of Botcake" [ref=e446] [cursor=pointer]:
+                            - /url: ../../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-botcake%E7%9A%84%E7%A0%94%E7%A9%B6/
+                            - generic [ref=e447]: House of Botcake
+                  - listitem [ref=e448]:
+                    - generic [ref=e450]: CTF Writeups
+                    - navigation "CTF Writeups" [ref=e452]:
+                      - generic [ref=e453] [cursor=pointer]: CTF Writeups
+                      - list [ref=e455]:
+                        - listitem [ref=e456]:
+                          - link "BaseCTF" [ref=e457] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/basectf/
+                            - generic [ref=e458]: BaseCTF
+                        - listitem [ref=e459]:
+                          - link "MoeCTF" [ref=e460] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/moectf/
+                            - generic [ref=e461]: MoeCTF
+                        - listitem [ref=e462]:
+                          - link "ISCTF2024" [ref=e463] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/isctf2024/
+                            - generic [ref=e464]: ISCTF2024
+                        - listitem [ref=e465]:
+                          - link "GHCTF" [ref=e466] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/ghctf/
+                            - generic [ref=e467]: GHCTF
+                        - listitem [ref=e468]:
+                          - link "XYCTF" [ref=e469] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/xyctf/
+                            - generic [ref=e470]: XYCTF
+                        - listitem [ref=e471]:
+                          - link "TGCTF" [ref=e472] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/tgctf/
+                            - generic [ref=e473]: TGCTF
+                        - listitem [ref=e474]:
+                          - link "NPCCTF" [ref=e475] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/NPCCTF/
+                            - generic [ref=e476]: NPCCTF
+                        - listitem [ref=e477]:
+                          - link "CTFShow" [ref=e478] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/ctfshow/
+                            - generic [ref=e479]: CTFShow
+                        - listitem [ref=e480]:
+                          - link "WHUCTF2024" [ref=e481] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/whuctf2024/
+                            - generic [ref=e482]: WHUCTF2024
+                        - listitem [ref=e483]:
+                          - link "WHUCTF2025" [ref=e484] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/whuctf2025/
+                            - generic [ref=e485]: WHUCTF2025
+                        - listitem [ref=e486]:
+                          - link "强网杯" [ref=e487] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/%E5%BC%BA%E7%BD%91%E6%9D%AF/
+                            - generic [ref=e488]: 强网杯
+                        - listitem [ref=e489]:
+                          - link "PolarD&N" [ref=e490] [cursor=pointer]:
+                            - /url: ../../../pwn/wp/polarD%26N/polarD%26N/
+                            - generic [ref=e491]: PolarD&N
+                        - listitem [ref=e492]:
+                          - generic [ref=e494]: BUUCTF
+                          - navigation "BUUCTF" [ref=e496]:
+                            - generic [ref=e497] [cursor=pointer]: BUUCTF
+                            - list [ref=e499]:
+                              - listitem [ref=e500]:
+                                - link "1-20题" [ref=e501] [cursor=pointer]:
+                                  - /url: ../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%881-20%E9%A2%98%EF%BC%89/
+                                  - generic [ref=e502]: 1-20题
+                              - listitem [ref=e503]:
+                                - link "21-40题" [ref=e504] [cursor=pointer]:
+                                  - /url: ../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8821-40%E9%A2%98%EF%BC%89/
+                                  - generic [ref=e505]: 21-40题
+                              - listitem [ref=e506]:
+                                - link "41-60题" [ref=e507] [cursor=pointer]:
+                                  - /url: ../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8841-60%E9%A2%98%EF%BC%89/
+                                  - generic [ref=e508]: 41-60题
+                              - listitem [ref=e509]:
+                                - link "61-80题" [ref=e510] [cursor=pointer]:
+                                  - /url: ../../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8861-80%E9%A2%98%EF%BC%89/
+                                  - generic [ref=e511]: 61-80题
+            - listitem [ref=e512]:
+              - generic [ref=e514]: 论道篇
+              - navigation "论道篇" [ref=e516]:
+                - generic [ref=e517] [cursor=pointer]: 论道篇
+                - list [ref=e519]:
+                  - listitem [ref=e520]:
+                    - link "前言" [ref=e521] [cursor=pointer]:
+                      - /url: ../../../thinking/pre/
+                      - generic [ref=e522]: 前言
+                  - listitem [ref=e523]:
+                    - link "信息时代的我们" [ref=e524] [cursor=pointer]:
+                      - /url: ../../../thinking/I/
+                      - generic [ref=e525]: 信息时代的我们
+                  - listitem [ref=e526]:
+                    - link "AI时代的我们" [ref=e527] [cursor=pointer]:
+                      - /url: ../../../thinking/AI/
+                      - generic [ref=e528]: AI时代的我们
+            - listitem [ref=e529]:
+              - generic [ref=e531]: 杂篇
+              - navigation "杂篇" [ref=e533]:
+                - generic [ref=e534] [cursor=pointer]: 杂篇
+                - list [ref=e536]:
+                  - listitem [ref=e537]:
+                    - link "proj" [ref=e538] [cursor=pointer]:
+                      - /url: ../../../sth/proj/
+                      - generic [ref=e539]: proj
+                  - listitem [ref=e540]:
+                    - link "十分钟学会panda" [ref=e541] [cursor=pointer]:
+                      - /url: ../../../sth/10-min-panda/
+                      - generic [ref=e542]: 十分钟学会panda
+                  - listitem [ref=e543]:
+                    - link "一些杂七杂八的随手记" [ref=e544] [cursor=pointer]:
+                      - /url: ../../../sth/others/
+                      - generic [ref=e545]: 一些杂七杂八的随手记
+                  - listitem [ref=e546]:
+                    - link "32位位运算可视化工具" [ref=e547] [cursor=pointer]:
+                      - /url: ../../../tools/bit32_visualizer/
+                      - generic [ref=e548]: 32位位运算可视化工具
+                  - listitem [ref=e549]:
+                    - generic [ref=e551]: 一些事故
+                    - navigation "一些事故" [ref=e553]:
+                      - generic [ref=e554] [cursor=pointer]: 一些事故
+                      - list [ref=e556]:
+                        - listitem [ref=e557]:
+                          - link "ssh配置" [ref=e558] [cursor=pointer]:
+                            - /url: ../../../sth/ssh/
+                            - generic [ref=e559]: ssh配置
+                        - listitem [ref=e560]:
+                          - link "codex cli卡死" [ref=e561] [cursor=pointer]:
+                            - /url: ../../../sth/codex/
+                            - generic [ref=e562]: codex cli卡死
+        - navigation "目录" [ref=e566]:
+          - generic [ref=e567]: 目录
+          - list [ref=e568]:
+            - listitem [ref=e569]:
+              - link "1. 明文输入与状态矩阵 State" [ref=e570] [cursor=pointer]:
+                - /url: "#1-state"
+                - generic [ref=e571]: 1. 明文输入与状态矩阵 State
+            - listitem [ref=e572]:
+              - link "2. 初始轮密钥加 AddRoundKey" [ref=e573] [cursor=pointer]:
+                - /url: "#2-addroundkey"
+                - generic [ref=e574]: 2. 初始轮密钥加 AddRoundKey
+            - listitem [ref=e575]:
+              - link "3. 左侧密钥扩展流程：CipherKey 到 Round Keys" [ref=e576] [cursor=pointer]:
+                - /url: "#3-cipherkey-round-keys"
+                - generic [ref=e577]: 3. 左侧密钥扩展流程：CipherKey 到 Round Keys
+            - listitem [ref=e578]:
+              - link "4. 标准轮：重复 次的核心加密结构" [ref=e579] [cursor=pointer]:
+                - /url: "#4-nr-1"
+                - generic [ref=e580]:
+                  - text: 4. 标准轮：重复
+                  - generic [ref=e581]:
+                    - generic [ref=e582]:
+                      - generic [ref=e584]: "N"
+                      - generic [ref=e586]: r
+                      - generic [ref=e588]: −
+                      - generic [ref=e590]: "1"
+                    - math [ref=e592]:
+                      - generic [ref=e593]: "N"
+                      - generic [ref=e594]: r
+                      - generic [ref=e595]: −
+                      - generic [ref=e596]: "1"
+                  - text: 次的核心加密结构
+              - navigation "4. 标准轮：重复 \\(Nr-1\\) 次的核心加密结构" [ref=e597]:
+                - list [ref=e598]:
+                  - listitem [ref=e599]:
+                    - link "4.1 字节代换 ByteSub / SubBytes" [ref=e600] [cursor=pointer]:
+                      - /url: "#41-bytesub-subbytes"
+                      - generic [ref=e601]: 4.1 字节代换 ByteSub / SubBytes
+                  - listitem [ref=e602]:
+                    - link "4.2 行移位 ShiftRow / ShiftRows" [ref=e603] [cursor=pointer]:
+                      - /url: "#42-shiftrow-shiftrows"
+                      - generic [ref=e604]: 4.2 行移位 ShiftRow / ShiftRows
+                  - listitem [ref=e605]:
+                    - link "4.3 列混合 MixColumn / MixColumns" [ref=e606] [cursor=pointer]:
+                      - /url: "#43-mixcolumn-mixcolumns"
+                      - generic [ref=e607]: 4.3 列混合 MixColumn / MixColumns
+                  - listitem [ref=e608]:
+                    - link "4.4 轮密钥加 AddRoundKey" [ref=e609] [cursor=pointer]:
+                      - /url: "#44-addroundkey"
+                      - generic [ref=e610]: 4.4 轮密钥加 AddRoundKey
+            - listitem [ref=e611]:
+              - link "5. 右侧迭代控制 Round Control" [ref=e612] [cursor=pointer]:
+                - /url: "#5-round-control"
+                - generic [ref=e613]: 5. 右侧迭代控制 Round Control
+            - listitem [ref=e614]:
+              - link "6. 最后一轮 Final Round" [ref=e615] [cursor=pointer]:
+                - /url: "#6-final-round"
+                - generic [ref=e616]: 6. 最后一轮 Final Round
+            - listitem [ref=e617]:
+              - link "7. 输出密文 Ciphertext" [ref=e618] [cursor=pointer]:
+                - /url: "#7-ciphertext"
+                - generic [ref=e619]: 7. 输出密文 Ciphertext
+            - listitem [ref=e620]:
+              - link "8. AES-128 的完整流程" [ref=e621] [cursor=pointer]:
+                - /url: "#8-aes-128"
+                - generic [ref=e622]: 8. AES-128 的完整流程
+            - listitem [ref=e623]:
+              - link "9. 算法实现" [ref=e624] [cursor=pointer]:
+                - /url: "#9"
+                - generic [ref=e625]: 9. 算法实现
+            - listitem [ref=e626]:
+              - link "解密算法" [ref=e627] [cursor=pointer]:
+                - /url: "#_1"
+                - generic [ref=e628]: 解密算法
+        - article [ref=e630]:
+          - heading "AES(RIJNDAEL)算法介绍" [level=1] [ref=e631]
+          - generic [ref=e632]:
+            - generic [ref=e633]: 阅读时长 18 分钟
+            - generic [ref=e634]: 字数 5384
+          - paragraph [ref=e635]:
+            - img "5cc2186f-ec4a-4103-b16e-5d2886b9b3d0" [ref=e636]
+          - paragraph [ref=e637]:
+            - text: AES 的数据块长度固定为 128 位，也就是 16 个字节，图中参数
+            - generic [ref=e639]:
+              - generic [ref=e640]:
+                - generic [ref=e642]: "N"
+                - generic [ref=e644]: b
+              - math [ref=e646]:
+                - generic [ref=e647]: "N"
+                - generic [ref=e648]: b
+            - text: 在 AES 中恒等于 4。密钥长度可以取 128、192、256 位，对应
+            - generic [ref=e650]:
+              - generic [ref=e651]:
+                - generic [ref=e653]: "N"
+                - generic [ref=e655]: k
+                - generic [ref=e657]: =
+                - generic [ref=e659]: "4"
+                - generic [ref=e661]: ","
+                - generic [ref=e663]: "6"
+                - generic [ref=e665]: ","
+                - generic [ref=e667]: "8"
+              - math [ref=e669]:
+                - generic [ref=e670]: "N"
+                - generic [ref=e671]: k
+                - generic [ref=e672]: =
+                - generic [ref=e673]: "4"
+                - generic [ref=e674]: ","
+                - generic [ref=e675]: "6"
+                - generic [ref=e676]: ","
+                - generic [ref=e677]: "8"
+            - text: ，轮数
+            - generic [ref=e679]:
+              - generic [ref=e680]:
+                - generic [ref=e682]: "N"
+                - generic [ref=e684]: r
+              - math [ref=e686]:
+                - generic [ref=e687]: "N"
+                - generic [ref=e688]: r
+            - text: 分别为 10、12、14。
+          - heading "1. 明文输入与状态矩阵 State" [level=3] [ref=e689]
+          - paragraph [ref=e690]: AES 处理的基本单位是 128 位明文分组。128 位等于 16 字节，设明文字节序列为：
+          - generic [ref=e692]:
+            - generic [ref=e693]:
+              - generic [ref=e694]:
+                - generic [ref=e696]: p
+                - generic [ref=e699]: "0"
+              - generic [ref=e701]: ","
+              - generic [ref=e702]:
+                - generic [ref=e704]: p
+                - generic [ref=e707]: "1"
+              - generic [ref=e709]: ","
+              - generic [ref=e710]:
+                - generic [ref=e712]: p
+                - generic [ref=e715]: "2"
+              - generic [ref=e717]: ","
+              - generic [ref=e719]: …
+              - generic [ref=e721]: ","
+              - generic [ref=e722]:
+                - generic [ref=e724]: p
+                - generic [ref=e727]:
+                  - generic [ref=e728]: "1"
+                  - generic [ref=e729]: "5"
+            - math [ref=e731]:
+              - generic [ref=e732]:
+                - generic [ref=e733]: p
+                - generic [ref=e734]: "0"
+              - generic [ref=e735]: ","
+              - generic [ref=e736]:
+                - generic [ref=e737]: p
+                - generic [ref=e738]: "1"
+              - generic [ref=e739]: ","
+              - generic [ref=e740]:
+                - generic [ref=e741]: p
+                - generic [ref=e742]: "2"
+              - generic [ref=e743]: ","
+              - generic [ref=e744]: …
+              - generic [ref=e745]: ","
+              - generic [ref=e746]:
+                - generic [ref=e747]: p
+                - generic [ref=e749]: "15"
+          - paragraph [ref=e750]:
+            - text: AES 会把这 16 个字节按列写入一个
+            - generic [ref=e752]:
+              - generic [ref=e753]:
+                - generic [ref=e755]: "4"
+                - generic [ref=e757]: ×
+                - generic [ref=e759]: "4"
+              - math [ref=e761]:
+                - generic [ref=e762]: "4"
+                - generic [ref=e763]: ×
+                - generic [ref=e764]: "4"
+            - text: 的状态矩阵 State：
+          - generic [ref=e766]:
+            - generic [ref=e767]:
+              - generic [ref=e769]: S
+              - generic [ref=e771]: t
+              - generic [ref=e773]: a
+              - generic [ref=e775]: t
+              - generic [ref=e777]: e
+              - generic [ref=e779]: =
+              - generic [ref=e780]:
+                - generic [ref=e782]:
+                  - generic [ref=e783]: ⎡
+                  - generic [ref=e784]: ⎢
+                  - generic [ref=e786]: ⎣
+                - generic [ref=e789]:
+                  - generic [ref=e790]:
+                    - generic [ref=e792]:
+                      - generic [ref=e794]: p
+                      - generic [ref=e797]: "0"
+                    - generic [ref=e799]:
+                      - generic [ref=e801]: p
+                      - generic [ref=e804]: "4"
+                    - generic [ref=e806]:
+                      - generic [ref=e808]: p
+                      - generic [ref=e811]: "8"
+                    - generic [ref=e813]:
+                      - generic [ref=e815]: p
+                      - generic [ref=e818]:
+                        - generic [ref=e819]: "1"
+                        - generic [ref=e820]: "2"
+                  - generic [ref=e821]:
+                    - generic [ref=e823]:
+                      - generic [ref=e825]: p
+                      - generic [ref=e828]: "1"
+                    - generic [ref=e830]:
+                      - generic [ref=e832]: p
+                      - generic [ref=e835]: "5"
+                    - generic [ref=e837]:
+                      - generic [ref=e839]: p
+                      - generic [ref=e842]: "9"
+                    - generic [ref=e844]:
+                      - generic [ref=e846]: p
+                      - generic [ref=e849]:
+                        - generic [ref=e850]: "1"
+                        - generic [ref=e851]: "3"
+                  - generic [ref=e852]:
+                    - generic [ref=e854]:
+                      - generic [ref=e856]: p
+                      - generic [ref=e859]: "2"
+                    - generic [ref=e861]:
+                      - generic [ref=e863]: p
+                      - generic [ref=e866]: "6"
+                    - generic [ref=e868]:
+                      - generic [ref=e870]: p
+                      - generic [ref=e873]:
+                        - generic [ref=e874]: "1"
+                        - generic [ref=e875]: "0"
+                    - generic [ref=e877]:
+                      - generic [ref=e879]: p
+                      - generic [ref=e882]:
+                        - generic [ref=e883]: "1"
+                        - generic [ref=e884]: "4"
+                  - generic [ref=e885]:
+                    - generic [ref=e887]:
+                      - generic [ref=e889]: p
+                      - generic [ref=e892]: "3"
+                    - generic [ref=e894]:
+                      - generic [ref=e896]: p
+                      - generic [ref=e899]: "7"
+                    - generic [ref=e901]:
+                      - generic [ref=e903]: p
+                      - generic [ref=e906]:
+                        - generic [ref=e907]: "1"
+                        - generic [ref=e908]: "1"
+                    - generic [ref=e910]:
+                      - generic [ref=e912]: p
+                      - generic [ref=e915]:
+                        - generic [ref=e916]: "1"
+                        - generic [ref=e917]: "5"
+                - generic [ref=e919]:
+                  - generic [ref=e920]: ⎤
+                  - generic [ref=e921]: ⎥
+                  - generic [ref=e923]: ⎦
+            - math [ref=e925]:
+              - generic [ref=e926]: S
+              - generic [ref=e927]: t
+              - generic [ref=e928]: a
+              - generic [ref=e929]: t
+              - generic [ref=e930]: e
+              - generic [ref=e931]: =
+              - generic [ref=e932]:
+                - generic [ref=e933]: "["
+                - generic [ref=e934]:
+                  - generic [ref=e935]:
+                    - generic [ref=e937]:
+                      - generic [ref=e938]: p
+                      - generic [ref=e939]: "0"
+                    - generic [ref=e941]:
+                      - generic [ref=e942]: p
+                      - generic [ref=e943]: "4"
+                    - generic [ref=e945]:
+                      - generic [ref=e946]: p
+                      - generic [ref=e947]: "8"
+                    - generic [ref=e949]:
+                      - generic [ref=e950]: p
+                      - generic [ref=e952]: "12"
+                  - generic [ref=e953]:
+                    - generic [ref=e955]:
+                      - generic [ref=e956]: p
+                      - generic [ref=e957]: "1"
+                    - generic [ref=e959]:
+                      - generic [ref=e960]: p
+                      - generic [ref=e961]: "5"
+                    - generic [ref=e963]:
+                      - generic [ref=e964]: p
+                      - generic [ref=e965]: "9"
+                    - generic [ref=e967]:
+                      - generic [ref=e968]: p
+                      - generic [ref=e970]: "13"
+                  - generic [ref=e971]:
+                    - generic [ref=e973]:
+                      - generic [ref=e974]: p
+                      - generic [ref=e975]: "2"
+                    - generic [ref=e977]:
+                      - generic [ref=e978]: p
+                      - generic [ref=e979]: "6"
+                    - generic [ref=e981]:
+                      - generic [ref=e982]: p
+                      - generic [ref=e984]: "10"
+                    - generic [ref=e986]:
+                      - generic [ref=e987]: p
+                      - generic [ref=e989]: "14"
+                  - generic [ref=e990]:
+                    - generic [ref=e992]:
+                      - generic [ref=e993]: p
+                      - generic [ref=e994]: "3"
+                    - generic [ref=e996]:
+                      - generic [ref=e997]: p
+                      - generic [ref=e998]: "7"
+                    - generic [ref=e1000]:
+                      - generic [ref=e1001]: p
+                      - generic [ref=e1003]: "11"
+                    - generic [ref=e1005]:
+                      - generic [ref=e1006]: p
+                      - generic [ref=e1008]: "15"
+                - generic [ref=e1009]: "]"
+          - paragraph [ref=e1010]:
+            - text: 这一点对应图片中的“按列写入状态矩阵 State（
+            - generic [ref=e1012]:
+              - generic [ref=e1013]:
+                - generic [ref=e1015]: "4"
+                - generic [ref=e1017]: ×
+                - generic [ref=e1019]: "N"
+                - generic [ref=e1021]: b
+              - math [ref=e1023]:
+                - generic [ref=e1024]: "4"
+                - generic [ref=e1025]: ×
+                - generic [ref=e1026]: "N"
+                - generic [ref=e1027]: b
+            - text: 字节）”。由于 AES 中
+            - generic [ref=e1029]:
+              - generic [ref=e1030]:
+                - generic [ref=e1032]: "N"
+                - generic [ref=e1034]: b
+                - generic [ref=e1036]: =
+                - generic [ref=e1038]: "4"
+              - math [ref=e1040]:
+                - generic [ref=e1041]: "N"
+                - generic [ref=e1042]: b
+                - generic [ref=e1043]: =
+                - generic [ref=e1044]: "4"
+            - text: ，所以状态矩阵就是
+            - generic [ref=e1046]:
+              - generic [ref=e1047]:
+                - generic [ref=e1049]: "4"
+                - generic [ref=e1051]: ×
+                - generic [ref=e1053]: "4"
+              - math [ref=e1055]:
+                - generic [ref=e1056]: "4"
+                - generic [ref=e1057]: ×
+                - generic [ref=e1058]: "4"
+            - text: 字节。之后每一轮加密操作都作用在这个矩阵上。
+          - paragraph [ref=e1059]: AES 中，状态矩阵就是算法内部的中间状态；明文进入矩阵，经过多轮变换，矩阵中的字节逐步变成密文字节。
+          - heading "2. 初始轮密钥加 AddRoundKey" [level=3] [ref=e1060]
+          - paragraph [ref=e1061]: 明文写入状态矩阵之后，马上进入初始轮密钥加。图中绿色箭头从左侧“生成轮密钥 / Round Keys”指向这个步骤，表示第 0 轮轮密钥参与运算。
+          - paragraph [ref=e1062]: AddRoundKey 的运算就是把当前状态矩阵和轮密钥逐字节异或。
+          - paragraph [ref=e1063]:
+            - text: 设状态矩阵中的某个字节为
+            - generic [ref=e1065]:
+              - generic [ref=e1067]:
+                - generic [ref=e1069]: s
+                - generic [ref=e1071]:
+                  - generic [ref=e1073]: i
+                  - generic [ref=e1075]: ","
+                  - generic [ref=e1077]: j
+              - math [ref=e1079]:
+                - generic [ref=e1080]:
+                  - generic [ref=e1081]: s
+                  - generic [ref=e1082]:
+                    - generic [ref=e1083]: i
+                    - generic [ref=e1084]: ","
+                    - generic [ref=e1085]: j
+            - text: ，第 0 轮轮密钥中对应位置的字节为
+            - generic [ref=e1087]:
+              - generic [ref=e1089]:
+                - generic [ref=e1091]: k
+                - generic [ref=e1092]:
+                  - generic [ref=e1093]:
+                    - generic [ref=e1095]: (
+                    - generic [ref=e1097]: "0"
+                    - generic [ref=e1099]: )
+                  - generic [ref=e1100]:
+                    - generic [ref=e1102]: i
+                    - generic [ref=e1104]: ","
+                    - generic [ref=e1106]: j
+              - math [ref=e1108]:
+                - generic [ref=e1109]:
+                  - generic [ref=e1110]: k
+                  - generic [ref=e1111]:
+                    - generic [ref=e1112]: i
+                    - generic [ref=e1113]: ","
+                    - generic [ref=e1114]: j
+                  - generic [ref=e1115]:
+                    - generic [ref=e1116]: (
+                    - generic [ref=e1117]: "0"
+                    - generic [ref=e1118]: )
+            - text: ，那么初始轮密钥加之后得到：
+          - generic [ref=e1120]:
+            - generic [ref=e1121]:
+              - generic [ref=e1122]:
+                - generic [ref=e1124]: s
+                - generic [ref=e1126]:
+                  - generic [ref=e1128]: i
+                  - generic [ref=e1130]: ","
+                  - generic [ref=e1132]: j
+              - generic [ref=e1134]: ←
+              - generic [ref=e1135]:
+                - generic [ref=e1137]: s
+                - generic [ref=e1139]:
+                  - generic [ref=e1141]: i
+                  - generic [ref=e1143]: ","
+                  - generic [ref=e1145]: j
+              - generic [ref=e1147]: ⊕
+              - generic [ref=e1148]:
+                - generic [ref=e1150]: k
+                - generic [ref=e1151]:
+                  - generic [ref=e1152]:
+                    - generic [ref=e1154]: (
+                    - generic [ref=e1156]: "0"
+                    - generic [ref=e1158]: )
+                  - generic [ref=e1159]:
+                    - generic [ref=e1161]: i
+                    - generic [ref=e1163]: ","
+                    - generic [ref=e1165]: j
+            - math [ref=e1167]:
+              - generic [ref=e1168]:
+                - generic [ref=e1169]: s
+                - generic [ref=e1170]:
+                  - generic [ref=e1171]: i
+                  - generic [ref=e1172]: ","
+                  - generic [ref=e1173]: j
+              - generic [ref=e1174]: ←
+              - generic [ref=e1175]:
+                - generic [ref=e1176]: s
+                - generic [ref=e1177]:
+                  - generic [ref=e1178]: i
+                  - generic [ref=e1179]: ","
+                  - generic [ref=e1180]: j
+              - generic [ref=e1181]: ⊕
+              - generic [ref=e1182]:
+                - generic [ref=e1183]: k
+                - generic [ref=e1184]:
+                  - generic [ref=e1185]: i
+                  - generic [ref=e1186]: ","
+                  - generic [ref=e1187]: j
+                - generic [ref=e1188]:
+                  - generic [ref=e1189]: (
+                  - generic [ref=e1190]: "0"
+                  - generic [ref=e1191]: )
+          - paragraph [ref=e1192]: AddRoundKey 的意义在于把主密钥派生出来的轮密钥注入状态矩阵，使后面的代换、移位和列混合都建立在密钥参与后的状态之上。
+          - paragraph [ref=e1193]: 对于 AES-128，总共有 10 轮加密，但轮密钥共有 11 组。第 0 组轮密钥用于初始 AddRoundKey，第 1 到第 9 组用于标准轮，第 10 组用于最后一轮。
+          - heading "3. 左侧密钥扩展流程：CipherKey 到 Round Keys" [level=3] [ref=e1194]
+          - paragraph [ref=e1195]: 图片左侧的绿色分支是密钥调度过程。它从“主密钥 / CipherKey”开始，经过“密钥扩展 / KeyExpansion”，生成“轮密钥 / Round Keys”，再把轮密钥送入初始轮、标准轮和最后一轮。
+          - paragraph [ref=e1196]: 以 AES-128 为例，主密钥长度为 128 位，也就是 16 字节。AES 每一组轮密钥也需要 16 字节。由于 AES-128 需要第 0 到第 10 组轮密钥，所以总扩展密钥长度为：
+          - generic [ref=e1198]:
+            - generic [ref=e1199]:
+              - generic [ref=e1200]:
+                - generic [ref=e1201]: "1"
+                - generic [ref=e1202]: "6"
+              - generic [ref=e1204]: ×
+              - generic [ref=e1206]: (
+              - generic [ref=e1207]:
+                - generic [ref=e1208]: "1"
+                - generic [ref=e1209]: "0"
+              - generic [ref=e1211]: +
+              - generic [ref=e1213]: "1"
+              - generic [ref=e1215]: )
+              - generic [ref=e1217]: =
+              - generic [ref=e1218]:
+                - generic [ref=e1219]: "1"
+                - generic [ref=e1220]: "7"
+                - generic [ref=e1221]: "6"
+              - generic [ref=e1222]:
+                - generic [ref=e1223]: 字
+                - generic [ref=e1224]: 节
+            - math [ref=e1226]:
+              - generic [ref=e1227]: "16"
+              - generic [ref=e1228]: ×
+              - generic [ref=e1229]: (
+              - generic [ref=e1230]: "10"
+              - generic [ref=e1231]: +
+              - generic [ref=e1232]: "1"
+              - generic [ref=e1233]: )
+              - generic [ref=e1234]: =
+              - generic [ref=e1235]: "176"
+              - generic [ref=e1236]: 字节
+          - paragraph [ref=e1237]: AES 密钥扩展通常按“字”来描述。一个字等于 4 字节。AES-128 的主密钥提供最开始的 4 个字：
+          - generic [ref=e1239]:
+            - generic [ref=e1240]:
+              - generic [ref=e1241]:
+                - generic [ref=e1243]: W
+                - generic [ref=e1246]: "0"
+              - generic [ref=e1248]: ","
+              - generic [ref=e1249]:
+                - generic [ref=e1251]: W
+                - generic [ref=e1254]: "1"
+              - generic [ref=e1256]: ","
+              - generic [ref=e1257]:
+                - generic [ref=e1259]: W
+                - generic [ref=e1262]: "2"
+              - generic [ref=e1264]: ","
+              - generic [ref=e1265]:
+                - generic [ref=e1267]: W
+                - generic [ref=e1270]: "3"
+            - math [ref=e1272]:
+              - generic [ref=e1273]:
+                - generic [ref=e1274]: W
+                - generic [ref=e1275]: "0"
+              - generic [ref=e1276]: ","
+              - generic [ref=e1277]:
+                - generic [ref=e1278]: W
+                - generic [ref=e1279]: "1"
+              - generic [ref=e1280]: ","
+              - generic [ref=e1281]:
+                - generic [ref=e1282]: W
+                - generic [ref=e1283]: "2"
+              - generic [ref=e1284]: ","
+              - generic [ref=e1285]:
+                - generic [ref=e1286]: W
+                - generic [ref=e1287]: "3"
+          - paragraph [ref=e1288]: 之后递推生成：
+          - generic [ref=e1290]:
+            - generic [ref=e1291]:
+              - generic [ref=e1292]:
+                - generic [ref=e1294]: W
+                - generic [ref=e1297]: "4"
+              - generic [ref=e1299]: ","
+              - generic [ref=e1300]:
+                - generic [ref=e1302]: W
+                - generic [ref=e1305]: "5"
+              - generic [ref=e1307]: ","
+              - generic [ref=e1309]: …
+              - generic [ref=e1311]: ","
+              - generic [ref=e1312]:
+                - generic [ref=e1314]: W
+                - generic [ref=e1317]:
+                  - generic [ref=e1318]: "4"
+                  - generic [ref=e1319]: "3"
+            - math [ref=e1321]:
+              - generic [ref=e1322]:
+                - generic [ref=e1323]: W
+                - generic [ref=e1324]: "4"
+              - generic [ref=e1325]: ","
+              - generic [ref=e1326]:
+                - generic [ref=e1327]: W
+                - generic [ref=e1328]: "5"
+              - generic [ref=e1329]: ","
+              - generic [ref=e1330]: …
+              - generic [ref=e1331]: ","
+              - generic [ref=e1332]:
+                - generic [ref=e1333]: W
+                - generic [ref=e1335]: "43"
+          - paragraph [ref=e1336]: 每 4 个 word 组成一组 128 位轮密钥：
+          - generic [ref=e1338]:
+            - generic [ref=e1339]:
+              - generic [ref=e1341]: R
+              - generic [ref=e1343]: o
+              - generic [ref=e1345]: u
+              - generic [ref=e1347]: "n"
+              - generic [ref=e1349]: d
+              - generic [ref=e1351]: K
+              - generic [ref=e1353]: e
+              - generic [ref=e1354]:
+                - generic [ref=e1356]: "y"
+                - generic [ref=e1359]: "0"
+              - generic [ref=e1361]: =
+              - generic [ref=e1363]: (
+              - generic [ref=e1364]:
+                - generic [ref=e1366]: W
+                - generic [ref=e1369]: "0"
+              - generic [ref=e1371]: ","
+              - generic [ref=e1372]:
+                - generic [ref=e1374]: W
+                - generic [ref=e1377]: "1"
+              - generic [ref=e1379]: ","
+              - generic [ref=e1380]:
+                - generic [ref=e1382]: W
+                - generic [ref=e1385]: "2"
+              - generic [ref=e1387]: ","
+              - generic [ref=e1388]:
+                - generic [ref=e1390]: W
+                - generic [ref=e1393]: "3"
+              - generic [ref=e1395]: )
+            - math [ref=e1397]:
+              - generic [ref=e1398]: R
+              - generic [ref=e1399]: o
+              - generic [ref=e1400]: u
+              - generic [ref=e1401]: "n"
+              - generic [ref=e1402]: d
+              - generic [ref=e1403]: K
+              - generic [ref=e1404]: e
+              - generic [ref=e1405]:
+                - generic [ref=e1406]: "y"
+                - generic [ref=e1407]: "0"
+              - generic [ref=e1408]: =
+              - generic [ref=e1409]: (
+              - generic [ref=e1410]:
+                - generic [ref=e1411]: W
+                - generic [ref=e1412]: "0"
+              - generic [ref=e1413]: ","
+              - generic [ref=e1414]:
+                - generic [ref=e1415]: W
+                - generic [ref=e1416]: "1"
+              - generic [ref=e1417]: ","
+              - generic [ref=e1418]:
+                - generic [ref=e1419]: W
+                - generic [ref=e1420]: "2"
+              - generic [ref=e1421]: ","
+              - generic [ref=e1422]:
+                - generic [ref=e1423]: W
+                - generic [ref=e1424]: "3"
+              - generic [ref=e1425]: )
+          - paragraph [ref=e1426]: 依次类推，直到：
+          - generic [ref=e1428]:
+            - generic [ref=e1429]:
+              - generic [ref=e1431]: R
+              - generic [ref=e1433]: o
+              - generic [ref=e1435]: u
+              - generic [ref=e1437]: "n"
+              - generic [ref=e1439]: d
+              - generic [ref=e1441]: K
+              - generic [ref=e1443]: e
+              - generic [ref=e1444]:
+                - generic [ref=e1446]: "y"
+                - generic [ref=e1449]:
+                  - generic [ref=e1450]: "1"
+                  - generic [ref=e1451]: "0"
+              - generic [ref=e1453]: =
+              - generic [ref=e1455]: (
+              - generic [ref=e1456]:
+                - generic [ref=e1458]: W
+                - generic [ref=e1461]:
+                  - generic [ref=e1462]: "4"
+                  - generic [ref=e1463]: "0"
+              - generic [ref=e1465]: ","
+              - generic [ref=e1466]:
+                - generic [ref=e1468]: W
+                - generic [ref=e1471]:
+                  - generic [ref=e1472]: "4"
+                  - generic [ref=e1473]: "1"
+              - generic [ref=e1475]: ","
+              - generic [ref=e1476]:
+                - generic [ref=e1478]: W
+                - generic [ref=e1481]:
+                  - generic [ref=e1482]: "4"
+                  - generic [ref=e1483]: "2"
+              - generic [ref=e1485]: ","
+              - generic [ref=e1486]:
+                - generic [ref=e1488]: W
+                - generic [ref=e1491]:
+                  - generic [ref=e1492]: "4"
+                  - generic [ref=e1493]: "3"
+              - generic [ref=e1495]: )
+            - math [ref=e1497]:
+              - generic [ref=e1498]: R
+              - generic [ref=e1499]: o
+              - generic [ref=e1500]: u
+              - generic [ref=e1501]: "n"
+              - generic [ref=e1502]: d
+              - generic [ref=e1503]: K
+              - generic [ref=e1504]: e
+              - generic [ref=e1505]:
+                - generic [ref=e1506]: "y"
+                - generic [ref=e1508]: "10"
+              - generic [ref=e1509]: =
+              - generic [ref=e1510]: (
+              - generic [ref=e1511]:
+                - generic [ref=e1512]: W
+                - generic [ref=e1514]: "40"
+              - generic [ref=e1515]: ","
+              - generic [ref=e1516]:
+                - generic [ref=e1517]: W
+                - generic [ref=e1519]: "41"
+              - generic [ref=e1520]: ","
+              - generic [ref=e1521]:
+                - generic [ref=e1522]: W
+                - generic [ref=e1524]: "42"
+              - generic [ref=e1525]: ","
+              - generic [ref=e1526]:
+                - generic [ref=e1527]: W
+                - generic [ref=e1529]: "43"
+              - generic [ref=e1530]: )
+          - paragraph [ref=e1531]: 密钥扩展的基本递推关系可以写成：
+          - generic [ref=e1533]:
+            - generic [ref=e1534]:
+              - generic [ref=e1535]:
+                - generic [ref=e1537]: W
+                - generic [ref=e1540]: i
+              - generic [ref=e1542]: =
+              - generic [ref=e1543]:
+                - generic [ref=e1545]: W
+                - generic [ref=e1547]:
+                  - generic [ref=e1549]: i
+                  - generic [ref=e1551]: −
+                  - generic [ref=e1553]: "N"
+                  - generic [ref=e1555]: k
+              - generic [ref=e1557]: ⊕
+              - generic [ref=e1559]: T
+              - generic [ref=e1561]: e
+              - generic [ref=e1563]: m
+              - generic [ref=e1565]: p
+            - math [ref=e1567]:
+              - generic [ref=e1568]:
+                - generic [ref=e1569]: W
+                - generic [ref=e1570]: i
+              - generic [ref=e1571]: =
+              - generic [ref=e1572]:
+                - generic [ref=e1573]: W
+                - generic [ref=e1574]:
+                  - generic [ref=e1575]: i
+                  - generic [ref=e1576]: −
+                  - generic [ref=e1577]: "N"
+                  - generic [ref=e1578]: k
+              - generic [ref=e1579]: ⊕
+              - generic [ref=e1580]: T
+              - generic [ref=e1581]: e
+              - generic [ref=e1582]: m
+              - generic [ref=e1583]: p
+          - blockquote [ref=e1584]:
+            - paragraph [ref=e1585]:
+              - text: 其中
+              - generic [ref=e1587]:
+                - generic [ref=e1588]:
+                  - generic [ref=e1590]: "N"
+                  - generic [ref=e1592]: k
+                - math [ref=e1594]:
+                  - generic [ref=e1595]: "N"
+                  - generic [ref=e1596]: k
+              - text: 表示主密钥包含多少个字。AES-128 中
+              - generic [ref=e1598]:
+                - generic [ref=e1599]:
+                  - generic [ref=e1601]: "N"
+                  - generic [ref=e1603]: k
+                  - generic [ref=e1605]: =
+                  - generic [ref=e1607]: "4"
+                - math [ref=e1609]:
+                  - generic [ref=e1610]: "N"
+                  - generic [ref=e1611]: k
+                  - generic [ref=e1612]: =
+                  - generic [ref=e1613]: "4"
+              - text: ，AES-192 中
+              - generic [ref=e1615]:
+                - generic [ref=e1616]:
+                  - generic [ref=e1618]: "N"
+                  - generic [ref=e1620]: k
+                  - generic [ref=e1622]: =
+                  - generic [ref=e1624]: "6"
+                - math [ref=e1626]:
+                  - generic [ref=e1627]: "N"
+                  - generic [ref=e1628]: k
+                  - generic [ref=e1629]: =
+                  - generic [ref=e1630]: "6"
+              - text: ，AES-256 中
+              - generic [ref=e1632]:
+                - generic [ref=e1633]:
+                  - generic [ref=e1635]: "N"
+                  - generic [ref=e1637]: k
+                  - generic [ref=e1639]: =
+                  - generic [ref=e1641]: "8"
+                - math [ref=e1643]:
+                  - generic [ref=e1644]: "N"
+                  - generic [ref=e1645]: k
+                  - generic [ref=e1646]: =
+                  - generic [ref=e1647]: "8"
+              - text: 。通常情况下：
+          - generic [ref=e1649]:
+            - generic [ref=e1650]:
+              - generic [ref=e1652]: T
+              - generic [ref=e1654]: e
+              - generic [ref=e1656]: m
+              - generic [ref=e1658]: p
+              - generic [ref=e1660]: =
+              - generic [ref=e1661]:
+                - generic [ref=e1663]: W
+                - generic [ref=e1665]:
+                  - generic [ref=e1667]: i
+                  - generic [ref=e1669]: −
+                  - generic [ref=e1671]: "1"
+            - math [ref=e1673]:
+              - generic [ref=e1674]: T
+              - generic [ref=e1675]: e
+              - generic [ref=e1676]: m
+              - generic [ref=e1677]: p
+              - generic [ref=e1678]: =
+              - generic [ref=e1679]:
+                - generic [ref=e1680]: W
+                - generic [ref=e1681]:
+                  - generic [ref=e1682]: i
+                  - generic [ref=e1683]: −
+                  - generic [ref=e1684]: "1"
+          - paragraph [ref=e1685]:
+            - strong [ref=e1686]: 注意
+            - text: 当
+            - generic [ref=e1688]:
+              - generic [ref=e1691]: i
+              - math [ref=e1693]:
+                - generic [ref=e1694]: i
+            - text: 是
+            - generic [ref=e1696]:
+              - generic [ref=e1697]:
+                - generic [ref=e1699]: "N"
+                - generic [ref=e1701]: k
+              - math [ref=e1703]:
+                - generic [ref=e1704]: "N"
+                - generic [ref=e1705]: k
+            - text: 的整数倍时，需要对
+            - generic [ref=e1707]:
+              - generic [ref=e1708]:
+                - generic [ref=e1710]: T
+                - generic [ref=e1712]: e
+                - generic [ref=e1714]: m
+                - generic [ref=e1716]: p
+              - math [ref=e1718]:
+                - generic [ref=e1719]: T
+                - generic [ref=e1720]: e
+                - generic [ref=e1721]: m
+                - generic [ref=e1722]: p
+            - text: 做三个处理：
+          - generic [ref=e1724]:
+            - generic [ref=e1725]:
+              - generic [ref=e1727]: T
+              - generic [ref=e1729]: e
+              - generic [ref=e1731]: m
+              - generic [ref=e1733]: p
+              - generic [ref=e1735]: =
+              - generic [ref=e1737]: S
+              - generic [ref=e1739]: u
+              - generic [ref=e1741]: b
+              - generic [ref=e1743]: W
+              - generic [ref=e1745]: o
+              - generic [ref=e1747]: r
+              - generic [ref=e1749]: d
+              - generic [ref=e1751]: (
+              - generic [ref=e1753]: R
+              - generic [ref=e1755]: o
+              - generic [ref=e1757]: t
+              - generic [ref=e1759]: W
+              - generic [ref=e1761]: o
+              - generic [ref=e1763]: r
+              - generic [ref=e1765]: d
+              - generic [ref=e1767]: (
+              - generic [ref=e1768]:
+                - generic [ref=e1770]: W
+                - generic [ref=e1772]:
+                  - generic [ref=e1774]: i
+                  - generic [ref=e1776]: −
+                  - generic [ref=e1778]: "1"
+              - generic [ref=e1780]: )
+              - generic [ref=e1782]: )
+              - generic [ref=e1784]: ⊕
+              - generic [ref=e1786]: R
+              - generic [ref=e1788]: c
+              - generic [ref=e1790]: o
+              - generic [ref=e1792]: "n"
+              - generic [ref=e1794]: "["
+              - generic [ref=e1796]: i
+              - generic [ref=e1799]: /
+              - generic [ref=e1801]: "N"
+              - generic [ref=e1803]: k
+              - generic [ref=e1805]: "]"
+            - math [ref=e1807]:
+              - generic [ref=e1808]: T
+              - generic [ref=e1809]: e
+              - generic [ref=e1810]: m
+              - generic [ref=e1811]: p
+              - generic [ref=e1812]: =
+              - generic [ref=e1813]: S
+              - generic [ref=e1814]: u
+              - generic [ref=e1815]: b
+              - generic [ref=e1816]: W
+              - generic [ref=e1817]: o
+              - generic [ref=e1818]: r
+              - generic [ref=e1819]: d
+              - generic [ref=e1820]: (
+              - generic [ref=e1821]: R
+              - generic [ref=e1822]: o
+              - generic [ref=e1823]: t
+              - generic [ref=e1824]: W
+              - generic [ref=e1825]: o
+              - generic [ref=e1826]: r
+              - generic [ref=e1827]: d
+              - generic [ref=e1828]: (
+              - generic [ref=e1829]:
+                - generic [ref=e1830]: W
+                - generic [ref=e1831]:
+                  - generic [ref=e1832]: i
+                  - generic [ref=e1833]: −
+                  - generic [ref=e1834]: "1"
+              - generic [ref=e1835]: )
+              - generic [ref=e1836]: )
+              - generic [ref=e1837]: ⊕
+              - generic [ref=e1838]: R
+              - generic [ref=e1839]: c
+              - generic [ref=e1840]: o
+              - generic [ref=e1841]: "n"
+              - generic [ref=e1842]: "["
+              - generic [ref=e1843]: i
+              - generic [ref=e1845]: /
+              - generic [ref=e1846]: "N"
+              - generic [ref=e1847]: k
+              - generic [ref=e1848]: "]"
+          - paragraph [ref=e1849]: 这里，
+          - list [ref=e1850]:
+            - listitem [ref=e1851]:
+              - code [ref=e1852]: RotWord
+              - text: 把一个 4 字节字循环左移一个字节，例如：
+          - generic [ref=e1854]:
+            - generic [ref=e1855]:
+              - generic [ref=e1857]: (
+              - generic [ref=e1858]:
+                - generic [ref=e1860]: a
+                - generic [ref=e1863]: "0"
+              - generic [ref=e1865]: ","
+              - generic [ref=e1866]:
+                - generic [ref=e1868]: a
+                - generic [ref=e1871]: "1"
+              - generic [ref=e1873]: ","
+              - generic [ref=e1874]:
+                - generic [ref=e1876]: a
+                - generic [ref=e1879]: "2"
+              - generic [ref=e1881]: ","
+              - generic [ref=e1882]:
+                - generic [ref=e1884]: a
+                - generic [ref=e1887]: "3"
+              - generic [ref=e1889]: )
+              - generic [ref=e1891]: →
+              - generic [ref=e1893]: (
+              - generic [ref=e1894]:
+                - generic [ref=e1896]: a
+                - generic [ref=e1899]: "1"
+              - generic [ref=e1901]: ","
+              - generic [ref=e1902]:
+                - generic [ref=e1904]: a
+                - generic [ref=e1907]: "2"
+              - generic [ref=e1909]: ","
+              - generic [ref=e1910]:
+                - generic [ref=e1912]: a
+                - generic [ref=e1915]: "3"
+              - generic [ref=e1917]: ","
+              - generic [ref=e1918]:
+                - generic [ref=e1920]: a
+                - generic [ref=e1923]: "0"
+              - generic [ref=e1925]: )
+            - math [ref=e1927]:
+              - generic [ref=e1928]: (
+              - generic [ref=e1929]:
+                - generic [ref=e1930]: a
+                - generic [ref=e1931]: "0"
+              - generic [ref=e1932]: ","
+              - generic [ref=e1933]:
+                - generic [ref=e1934]: a
+                - generic [ref=e1935]: "1"
+              - generic [ref=e1936]: ","
+              - generic [ref=e1937]:
+                - generic [ref=e1938]: a
+                - generic [ref=e1939]: "2"
+              - generic [ref=e1940]: ","
+              - generic [ref=e1941]:
+                - generic [ref=e1942]: a
+                - generic [ref=e1943]: "3"
+              - generic [ref=e1944]: )
+              - generic [ref=e1945]: →
+              - generic [ref=e1946]: (
+              - generic [ref=e1947]:
+                - generic [ref=e1948]: a
+                - generic [ref=e1949]: "1"
+              - generic [ref=e1950]: ","
+              - generic [ref=e1951]:
+                - generic [ref=e1952]: a
+                - generic [ref=e1953]: "2"
+              - generic [ref=e1954]: ","
+              - generic [ref=e1955]:
+                - generic [ref=e1956]: a
+                - generic [ref=e1957]: "3"
+              - generic [ref=e1958]: ","
+              - generic [ref=e1959]:
+                - generic [ref=e1960]: a
+                - generic [ref=e1961]: "0"
+              - generic [ref=e1962]: )
+          - list [ref=e1963]:
+            - listitem [ref=e1964]:
+              - paragraph [ref=e1965]:
+                - code [ref=e1966]: SubWord
+                - text: 对 4 个字节分别查 S 盒。
+            - listitem [ref=e1967]:
+              - paragraph [ref=e1968]:
+                - code [ref=e1969]: Rcon
+                - text: 是轮常量，用来让各轮轮密钥之间产生明确区分。
+          - paragraph [ref=e1970]:
+            - text: AES-256 还会在特定位置额外使用一次
+            - code [ref=e1971]: SubWord
+            - text: ，用于增强扩展密钥中非线性成分的密度。
+          - list [ref=e1972]:
+            - listitem [ref=e1973]:
+              - generic [ref=e1975]:
+                - generic [ref=e1976]:
+                  - generic [ref=e1978]: i
+                  - generic [ref=e1979]:
+                    - generic [ref=e1980]: m
+                    - generic [ref=e1981]: o
+                    - generic [ref=e1982]: d
+                  - generic [ref=e1986]: "N"
+                  - generic [ref=e1988]: k
+                  - generic [ref=e1990]: =
+                  - generic [ref=e1992]: "4"
+                - math [ref=e1994]:
+                  - generic [ref=e1995]: i
+                  - generic [ref=e1996]: mod
+                  - generic [ref=e1997]: "N"
+                  - generic [ref=e1998]: k
+                  - generic [ref=e1999]: =
+                  - generic [ref=e2000]: "4"
+              - text: 时，会对
+              - generic [ref=e2002]:
+                - generic [ref=e2004]:
+                  - generic [ref=e2006]: W
+                  - generic [ref=e2008]:
+                    - generic [ref=e2010]: i
+                    - generic [ref=e2012]: −
+                    - generic [ref=e2014]: "1"
+                - math [ref=e2016]:
+                  - generic [ref=e2017]:
+                    - generic [ref=e2018]: W
+                    - generic [ref=e2019]:
+                      - generic [ref=e2020]: i
+                      - generic [ref=e2021]: −
+                      - generic [ref=e2022]: "1"
+              - text: 先进行一次
+              - code [ref=e2023]: SubWord
+              - text: 变换
+          - heading "4. 标准轮：重复 次的核心加密结构" [level=3] [ref=e2024]:
+            - text: 4. 标准轮：重复
+            - generic [ref=e2026]:
+              - generic [ref=e2027]:
+                - generic [ref=e2029]: "N"
+                - generic [ref=e2031]: r
+                - generic [ref=e2033]: −
+                - generic [ref=e2035]: "1"
+              - math [ref=e2037]:
+                - generic [ref=e2038]: "N"
+                - generic [ref=e2039]: r
+                - generic [ref=e2040]: −
+                - generic [ref=e2041]: "1"
+            - text: 次的核心加密结构
+          - paragraph [ref=e2042]:
+            - text: 图片中间蓝色虚线框标注为“标准轮（重复
+            - generic [ref=e2044]:
+              - generic [ref=e2045]:
+                - generic [ref=e2047]: "N"
+                - generic [ref=e2049]: r
+                - generic [ref=e2051]: −
+                - generic [ref=e2053]: "1"
+              - math [ref=e2055]:
+                - generic [ref=e2056]: "N"
+                - generic [ref=e2057]: r
+                - generic [ref=e2058]: −
+                - generic [ref=e2059]: "1"
+            - text: 次）”。这一部分是 AES 加密的主体。
+          - list [ref=e2060]:
+            - listitem [ref=e2061]:
+              - text: 对于 AES-128，
+              - generic [ref=e2063]:
+                - generic [ref=e2064]:
+                  - generic [ref=e2066]: "N"
+                  - generic [ref=e2068]: r
+                  - generic [ref=e2070]: =
+                  - generic [ref=e2071]:
+                    - generic [ref=e2072]: "1"
+                    - generic [ref=e2073]: "0"
+                - math [ref=e2075]:
+                  - generic [ref=e2076]: "N"
+                  - generic [ref=e2077]: r
+                  - generic [ref=e2078]: =
+                  - generic [ref=e2079]: "10"
+              - text: ，因此标准轮执行 9 次；
+            - listitem [ref=e2080]: 对于 AES-192，标准轮执行 11 次；
+            - listitem [ref=e2081]: 对于 AES-256，标准轮执行 13 次。
+          - paragraph [ref=e2082]: 每一个标准轮包含四个顺序固定的步骤：
+          - generic [ref=e2084]:
+            - generic [ref=e2085]:
+              - generic [ref=e2087]: S
+              - generic [ref=e2089]: u
+              - generic [ref=e2091]: b
+              - generic [ref=e2093]: B
+              - generic [ref=e2095]: "y"
+              - generic [ref=e2097]: t
+              - generic [ref=e2099]: e
+              - generic [ref=e2101]: s
+              - generic [ref=e2103]: →
+              - generic [ref=e2105]: S
+              - generic [ref=e2107]: h
+              - generic [ref=e2109]: i
+              - generic [ref=e2111]: f
+              - generic [ref=e2113]: t
+              - generic [ref=e2115]: R
+              - generic [ref=e2117]: o
+              - generic [ref=e2119]: w
+              - generic [ref=e2121]: s
+              - generic [ref=e2123]: →
+              - generic [ref=e2125]: M
+              - generic [ref=e2127]: i
+              - generic [ref=e2129]: x
+              - generic [ref=e2131]: C
+              - generic [ref=e2133]: o
+              - generic [ref=e2135]: l
+              - generic [ref=e2137]: u
+              - generic [ref=e2139]: m
+              - generic [ref=e2141]: "n"
+              - generic [ref=e2143]: s
+              - generic [ref=e2145]: →
+              - generic [ref=e2147]: A
+              - generic [ref=e2149]: d
+              - generic [ref=e2151]: d
+              - generic [ref=e2153]: R
+              - generic [ref=e2155]: o
+              - generic [ref=e2157]: u
+              - generic [ref=e2159]: "n"
+              - generic [ref=e2161]: d
+              - generic [ref=e2163]: K
+              - generic [ref=e2165]: e
+              - generic [ref=e2167]: "y"
+            - math [ref=e2169]:
+              - generic [ref=e2170]: S
+              - generic [ref=e2171]: u
+              - generic [ref=e2172]: b
+              - generic [ref=e2173]: B
+              - generic [ref=e2174]: "y"
+              - generic [ref=e2175]: t
+              - generic [ref=e2176]: e
+              - generic [ref=e2177]: s
+              - generic [ref=e2178]: →
+              - generic [ref=e2179]: S
+              - generic [ref=e2180]: h
+              - generic [ref=e2181]: i
+              - generic [ref=e2182]: f
+              - generic [ref=e2183]: t
+              - generic [ref=e2184]: R
+              - generic [ref=e2185]: o
+              - generic [ref=e2186]: w
+              - generic [ref=e2187]: s
+              - generic [ref=e2188]: →
+              - generic [ref=e2189]: M
+              - generic [ref=e2190]: i
+              - generic [ref=e2191]: x
+              - generic [ref=e2192]: C
+              - generic [ref=e2193]: o
+              - generic [ref=e2194]: l
+              - generic [ref=e2195]: u
+              - generic [ref=e2196]: m
+              - generic [ref=e2197]: "n"
+              - generic [ref=e2198]: s
+              - generic [ref=e2199]: →
+              - generic [ref=e2200]: A
+              - generic [ref=e2201]: d
+              - generic [ref=e2202]: d
+              - generic [ref=e2203]: R
+              - generic [ref=e2204]: o
+              - generic [ref=e2205]: u
+              - generic [ref=e2206]: "n"
+              - generic [ref=e2207]: d
+              - generic [ref=e2208]: K
+              - generic [ref=e2209]: e
+              - generic [ref=e2210]: "y"
+          - paragraph [ref=e2211]: 这一顺序体现了 AES 的 SP 网络结构。S 盒代换提供非线性，行移位改变字节位置，列混合实现扩散，轮密钥加把密钥材料注入当前状态。下面按图片中的四个小框逐一展开。
+          - heading "4.1 字节代换 ByteSub / SubBytes" [level=4] [ref=e2212]
+          - paragraph [ref=e2213]:
+            - text: SubBytes 是作用在单个字节上的代换。状态矩阵中共有 16 个字节，每个字节都会独立查 S 盒，得到一个新的字节。设输入字节为
+            - generic [ref=e2215]:
+              - generic [ref=e2218]: x
+              - math [ref=e2220]:
+                - generic [ref=e2221]: x
+            - text: ，S 盒输出为：
+          - generic [ref=e2223]:
+            - generic [ref=e2224]:
+              - generic [ref=e2226]: "y"
+              - generic [ref=e2228]: =
+              - generic [ref=e2230]: S
+              - generic [ref=e2232]: (
+              - generic [ref=e2234]: x
+              - generic [ref=e2236]: )
+            - math [ref=e2238]:
+              - generic [ref=e2239]: "y"
+              - generic [ref=e2240]: =
+              - generic [ref=e2241]: S
+              - generic [ref=e2242]: (
+              - generic [ref=e2243]: x
+              - generic [ref=e2244]: )
+          - paragraph [ref=e2245]:
+            - strong [ref=e2246]: AES 的 S 盒由两个阶段构造。
+          - paragraph [ref=e2247]:
+            - text: 第一阶段是在有限域
+            - generic [ref=e2249]:
+              - generic [ref=e2250]:
+                - generic [ref=e2252]: G
+                - generic [ref=e2254]: F
+                - generic [ref=e2256]: (
+                - generic [ref=e2257]:
+                  - generic [ref=e2259]: "2"
+                  - generic [ref=e2262]: "8"
+                - generic [ref=e2264]: )
+              - math [ref=e2266]:
+                - generic [ref=e2267]: G
+                - generic [ref=e2268]: F
+                - generic [ref=e2269]: (
+                - generic [ref=e2270]:
+                  - generic [ref=e2271]: "2"
+                  - generic [ref=e2272]: "8"
+                - generic [ref=e2273]: )
+            - text: 中求乘法逆元。对输入字节
+            - generic [ref=e2275]:
+              - generic [ref=e2278]: x
+              - math [ref=e2280]:
+                - generic [ref=e2281]: x
+            - text: ，先得到
+            - generic [ref=e2283]:
+              - generic [ref=e2285]:
+                - generic [ref=e2287]: x
+                - generic [ref=e2289]:
+                  - generic [ref=e2291]: −
+                  - generic [ref=e2293]: "1"
+              - math [ref=e2295]:
+                - generic [ref=e2296]:
+                  - generic [ref=e2297]: x
+                  - generic [ref=e2298]:
+                    - generic [ref=e2299]: −
+                    - generic [ref=e2300]: "1"
+            - text: 。当输入为 0 时，按照 AES 规定取 0。
+          - paragraph [ref=e2301]: 第二阶段对逆元做仿射变换，得到最终输出字节。
+          - paragraph [ref=e2302]: 用教材中的矩阵形式描述，设逆元写成 8 位向量：
+          - generic [ref=e2304]:
+            - generic [ref=e2305]:
+              - generic [ref=e2307]: (
+              - generic [ref=e2308]:
+                - generic [ref=e2310]: x
+                - generic [ref=e2313]: "0"
+              - generic [ref=e2315]: ","
+              - generic [ref=e2316]:
+                - generic [ref=e2318]: x
+                - generic [ref=e2321]: "1"
+              - generic [ref=e2323]: ","
+              - generic [ref=e2325]: …
+              - generic [ref=e2327]: ","
+              - generic [ref=e2328]:
+                - generic [ref=e2330]: x
+                - generic [ref=e2333]: "7"
+              - generic [ref=e2335]: )
+            - math [ref=e2337]:
+              - generic [ref=e2338]: (
+              - generic [ref=e2339]:
+                - generic [ref=e2340]: x
+                - generic [ref=e2341]: "0"
+              - generic [ref=e2342]: ","
+              - generic [ref=e2343]:
+                - generic [ref=e2344]: x
+                - generic [ref=e2345]: "1"
+              - generic [ref=e2346]: ","
+              - generic [ref=e2347]: …
+              - generic [ref=e2348]: ","
+              - generic [ref=e2349]:
+                - generic [ref=e2350]: x
+                - generic [ref=e2351]: "7"
+              - generic [ref=e2352]: )
+          - paragraph [ref=e2353]: 输出写成：
+          - generic [ref=e2355]:
+            - generic [ref=e2356]:
+              - generic [ref=e2358]: (
+              - generic [ref=e2359]:
+                - generic [ref=e2361]: "y"
+                - generic [ref=e2364]: "0"
+              - generic [ref=e2366]: ","
+              - generic [ref=e2367]:
+                - generic [ref=e2369]: "y"
+                - generic [ref=e2372]: "1"
+              - generic [ref=e2374]: ","
+              - generic [ref=e2376]: …
+              - generic [ref=e2378]: ","
+              - generic [ref=e2379]:
+                - generic [ref=e2381]: "y"
+                - generic [ref=e2384]: "7"
+              - generic [ref=e2386]: )
+            - math [ref=e2388]:
+              - generic [ref=e2389]: (
+              - generic [ref=e2390]:
+                - generic [ref=e2391]: "y"
+                - generic [ref=e2392]: "0"
+              - generic [ref=e2393]: ","
+              - generic [ref=e2394]:
+                - generic [ref=e2395]: "y"
+                - generic [ref=e2396]: "1"
+              - generic [ref=e2397]: ","
+              - generic [ref=e2398]: …
+              - generic [ref=e2399]: ","
+              - generic [ref=e2400]:
+                - generic [ref=e2401]: "y"
+                - generic [ref=e2402]: "7"
+              - generic [ref=e2403]: )
+          - paragraph [ref=e2404]: 则：
+          - generic [ref=e2406]:
+            - generic [ref=e2407]:
+              - generic [ref=e2408]:
+                - generic [ref=e2410]:
+                  - generic [ref=e2411]: ⎡
+                  - generic [ref=e2412]: ⎢
+                  - generic [ref=e2414]: ⎣
+                - generic [ref=e2417]:
+                  - generic [ref=e2420]:
+                    - generic [ref=e2422]: "y"
+                    - generic [ref=e2425]: "0"
+                  - generic [ref=e2428]:
+                    - generic [ref=e2430]: "y"
+                    - generic [ref=e2433]: "1"
+                  - generic [ref=e2436]:
+                    - generic [ref=e2438]: "y"
+                    - generic [ref=e2441]: "2"
+                  - generic [ref=e2444]:
+                    - generic [ref=e2446]: "y"
+                    - generic [ref=e2449]: "3"
+                  - generic [ref=e2452]:
+                    - generic [ref=e2454]: "y"
+                    - generic [ref=e2457]: "4"
+                  - generic [ref=e2460]:
+                    - generic [ref=e2462]: "y"
+                    - generic [ref=e2465]: "5"
+                  - generic [ref=e2468]:
+                    - generic [ref=e2470]: "y"
+                    - generic [ref=e2473]: "6"
+                  - generic [ref=e2476]:
+                    - generic [ref=e2478]: "y"
+                    - generic [ref=e2481]: "7"
+                - generic [ref=e2483]:
+                  - generic [ref=e2484]: ⎤
+                  - generic [ref=e2485]: ⎥
+                  - generic [ref=e2487]: ⎦
+              - generic [ref=e2489]: =
+              - generic [ref=e2491]: A
+              - generic [ref=e2492]:
+                - generic [ref=e2494]:
+                  - generic [ref=e2495]: ⎡
+                  - generic [ref=e2496]: ⎢
+                  - generic [ref=e2498]: ⎣
+                - generic [ref=e2501]:
+                  - generic [ref=e2504]:
+                    - generic [ref=e2506]: x
+                    - generic [ref=e2509]: "0"
+                  - generic [ref=e2512]:
+                    - generic [ref=e2514]: x
+                    - generic [ref=e2517]: "1"
+                  - generic [ref=e2520]:
+                    - generic [ref=e2522]: x
+                    - generic [ref=e2525]: "2"
+                  - generic [ref=e2528]:
+                    - generic [ref=e2530]: x
+                    - generic [ref=e2533]: "3"
+                  - generic [ref=e2536]:
+                    - generic [ref=e2538]: x
+                    - generic [ref=e2541]: "4"
+                  - generic [ref=e2544]:
+                    - generic [ref=e2546]: x
+                    - generic [ref=e2549]: "5"
+                  - generic [ref=e2552]:
+                    - generic [ref=e2554]: x
+                    - generic [ref=e2557]: "6"
+                  - generic [ref=e2560]:
+                    - generic [ref=e2562]: x
+                    - generic [ref=e2565]: "7"
+                - generic [ref=e2567]:
+                  - generic [ref=e2568]: ⎤
+                  - generic [ref=e2569]: ⎥
+                  - generic [ref=e2571]: ⎦
+              - generic [ref=e2573]: ⊕
+              - generic [ref=e2574]:
+                - generic [ref=e2576]:
+                  - generic [ref=e2577]: ⎡
+                  - generic [ref=e2578]: ⎢
+                  - generic [ref=e2580]: ⎣
+                - generic [ref=e2583]:
+                  - generic [ref=e2587]: "1"
+                  - generic [ref=e2591]: "1"
+                  - generic [ref=e2595]: "0"
+                  - generic [ref=e2599]: "0"
+                  - generic [ref=e2603]: "0"
+                  - generic [ref=e2607]: "1"
+                  - generic [ref=e2611]: "1"
+                  - generic [ref=e2615]: "0"
+                - generic [ref=e2617]:
+                  - generic [ref=e2618]: ⎤
+                  - generic [ref=e2619]: ⎥
+                  - generic [ref=e2621]: ⎦
+            - math [ref=e2623]:
+              - generic [ref=e2624]:
+                - generic [ref=e2625]: "["
+                - generic [ref=e2626]:
+                  - generic [ref=e2629]:
+                    - generic [ref=e2630]: "y"
+                    - generic [ref=e2631]: "0"
+                  - generic [ref=e2634]:
+                    - generic [ref=e2635]: "y"
+                    - generic [ref=e2636]: "1"
+                  - generic [ref=e2639]:
+                    - generic [ref=e2640]: "y"
+                    - generic [ref=e2641]: "2"
+                  - generic [ref=e2644]:
+                    - generic [ref=e2645]: "y"
+                    - generic [ref=e2646]: "3"
+                  - generic [ref=e2649]:
+                    - generic [ref=e2650]: "y"
+                    - generic [ref=e2651]: "4"
+                  - generic [ref=e2654]:
+                    - generic [ref=e2655]: "y"
+                    - generic [ref=e2656]: "5"
+                  - generic [ref=e2659]:
+                    - generic [ref=e2660]: "y"
+                    - generic [ref=e2661]: "6"
+                  - generic [ref=e2664]:
+                    - generic [ref=e2665]: "y"
+                    - generic [ref=e2666]: "7"
+                - generic [ref=e2667]: "]"
+              - generic [ref=e2668]: =
+              - generic [ref=e2669]: A
+              - generic [ref=e2670]:
+                - generic [ref=e2671]: "["
+                - generic [ref=e2672]:
+                  - generic [ref=e2675]:
+                    - generic [ref=e2676]: x
+                    - generic [ref=e2677]: "0"
+                  - generic [ref=e2680]:
+                    - generic [ref=e2681]: x
+                    - generic [ref=e2682]: "1"
+                  - generic [ref=e2685]:
+                    - generic [ref=e2686]: x
+                    - generic [ref=e2687]: "2"
+                  - generic [ref=e2690]:
+                    - generic [ref=e2691]: x
+                    - generic [ref=e2692]: "3"
+                  - generic [ref=e2695]:
+                    - generic [ref=e2696]: x
+                    - generic [ref=e2697]: "4"
+                  - generic [ref=e2700]:
+                    - generic [ref=e2701]: x
+                    - generic [ref=e2702]: "5"
+                  - generic [ref=e2705]:
+                    - generic [ref=e2706]: x
+                    - generic [ref=e2707]: "6"
+                  - generic [ref=e2710]:
+                    - generic [ref=e2711]: x
+                    - generic [ref=e2712]: "7"
+                - generic [ref=e2713]: "]"
+              - generic [ref=e2714]: ⊕
+              - generic [ref=e2715]:
+                - generic [ref=e2716]: "["
+                - generic [ref=e2717]:
+                  - generic [ref=e2720]: "1"
+                  - generic [ref=e2723]: "1"
+                  - generic [ref=e2726]: "0"
+                  - generic [ref=e2729]: "0"
+                  - generic [ref=e2732]: "0"
+                  - generic [ref=e2735]: "1"
+                  - generic [ref=e2738]: "1"
+                  - generic [ref=e2741]: "0"
+                - generic [ref=e2742]: "]"
+          - paragraph [ref=e2743]:
+            - text: 其中
+            - generic [ref=e2745]:
+              - generic [ref=e2748]: A
+              - math [ref=e2750]:
+                - generic [ref=e2751]: A
+            - text: 是固定的
+            - generic [ref=e2753]:
+              - generic [ref=e2754]:
+                - generic [ref=e2756]: "8"
+                - generic [ref=e2758]: ×
+                - generic [ref=e2760]: "8"
+              - math [ref=e2762]:
+                - generic [ref=e2763]: "8"
+                - generic [ref=e2764]: ×
+                - generic [ref=e2765]: "8"
+            - text: 二进制矩阵。这个步骤让输入字节和输出字节之间形成复杂的非线性关系。由于 S 盒逐字节作用，所以它本身负责“混淆”：攻击者即使观察到密文，也很难建立明文字节、密钥字节和输出字节之间的简单线性关系。
+          - heading "4.2 行移位 ShiftRow / ShiftRows" [level=4] [ref=e2766]
+          - paragraph [ref=e2767]: SubBytes 完成后，AES 对状态矩阵按行做循环左移。设 SubBytes 后的状态矩阵为
+          - generic [ref=e2769]:
+            - generic [ref=e2771]:
+              - generic [ref=e2773]:
+                - generic [ref=e2774]: ⎡
+                - generic [ref=e2775]: ⎢
+                - generic [ref=e2777]: ⎣
+              - generic [ref=e2780]:
+                - generic [ref=e2781]:
+                  - generic [ref=e2783]:
+                    - generic [ref=e2785]: a
+                    - generic [ref=e2787]:
+                      - generic [ref=e2789]: "0"
+                      - generic [ref=e2791]: ","
+                      - generic [ref=e2793]: "0"
+                  - generic [ref=e2795]:
+                    - generic [ref=e2797]: a
+                    - generic [ref=e2799]:
+                      - generic [ref=e2801]: "0"
+                      - generic [ref=e2803]: ","
+                      - generic [ref=e2805]: "1"
+                  - generic [ref=e2807]:
+                    - generic [ref=e2809]: a
+                    - generic [ref=e2811]:
+                      - generic [ref=e2813]: "0"
+                      - generic [ref=e2815]: ","
+                      - generic [ref=e2817]: "2"
+                  - generic [ref=e2819]:
+                    - generic [ref=e2821]: a
+                    - generic [ref=e2823]:
+                      - generic [ref=e2825]: "0"
+                      - generic [ref=e2827]: ","
+                      - generic [ref=e2829]: "3"
+                - generic [ref=e2830]:
+                  - generic [ref=e2832]:
+                    - generic [ref=e2834]: a
+                    - generic [ref=e2836]:
+                      - generic [ref=e2838]: "1"
+                      - generic [ref=e2840]: ","
+                      - generic [ref=e2842]: "0"
+                  - generic [ref=e2844]:
+                    - generic [ref=e2846]: a
+                    - generic [ref=e2848]:
+                      - generic [ref=e2850]: "1"
+                      - generic [ref=e2852]: ","
+                      - generic [ref=e2854]: "1"
+                  - generic [ref=e2856]:
+                    - generic [ref=e2858]: a
+                    - generic [ref=e2860]:
+                      - generic [ref=e2862]: "1"
+                      - generic [ref=e2864]: ","
+                      - generic [ref=e2866]: "2"
+                  - generic [ref=e2868]:
+                    - generic [ref=e2870]: a
+                    - generic [ref=e2872]:
+                      - generic [ref=e2874]: "1"
+                      - generic [ref=e2876]: ","
+                      - generic [ref=e2878]: "3"
+                - generic [ref=e2879]:
+                  - generic [ref=e2881]:
+                    - generic [ref=e2883]: a
+                    - generic [ref=e2885]:
+                      - generic [ref=e2887]: "2"
+                      - generic [ref=e2889]: ","
+                      - generic [ref=e2891]: "0"
+                  - generic [ref=e2893]:
+                    - generic [ref=e2895]: a
+                    - generic [ref=e2897]:
+                      - generic [ref=e2899]: "2"
+                      - generic [ref=e2901]: ","
+                      - generic [ref=e2903]: "1"
+                  - generic [ref=e2905]:
+                    - generic [ref=e2907]: a
+                    - generic [ref=e2909]:
+                      - generic [ref=e2911]: "2"
+                      - generic [ref=e2913]: ","
+                      - generic [ref=e2915]: "2"
+                  - generic [ref=e2917]:
+                    - generic [ref=e2919]: a
+                    - generic [ref=e2921]:
+                      - generic [ref=e2923]: "2"
+                      - generic [ref=e2925]: ","
+                      - generic [ref=e2927]: "3"
+                - generic [ref=e2928]:
+                  - generic [ref=e2930]:
+                    - generic [ref=e2932]: a
+                    - generic [ref=e2934]:
+                      - generic [ref=e2936]: "3"
+                      - generic [ref=e2938]: ","
+                      - generic [ref=e2940]: "0"
+                  - generic [ref=e2942]:
+                    - generic [ref=e2944]: a
+                    - generic [ref=e2946]:
+                      - generic [ref=e2948]: "3"
+                      - generic [ref=e2950]: ","
+                      - generic [ref=e2952]: "1"
+                  - generic [ref=e2954]:
+                    - generic [ref=e2956]: a
+                    - generic [ref=e2958]:
+                      - generic [ref=e2960]: "3"
+                      - generic [ref=e2962]: ","
+                      - generic [ref=e2964]: "2"
+                  - generic [ref=e2966]:
+                    - generic [ref=e2968]: a
+                    - generic [ref=e2970]:
+                      - generic [ref=e2972]: "3"
+                      - generic [ref=e2974]: ","
+                      - generic [ref=e2976]: "3"
+              - generic [ref=e2978]:
+                - generic [ref=e2979]: ⎤
+                - generic [ref=e2980]: ⎥
+                - generic [ref=e2982]: ⎦
+            - math [ref=e2984]:
+              - generic [ref=e2985]:
+                - generic [ref=e2986]: "["
+                - generic [ref=e2987]:
+                  - generic [ref=e2988]:
+                    - generic [ref=e2990]:
+                      - generic [ref=e2991]: a
+                      - generic [ref=e2992]:
+                        - generic [ref=e2993]: "0"
+                        - generic [ref=e2994]: ","
+                        - generic [ref=e2995]: "0"
+                    - generic [ref=e2997]:
+                      - generic [ref=e2998]: a
+                      - generic [ref=e2999]:
+                        - generic [ref=e3000]: "0"
+                        - generic [ref=e3001]: ","
+                        - generic [ref=e3002]: "1"
+                    - generic [ref=e3004]:
+                      - generic [ref=e3005]: a
+                      - generic [ref=e3006]:
+                        - generic [ref=e3007]: "0"
+                        - generic [ref=e3008]: ","
+                        - generic [ref=e3009]: "2"
+                    - generic [ref=e3011]:
+                      - generic [ref=e3012]: a
+                      - generic [ref=e3013]:
+                        - generic [ref=e3014]: "0"
+                        - generic [ref=e3015]: ","
+                        - generic [ref=e3016]: "3"
+                  - generic [ref=e3017]:
+                    - generic [ref=e3019]:
+                      - generic [ref=e3020]: a
+                      - generic [ref=e3021]:
+                        - generic [ref=e3022]: "1"
+                        - generic [ref=e3023]: ","
+                        - generic [ref=e3024]: "0"
+                    - generic [ref=e3026]:
+                      - generic [ref=e3027]: a
+                      - generic [ref=e3028]:
+                        - generic [ref=e3029]: "1"
+                        - generic [ref=e3030]: ","
+                        - generic [ref=e3031]: "1"
+                    - generic [ref=e3033]:
+                      - generic [ref=e3034]: a
+                      - generic [ref=e3035]:
+                        - generic [ref=e3036]: "1"
+                        - generic [ref=e3037]: ","
+                        - generic [ref=e3038]: "2"
+                    - generic [ref=e3040]:
+                      - generic [ref=e3041]: a
+                      - generic [ref=e3042]:
+                        - generic [ref=e3043]: "1"
+                        - generic [ref=e3044]: ","
+                        - generic [ref=e3045]: "3"
+                  - generic [ref=e3046]:
+                    - generic [ref=e3048]:
+                      - generic [ref=e3049]: a
+                      - generic [ref=e3050]:
+                        - generic [ref=e3051]: "2"
+                        - generic [ref=e3052]: ","
+                        - generic [ref=e3053]: "0"
+                    - generic [ref=e3055]:
+                      - generic [ref=e3056]: a
+                      - generic [ref=e3057]:
+                        - generic [ref=e3058]: "2"
+                        - generic [ref=e3059]: ","
+                        - generic [ref=e3060]: "1"
+                    - generic [ref=e3062]:
+                      - generic [ref=e3063]: a
+                      - generic [ref=e3064]:
+                        - generic [ref=e3065]: "2"
+                        - generic [ref=e3066]: ","
+                        - generic [ref=e3067]: "2"
+                    - generic [ref=e3069]:
+                      - generic [ref=e3070]: a
+                      - generic [ref=e3071]:
+                        - generic [ref=e3072]: "2"
+                        - generic [ref=e3073]: ","
+                        - generic [ref=e3074]: "3"
+                  - generic [ref=e3075]:
+                    - generic [ref=e3077]:
+                      - generic [ref=e3078]: a
+                      - generic [ref=e3079]:
+                        - generic [ref=e3080]: "3"
+                        - generic [ref=e3081]: ","
+                        - generic [ref=e3082]: "0"
+                    - generic [ref=e3084]:
+                      - generic [ref=e3085]: a
+                      - generic [ref=e3086]:
+                        - generic [ref=e3087]: "3"
+                        - generic [ref=e3088]: ","
+                        - generic [ref=e3089]: "1"
+                    - generic [ref=e3091]:
+                      - generic [ref=e3092]: a
+                      - generic [ref=e3093]:
+                        - generic [ref=e3094]: "3"
+                        - generic [ref=e3095]: ","
+                        - generic [ref=e3096]: "2"
+                    - generic [ref=e3098]:
+                      - generic [ref=e3099]: a
+                      - generic [ref=e3100]:
+                        - generic [ref=e3101]: "3"
+                        - generic [ref=e3102]: ","
+                        - generic [ref=e3103]: "3"
+                - generic [ref=e3104]: "]"
+          - paragraph [ref=e3105]: ShiftRows 后变为：
+          - generic [ref=e3107]:
+            - generic [ref=e3109]:
+              - generic [ref=e3111]:
+                - generic [ref=e3112]: ⎡
+                - generic [ref=e3113]: ⎢
+                - generic [ref=e3115]: ⎣
+              - generic [ref=e3118]:
+                - generic [ref=e3119]:
+                  - generic [ref=e3121]:
+                    - generic [ref=e3123]: a
+                    - generic [ref=e3125]:
+                      - generic [ref=e3127]: "0"
+                      - generic [ref=e3129]: ","
+                      - generic [ref=e3131]: "0"
+                  - generic [ref=e3133]:
+                    - generic [ref=e3135]: a
+                    - generic [ref=e3137]:
+                      - generic [ref=e3139]: "0"
+                      - generic [ref=e3141]: ","
+                      - generic [ref=e3143]: "1"
+                  - generic [ref=e3145]:
+                    - generic [ref=e3147]: a
+                    - generic [ref=e3149]:
+                      - generic [ref=e3151]: "0"
+                      - generic [ref=e3153]: ","
+                      - generic [ref=e3155]: "2"
+                  - generic [ref=e3157]:
+                    - generic [ref=e3159]: a
+                    - generic [ref=e3161]:
+                      - generic [ref=e3163]: "0"
+                      - generic [ref=e3165]: ","
+                      - generic [ref=e3167]: "3"
+                - generic [ref=e3168]:
+                  - generic [ref=e3170]:
+                    - generic [ref=e3172]: a
+                    - generic [ref=e3174]:
+                      - generic [ref=e3176]: "1"
+                      - generic [ref=e3178]: ","
+                      - generic [ref=e3180]: "1"
+                  - generic [ref=e3182]:
+                    - generic [ref=e3184]: a
+                    - generic [ref=e3186]:
+                      - generic [ref=e3188]: "1"
+                      - generic [ref=e3190]: ","
+                      - generic [ref=e3192]: "2"
+                  - generic [ref=e3194]:
+                    - generic [ref=e3196]: a
+                    - generic [ref=e3198]:
+                      - generic [ref=e3200]: "1"
+                      - generic [ref=e3202]: ","
+                      - generic [ref=e3204]: "3"
+                  - generic [ref=e3206]:
+                    - generic [ref=e3208]: a
+                    - generic [ref=e3210]:
+                      - generic [ref=e3212]: "1"
+                      - generic [ref=e3214]: ","
+                      - generic [ref=e3216]: "0"
+                - generic [ref=e3217]:
+                  - generic [ref=e3219]:
+                    - generic [ref=e3221]: a
+                    - generic [ref=e3223]:
+                      - generic [ref=e3225]: "2"
+                      - generic [ref=e3227]: ","
+                      - generic [ref=e3229]: "2"
+                  - generic [ref=e3231]:
+                    - generic [ref=e3233]: a
+                    - generic [ref=e3235]:
+                      - generic [ref=e3237]: "2"
+                      - generic [ref=e3239]: ","
+                      - generic [ref=e3241]: "3"
+                  - generic [ref=e3243]:
+                    - generic [ref=e3245]: a
+                    - generic [ref=e3247]:
+                      - generic [ref=e3249]: "2"
+                      - generic [ref=e3251]: ","
+                      - generic [ref=e3253]: "0"
+                  - generic [ref=e3255]:
+                    - generic [ref=e3257]: a
+                    - generic [ref=e3259]:
+                      - generic [ref=e3261]: "2"
+                      - generic [ref=e3263]: ","
+                      - generic [ref=e3265]: "1"
+                - generic [ref=e3266]:
+                  - generic [ref=e3268]:
+                    - generic [ref=e3270]: a
+                    - generic [ref=e3272]:
+                      - generic [ref=e3274]: "3"
+                      - generic [ref=e3276]: ","
+                      - generic [ref=e3278]: "3"
+                  - generic [ref=e3280]:
+                    - generic [ref=e3282]: a
+                    - generic [ref=e3284]:
+                      - generic [ref=e3286]: "3"
+                      - generic [ref=e3288]: ","
+                      - generic [ref=e3290]: "0"
+                  - generic [ref=e3292]:
+                    - generic [ref=e3294]: a
+                    - generic [ref=e3296]:
+                      - generic [ref=e3298]: "3"
+                      - generic [ref=e3300]: ","
+                      - generic [ref=e3302]: "1"
+                  - generic [ref=e3304]:
+                    - generic [ref=e3306]: a
+                    - generic [ref=e3308]:
+                      - generic [ref=e3310]: "3"
+                      - generic [ref=e3312]: ","
+                      - generic [ref=e3314]: "2"
+              - generic [ref=e3316]:
+                - generic [ref=e3317]: ⎤
+                - generic [ref=e3318]: ⎥
+                - generic [ref=e3320]: ⎦
+            - math [ref=e3322]:
+              - generic [ref=e3323]:
+                - generic [ref=e3324]: "["
+                - generic [ref=e3325]:
+                  - generic [ref=e3326]:
+                    - generic [ref=e3328]:
+                      - generic [ref=e3329]: a
+                      - generic [ref=e3330]:
+                        - generic [ref=e3331]: "0"
+                        - generic [ref=e3332]: ","
+                        - generic [ref=e3333]: "0"
+                    - generic [ref=e3335]:
+                      - generic [ref=e3336]: a
+                      - generic [ref=e3337]:
+                        - generic [ref=e3338]: "0"
+                        - generic [ref=e3339]: ","
+                        - generic [ref=e3340]: "1"
+                    - generic [ref=e3342]:
+                      - generic [ref=e3343]: a
+                      - generic [ref=e3344]:
+                        - generic [ref=e3345]: "0"
+                        - generic [ref=e3346]: ","
+                        - generic [ref=e3347]: "2"
+                    - generic [ref=e3349]:
+                      - generic [ref=e3350]: a
+                      - generic [ref=e3351]:
+                        - generic [ref=e3352]: "0"
+                        - generic [ref=e3353]: ","
+                        - generic [ref=e3354]: "3"
+                  - generic [ref=e3355]:
+                    - generic [ref=e3357]:
+                      - generic [ref=e3358]: a
+                      - generic [ref=e3359]:
+                        - generic [ref=e3360]: "1"
+                        - generic [ref=e3361]: ","
+                        - generic [ref=e3362]: "1"
+                    - generic [ref=e3364]:
+                      - generic [ref=e3365]: a
+                      - generic [ref=e3366]:
+                        - generic [ref=e3367]: "1"
+                        - generic [ref=e3368]: ","
+                        - generic [ref=e3369]: "2"
+                    - generic [ref=e3371]:
+                      - generic [ref=e3372]: a
+                      - generic [ref=e3373]:
+                        - generic [ref=e3374]: "1"
+                        - generic [ref=e3375]: ","
+                        - generic [ref=e3376]: "3"
+                    - generic [ref=e3378]:
+                      - generic [ref=e3379]: a
+                      - generic [ref=e3380]:
+                        - generic [ref=e3381]: "1"
+                        - generic [ref=e3382]: ","
+                        - generic [ref=e3383]: "0"
+                  - generic [ref=e3384]:
+                    - generic [ref=e3386]:
+                      - generic [ref=e3387]: a
+                      - generic [ref=e3388]:
+                        - generic [ref=e3389]: "2"
+                        - generic [ref=e3390]: ","
+                        - generic [ref=e3391]: "2"
+                    - generic [ref=e3393]:
+                      - generic [ref=e3394]: a
+                      - generic [ref=e3395]:
+                        - generic [ref=e3396]: "2"
+                        - generic [ref=e3397]: ","
+                        - generic [ref=e3398]: "3"
+                    - generic [ref=e3400]:
+                      - generic [ref=e3401]: a
+                      - generic [ref=e3402]:
+                        - generic [ref=e3403]: "2"
+                        - generic [ref=e3404]: ","
+                        - generic [ref=e3405]: "0"
+                    - generic [ref=e3407]:
+                      - generic [ref=e3408]: a
+                      - generic [ref=e3409]:
+                        - generic [ref=e3410]: "2"
+                        - generic [ref=e3411]: ","
+                        - generic [ref=e3412]: "1"
+                  - generic [ref=e3413]:
+                    - generic [ref=e3415]:
+                      - generic [ref=e3416]: a
+                      - generic [ref=e3417]:
+                        - generic [ref=e3418]: "3"
+                        - generic [ref=e3419]: ","
+                        - generic [ref=e3420]: "3"
+                    - generic [ref=e3422]:
+                      - generic [ref=e3423]: a
+                      - generic [ref=e3424]:
+                        - generic [ref=e3425]: "3"
+                        - generic [ref=e3426]: ","
+                        - generic [ref=e3427]: "0"
+                    - generic [ref=e3429]:
+                      - generic [ref=e3430]: a
+                      - generic [ref=e3431]:
+                        - generic [ref=e3432]: "3"
+                        - generic [ref=e3433]: ","
+                        - generic [ref=e3434]: "1"
+                    - generic [ref=e3436]:
+                      - generic [ref=e3437]: a
+                      - generic [ref=e3438]:
+                        - generic [ref=e3439]: "3"
+                        - generic [ref=e3440]: ","
+                        - generic [ref=e3441]: "2"
+                - generic [ref=e3442]: "]"
+          - paragraph [ref=e3443]: 也就是第 0 行左移 0 字节，第 1 行左移 1 字节，第 2 行左移 2 字节，第 3 行左移 3 字节。（AES-256的移动是1、3、4）
+          - paragraph [ref=e3444]: 这一操作本身只改变字节位置。它的作用要和下一步 MixColumns 连起来看。MixColumns 是按列处理的，ShiftRows 把原来同一列中的字节分散到多个列中，再交给 MixColumns 处理。经过多轮之后，一个输入字节的影响会扩散到状态矩阵的多个位置。
+          - heading "4.3 列混合 MixColumn / MixColumns" [level=4] [ref=e3445]
+          - paragraph [ref=e3446]:
+            - text: MixColumns 以列为单位处理状态矩阵。AES 把每一列看成
+            - generic [ref=e3448]:
+              - generic [ref=e3449]:
+                - generic [ref=e3451]: G
+                - generic [ref=e3453]: F
+                - generic [ref=e3455]: (
+                - generic [ref=e3456]:
+                  - generic [ref=e3458]: "2"
+                  - generic [ref=e3461]: "8"
+                - generic [ref=e3463]: )
+              - math [ref=e3465]:
+                - generic [ref=e3466]: G
+                - generic [ref=e3467]: F
+                - generic [ref=e3468]: (
+                - generic [ref=e3469]:
+                  - generic [ref=e3470]: "2"
+                  - generic [ref=e3471]: "8"
+                - generic [ref=e3472]: )
+            - text: 上的四维向量，然后乘以一个固定矩阵：
+          - generic [ref=e3474]:
+            - generic [ref=e3476]:
+              - generic [ref=e3478]:
+                - generic [ref=e3479]: ⎡
+                - generic [ref=e3480]: ⎢
+                - generic [ref=e3482]: ⎣
+              - generic [ref=e3485]:
+                - generic [ref=e3486]:
+                  - generic [ref=e3488]:
+                    - generic [ref=e3489]: "0"
+                    - generic [ref=e3490]: "2"
+                  - generic [ref=e3492]:
+                    - generic [ref=e3493]: "0"
+                    - generic [ref=e3494]: "3"
+                  - generic [ref=e3496]:
+                    - generic [ref=e3497]: "0"
+                    - generic [ref=e3498]: "1"
+                  - generic [ref=e3500]:
+                    - generic [ref=e3501]: "0"
+                    - generic [ref=e3502]: "1"
+                - generic [ref=e3503]:
+                  - generic [ref=e3505]:
+                    - generic [ref=e3506]: "0"
+                    - generic [ref=e3507]: "1"
+                  - generic [ref=e3509]:
+                    - generic [ref=e3510]: "0"
+                    - generic [ref=e3511]: "2"
+                  - generic [ref=e3513]:
+                    - generic [ref=e3514]: "0"
+                    - generic [ref=e3515]: "3"
+                  - generic [ref=e3517]:
+                    - generic [ref=e3518]: "0"
+                    - generic [ref=e3519]: "1"
+                - generic [ref=e3520]:
+                  - generic [ref=e3522]:
+                    - generic [ref=e3523]: "0"
+                    - generic [ref=e3524]: "1"
+                  - generic [ref=e3526]:
+                    - generic [ref=e3527]: "0"
+                    - generic [ref=e3528]: "1"
+                  - generic [ref=e3530]:
+                    - generic [ref=e3531]: "0"
+                    - generic [ref=e3532]: "2"
+                  - generic [ref=e3534]:
+                    - generic [ref=e3535]: "0"
+                    - generic [ref=e3536]: "3"
+                - generic [ref=e3537]:
+                  - generic [ref=e3539]:
+                    - generic [ref=e3540]: "0"
+                    - generic [ref=e3541]: "3"
+                  - generic [ref=e3543]:
+                    - generic [ref=e3544]: "0"
+                    - generic [ref=e3545]: "1"
+                  - generic [ref=e3547]:
+                    - generic [ref=e3548]: "0"
+                    - generic [ref=e3549]: "1"
+                  - generic [ref=e3551]:
+                    - generic [ref=e3552]: "0"
+                    - generic [ref=e3553]: "2"
+              - generic [ref=e3555]:
+                - generic [ref=e3556]: ⎤
+                - generic [ref=e3557]: ⎥
+                - generic [ref=e3559]: ⎦
+            - math [ref=e3561]:
+              - generic [ref=e3562]:
+                - generic [ref=e3563]: "["
+                - generic [ref=e3564]:
+                  - generic [ref=e3565]:
+                    - generic [ref=e3567]: "02"
+                    - generic [ref=e3569]: "03"
+                    - generic [ref=e3571]: "01"
+                    - generic [ref=e3573]: "01"
+                  - generic [ref=e3574]:
+                    - generic [ref=e3576]: "01"
+                    - generic [ref=e3578]: "02"
+                    - generic [ref=e3580]: "03"
+                    - generic [ref=e3582]: "01"
+                  - generic [ref=e3583]:
+                    - generic [ref=e3585]: "01"
+                    - generic [ref=e3587]: "01"
+                    - generic [ref=e3589]: "02"
+                    - generic [ref=e3591]: "03"
+                  - generic [ref=e3592]:
+                    - generic [ref=e3594]: "03"
+                    - generic [ref=e3596]: "01"
+                    - generic [ref=e3598]: "01"
+                    - generic [ref=e3600]: "02"
+                - generic [ref=e3601]: "]"
+          - paragraph [ref=e3602]: 设某一列为：
+          - generic [ref=e3604]:
+            - generic [ref=e3606]:
+              - generic [ref=e3608]:
+                - generic [ref=e3609]: ⎡
+                - generic [ref=e3610]: ⎢
+                - generic [ref=e3612]: ⎣
+              - generic [ref=e3615]:
+                - generic [ref=e3618]:
+                  - generic [ref=e3620]: s
+                  - generic [ref=e3623]: "0"
+                - generic [ref=e3626]:
+                  - generic [ref=e3628]: s
+                  - generic [ref=e3631]: "1"
+                - generic [ref=e3634]:
+                  - generic [ref=e3636]: s
+                  - generic [ref=e3639]: "2"
+                - generic [ref=e3642]:
+                  - generic [ref=e3644]: s
+                  - generic [ref=e3647]: "3"
+              - generic [ref=e3649]:
+                - generic [ref=e3650]: ⎤
+                - generic [ref=e3651]: ⎥
+                - generic [ref=e3653]: ⎦
+            - math [ref=e3655]:
+              - generic [ref=e3656]:
+                - generic [ref=e3657]: "["
+                - generic [ref=e3658]:
+                  - generic [ref=e3661]:
+                    - generic [ref=e3662]: s
+                    - generic [ref=e3663]: "0"
+                  - generic [ref=e3666]:
+                    - generic [ref=e3667]: s
+                    - generic [ref=e3668]: "1"
+                  - generic [ref=e3671]:
+                    - generic [ref=e3672]: s
+                    - generic [ref=e3673]: "2"
+                  - generic [ref=e3676]:
+                    - generic [ref=e3677]: s
+                    - generic [ref=e3678]: "3"
+                - generic [ref=e3679]: "]"
+          - paragraph [ref=e3680]: 经过 MixColumns 后得到：
+          - generic [ref=e3682]:
+            - generic [ref=e3683]:
+              - generic [ref=e3684]:
+                - generic [ref=e3686]:
+                  - generic [ref=e3687]: ⎡
+                  - generic [ref=e3688]: ⎢
+                  - generic [ref=e3690]: ⎣
+                - generic [ref=e3693]:
+                  - generic [ref=e3696]:
+                    - generic [ref=e3698]: s
+                    - generic [ref=e3699]:
+                      - generic [ref=e3701]: ′
+                      - generic [ref=e3703]: "0"
+                  - generic [ref=e3706]:
+                    - generic [ref=e3708]: s
+                    - generic [ref=e3709]:
+                      - generic [ref=e3711]: ′
+                      - generic [ref=e3713]: "1"
+                  - generic [ref=e3716]:
+                    - generic [ref=e3718]: s
+                    - generic [ref=e3719]:
+                      - generic [ref=e3721]: ′
+                      - generic [ref=e3723]: "2"
+                  - generic [ref=e3726]:
+                    - generic [ref=e3728]: s
+                    - generic [ref=e3729]:
+                      - generic [ref=e3731]: ′
+                      - generic [ref=e3733]: "3"
+                - generic [ref=e3735]:
+                  - generic [ref=e3736]: ⎤
+                  - generic [ref=e3737]: ⎥
+                  - generic [ref=e3739]: ⎦
+              - generic [ref=e3741]: =
+              - generic [ref=e3742]:
+                - generic [ref=e3744]:
+                  - generic [ref=e3745]: ⎡
+                  - generic [ref=e3746]: ⎢
+                  - generic [ref=e3748]: ⎣
+                - generic [ref=e3751]:
+                  - generic [ref=e3752]:
+                    - generic [ref=e3754]:
+                      - generic [ref=e3755]: "0"
+                      - generic [ref=e3756]: "2"
+                    - generic [ref=e3758]:
+                      - generic [ref=e3759]: "0"
+                      - generic [ref=e3760]: "3"
+                    - generic [ref=e3762]:
+                      - generic [ref=e3763]: "0"
+                      - generic [ref=e3764]: "1"
+                    - generic [ref=e3766]:
+                      - generic [ref=e3767]: "0"
+                      - generic [ref=e3768]: "1"
+                  - generic [ref=e3769]:
+                    - generic [ref=e3771]:
+                      - generic [ref=e3772]: "0"
+                      - generic [ref=e3773]: "1"
+                    - generic [ref=e3775]:
+                      - generic [ref=e3776]: "0"
+                      - generic [ref=e3777]: "2"
+                    - generic [ref=e3779]:
+                      - generic [ref=e3780]: "0"
+                      - generic [ref=e3781]: "3"
+                    - generic [ref=e3783]:
+                      - generic [ref=e3784]: "0"
+                      - generic [ref=e3785]: "1"
+                  - generic [ref=e3786]:
+                    - generic [ref=e3788]:
+                      - generic [ref=e3789]: "0"
+                      - generic [ref=e3790]: "1"
+                    - generic [ref=e3792]:
+                      - generic [ref=e3793]: "0"
+                      - generic [ref=e3794]: "1"
+                    - generic [ref=e3796]:
+                      - generic [ref=e3797]: "0"
+                      - generic [ref=e3798]: "2"
+                    - generic [ref=e3800]:
+                      - generic [ref=e3801]: "0"
+                      - generic [ref=e3802]: "3"
+                  - generic [ref=e3803]:
+                    - generic [ref=e3805]:
+                      - generic [ref=e3806]: "0"
+                      - generic [ref=e3807]: "3"
+                    - generic [ref=e3809]:
+                      - generic [ref=e3810]: "0"
+                      - generic [ref=e3811]: "1"
+                    - generic [ref=e3813]:
+                      - generic [ref=e3814]: "0"
+                      - generic [ref=e3815]: "1"
+                    - generic [ref=e3817]:
+                      - generic [ref=e3818]: "0"
+                      - generic [ref=e3819]: "2"
+                - generic [ref=e3821]:
+                  - generic [ref=e3822]: ⎤
+                  - generic [ref=e3823]: ⎥
+                  - generic [ref=e3825]: ⎦
+              - generic [ref=e3826]:
+                - generic [ref=e3828]:
+                  - generic [ref=e3829]: ⎡
+                  - generic [ref=e3830]: ⎢
+                  - generic [ref=e3832]: ⎣
+                - generic [ref=e3835]:
+                  - generic [ref=e3838]:
+                    - generic [ref=e3840]: s
+                    - generic [ref=e3843]: "0"
+                  - generic [ref=e3846]:
+                    - generic [ref=e3848]: s
+                    - generic [ref=e3851]: "1"
+                  - generic [ref=e3854]:
+                    - generic [ref=e3856]: s
+                    - generic [ref=e3859]: "2"
+                  - generic [ref=e3862]:
+                    - generic [ref=e3864]: s
+                    - generic [ref=e3867]: "3"
+                - generic [ref=e3869]:
+                  - generic [ref=e3870]: ⎤
+                  - generic [ref=e3871]: ⎥
+                  - generic [ref=e3873]: ⎦
+            - math [ref=e3875]:
+              - generic [ref=e3876]:
+                - generic [ref=e3877]: "["
+                - generic [ref=e3878]:
+                  - generic [ref=e3881]:
+                    - generic [ref=e3882]: s
+                    - generic [ref=e3883]: "0"
+                    - generic [ref=e3884]: ′
+                  - generic [ref=e3887]:
+                    - generic [ref=e3888]: s
+                    - generic [ref=e3889]: "1"
+                    - generic [ref=e3890]: ′
+                  - generic [ref=e3893]:
+                    - generic [ref=e3894]: s
+                    - generic [ref=e3895]: "2"
+                    - generic [ref=e3896]: ′
+                  - generic [ref=e3899]:
+                    - generic [ref=e3900]: s
+                    - generic [ref=e3901]: "3"
+                    - generic [ref=e3902]: ′
+                - generic [ref=e3903]: "]"
+              - generic [ref=e3904]: =
+              - generic [ref=e3905]:
+                - generic [ref=e3906]: "["
+                - generic [ref=e3907]:
+                  - generic [ref=e3908]:
+                    - generic [ref=e3910]: "02"
+                    - generic [ref=e3912]: "03"
+                    - generic [ref=e3914]: "01"
+                    - generic [ref=e3916]: "01"
+                  - generic [ref=e3917]:
+                    - generic [ref=e3919]: "01"
+                    - generic [ref=e3921]: "02"
+                    - generic [ref=e3923]: "03"
+                    - generic [ref=e3925]: "01"
+                  - generic [ref=e3926]:
+                    - generic [ref=e3928]: "01"
+                    - generic [ref=e3930]: "01"
+                    - generic [ref=e3932]: "02"
+                    - generic [ref=e3934]: "03"
+                  - generic [ref=e3935]:
+                    - generic [ref=e3937]: "03"
+                    - generic [ref=e3939]: "01"
+                    - generic [ref=e3941]: "01"
+                    - generic [ref=e3943]: "02"
+                - generic [ref=e3944]: "]"
+              - generic [ref=e3945]:
+                - generic [ref=e3946]: "["
+                - generic [ref=e3947]:
+                  - generic [ref=e3950]:
+                    - generic [ref=e3951]: s
+                    - generic [ref=e3952]: "0"
+                  - generic [ref=e3955]:
+                    - generic [ref=e3956]: s
+                    - generic [ref=e3957]: "1"
+                  - generic [ref=e3960]:
+                    - generic [ref=e3961]: s
+                    - generic [ref=e3962]: "2"
+                  - generic [ref=e3965]:
+                    - generic [ref=e3966]: s
+                    - generic [ref=e3967]: "3"
+                - generic [ref=e3968]: "]"
+          - paragraph [ref=e3969]: 展开后是：
+          - generic [ref=e3971]:
+            - generic [ref=e3972]:
+              - generic [ref=e3973]:
+                - generic [ref=e3975]: s
+                - generic [ref=e3976]:
+                  - generic [ref=e3978]: ′
+                  - generic [ref=e3980]: "0"
+              - generic [ref=e3982]: =
+              - generic [ref=e3984]: (
+              - generic [ref=e3985]:
+                - generic [ref=e3986]: "0"
+                - generic [ref=e3987]: "2"
+              - generic [ref=e3989]: ⋅
+              - generic [ref=e3990]:
+                - generic [ref=e3992]: s
+                - generic [ref=e3995]: "0"
+              - generic [ref=e3997]: )
+              - generic [ref=e3999]: ⊕
+              - generic [ref=e4001]: (
+              - generic [ref=e4002]:
+                - generic [ref=e4003]: "0"
+                - generic [ref=e4004]: "3"
+              - generic [ref=e4006]: ⋅
+              - generic [ref=e4007]:
+                - generic [ref=e4009]: s
+                - generic [ref=e4012]: "1"
+              - generic [ref=e4014]: )
+              - generic [ref=e4016]: ⊕
+              - generic [ref=e4017]:
+                - generic [ref=e4019]: s
+                - generic [ref=e4022]: "2"
+              - generic [ref=e4024]: ⊕
+              - generic [ref=e4025]:
+                - generic [ref=e4027]: s
+                - generic [ref=e4030]: "3"
+            - math [ref=e4032]:
+              - generic [ref=e4033]:
+                - generic [ref=e4034]: s
+                - generic [ref=e4035]: "0"
+                - generic [ref=e4036]: ′
+              - generic [ref=e4037]: =
+              - generic [ref=e4038]: (
+              - generic [ref=e4039]: "02"
+              - generic [ref=e4040]: ⋅
+              - generic [ref=e4041]:
+                - generic [ref=e4042]: s
+                - generic [ref=e4043]: "0"
+              - generic [ref=e4044]: )
+              - generic [ref=e4045]: ⊕
+              - generic [ref=e4046]: (
+              - generic [ref=e4047]: "03"
+              - generic [ref=e4048]: ⋅
+              - generic [ref=e4049]:
+                - generic [ref=e4050]: s
+                - generic [ref=e4051]: "1"
+              - generic [ref=e4052]: )
+              - generic [ref=e4053]: ⊕
+              - generic [ref=e4054]:
+                - generic [ref=e4055]: s
+                - generic [ref=e4056]: "2"
+              - generic [ref=e4057]: ⊕
+              - generic [ref=e4058]:
+                - generic [ref=e4059]: s
+                - generic [ref=e4060]: "3"
+          - paragraph [ref=e4061]:
+            - text: 这里的加法是异或，乘法是在
+            - generic [ref=e4063]:
+              - generic [ref=e4064]:
+                - generic [ref=e4066]: G
+                - generic [ref=e4068]: F
+                - generic [ref=e4070]: (
+                - generic [ref=e4071]:
+                  - generic [ref=e4073]: "2"
+                  - generic [ref=e4076]: "8"
+                - generic [ref=e4078]: )
+              - math [ref=e4080]:
+                - generic [ref=e4081]: G
+                - generic [ref=e4082]: F
+                - generic [ref=e4083]: (
+                - generic [ref=e4084]:
+                  - generic [ref=e4085]: "2"
+                  - generic [ref=e4086]: "8"
+                - generic [ref=e4087]: )
+            - text: 上完成。AES 中字节可以看成次数小于 8 的二进制多项式。例如字节
+            - code [ref=e4088]: "0x57"
+            - text: 的二进制是
+            - code [ref=e4089]: "01010111"
+            - text: ，可以表示为：
+          - generic [ref=e4091]:
+            - generic [ref=e4092]:
+              - generic [ref=e4093]:
+                - generic [ref=e4095]: x
+                - generic [ref=e4098]: "6"
+              - generic [ref=e4100]: +
+              - generic [ref=e4101]:
+                - generic [ref=e4103]: x
+                - generic [ref=e4106]: "4"
+              - generic [ref=e4108]: +
+              - generic [ref=e4109]:
+                - generic [ref=e4111]: x
+                - generic [ref=e4114]: "2"
+              - generic [ref=e4116]: +
+              - generic [ref=e4118]: x
+              - generic [ref=e4120]: +
+              - generic [ref=e4122]: "1"
+            - math [ref=e4124]:
+              - generic [ref=e4125]:
+                - generic [ref=e4126]: x
+                - generic [ref=e4127]: "6"
+              - generic [ref=e4128]: +
+              - generic [ref=e4129]:
+                - generic [ref=e4130]: x
+                - generic [ref=e4131]: "4"
+              - generic [ref=e4132]: +
+              - generic [ref=e4133]:
+                - generic [ref=e4134]: x
+                - generic [ref=e4135]: "2"
+              - generic [ref=e4136]: +
+              - generic [ref=e4137]: x
+              - generic [ref=e4138]: +
+              - generic [ref=e4139]: "1"
+          - paragraph [ref=e4140]:
+            - text: 在这个域中，乘以
+            - code [ref=e4141]: "02"
+            - text: 相当于乘以
+            - generic [ref=e4143]:
+              - generic [ref=e4146]: x
+              - math [ref=e4148]:
+                - generic [ref=e4149]: x
+            - text: 。当结果超出 8 位时，要用 AES 规定的模多项式：
+          - generic [ref=e4151]:
+            - generic [ref=e4152]:
+              - generic [ref=e4154]: m
+              - generic [ref=e4156]: (
+              - generic [ref=e4158]: x
+              - generic [ref=e4160]: )
+              - generic [ref=e4162]: =
+              - generic [ref=e4163]:
+                - generic [ref=e4165]: x
+                - generic [ref=e4168]: "8"
+              - generic [ref=e4170]: +
+              - generic [ref=e4171]:
+                - generic [ref=e4173]: x
+                - generic [ref=e4176]: "4"
+              - generic [ref=e4178]: +
+              - generic [ref=e4179]:
+                - generic [ref=e4181]: x
+                - generic [ref=e4184]: "3"
+              - generic [ref=e4186]: +
+              - generic [ref=e4188]: x
+              - generic [ref=e4190]: +
+              - generic [ref=e4192]: "1"
+            - math [ref=e4194]:
+              - generic [ref=e4195]: m
+              - generic [ref=e4196]: (
+              - generic [ref=e4197]: x
+              - generic [ref=e4198]: )
+              - generic [ref=e4199]: =
+              - generic [ref=e4200]:
+                - generic [ref=e4201]: x
+                - generic [ref=e4202]: "8"
+              - generic [ref=e4203]: +
+              - generic [ref=e4204]:
+                - generic [ref=e4205]: x
+                - generic [ref=e4206]: "4"
+              - generic [ref=e4207]: +
+              - generic [ref=e4208]:
+                - generic [ref=e4209]: x
+                - generic [ref=e4210]: "3"
+              - generic [ref=e4211]: +
+              - generic [ref=e4212]: x
+              - generic [ref=e4213]: +
+              - generic [ref=e4214]: "1"
+          - paragraph [ref=e4215]:
+            - text: 进行化简。工程实现中常见规则是：字节左移一位，若移出最高位，则再异或
+            - code [ref=e4216]: "0x1B"
+            - text: 。乘以
+            - code [ref=e4217]: "03"
+            - text: 可以写成：
+          - generic [ref=e4219]:
+            - generic [ref=e4220]:
+              - generic [ref=e4221]:
+                - generic [ref=e4222]: "0"
+                - generic [ref=e4223]: "3"
+              - generic [ref=e4225]: ⋅
+              - generic [ref=e4227]: s
+              - generic [ref=e4229]: =
+              - generic [ref=e4231]: (
+              - generic [ref=e4232]:
+                - generic [ref=e4233]: "0"
+                - generic [ref=e4234]: "2"
+              - generic [ref=e4236]: ⋅
+              - generic [ref=e4238]: s
+              - generic [ref=e4240]: )
+              - generic [ref=e4242]: ⊕
+              - generic [ref=e4244]: s
+            - math [ref=e4246]:
+              - generic [ref=e4247]: "03"
+              - generic [ref=e4248]: ⋅
+              - generic [ref=e4249]: s
+              - generic [ref=e4250]: =
+              - generic [ref=e4251]: (
+              - generic [ref=e4252]: "02"
+              - generic [ref=e4253]: ⋅
+              - generic [ref=e4254]: s
+              - generic [ref=e4255]: )
+              - generic [ref=e4256]: ⊕
+              - generic [ref=e4257]: s
+          - paragraph [ref=e4258]: 所以 MixColumns 可以用移位和异或高效实现。
+          - paragraph [ref=e4259]: MixColumns 的作用是扩散。一列中的 4 个输入字节共同决定 4 个输出字节。经过 ShiftRows 和 MixColumns 配合，字节之间的影响范围会从局部列扩展到整个状态矩阵。
+          - heading "4.4 轮密钥加 AddRoundKey" [level=4] [ref=e4260]
+          - paragraph [ref=e4261]:
+            - text: 标准轮的最后一步仍然是 AddRoundKey。第
+            - generic [ref=e4263]:
+              - generic [ref=e4266]: r
+              - math [ref=e4268]:
+                - generic [ref=e4269]: r
+            - text: 轮使用第
+            - generic [ref=e4271]:
+              - generic [ref=e4274]: r
+              - math [ref=e4276]:
+                - generic [ref=e4277]: r
+            - text: 组轮密钥：
+          - generic [ref=e4279]:
+            - generic [ref=e4280]:
+              - generic [ref=e4282]: S
+              - generic [ref=e4284]: t
+              - generic [ref=e4286]: a
+              - generic [ref=e4288]: t
+              - generic [ref=e4290]: e
+              - generic [ref=e4292]: ←
+              - generic [ref=e4294]: S
+              - generic [ref=e4296]: t
+              - generic [ref=e4298]: a
+              - generic [ref=e4300]: t
+              - generic [ref=e4302]: e
+              - generic [ref=e4304]: ⊕
+              - generic [ref=e4306]: R
+              - generic [ref=e4308]: o
+              - generic [ref=e4310]: u
+              - generic [ref=e4312]: "n"
+              - generic [ref=e4314]: d
+              - generic [ref=e4316]: K
+              - generic [ref=e4318]: e
+              - generic [ref=e4319]:
+                - generic [ref=e4321]: "y"
+                - generic [ref=e4324]: r
+            - math [ref=e4326]:
+              - generic [ref=e4327]: S
+              - generic [ref=e4328]: t
+              - generic [ref=e4329]: a
+              - generic [ref=e4330]: t
+              - generic [ref=e4331]: e
+              - generic [ref=e4332]: ←
+              - generic [ref=e4333]: S
+              - generic [ref=e4334]: t
+              - generic [ref=e4335]: a
+              - generic [ref=e4336]: t
+              - generic [ref=e4337]: e
+              - generic [ref=e4338]: ⊕
+              - generic [ref=e4339]: R
+              - generic [ref=e4340]: o
+              - generic [ref=e4341]: u
+              - generic [ref=e4342]: "n"
+              - generic [ref=e4343]: d
+              - generic [ref=e4344]: K
+              - generic [ref=e4345]: e
+              - generic [ref=e4346]:
+                - generic [ref=e4347]: "y"
+                - generic [ref=e4348]: r
+          - paragraph [ref=e4349]: 这个步骤把密钥材料持续注入状态。AES 中只有 AddRoundKey 直接使用密钥，SubBytes、ShiftRows、MixColumns 都是固定变换。由于每轮轮密钥由主密钥扩展得到，每一轮状态都受到主密钥控制。
+          - heading "5. 右侧迭代控制 Round Control" [level=3] [ref=e4350]
+          - paragraph [ref=e4351]:
+            - text: 图片中标准轮右侧有“迭代控制 / Round Control”的回环箭头。这个回环表示标准轮会重复执行
+            - generic [ref=e4353]:
+              - generic [ref=e4354]:
+                - generic [ref=e4356]: "N"
+                - generic [ref=e4358]: r
+                - generic [ref=e4360]: −
+                - generic [ref=e4362]: "1"
+              - math [ref=e4364]:
+                - generic [ref=e4365]: "N"
+                - generic [ref=e4366]: r
+                - generic [ref=e4367]: −
+                - generic [ref=e4368]: "1"
+            - text: 次。循环变量可以写成：
+          - generic [ref=e4370]:
+            - generic [ref=e4371]:
+              - generic [ref=e4373]: r
+              - generic [ref=e4375]: =
+              - generic [ref=e4377]: "1"
+              - generic [ref=e4379]: ","
+              - generic [ref=e4381]: "2"
+              - generic [ref=e4383]: ","
+              - generic [ref=e4385]: …
+              - generic [ref=e4387]: ","
+              - generic [ref=e4389]: "N"
+              - generic [ref=e4391]: r
+              - generic [ref=e4393]: −
+              - generic [ref=e4395]: "1"
+            - math [ref=e4397]:
+              - generic [ref=e4398]: r
+              - generic [ref=e4399]: =
+              - generic [ref=e4400]: "1"
+              - generic [ref=e4401]: ","
+              - generic [ref=e4402]: "2"
+              - generic [ref=e4403]: ","
+              - generic [ref=e4404]: …
+              - generic [ref=e4405]: ","
+              - generic [ref=e4406]: "N"
+              - generic [ref=e4407]: r
+              - generic [ref=e4408]: −
+              - generic [ref=e4409]: "1"
+          - paragraph [ref=e4410]: 每一轮都执行：
+          - generic [ref=e4412]:
+            - generic [ref=e4413]:
+              - generic [ref=e4415]: S
+              - generic [ref=e4417]: t
+              - generic [ref=e4419]: a
+              - generic [ref=e4421]: t
+              - generic [ref=e4423]: e
+              - generic [ref=e4425]: ←
+              - generic [ref=e4427]: A
+              - generic [ref=e4429]: d
+              - generic [ref=e4431]: d
+              - generic [ref=e4433]: R
+              - generic [ref=e4435]: o
+              - generic [ref=e4437]: u
+              - generic [ref=e4439]: "n"
+              - generic [ref=e4441]: d
+              - generic [ref=e4443]: K
+              - generic [ref=e4445]: e
+              - generic [ref=e4447]: "y"
+              - generic [ref=e4449]: (
+              - generic [ref=e4451]: M
+              - generic [ref=e4453]: i
+              - generic [ref=e4455]: x
+              - generic [ref=e4457]: C
+              - generic [ref=e4459]: o
+              - generic [ref=e4461]: l
+              - generic [ref=e4463]: u
+              - generic [ref=e4465]: m
+              - generic [ref=e4467]: "n"
+              - generic [ref=e4469]: s
+              - generic [ref=e4471]: (
+              - generic [ref=e4473]: S
+              - generic [ref=e4475]: h
+              - generic [ref=e4477]: i
+              - generic [ref=e4479]: f
+              - generic [ref=e4481]: t
+              - generic [ref=e4483]: R
+              - generic [ref=e4485]: o
+              - generic [ref=e4487]: w
+              - generic [ref=e4489]: s
+              - generic [ref=e4491]: (
+              - generic [ref=e4493]: S
+              - generic [ref=e4495]: u
+              - generic [ref=e4497]: b
+              - generic [ref=e4499]: B
+              - generic [ref=e4501]: "y"
+              - generic [ref=e4503]: t
+              - generic [ref=e4505]: e
+              - generic [ref=e4507]: s
+              - generic [ref=e4509]: (
+              - generic [ref=e4511]: S
+              - generic [ref=e4513]: t
+              - generic [ref=e4515]: a
+              - generic [ref=e4517]: t
+              - generic [ref=e4519]: e
+              - generic [ref=e4521]: )
+              - generic [ref=e4523]: )
+              - generic [ref=e4525]: )
+              - generic [ref=e4527]: ","
+              - generic [ref=e4529]: R
+              - generic [ref=e4531]: o
+              - generic [ref=e4533]: u
+              - generic [ref=e4535]: "n"
+              - generic [ref=e4537]: d
+              - generic [ref=e4539]: K
+              - generic [ref=e4541]: e
+              - generic [ref=e4542]:
+                - generic [ref=e4544]: "y"
+                - generic [ref=e4547]: r
+              - generic [ref=e4549]: )
+            - math [ref=e4551]:
+              - generic [ref=e4552]: S
+              - generic [ref=e4553]: t
+              - generic [ref=e4554]: a
+              - generic [ref=e4555]: t
+              - generic [ref=e4556]: e
+              - generic [ref=e4557]: ←
+              - generic [ref=e4558]: A
+              - generic [ref=e4559]: d
+              - generic [ref=e4560]: d
+              - generic [ref=e4561]: R
+              - generic [ref=e4562]: o
+              - generic [ref=e4563]: u
+              - generic [ref=e4564]: "n"
+              - generic [ref=e4565]: d
+              - generic [ref=e4566]: K
+              - generic [ref=e4567]: e
+              - generic [ref=e4568]: "y"
+              - generic [ref=e4569]: (
+              - generic [ref=e4570]: M
+              - generic [ref=e4571]: i
+              - generic [ref=e4572]: x
+              - generic [ref=e4573]: C
+              - generic [ref=e4574]: o
+              - generic [ref=e4575]: l
+              - generic [ref=e4576]: u
+              - generic [ref=e4577]: m
+              - generic [ref=e4578]: "n"
+              - generic [ref=e4579]: s
+              - generic [ref=e4580]: (
+              - generic [ref=e4581]: S
+              - generic [ref=e4582]: h
+              - generic [ref=e4583]: i
+              - generic [ref=e4584]: f
+              - generic [ref=e4585]: t
+              - generic [ref=e4586]: R
+              - generic [ref=e4587]: o
+              - generic [ref=e4588]: w
+              - generic [ref=e4589]: s
+              - generic [ref=e4590]: (
+              - generic [ref=e4591]: S
+              - generic [ref=e4592]: u
+              - generic [ref=e4593]: b
+              - generic [ref=e4594]: B
+              - generic [ref=e4595]: "y"
+              - generic [ref=e4596]: t
+              - generic [ref=e4597]: e
+              - generic [ref=e4598]: s
+              - generic [ref=e4599]: (
+              - generic [ref=e4600]: S
+              - generic [ref=e4601]: t
+              - generic [ref=e4602]: a
+              - generic [ref=e4603]: t
+              - generic [ref=e4604]: e
+              - generic [ref=e4605]: )
+              - generic [ref=e4606]: )
+              - generic [ref=e4607]: )
+              - generic [ref=e4608]: ","
+              - generic [ref=e4609]: R
+              - generic [ref=e4610]: o
+              - generic [ref=e4611]: u
+              - generic [ref=e4612]: "n"
+              - generic [ref=e4613]: d
+              - generic [ref=e4614]: K
+              - generic [ref=e4615]: e
+              - generic [ref=e4616]:
+                - generic [ref=e4617]: "y"
+                - generic [ref=e4618]: r
+              - generic [ref=e4619]: )
+          - paragraph [ref=e4620]: 以 AES-128 为例：
+          - generic [ref=e4622]:
+            - generic [ref=e4623]:
+              - generic [ref=e4625]: r
+              - generic [ref=e4627]: =
+              - generic [ref=e4629]: "1"
+              - generic [ref=e4631]: ","
+              - generic [ref=e4633]: "2"
+              - generic [ref=e4635]: ","
+              - generic [ref=e4637]: …
+              - generic [ref=e4639]: ","
+              - generic [ref=e4641]: "9"
+            - math [ref=e4643]:
+              - generic [ref=e4644]: r
+              - generic [ref=e4645]: =
+              - generic [ref=e4646]: "1"
+              - generic [ref=e4647]: ","
+              - generic [ref=e4648]: "2"
+              - generic [ref=e4649]: ","
+              - generic [ref=e4650]: …
+              - generic [ref=e4651]: ","
+              - generic [ref=e4652]: "9"
+          - paragraph [ref=e4653]: 因此前 9 轮都包含 MixColumns。每一轮处理之后，状态矩阵继续进入下一轮，直到标准轮循环完成，再进入图片下方的最后一轮。
+          - heading "6. 最后一轮 Final Round" [level=3] [ref=e4654]
+          - paragraph [ref=e4655]: 图片中紫色虚线框标注为“最后一轮 / Final Round”。这一轮包含三个步骤：
+          - generic [ref=e4657]:
+            - generic [ref=e4658]:
+              - generic [ref=e4660]: S
+              - generic [ref=e4662]: u
+              - generic [ref=e4664]: b
+              - generic [ref=e4666]: B
+              - generic [ref=e4668]: "y"
+              - generic [ref=e4670]: t
+              - generic [ref=e4672]: e
+              - generic [ref=e4674]: s
+              - generic [ref=e4676]: →
+              - generic [ref=e4678]: S
+              - generic [ref=e4680]: h
+              - generic [ref=e4682]: i
+              - generic [ref=e4684]: f
+              - generic [ref=e4686]: t
+              - generic [ref=e4688]: R
+              - generic [ref=e4690]: o
+              - generic [ref=e4692]: w
+              - generic [ref=e4694]: s
+              - generic [ref=e4696]: →
+              - generic [ref=e4698]: A
+              - generic [ref=e4700]: d
+              - generic [ref=e4702]: d
+              - generic [ref=e4704]: R
+              - generic [ref=e4706]: o
+              - generic [ref=e4708]: u
+              - generic [ref=e4710]: "n"
+              - generic [ref=e4712]: d
+              - generic [ref=e4714]: K
+              - generic [ref=e4716]: e
+              - generic [ref=e4718]: "y"
+            - math [ref=e4720]:
+              - generic [ref=e4721]: S
+              - generic [ref=e4722]: u
+              - generic [ref=e4723]: b
+              - generic [ref=e4724]: B
+              - generic [ref=e4725]: "y"
+              - generic [ref=e4726]: t
+              - generic [ref=e4727]: e
+              - generic [ref=e4728]: s
+              - generic [ref=e4729]: →
+              - generic [ref=e4730]: S
+              - generic [ref=e4731]: h
+              - generic [ref=e4732]: i
+              - generic [ref=e4733]: f
+              - generic [ref=e4734]: t
+              - generic [ref=e4735]: R
+              - generic [ref=e4736]: o
+              - generic [ref=e4737]: w
+              - generic [ref=e4738]: s
+              - generic [ref=e4739]: →
+              - generic [ref=e4740]: A
+              - generic [ref=e4741]: d
+              - generic [ref=e4742]: d
+              - generic [ref=e4743]: R
+              - generic [ref=e4744]: o
+              - generic [ref=e4745]: u
+              - generic [ref=e4746]: "n"
+              - generic [ref=e4747]: d
+              - generic [ref=e4748]: K
+              - generic [ref=e4749]: e
+              - generic [ref=e4750]: "y"
+          - paragraph [ref=e4751]: 图中红字提示“最后一轮省去列混合 MixColumn”。因此最后一轮的形式为：
+          - generic [ref=e4753]:
+            - generic [ref=e4754]:
+              - generic [ref=e4756]: S
+              - generic [ref=e4758]: t
+              - generic [ref=e4760]: a
+              - generic [ref=e4762]: t
+              - generic [ref=e4764]: e
+              - generic [ref=e4766]: ←
+              - generic [ref=e4768]: A
+              - generic [ref=e4770]: d
+              - generic [ref=e4772]: d
+              - generic [ref=e4774]: R
+              - generic [ref=e4776]: o
+              - generic [ref=e4778]: u
+              - generic [ref=e4780]: "n"
+              - generic [ref=e4782]: d
+              - generic [ref=e4784]: K
+              - generic [ref=e4786]: e
+              - generic [ref=e4788]: "y"
+              - generic [ref=e4790]: (
+              - generic [ref=e4792]: S
+              - generic [ref=e4794]: h
+              - generic [ref=e4796]: i
+              - generic [ref=e4798]: f
+              - generic [ref=e4800]: t
+              - generic [ref=e4802]: R
+              - generic [ref=e4804]: o
+              - generic [ref=e4806]: w
+              - generic [ref=e4808]: s
+              - generic [ref=e4810]: (
+              - generic [ref=e4812]: S
+              - generic [ref=e4814]: u
+              - generic [ref=e4816]: b
+              - generic [ref=e4818]: B
+              - generic [ref=e4820]: "y"
+              - generic [ref=e4822]: t
+              - generic [ref=e4824]: e
+              - generic [ref=e4826]: s
+              - generic [ref=e4828]: (
+              - generic [ref=e4830]: S
+              - generic [ref=e4832]: t
+              - generic [ref=e4834]: a
+              - generic [ref=e4836]: t
+              - generic [ref=e4838]: e
+              - generic [ref=e4840]: )
+              - generic [ref=e4842]: )
+              - generic [ref=e4844]: ","
+              - generic [ref=e4846]: R
+              - generic [ref=e4848]: o
+              - generic [ref=e4850]: u
+              - generic [ref=e4852]: "n"
+              - generic [ref=e4854]: d
+              - generic [ref=e4856]: K
+              - generic [ref=e4858]: e
+              - generic [ref=e4859]:
+                - generic [ref=e4861]: "y"
+                - generic [ref=e4863]:
+                  - generic [ref=e4865]: "N"
+                  - generic [ref=e4867]: r
+              - generic [ref=e4869]: )
+            - math [ref=e4871]:
+              - generic [ref=e4872]: S
+              - generic [ref=e4873]: t
+              - generic [ref=e4874]: a
+              - generic [ref=e4875]: t
+              - generic [ref=e4876]: e
+              - generic [ref=e4877]: ←
+              - generic [ref=e4878]: A
+              - generic [ref=e4879]: d
+              - generic [ref=e4880]: d
+              - generic [ref=e4881]: R
+              - generic [ref=e4882]: o
+              - generic [ref=e4883]: u
+              - generic [ref=e4884]: "n"
+              - generic [ref=e4885]: d
+              - generic [ref=e4886]: K
+              - generic [ref=e4887]: e
+              - generic [ref=e4888]: "y"
+              - generic [ref=e4889]: (
+              - generic [ref=e4890]: S
+              - generic [ref=e4891]: h
+              - generic [ref=e4892]: i
+              - generic [ref=e4893]: f
+              - generic [ref=e4894]: t
+              - generic [ref=e4895]: R
+              - generic [ref=e4896]: o
+              - generic [ref=e4897]: w
+              - generic [ref=e4898]: s
+              - generic [ref=e4899]: (
+              - generic [ref=e4900]: S
+              - generic [ref=e4901]: u
+              - generic [ref=e4902]: b
+              - generic [ref=e4903]: B
+              - generic [ref=e4904]: "y"
+              - generic [ref=e4905]: t
+              - generic [ref=e4906]: e
+              - generic [ref=e4907]: s
+              - generic [ref=e4908]: (
+              - generic [ref=e4909]: S
+              - generic [ref=e4910]: t
+              - generic [ref=e4911]: a
+              - generic [ref=e4912]: t
+              - generic [ref=e4913]: e
+              - generic [ref=e4914]: )
+              - generic [ref=e4915]: )
+              - generic [ref=e4916]: ","
+              - generic [ref=e4917]: R
+              - generic [ref=e4918]: o
+              - generic [ref=e4919]: u
+              - generic [ref=e4920]: "n"
+              - generic [ref=e4921]: d
+              - generic [ref=e4922]: K
+              - generic [ref=e4923]: e
+              - generic [ref=e4924]:
+                - generic [ref=e4925]: "y"
+                - generic [ref=e4926]:
+                  - generic [ref=e4927]: "N"
+                  - generic [ref=e4928]: r
+              - generic [ref=e4929]: )
+          - paragraph [ref=e4930]:
+            - text: 以 AES-128 为例，最后一轮是第 10 轮，使用
+            - generic [ref=e4932]:
+              - generic [ref=e4933]:
+                - generic [ref=e4935]: R
+                - generic [ref=e4937]: o
+                - generic [ref=e4939]: u
+                - generic [ref=e4941]: "n"
+                - generic [ref=e4943]: d
+                - generic [ref=e4945]: K
+                - generic [ref=e4947]: e
+                - generic [ref=e4948]:
+                  - generic [ref=e4950]: "y"
+                  - generic [ref=e4953]:
+                    - generic [ref=e4954]: "1"
+                    - generic [ref=e4955]: "0"
+              - math [ref=e4957]:
+                - generic [ref=e4958]: R
+                - generic [ref=e4959]: o
+                - generic [ref=e4960]: u
+                - generic [ref=e4961]: "n"
+                - generic [ref=e4962]: d
+                - generic [ref=e4963]: K
+                - generic [ref=e4964]: e
+                - generic [ref=e4965]:
+                  - generic [ref=e4966]: "y"
+                  - generic [ref=e4968]: "10"
+            - text: 。这一步完成后，状态矩阵中的 16 个字节按列读出，得到最终密文。
+          - paragraph [ref=e4969]: 从结构上看，最后一轮保留了 S 盒代换、行移位和轮密钥加。这样密文输出前仍经过非线性代换和密钥注入，同时加密流程与解密流程可以形成更清晰的逆向对应关系。
+          - heading "7. 输出密文 Ciphertext" [level=3] [ref=e4970]
+          - paragraph [ref=e4971]: 最后一轮结束后，状态矩阵就是密文状态。AES 按列把状态矩阵读出，恢复成 16 字节密文序列。若最后状态矩阵为：
+          - generic [ref=e4973]:
+            - generic [ref=e4975]:
+              - generic [ref=e4977]:
+                - generic [ref=e4978]: ⎡
+                - generic [ref=e4979]: ⎢
+                - generic [ref=e4981]: ⎣
+              - generic [ref=e4984]:
+                - generic [ref=e4985]:
+                  - generic [ref=e4987]:
+                    - generic [ref=e4989]: c
+                    - generic [ref=e4992]: "0"
+                  - generic [ref=e4994]:
+                    - generic [ref=e4996]: c
+                    - generic [ref=e4999]: "4"
+                  - generic [ref=e5001]:
+                    - generic [ref=e5003]: c
+                    - generic [ref=e5006]: "8"
+                  - generic [ref=e5008]:
+                    - generic [ref=e5010]: c
+                    - generic [ref=e5013]:
+                      - generic [ref=e5014]: "1"
+                      - generic [ref=e5015]: "2"
+                - generic [ref=e5016]:
+                  - generic [ref=e5018]:
+                    - generic [ref=e5020]: c
+                    - generic [ref=e5023]: "1"
+                  - generic [ref=e5025]:
+                    - generic [ref=e5027]: c
+                    - generic [ref=e5030]: "5"
+                  - generic [ref=e5032]:
+                    - generic [ref=e5034]: c
+                    - generic [ref=e5037]: "9"
+                  - generic [ref=e5039]:
+                    - generic [ref=e5041]: c
+                    - generic [ref=e5044]:
+                      - generic [ref=e5045]: "1"
+                      - generic [ref=e5046]: "3"
+                - generic [ref=e5047]:
+                  - generic [ref=e5049]:
+                    - generic [ref=e5051]: c
+                    - generic [ref=e5054]: "2"
+                  - generic [ref=e5056]:
+                    - generic [ref=e5058]: c
+                    - generic [ref=e5061]: "6"
+                  - generic [ref=e5063]:
+                    - generic [ref=e5065]: c
+                    - generic [ref=e5068]:
+                      - generic [ref=e5069]: "1"
+                      - generic [ref=e5070]: "0"
+                  - generic [ref=e5072]:
+                    - generic [ref=e5074]: c
+                    - generic [ref=e5077]:
+                      - generic [ref=e5078]: "1"
+                      - generic [ref=e5079]: "4"
+                - generic [ref=e5080]:
+                  - generic [ref=e5082]:
+                    - generic [ref=e5084]: c
+                    - generic [ref=e5087]: "3"
+                  - generic [ref=e5089]:
+                    - generic [ref=e5091]: c
+                    - generic [ref=e5094]: "7"
+                  - generic [ref=e5096]:
+                    - generic [ref=e5098]: c
+                    - generic [ref=e5101]:
+                      - generic [ref=e5102]: "1"
+                      - generic [ref=e5103]: "1"
+                  - generic [ref=e5105]:
+                    - generic [ref=e5107]: c
+                    - generic [ref=e5110]:
+                      - generic [ref=e5111]: "1"
+                      - generic [ref=e5112]: "5"
+              - generic [ref=e5114]:
+                - generic [ref=e5115]: ⎤
+                - generic [ref=e5116]: ⎥
+                - generic [ref=e5118]: ⎦
+            - math [ref=e5120]:
+              - generic [ref=e5121]:
+                - generic [ref=e5122]: "["
+                - generic [ref=e5123]:
+                  - generic [ref=e5124]:
+                    - generic [ref=e5126]:
+                      - generic [ref=e5127]: c
+                      - generic [ref=e5128]: "0"
+                    - generic [ref=e5130]:
+                      - generic [ref=e5131]: c
+                      - generic [ref=e5132]: "4"
+                    - generic [ref=e5134]:
+                      - generic [ref=e5135]: c
+                      - generic [ref=e5136]: "8"
+                    - generic [ref=e5138]:
+                      - generic [ref=e5139]: c
+                      - generic [ref=e5141]: "12"
+                  - generic [ref=e5142]:
+                    - generic [ref=e5144]:
+                      - generic [ref=e5145]: c
+                      - generic [ref=e5146]: "1"
+                    - generic [ref=e5148]:
+                      - generic [ref=e5149]: c
+                      - generic [ref=e5150]: "5"
+                    - generic [ref=e5152]:
+                      - generic [ref=e5153]: c
+                      - generic [ref=e5154]: "9"
+                    - generic [ref=e5156]:
+                      - generic [ref=e5157]: c
+                      - generic [ref=e5159]: "13"
+                  - generic [ref=e5160]:
+                    - generic [ref=e5162]:
+                      - generic [ref=e5163]: c
+                      - generic [ref=e5164]: "2"
+                    - generic [ref=e5166]:
+                      - generic [ref=e5167]: c
+                      - generic [ref=e5168]: "6"
+                    - generic [ref=e5170]:
+                      - generic [ref=e5171]: c
+                      - generic [ref=e5173]: "10"
+                    - generic [ref=e5175]:
+                      - generic [ref=e5176]: c
+                      - generic [ref=e5178]: "14"
+                  - generic [ref=e5179]:
+                    - generic [ref=e5181]:
+                      - generic [ref=e5182]: c
+                      - generic [ref=e5183]: "3"
+                    - generic [ref=e5185]:
+                      - generic [ref=e5186]: c
+                      - generic [ref=e5187]: "7"
+                    - generic [ref=e5189]:
+                      - generic [ref=e5190]: c
+                      - generic [ref=e5192]: "11"
+                    - generic [ref=e5194]:
+                      - generic [ref=e5195]: c
+                      - generic [ref=e5197]: "15"
+                - generic [ref=e5198]: "]"
+          - paragraph [ref=e5199]: 那么输出密文为：
+          - generic [ref=e5201]:
+            - generic [ref=e5202]:
+              - generic [ref=e5203]:
+                - generic [ref=e5205]: c
+                - generic [ref=e5208]: "0"
+              - generic [ref=e5210]: ","
+              - generic [ref=e5211]:
+                - generic [ref=e5213]: c
+                - generic [ref=e5216]: "1"
+              - generic [ref=e5218]: ","
+              - generic [ref=e5219]:
+                - generic [ref=e5221]: c
+                - generic [ref=e5224]: "2"
+              - generic [ref=e5226]: ","
+              - generic [ref=e5228]: …
+              - generic [ref=e5230]: ","
+              - generic [ref=e5231]:
+                - generic [ref=e5233]: c
+                - generic [ref=e5236]:
+                  - generic [ref=e5237]: "1"
+                  - generic [ref=e5238]: "5"
+            - math [ref=e5240]:
+              - generic [ref=e5241]:
+                - generic [ref=e5242]: c
+                - generic [ref=e5243]: "0"
+              - generic [ref=e5244]: ","
+              - generic [ref=e5245]:
+                - generic [ref=e5246]: c
+                - generic [ref=e5247]: "1"
+              - generic [ref=e5248]: ","
+              - generic [ref=e5249]:
+                - generic [ref=e5250]: c
+                - generic [ref=e5251]: "2"
+              - generic [ref=e5252]: ","
+              - generic [ref=e5253]: …
+              - generic [ref=e5254]: ","
+              - generic [ref=e5255]:
+                - generic [ref=e5256]: c
+                - generic [ref=e5258]: "15"
+          - paragraph [ref=e5259]: 这和明文写入状态矩阵时的列优先顺序相对应。
+          - heading "8. AES-128 的完整流程" [level=3] [ref=e5260]
+          - paragraph [ref=e5261]: 以最常见的 AES-128 为例
+          - paragraph [ref=e5262]:
+            - text: 第一步，输入 128 位明文，按列写入
+            - generic [ref=e5264]:
+              - generic [ref=e5265]:
+                - generic [ref=e5267]: "4"
+                - generic [ref=e5269]: ×
+                - generic [ref=e5271]: "4"
+              - math [ref=e5273]:
+                - generic [ref=e5274]: "4"
+                - generic [ref=e5275]: ×
+                - generic [ref=e5276]: "4"
+            - text: 状态矩阵。
+          - paragraph [ref=e5277]: 第二步，主密钥经过 KeyExpansion 生成 11 组轮密钥：
+          - generic [ref=e5279]:
+            - generic [ref=e5280]:
+              - generic [ref=e5282]: R
+              - generic [ref=e5284]: o
+              - generic [ref=e5286]: u
+              - generic [ref=e5288]: "n"
+              - generic [ref=e5290]: d
+              - generic [ref=e5292]: K
+              - generic [ref=e5294]: e
+              - generic [ref=e5295]:
+                - generic [ref=e5297]: "y"
+                - generic [ref=e5300]: "0"
+              - generic [ref=e5302]: ","
+              - generic [ref=e5304]: R
+              - generic [ref=e5306]: o
+              - generic [ref=e5308]: u
+              - generic [ref=e5310]: "n"
+              - generic [ref=e5312]: d
+              - generic [ref=e5314]: K
+              - generic [ref=e5316]: e
+              - generic [ref=e5317]:
+                - generic [ref=e5319]: "y"
+                - generic [ref=e5322]: "1"
+              - generic [ref=e5324]: ","
+              - generic [ref=e5326]: …
+              - generic [ref=e5328]: ","
+              - generic [ref=e5330]: R
+              - generic [ref=e5332]: o
+              - generic [ref=e5334]: u
+              - generic [ref=e5336]: "n"
+              - generic [ref=e5338]: d
+              - generic [ref=e5340]: K
+              - generic [ref=e5342]: e
+              - generic [ref=e5343]:
+                - generic [ref=e5345]: "y"
+                - generic [ref=e5348]:
+                  - generic [ref=e5349]: "1"
+                  - generic [ref=e5350]: "0"
+            - math [ref=e5352]:
+              - generic [ref=e5353]: R
+              - generic [ref=e5354]: o
+              - generic [ref=e5355]: u
+              - generic [ref=e5356]: "n"
+              - generic [ref=e5357]: d
+              - generic [ref=e5358]: K
+              - generic [ref=e5359]: e
+              - generic [ref=e5360]:
+                - generic [ref=e5361]: "y"
+                - generic [ref=e5362]: "0"
+              - generic [ref=e5363]: ","
+              - generic [ref=e5364]: R
+              - generic [ref=e5365]: o
+              - generic [ref=e5366]: u
+              - generic [ref=e5367]: "n"
+              - generic [ref=e5368]: d
+              - generic [ref=e5369]: K
+              - generic [ref=e5370]: e
+              - generic [ref=e5371]:
+                - generic [ref=e5372]: "y"
+                - generic [ref=e5373]: "1"
+              - generic [ref=e5374]: ","
+              - generic [ref=e5375]: …
+              - generic [ref=e5376]: ","
+              - generic [ref=e5377]: R
+              - generic [ref=e5378]: o
+              - generic [ref=e5379]: u
+              - generic [ref=e5380]: "n"
+              - generic [ref=e5381]: d
+              - generic [ref=e5382]: K
+              - generic [ref=e5383]: e
+              - generic [ref=e5384]:
+                - generic [ref=e5385]: "y"
+                - generic [ref=e5387]: "10"
+          - paragraph [ref=e5388]:
+            - text: 第三步，状态矩阵先与
+            - generic [ref=e5390]:
+              - generic [ref=e5391]:
+                - generic [ref=e5393]: R
+                - generic [ref=e5395]: o
+                - generic [ref=e5397]: u
+                - generic [ref=e5399]: "n"
+                - generic [ref=e5401]: d
+                - generic [ref=e5403]: K
+                - generic [ref=e5405]: e
+                - generic [ref=e5406]:
+                  - generic [ref=e5408]: "y"
+                  - generic [ref=e5411]: "0"
+              - math [ref=e5413]:
+                - generic [ref=e5414]: R
+                - generic [ref=e5415]: o
+                - generic [ref=e5416]: u
+                - generic [ref=e5417]: "n"
+                - generic [ref=e5418]: d
+                - generic [ref=e5419]: K
+                - generic [ref=e5420]: e
+                - generic [ref=e5421]:
+                  - generic [ref=e5422]: "y"
+                  - generic [ref=e5423]: "0"
+            - text: 异或，完成初始 AddRoundKey。
+          - paragraph [ref=e5424]: 第四步，执行第 1 到第 9 轮标准轮。每一轮依次执行：
+          - generic [ref=e5426]:
+            - generic [ref=e5427]:
+              - generic [ref=e5429]: S
+              - generic [ref=e5431]: u
+              - generic [ref=e5433]: b
+              - generic [ref=e5435]: B
+              - generic [ref=e5437]: "y"
+              - generic [ref=e5439]: t
+              - generic [ref=e5441]: e
+              - generic [ref=e5443]: s
+              - generic [ref=e5445]: →
+              - generic [ref=e5447]: S
+              - generic [ref=e5449]: h
+              - generic [ref=e5451]: i
+              - generic [ref=e5453]: f
+              - generic [ref=e5455]: t
+              - generic [ref=e5457]: R
+              - generic [ref=e5459]: o
+              - generic [ref=e5461]: w
+              - generic [ref=e5463]: s
+              - generic [ref=e5465]: →
+              - generic [ref=e5467]: M
+              - generic [ref=e5469]: i
+              - generic [ref=e5471]: x
+              - generic [ref=e5473]: C
+              - generic [ref=e5475]: o
+              - generic [ref=e5477]: l
+              - generic [ref=e5479]: u
+              - generic [ref=e5481]: m
+              - generic [ref=e5483]: "n"
+              - generic [ref=e5485]: s
+              - generic [ref=e5487]: →
+              - generic [ref=e5489]: A
+              - generic [ref=e5491]: d
+              - generic [ref=e5493]: d
+              - generic [ref=e5495]: R
+              - generic [ref=e5497]: o
+              - generic [ref=e5499]: u
+              - generic [ref=e5501]: "n"
+              - generic [ref=e5503]: d
+              - generic [ref=e5505]: K
+              - generic [ref=e5507]: e
+              - generic [ref=e5509]: "y"
+            - math [ref=e5511]:
+              - generic [ref=e5512]: S
+              - generic [ref=e5513]: u
+              - generic [ref=e5514]: b
+              - generic [ref=e5515]: B
+              - generic [ref=e5516]: "y"
+              - generic [ref=e5517]: t
+              - generic [ref=e5518]: e
+              - generic [ref=e5519]: s
+              - generic [ref=e5520]: →
+              - generic [ref=e5521]: S
+              - generic [ref=e5522]: h
+              - generic [ref=e5523]: i
+              - generic [ref=e5524]: f
+              - generic [ref=e5525]: t
+              - generic [ref=e5526]: R
+              - generic [ref=e5527]: o
+              - generic [ref=e5528]: w
+              - generic [ref=e5529]: s
+              - generic [ref=e5530]: →
+              - generic [ref=e5531]: M
+              - generic [ref=e5532]: i
+              - generic [ref=e5533]: x
+              - generic [ref=e5534]: C
+              - generic [ref=e5535]: o
+              - generic [ref=e5536]: l
+              - generic [ref=e5537]: u
+              - generic [ref=e5538]: m
+              - generic [ref=e5539]: "n"
+              - generic [ref=e5540]: s
+              - generic [ref=e5541]: →
+              - generic [ref=e5542]: A
+              - generic [ref=e5543]: d
+              - generic [ref=e5544]: d
+              - generic [ref=e5545]: R
+              - generic [ref=e5546]: o
+              - generic [ref=e5547]: u
+              - generic [ref=e5548]: "n"
+              - generic [ref=e5549]: d
+              - generic [ref=e5550]: K
+              - generic [ref=e5551]: e
+              - generic [ref=e5552]: "y"
+          - paragraph [ref=e5553]:
+            - text: 其中第
+            - generic [ref=e5555]:
+              - generic [ref=e5558]: r
+              - math [ref=e5560]:
+                - generic [ref=e5561]: r
+            - text: 轮使用
+            - generic [ref=e5563]:
+              - generic [ref=e5564]:
+                - generic [ref=e5566]: R
+                - generic [ref=e5568]: o
+                - generic [ref=e5570]: u
+                - generic [ref=e5572]: "n"
+                - generic [ref=e5574]: d
+                - generic [ref=e5576]: K
+                - generic [ref=e5578]: e
+                - generic [ref=e5579]:
+                  - generic [ref=e5581]: "y"
+                  - generic [ref=e5584]: r
+              - math [ref=e5586]:
+                - generic [ref=e5587]: R
+                - generic [ref=e5588]: o
+                - generic [ref=e5589]: u
+                - generic [ref=e5590]: "n"
+                - generic [ref=e5591]: d
+                - generic [ref=e5592]: K
+                - generic [ref=e5593]: e
+                - generic [ref=e5594]:
+                  - generic [ref=e5595]: "y"
+                  - generic [ref=e5596]: r
+            - text: 。
+          - paragraph [ref=e5597]: 第五步，执行第 10 轮最后轮。最后轮依次执行：
+          - generic [ref=e5599]:
+            - generic [ref=e5600]:
+              - generic [ref=e5602]: S
+              - generic [ref=e5604]: u
+              - generic [ref=e5606]: b
+              - generic [ref=e5608]: B
+              - generic [ref=e5610]: "y"
+              - generic [ref=e5612]: t
+              - generic [ref=e5614]: e
+              - generic [ref=e5616]: s
+              - generic [ref=e5618]: →
+              - generic [ref=e5620]: S
+              - generic [ref=e5622]: h
+              - generic [ref=e5624]: i
+              - generic [ref=e5626]: f
+              - generic [ref=e5628]: t
+              - generic [ref=e5630]: R
+              - generic [ref=e5632]: o
+              - generic [ref=e5634]: w
+              - generic [ref=e5636]: s
+              - generic [ref=e5638]: →
+              - generic [ref=e5640]: A
+              - generic [ref=e5642]: d
+              - generic [ref=e5644]: d
+              - generic [ref=e5646]: R
+              - generic [ref=e5648]: o
+              - generic [ref=e5650]: u
+              - generic [ref=e5652]: "n"
+              - generic [ref=e5654]: d
+              - generic [ref=e5656]: K
+              - generic [ref=e5658]: e
+              - generic [ref=e5660]: "y"
+            - math [ref=e5662]:
+              - generic [ref=e5663]: S
+              - generic [ref=e5664]: u
+              - generic [ref=e5665]: b
+              - generic [ref=e5666]: B
+              - generic [ref=e5667]: "y"
+              - generic [ref=e5668]: t
+              - generic [ref=e5669]: e
+              - generic [ref=e5670]: s
+              - generic [ref=e5671]: →
+              - generic [ref=e5672]: S
+              - generic [ref=e5673]: h
+              - generic [ref=e5674]: i
+              - generic [ref=e5675]: f
+              - generic [ref=e5676]: t
+              - generic [ref=e5677]: R
+              - generic [ref=e5678]: o
+              - generic [ref=e5679]: w
+              - generic [ref=e5680]: s
+              - generic [ref=e5681]: →
+              - generic [ref=e5682]: A
+              - generic [ref=e5683]: d
+              - generic [ref=e5684]: d
+              - generic [ref=e5685]: R
+              - generic [ref=e5686]: o
+              - generic [ref=e5687]: u
+              - generic [ref=e5688]: "n"
+              - generic [ref=e5689]: d
+              - generic [ref=e5690]: K
+              - generic [ref=e5691]: e
+              - generic [ref=e5692]: "y"
+          - paragraph [ref=e5693]:
+            - text: 并使用
+            - generic [ref=e5695]:
+              - generic [ref=e5696]:
+                - generic [ref=e5698]: R
+                - generic [ref=e5700]: o
+                - generic [ref=e5702]: u
+                - generic [ref=e5704]: "n"
+                - generic [ref=e5706]: d
+                - generic [ref=e5708]: K
+                - generic [ref=e5710]: e
+                - generic [ref=e5711]:
+                  - generic [ref=e5713]: "y"
+                  - generic [ref=e5716]:
+                    - generic [ref=e5717]: "1"
+                    - generic [ref=e5718]: "0"
+              - math [ref=e5720]:
+                - generic [ref=e5721]: R
+                - generic [ref=e5722]: o
+                - generic [ref=e5723]: u
+                - generic [ref=e5724]: "n"
+                - generic [ref=e5725]: d
+                - generic [ref=e5726]: K
+                - generic [ref=e5727]: e
+                - generic [ref=e5728]:
+                  - generic [ref=e5729]: "y"
+                  - generic [ref=e5731]: "10"
+            - text: 。
+          - paragraph [ref=e5732]: 第六步，将最终状态矩阵按列读出，得到 128 位密文。
+          - paragraph [ref=e5733]: 用紧凑公式表示，AES-128 加密可以写成：
+          - generic [ref=e5735]:
+            - generic [ref=e5736]:
+              - generic [ref=e5738]: S
+              - generic [ref=e5740]: t
+              - generic [ref=e5742]: a
+              - generic [ref=e5744]: t
+              - generic [ref=e5745]:
+                - generic [ref=e5747]: e
+                - generic [ref=e5750]: "0"
+              - generic [ref=e5752]: =
+              - generic [ref=e5754]: P
+              - generic [ref=e5756]: l
+              - generic [ref=e5758]: a
+              - generic [ref=e5760]: i
+              - generic [ref=e5762]: "n"
+              - generic [ref=e5764]: t
+              - generic [ref=e5766]: e
+              - generic [ref=e5768]: x
+              - generic [ref=e5770]: t
+            - math [ref=e5772]:
+              - generic [ref=e5773]: S
+              - generic [ref=e5774]: t
+              - generic [ref=e5775]: a
+              - generic [ref=e5776]: t
+              - generic [ref=e5777]:
+                - generic [ref=e5778]: e
+                - generic [ref=e5779]: "0"
+              - generic [ref=e5780]: =
+              - generic [ref=e5781]: P
+              - generic [ref=e5782]: l
+              - generic [ref=e5783]: a
+              - generic [ref=e5784]: i
+              - generic [ref=e5785]: "n"
+              - generic [ref=e5786]: t
+              - generic [ref=e5787]: e
+              - generic [ref=e5788]: x
+              - generic [ref=e5789]: t
+          - heading "9. 算法实现" [level=3] [ref=e5790]
+          - generic [ref=e5792]:
+            - button "复制" [ref=e5793] [cursor=pointer]
+            - code [ref=e5794]: "from __future__ import annotations # ============================================================ # 1. GF(2^8) 有限域运算 # AES 的 SubBytes 和 MixColumns 都建立在 GF(2^8) 上。 # 一个字节可以看成次数小于 8 的二进制多项式。 # AES 使用的模多项式为： # m(x) = x^8 + x^4 + x^3 + x + 1 # 工程实现中，对应的化简常量是 0x1B。 # ============================================================ def gmul(a: int, b: int) -> int: \"\"\" GF(2^8) 上的字节乘法。 参数： a, b: 0~255 的整数，表示两个字节。 返回： a * b 在 AES 有限域中的乘积。 实现思路： 逐位检查 b。 当 b 的最低位为 1 时，把当前 a 加入结果。 GF(2^8) 中的加法就是异或。 每轮把 a 乘以 x，相当于左移一位。 若左移前最高位为 1，则左移后需要用 0x1B 做模化简。 \"\"\" result = 0 for _ in range(8): if b & 1: result ^= a carry = a & 0x80 a = (a << 1) & 0xFF if carry: a ^= 0x1B b >>= 1 return result def gf_pow(a: int, n: int) -> int: \"\"\" GF(2^8) 上的快速幂。 AES S 盒构造中需要求乘法逆元。 对非零元素 a，有 a^255 = 1，所以 a 的逆元为 a^254。 \"\"\" result = 1 while n > 0: if n & 1: result = gmul(result, a) a = gmul(a, a) n >>= 1 return result def gf_inv(a: int) -> int: \"\"\" GF(2^8) 上的乘法逆元。 AES 规定输入 0 时，逆元阶段输出 0。 其他字节通过 a^254 得到逆元。 \"\"\" if a == 0: return 0 return gf_pow(a, 254) # ============================================================ # 2. S 盒生成：SubBytes 的核心 # AES S 盒由两部分组成： # 先在 GF(2^8) 中求逆元，再做仿射变换。 # ============================================================ def affine_transform(x: int) -> int: \"\"\" AES S 盒中的仿射变换。 参数： x: 求逆元后的 8 位输入。 返回： 经过固定仿射变换后的 8 位输出。 位级公式： y_i = x_i ⊕ x_{i+4} ⊕ x_{i+5} ⊕ x_{i+6} ⊕ x_{i+7} ⊕ c_i 下标按 mod 8 处理。 常量 c = 0x63。 \"\"\" c = 0x63 y = 0 for i in range(8): bit = ( ((x >> i) & 1) ^ ((x >> ((i + 4) & 7)) & 1) ^ ((x >> ((i + 5) & 7)) & 1) ^ ((x >> ((i + 6) & 7)) & 1) ^ ((x >> ((i + 7) & 7)) & 1) ^ ((c >> i) & 1) ) y |= bit << i return y # 正向 S 盒：用于加密中的 SubBytes S_BOX = [affine_transform(gf_inv(i)) for i in range(256)] # 逆向 S 盒：用于解密中的 InvSubBytes INV_S_BOX = [0] * 256 for i, value in enumerate(S_BOX): INV_S_BOX[value] = i # ============================================================ # 3. 状态矩阵 State 与字 Word # AES 每个明文分组为 16 字节。 # 内部状态按列组织为 4 个 word，每个 word 为 4 字节。 # # 明文字节： # p0 p1 p2 ... p15 # # 状态矩阵逻辑形态： # [ p0 p4 p8 p12 ] # [ p1 p5 p9 p13 ] # [ p2 p6 p10 p14 ] # [ p3 p7 p11 p15 ] # # 代码中 state[c][r] 表示第 c 列第 r 行。 # ============================================================ def bytes_to_matrix(block: bytes) -> list[list[int]]: \"\"\" 16 字节分组转为 AES 状态结构。 返回结构为 4 个列向量： [ [p0, p1, p2, p3], [p4, p5, p6, p7], [p8, p9, p10, p11], [p12, p13, p14, p15], ] 这种存储方式和 AES 按列处理的逻辑一致。 \"\"\" return [list(block[i:i + 4]) for i in range(0, len(block), 4)] def matrix_to_bytes(matrix: list[list[int]]) -> bytes: \"\"\" AES 状态结构转回字节序列。 由于状态按列保存，所以直接按列拼接即可恢复 AES 输出顺序。 \"\"\" return bytes(sum(matrix, [])) def xor_words(a: list[int], b: list[int]) -> list[int]: \"\"\" 两个 word 做逐字节异或。 word 在 AES 中表示 4 字节。 \"\"\" return [x ^ y for x, y in zip(a, b)] def rot_word(word: list[int]) -> list[int]: \"\"\" KeyExpansion 中的 RotWord。 例如： [a0, a1, a2, a3] -> [a1, a2, a3, a0] \"\"\" return word[1:] + word[:1] def sub_word(word: list[int]) -> list[int]: \"\"\" KeyExpansion 中的 SubWord。 对 word 中的 4 个字节分别查 S 盒。 \"\"\" return [S_BOX[b] for b in word] def make_rcon(count: int = 15) -> list[int]: \"\"\" 生成密钥扩展需要的轮常量 Rcon。 Rcon[i] 的第一个字节是 GF(2^8) 中的 2^(i-1)， 后三个字节在使用时取 0。 \"\"\" rcon = [0x00] value = 0x01 for _ in range(1, count): rcon.append(value) value = gmul(value, 0x02) return rcon RCON = make_rcon() # ============================================================ # 4. 密钥扩展 KeyExpansion # 图中左侧流程： # 主密钥 CipherKey -> 密钥扩展 KeyExpansion -> 轮密钥 Round Keys # # AES-128: Nk = 4, Nr = 10 # AES-192: Nk = 6, Nr = 12 # AES-256: Nk = 8, Nr = 14 # 其中 Nk 表示主密钥包含多少个 word。 # ============================================================ def expand_key(master_key: bytes) -> tuple[list[list[list[int]]], int]: \"\"\" 根据主密钥生成所有轮密钥。 参数： master_key: 16 字节 -> AES-128 24 字节 -> AES-192 32 字节 -> AES-256 返回： round_keys: 每个元素是一组轮密钥。 每组轮密钥包含 4 个 word，也就是 16 字节。 nr: AES 轮数。 \"\"\" key_len = len(master_key) if key_len not in (16, 24, 32): raise ValueError(\"AES key length must be 16, 24, or 32 bytes\") nk = key_len // 4 nr = nk + 6 # 主密钥先切分成若干 word words = bytes_to_matrix(master_key) # AES 需要 nr + 1 组轮密钥，每组 4 个 word target_words = 4 * (nr + 1) while len(words) < target_words: i = len(words) temp = words[-1].copy() # 每隔 nk 个 word 触发一次核心变换： # RotWord -> SubWord -> XOR Rcon if i % nk == 0: temp = xor_words( sub_word(rot_word(temp)), [RCON[i // nk], 0x00, 0x00, 0x00], ) # AES-256 的额外 SubWord 规则 elif nk > 6 and i % nk == 4: temp = sub_word(temp) # 新 word 由前 nk 个 word 与 temp 异或得到 words.append(xor_words(words[i - nk], temp)) # 每 4 个 word 组成一组轮密钥 round_keys = [ words[4 * i: 4 * (i + 1)] for i in range(nr + 1) ] return round_keys, nr # ============================================================ # 5. AddRoundKey：轮密钥加 # 图中对应： # 初始轮密钥加 AddRoundKey # 标准轮中的 AddRoundKey # 最后一轮中的 AddRoundKey # ============================================================ def add_round_key(state: list[list[int]], round_key: list[list[int]]) -> None: \"\"\" 状态矩阵与轮密钥逐字节异或。 state[c][r] 表示第 c 列第 r 行。 round_key 使用同样的列式结构。 \"\"\" for c in range(4): for r in range(4): state[c][r] ^= round_key[c][r] # ============================================================ # 6. SubBytes：字节代换 # 图中标准轮和最后一轮的第一个步骤。 # ============================================================ def sub_bytes(state: list[list[int]]) -> None: \"\"\" 对状态矩阵中的每个字节执行 S 盒代换。 \"\"\" for c in range(4): for r in range(4): state[c][r] = S_BOX[state[c][r]] def inv_sub_bytes(state: list[list[int]]) -> None: \"\"\" 解密时使用的逆字节代换。 \"\"\" for c in range(4): for r in range(4): state[c][r] = INV_S_BOX[state[c][r]] # ============================================================ # 7. ShiftRows：行移位 # 图中标准轮和最后一轮的第二个步骤。 # # 第 0 行左移 0 字节 # 第 1 行左移 1 字节 # 第 2 行左移 2 字节 # 第 3 行左移 3 字节 # ============================================================ def shift_rows(state: list[list[int]]) -> None: \"\"\" 对状态矩阵的每一行做循环左移。 由于代码中 state 按列存储，所以先取出某一行， 完成循环左移后再写回对应位置。 \"\"\" for r in range(1, 4): row = [state[c][r] for c in range(4)] row = row[r:] + row[:r] for c in range(4): state[c][r] = row[c] def inv_shift_rows(state: list[list[int]]) -> None: \"\"\" 解密时使用的逆行移位。 第 r 行循环右移 r 个字节。 \"\"\" for r in range(1, 4): row = [state[c][r] for c in range(4)] row = row[-r:] + row[:-r] for c in range(4): state[c][r] = row[c] # ============================================================ # 8. MixColumns：列混合 # 图中标准轮的第三个步骤。 # # 对每一列乘以固定矩阵： # [02 03 01 01] # [01 02 03 01] # [01 01 02 03] # [03 01 01 02] # ============================================================ def mix_single_column(col: list[int]) -> None: \"\"\" 对状态矩阵的一列执行 MixColumns。 输入列： [s0, s1, s2, s3] 输出列： s0' = 02*s0 ⊕ 03*s1 ⊕ 01*s2 ⊕ 01*s3 s1' = 01*s0 ⊕ 02*s1 ⊕ 03*s2 ⊕ 01*s3 s2' = 01*s0 ⊕ 01*s1 ⊕ 02*s2 ⊕ 03*s3 s3' = 03*s0 ⊕ 01*s1 ⊕ 01*s2 ⊕ 02*s3 \"\"\" a0, a1, a2, a3 = col col[0] = gmul(a0, 0x02) ^ gmul(a1, 0x03) ^ a2 ^ a3 col[1] = a0 ^ gmul(a1, 0x02) ^ gmul(a2, 0x03) ^ a3 col[2] = a0 ^ a1 ^ gmul(a2, 0x02) ^ gmul(a3, 0x03) col[3] = gmul(a0, 0x03) ^ a1 ^ a2 ^ gmul(a3, 0x02) def mix_columns(state: list[list[int]]) -> None: \"\"\" 对状态矩阵的 4 列分别执行 MixColumns。 \"\"\" for c in range(4): mix_single_column(state[c]) def inv_mix_single_column(col: list[int]) -> None: \"\"\" 解密时使用的逆列混合。 逆矩阵为： [0E 0B 0D 09] [09 0E 0B 0D] [0D 09 0E 0B] [0B 0D 09 0E] \"\"\" a0, a1, a2, a3 = col col[0] = ( gmul(a0, 0x0E) ^ gmul(a1, 0x0B) ^ gmul(a2, 0x0D) ^ gmul(a3, 0x09) ) col[1] = ( gmul(a0, 0x09) ^ gmul(a1, 0x0E) ^ gmul(a2, 0x0B) ^ gmul(a3, 0x0D) ) col[2] = ( gmul(a0, 0x0D) ^ gmul(a1, 0x09) ^ gmul(a2, 0x0E) ^ gmul(a3, 0x0B) ) col[3] = ( gmul(a0, 0x0B) ^ gmul(a1, 0x0D) ^ gmul(a2, 0x09) ^ gmul(a3, 0x0E) ) def inv_mix_columns(state: list[list[int]]) -> None: \"\"\" 对状态矩阵的 4 列分别执行 InvMixColumns。 \"\"\" for c in range(4): inv_mix_single_column(state[c]) # ============================================================ # 9. AES 单分组加密 # 图中间主流程： # 明文输入 # -> 状态矩阵 # -> 初始 AddRoundKey # -> 标准轮重复 Nr-1 次 # -> 最后一轮 # -> 密文输出 # ============================================================ def encrypt_block(block: bytes, master_key: bytes) -> bytes: \"\"\" 加密一个 16 字节分组。 标准轮： SubBytes -> ShiftRows -> MixColumns -> AddRoundKey 最后一轮： SubBytes -> ShiftRows -> AddRoundKey 参数： block: 16 字节明文分组。 master_key: 16、24 或 32 字节主密钥。 返回： 16 字节密文分组。 \"\"\" if len(block) != 16: raise ValueError(\"AES block length must be 16 bytes\") round_keys, nr = expand_key(master_key) state = bytes_to_matrix(block) # 初始轮密钥加：使用 RoundKey_0 add_round_key(state, round_keys[0]) # 标准轮：第 1 轮到第 Nr-1 轮 for round_index in range(1, nr): sub_bytes(state) shift_rows(state) mix_columns(state) add_round_key(state, round_keys[round_index]) # 最后一轮：省略 MixColumns sub_bytes(state) shift_rows(state) add_round_key(state, round_keys[nr]) return matrix_to_bytes(state) # ============================================================ # 10. AES 单分组解密 # 加密流程的逆过程： # AddRoundKey # -> InvShiftRows # -> InvSubBytes # -> AddRoundKey # -> InvMixColumns # ============================================================ def decrypt_block(block: bytes, master_key: bytes) -> bytes: \"\"\" 解密一个 16 字节分组。 参数： block: 16 字节密文分组。 master_key: 16、24 或 32 字节主密钥。 返回： 16 字节明文分组。 \"\"\" if len(block) != 16: raise ValueError(\"AES block length must be 16 bytes\") round_keys, nr = expand_key(master_key) state = bytes_to_matrix(block) # 解密从最后一组轮密钥开始 add_round_key(state, round_keys[nr]) # 中间逆轮：第 Nr-1 轮回到第 1 轮 for round_index in range(nr - 1, 0, -1): inv_shift_rows(state) inv_sub_bytes(state) add_round_key(state, round_keys[round_index]) inv_mix_columns(state) # 逆向收尾：对应加密开始处的初始 AddRoundKey inv_shift_rows(state) inv_sub_bytes(state) add_round_key(state, round_keys[0]) return matrix_to_bytes(state) # ============================================================ # 11. PKCS#7 填充 # AES 的单分组长度固定为 16 字节。 # 多字节消息进入 AES 前，需要补齐到 16 字节整数倍。 # ============================================================ def pkcs7_pad(data: bytes, block_size: int = 16) -> bytes: \"\"\" PKCS#7 填充。 若原始数据长度已经是 16 的整数倍， 仍会补上一整块 0x10。 这样解密后才能准确识别填充长度。 \"\"\" pad_len = block_size - len(data) % block_size return data + bytes([pad_len]) * pad_len def pkcs7_unpad(data: bytes, block_size: int = 16) -> bytes: \"\"\" 移除 PKCS#7 填充。 \"\"\" if len(data) == 0 or len(data) % block_size != 0: raise ValueError(\"invalid PKCS#7 data length\") pad_len = data[-1] if pad_len < 1 or pad_len > block_size: raise ValueError(\"invalid PKCS#7 padding\") if data[-pad_len:] != bytes([pad_len]) * pad_len: raise ValueError(\"invalid PKCS#7 padding\") return data[:-pad_len] # ============================================================ # 12. ECB 模式演示 # 这里用于展示多个分组如何调用 encrypt_block。 # 工程项目中通常采用带认证能力的模式，例如 AES-GCM。 # ============================================================ def encrypt_ecb(data: bytes, master_key: bytes) -> bytes: \"\"\" ECB 模式加密演示。 过程： 1. 对数据做 PKCS#7 填充。 2. 每 16 字节切成一个分组。 3. 分别调用 encrypt_block。 \"\"\" data = pkcs7_pad(data) result = bytearray() for i in range(0, len(data), 16): result.extend(encrypt_block(data[i:i + 16], master_key)) return bytes(result) def decrypt_ecb(ciphertext: bytes, master_key: bytes) -> bytes: \"\"\" ECB 模式解密演示。 过程： 1. 每 16 字节切成一个密文分组。 2. 分别调用 decrypt_block。 3. 合并后移除 PKCS#7 填充。 \"\"\" if len(ciphertext) % 16 != 0: raise ValueError(\"ciphertext length must be a multiple of 16 bytes\") result = bytearray() for i in range(0, len(ciphertext), 16): result.extend(decrypt_block(ciphertext[i:i + 16], master_key)) return pkcs7_unpad(bytes(result)) # ============================================================ # 13. 测试与演示 # demo_block 使用 AES 常见测试向量： # key = 000102030405060708090a0b0c0d0e0f # plaintext = 00112233445566778899aabbccddeeff # ciphertext= 69c4e0d86a7b0430d8cdb78070b4c55a # ============================================================ def demo_block() -> None: \"\"\" 单分组 AES-128 测试。 \"\"\" key = bytes.fromhex(\"000102030405060708090a0b0c0d0e0f\") plaintext = bytes.fromhex(\"00112233445566778899aabbccddeeff\") ciphertext = encrypt_block(plaintext, key) recovered = decrypt_block(ciphertext, key) print(\"AES-128 single block test\") print(\"key =\", key.hex()) print(\"plaintext =\", plaintext.hex()) print(\"ciphertext=\", ciphertext.hex()) print(\"recovered =\", recovered.hex()) expected = \"69c4e0d86a7b0430d8cdb78070b4c55a\" print(\"expected =\", expected) print(\"pass =\", ciphertext.hex() == expected and recovered == plaintext) def demo_ecb() -> None: \"\"\" 多分组文本加解密演示。 \"\"\" key = b\"this_is_16_bytes\" data = \"RIJNDAEL / AES 加密流程演示\".encode(\"utf-8\") ciphertext = encrypt_ecb(data, key) recovered = decrypt_ecb(ciphertext, key) print() print(\"ECB demo\") print(\"plaintext =\", data.decode(\"utf-8\")) print(\"ciphertext=\", ciphertext.hex()) print(\"recovered =\", recovered.decode(\"utf-8\")) if __name__ == \"__main__\": demo_block() demo_ecb()"
+          - heading "解密算法" [level=3] [ref=e5795]
+          - paragraph [ref=e5796]:
+            - img "939bf524-b62d-4c60-98ea-b425181caf91" [ref=e5797]
+          - generic [ref=e5798]:
+            - navigation "文章分页导航" [ref=e5799]:
+              - link "上一篇 数学基础" [ref=e5800] [cursor=pointer]:
+                - /url: ../math_base/
+                - generic [ref=e5801]: 上一篇
+                - generic [ref=e5802]: 数学基础
+              - link "下一篇 算法介绍-SM4" [ref=e5803] [cursor=pointer]:
+                - /url: ../SM4/
+                - generic [ref=e5804]: 下一篇
+                - generic [ref=e5805]: 算法介绍-SM4
+            - heading "评论" [level=2] [ref=e5806]
+            - iframe [ref=e5808]
+      - button "回到页面顶部":
+        - img
+        - text: 回到页面顶部
+    - contentinfo [ref=e5809]:
+      - generic [ref=e5812]:
+        - text: Made with
+        - link "Material for MkDocs" [ref=e5813] [cursor=pointer]:
+          - /url: https://squidfunk.github.io/mkdocs-material/

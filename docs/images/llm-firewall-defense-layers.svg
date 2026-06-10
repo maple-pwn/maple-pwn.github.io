@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760">
+  <rect width="1280" height="760" fill="#f8f8f5"/>
+  <text x="60" y="64" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#1f2833">Defense in Depth for an LLM Firewall</text>
+  <text x="60" y="98" font-family="Arial, sans-serif" font-size="18" fill="#56626d">No single filter is enough; practical systems stack controls across the full workflow.</text>
+
+  <rect x="120" y="170" width="1040" height="92" rx="24" fill="#dff1ff" stroke="#3777ae" stroke-width="3"/>
+  <text x="220" y="225" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#163f62">1. Input Detection</text>
+  <text x="540" y="225" font-family="Arial, sans-serif" font-size="20" fill="#163f62">prompt injection, jailbreak, encoding tricks, high-risk intent</text>
+
+  <rect x="160" y="284" width="960" height="92" rx="24" fill="#fff4cf" stroke="#b49018" stroke-width="3"/>
+  <text x="280" y="339" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#634d05">2. Context Governance</text>
+  <text x="600" y="339" font-family="Arial, sans-serif" font-size="20" fill="#634d05">trust tiers, source labels, retrieval hygiene, memory write control</text>
+
+  <rect x="200" y="398" width="880" height="92" rx="24" fill="#e7f6ec" stroke="#2d8757" stroke-width="3"/>
+  <text x="325" y="453" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#145436">3. Runtime Policy</text>
+  <text x="628" y="453" font-family="Arial, sans-serif" font-size="20" fill="#145436">structured outputs, tool allowlists, parameter checks, user approval</text>
+
+  <rect x="240" y="512" width="800" height="92" rx="24" fill="#fce8f1" stroke="#be4e82" stroke-width="3"/>
+  <text x="372" y="567" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#7a234d">4. Output Control</text>
+  <text x="648" y="567" font-family="Arial, sans-serif" font-size="20" fill="#7a234d">moderation, DLP, grounding checks, leak prevention</text>
+
+  <rect x="280" y="626" width="720" height="82" rx="24" fill="#edf3fb" stroke="#5d7eb0" stroke-width="3"/>
+  <text x="408" y="676" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#314d79">5. Audit and Response</text>
+  <text x="670" y="676" font-family="Arial, sans-serif" font-size="20" fill="#314d79">traces, alerts, incident review, policy updates</text>
+
+  <path d="M640 262 V284" stroke="#6a7b86" stroke-width="4" fill="none"/>
+  <polygon points="640,284 633,270 647,270" fill="#6a7b86"/>
+  <path d="M640 376 V398" stroke="#6a7b86" stroke-width="4" fill="none"/>
+  <polygon points="640,398 633,384 647,384" fill="#6a7b86"/>
+  <path d="M640 490 V512" stroke="#6a7b86" stroke-width="4" fill="none"/>
+  <polygon points="640,512 633,498 647,498" fill="#6a7b86"/>
+  <path d="M640 604 V626" stroke="#6a7b86" stroke-width="4" fill="none"/>
+  <polygon points="640,626 633,612 647,612" fill="#6a7b86"/>
+
+  <text x="60" y="736" font-family="Arial, sans-serif" font-size="17" fill="#59656f">Author-drawn summary based on OpenAI agent safety guidance, OWASP LLM Top 10, Anthropic guardrail guidance, and Microsoft/NVIDIA runtime defense docs.</text>
+</svg>

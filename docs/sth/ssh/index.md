@@ -31,31 +31,9 @@
 
 
 ```
-
-sudo
-
-systemctl
-
-disable
-
---now
-
-ssh.socket
-sudo
-
-mkdir
-
--p
-
-/run/sshd
-sudo
-
-systemctl
-
-restart
-
-ssh
-
+sudo systemctl disable --now ssh.socket
+sudo mkdir -p /run/sshd
+sudo systemctl restart ssh
 ```
 
 这次终于成功了。`ss -tlnp | grep :2222` 显示 sshd 正在监听 2222 端口，进程也在运行。
@@ -71,53 +49,8 @@ WSL2 不像 WSL1 那样直接共享 Windows 的网络栈，它运行在一个虚
 
 
 ```
-
-$wslIP
-
-=
-
-(
-wsl
-
-hostname
-
--I
-).
-Trim
-()
-
-netsh
-
-interface
-
-portproxy
-
-add
-
-v4tov4
-
-listenport
-=
-2222
-
-listenaddress
-=
-0
-.
-0
-.
-0
-.
-0
-
-connectport
-=
-2222
-
-connectaddress
-=
-$wslIP
-
+$wslIP = (wsl hostname -I).Trim()
+netsh interface portproxy add v4tov4 listenport=2222 listenaddress=0.0.0.0 connectport=2222 connectaddress=$wslIP
 ```
 
 理论上，这样就能把 Windows 的 2222 端口转发到 WSL 的 2222 端口了。
@@ -129,15 +62,7 @@ $wslIP
 
 
 ```
-
-ssh
-
--p
-
-2222
-
-pwn@10.0.0.1
-
+ssh -p 2222 pwn@10.0.0.1
 ```
 
 结果：`Connection timed out`。
@@ -146,29 +71,7 @@ pwn@10.0.0.1
 
 
 ```
-
-New-NetFirewallRule
-
--DisplayName
-
-"WSL2 SSH"
-
--Direction
-
-Inbound
-
--LocalPort
-
-2222
-
--Protocol
-
-TCP
-
--Action
-
-Allow
-
+New-NetFirewallRule -DisplayName "WSL2 SSH" -Direction Inbound -LocalPort 2222 -Protocol TCP -Action Allow
 ```
 
 再试，还是超时。
@@ -184,26 +87,14 @@ Windows 的真实局域网 IP 是 `10.138.138.98`（WiFi）和 `10.138.170.117`�
 
 
 ```
-
-ssh
-
--vvv
-
--p
-
-2222
-
-pwn@10.138.138.98
-
+ssh -vvv -p 2222 pwn@10.138.138.98
 ```
 
 这次有进展了！调试输出显示 `Connection established`，说明 TCP 连接成功了。但紧接着，连接就卡在了 `Local version string SSH-2.0-OpenSSH_10.2`，然后报错：
 
 
 ```
-
 kex_exchange_identification: read: Connection reset by peer
-
 ```
 
 这个错误很诡异。TCP 连接建立了，说明网络是通的，但 SSH 握手阶段就被重置了。这通常意味着流量到达了目标主机，但没有到达正确的 SSH 服务。
@@ -215,28 +106,16 @@ kex_exchange_identification: read: Connection reset by peer
 
 
 ```
-
-netsh
-
-interface
-
-portproxy
-
-show
-
-all
-
+netsh interface portproxy show all
 ```
 
 输出显示：
 
 
 ```
-
 侦听 ipv4:                 连接到 ipv4:
 地址            端口        地址            端口
 0.0.0.0         2222        26.243.2.236    2222
-
 ```
 
 `26.243.2.236` 是什么？这个我一直没有注意到，依旧以为是端口的问题，做了很久的尝试
@@ -252,38 +131,8 @@ all
 
 
 ```
-
-$wslIP
-
-=
-
-wsl
-
--e
-
-sh
-
--lc
-
-"ip -4 addr show eth0 | grep -o 'inet [0-9.]*' | head -n1"
-
-$wslIP
-
-=
-
-(
-$wslIP
-
--replace
-
-'inet '
-,
-
-''
-).
-Trim
-()
-
+$wslIP = wsl -e sh -lc "ip -4 addr show eth0 | grep -o 'inet [0-9.]*' | head -n1"
+$wslIP = ($wslIP -replace 'inet ', '').Trim()
 ```
 
 但结果还是 `26.243.2.236`。这说明 Radmin VPN 不仅创建了虚拟网卡，还影响了 WSL 的网络配置。
@@ -295,69 +144,8 @@ Trim
 
 
 ```
-
-netsh
-
-interface
-
-portproxy
-
-delete
-
-v4tov4
-
-listenport
-=
-2222
-
-listenaddress
-=
-0
-.
-0
-.
-0
-.
-0
-
-netsh
-
-interface
-
-portproxy
-
-add
-
-v4tov4
-
-listenport
-=
-2222
-
-listenaddress
-=
-0
-.
-0
-.
-0
-.
-0
-
-connectport
-=
-2222
-
-connectaddress
-=
-127
-.
-0
-.
-0
-.
-1
-
+netsh interface portproxy delete v4tov4 listenport=2222 listenaddress=0.0.0.0
+netsh interface portproxy add v4tov4 listenport=2222 listenaddress=0.0.0.0 connectport=2222 connectaddress=127.0.0.1
 ```
 
 测试正确的端口后，发现 Windows 本机确实能连到 WSL 的 2222 端口。
@@ -369,108 +157,16 @@ connectaddress
 
 
 ```
-
-netsh
-
-interface
-
-portproxy
-
-delete
-
-v4tov4
-
-listenport
-=
-2222
-
-listenaddress
-=
-0
-.
-0
-.
-0
-.
-0
-
-netsh
-
-interface
-
-portproxy
-
-add
-
-v4tov4
-
-listenport
-=
-8022
-
-listenaddress
-=
-0
-.
-0
-.
-0
-.
-0
-
-connectport
-=
-2222
-
-connectaddress
-=
-26
-.
-243
-.
-2
-.
-236
-
-New-NetFirewallRule
-
--DisplayName
-
-"WSL2-SSH-8022"
-
--Direction
-
-Inbound
-
--LocalPort
-
-8022
-
--Protocol
-
-TCP
-
--Action
-
-Allow
-
+netsh interface portproxy delete v4tov4 listenport=2222 listenaddress=0.0.0.0
+netsh interface portproxy add v4tov4 listenport=8022 listenaddress=0.0.0.0 connectport=2222 connectaddress=26.243.2.236
+New-NetFirewallRule -DisplayName "WSL2-SSH-8022" -Direction Inbound -LocalPort 8022 -Protocol TCP -Action Allow
 ```
 
 从 Mac 连接：
 
 
 ```
-
-ssh
-
--vvv
-
--p
-
-8022
-
-pwn@10.138.138.98
-
+ssh -vvv -p 8022 pwn@10.138.138.98
 ```
 
 结果还是一样：`Connection established` 后立即 `Connection reset by peer`。
@@ -482,15 +178,7 @@ pwn@10.138.138.98
 
 
 ```
-
-ssh
-
--p
-
-2222
-
-pwn@127.0.0.1
-
+ssh -p 2222 pwn@127.0.0.1
 ```
 
 成功了！SSH 握手完成，只是在认证阶段失败（因为本地没有配置密钥）。这证明 sshd 服务本身是正常的，问题确实出在转发链路上。
@@ -511,83 +199,9 @@ pwn@127.0.0.1
 
 
 ```
-
-$wslIP
-
-=
-
-(
-wsl
-
-hostname
-
--I
-).
-Trim
-().
-Split
-(
-' '
-)[
-0
-]
-
-netsh
-
-interface
-
-portproxy
-
-delete
-
-v4tov4
-
-listenport
-=
-8022
-
-listenaddress
-=
-0
-.
-0
-.
-0
-.
-0
-
-netsh
-
-interface
-
-portproxy
-
-add
-
-v4tov4
-
-listenport
-=
-8022
-
-listenaddress
-=
-0
-.
-0
-.
-0
-.
-0
-
-connectport
-=
-2222
-
-connectaddress
-=
-$wslIP
-
+$wslIP = (wsl hostname -I).Trim().Split(' ')[0]
+netsh interface portproxy delete v4tov4 listenport=8022 listenaddress=0.0.0.0
+netsh interface portproxy add v4tov4 listenport=8022 listenaddress=0.0.0.0 connectport=2222 connectaddress=$wslIP
 ```
 
 这次，`netsh interface portproxy show all` 显示的转发目标终于不是 `26.243.2.236` 了。
@@ -596,15 +210,7 @@ $wslIP
 
 
 ```
-
-ssh
-
--p
-
-8022
-
-pwn@10.138.138.98
-
+ssh -p 8022 pwn@10.138.138.98
 ```
 
 终于成功了！SSH 提示输入密码，输入后顺利登录到 WSL 环境。
@@ -629,26 +235,10 @@ Radmin VPN 在系统中创建了一个虚拟网卡（`26.243.2.236`），这个�
 
 
 ```
-
-mkdir
-
--p
-
-~/.ssh
-chmod
-
-700
-
-~/.ssh
-touch
-
-~/.ssh/authorized_keys
-chmod
-
-600
-
-~/.ssh/authorized_keys
-
+mkdir -p ~/.ssh
+chmod 700 ~/.ssh
+touch ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
 ```
 
 然后把 Mac 上的公钥（`~/.ssh/id_rsa.pub`）内容添加到 WSL 的 `authorized_keys` 文件中。之后就可以直接免密登录了。

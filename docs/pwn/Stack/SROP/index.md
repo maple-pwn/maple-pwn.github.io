@@ -25,96 +25,27 @@
 pwntools可以直接梭srop了
 
 
-```
-
-section
-
-.text
-
-global
-
-_start
+```asm
+section .text
+global _start
 
 _start:
+    lea     rdi, [rel identity]
+    call    boot_sequence
 
-
-lea
-
-rdi
-,
-
-[
-rel
-
-identity
-]
-
-
-call
-
-boot_sequence
-
-
-call
-
-decode_world
-
-
-call
-
-rewrite_self
-
-
-call
-
-sync_with_others
+    call    decode_world
+    call    rewrite_self
+    call    sync_with_others
 
 .next:
+    call    iterate_future
+    call    embrace_fault
+    call    commit_vision
 
+    call    fallback_path
+    mov     rax, -1
+    test    rax, rax
+    js      .next
 
-call
-
-iterate_future
-
-
-call
-
-embrace_fault
-
-
-call
-
-commit_vision
-
-
-call
-
-fallback_path
-
-
-mov
-
-rax
-,
-
--1
-
-
-test
-
-rax
-,
-
-rax
-
-
-js
-
-.next
-
-
-jmp
-
-.next
-
+    jmp     .next
 ```

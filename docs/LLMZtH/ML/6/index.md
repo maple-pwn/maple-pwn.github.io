@@ -1,8 +1,7 @@
 # 第六章 支持向量机
 
-Note
-
-支持向量机(SVM)是一种常用的 **监督学习模型**，主要用于分类和回归问题。
+!!! note
+    支持向量机(SVM)是一种常用的 **监督学习模型**，主要用于分类和回归问题。
 
 > 之前介绍过，监督学习模型就是通过已有的标注数据来训练模型，以便在未来对未见过的数据进行预测或分类
 
@@ -71,6 +70,7 @@ $$
 > 首先我们知道 $||\boldsymbol{w}||$ 是向量 $\boldsymbol{w}$ 的欧几里得范数，计算公式如下：
 >
 >
+
 $$
 \|\boldsymbol{w}\| = \sqrt{\sum_{i=1}^{n} w_i^2} \quad \text{或者} \quad \|\boldsymbol{w}\| = \sqrt{\boldsymbol{w}^T \boldsymbol{w}}.
 $$
@@ -79,6 +79,7 @@ $$
 > 所以 $||\boldsymbol{w}||^2$ 是 $\boldsymbol{w}$ 的平方范数，表示如下
 >
 >
+
 $$
 \|\boldsymbol{w}\|^2 = \boldsymbol{w}^T \boldsymbol{w}
 $$
@@ -91,18 +92,17 @@ $$
 
 ### 对偶问题
 
-Note
+!!! note
+    **目的**：我们希望求解式(6.6)来得到大间隔划分超平面所对应的模型，如下
 
-**目的**：我们希望求解式(6.6)来得到大间隔划分超平面所对应的模型，如下
-$$
-f(\boldsymbol{x})=\boldsymbol{w}^T\boldsymbol{x}+b\tag{6.7}
-$$
+    $$
+    f(\boldsymbol{x})=\boldsymbol{w}^T\boldsymbol{x}+b\tag{6.7}
+    $$
 
 书中介绍了利用拉格朗日乘子法得到对偶问题进而求解的方法，具体过程如下：
 
-Note
-
-**求对偶问题**
+!!! note
+    **求对偶问题**
 
 对式(6.6)的每条约束添加拉格朗日乘子 $\alpha_i\ge 0$ ，则该问题的拉格朗日函数可以写为
 
@@ -119,9 +119,8 @@ $$
 \end{align}
 $$
 
-Tip
-
-偏导计算过程
+!!! tip
+    偏导计算过程
 
 **对 $\boldsymbol{w}$ 求偏导数：**
 
@@ -200,9 +199,8 @@ $$
 
 可以轻松观察得：对任意训练样本 $(\boldsymbol{x}_i,y_i)$ ,总有 $\alpha_i=0$ 或 $y_if(\boldsymbol{x_i})=1$
 
-Note
-
-**求解式(6.11)**
+!!! note
+    **求解式(6.11)**
 
 若采用二次规划算法来求解此问题，会产生非常大得开销。于是人们根据问题本身的特性开发一些高效算法，书中主要介绍的是SMO算法，其基本思路是逐步优化两个拉格朗日乘子来简化问题
 
@@ -247,11 +245,11 @@ $$
 > - 在每次优化过程中，SMO会选择两个乘子 $\alpha_i$ 和 $\alpha_j$ 来进行更新。这两个拉格朗日乘子的和必须满足某种关系，其中 $y_i$ 和 $y_j$ 是它们所对应的标签
 > - 因为我们希望使目标函数变化最大化，所以要求这两个变量在更新时保持某种平衡。公式(6.16)保持了这个平衡
 
-Note
-
-**求解偏置项**
+!!! note
+    **求解偏置项**
 
 对于任意支持向量 $(\boldsymbol{x_s},y_s)$ ，都有 $y_sf(\boldsymbol{x_s})=1$，也就是：
+
 $$
 y\_s\left(\sum\_{i \in S} \alpha\_i y\_i x\_i^T x\_s + b \right)= 1\tag{6.17}
 $$
@@ -265,6 +263,7 @@ $$
 > 公式表示了在优化过程中，所有支持向量的加权和与偏置项 $b$ 的和 **一定** 为1。这个约束条件确保了决策函数处于正确的位置，且支持向量对决策边界的贡献是平衡的
 
 现实中采用所有支持向量求解的平均值来获得b，以得到更好的鲁棒性
+
 $$
 b = \frac{1}{|S|} \sum\_{s \in S} \left( y\_s - \sum\_{i \in S} \alpha\_i y\_i x\_i^T x\_s \right)\tag{6.18}
 $$
@@ -337,9 +336,8 @@ $$
 
 于是有了如下定理
 
-Note
-
-**定理 6.1** (核函数) 令 $\mathcal{X}$ 为输入空间，$\kappa(\cdot, \cdot)$ 是定义在 $\mathcal{X} \times \mathcal{X}$ 上的对称函数，则该核函数当且仅当对于任意数据 $D = \{x_1, x_2, \dots, x_m\}$，"核矩阵" (kernel matrix) $K$ 总是半正定的：
+!!! note
+    **定理 6.1** (核函数) 令 $\mathcal{X}$ 为输入空间，$\kappa(\cdot, \cdot)$ 是定义在 $\mathcal{X} \times \mathcal{X}$ 上的对称函数，则该核函数当且仅当对于任意数据 $D = \{x_1, x_2, \dots, x_m\}$，"核矩阵" (kernel matrix) $K$ 总是半正定的：
 
 $$
 K = \begin{bmatrix}
@@ -356,1344 +354,125 @@ $$
 实现代码
 
 
-```
-
-import
-
-numpy
-
-as
-
-np
-
-class
-
-SMO
-:
-
-
-def
-
-__init__
-(
-self
-,
-
-C
-=
-1.0
-,
-
-tolerance
-=
-0.001
-,
-
-max_iter
-=
-100
-):
-
-
-self
-.
-C
-
-=
-
-C
-
-
-# 惩罚参数
-
-
-self
-.
-tolerance
-
-=
-
-tolerance
-
-
-# 精度
-
-
-self
-.
-max_iter
-
-=
-
-max_iter
-
-
-# 最大迭代次数
-
-
-def
-
-fit
-(
-self
-,
-
-X
-,
-
-y
-):
-
-
-
-# 样本数量和特征数
-
-
-m
-,
-
-n
-
-=
-
-X
-.
-shape
-
-
-self
-.
-X
-
-=
-
-X
-
-
-self
-.
-y
-
-=
-
-y
-
-
-self
-.
-alphas
-
-=
-
-np
-.
-zeros
-(
-m
-)
-
-
-# 初始化拉格朗日乘子α
-
-
-self
-.
-b
-
-=
-
-0
-
-
-# 初始化偏置b
-
-
-self
-.
-errors
-
-=
-
-np
-.
-zeros
-(
-m
-)
-
-
-# 误差缓存
-
-
-
-# 训练过程
-
-
-iteration
-
-=
-
-0
-
-
-while
-
-iteration
-
-<
-
-self
-.
-max_iter
-:
-
-
-alpha_pairs_changed
-
-=
-
-0
-
-
-for
-
-i
-
-in
-
-range
-(
-m
-):
-
-
-
-# 计算预测值
-
-
-Ei
-
-=
-
-self
-.
-_calculate_error
-(
-i
-)
-
-
-if
-
-(
-self
-.
-y
-[
-i
-]
-
-*
-
-Ei
-
-<
-
--
-self
-.
-tolerance
-
-and
-
-self
-.
-alphas
-[
-i
-]
-
-<
-
-self
-.
-C
-)
-
-or
-
-(
-self
-.
-y
-[
-i
-]
-
-*
-
-Ei
-
-self
-.
-tolerance
-
-and
-
-self
-.
-alphas
-[
-i
-]
-
-0
-):
-
-
-j
-
-=
-
-self
-.
-_select_j
-(
-i
-,
-
-m
-)
-
-
-Ej
-
-=
-
-self
-.
-_calculate_error
-(
-j
-)
-
-
-alpha_i_old
-
-=
-
-self
-.
-alphas
-[
-i
-]
-
-
-alpha_j_old
-
-=
-
-self
-.
-alphas
-[
-j
-]
-
-
-
-# 计算边界
-
-
-if
-
-self
-.
-y
-[
-i
-]
-
-!=
-
-self
-.
-y
-[
-j
-]:
-
-
-L
-
-=
-
-max
-(
-0
-,
-
-self
-.
-alphas
-[
-j
-]
-
--
-
-self
-.
-alphas
-[
-i
-])
-
-
-H
-
-=
-
-min
-(
-self
-.
-C
-,
-
-self
-.
-C
-
-+
-
-self
-.
-alphas
-[
-j
-]
-
--
-
-self
-.
-alphas
-[
-i
-])
-
-
-else
-:
-
-
-L
-
-=
-
-max
-(
-0
-,
-
-self
-.
-alphas
-[
-i
-]
-
-+
-
-self
-.
-alphas
-[
-j
-]
-
--
-
-self
-.
-C
-)
-
-
-H
-
-=
-
-min
-(
-self
-.
-C
-,
-
-self
-.
-alphas
-[
-i
-]
-
-+
-
-self
-.
-alphas
-[
-j
-])
-
-
-if
-
-L
-
-==
-
-H
-:
-
-
-continue
-
-
-
-# 计算内核函数部分
-
-
-eta
-
-=
-
-2.0
-
-*
-
-self
-.
-kernel
-(
-X
-[
-i
-],
-
-X
-[
-j
-])
-
--
-
-self
-.
-kernel
-(
-X
-[
-i
-],
-
-X
-[
-i
-])
-
--
-
-self
-.
-kernel
-(
-X
-[
-j
-],
-
-X
-[
-j
-])
-
-
-if
-
-eta
-
-=
-
-0
-:
-
-
-continue
-
-
-
-# 更新α值
-
-
-self
-.
-alphas
-[
-j
-]
-
--=
-
-self
-.
-y
-[
-j
-]
-
-*
-
-(
-Ei
-
--
-
-Ej
-)
-
-/
-
-eta
-
-
-self
-.
-alphas
-[
-j
-]
-
-=
-
-self
-.
-_clip_alpha
-(
-self
-.
-alphas
-[
-j
-],
-
-H
-,
-
-L
-)
-
-
-self
-.
-_update_error_cache
-(
-j
-)
-
-
-if
-
-abs
-(
-self
-.
-alphas
-[
-j
-]
-
--
-
-alpha_j_old
-)
-
-<
-
-self
-.
-tolerance
-:
-
-
-continue
-
-
-self
-.
-alphas
-[
-i
-]
-
-+=
-
-self
-.
-y
-[
-i
-]
-
-*
-
-self
-.
-y
-[
-j
-]
-
-*
-
-(
-alpha_j_old
-
--
-
-self
-.
-alphas
-[
-j
-])
-
-
-self
-.
-_update_error_cache
-(
-i
-)
-
-
-alpha_pairs_changed
-
-+=
-
-1
-
-
-if
-
-alpha_pairs_changed
-
-==
-
-0
-:
-
-
-iteration
-
-+=
-
-1
-
-
-else
-:
-
-
-iteration
-
-=
-
-0
-
-
-
-# 训练结束，计算偏置b
-
-
-self
-.
-b
-
-=
-
-self
-.
-_calculate_b
-()
-
-
-def
-
-_calculate_error
-(
-self
-,
-
-i
-):
-
-
-"""计算误差"""
-
-
-fXi
-
-=
-
-np
-.
-dot
-(
-self
-.
-alphas
-
-*
-
-self
-.
-y
-,
-
-self
-.
-kernel
-(
-self
-.
-X
-,
-
-self
-.
-X
-[
-i
-]))
-
-+
-
-self
-.
-b
-
-
-return
-
-fXi
-
--
-
-self
-.
-y
-[
-i
-]
-
-
-def
-
-_select_j
-(
-self
-,
-
-i
-,
-
-m
-):
-
-
-"""选择第二个违反KKT条件的α"""
-
-
-j
-
-=
-
-i
-
-
-while
-
-j
-
-==
-
-i
-:
-
-
-j
-
-=
-
-np
-.
-random
-.
-randint
-(
-0
-,
-
-m
-)
-
-
-return
-
-j
-
-
-def
-
-kernel
-(
-self
-,
-
-X1
-,
-
-X2
-):
-
-
-"""核函数，使用线性核"""
-
-
-return
-
-np
-.
-dot
-(
-X1
-,
-
-X2
-)
-
-
-def
-
-_clip_alpha
-(
-self
-,
-
-alpha
-,
-
-H
-,
-
-L
-):
-
-
-"""确保α值在[0, C]之间"""
-
-
-return
-
-max
-(
-L
-,
-
-min
-(
-alpha
-,
-
-H
-))
-
-
-def
-
-_update_error_cache
-(
-self
-,
-
-i
-):
-
-
-"""更新误差缓存"""
-
-
-self
-.
-errors
-[
-i
-]
-
-=
-
-self
-.
-_calculate_error
-(
-i
-)
-
-
-def
-
-_calculate_b
-(
-self
-):
-
-
-"""计算偏置b"""
-
-
-b
-
-=
-
-0
-
-
-for
-
-i
-
-in
-
-range
-(
-len
-(
-self
-.
-alphas
-)):
-
-
-if
-
-0
-
-<
-
-self
-.
-alphas
-[
-i
-]
-
-<
-
-self
-.
-C
-:
-
-
-b
-
-=
-
-self
-.
-y
-[
-i
-]
-
--
-
-np
-.
-dot
-(
-self
-.
-alphas
-
-*
-
-self
-.
-y
-,
-
-self
-.
-kernel
-(
-self
-.
-X
-,
-
-self
-.
-X
-[
-i
-]))
-
-
-break
-
-
-return
-
-b
-
-
-def
-
-predict
-(
-self
-,
-
-X
-):
-
-
-"""预测新样本"""
-
-
-result
-
-=
-
-np
-.
-dot
-(
-self
-.
-alphas
-
-*
-
-self
-.
-y
-,
-
-self
-.
-kernel
-(
-self
-.
-X
-,
-
-X
-.
-T
-))
-
-+
-
-self
-.
-b
-
-
-return
-
-np
-.
-sign
-(
-result
-)
-
+```python
+import numpy as np
+
+class SMO:
+    def __init__(self, C=1.0, tolerance=0.001, max_iter=100):
+        self.C = C  # 惩罚参数
+        self.tolerance = tolerance  # 精度
+        self.max_iter = max_iter  # 最大迭代次数
+
+    def fit(self, X, y):
+        # 样本数量和特征数
+        m, n = X.shape
+        self.X = X
+        self.y = y
+        self.alphas = np.zeros(m)  # 初始化拉格朗日乘子α
+        self.b = 0  # 初始化偏置b
+        self.errors = np.zeros(m)  # 误差缓存
+
+        # 训练过程
+        iteration = 0
+        while iteration < self.max_iter:
+            alpha_pairs_changed = 0
+            for i in range(m):
+                # 计算预测值
+                Ei = self._calculate_error(i)
+                if (self.y[i] * Ei < -self.tolerance and self.alphas[i] < self.C) or (self.y[i] * Ei      self.tolerance and self.alphas[i]      0):
+                    j = self._select_j(i, m)
+                    Ej = self._calculate_error(j)
+                    alpha_i_old = self.alphas[i]
+                    alpha_j_old = self.alphas[j]
+
+                    # 计算边界
+                    if self.y[i] != self.y[j]:
+                        L = max(0, self.alphas[j] - self.alphas[i])
+                        H = min(self.C, self.C + self.alphas[j] - self.alphas[i])
+                    else:
+                        L = max(0, self.alphas[i] + self.alphas[j] - self.C)
+                        H = min(self.C, self.alphas[i] + self.alphas[j])
+
+                    if L == H:
+                        continue
+
+                    # 计算内核函数部分
+                    eta = 2.0 * self.kernel(X[i], X[j]) - self.kernel(X[i], X[i]) - self.kernel(X[j], X[j])
+                    if eta     = 0:
+                        continue
+
+                    # 更新α值
+                    self.alphas[j] -= self.y[j] * (Ei - Ej) / eta
+                    self.alphas[j] = self._clip_alpha(self.alphas[j], H, L)
+                    self._update_error_cache(j)
+
+                    if abs(self.alphas[j] - alpha_j_old) < self.tolerance:
+                        continue
+
+                    self.alphas[i] += self.y[i] * self.y[j] * (alpha_j_old - self.alphas[j])
+                    self._update_error_cache(i)
+
+                    alpha_pairs_changed += 1
+
+            if alpha_pairs_changed == 0:
+                iteration += 1
+            else:
+                iteration = 0
+
+        # 训练结束，计算偏置b
+        self.b = self._calculate_b()
+
+    def _calculate_error(self, i):
+        """计算误差"""
+        fXi = np.dot(self.alphas * self.y, self.kernel(self.X, self.X[i])) + self.b
+        return fXi - self.y[i]
+
+    def _select_j(self, i, m):
+        """选择第二个违反KKT条件的α"""
+        j = i
+        while j == i:
+            j = np.random.randint(0, m)
+        return j
+
+    def kernel(self, X1, X2):
+        """核函数，使用线性核"""
+        return np.dot(X1, X2)
+
+    def _clip_alpha(self, alpha, H, L):
+        """确保α值在[0, C]之间"""
+        return max(L, min(alpha, H))
+
+    def _update_error_cache(self, i):
+        """更新误差缓存"""
+        self.errors[i] = self._calculate_error(i)
+
+    def _calculate_b(self):
+        """计算偏置b"""
+        b = 0
+        for i in range(len(self.alphas)):
+            if 0 < self.alphas[i] < self.C:
+                b = self.y[i] - np.dot(self.alphas * self.y, self.kernel(self.X, self.X[i]))
+                break
+        return b
+
+    def predict(self, X):
+        """预测新样本"""
+        result = np.dot(self.alphas * self.y, self.kernel(self.X, X.T)) + self.b
+        return np.sign(result)
 
 # 示例：加载数据并训练模型
+if __name__ == "__main__":
+    # 创建一个简单的二分类数据集
+    X = np.array([[2, 3], [3, 3], [3, 4], [4, 5], [6, 7], [7, 8], [8, 9]])
+    y = np.array([1, 1, 1, -1, -1, -1, -1])
 
-if
+    # 初始化SMO并训练
+    smo = SMO(C=1.0, tolerance=0.001, max_iter=100)
+    smo.fit(X, y)
 
-__name__
-
-==
-
-"__main__"
-:
-
-
-
-# 创建一个简单的二分类数据集
-
-
-X
-
-=
-
-np
-.
-array
-([[
-2
-,
-
-3
-],
-
-[
-3
-,
-
-3
-],
-
-[
-3
-,
-
-4
-],
-
-[
-4
-,
-
-5
-],
-
-[
-6
-,
-
-7
-],
-
-[
-7
-,
-
-8
-],
-
-[
-8
-,
-
-9
-]])
-
-
-y
-
-=
-
-np
-.
-array
-([
-1
-,
-
-1
-,
-
-1
-,
-
--
-1
-,
-
--
-1
-,
-
--
-1
-,
-
--
-1
-])
-
-
-
-# 初始化SMO并训练
-
-
-smo
-
-=
-
-SMO
-(
-C
-=
-1.0
-,
-
-tolerance
-=
-0.001
-,
-
-max_iter
-=
-100
-)
-
-
-smo
-.
-fit
-(
-X
-,
-
-y
-)
-
-
-
-# 预测
-
-
-prediction
-
-=
-
-smo
-.
-predict
-(
-X
-)
-
-
-print
-(
-"Predictions:"
-,
-
-prediction
-)
-
+    # 预测
+    prediction = smo.predict(X)
+    print("Predictions:", prediction)
 ```
 
 
@@ -1738,6 +517,7 @@ $$
 > - $\ell_{0/1}$ 是0/1损失函数，用来计数：多少个样本不满足约束。*不过这个函数的数学性质不好，一般用其它损失函数替代，如 hinge损失、指数损失、对率损失等*
 >
 >
+
 $$
 \ell_{0/1}(z)=
 \begin{cases}
@@ -1766,9 +546,8 @@ $$
 
 接下来就是和上面计算基础向量机的计算方式差不多（下面的计算是用hinge损失来做替代）
 
-Note
-
-**1) 拉格朗日函数**
+!!! note
+    **1) 拉格朗日函数**
 
 对约束引入拉格朗日乘子：$\alpha_i\ge 0$、$\mu_i\ge 0$。
 
@@ -1800,6 +579,7 @@ $$
 $$
 
 - 关于 $\xi_i$：
+
   $$
   C=\alpha\_i+\mu\_i.\tag{6.39}
   $$
@@ -1874,6 +654,7 @@ $$
   - $\xi_i>1$：样本被误分类。
 
 更一般的，优化目标中的第一项用来描述划分超平面的“间隔”大小，另一项 $\sum_{i=1}^{m}\ell(f(\boldsymbol{x_i},y_i)$ 来表述训练集上的误差，于是我们可以得到一般式
+
 $$
 \min\_f\Omega(f)+C\sum\_{i=1}^{m}\ell(f(\boldsymbol{x\_i}),y\_i)\tag{6.42}
 $$

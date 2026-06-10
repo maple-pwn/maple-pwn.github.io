@@ -13,227 +13,53 @@
 实现也很简单，如下
 
 
-```
-
+```c
 /*
-
  * debug.h
-
  */
-
 #ifndef __KERNEL_DEBUG_H
-
 #define __KERNEL_DEBUG_H
+void panic_spin(char* filename, int line, const char* func, const char* condition);
 
-void
-
-panic_spin
-(
-char
-*
-
-filename
-,
-
-int
-
-line
-,
-
-const
-
-char
-*
-
-func
-,
-
-const
-
-char
-*
-
-condition
-);
-
-#define PANIC(...) panic_spin(__FILE__, __LINE__, __func__, __VA_ARGS__)
+#define PANIC(...) panic_spin(__FILE__, __LINE__, __func__, __VA_ARGS__)   
 
 #ifdef NDEBUG
-
-
-#define ASSERT(CONDITION) ((void)0)
-
-#else
-
+  #define ASSERT(CONDITION) ((void)0)   
+#else                                  
 #define ASSERT(CONDITION) \
-
-if(CONDITION){}else{    \
-
-
-/* 符号#让编译器将宏的参数转化为字符串面量 */
-
-\
-
-
-
-PANIC
-(
-
-#
-CONDITION
-);
-
-\
-
-
+if(CONDITION){}else{    \               
+  /* 符号#让编译器将宏的参数转化为字符串面量 */ \       
+  PANIC(#CONDITION); \                 
 }
 
-#endif
-/*__NDEBUG*/
-
-#endif
-/*__KERNEL_DEBUG_H*/
-
+#endif /*__NDEBUG*/
+#endif /*__KERNEL_DEBUG_H*/
 ```
 
 
-```
-
-/*
-
+```c
+/* 
  * debug.c
-
  */
-
-#include
-
-"debug.h"
-
-#include
-
-"print.h"
-
-#include
-
-"interrupt.h"
+#include "debug.h"
+#include "print.h"
+#include "interrupt.h"
 
 /* 打印文件名、行号、函数名、条件并使程序悬停 */
-
-void
-
-panic_spin
-(
-char
-*
-
-filename
-,
-
-int
-
-line
-,
-
-const
-
-char
-*
-
-func
-,
-
-const
-
-char
-*
-
-condition
-){
-
-
-intr_disable
-();
-
-//这里先关中断，免得别的中断打扰
-
-
-put_str
-(
-"
-\n\n\n
-!!! error !!!
-\n
-"
-);
-
-
-put_str
-(
-"filename:"
-);
-
-
-put_str
-(
-filename
-);
-
-
-put_str
-(
-"
-\n
-"
-);
-
-
-put_str
-(
-"line:0x"
-);
-
-
-put_int
-(
-line
-);
-
-
-put_str
-(
-"
-\n
-"
-);
-
-
-put_str
-(
-"condition:"
-);
-
-
-put_str
-(
-condition
-);
-
-
-put_str
-(
-"
-\n
-"
-);
-
-
-while
-(
-1
-);
-
+void panic_spin(char* filename, int line, const char* func, const char* condition){
+  intr_disable();                   //这里先关中断，免得别的中断打扰
+  put_str("\n\n\n!!! error !!!\n");
+  put_str("filename:");
+  put_str(filename);
+  put_str("\n");
+  put_str("line:0x");
+  put_int(line);
+  put_str("\n");
+  put_str("condition:");
+  put_str(condition);
+  put_str("\n");
+  while(1);
 }
-
 ```
 
 
@@ -250,9 +76,8 @@ while
 
 在保护模式下，程序地址编程了虚拟地址，虚拟地址对应的物理地址是由分页机制做的映射。因此，在分页机制下有了虚拟、物理这两种地址，操作系统有责任把这两种地址分别管理。并通过页表将这两类地址关联。接下来讨论的就是有关这两类地址的\*\*内存池\*\*规划问题
 
-Note
-
-可以认为是一个内存仓库，我们将可用的内存地址集中放到一起，需要的时候直接从里面取出，用完再放回去。由于在分页机制下有了虚拟地址和物理地址，为了有效地管理它们，我们需要创建虚拟内存地址池和物理内存地址池
+!!! note
+    可以认为是一个内存仓库，我们将可用的内存地址集中放到一起，需要的时候直接从里面取出，用完再放回去。由于在分页机制下有了虚拟地址和物理地址，为了有效地管理它们，我们需要创建虚拟内存地址池和物理内存地址池
 
 **物理内存池**
 
@@ -268,15 +93,13 @@ Note
 
 **分配页内存**
 
-Note
+!!! note
+    1. 高10位是页目录项pde的索引，用于在页目录表中定位pde，细节是处理获取高10位后自动将其乘以4，再加上页目录表的物理地址，这样就得到了ped索引对应的ped所在的物理地址，然后自动在该物理地址中获取保存的页表物理地址
+    2. 中间10位是页表项pte的索引，用于在页表中定位pte。细节是处理器获取中间10位后自动将其乘以4，再加上第一步中得到的页表的物理地址，这样就得到了pte索引对应的pte所在的物理地址，然后自动在该物理地址中获取保存的普通物理页的物理地址
+    3. 低12位是物理页内的偏移量，页大小是4KB，12位可寻址的范围正好是4KB，因此处理器便直接把低12位作为第二步中获取的物理页的偏移量，无需乘以4。用物理页的物理地址加上这低12位的和便是这32位虚拟地址最终落向的物理地址
 
-1. 高10位是页目录项pde的索引，用于在页目录表中定位pde，细节是处理获取高10位后自动将其乘以4，再加上页目录表的物理地址，这样就得到了ped索引对应的ped所在的物理地址，然后自动在该物理地址中获取保存的页表物理地址
-2. 中间10位是页表项pte的索引，用于在页表中定位pte。细节是处理器获取中间10位后自动将其乘以4，再加上第一步中得到的页表的物理地址，这样就得到了pte索引对应的pte所在的物理地址，然后自动在该物理地址中获取保存的普通物理页的物理地址
-3. 低12位是物理页内的偏移量，页大小是4KB，12位可寻址的范围正好是4KB，因此处理器便直接把低12位作为第二步中获取的物理页的偏移量，无需乘以4。用物理页的物理地址加上这低12位的和便是这32位虚拟地址最终落向的物理地址
 
-
-```
-
+```mermaid
 flowchart TD
     A[32位虚拟地址] --> B1[高10位（31~22）<br/>页目录索引 PDE]
     A --> B2[中10位 （21~12）<br/>页表索引 PTE]
@@ -320,7 +143,6 @@ flowchart TD
         C2
         D2
     end
-
 ```
 
 分配页表中，我们需要做的事有三件：
@@ -333,309 +155,41 @@ flowchart TD
 
 
 ```
-
 /* 页表中添加虚拟地址_vaddr与物理地址_page_phyaddr的映射 */
-
-static
-
-void
-
-page_table_add
-(
-void
-*
-
-_vaddr
-,
-
-void
-*
-
-_page_phyaddr
-){
-
-
-uint32_t
-
-vaddr
-
-=
-
-(
-uint32_t
-)
-_vaddr
-,
-page_phyaddr
-
-=
-
-(
-uint32_t
-)
-_page_phyaddr
-;
-
-
-uint32_t
-*
-
-pde
-
-=
-
-pde_ptr
-(
-vaddr
-);
-
-
-uint32_t
-*
-
-pte
-
-=
-
-pte_ptr
-(
-vaddr
-);
+static void page_table_add(void* _vaddr, void* _page_phyaddr){
+  uint32_t vaddr = (uint32_t)_vaddr,page_phyaddr = (uint32_t)_page_phyaddr;
+  uint32_t* pde = pde_ptr(vaddr);
+  uint32_t* pte = pte_ptr(vaddr);
 
 /******************************** 注意 **********************************
-
  * 执行*pte会访问到空的pde，所以确保pde创建完成后才能执行*pte,
-
  * 否则会引发page_fault。因此在*pde为0的时候，*pte只能出现在下面else语句块中的*pde后面
-
  * **********************************************************************/
-
-
-/* 先在页目录内判断目录项的P位，若为1则表示该表已经存在 */
-
-
-if
-(
-*
-pde
-
-&
-
-0x00000001
-){
-
-
-//页目录项和页表项的第0位为p，这里是判断页目录项是否存在
-
-
-ASSERT
-(
-!
-(
-*
-pte
-
-&
-
-0x00000001
-));
-
-//这里若是说以前有已经装载的物理页框，则会报错
-
-
-if
-(
-!
-(
-*
-pte
-
-&
-
-0x00000001
-)){
-
-
-*
-pte
-
-=
-
-(
-page_phyaddr
-
-|
-
-PG_US_U
-
-|
-
-PG_RW_W
-
-|
-
-PG_P_1
-);
-
-
-}
-else
-{
-
-
-PANIC
-(
-"pte repeat"
-);
-
-//ASSERT的内置函数
-
-
-*
-pte
-
-=
-
-(
-page_phyaddr
-
-|
-
-PG_US_U
-
-|
-
-PG_RW_W
-
-|
-
-PG_P_1
-);
-
-
-}
-
-
-}
-else
-{
-
-
-//页目录项不存在，所以需要先创建页目录再创建页表项
-
-
-/* 页表中的页框一律从内核空间分配 */
-
-
-uint32_t
-
-pde_phyaddr
-
-=
-
-(
-uint32_t
-)
-palloc
-(
-&
-kernel_pool
-);
-
-
-*
-pde
-
-=
-
-(
-pde_phyaddr
-
-|
-
-PG_US_U
-
-|
-
-PG_RW_W
-
-|
-
-PG_P_1
-);
-
-
-/* 分配到的物理页地址pde_phyaddr对应的物理内存清0,
-
+  /* 先在页目录内判断目录项的P位，若为1则表示该表已经存在 */
+  if(*pde & 0x00000001){
+    //页目录项和页表项的第0位为p，这里是判断页目录项是否存在
+    ASSERT(!(*pte & 0x00000001));   //这里若是说以前有已经装载的物理页框，则会报错
+    if(!(*pte & 0x00000001)){
+      *pte = (page_phyaddr | PG_US_U | PG_RW_W | PG_P_1);
+    }else{
+      PANIC("pte repeat");      //ASSERT的内置函数
+      *pte = (page_phyaddr | PG_US_U | PG_RW_W | PG_P_1);
+    }
+  }else{
+    //页目录项不存在，所以需要先创建页目录再创建页表项
+    /* 页表中的页框一律从内核空间分配 */
+    uint32_t pde_phyaddr = (uint32_t)palloc(&kernel_pool);
+    *pde = (pde_phyaddr | PG_US_U | PG_RW_W | PG_P_1);
+    /* 分配到的物理页地址pde_phyaddr对应的物理内存清0,
      * 避免里面的旧数据变成页表项，从而让页表混乱
-
      * 访问到pde对应的物理地址，用pte取高20位即可
-
      * 因为pte基于该pde对应的物理地址内再寻址，
-
      * 把低12位置0便是该pde对应的物理页的起始 */
-
-
-memset
-((
-void
-*
-)((
-int
-)
-pte
-
-&
-
-0xfffff000
-),
-
-0
-,
-
-PG_SIZE
-);
-
-
-ASSERT
-(
-!
-(
-*
-pte
-
-&
-
-0x00000001
-));
-
-
-*
-pte
-
-=
-
-(
-page_phyaddr
-
-|
-
-PG_US_U
-
-|
-
-PG_RW_W
-
-|
-
-PG_P_1
-);
-
-
+    memset((void*)((int)pte & 0xfffff000), 0, PG_SIZE);
+    ASSERT(!(*pte & 0x00000001));
+    *pte = (page_phyaddr | PG_US_U | PG_RW_W | PG_P_1);
+  }
 }
-
-}
-
 ```
 
 
@@ -662,9 +216,8 @@ PG_P_1
 
 以上的任务轮转工作就是由\*\*任务调度器\*\*完成的
 
-Note
-
-就是操作系统中用于把任务轮流调度上处理器运行的一个软件模块，它是操作系统的一部分。调度器在内核中维护一个任务表（也称为进程表、线程表或调度表），然后按照一定的算法，从任务表中选择一个任务，然后把该任务放到处理器上运行，当任务运行的实践片到期后，再从任务表中找另一个任务放到处理器上运行
+!!! note
+    就是操作系统中用于把任务轮流调度上处理器运行的一个软件模块，它是操作系统的一部分。调度器在内核中维护一个任务表（也称为进程表、线程表或调度表），然后按照一定的算法，从任务表中选择一个任务，然后把该任务放到处理器上运行，当任务运行的实践片到期后，再从任务表中找另一个任务放到处理器上运行
 
 回归主题，我们的处理器只知道加电后按照程序计数器中的地址不断地进行执行下去，在不断执行地过程中，我们把程序计数器中地下一条指令地址所组成地执行轨迹称为程序的\*\*控制执行流\*\*。换句话说，\*\*执行流\*\*就是一段逻辑上独立的指令区域，是人为给处理器安排的处理单元。
 
@@ -674,111 +227,22 @@ Note
 
 **线程到底是什么**
 
-Note
+!!! note
+    ```c
+    //thread.c
+    #include<stdio.h>
+    #include<pthread.h>
+    void* thread_func(void* _arg) {
+        unsigned int * arg = _arg;
+        printf(" new thread tid is %u\n", *arg);
+    }
 
-
-```
-
-//thread.c
-
-#include
-<stdio.h>
-
-#include
-<pthread.h>
-
-void
-*
-
-thread_func
-(
-void
-*
-
-_arg
-)
-
-{
-
-
-unsigned
-
-int
-
-*
-
-arg
-
-=
-
-_arg
-;
-
-
-printf
-(
-" new thread tid is %u
-\n
-"
-,
-
-*
-arg
-);
-
-}
-
-void
-
-main
-()
-
-{
-
-
-pthread_t
-
-new_thread_id
-;
-
-
-pthread_create
-(
-&
-new_thread_id
-,
-
-NULL
-,
-
-thread_func
-,
-
-&
-new_thread_id
-);
-
-
-printf
-(
-"main thread tid is %u
-\n
-"
-,
-
-pthread_self
-());
-
-
-usleep
-(
-100
-);
-
-//不清楚新线程是否是在主线程结束之前被调用，所以在主线程最后加一个100ms的阻塞
-
-}
-
+    void main() {
+        pthread_t new_thread_id;
+        pthread_create(&new_thread_id, NULL, thread_func, &new_thread_id);
+        printf("main thread tid is %u\n", pthread_self());
+        usleep(100);    //不清楚新线程是否是在主线程结束之前被调用，所以在主线程最后加一个100ms的阻塞
+    }
 ```
 
 编译并运行
@@ -810,8 +274,7 @@ usleep
 可以认为，线程是在进程基础之上的二次并发
 
 
-```
-
+```mermaid
 graph TD
     A[程序] --> B[进程]
     B --> C[线程]
@@ -830,7 +293,6 @@ graph TD
     class A program;
     class B process;
     class C thread;
-
 ```
 
 **PCB——进程的身份证**
@@ -845,11 +307,10 @@ PCB(Process Control Block),程序控制块。用来记录与此进程相关的�
 
 - **进程状态**：是指运行、就绪、阻塞等，这样调度器就知道他是否可以进行调度
 
-Note
-
-- **运行**：进程处于运行状态时，它正被CPU调度并正在执行指令
-- **就绪**：进程处于就绪状态时，它已经加载到内存并准备好执行，只是等等待操作系统将CPU分配给他。
-- **阻塞**：进程处于阻塞状态时，它因为等待某些事件或资源（如I/O操作、锁、信号量等）而无法继续执行
+!!! note
+    - **运行**：进程处于运行状态时，它正被CPU调度并正在执行指令
+    - **就绪**：进程处于就绪状态时，它已经加载到内存并准备好执行，只是等等待操作系统将CPU分配给他。
+    - **阻塞**：进程处于阻塞状态时，它因为等待某些事件或资源（如I/O操作、锁、信号量等）而无法继续执行
 
 - **时间片**：时间为0的时候说明这个进程在处理器上的时间已经到了，这时候需要调度器进行调度
 - **页表**：表示进程的地址空间，这个是进程独享的
@@ -859,9 +320,8 @@ Note
 
 ### 实现
 
-Note
-
-标题中提到了\*\*内核线程\*\*，那么与之对应的，有一种\*\*用户进程\*\*，下面做一下解释
+!!! note
+    标题中提到了\*\*内核线程\*\*，那么与之对应的，有一种\*\*用户进程\*\*，下面做一下解释
 
 先说结论：
 
@@ -879,101 +339,24 @@ Note
 | 出错影响 | 系统级崩溃或死机 | 进程崩溃，不影响系统 |
 
 
-```
-
+```c
 //thread/thread.c
-
 /*...*/
-
-struct
-
-thread_stack
-{
-
-
-uint32_t
-
-ebp
-;
-
-
-uint32_t
-
-ebx
-;
-
-
-uint32_t
-
-edi
-;
-
-
-uint32_t
-
-esi
-;
-
-
-/* 线程第一次执行的时候，eip指向带调用的函数kernel_thread
-
+struct thread_stack{
+    uint32_t ebp;
+    uint32_t ebx;
+    uint32_t edi;
+    uint32_t esi;
+    /* 线程第一次执行的时候，eip指向带调用的函数kernel_thread
      * 其它时候，eip指向的switch_to的返回地址*/
+    void (*eip) (thread_func* func, void* func_arg);    //表示一个地址变量
 
-
-void
-
-(
-*
-eip
-)
-
-(
-thread_func
-*
-
-func
-,
-
-void
-*
-
-func_arg
-);
-
-//表示一个地址变量
-
-
-/******以下仅供第一次被调度上CPU使用*******/
-
-
-void
-(
-*
-unused_retaddr
-);
-
-
-thread_func
-*
-
-function
-;
-
-//由kernel_thread所调用的函数名
-
-
-void
-*
-
-func_arg
-;
-
-//由kernel_thread所调用的函数所需要的参数
-
+    /******以下仅供第一次被调度上CPU使用*******/
+    void(*unused_retaddr);
+    thread_func* function;  //由kernel_thread所调用的函数名
+    void* func_arg;         //由kernel_thread所调用的函数所需要的参数
 };
-
 /*...*/
-
 ```
 
 这里定义的struct thread\_stack有两个作用：
@@ -990,108 +373,28 @@ func_arg
 在thread.h中的PCB结构中新加几个数据，更新task\_struct如下：
 
 
-```
-
+```c
 /* 进程或线程的PCB */
+struct task_struct{
+  uint32_t* self_kstack;        //各内核线程都用自己的内核栈
+  enum task_status status;
+  char name[16];
+  uint8_t priority;             //线程优先级
+  uint8_t ticks;                //每次在处理器上执行的时间滴答数
 
-struct
-
-task_struct
-{
-
-
-uint32_t
-*
-
-self_kstack
-;
-
-//各内核线程都用自己的内核栈
-
-
-enum
-
-task_status
-
-status
-;
-
-
-char
-
-name
-[
-16
-];
-
-
-uint8_t
-
-priority
-;
-
-//线程优先级
-
-
-uint8_t
-
-ticks
-;
-
-//每次在处理器上执行的时间滴答数
-
-
-/* 此任务自从上cpu运行后至今占用了多少cpu滴答数，
-
+  /* 此任务自从上cpu运行后至今占用了多少cpu滴答数，
    * 也就是此任务执行了多久 */
+  uint32_t elapsed_ticks;
 
+  /* general_tag的作用是用于线程在一般的队列中的结点 */
+  struct list_elem general_tag;
 
-uint32_t
+  /* all_list_tag的作用是用于线程队列thread_all_list中的节点 */
+  struct list_elem all_list_tag;
 
-elapsed_ticks
-;
-
-
-/* general_tag的作用是用于线程在一般的队列中的结点 */
-
-
-struct
-
-list_elem
-
-general_tag
-;
-
-
-/* all_list_tag的作用是用于线程队列thread_all_list中的节点 */
-
-
-struct
-
-list_elem
-
-all_list_tag
-;
-
-
-uint32_t
-*
-
-pgdir
-;
-
-//进程自己页表的虚拟地址
-
-
-uint32_t
-
-stack_magic
-;
-
-//栈的边界标记，用于检测栈的溢出
-
+  uint32_t* pgdir;              //进程自己页表的虚拟地址
+  uint32_t stack_magic;         //栈的边界标记，用于检测栈的溢出
 };
-
 ```
 
 这里我们的`ticks`元素与`priority`配合使用，优先级越高，则处理器上执行该任务的时间片就越长，每次时钟中断都会将当前任务的`ticks`减1
@@ -1141,11 +444,9 @@ stack_magic
 
 
 ```
-
 text复制编辑1. 虚拟地址申请（虚拟内存池打标记）
 2. 物理页分配（物理内存池打标记）
 3. 建立页表映射（修改 PDE / PTE）
-
 ```
 
 - 注意：先判断 PDE 是否存在再写入 PTE，否则会触发 `page_fault`

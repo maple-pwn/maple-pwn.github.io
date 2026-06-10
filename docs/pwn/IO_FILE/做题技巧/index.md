@@ -10,313 +10,56 @@
 `puts`函数最终会调用到该函数，我们需要满足部分 flag 要求使其能够进入`_IO_do_write`
 
 
-```
-
+```python
 int
-
-_IO_new_file_overflow
-
-(
-_IO_FILE
-
-*
-f
-,
-
-int
-
-ch
-)
-
+_IO_new_file_overflow (_IO_FILE *f, int ch)
 {
-
-
-if
-
-(
-f
-->
-_flags
-
-&
-
-_IO_NO_WRITES
-)
-
-
-
-{
-
-
-f
-->
-_flags
-
-|=
-
-_IO_ERR_SEEN
-;
-
-
-__set_errno
-
-(
-EBADF
-);
-
-
-return
-
-EOF
-;
-
-
-}
-
-
-/* If currently reading or no buffer allocated. */
-
-
-if
-
-((
-f
-->
-_flags
-
-&
-
-_IO_CURRENTLY_PUTTING
-)
-
-==
-
-0
-
-||
-
-f
-->
-_IO_write_base
-
-==
-
-NULL
-)
-
-
-
-{
-
-
-:
-
-
-:
-
-
-}
-
-
-if
-
-(
-ch
-
-==
-
-EOF
-)
-
-
-return
-
-_IO_do_write
-
-(
-f
-,
-
-f
-->
-_IO_write_base
-,
-
-f
-->
-_IO_write_ptr
-
--
-
-f
-->
-_IO_write_base
-);
-
-
-// 第二个参数为需要调用的目标，如果使得_IO_write_base < _IO_write_ptr，且 _IO_write_base 处存在有价值的地址 （libc 地址）则可进行泄露
-
-
-// 在正常情况下，_IO_write_base == _IO_write_ptr 且位于 libc 中，所以可进行部分写
-
+  if (f->_flags & _IO_NO_WRITES) 
+    {
+      f->_flags |= _IO_ERR_SEEN;
+      __set_errno (EBADF);
+      return EOF;
+    }
+  /* If currently reading or no buffer allocated. */
+  if ((f->_flags & _IO_CURRENTLY_PUTTING) == 0 || f->_IO_write_base == NULL) 
+    {
+      :
+      :
+    }
+  if (ch == EOF)
+    return _IO_do_write (f, f->_IO_write_base, f->_IO_write_ptr - f->_IO_write_base);
+    // 第二个参数为需要调用的目标，如果使得_IO_write_base < _IO_write_ptr，且 _IO_write_base 处存在有价值的地址 （libc 地址）则可进行泄露
+    // 在正常情况下，_IO_write_base == _IO_write_ptr 且位于 libc 中，所以可进行部分写
 ```
 
 进入后的部分
 
 
 ```
-
 static
-
 _IO_size_t
-
-new_do_write
-
-(
-_IO_FILE
-
-*
-fp
-,
-
-const
-
-char
-
-*
-data
-,
-
-_IO_size_t
-
-to_do
-)
-
+new_do_write (_IO_FILE *fp, const char *data, _IO_size_t to_do)
 {
-
-
-_IO_size_t
-
-count
-;
-
-
-if
-
-(
-fp
-->
-_flags
-
-&
-
-_IO_IS_APPENDING
-)
-
-/* 需要满足 */
-
-
-/* 在没有正确实现 O_APPEND 的系统上，
-
-    你需要在这里调用 sys_seek(0, SEEK_END)，
-
-    但在类 Unix 或类 Posix 系统上，这是不需要的，也不推荐这样做。
-
+  _IO_size_t count;
+  if (fp->_flags & _IO_IS_APPENDING)  /* 需要满足 */
+ /* 在没有正确实现 O_APPEND 的系统上，  
+    你需要在这里调用 sys_seek(0, SEEK_END)，  
+    但在类 Unix 或类 Posix 系统上，这是不需要的，也不推荐这样做。  
     相反，只需表明偏移量（前后）是不可预测的。 */
-
-
-fp
-->
-_offset
-
-=
-
-_IO_pos_BAD
-;
-
-
-else
-
-if
-
-(
-fp
-->
-_IO_read_end
-
-!=
-
-fp
-->
-_IO_write_base
-)
-
-
-{
-
-
-............
-
-
-}
-
-
-count
-
-=
-
-_IO_SYSWRITE
-
-(
-fp
-,
-
-data
-,
-
-to_do
-);
-
-// 这里真正进行 write
-
+    fp->_offset = _IO_pos_BAD;
+  else if (fp->_IO_read_end != fp->_IO_write_base)
+    {
+     ............
+    }
+  count = _IO_SYSWRITE (fp, data, to_do); // 这里真正进行 write
 ```
 
 也就是说，为调用到目标函数地址，需要满足部分flags的需求，具体需要满足的flags：
 
 
 ```
-
-_flags
-
-=
-
-0xfbad0000
-
-//Magic Number
-
-_flags
-
-&=
-
-~
-_IO_NO_WRITES
-
-//_flags = 0xfbad0000
-
-_flags
-
-|=
-
-_IO_CURRENTLY_PUTTING
-
-//_flags = 0xfbad0800
-
-_flags
-
-|=
-
-_IO_IS_APPENDING
-
-//_flags = 0xfbad1800
-
+_flags = 0xfbad0000 //Magic Number
+_flags &= ~_IO_NO_WRITES //_flags = 0xfbad0000
+_flags |= _IO_CURRENTLY_PUTTING //_flags = 0xfbad0800
+_flags |= _IO_IS_APPENDING  //_flags = 0xfbad1800
 ```

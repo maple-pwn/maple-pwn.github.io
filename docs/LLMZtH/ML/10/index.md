@@ -99,9 +99,8 @@ dist^2_{ij}=||z_i-z_j||^2&=||z_i||^2+||z_j||^2-2z_t^{T}z_j\\
 \end{align}
 $$
 
-Note
-
-这一步是将“两个点的欧式距离”改写为“点的长度+点之间的相似度”：
+!!! note
+    这一步是将“两个点的欧式距离”改写为“点的长度+点之间的相似度”：
 
 $b_{ii}=||z_i||^2$ 表示点 $i$ 离原点有多远；$b_{ij}=z_i^Tz_j$ 表示点 $i$ 和点 $j$ 在方向上有多对齐（相似度）
 
@@ -115,9 +114,8 @@ $$
 \end{align}
 $$
 
-Note
-
-刚刚式(10.3)中存在未知的 $b_{ii}$ 等内容，但是我们只有距离 $dist_{ij}$ 的预测值，那么怎么解呢？给出的办法是对 $i$ 和 $j$ 求和/全体求和，利用中心化带来的行列和为0，把未知项消去。
+!!! note
+    刚刚式(10.3)中存在未知的 $b_{ii}$ 等内容，但是我们只有距离 $dist_{ij}$ 的预测值，那么怎么解呢？给出的办法是对 $i$ 和 $j$ 求和/全体求和，利用中心化带来的行列和为0，把未知项消去。
 
 以式(10.4)为例，它意味着：固定 $j$ ，把所有点到 $j$ 的距离平方加起来，等价于 “总能量 $\text{tr}(B)$+$j$ 点的长度项$mb_{jj}$“。可以认为是：距离的列求和=你能推回每个点的 $||z_j||^2$
 
@@ -133,9 +131,8 @@ dist_{\cdot\cdot}^2=\dfrac{1}{m^2}\sum_{i=1}^m\sum_{j=1}^mdist_{ij}^2\tag{10.9}
 \end{align}
 $$
 
-Note
-
-这三个按顺序分别是行平均、列平均和全局平均
+!!! note
+    这三个按顺序分别是行平均、列平均和全局平均
 
 它们是为了把式(10.4)-(10.6)的求和结果写得更加紧凑，最终塞进(10.10)形成一个直接可算得闭式公式
 
@@ -145,9 +142,8 @@ $$
 b_{ij}=-\dfrac{1}{2}(dist_{ij}^2-dist_{i\cdot}^2-dist_{\cdot j}^2+dist_{\cdot\cdot}^2)\tag{10.10}
 $$
 
-Note
-
-这里在做双中心化操作：去掉行均值、列均值，再加回总体均值。效果为：
+!!! note
+    这里在做双中心化操作：去掉行均值、列均值，再加回总体均值。效果为：
 
 - 把距离平方矩阵里的”平移影响“去掉（因为你只知道距离，不知道坐标原点的位置）
 - 得到一个与某组中心化坐标Z相一致的Gram矩阵 $B=Z^TZ$
@@ -162,9 +158,8 @@ $$
 Z=\Lambda_*^{1/2}V_*^{T}\in\mathbb{R}^{d^*\times m}\tag{10.11}
 $$
 
-Note
-
-如果这些距离真的是某个欧式空间中产生的（噪声很小，没有冲突），那么：
+!!! note
+    如果这些距离真的是某个欧式空间中产生的（噪声很小，没有冲突），那么：
 
 - $B=V\Lambda V^T$ 的特征分解相当于找到了坐标轴（特征向量）
 - 特征值 $\lambda$ 给出每个轴的“尺度/方差”($\sqrt{\lambda}$ 是长度尺度）
@@ -178,9 +173,8 @@ $$
 Z=\hat \Lambda^{1/2}\hat V^{T}\in\mathbb{R}^{d'\times m}\tag{10.12}
 $$
 
-Note
-
-实际距离往往不可能被低维完全满足（噪声、非欧式结构、维度不够），那就：
+!!! note
+    实际距离往往不可能被低维完全满足（噪声、非欧式结构、维度不够），那就：
 
 - 只取最大的 $d'$ 个特征值/特征向量
 - 得到最能保留整体结构的低维表示
@@ -190,472 +184,71 @@ Note
 ![image-20260223220918943](../../../images/image-20260223220918943.png)
 
 
-```
+```python
+import numpy as np
 
-import
-
-numpy
-
-as
-
-np
-
-def
-
-classical_mds
-(
-D
-,
-
-d_prime
-=
-2
-,
-
-eps
-=
-1e-12
-):
-
-
-"""
-
-    经典 MDS（Classical MDS）
-
-    输入:
-
-        D: (m, m) 距离矩阵，D[i, j] = dist(x_i, x_j)，要求对称、对角为0
-
-        d_prime: 目标降维维度 d'
-
-        eps: 数值稳定用的小阈值
-
-    输出:
-
-        Z: (m, d') 低维坐标矩阵，每一行是一个样本在低维空间的坐标
-
-        eigvals: 选取的前 d' 个特征值（从大到小）
-
+def classical_mds(D, d_prime=2, eps=1e-12):
     """
-
-
-D
-
-=
-
-np
-.
-asarray
-(
-D
-,
-
-dtype
-=
-float
-)
-
-
-m
-
-=
-
-D
-.
-shape
-[
-0
-]
-
-
-assert
-
-D
-.
-shape
-
-==
-
-(
-m
-,
-
-m
-),
-
-"D 必须是方阵 (m, m)"
-
-
-
-# 1) 距离平方矩阵：D2[i,j] = dist_ij^2
-
-
-D2
-
-=
-
-D
-
-**
-
-2
-
-
-
-# 2) 双中心化（对应教材(10.10)的效果）
-
-
-
-#    B = -1/2 * J * D2 * J
-
-
-
-#    其中 J = I - (1/m) * 11^T 是中心化矩阵
-
-
-I
-
-=
-
-np
-.
-eye
-(
-m
-)
-
-
-one
-
-=
-
-np
-.
-ones
-((
-m
-,
-
-1
-))
-
-
-J
-
-=
-
-I
-
--
-
-(
-one
-
-@
-
-one
-.
-T
-)
-
-/
-
-m
-
-
-B
-
-=
-
--
-0.5
-
-*
-
-J
-
-@
-
-D2
-
-@
-
-J
-
-
-
-# 3) B 是对称矩阵，用 eigh（专门处理对称/厄米矩阵）更稳
-
-
-
-#    eigvals 升序，eigvecs 列为特征向量
-
-
-eigvals
-,
-
-eigvecs
-
-=
-
-np
-.
-linalg
-.
-eigh
-(
-B
-)
-
-
-
-# 4) 按特征值从大到小排序
-
-
-idx
-
-=
-
-np
-.
-argsort
-(
-eigvals
-)[::
--
-1
-]
-
-
-eigvals
-
-=
-
-eigvals
-[
-idx
-]
-
-
-eigvecs
-
-=
-
-eigvecs
-[:,
-
-idx
-]
-
-
-
-# 5) 取前 d' 个“非负”特征值（理论上 B 半正定；数值误差可能出现微小负数）
-
-
-
-#    Z = V_{d'} * sqrt(Lambda_{d'})，输出 shape (m, d')
-
-
-eigvals_top
-
-=
-
-eigvals
-[:
-d_prime
-]
-
-
-eigvecs_top
-
-=
-
-eigvecs
-[:,
-
-:
-d_prime
-]
-
-
-
-# 将小于 0 的特征值截断为 0（避免 sqrt 出现 nan）
-
-
-eigvals_top_clipped
-
-=
-
-np
-.
-maximum
-(
-eigvals_top
-,
-
-0.0
-)
-
-
-
-# 低维坐标：每列缩放对应特征向量
-
-
-Z
-
-=
-
-eigvecs_top
-
-*
-
-np
-.
-sqrt
-(
-eigvals_top_clipped
-
-+
-
-eps
-)
-
-
-return
-
-Z
-,
-
-eigvals_top
+    经典 MDS（Classical MDS）
+    输入:
+        D: (m, m) 距离矩阵，D[i, j] = dist(x_i, x_j)，要求对称、对角为0
+        d_prime: 目标降维维度 d'
+        eps: 数值稳定用的小阈值
+    输出:
+        Z: (m, d') 低维坐标矩阵，每一行是一个样本在低维空间的坐标
+        eigvals: 选取的前 d' 个特征值（从大到小）
+    """
+    D = np.asarray(D, dtype=float)
+    m = D.shape[0]
+    assert D.shape == (m, m), "D 必须是方阵 (m, m)"
+
+    # 1) 距离平方矩阵：D2[i,j] = dist_ij^2
+    D2 = D ** 2
+
+    # 2) 双中心化（对应教材(10.10)的效果）
+    #    B = -1/2 * J * D2 * J
+    #    其中 J = I - (1/m) * 11^T 是中心化矩阵
+    I = np.eye(m)
+    one = np.ones((m, 1))
+    J = I - (one @ one.T) / m
+    B = -0.5 * J @ D2 @ J
+
+    # 3) B 是对称矩阵，用 eigh（专门处理对称/厄米矩阵）更稳
+    #    eigvals 升序，eigvecs 列为特征向量
+    eigvals, eigvecs = np.linalg.eigh(B)
+
+    # 4) 按特征值从大到小排序
+    idx = np.argsort(eigvals)[::-1]
+    eigvals = eigvals[idx]
+    eigvecs = eigvecs[:, idx]
+
+    # 5) 取前 d' 个“非负”特征值（理论上 B 半正定；数值误差可能出现微小负数）
+    #    Z = V_{d'} * sqrt(Lambda_{d'})，输出 shape (m, d')
+    eigvals_top = eigvals[:d_prime]
+    eigvecs_top = eigvecs[:, :d_prime]
+
+    # 将小于 0 的特征值截断为 0（避免 sqrt 出现 nan）
+    eigvals_top_clipped = np.maximum(eigvals_top, 0.0)
+
+    # 低维坐标：每列缩放对应特征向量
+    Z = eigvecs_top * np.sqrt(eigvals_top_clipped + eps)
+
+    return Z, eigvals_top
 
 
 # ========== 示例 ==========
+if __name__ == "__main__":
+    # 构造 4 个点的距离矩阵（例子随便写的）
+    D = np.array([
+        [0, 1, 2, 2],
+        [1, 0, 1, 2],
+        [2, 1, 0, 1],
+        [2, 2, 1, 0],
+    ], dtype=float)
 
-if
-
-__name__
-
-==
-
-"__main__"
-:
-
-
-
-# 构造 4 个点的距离矩阵（例子随便写的）
-
-
-D
-
-=
-
-np
-.
-array
-([
-
-
-[
-0
-,
-
-1
-,
-
-2
-,
-
-2
-],
-
-
-[
-1
-,
-
-0
-,
-
-1
-,
-
-2
-],
-
-
-[
-2
-,
-
-1
-,
-
-0
-,
-
-1
-],
-
-
-[
-2
-,
-
-2
-,
-
-1
-,
-
-0
-],
-
-
-],
-
-dtype
-=
-float
-)
-
-
-Z
-,
-
-lam
-
-=
-
-classical_mds
-(
-D
-,
-
-d_prime
-=
-2
-)
-
-
-print
-(
-"前两个特征值:"
-,
-
-lam
-)
-
-
-print
-(
-"二维坐标 Z:
-\n
-"
-,
-
-Z
-)
-
+    Z, lam = classical_mds(D, d_prime=2)
+    print("前两个特征值:", lam)
+    print("二维坐标 Z:\n", Z)
 ```
 
 ---
@@ -716,9 +309,8 @@ W
 \end{align}
 $$
 
-Note
-
-此式左边是 **所有样本的平方重构误差**。式(10.14)表明：在正交约束下，最小化重构误差等价于 **最大投影化后捕获到的能量**
+!!! note
+    此式左边是 **所有样本的平方重构误差**。式(10.14)表明：在正交约束下，最小化重构误差等价于 **最大投影化后捕获到的能量**
 
 数学直觉来说：你投影到某个子空间，能解释的数据能量越多，丢掉的能量越少，重构就越准
 
@@ -729,9 +321,8 @@ $$
 s.t. W^TW=I\tag{10.15}
 $$
 
-Note
-
-在所有 $d’$ 维正交子空间中，找一个让投影能量中最大（也就是重构误差最小）的子空间
+!!! note
+    在所有 $d’$ 维正交子空间中，找一个让投影能量中最大（也就是重构误差最小）的子空间
 
 ---
 
@@ -750,9 +341,8 @@ s.t. W^TW=I
 \end{align}
 $$
 
-Note
-
-投影后样本的方差（散布程度）由协方差决定，trace可以理解为“各投影轴上方差的总和”
+!!! note
+    投影后样本的方差（散布程度）由协方差决定，trace可以理解为“各投影轴上方差的总和”
 
 式(10.16)就是在找投影后最分散的 $d’$ 维子空间——点拉得开，信息更集中在少数维里
 
@@ -766,9 +356,8 @@ $$
 XX^TW=W\Lambda\tag{10.17}
 $$
 
-Note
-
-最优的 $W$ 的列向量就是协方差矩阵（或 $XX^T$ ）的特征向量，$\Lambda$ 的对角元素是对应特征值
+!!! note
+    最优的 $W$ 的列向量就是协方差矩阵（或 $XX^T$ ）的特征向量，$\Lambda$ 的对角元素是对应特征值
 
 然后按照特征值从大到小取前 $d’$ 个特征向量（也就是选择维度，下面会介绍别的方法），就得到主成分方向
 
@@ -787,511 +376,75 @@ $$
 }\ge t\tag{10.18}
 $$
 
-Note
-
-总方差看作信息总量，前 $d’$ 个主成分解释的比例至少要达到 $t$
-
-
-```
-
-import
-
-numpy
-
-as
-
-np
-
-def
-
-pca
-(
-X
-,
-
-d_out
-=
-None
-,
-
-var_ratio
-=
-None
-):
+!!! note
+    总方差看作信息总量，前 $d’$ 个主成分解释的比例至少要达到 $t$
 
 
-"""
+```python
+import numpy as np
 
+def pca(X, d_out=None, var_ratio=None):
+    """
     PCA（主成分分析）
 
     输入:
-
         X: (m, d) numpy数组，m个样本、d维特征（行=样本）
-
         d_out: 目标降到的维度 d'（二选一；优先使用d_out）
-
         var_ratio: 解释方差阈值t（如0.95），自动选最小d'
 
     输出:
-
         Z: (m, d') 降维后的表示（投影坐标）
-
         W: (d, d') 投影矩阵（列为主成分方向）
-
         mu: (d,) 均值向量（用于对新样本做同样中心化）
-
         eigvals: (d,) 按降序排列的特征值（方差大小）
-
     """
-
-
-X
-
-=
-
-np
-.
-asarray
-(
-X
-,
-
-dtype
-=
-float
-)
-
-
-m
-,
-
-d
-
-=
-
-X
-.
-shape
-
-
-
-# 1) 中心化
-
-
-mu
-
-=
-
-X
-.
-mean
-(
-axis
-=
-0
-)
-
-
-Xc
-
-=
-
-X
-
--
-
-mu
-
-
-
-# 2) 协方差矩阵（对称）
-
-
-C
-
-=
-
-(
-Xc
-.
-T
-
-@
-
-Xc
-)
-
-/
-
-max
-(
-m
-
--
-
-1
-,
-
-1
-)
-
-
-
-# 3) 特征分解（对称矩阵用eigh更稳）
-
-
-eigvals
-,
-
-eigvecs
-
-=
-
-np
-.
-linalg
-.
-eigh
-(
-C
-)
-
-
-# 升序
-
-
-idx
-
-=
-
-np
-.
-argsort
-(
-eigvals
-)[::
--
-1
-]
-
-
-# 改为降序
-
-
-eigvals
-,
-
-eigvecs
-
-=
-
-eigvals
-[
-idx
-],
-
-eigvecs
-[:,
-
-idx
-]
-
-
-# eigvecs列对应特征值
-
-
-
-# 4) 选择降维维度 d'
-
-
-if
-
-d_out
-
-is
-
-None
-:
-
-
-if
-
-var_ratio
-
-is
-
-None
-:
-
-
-d_out
-
-=
-
-d
-
-
-# 不指定则不降维
-
-
-else
-:
-
-
-total
-
-=
-
-eigvals
-.
-sum
-()
-
-
-if
-
-total
-
-<=
-
-0
-:
-
-
-d_out
-
-=
-
-1
-
-
-else
-:
-
-
-cum
-
-=
-
-np
-.
-cumsum
-(
-eigvals
-)
-
-/
-
-total
-
-
-d_out
-
-=
-
-int
-(
-np
-.
-searchsorted
-(
-cum
-,
-
-var_ratio
-)
-
-+
-
-1
-)
-
-
-d_out
-
-=
-
-int
-(
-np
-.
-clip
-(
-d_out
-,
-
-1
-,
-
-d
-))
-
-
-
-# 5) 投影：W为前d'个主成分，Z为低维坐标
-
-
-W
-
-=
-
-eigvecs
-[:,
-
-:
-d_out
-]
-
-
-Z
-
-=
-
-Xc
-
-@
-
-W
-
-
-return
-
-Z
-,
-
-W
-,
-
-mu
-,
-
-eigvals
-
+    X = np.asarray(X, dtype=float)
+    m, d = X.shape
+
+    # 1) 中心化
+    mu = X.mean(axis=0)
+    Xc = X - mu
+
+    # 2) 协方差矩阵（对称）
+    C = (Xc.T @ Xc) / max(m - 1, 1)
+
+    # 3) 特征分解（对称矩阵用eigh更稳）
+    eigvals, eigvecs = np.linalg.eigh(C)              # 升序
+    idx = np.argsort(eigvals)[::-1]                   # 改为降序
+    eigvals, eigvecs = eigvals[idx], eigvecs[:, idx]  # eigvecs列对应特征值
+
+    # 4) 选择降维维度 d'
+    if d_out is None:
+        if var_ratio is None:
+            d_out = d  # 不指定则不降维
+        else:
+            total = eigvals.sum()
+            if total <= 0:
+                d_out = 1
+            else:
+                cum = np.cumsum(eigvals) / total
+                d_out = int(np.searchsorted(cum, var_ratio) + 1)
+
+    d_out = int(np.clip(d_out, 1, d))
+
+    # 5) 投影：W为前d'个主成分，Z为低维坐标
+    W = eigvecs[:, :d_out]
+    Z = Xc @ W
+
+    return Z, W, mu, eigvals
 
 # ====== demo ======
-
-if
-
-__name__
-
-==
-
-"__main__"
-:
-
-
-X
-
-=
-
-np
-.
-array
-([[
-2
-,
-
-0
-],
-
-[
-0
-,
-
-1
-],
-
-[
-3
-,
-
-1
-],
-
-[
-4
-,
-
-2
-]],
-
-dtype
-=
-float
-)
-
-
-Z
-,
-
-W
-,
-
-mu
-,
-
-eigvals
-
-=
-
-pca
-(
-X
-,
-
-d_out
-=
-1
-)
-
-
-# 降到1维
-
-
-print
-(
-"Z=
-\n
-"
-,
-
-Z
-)
-
-
-print
-(
-"W=
-\n
-"
-,
-
-W
-)
-
-
-print
-(
-"mu="
-,
-
-mu
-)
-
-
-print
-(
-"eigvals="
-,
-
-eigvals
-)
-
+if __name__ == "__main__":
+    X = np.array([[2, 0], [0, 1], [3, 1], [4, 2]], dtype=float)
+    Z, W, mu, eigvals = pca(X, d_out=1)  # 降到1维
+    print("Z=\n", Z)
+    print("W=\n", W)
+    print("mu=", mu)
+    print("eigvals=", eigvals)
 ```
 
-Tip
-
-**梳理一下到此为止的思路：**
+!!! tip
+    **梳理一下到此为止的思路：**
 
 我们先是在 $k$ 近邻学习中讨论 1NN的上界，不过需要dense sample。
 
@@ -1318,9 +471,8 @@ $$
 \left(\sum_{i=1}^mz_iz_i^T\right)W=\lambda W\tag{10.19}
 $$
 
-Note
-
-这里 $z_i$ 不是指原始 $x_i$，是它在更高维特征空间中的表示，后续写为 $\phi(x_i)$
+!!! note
+    这里 $z_i$ 不是指原始 $x_i$，是它在更高维特征空间中的表示，后续写为 $\phi(x_i)$
 
 此式意味着：PCA的本质仍然是对“协方差做特征分解“，只不过把它搬到了一个可能是高维甚至无限维的空间里
 
@@ -1341,9 +493,8 @@ $$
 W=\sum_{i=1}^m\phi(x_i)\alpha_i\tag{10.22}
 $$
 
-Note
-
-最优投影方向W可以写成训练样本在特征空间表示的线性组合。这一步让我们后续只需要样本之间的内积，不需要显式写出W的坐标
+!!! note
+    最优投影方向W可以写成训练样本在特征空间表示的线性组合。这一步让我们后续只需要样本之间的内积，不需要显式写出W的坐标
 
 接下来我们用映射 $\phi$ 把 $z_i$ 改写为 $\phi(x_i)$
 
@@ -1354,9 +505,8 @@ $$
 =\lambda W\tag{10.21}
 $$
 
-Note
-
-明确“非线性”的来源：先用 $\phi$ 把数据送去高维，再在高维空间做线性 PCA
+!!! note
+    明确“非线性”的来源：先用 $\phi$ 把数据送去高维，再在高维空间做线性 PCA
 
 **但是**，式(10.21)和式(10.22)存在一个问题：我们可能并不知道 $\phi$ 的显式表达，该怎么解决呢？
 
@@ -1368,18 +518,17 @@ $$
 \kappa(x_i,x_j)=\phi(x_i)^T\phi(x_j)\tag{10.23}
 $$
 
-Note
-
-核技巧的核心内容，只要能计算 $\kappa$，就等价于在某个高维空间里做内积
+!!! note
+    核技巧的核心内容，只要能计算 $\kappa$，就等价于在某个高维空间里做内积
 
 基于式(10.23)带来的核函数，我们可以重构式(10.21)，也就是变为核矩阵的特征分解
+
 $$
 K A=\lambda A\tag{10.24}
 $$
 
-Note
-
-这里的 $K$ 为 $\kappa$ 对应的核矩阵，$K_{ij}=\kappa(x_i,x_j)$，$A=(\alpha_1,\dots,\alpha_m)$
+!!! note
+    这里的 $K$ 为 $\kappa$ 对应的核矩阵，$K_{ij}=\kappa(x_i,x_j)$，$A=(\alpha_1,\dots,\alpha_m)$
 
 KPCA 的训练阶段就是：构造核矩阵 $K$ ，然后做特征分解，取最大的 $d’$ 个特征值对应的特征向量(PCA的取最大特征值方向一样)
 
@@ -1394,1448 +543,182 @@ z_j&=w_j^T\phi(x)=\sum_{i=1}^m\alpha_i^j\phi(x_i)^T\phi(x)\\
 \end{align}
 $$
 
-Note
-
-$\alpha_i$ 已经过规范化，$\alpha_i^j$ 是 $\alpha_i$ 的第 $j$ 个分量
+!!! note
+    $\alpha_i$ 已经过规范化，$\alpha_i^j$ 是 $\alpha_i$ 的第 $j$ 个分量
 
 此式意味着：新点的第 $j$ 维低维坐标，等于“它和每个训练点的相似度”做加权加和
 
 不过这也解释了计算代价：每多出一个新样本，就要算它与全部训练样本的核(m次)，所以KPCA在大样本下开销很大
 
 
-```
-
-import
-
-numpy
-
-as
-
-np
-
+```python
+import numpy as np
 
 # 之前的MDS
-
-def
-
-classical_mds
-(
-D
-,
-
-d_prime
-=
-2
-,
-
-eps
-=
-1e-12
-):
-
-
-"""
-
+def classical_mds(D, d_prime=2, eps=1e-12):
+    """
     经典 MDS（Classical MDS）
-
     输入:
-
         D: (m, m) 距离矩阵，D[i, j] = dist(x_i, x_j)，要求对称、对角为0
-
         d_prime: 目标降维维度 d'
-
         eps: 数值稳定用的小阈值
-
     输出:
-
         Z: (m, d') 低维坐标矩阵，每一行是一个样本在低维空间的坐标
-
         eigvals: 选取的前 d' 个特征值（从大到小）
-
     """
-
-
-D
-
-=
-
-np
-.
-asarray
-(
-D
-,
-
-dtype
-=
-float
-)
-
-
-m
-
-=
-
-D
-.
-shape
-[
-0
-]
-
-
-assert
-
-D
-.
-shape
-
-==
-
-(
-m
-,
-
-m
-),
-
-"D 必须是方阵 (m, m)"
-
-
-D2
-
-=
-
-D
-
-**
-
-2
-
-
-I
-
-=
-
-np
-.
-eye
-(
-m
-)
-
-
-one
-
-=
-
-np
-.
-ones
-((
-m
-,
-
-1
-))
-
-
-J
-
-=
-
-I
-
--
-
-(
-one
-
-@
-
-one
-.
-T
-)
-
-/
-
-m
-
-
-B
-
-=
-
--
-0.5
-
-*
-
-J
-
-@
-
-D2
-
-@
-
-J
-
-
-eigvals
-,
-
-eigvecs
-
-=
-
-np
-.
-linalg
-.
-eigh
-(
-B
-)
-
-
-idx
-
-=
-
-np
-.
-argsort
-(
-eigvals
-)[::
--
-1
-]
-
-
-eigvals
-
-=
-
-eigvals
-[
-idx
-]
-
-
-eigvecs
-
-=
-
-eigvecs
-[:,
-
-idx
-]
-
-
-eigvals_top
-
-=
-
-eigvals
-[:
-d_prime
-]
-
-
-eigvecs_top
-
-=
-
-eigvecs
-[:,
-
-:
-d_prime
-]
-
-
-eigvals_top_clipped
-
-=
-
-np
-.
-maximum
-(
-eigvals_top
-,
-
-0.0
-)
-
-
-Z
-
-=
-
-eigvecs_top
-
-*
-
-np
-.
-sqrt
-(
-eigvals_top_clipped
-
-+
-
-eps
-)
-
-
-return
-
-Z
-,
-
-eigvals_top
+    D = np.asarray(D, dtype=float)
+    m = D.shape[0]
+    assert D.shape == (m, m), "D 必须是方阵 (m, m)"
+
+    D2 = D ** 2
+    I = np.eye(m)
+    one = np.ones((m, 1))
+    J = I - (one @ one.T) / m
+    B = -0.5 * J @ D2 @ J
+
+    eigvals, eigvecs = np.linalg.eigh(B)
+    idx = np.argsort(eigvals)[::-1]
+    eigvals = eigvals[idx]
+    eigvecs = eigvecs[:, idx]
+
+    eigvals_top = eigvals[:d_prime]
+    eigvecs_top = eigvecs[:, :d_prime]
+    eigvals_top_clipped = np.maximum(eigvals_top, 0.0)
+    Z = eigvecs_top * np.sqrt(eigvals_top_clipped + eps)
+    return Z, eigvals_top
 
 
 # =========================
-
-
 # 工具：两两欧氏距离矩阵
+# =========================
+def pairwise_dist(X):
+    """输入 X:(m,d)，输出 D:(m,m) 欧氏距离矩阵"""
+    X = np.asarray(X, dtype=float)
+    G = X @ X.T
+    sq = np.diag(G)
+    D2 = sq[:, None] + sq[None, :] - 2.0 * G
+    D2 = np.maximum(D2, 0.0)
+    return np.sqrt(D2)
 
 
 # =========================
-
-def
-
-pairwise_dist
-(
-X
-):
-
-
-"""输入 X:(m,d)，输出 D:(m,m) 欧氏距离矩阵"""
-
-
-X
-
-=
-
-np
-.
-asarray
-(
-X
-,
-
-dtype
-=
-float
-)
-
-
-G
-
-=
-
-X
-
-@
-
-X
-.
-T
-
-
-sq
-
-=
-
-np
-.
-diag
-(
-G
-)
-
-
-D2
-
-=
-
-sq
-[:,
-
-None
-]
-
-+
-
-sq
-[
-None
-,
-
-:]
-
--
-
-2.0
-
-*
-
-G
-
-
-D2
-
-=
-
-np
-.
-maximum
-(
-D2
-,
-
-0.0
-)
-
-
-return
-
-np
-.
-sqrt
-(
-D2
-)
-
-
-# =========================
-
-
 # 1) KPCA（核PCA）
-
-
 # =========================
-
-def
-
-kpca
-(
-X
-,
-
-d_prime
-=
-2
-,
-
-kernel
-=
-"rbf"
-,
-
-gamma
-=
-None
-,
-
-degree
-=
-3
-,
-
-coef0
-=
-1.0
-,
-
-eps
-=
-1e-12
-):
-
-
-"""
-
+def kpca(X, d_prime=2, kernel="rbf", gamma=None, degree=3, coef0=1.0, eps=1e-12):
+    """
     KPCA（Kernel PCA）
-
     输入:
-
         X: (m,d) 样本矩阵（行=样本）
-
         d_prime: 目标维度
-
         kernel: "rbf" | "poly" | "linear"
-
         gamma: RBF/poly 的系数；None 时默认 1/d
-
         degree, coef0: poly 核参数
-
         eps: 数值稳定
-
     输出:
-
         Z: (m,d') 训练样本的低维坐标
-
         model: dict，用于对新样本做投影（包含 X_train、alpha、eigvals、核参数等）
-
     """
-
-
-X
-
-=
-
-np
-.
-asarray
-(
-X
-,
-
-dtype
-=
-float
-)
-
-
-m
-,
-
-d
-
-=
-
-X
-.
-shape
-
-
-if
-
-gamma
-
-is
-
-None
-:
-
-
-gamma
-
-=
-
-1.0
-
-/
-
-max
-(
-d
-,
-
-1
-)
-
-
-
-# 1) 构造核矩阵 K
-
-
-if
-
-kernel
-
-==
-
-"linear"
-:
-
-
-K
-
-=
-
-X
-
-@
-
-X
-.
-T
-
-
-elif
-
-kernel
-
-==
-
-"poly"
-:
-
-
-K
-
-=
-
-(
-gamma
-
-*
-
-(
-X
-
-@
-
-X
-.
-T
-)
-
-+
-
-coef0
-)
-
-**
-
-degree
-
-
-elif
-
-kernel
-
-==
-
-"rbf"
-:
-
-
-D
-
-=
-
-pairwise_dist
-(
-X
-)
-
-
-K
-
-=
-
-np
-.
-exp
-(
--
-(
-gamma
-
-*
-
-(
-D
-
-**
-
-2
-)))
-
-
-else
-:
-
-
-raise
-
-ValueError
-(
-"kernel 仅支持: 'rbf' | 'poly' | 'linear'"
-)
-
-
-
-# 2) 中心化核矩阵：Kc = J K J
-
-
-one
-
-=
-
-np
-.
-ones
-((
-m
-,
-
-1
-))
-
-
-J
-
-=
-
-np
-.
-eye
-(
-m
-)
-
--
-
-(
-one
-
-@
-
-one
-.
-T
-)
-
-/
-
-m
-
-
-Kc
-
-=
-
-J
-
-@
-
-K
-
-@
-
-J
-
-
-
-# 3) 特征分解（对称）
-
-
-eigvals
-,
-
-eigvecs
-
-=
-
-np
-.
-linalg
-.
-eigh
-(
-Kc
-)
-
-
-idx
-
-=
-
-np
-.
-argsort
-(
-eigvals
-)[::
--
-1
-]
-
-
-eigvals
-,
-
-eigvecs
-
-=
-
-eigvals
-[
-idx
-],
-
-eigvecs
-[:,
-
-idx
-]
-
-
-
-# 4) 取前 d' 个（截断非正特征值）
-
-
-eigvals_top
-
-=
-
-eigvals
-[:
-d_prime
-]
-
-
-eigvecs_top
-
-=
-
-eigvecs
-[:,
-
-:
-d_prime
-]
-
-
-eigvals_top
-
-=
-
-np
-.
-maximum
-(
-eigvals_top
-,
-
-0.0
-)
-
-
-
-# 5) 归一化 alpha：alpha_j = v_j / sqrt(lambda_j)
-
-
-
-#    这样新样本投影：z_j(x)=sum_i alpha_ij * k(x_i, x)（对应教材(10.25)）
-
-
-denom
-
-=
-
-np
-.
-sqrt
-(
-eigvals_top
-
-+
-
-eps
-)
-
-
-alpha
-
-=
-
-eigvecs_top
-
-/
-
-denom
-[
-None
-,
-
-:]
-
-
-
-# 6) 训练样本坐标：Z = Kc @ alpha
-
-
-Z
-
-=
-
-Kc
-
-@
-
-alpha
-
-
-model
-
-=
-
-{
-
-
-"X_train"
-:
-
-X
-,
-
-
-"kernel"
-:
-
-kernel
-,
-
-
-"gamma"
-:
-
-gamma
-,
-
-
-"degree"
-:
-
-degree
-,
-
-
-"coef0"
-:
-
-coef0
-,
-
-
-"alpha"
-:
-
-alpha
-,
-
-
-# (m,d')
-
-
-"eigvals"
-:
-
-eigvals_top
-,
-
-
-# (d',)
-
-
-"K_row_mean"
-:
-
-K
-.
-mean
-(
-axis
-=
-1
-),
-
-
-# 用于中心化新样本核向量
-
-
-"K_all_mean"
-:
-
-K
-.
-mean
-(),
-
-
-# 用于中心化新样本核向量
-
-
-}
-
-
-return
-
-Z
-,
-
-model
-
-def
-
-kpca_transform
-(
-X_new
-,
-
-model
-):
-
-
-"""
-
+    X = np.asarray(X, dtype=float)
+    m, d = X.shape
+    if gamma is None:
+        gamma = 1.0 / max(d, 1)
+
+    # 1) 构造核矩阵 K
+    if kernel == "linear":
+        K = X @ X.T
+    elif kernel == "poly":
+        K = (gamma * (X @ X.T) + coef0) ** degree
+    elif kernel == "rbf":
+        D = pairwise_dist(X)
+        K = np.exp(-(gamma * (D ** 2)))
+    else:
+        raise ValueError("kernel 仅支持: 'rbf' | 'poly' | 'linear'")
+
+    # 2) 中心化核矩阵：Kc = J K J
+    one = np.ones((m, 1))
+    J = np.eye(m) - (one @ one.T) / m
+    Kc = J @ K @ J
+
+    # 3) 特征分解（对称）
+    eigvals, eigvecs = np.linalg.eigh(Kc)
+    idx = np.argsort(eigvals)[::-1]
+    eigvals, eigvecs = eigvals[idx], eigvecs[:, idx]
+
+    # 4) 取前 d' 个（截断非正特征值）
+    eigvals_top = eigvals[:d_prime]
+    eigvecs_top = eigvecs[:, :d_prime]
+    eigvals_top = np.maximum(eigvals_top, 0.0)
+
+    # 5) 归一化 alpha：alpha_j = v_j / sqrt(lambda_j)
+    #    这样新样本投影：z_j(x)=sum_i alpha_ij * k(x_i, x)（对应教材(10.25)）
+    denom = np.sqrt(eigvals_top + eps)
+    alpha = eigvecs_top / denom[None, :]
+
+    # 6) 训练样本坐标：Z = Kc @ alpha
+    Z = Kc @ alpha
+
+    model = {
+        "X_train": X,
+        "kernel": kernel,
+        "gamma": gamma,
+        "degree": degree,
+        "coef0": coef0,
+        "alpha": alpha,          # (m,d')
+        "eigvals": eigvals_top,  # (d',)
+        "K_row_mean": K.mean(axis=1),   # 用于中心化新样本核向量
+        "K_all_mean": K.mean(),         # 用于中心化新样本核向量
+    }
+    return Z, model
+
+
+def kpca_transform(X_new, model):
+    """
     KPCA 对新样本投影
-
     输入:
-
         X_new: (n,d) 新样本
-
         model: kpca 返回的 model
-
     输出:
-
         Z_new: (n,d') 新样本低维坐标
-
     """
-
-
-X_new
-
-=
-
-np
-.
-asarray
-(
-X_new
-,
-
-dtype
-=
-float
-)
-
-
-Xtr
-
-=
-
-model
-[
-"X_train"
-]
-
-
-kernel
-
-=
-
-model
-[
-"kernel"
-]
-
-
-gamma
-
-=
-
-model
-[
-"gamma"
-]
-
-
-degree
-
-=
-
-model
-[
-"degree"
-]
-
-
-coef0
-
-=
-
-model
-[
-"coef0"
-]
-
-
-alpha
-
-=
-
-model
-[
-"alpha"
-]
-
-
-
-# 1) 计算 K_new: (n,m)
-
-
-if
-
-kernel
-
-==
-
-"linear"
-:
-
-
-K_new
-
-=
-
-X_new
-
-@
-
-Xtr
-.
-T
-
-
-elif
-
-kernel
-
-==
-
-"poly"
-:
-
-
-K_new
-
-=
-
-(
-gamma
-
-*
-
-(
-X_new
-
-@
-
-Xtr
-.
-T
-)
-
-+
-
-coef0
-)
-
-**
-
-degree
-
-
-elif
-
-kernel
-
-==
-
-"rbf"
-:
-
-
-
-# 欧氏距离：||a-b||^2 = a^2 + b^2 -2ab
-
-
-A2
-
-=
-
-np
-.
-sum
-(
-X_new
-**
-2
-,
-
-axis
-=
-1
-)[:,
-
-None
-]
-
-
-B2
-
-=
-
-np
-.
-sum
-(
-Xtr
-**
-2
-,
-
-axis
-=
-1
-)[
-None
-,
-
-:]
-
-
-D2
-
-=
-
-np
-.
-maximum
-(
-A2
-
-+
-
-B2
-
--
-
-2.0
-
-*
-
-(
-X_new
-
-@
-
-Xtr
-.
-T
-),
-
-0.0
-)
-
-
-K_new
-
-=
-
-np
-.
-exp
-(
--
-gamma
-
-*
-
-D2
-)
-
-
-else
-:
-
-
-raise
-
-ValueError
-(
-"bad kernel"
-)
-
-
-
-# 2) 中心化新样本核向量（与训练时 Kc=J K J 一致）
-
-
-
-#    k_c(x,·) = k(x,·) - mean_row(·) - mean(k(x,·)) + mean_all
-
-
-row_mean
-
-=
-
-model
-[
-"K_row_mean"
-][
-None
-,
-
-:]
-
-
-# (1,m)
-
-
-all_mean
-
-=
-
-model
-[
-"K_all_mean"
-]
-
-
-new_mean
-
-=
-
-K_new
-.
-mean
-(
-axis
-=
-1
-,
-
-keepdims
-=
-True
-)
-
-
-# (n,1)
-
-
-K_new_c
-
-=
-
-K_new
-
--
-
-row_mean
-
--
-
-new_mean
-
-+
-
-all_mean
-
-
-
-# 3) 投影：Z = K_new_c @ alpha
-
-
-return
-
-K_new_c
-
-@
-
-alpha
-
-if
-
-__name__
-
-==
-
-"__main__"
-:
-
-
-rng
-
-=
-
-np
-.
-random
-.
-default_rng
-(
-0
-)
-
-
-X
-
-=
-
-rng
-.
-normal
-(
-size
-=
-(
-200
-,
-
-5
-))
-
-
-Z_kpca
-,
-
-model
-
-=
-
-kpca
-(
-X
-,
-
-d_prime
-=
-2
-,
-
-kernel
-=
-"rbf"
-,
-
-gamma
-=
-0.5
-)
-
-
-print
-(
-Z_kpca
-.
-shape
-)
-
+    X_new = np.asarray(X_new, dtype=float)
+    Xtr = model["X_train"]
+    kernel = model["kernel"]
+    gamma = model["gamma"]
+    degree = model["degree"]
+    coef0 = model["coef0"]
+    alpha = model["alpha"]
+
+    # 1) 计算 K_new: (n,m)
+    if kernel == "linear":
+        K_new = X_new @ Xtr.T
+    elif kernel == "poly":
+        K_new = (gamma * (X_new @ Xtr.T) + coef0) ** degree
+    elif kernel == "rbf":
+        # 欧氏距离：||a-b||^2 = a^2 + b^2 -2ab
+        A2 = np.sum(X_new**2, axis=1)[:, None]
+        B2 = np.sum(Xtr**2, axis=1)[None, :]
+        D2 = np.maximum(A2 + B2 - 2.0 * (X_new @ Xtr.T), 0.0)
+        K_new = np.exp(-gamma * D2)
+    else:
+        raise ValueError("bad kernel")
+
+    # 2) 中心化新样本核向量（与训练时 Kc=J K J 一致）
+    #    k_c(x,·) = k(x,·) - mean_row(·) - mean(k(x,·)) + mean_all
+    row_mean = model["K_row_mean"][None, :]     # (1,m)
+    all_mean = model["K_all_mean"]
+    new_mean = K_new.mean(axis=1, keepdims=True)  # (n,1)
+    K_new_c = K_new - row_mean - new_mean + all_mean
+
+    # 3) 投影：Z = K_new_c @ alpha
+    return K_new_c @ alpha
+
+if __name__ == "__main__":
+    rng = np.random.default_rng(0)
+    X = rng.normal(size=(200, 5))
+
+    Z_kpca, model = kpca(X, d_prime=2, kernel="rbf", gamma=0.5)
+
+    print(Z_kpca.shape)
 ```
 
 
@@ -2843,9 +726,8 @@ shape
 
 流形学习同样是一种降维方法，这一节的核心假设是：数据落在一个低维“流形”上——**局部** 近似欧式空间，所以局部距离/线性关系可靠；但 **全局** 直线距离不可靠。本节主要就是解决此问题
 
-Note
-
-流形 **在局部看起来像欧式空间的空间**。或者说：当你站的足够近，它就像一个普通平面，但拉远看会发现很弯曲，带入地球想一下就行
+!!! note
+    流形 **在局部看起来像欧式空间的空间**。或者说：当你站的足够近，它就像一个普通平面，但拉远看会发现很弯曲，带入地球想一下就行
 
 ![image-20260226120548458](../../../images/image-20260226120548458.png)
 
@@ -2862,774 +744,99 @@ Note
 不过Isomap仅仅得到了训练样本子低维空间的坐标，对于新样本，目前采取的措施是：将训练样本的高维空间坐标作为输入、低维空间作为输出，训练一个回归学习器来对新样本的低维空间坐标做预测
 
 
-```
-
-import
-
-numpy
-
-as
-
-np
-
+```python
+import numpy as np
 
 # 之前的MDS
-
-def
-
-classical_mds
-(
-D
-,
-
-d_prime
-=
-2
-,
-
-eps
-=
-1e-12
-):
-
-
-"""
-
+def classical_mds(D, d_prime=2, eps=1e-12):
+    """
     经典 MDS（Classical MDS）
-
     输入:
-
         D: (m, m) 距离矩阵，D[i, j] = dist(x_i, x_j)，要求对称、对角为0
-
         d_prime: 目标降维维度 d'
-
         eps: 数值稳定用的小阈值
-
     输出:
-
         Z: (m, d') 低维坐标矩阵，每一行是一个样本在低维空间的坐标
-
         eigvals: 选取的前 d' 个特征值（从大到小）
-
     """
-
-
-D
-
-=
-
-np
-.
-asarray
-(
-D
-,
-
-dtype
-=
-float
-)
-
-
-m
-
-=
-
-D
-.
-shape
-[
-0
-]
-
-
-assert
-
-D
-.
-shape
-
-==
-
-(
-m
-,
-
-m
-),
-
-"D 必须是方阵 (m, m)"
-
-
-D2
-
-=
-
-D
-
-**
-
-2
-
-
-I
-
-=
-
-np
-.
-eye
-(
-m
-)
-
-
-one
-
-=
-
-np
-.
-ones
-((
-m
-,
-
-1
-))
-
-
-J
-
-=
-
-I
-
--
-
-(
-one
-
-@
-
-one
-.
-T
-)
-
-/
-
-m
-
-
-B
-
-=
-
--
-0.5
-
-*
-
-J
-
-@
-
-D2
-
-@
-
-J
-
-
-eigvals
-,
-
-eigvecs
-
-=
-
-np
-.
-linalg
-.
-eigh
-(
-B
-)
-
-
-idx
-
-=
-
-np
-.
-argsort
-(
-eigvals
-)[::
--
-1
-]
-
-
-eigvals
-
-=
-
-eigvals
-[
-idx
-]
-
-
-eigvecs
-
-=
-
-eigvecs
-[:,
-
-idx
-]
-
-
-eigvals_top
-
-=
-
-eigvals
-[:
-d_prime
-]
-
-
-eigvecs_top
-
-=
-
-eigvecs
-[:,
-
-:
-d_prime
-]
-
-
-eigvals_top_clipped
-
-=
-
-np
-.
-maximum
-(
-eigvals_top
-,
-
-0.0
-)
-
-
-Z
-
-=
-
-eigvecs_top
-
-*
-
-np
-.
-sqrt
-(
-eigvals_top_clipped
-
-+
-
-eps
-)
-
-
-return
-
-Z
-,
-
-eigvals_top
-
+    D = np.asarray(D, dtype=float)
+    m = D.shape[0]
+    assert D.shape == (m, m), "D 必须是方阵 (m, m)"
+
+    D2 = D ** 2
+    I = np.eye(m)
+    one = np.ones((m, 1))
+    J = I - (one @ one.T) / m
+    B = -0.5 * J @ D2 @ J
+
+    eigvals, eigvecs = np.linalg.eigh(B)
+    idx = np.argsort(eigvals)[::-1]
+    eigvals = eigvals[idx]
+    eigvecs = eigvecs[:, idx]
+
+    eigvals_top = eigvals[:d_prime]
+    eigvecs_top = eigvecs[:, :d_prime]
+    eigvals_top_clipped = np.maximum(eigvals_top, 0.0)
+    Z = eigvecs_top * np.sqrt(eigvals_top_clipped + eps)
+    return Z, eigvals_top
 
 # =========================
-
-
 # 工具：两两欧氏距离矩阵
-
-
 # =========================
+def pairwise_dist(X):
+    """输入 X:(m,d)，输出 D:(m,m) 欧氏距离矩阵"""
+    X = np.asarray(X, dtype=float)
+    G = X @ X.T
+    sq = np.diag(G)
+    D2 = sq[:, None] + sq[None, :] - 2.0 * G
+    D2 = np.maximum(D2, 0.0)
+    return np.sqrt(D2)
 
-def
-
-pairwise_dist
-(
-X
-):
-
-
-"""输入 X:(m,d)，输出 D:(m,m) 欧氏距离矩阵"""
-
-
-X
-
-=
-
-np
-.
-asarray
-(
-X
-,
-
-dtype
-=
-float
-)
-
-
-G
-
-=
-
-X
-
-@
-
-X
-.
-T
-
-
-sq
-
-=
-
-np
-.
-diag
-(
-G
-)
-
-
-D2
-
-=
-
-sq
-[:,
-
-None
-]
-
-+
-
-sq
-[
-None
-,
-
-:]
-
--
-
-2.0
-
-*
-
-G
-
-
-D2
-
-=
-
-np
-.
-maximum
-(
-D2
-,
-
-0.0
-)
-
-
-return
-
-np
-.
-sqrt
-(
-D2
-)
-
-def
-
-isomap
-(
-X
-,
-
-k
-=
-10
-,
-
-d_prime
-=
-2
-):
-
-
-"""
-
-    Isomap
-
-    输入:
-
-        X: (m,d) 样本矩阵
-
-        k: 近邻数
-
-        d_prime: 目标维度
-
-    输出:
-
-        Z: (m,d') 低维坐标（用 MDS 得到）
-
-        D_geo: (m,m) 近似测地线距离（图最短路距离）
-
+def isomap(X, k=10, d_prime=2):
     """
-
-
-X
-
-=
-
-np
-.
-asarray
-(
-X
-,
-
-dtype
-=
-float
-)
-
-
-m
-
-=
-
-X
-.
-shape
-[
-0
-]
-
-
-D
-
-=
-
-pairwise_dist
-(
-X
-)
-
-
-
-# 1) 构造 kNN 图的邻接矩阵（非邻居设为 inf）
-
-
-G
-
-=
-
-np
-.
-full
-((
-m
-,
-
-m
-),
-
-np
-.
-inf
-)
-
-
-np
-.
-fill_diagonal
-(
-G
-,
-
-0.0
-)
-
-
-for
-
-i
-
-in
-
-range
-(
-m
-):
-
-
-nn
-
-=
-
-np
-.
-argsort
-(
-D
-[
-i
-])[
-1
-:
-k
-+
-1
-]
-
-
-# 排除自己
-
-
-G
-[
-i
-,
-
-nn
-]
-
-=
-
-D
-[
-i
-,
-
-nn
-]
-
-
-
-# 无向化（常见做法：取 min）
-
-
-G
-
-=
-
-np
-.
-minimum
-(
-G
-,
-
-G
-.
-T
-)
-
-
-
-# 2) Floyd-Warshall 求所有点对最短路（测地线近似）
-
-
-D_geo
-
-=
-
-G
-.
-copy
-()
-
-
-for
-
-t
-
-in
-
-range
-(
-m
-):
-
-
-
-# 利用广播加速：D[i,j] = min(D[i,j], D[i,t]+D[t,j])
-
-
-D_geo
-
-=
-
-np
-.
-minimum
-(
-D_geo
-,
-
-D_geo
-[:,
-
-[
-t
-]]
-
-+
-
-D_geo
-[[
-t
-],
-
-:])
-
-
-
-# 3) 用 MDS 将测地线距离嵌入到低维
-
-
-Z
-,
-
-_
-
-=
-
-classical_mds
-(
-D_geo
-,
-
-d_prime
-=
-d_prime
-)
-
-
-return
-
-Z
-,
-
-D_geo
-
+    Isomap
+    输入:
+        X: (m,d) 样本矩阵
+        k: 近邻数
+        d_prime: 目标维度
+    输出:
+        Z: (m,d') 低维坐标（用 MDS 得到）
+        D_geo: (m,m) 近似测地线距离（图最短路距离）
+    """
+    X = np.asarray(X, dtype=float)
+    m = X.shape[0]
+    D = pairwise_dist(X)
+
+    # 1) 构造 kNN 图的邻接矩阵（非邻居设为 inf）
+    G = np.full((m, m), np.inf)
+    np.fill_diagonal(G, 0.0)
+    for i in range(m):
+        nn = np.argsort(D[i])[1:k+1]  # 排除自己
+        G[i, nn] = D[i, nn]
+
+    # 无向化（常见做法：取 min）
+    G = np.minimum(G, G.T)
+
+    # 2) Floyd-Warshall 求所有点对最短路（测地线近似）
+    D_geo = G.copy()
+    for t in range(m):
+        # 利用广播加速：D[i,j] = min(D[i,j], D[i,t]+D[t,j])
+        D_geo = np.minimum(D_geo, D_geo[:, [t]] + D_geo[[t], :])
+
+    # 3) 用 MDS 将测地线距离嵌入到低维
+    Z, _ = classical_mds(D_geo, d_prime=d_prime)
+    return Z, D_geo
 
 # =========================
-
-
 # 简短用法示例
-
-
 # =========================
+if __name__ == "__main__":
+    rng = np.random.default_rng(0)
+    X = rng.normal(size=(200, 5))
 
-if
+    Z_iso, D_geo = isomap(X, k=10, d_prime=2)
 
-__name__
-
-==
-
-"__main__"
-:
-
-
-rng
-
-=
-
-np
-.
-random
-.
-default_rng
-(
-0
-)
-
-
-X
-
-=
-
-rng
-.
-normal
-(
-size
-=
-(
-200
-,
-
-5
-))
-
-
-Z_iso
-,
-
-D_geo
-
-=
-
-isomap
-(
-X
-,
-
-k
-=
-10
-,
-
-d_prime
-=
-2
-)
-
-
-print
-(
-
-Z_iso
-.
-shape
-)
-
+    print( Z_iso.shape)
 ```
 
 ---
@@ -3646,9 +853,8 @@ $$
 
 LLE 希望式(10.26)的关系在低维空间中也可以保持
 
-Note
-
-点 $x_i$ 可以由它的邻居点线性组合重构，这符合流形的“在小邻近域里近似成立”
+!!! note
+    点 $x_i$ 可以由它的邻居点线性组合重构，这符合流形的“在小邻近域里近似成立”
 
 下面是计算过程，我们先为每个样本 $x_i$ 找到其近邻下标集合 $Q_i$ ，然后计算出基于 $Q_i$ 中的样本点对 $x_i$ 进行线性重构的系数 $w_i$，也就是在高维里求重构权重
 
@@ -3692,629 +898,85 @@ $$
 s.t.\quad ZZ^T=I\tag{10.31}
 $$
 
-Note
-
-这里是标准的“在正交约束下最小化二次型”，解就是取 M 的最小的 d' 个特征值对应的特征向量
+!!! note
+    这里是标准的“在正交约束下最小化二次型”，解就是取 M 的最小的 d' 个特征值对应的特征向量
 
 ![image-20260226143039444](../../../images/image-20260226143039444.png)
 
 
-```
-
-import
-
-numpy
-
-as
-
-np
-
+```python
+import numpy as np
 
 # =========================
-
-
 # 工具：两两欧氏距离矩阵
-
-
 # =========================
+def pairwise_dist(X):
+    """输入 X:(m,d)，输出 D:(m,m) 欧氏距离矩阵"""
+    X = np.asarray(X, dtype=float)
+    G = X @ X.T
+    sq = np.diag(G)
+    D2 = sq[:, None] + sq[None, :] - 2.0 * G
+    D2 = np.maximum(D2, 0.0)
+    return np.sqrt(D2)
 
-def
-
-pairwise_dist
-(
-X
-):
-
-
-"""输入 X:(m,d)，输出 D:(m,m) 欧氏距离矩阵"""
-
-
-X
-
-=
-
-np
-.
-asarray
-(
-X
-,
-
-dtype
-=
-float
-)
-
-
-G
-
-=
-
-X
-
-@
-
-X
-.
-T
-
-
-sq
-
-=
-
-np
-.
-diag
-(
-G
-)
-
-
-D2
-
-=
-
-sq
-[:,
-
-None
-]
-
-+
-
-sq
-[
-None
-,
-
-:]
-
--
-
-2.0
-
-*
-
-G
-
-
-D2
-
-=
-
-np
-.
-maximum
-(
-D2
-,
-
-0.0
-)
-
-
-return
-
-np
-.
-sqrt
-(
-D2
-)
-
-def
-
-lle
-(
-X
-,
-
-k
-=
-10
-,
-
-d_prime
-=
-2
-,
-
-reg
-=
-1e-3
-,
-
-eps
-=
-1e-12
-):
-
-
-"""
-
-    LLE（Locally Linear Embedding）
-
-    输入:
-
-        X: (m,d) 样本矩阵
-
-        k: 近邻数
-
-        d_prime: 目标维度
-
-        reg: 求逆稳定项（对局部协方差加 reg*trace）
-
-    输出:
-
-        Z: (m,d') 低维坐标（每行一个样本）
-
-        W: (m,m) 权重矩阵（W[i,j]=w_ij；非邻居为0）
-
+def lle(X, k=10, d_prime=2, reg=1e-3, eps=1e-12):
     """
-
-
-X
-
-=
-
-np
-.
-asarray
-(
-X
-,
-
-dtype
-=
-float
-)
-
-
-m
-,
-
-d
-
-=
-
-X
-.
-shape
-
-
-D
-
-=
-
-pairwise_dist
-(
-X
-)
-
-
-
-# 1) 找近邻并求权重（对应(10.27)(10.28)）
-
-
-W
-
-=
-
-np
-.
-zeros
-((
-m
-,
-
-m
-),
-
-dtype
-=
-float
-)
-
-
-for
-
-i
-
-in
-
-range
-(
-m
-):
-
-
-nn
-
-=
-
-np
-.
-argsort
-(
-D
-[
-i
-])[
-1
-:
-k
-+
-1
-]
-
-
-Xi
-
-=
-
-X
-[
-i
-]
-
-
-Xn
-
-=
-
-X
-[
-nn
-]
-
-
-# (k,d)
-
-
-Zloc
-
-=
-
-Xn
-
--
-
-Xi
-
-
-# (k,d)
-
-
-
-# 局部Gram矩阵 C = (x_i-x_j)^T (x_i-x_k) = Zloc Zloc^T
-
-
-C
-
-=
-
-Zloc
-
-@
-
-Zloc
-.
-T
-
-
-# (k,k)
-
-
-
-# 正则化：避免奇异（reg * trace(C)）
-
-
-tr
-
-=
-
-np
-.
-trace
-(
-C
-)
-
-
-C
-
-=
-
-C
-
-+
-
-np
-.
-eye
-(
-k
-)
-
-*
-
-(
-reg
-
-*
-
-(
-tr
-
-if
-
-tr
-
->
-
-eps
-
-else
-
-1.0
-))
-
-
-
-# 解 C w = 1，然后归一化使 sum(w)=1
-
-
-ones
-
-=
-
-np
-.
-ones
-(
-k
-)
-
-
-w
-
-=
-
-np
-.
-linalg
-.
-solve
-(
-C
-,
-
-ones
-)
-
-
-w
-
-=
-
-w
-
-/
-
-(
-w
-.
-sum
-()
-
-+
-
-eps
-)
-
-
-W
-[
-i
-,
-
-nn
-]
-
-=
-
-w
-
-
-
-# 2) 构造 M = (I-W)^T(I-W)（对应(10.30)）
-
-
-I
-
-=
-
-np
-.
-eye
-(
-m
-)
-
-
-M
-
-=
-
-(
-I
-
--
-
-W
-)
-.
-T
-
-@
-
-(
-I
-
--
-
-W
-)
-
-
-
-# 3) 解最小特征值对应的特征向量（对应(10.31)）
-
-
-eigvals
-,
-
-eigvecs
-
-=
-
-np
-.
-linalg
-.
-eigh
-(
-M
-)
-
-
-# 升序
-
-
-
-# 跳过最小的一个（理论上为0，对应平移不变的常数向量）
-
-
-Z
-
-=
-
-eigvecs
-[:,
-
-1
-:
-d_prime
-+
-1
-]
-
-
-return
-
-Z
-,
-
-W
-
-if
-
-__name__
-
-==
-
-"__main__"
-:
-
-
-rng
-
-=
-
-np
-.
-random
-.
-default_rng
-(
-0
-)
-
-
-X
-
-=
-
-rng
-.
-normal
-(
-size
-=
-(
-200
-,
-
-5
-))
-
-
-Z_lle
-,
-
-W
-
-=
-
-lle
-(
-X
-,
-
-k
-=
-10
-,
-
-d_prime
-=
-2
-)
-
-
-print
-(
-Z_lle
-.
-shape
-)
-
+    LLE（Locally Linear Embedding）
+    输入:
+        X: (m,d) 样本矩阵
+        k: 近邻数
+        d_prime: 目标维度
+        reg: 求逆稳定项（对局部协方差加 reg*trace）
+    输出:
+        Z: (m,d') 低维坐标（每行一个样本）
+        W: (m,m) 权重矩阵（W[i,j]=w_ij；非邻居为0）
+    """
+    X = np.asarray(X, dtype=float)
+    m, d = X.shape
+    D = pairwise_dist(X)
+
+    # 1) 找近邻并求权重（对应(10.27)(10.28)）
+    W = np.zeros((m, m), dtype=float)
+    for i in range(m):
+        nn = np.argsort(D[i])[1:k+1]
+        Xi = X[i]
+        Xn = X[nn]                    # (k,d)
+        Zloc = Xn - Xi                # (k,d)
+
+        # 局部Gram矩阵 C = (x_i-x_j)^T (x_i-x_k) = Zloc Zloc^T
+        C = Zloc @ Zloc.T             # (k,k)
+
+        # 正则化：避免奇异（reg * trace(C)）
+        tr = np.trace(C)
+        C = C + np.eye(k) * (reg * (tr if tr > eps else 1.0))
+
+        # 解 C w = 1，然后归一化使 sum(w)=1
+        ones = np.ones(k)
+        w = np.linalg.solve(C, ones)
+        w = w / (w.sum() + eps)
+        W[i, nn] = w
+
+    # 2) 构造 M = (I-W)^T(I-W)（对应(10.30)）
+    I = np.eye(m)
+    M = (I - W).T @ (I - W)
+
+    # 3) 解最小特征值对应的特征向量（对应(10.31)）
+    eigvals, eigvecs = np.linalg.eigh(M)  # 升序
+    # 跳过最小的一个（理论上为0，对应平移不变的常数向量）
+    Z = eigvecs[:, 1:d_prime+1]
+    return Z, W
+
+if __name__ == "__main__":
+    rng = np.random.default_rng(0)
+    X = rng.normal(size=(200, 5))
+
+    Z_lle, W = lle(X, k=10, d_prime=2)
+
+    print(Z_lle.shape)
 ```
 
-Tip
-
-PCA/KPCA都在找全局投影方向，也就是线性或核化后的线性，偏全局结构
+!!! tip
+    PCA/KPCA都在找全局投影方向，也就是线性或核化后的线性，偏全局结构
 
 Isomap是先把距离改为近似测地线，再用MDS全局保持距离
 
@@ -4335,9 +997,8 @@ $$
 dist_{ed}^2(x_i,x_j)=\|x_i-x_j\|_2^2=dist_{ij,2}^2+dist_{ij,2}^2+\dots+dist_{ij,d}^2\tag{10.32}
 $$
 
-Note
-
-欧氏距离默认把每个维度当成同等重要、互不相关的“正交坐标轴”，所以就是逐维差平方求和。
+!!! note
+    欧氏距离默认把每个维度当成同等重要、互不相关的“正交坐标轴”，所以就是逐维差平方求和。
 
 **但**：现实里不同特征的重要性不同，而且特征之间还会相关（比如“重量”和“体积”）。
 
@@ -4356,9 +1017,8 @@ $$
 \end{align}
 $$
 
-Note
-
-这里我们假设 $W$ 是对角矩阵，依旧意味着我们仍然假设各维度不相关，坐标轴存在正交。
+!!! note
+    这里我们假设 $W$ 是对角矩阵，依旧意味着我们仍然假设各维度不相关，坐标轴存在正交。
 
 因此这一步可以看作“可学习的特征缩放“，但还不够灵活
 
@@ -4370,9 +1030,8 @@ $$
 
 其中 $M$ 要求半正定对阵，并且可以写为 $M=PP^T$ ，$P$ 为正交基
 
-Note
-
-这样的话，M 的\*\*非对角项\*\*允许我们表达“特征相关/旋转坐标轴”：距离不再是逐维独立相加，而是在一个被旋转+拉伸的空间里测量。
+!!! note
+    这样的话，M 的\*\*非对角项\*\*允许我们表达“特征相关/旋转坐标轴”：距离不再是逐维独立相加，而是在一个被旋转+拉伸的空间里测量。
 
 ---
 
@@ -4397,9 +1056,8 @@ p_{ij}=\dfrac{
 \tag{10.35}
 $$
 
-Note
-
-这里的 分母是归一化，保证 $\sum_j p_{ij}=1$
+!!! note
+    这里的 分母是归一化，保证 $\sum_j p_{ij}=1$
 
 然后验证一下，我们若以留一法（LOO）正确率的最大化为目标，则可以计算 $x_i$ 的留一法正确率，即它被自身之外的所有样本正确分类的概率为
 
@@ -4423,903 +1081,108 @@ $$
 \tag{10.38}
 $$
 
-Note
+!!! note
+    直接学习一个线性变换 $P^\top x$（相当于学一个嵌入空间）；在这个空间里，soft-kNN 的 LOO 正确率最大（损失最小）；这就是“把距离学习和分类性能绑定”的典型做法：不是在抽象地学几何，而是在为 kNN 的准确率服务。
 
-直接学习一个线性变换 $P^\top x$（相当于学一个嵌入空间）；在这个空间里，soft-kNN 的 LOO 正确率最大（损失最小）；这就是“把距离学习和分类性能绑定”的典型做法：不是在抽象地学几何，而是在为 kNN 的准确率服务。
 
-
-```
-
-import
-
-numpy
-
-as
-
-np
-
+```python
+import numpy as np
 
 # =========================
-
-
 # 10.6 度量学习：NCA + 约束式(类似Xing) 的最小可用实现
-
-
 # =========================
+def _pairwise_sqdist(A, B):
+    """返回 (n,m) 的平方欧氏距离矩阵 ||A_i - B_j||^2"""
+    A2 = np.sum(A*A, axis=1, keepdims=True)
+    B2 = np.sum(B*B, axis=1, keepdims=True).T
+    D2 = A2 + B2 - 2.0 * (A @ B.T)
+    return np.maximum(D2, 0.0)
 
-def
-
-_pairwise_sqdist
-(
-A
-,
-
-B
-):
-
-
-"""返回 (n,m) 的平方欧氏距离矩阵 ||A_i - B_j||^2"""
-
-
-A2
-
-=
-
-np
-.
-sum
-(
-A
-*
-A
-,
-
-axis
-=
-1
-,
-
-keepdims
-=
-True
-)
-
-
-B2
-
-=
-
-np
-.
-sum
-(
-B
-*
-B
-,
-
-axis
-=
-1
-,
-
-keepdims
-=
-True
-)
-.
-T
-
-
-D2
-
-=
-
-A2
-
-+
-
-B2
-
--
-
-2.0
-
-*
-
-(
-A
-
-@
-
-B
-.
-T
-)
-
-
-return
-
-np
-.
-maximum
-(
-D2
-,
-
-0.0
-)
-
-def
-
-_softmax_rows
-(
-S
-):
-
-
-"""对每行做 softmax（数值稳定）"""
-
-
-S
-
-=
-
-S
-
--
-
-np
-.
-max
-(
-S
-,
-
-axis
-=
-1
-,
-
-keepdims
-=
-True
-)
-
-
-E
-
-=
-
-np
-.
-exp
-(
-S
-)
-
-
-return
-
-E
-
-/
-
-(
-np
-.
-sum
-(
-E
-,
-
-axis
-=
-1
-,
-
-keepdims
-=
-True
-)
-
-+
-
-1e-12
-)
-
+def _softmax_rows(S):
+    """对每行做 softmax（数值稳定）"""
+    S = S - np.max(S, axis=1, keepdims=True)
+    E = np.exp(S)
+    return E / (np.sum(E, axis=1, keepdims=True) + 1e-12)
 
 # ==========================================================
-
-
 # (A) NCA：对应教材(10.35)-(10.38)，学习 P，使 soft-kNN 的 LOO 正确率最大
-
-
 # ==========================================================
-
-def
-
-nca_fit
-(
-X
-,
-
-y
-,
-
-d_out
-=
-2
-,
-
-lr
-=
-1e-2
-,
-
-epochs
-=
-200
-,
-
-reg
-=
-1e-4
-,
-
-seed
-=
-0
-):
-
-
-"""
-
-    NCA 训练（学习线性变换 P，M = P P^T）
-
-    输入:
-
-        X: (m,d) 样本矩阵（行=样本）
-
-        y: (m,) 0..C-1 类别标签
-
-        d_out: 低维维度 d'（P 的输出维）
-
-        lr: 学习率
-
-        epochs: 迭代轮数
-
-        reg: L2 正则（防止发散）
-
-    输出:
-
-        P: (d,d') 线性变换矩阵；距离为 ||P^T x_i - P^T x_j||^2
-
-        history: 每轮目标值列表（越小越好）
-
+def nca_fit(X, y, d_out=2, lr=1e-2, epochs=200, reg=1e-4, seed=0):
     """
+    NCA 训练（学习线性变换 P，M = P P^T）
+    输入:
+        X: (m,d) 样本矩阵（行=样本）
+        y: (m,) 0..C-1 类别标签
+        d_out: 低维维度 d'（P 的输出维）
+        lr: 学习率
+        epochs: 迭代轮数
+        reg: L2 正则（防止发散）
+    输出:
+        P: (d,d') 线性变换矩阵；距离为 ||P^T x_i - P^T x_j||^2
+        history: 每轮目标值列表（越小越好）
+    """
+    X = np.asarray(X, float)
+    y = np.asarray(y)
+    m, d = X.shape
+    rng = np.random.default_rng(seed)
+    P = 0.01 * rng.standard_normal((d, d_out))
+
+    # 同类掩码：same[i,j]=True 表示 y_i==y_j，训练中用于(10.36)
+    same = (y[:, None] == y[None, :]).astype(float)
+    np.fill_diagonal(same, 0.0)  # 留一法：不让自己投票
+
+    history = []
+    for _ in range(epochs):
+        Z = X @ P                       # (m,d')
+        D2 = _pairwise_sqdist(Z, Z)     # (m,m) 低维平方距离
+        np.fill_diagonal(D2, np.inf)    # 排除自己（更接近LOO）
+
+        # (10.35) p_ij = softmax( -||zi-zj||^2 )
+        Pij = _softmax_rows(-D2)
+
+        # (10.36) p_i = sum_{j in same class} p_ij
+        pi = np.sum(Pij * same, axis=1)                     # (m,)
+        loss = 1.0 - np.mean(pi) + reg * np.sum(P * P)      # (10.38) 的平均版 + 正则
+        history.append(loss)
+
+        # --------- 下面是对 P 的梯度（一个紧凑可用的推导实现）---------
+        # 记 A_ij = Pij_ij，S_ij = same_ij
+        A = Pij
+        S = same
+
+        # 对每个 i，构造权重矩阵 Wi:
+        # Wi[j] = A_ij * (pi_i - S_ij)
+        # 这是 NCA 常见梯度形式的核心权重
+        pi_col = pi[:, None]                               # (m,1)
+        W = A * (pi_col - S)                               # (m,m)
+
+        # 梯度：dL/dP = 2 X^T (G) ，其中
+        # G_i = sum_j W_ij (z_i - z_j)   （按 i 聚合）
+        # 用矩阵方式实现：G = diag(row_sum(W)) Z - W Z
+        row_sum = np.sum(W, axis=1)                        # (m,)
+        G = (row_sum[:, None] * Z) - (W @ Z)               # (m,d')
+        grad = 2.0 * (X.T @ G) / m + 2.0 * reg * P         # (d,d')
+
+        P -= lr * grad
+
+    return P, history
+
+def nca_transform(X, P):
+    """用学到的 P 做嵌入：Z = X P"""
+    return np.asarray(X, float) @ P
 
-
-X
-
-=
-
-np
-.
-asarray
-(
-X
-,
-
-float
-)
-
-
-y
-
-=
-
-np
-.
-asarray
-(
-y
-)
-
-
-m
-,
-
-d
-
-=
-
-X
-.
-shape
-
-
-rng
-
-=
-
-np
-.
-random
-.
-default_rng
-(
-seed
-)
-
-
-P
-
-=
-
-0.01
-
-*
-
-rng
-.
-standard_normal
-((
-d
-,
-
-d_out
-))
-
-
-
-# 同类掩码：same[i,j]=True 表示 y_i==y_j，训练中用于(10.36)
-
-
-same
-
-=
-
-(
-y
-[:,
-
-None
-]
-
-==
-
-y
-[
-None
-,
-
-:])
-.
-astype
-(
-float
-)
-
-
-np
-.
-fill_diagonal
-(
-same
-,
-
-0.0
-)
-
-
-# 留一法：不让自己投票
-
-
-history
-
-=
-
-[]
-
-
-for
-
-_
-
-in
-
-range
-(
-epochs
-):
-
-
-Z
-
-=
-
-X
-
-@
-
-P
-
-
-# (m,d')
-
-
-D2
-
-=
-
-_pairwise_sqdist
-(
-Z
-,
-
-Z
-)
-
-
-# (m,m) 低维平方距离
-
-
-np
-.
-fill_diagonal
-(
-D2
-,
-
-np
-.
-inf
-)
-
-
-# 排除自己（更接近LOO）
-
-
-
-# (10.35) p_ij = softmax( -||zi-zj||^2 )
-
-
-Pij
-
-=
-
-_softmax_rows
-(
--
-D2
-)
-
-
-
-# (10.36) p_i = sum_{j in same class} p_ij
-
-
-pi
-
-=
-
-np
-.
-sum
-(
-Pij
-
-*
-
-same
-,
-
-axis
-=
-1
-)
-
-
-# (m,)
-
-
-loss
-
-=
-
-1.0
-
--
-
-np
-.
-mean
-(
-pi
-)
-
-+
-
-reg
-
-*
-
-np
-.
-sum
-(
-P
-
-*
-
-P
-)
-
-
-# (10.38) 的平均版 + 正则
-
-
-history
-.
-append
-(
-loss
-)
-
-
-
-# --------- 下面是对 P 的梯度（一个紧凑可用的推导实现）---------
-
-
-
-# 记 A_ij = Pij_ij，S_ij = same_ij
-
-
-A
-
-=
-
-Pij
-
-
-S
-
-=
-
-same
-
-
-
-# 对每个 i，构造权重矩阵 Wi:
-
-
-
-# Wi[j] = A_ij * (pi_i - S_ij)
-
-
-
-# 这是 NCA 常见梯度形式的核心权重
-
-
-pi_col
-
-=
-
-pi
-[:,
-
-None
-]
-
-
-# (m,1)
-
-
-W
-
-=
-
-A
-
-*
-
-(
-pi_col
-
--
-
-S
-)
-
-
-# (m,m)
-
-
-
-# 梯度：dL/dP = 2 X^T (G) ，其中
-
-
-
-# G_i = sum_j W_ij (z_i - z_j)   （按 i 聚合）
-
-
-
-# 用矩阵方式实现：G = diag(row_sum(W)) Z - W Z
-
-
-row_sum
-
-=
-
-np
-.
-sum
-(
-W
-,
-
-axis
-=
-1
-)
-
-
-# (m,)
-
-
-G
-
-=
-
-(
-row_sum
-[:,
-
-None
-]
-
-*
-
-Z
-)
-
--
-
-(
-W
-
-@
-
-Z
-)
-
-
-# (m,d')
-
-
-grad
-
-=
-
-2.0
-
-*
-
-(
-X
-.
-T
-
-@
-
-G
-)
-
-/
-
-m
-
-+
-
-2.0
-
-*
-
-reg
-
-*
-
-P
-
-
-# (d,d')
-
-
-P
-
--=
-
-lr
-
-*
-
-grad
-
-
-return
-
-P
-,
-
-history
-
-def
-
-nca_transform
-(
-X
-,
-
-P
-):
-
-
-"""用学到的 P 做嵌入：Z = X P"""
-
-
-return
-
-np
-.
-asarray
-(
-X
-,
-
-float
-)
-
-@
-
-P
 
 
 # =========================
-
-
 # 用法示例（可删）
-
-
 # =========================
+if __name__ == "__main__":
+    rng = np.random.default_rng(0)
+    X = rng.normal(size=(100, 10))
+    y = rng.integers(0, 3, size=100)
 
-if
-
-__name__
-
-==
-
-"__main__"
-:
-
-
-rng
-
-=
-
-np
-.
-random
-.
-default_rng
-(
-0
-)
-
-
-X
-
-=
-
-rng
-.
-normal
-(
-size
-=
-(
-100
-,
-
-10
-))
-
-
-y
-
-=
-
-rng
-.
-integers
-(
-0
-,
-
-3
-,
-
-size
-=
-100
-)
-
-
-
-# NCA
-
-
-P
-,
-
-hist
-
-=
-
-nca_fit
-(
-X
-,
-
-y
-,
-
-d_out
-=
-2
-,
-
-lr
-=
-0.05
-,
-
-epochs
-=
-100
-)
-
-
-Z
-
-=
-
-nca_transform
-(
-X
-,
-
-P
-)
-
-
-print
-(
-"NCA:"
-,
-
-Z
-.
-shape
-,
-
-"last loss:"
-,
-
-hist
-[
--
-1
-])
-
+    # NCA
+    P, hist = nca_fit(X, y, d_out=2, lr=0.05, epochs=100)
+    Z = nca_transform(X, P)
+    print("NCA:", Z.shape, "last loss:", hist[-1])
 ```
