@@ -1,0 +1,155 @@
+/* ============================================================
+   PDF Viewer Styles — continuous scroll layout
+   Used by overrides/pdf-viewer.html
+   ============================================================ */
+
+.pdf-viewer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+}
+
+/* --- toolbar --- */
+.pdf-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 8px 16px;
+  background: var(--md-default-bg-color, #fff);
+  border-bottom: 1px solid var(--md-default-fg-color--lightest, rgba(0,0,0,0.07));
+  transition: background 0.2s, border-color 0.2s;
+}
+
+[data-md-color-scheme="slate"] .pdf-toolbar {
+  background: var(--md-default-bg-color, #1a1a2e);
+  border-color: var(--md-default-fg-color--lightest, rgba(255,255,255,0.07));
+}
+
+/* --- toolbar buttons --- */
+.pdf-toolbar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--md-default-fg-color--lightest, rgba(0,0,0,0.12));
+  border-radius: 6px;
+  background: var(--md-default-bg-color, #fff);
+  color: var(--md-default-fg-color, #333);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.pdf-toolbar button:hover {
+  background: var(--md-code-bg-color, rgba(0,0,0,0.05));
+}
+
+.pdf-toolbar button:active {
+  background: var(--md-primary-fg-color--transparent, rgba(0,0,0,0.10));
+}
+
+/* --- toolbar separator --- */
+.pdf-toolbar .sep {
+  width: 1px;
+  height: 22px;
+  background: var(--md-default-fg-color--lightest, rgba(0,0,0,0.15));
+}
+
+/* --- zoom label --- */
+.pdf-zoom-label {
+  font-size: 13px;
+  color: var(--md-default-fg-color--light, #666);
+  min-width: 40px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+
+/* --- page indicator --- */
+.pdf-page-indicator {
+  font-size: 13px;
+  color: var(--md-default-fg-color--light, #666);
+  min-width: 80px;
+  text-align: center;
+  user-select: none;
+}
+
+/* --- continuous pages container --- */
+.pdf-pages-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 16px 8px;
+  gap: 8px;
+}
+
+/* --- individual page canvas --- */
+.pdf-page-canvas {
+  max-width: 100%;
+  height: auto !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  border-radius: 2px;
+}
+
+[data-md-color-scheme="slate"] .pdf-page-canvas {
+  box-shadow: 0 2px 12px rgba(0,0,0,0.40);
+}
+
+/* --- loading / error / empty states --- */
+.pdf-viewer-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  color: var(--md-default-fg-color--light, #666);
+  font-size: 15px;
+  text-align: center;
+}
+
+/* spinner */
+.pdf-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--md-default-fg-color--lightest, rgba(0,0,0,0.1));
+  border-top-color: var(--md-primary-fg-color, #4051b5);
+  border-radius: 50%;
+  animation: pdf-spin 0.8s linear infinite;
+  margin-bottom: 12px;
+}
+
+@keyframes pdf-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --- responsive --- */
+@media (max-width: 600px) {
+  .pdf-toolbar {
+    gap: 6px;
+    padding: 6px 8px;
+  }
+
+  .pdf-toolbar button {
+    min-width: 30px;
+    height: 30px;
+    padding: 0 8px;
+    font-size: 13px;
+  }
+
+  .pdf-pages-container {
+    padding: 8px 4px;
+    gap: 6px;
+  }
+}
