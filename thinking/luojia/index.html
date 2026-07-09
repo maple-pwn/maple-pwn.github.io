@@ -8,28 +8,28 @@
       
       
       
-        <link rel="canonical" href="https://maple-pwn.github.io/pwn/Heap/%E5%A0%86%E5%90%84%E7%B1%BB%E6%94%BB%E5%87%BB%E6%89%8B%E6%B3%95/">
+        <link rel="canonical" href="https://maple-pwn.github.io/thinking/luojia/">
       
       
-        <link rel="prev" href="../%E5%A0%86%E4%B8%AD%E7%9A%84off-by-one/">
+        <link rel="prev" href="../teacher/">
       
       
-        <link rel="next" href="../%E4%BE%8B%E9%A2%98%E8%AE%B0%E5%BD%95/">
+        <link rel="next" href="../../sth/proj/">
       
       
-      <link rel="icon" href="../../../images/logo.svg">
+      <link rel="icon" href="../../images/logo.svg">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
     
     
       
-        <title>攻击手法 - Maple's blog</title>
+        <title>珞珈 - Maple's blog</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.e53b48f4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -48,17 +48,17 @@
       
     
     
-      <link rel="stylesheet" href="../../../resources/css/extra.css">
+      <link rel="stylesheet" href="../../resources/css/extra.css">
     
-      <link rel="stylesheet" href="../../../resources/css/tittle.css">
+      <link rel="stylesheet" href="../../resources/css/tittle.css">
     
-      <link rel="stylesheet" href="../../../resources/css/read-metrics.css">
+      <link rel="stylesheet" href="../../resources/css/read-metrics.css">
     
-      <link rel="stylesheet" href="../../../resources/css/leftsidebar.css">
+      <link rel="stylesheet" href="../../resources/css/leftsidebar.css">
     
       <link rel="stylesheet" href="https://static.zeoseven.com/zsft/292/main/result.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -83,11 +83,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#chunk-overlapping" class="md-skip">
-          跳转至
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -98,9 +93,9 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="页眉">
-    <a href="../../.." title="Maple&#39;s blog" class="md-header__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+    <a href="../.." title="Maple&#39;s blog" class="md-header__button md-logo" aria-label="Maple's blog" data-md-component="logo">
       
-  <img src="../../../images/logo.svg" alt="logo">
+  <img src="../../images/logo.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -117,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              攻击手法
+              珞珈
             
           </span>
         </div>
@@ -178,7 +173,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../mysys/pre/" class="md-tabs__link">
+        <a href="../../mysys/pre/" class="md-tabs__link">
           
   
   
@@ -198,7 +193,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../LLMZtH/pre/" class="md-tabs__link">
+        <a href="../../LLMZtH/pre/" class="md-tabs__link">
           
   
   
@@ -218,7 +213,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../study/pre/" class="md-tabs__link">
+        <a href="../../study/pre/" class="md-tabs__link">
           
   
   
@@ -245,7 +240,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../READ/paperread/mHC/" class="md-tabs__link">
+        <a href="../../READ/paperread/mHC/" class="md-tabs__link">
           
   
   
@@ -264,13 +259,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../pre/" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../pwn/pre/" class="md-tabs__link">
           
   
   
@@ -286,11 +279,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../../thinking/pre/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../pre/" class="md-tabs__link">
           
   
   
@@ -310,7 +305,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../sth/proj/" class="md-tabs__link">
+        <a href="../../sth/proj/" class="md-tabs__link">
           
   
   
@@ -363,9 +358,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Maple&#39;s blog" class="md-nav__button md-logo" aria-label="Maple's blog" data-md-component="logo">
+    <a href="../.." title="Maple&#39;s blog" class="md-nav__button md-logo" aria-label="Maple's blog" data-md-component="logo">
       
-  <img src="../../../images/logo.svg" alt="logo">
+  <img src="../../images/logo.svg" alt="logo">
 
     </a>
     Maple's blog
@@ -421,7 +416,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../mysys/pre/" class="md-nav__link">
+      <a href="../../mysys/pre/" class="md-nav__link">
         
   
   
@@ -444,7 +439,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../mysys/01/" class="md-nav__link">
+      <a href="../../mysys/01/" class="md-nav__link">
         
   
   
@@ -467,7 +462,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../mysys/02/" class="md-nav__link">
+      <a href="../../mysys/02/" class="md-nav__link">
         
   
   
@@ -490,7 +485,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../mysys/03/" class="md-nav__link">
+      <a href="../../mysys/03/" class="md-nav__link">
         
   
   
@@ -513,7 +508,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../mysys/04/" class="md-nav__link">
+      <a href="../../mysys/04/" class="md-nav__link">
         
   
   
@@ -536,7 +531,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../mysys/05/" class="md-nav__link">
+      <a href="../../mysys/05/" class="md-nav__link">
         
   
   
@@ -559,7 +554,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../mysys/06/" class="md-nav__link">
+      <a href="../../mysys/06/" class="md-nav__link">
         
   
   
@@ -630,7 +625,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/pre/" class="md-nav__link">
+      <a href="../../LLMZtH/pre/" class="md-nav__link">
         
   
   
@@ -694,7 +689,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/Agent/" class="md-nav__link">
+      <a href="../../LLMZtH/Agent/" class="md-nav__link">
         
   
   
@@ -717,7 +712,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/RAG/" class="md-nav__link">
+      <a href="../../LLMZtH/RAG/" class="md-nav__link">
         
   
   
@@ -740,7 +735,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/LLMWAF/" class="md-nav__link">
+      <a href="../../LLMZtH/LLMWAF/" class="md-nav__link">
         
   
   
@@ -763,7 +758,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/LLMT10/" class="md-nav__link">
+      <a href="../../LLMZtH/LLMT10/" class="md-nav__link">
         
   
   
@@ -835,7 +830,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/ML/1-3/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/1-3/" class="md-nav__link">
         
   
   
@@ -858,7 +853,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/ML/4/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/4/" class="md-nav__link">
         
   
   
@@ -881,7 +876,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/ML/5/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/5/" class="md-nav__link">
         
   
   
@@ -904,7 +899,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/ML/6/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/6/" class="md-nav__link">
         
   
   
@@ -927,7 +922,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/ML/7/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/7/" class="md-nav__link">
         
   
   
@@ -950,7 +945,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/ML/7_1/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/7_1/" class="md-nav__link">
         
   
   
@@ -973,7 +968,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/ML/8/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/8/" class="md-nav__link">
         
   
   
@@ -996,7 +991,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/ML/9/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/9/" class="md-nav__link">
         
   
   
@@ -1019,7 +1014,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/ML/10/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/10/" class="md-nav__link">
         
   
   
@@ -1042,7 +1037,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/ML/11/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/11/" class="md-nav__link">
         
   
   
@@ -1065,7 +1060,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/ML/12/" class="md-nav__link">
+      <a href="../../LLMZtH/ML/12/" class="md-nav__link">
         
   
   
@@ -1137,7 +1132,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/RL/1/" class="md-nav__link">
+      <a href="../../LLMZtH/RL/1/" class="md-nav__link">
         
   
   
@@ -1209,7 +1204,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/DL/1/" class="md-nav__link">
+      <a href="../../LLMZtH/DL/1/" class="md-nav__link">
         
   
   
@@ -1232,7 +1227,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/DL/images-class/" class="md-nav__link">
+      <a href="../../LLMZtH/DL/images-class/" class="md-nav__link">
         
   
   
@@ -1255,7 +1250,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/DL/images-class-py/" class="md-nav__link">
+      <a href="../../LLMZtH/DL/images-class-py/" class="md-nav__link">
         
   
   
@@ -1278,7 +1273,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/DL/linear/" class="md-nav__link">
+      <a href="../../LLMZtH/DL/linear/" class="md-nav__link">
         
   
   
@@ -1301,7 +1296,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/DL/linear-py/" class="md-nav__link">
+      <a href="../../LLMZtH/DL/linear-py/" class="md-nav__link">
         
   
   
@@ -1324,7 +1319,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/DL/optimization/" class="md-nav__link">
+      <a href="../../LLMZtH/DL/optimization/" class="md-nav__link">
         
   
   
@@ -1347,7 +1342,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../LLMZtH/DL/Backprop/" class="md-nav__link">
+      <a href="../../LLMZtH/DL/Backprop/" class="md-nav__link">
         
   
   
@@ -1426,7 +1421,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/pre/" class="md-nav__link">
+      <a href="../../study/pre/" class="md-nav__link">
         
   
   
@@ -1449,7 +1444,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/eda/" class="md-nav__link">
+      <a href="../../study/eda/" class="md-nav__link">
         
   
   
@@ -1513,7 +1508,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/dw/" class="md-nav__link">
+      <a href="../../study/dw/" class="md-nav__link">
         
   
   
@@ -1536,7 +1531,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/dw2/" class="md-nav__link">
+      <a href="../../study/dw2/" class="md-nav__link">
         
   
   
@@ -1567,7 +1562,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/gt/" class="md-nav__link">
+      <a href="../../study/gt/" class="md-nav__link">
         
   
   
@@ -1590,7 +1585,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/lisan/" class="md-nav__link">
+      <a href="../../study/lisan/" class="md-nav__link">
         
   
   
@@ -1613,7 +1608,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/mao/" class="md-nav__link">
+      <a href="../../study/mao/" class="md-nav__link">
         
   
   
@@ -1677,7 +1672,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/cs_final/" class="md-nav__link">
+      <a href="../../study/cs_final/" class="md-nav__link">
         
   
   
@@ -1700,7 +1695,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/cs_exam/" class="md-nav__link">
+      <a href="../../study/cs_exam/" class="md-nav__link">
         
   
   
@@ -1772,7 +1767,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/cry/review/" class="md-nav__link">
+      <a href="../../study/cry/review/" class="md-nav__link">
         
   
   
@@ -1795,7 +1790,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/cry/crypto/" class="md-nav__link">
+      <a href="../../study/cry/crypto/" class="md-nav__link">
         
   
   
@@ -1818,7 +1813,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/cry/math_base/" class="md-nav__link">
+      <a href="../../study/cry/math_base/" class="md-nav__link">
         
   
   
@@ -1841,7 +1836,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/cry/AES/" class="md-nav__link">
+      <a href="../../study/cry/AES/" class="md-nav__link">
         
   
   
@@ -1864,7 +1859,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/cry/SM4/" class="md-nav__link">
+      <a href="../../study/cry/SM4/" class="md-nav__link">
         
   
   
@@ -1887,7 +1882,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/cry/SHA3/" class="md-nav__link">
+      <a href="../../study/cry/SHA3/" class="md-nav__link">
         
   
   
@@ -1910,7 +1905,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/cry/SM3/" class="md-nav__link">
+      <a href="../../study/cry/SM3/" class="md-nav__link">
         
   
   
@@ -1933,7 +1928,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/cry/ZUC/" class="md-nav__link">
+      <a href="../../study/cry/ZUC/" class="md-nav__link">
         
   
   
@@ -1956,7 +1951,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/cry/RSA%26EIGamal/" class="md-nav__link">
+      <a href="../../study/cry/RSA%26EIGamal/" class="md-nav__link">
         
   
   
@@ -1979,7 +1974,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/cry/SM2/" class="md-nav__link">
+      <a href="../../study/cry/SM2/" class="md-nav__link">
         
   
   
@@ -2051,7 +2046,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/OS/" class="md-nav__link">
+      <a href="../../study/OS/" class="md-nav__link">
         
   
   
@@ -2074,7 +2069,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/OS/review/" class="md-nav__link">
+      <a href="../../study/OS/review/" class="md-nav__link">
         
   
   
@@ -2146,7 +2141,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/compiler/" class="md-nav__link">
+      <a href="../../study/compiler/" class="md-nav__link">
         
   
   
@@ -2169,7 +2164,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/compiler/review/" class="md-nav__link">
+      <a href="../../study/compiler/review/" class="md-nav__link">
         
   
   
@@ -2241,7 +2236,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/db/db_homework/" class="md-nav__link">
+      <a href="../../study/db/db_homework/" class="md-nav__link">
         
   
   
@@ -2264,7 +2259,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/db/db/" class="md-nav__link">
+      <a href="../../study/db/db/" class="md-nav__link">
         
   
   
@@ -2287,7 +2282,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/db/review/" class="md-nav__link">
+      <a href="../../study/db/review/" class="md-nav__link">
         
   
   
@@ -2318,7 +2313,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/cs_e/" class="md-nav__link">
+      <a href="../../study/cs_e/" class="md-nav__link">
         
   
   
@@ -2382,7 +2377,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/huibian/" class="md-nav__link">
+      <a href="../../study/huibian/" class="md-nav__link">
         
   
   
@@ -2405,7 +2400,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/asm_homework/" class="md-nav__link">
+      <a href="../../study/asm_homework/" class="md-nav__link">
         
   
   
@@ -2428,7 +2423,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/asm/" class="md-nav__link">
+      <a href="../../study/asm/" class="md-nav__link">
         
   
   
@@ -2459,7 +2454,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../study/hot100/" class="md-nav__link">
+      <a href="../../study/hot100/" class="md-nav__link">
         
   
   
@@ -2571,7 +2566,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../READ/paperread/mHC/" class="md-nav__link">
+      <a href="../../READ/paperread/mHC/" class="md-nav__link">
         
   
   
@@ -2594,7 +2589,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../READ/paperread/GCG/" class="md-nav__link">
+      <a href="../../READ/paperread/GCG/" class="md-nav__link">
         
   
   
@@ -2617,7 +2612,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../READ/paperread/cs231n/" class="md-nav__link">
+      <a href="../../READ/paperread/cs231n/" class="md-nav__link">
         
   
   
@@ -2652,29 +2647,24 @@
       
   
   
-    
   
   
-  
     
     
     
     
       
-        
-        
-      
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
   
@@ -2687,7 +2677,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             pwn篇
@@ -2701,7 +2691,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pre/" class="md-nav__link">
+      <a href="../../pwn/pre/" class="md-nav__link">
         
   
   
@@ -2724,7 +2714,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tricks/" class="md-nav__link">
+      <a href="../../pwn/tricks/" class="md-nav__link">
         
   
   
@@ -2747,7 +2737,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../AI%E5%81%9A%E9%A2%98/" class="md-nav__link">
+      <a href="../../pwn/AI%E5%81%9A%E9%A2%98/" class="md-nav__link">
         
   
   
@@ -2770,7 +2760,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/" class="md-nav__link">
+      <a href="../../pwn/Agent/" class="md-nav__link">
         
   
   
@@ -2793,7 +2783,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../agent-ppt/" class="md-nav__link">
+      <a href="../../pwn/agent-ppt/" class="md-nav__link">
         
   
   
@@ -2857,7 +2847,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Stack/%E6%B1%87%E7%BC%96%E9%80%9F%E9%80%9A/" class="md-nav__link">
+      <a href="../../pwn/Stack/%E6%B1%87%E7%BC%96%E9%80%9F%E9%80%9A/" class="md-nav__link">
         
   
   
@@ -2880,7 +2870,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Stack/ASLR/" class="md-nav__link">
+      <a href="../../pwn/Stack/ASLR/" class="md-nav__link">
         
   
   
@@ -2903,7 +2893,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Stack/Canary/" class="md-nav__link">
+      <a href="../../pwn/Stack/Canary/" class="md-nav__link">
         
   
   
@@ -2926,7 +2916,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Stack/PIE%E7%BB%95%E8%BF%87/" class="md-nav__link">
+      <a href="../../pwn/Stack/PIE%E7%BB%95%E8%BF%87/" class="md-nav__link">
         
   
   
@@ -2949,7 +2939,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Stack/fmt-all-in-one/" class="md-nav__link">
+      <a href="../../pwn/Stack/fmt-all-in-one/" class="md-nav__link">
         
   
   
@@ -2972,7 +2962,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Stack/shellcode-all-in-one/" class="md-nav__link">
+      <a href="../../pwn/Stack/shellcode-all-in-one/" class="md-nav__link">
         
   
   
@@ -2995,7 +2985,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Stack/SROP/" class="md-nav__link">
+      <a href="../../pwn/Stack/SROP/" class="md-nav__link">
         
   
   
@@ -3023,8 +3013,6 @@
                 
   
   
-    
-  
   
   
     
@@ -3035,11 +3023,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" >
         
           
           <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="0">
@@ -3055,7 +3043,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_7_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_7_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5_7">
             <span class="md-nav__icon md-icon"></span>
             堆利用
@@ -3069,7 +3057,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+      <a href="../../pwn/Heap/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
         
   
   
@@ -3092,7 +3080,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../%E5%90%84%E4%B8%AA%E5%87%BD%E6%95%B0%E5%8E%9F%E5%9E%8B/" class="md-nav__link">
+      <a href="../../pwn/Heap/%E5%90%84%E4%B8%AA%E5%87%BD%E6%95%B0%E5%8E%9F%E5%9E%8B/" class="md-nav__link">
         
   
   
@@ -3115,7 +3103,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../%E5%A0%86%E6%BA%A2%E5%87%BA/" class="md-nav__link">
+      <a href="../../pwn/Heap/%E5%A0%86%E6%BA%A2%E5%87%BA/" class="md-nav__link">
         
   
   
@@ -3138,7 +3126,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../%E5%A0%86%E6%BA%A2%E5%87%BA%E4%B8%AD%E6%AF%94%E8%BE%83%E9%87%8D%E8%A6%81%E7%9A%84%E6%AD%A5%E9%AA%A4/" class="md-nav__link">
+      <a href="../../pwn/Heap/%E5%A0%86%E6%BA%A2%E5%87%BA%E4%B8%AD%E6%AF%94%E8%BE%83%E9%87%8D%E8%A6%81%E7%9A%84%E6%AD%A5%E9%AA%A4/" class="md-nav__link">
         
   
   
@@ -3161,7 +3149,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../%E5%A0%86%E4%B8%AD%E7%9A%84off-by-one/" class="md-nav__link">
+      <a href="../../pwn/Heap/%E5%A0%86%E4%B8%AD%E7%9A%84off-by-one/" class="md-nav__link">
         
   
   
@@ -3181,30 +3169,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    攻击手法
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../pwn/Heap/%E5%A0%86%E5%90%84%E7%B1%BB%E6%94%BB%E5%87%BB%E6%89%8B%E6%B3%95/" class="md-nav__link">
         
   
   
@@ -3215,267 +3183,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#chunk-overlapping" class="md-nav__link">
-    <span class="md-ellipsis">
-      chunk overlapping
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#overlapping_heap_chunk" class="md-nav__link">
-    <span class="md-ellipsis">
-      overlapping_heap_chunk
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="overlapping_heap_chunk">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#uaf" class="md-nav__link">
-    <span class="md-ellipsis">
-      uaf
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#uaf_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      uaf
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="uaf">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#fastbin-attack" class="md-nav__link">
-    <span class="md-ellipsis">
-      fastbin attack
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fastbin" class="md-nav__link">
-    <span class="md-ellipsis">
-      fastbin #任意地址写 #任意地址读
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="fastbin #任意地址写 #任意地址读">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#double-free" class="md-nav__link">
-    <span class="md-ellipsis">
-      double free
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#double_free" class="md-nav__link">
-    <span class="md-ellipsis">
-      double_free
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="double_free">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#house-of-spirit" class="md-nav__link">
-    <span class="md-ellipsis">
-      House of Spirit
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#house_of_spirit" class="md-nav__link">
-    <span class="md-ellipsis">
-      house_of_spirit
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="house_of_spirit">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#alloc-to-stack" class="md-nav__link">
-    <span class="md-ellipsis">
-      Alloc to Stack
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#alloc_to_stack" class="md-nav__link">
-    <span class="md-ellipsis">
-      alloc_to_stack
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="alloc_to_stack">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#arbitrary-alloc" class="md-nav__link">
-    <span class="md-ellipsis">
-      Arbitrary Alloc
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#arbitrary_alloc" class="md-nav__link">
-    <span class="md-ellipsis">
-      arbitrary_alloc
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="arbitrary_alloc">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#unsortedbin-attack" class="md-nav__link">
-    <span class="md-ellipsis">
-      unsortedbin attack
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#unosrtedbin_attack" class="md-nav__link">
-    <span class="md-ellipsis">
-      unosrtedbin_attack #任意地址大数据写
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="unosrtedbin_attack #任意地址大数据写">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#unsortedbinleak" class="md-nav__link">
-    <span class="md-ellipsis">
-      如何使用unsortedbin进行leak
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#unsorted-bin-attack" class="md-nav__link">
-    <span class="md-ellipsis">
-      unsorted bin attack原理
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tcache-attack" class="md-nav__link">
-    <span class="md-ellipsis">
-      Tcache attack
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tcache_attack" class="md-nav__link">
-    <span class="md-ellipsis">
-      tcache_attack
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="tcache_attack">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      源码
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3488,7 +3195,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../%E4%BE%8B%E9%A2%98%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+      <a href="../../pwn/Heap/%E4%BE%8B%E9%A2%98%E8%AE%B0%E5%BD%95/" class="md-nav__link">
         
   
   
@@ -3560,7 +3267,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../IO_FILE/_IO_FILE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+      <a href="../../pwn/IO_FILE/_IO_FILE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
         
   
   
@@ -3583,7 +3290,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../IO_FILE/IO_FILE%E6%BA%90%E7%A0%81/" class="md-nav__link">
+      <a href="../../pwn/IO_FILE/IO_FILE%E6%BA%90%E7%A0%81/" class="md-nav__link">
         
   
   
@@ -3606,7 +3313,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../IO_FILE/fopen/" class="md-nav__link">
+      <a href="../../pwn/IO_FILE/fopen/" class="md-nav__link">
         
   
   
@@ -3629,7 +3336,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../IO_FILE/fread/" class="md-nav__link">
+      <a href="../../pwn/IO_FILE/fread/" class="md-nav__link">
         
   
   
@@ -3652,7 +3359,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../IO_FILE/%E5%81%9A%E9%A2%98%E6%8A%80%E5%B7%A7/" class="md-nav__link">
+      <a href="../../pwn/IO_FILE/%E5%81%9A%E9%A2%98%E6%8A%80%E5%B7%A7/" class="md-nav__link">
         
   
   
@@ -3724,7 +3431,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../house/%E5%85%B3%E4%BA%8Ehouse%20of%20apple1%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
+      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse%20of%20apple1%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
         
   
   
@@ -3747,7 +3454,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../house/%E5%85%B3%E4%BA%8Ehouse-of-apple2%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-apple2%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
         
   
   
@@ -3770,7 +3477,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../house/%E5%85%B3%E4%BA%8Ehouse%20of%20cat%20%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse%20of%20cat%20%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
         
   
   
@@ -3793,7 +3500,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../house/%E5%85%B3%E4%BA%8Ehouse-of-kiwi%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-kiwi%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
         
   
   
@@ -3816,7 +3523,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../house/%E5%85%B3%E4%BA%8Ehouse-of-botcake%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
+      <a href="../../pwn/house/%E5%85%B3%E4%BA%8Ehouse-of-botcake%E7%9A%84%E7%A0%94%E7%A9%B6/" class="md-nav__link">
         
   
   
@@ -3888,7 +3595,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/basectf/" class="md-nav__link">
+      <a href="../../pwn/wp/basectf/" class="md-nav__link">
         
   
   
@@ -3911,7 +3618,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/moectf/" class="md-nav__link">
+      <a href="../../pwn/wp/moectf/" class="md-nav__link">
         
   
   
@@ -3934,7 +3641,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/isctf2024/" class="md-nav__link">
+      <a href="../../pwn/wp/isctf2024/" class="md-nav__link">
         
   
   
@@ -3957,7 +3664,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/ghctf/" class="md-nav__link">
+      <a href="../../pwn/wp/ghctf/" class="md-nav__link">
         
   
   
@@ -3980,7 +3687,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/xyctf/" class="md-nav__link">
+      <a href="../../pwn/wp/xyctf/" class="md-nav__link">
         
   
   
@@ -4003,7 +3710,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/tgctf/" class="md-nav__link">
+      <a href="../../pwn/wp/tgctf/" class="md-nav__link">
         
   
   
@@ -4026,7 +3733,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/NPCCTF/" class="md-nav__link">
+      <a href="../../pwn/wp/NPCCTF/" class="md-nav__link">
         
   
   
@@ -4049,7 +3756,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/ctfshow/" class="md-nav__link">
+      <a href="../../pwn/wp/ctfshow/" class="md-nav__link">
         
   
   
@@ -4072,7 +3779,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/whuctf2024/" class="md-nav__link">
+      <a href="../../pwn/wp/whuctf2024/" class="md-nav__link">
         
   
   
@@ -4095,7 +3802,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/whuctf2025/" class="md-nav__link">
+      <a href="../../pwn/wp/whuctf2025/" class="md-nav__link">
         
   
   
@@ -4118,7 +3825,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/%E5%BC%BA%E7%BD%91%E6%9D%AF/" class="md-nav__link">
+      <a href="../../pwn/wp/%E5%BC%BA%E7%BD%91%E6%9D%AF/" class="md-nav__link">
         
   
   
@@ -4141,7 +3848,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/polarD%26N/polarD%26N/" class="md-nav__link">
+      <a href="../../pwn/wp/polarD%26N/polarD%26N/" class="md-nav__link">
         
   
   
@@ -4205,7 +3912,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%881-20%E9%A2%98%EF%BC%89/" class="md-nav__link">
+      <a href="../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%881-20%E9%A2%98%EF%BC%89/" class="md-nav__link">
         
   
   
@@ -4228,7 +3935,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8821-40%E9%A2%98%EF%BC%89/" class="md-nav__link">
+      <a href="../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8821-40%E9%A2%98%EF%BC%89/" class="md-nav__link">
         
   
   
@@ -4251,7 +3958,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8841-60%E9%A2%98%EF%BC%89/" class="md-nav__link">
+      <a href="../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8841-60%E9%A2%98%EF%BC%89/" class="md-nav__link">
         
   
   
@@ -4274,7 +3981,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8861-80%E9%A2%98%EF%BC%89/" class="md-nav__link">
+      <a href="../../pwn/wp/buuctf/buuctf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%8861-80%E9%A2%98%EF%BC%89/" class="md-nav__link">
         
   
   
@@ -4317,24 +4024,29 @@
       
   
   
+    
   
   
+  
     
     
     
     
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
             
   
   
@@ -4347,7 +4059,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             论道篇
@@ -4361,7 +4073,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../thinking/pre/" class="md-nav__link">
+      <a href="../pre/" class="md-nav__link">
         
   
   
@@ -4384,7 +4096,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../thinking/I/" class="md-nav__link">
+      <a href="../I/" class="md-nav__link">
         
   
   
@@ -4407,7 +4119,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../thinking/AI/" class="md-nav__link">
+      <a href="../AI/" class="md-nav__link">
         
   
   
@@ -4430,7 +4142,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../thinking/teacher/" class="md-nav__link">
+      <a href="../teacher/" class="md-nav__link">
         
   
   
@@ -4450,10 +4162,17 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../thinking/luojia/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -4464,6 +4183,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -4524,7 +4244,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../sth/proj/" class="md-nav__link">
+      <a href="../../sth/proj/" class="md-nav__link">
         
   
   
@@ -4547,7 +4267,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../sth/10-min-panda/" class="md-nav__link">
+      <a href="../../sth/10-min-panda/" class="md-nav__link">
         
   
   
@@ -4570,7 +4290,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../sth/others/" class="md-nav__link">
+      <a href="../../sth/others/" class="md-nav__link">
         
   
   
@@ -4593,7 +4313,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tools/bit32_visualizer/" class="md-nav__link">
+      <a href="../../tools/bit32_visualizer/" class="md-nav__link">
         
   
   
@@ -4657,7 +4377,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../sth/ssh/" class="md-nav__link">
+      <a href="../../sth/ssh/" class="md-nav__link">
         
   
   
@@ -4680,7 +4400,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../sth/codex/" class="md-nav__link">
+      <a href="../../sth/codex/" class="md-nav__link">
         
   
   
@@ -4751,257 +4471,6 @@
   
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#chunk-overlapping" class="md-nav__link">
-    <span class="md-ellipsis">
-      chunk overlapping
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#overlapping_heap_chunk" class="md-nav__link">
-    <span class="md-ellipsis">
-      overlapping_heap_chunk
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="overlapping_heap_chunk">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#uaf" class="md-nav__link">
-    <span class="md-ellipsis">
-      uaf
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#uaf_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      uaf
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="uaf">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#fastbin-attack" class="md-nav__link">
-    <span class="md-ellipsis">
-      fastbin attack
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fastbin" class="md-nav__link">
-    <span class="md-ellipsis">
-      fastbin #任意地址写 #任意地址读
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="fastbin #任意地址写 #任意地址读">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#double-free" class="md-nav__link">
-    <span class="md-ellipsis">
-      double free
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#double_free" class="md-nav__link">
-    <span class="md-ellipsis">
-      double_free
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="double_free">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#house-of-spirit" class="md-nav__link">
-    <span class="md-ellipsis">
-      House of Spirit
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#house_of_spirit" class="md-nav__link">
-    <span class="md-ellipsis">
-      house_of_spirit
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="house_of_spirit">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#alloc-to-stack" class="md-nav__link">
-    <span class="md-ellipsis">
-      Alloc to Stack
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#alloc_to_stack" class="md-nav__link">
-    <span class="md-ellipsis">
-      alloc_to_stack
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="alloc_to_stack">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#arbitrary-alloc" class="md-nav__link">
-    <span class="md-ellipsis">
-      Arbitrary Alloc
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#arbitrary_alloc" class="md-nav__link">
-    <span class="md-ellipsis">
-      arbitrary_alloc
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="arbitrary_alloc">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#unsortedbin-attack" class="md-nav__link">
-    <span class="md-ellipsis">
-      unsortedbin attack
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#unosrtedbin_attack" class="md-nav__link">
-    <span class="md-ellipsis">
-      unosrtedbin_attack #任意地址大数据写
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="unosrtedbin_attack #任意地址大数据写">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#unsortedbinleak" class="md-nav__link">
-    <span class="md-ellipsis">
-      如何使用unsortedbin进行leak
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#unsorted-bin-attack" class="md-nav__link">
-    <span class="md-ellipsis">
-      unsorted bin attack原理
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tcache-attack" class="md-nav__link">
-    <span class="md-ellipsis">
-      Tcache attack
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tcache_attack" class="md-nav__link">
-    <span class="md-ellipsis">
-      tcache_attack
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="tcache_attack">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      源码
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -5017,158 +4486,17 @@
 
 
 
-<h2 id="chunk-overlapping">chunk overlapping</h2>
-<h1 id="overlapping_heap_chunk">overlapping_heap_chunk</h1>
-<h2 id="uaf">uaf</h2>
-<h1 id="uaf_1">uaf</h1>
-<p>个人理解：uaf就是当此程序的结构体中有指针，然后虽然被free了，但是指针没有被清空，导致这个指针可以复用，因此可以修改为自己想执行的内容，然后执行
-- <strong>任意内存读写</strong>
-- 如果 UAF 的位置被用于保存指针（如函数指针、对象 vtable 指针、结构体 fd/bk 指针），攻击者能把它改成任意地址。
-- 结果是：在随后的访问中，程序会对攻击者指定的任意地址进行读写。
-- <strong>任意代码执行</strong>
-- 如果 UAF 的对象里有函数指针或虚函数表（C++ 对象常见），攻击者可以把它改写为指向任意函数地址或 ROP 链。
-- 这样在调用的时候，等同于“任意地址执行”。
-- <strong>信息泄露</strong>
-- UAF 也经常被用来泄露内存布局（ASLR/堆地址/ libc 地址），为后续利用做准备。</p>
-<h2 id="fastbin-attack">fastbin attack</h2>
-<h1 id="fastbin">fastbin #任意地址写 #任意地址读</h1>
-<p>是指所有基于fastbin机制的漏洞利用方法，这类利用的前提是：
-- 存在堆溢出、uaf等能够控制chunk内容的漏洞
-- 漏洞发生于fastbin类型的chunk中
-细分可分为
-- fastbin double free
-- houst of spirit
-- alloc to stack
-- arbitrary alloc
-前两种侧重利用<code class="language-text highlight">free</code>函数释放**真的chunk或伪造的chunk**，然后再次申请chunk进行攻击
-后两种侧重于故意修改fd指针，直接利用<code class="language-text highlight">malloc</code>申请指定位置chunk进行攻击
-<strong>fastbin管理的chunk即使被释放，其next_chunk的prev_inuse位也不会被清空</strong></p>
-<h3 id="double-free">double free</h3>
-<h1 id="double_free">double_free</h1>
-<p>本质其实就是利用了：当前 chunk 的 fd 指针指向下一个 chunk。
-就是通过double free实现多个指针指向一个堆块，因此可以实现指定堆块写，可以用来应对没有<code class="language-text highlight">edit</code>的菜单
-因为我们可以通过double获得某个堆的二次写机会，因此可以改写fd为需要的地址，从而让下一个chunk被分配到栈上、bss上等等等等地址
-这里的可以通过写的时候修改fd实现堆地址的迁移
-注意保证size的大小是一致的</p>
-<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>new(0x70,b&#39;a&#39;)
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>new(0x70,b&#39;a&#39;)
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>free(0)
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>free(1)
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>new(0x70,p64(target))
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>new(0x70,b&#39;a&#39;)
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>new(0x70,b&#39;a&#39;)
-</code></pre></div>
-<ul>
-<li>可以尝试把got表写进去，这样子可以通过 堆打印 来把libc泄露出来</li>
-</ul>
-<h3 id="house-of-spirit">House of Spirit</h3>
-<h1 id="house_of_spirit">house_of_spirit</h1>
-<p>在目标位置处伪造fastbin chunk，并将其释放，从而达到分配指定地址的**chunk**的目的</p>
-<h3 id="alloc-to-stack">Alloc to Stack</h3>
-<h1 id="alloc_to_stack">alloc_to_stack</h1>
-<p>劫持fastbin链表中的chunk的fd指针，把fd指针指向我们想要分配的栈上，从而实现控制栈中的一些关键数据，比如返回地址等</p>
-<p>通过该技术可以把fastbin chunk分配到栈中，从而控制返回地址等关键数据。要实现这一点需要劫持fastbin 中 chunk 的 fd 域，把它指到栈上，当然同时**需要栈上存在有满足条件的 size 值**</p>
-<h3 id="arbitrary-alloc">Arbitrary Alloc</h3>
-<h1 id="arbitrary_alloc">arbitrary_alloc</h1>
-<p>分配的地址从栈上变成其它地方，bss、heap、data、stack等，通过字节错位等方法绕过size域的检验，实现任意地址分配 chunk，最后的效果相当于**任意地址写任意值**</p>
-<h2 id="unsortedbin-attack">unsortedbin attack</h2>
-<h1 id="unosrtedbin_attack">unosrtedbin_attack #任意地址大数据写</h1>
-<p><strong>基本来源</strong>
-1. 当一个较大的 chunk 被分割为两半后，如果剩下的部分大于<code class="language-text highlight">MINSIZE</code>，就会被放到unsorted bin中
-2. 释放一个不属于fastbin的chunk，并且该chunk不和top chunk紧邻时，该chunk会被首先放到unsorted bin中
-3. 当进行malloc_consolidate中时，可能会把合并后的chunk放到unsorted bin中</p>
-<p><strong>基本使用情况</strong>
-1. unsorted bin在使用的过程中采用的遍历顺序是FIFO，<strong>即插入的时候插入到unsorted bin的头部，取出的时候从链表尾获取</strong>
-2. 在程序malloc的时候，如果在fastbin，smallbin中找不到对应大小的chunk，就会尝试从unsortedbin中寻找chunk。如果取出的chunk大小刚好满足，就会直接返回给用户，否则就会把这些chunk分别插入到对应的bin中</p>
-<h5 id="unsortedbinleak">如何使用unsortedbin进行leak</h5>
-<p>unsorted bin在管理时为双向链表，若ub中有两个<code class="language-text highlight">bin</code>，那么链表结构如下：
-<img alt="unsortedbins-struct.png" src="../../images/unsortedbins-struct.png" />
-我们可以看到链表必定有一个节点的<code class="language-text highlight">fd</code>指针会指向<code class="language-scdoc highlight">main_arena</code>内部</p>
-<p>如果我们可以把正确的<code class="language-text highlight">fd</code>指针leak出来，就可以获得一个与<code class="language-scdoc highlight">main_arena</code>有固定偏移的地址
-而<code class="language-scdoc highlight">main_arena</code>是一个<code class="language-scdoc highlight">struct malloc_state</code>类型的全局变量，是<code class="language-text highlight">ptmalloc</code>管理主分配去的唯一实例
-而全局变量会被分配到<code class="language-gas highlight"><span class="na">.data</span></code>或者<code class="language-gas highlight"><span class="na">.bss</span></code>等段上，那么如果我们有进程所使用的<code class="language-text highlight">libc</code>的<code class="language-gas highlight"><span class="na">.so</span></code>文件的话，我们就可以获得<code class="language-scdoc highlight">main_arena</code>与<code class="language-text highlight">libc</code>基地址的偏移，实现对<span class="arithmatex">\(ASLR\)</span>的绕过</p>
-<p><code class="language-scdoc highlight">main_arena</code>和<code class="language-scdoc highlight">__malloc_hook</code>的地址差是0x10，大多数libc都可以直接查出来<code class="language-scdoc highlight">__malloc_hook</code>的地址，所以很容易得到：</p>
-<div class="language-scdoc highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>libc = ELF(&#39;libc.so.6&#39;)
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>main_arena_offset = libc.sym[&#39;__malloc_hook&#39;]+0x10
-</code></pre></div>
-<p><strong>实现leak的方法</strong></p>
-<p>要实现leak，需要有<code class="language-text highlight">UAF</code>，将一个<code class="language-text highlight">chunk</code>放入<code class="language-text highlight">ub</code>后再打出其<code class="language-text highlight">fd</code>。然后通过题目给的<code class="language-teratermmacro highlight"><span class="k">show</span></code>函数，将链表尾的节点<code class="language-teratermmacro highlight"><span class="k">show</span></code>出来就可以leak libc了</p>
-<h5 id="unsorted-bin-attack">unsorted bin attack原理</h5>
-<p>在<a href="https://codebrowser.dev/glibc/glibc/malloc/malloc.c.html">glibc/malloc/mlloc.c</a>中的<code class="language-scdoc highlight">_int_malloc</code>中有一段代码，将一个<code class="language-text highlight">ub</code>取出的时候，会将<code class="language-ecl highlight"><span class="n">bck</span><span class="o">-&gt;</span><span class="n">fd</span></code>的位置写入本<code class="language-text highlight">ub</code>的位置</p>
-<div class="language-python highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>          <span class="o">/*</span> <span class="n">remove</span> <span class="kn">from</span><span class="w"> </span><span class="nn">unsorted</span> <span class="nb">list</span> <span class="o">*/</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>          <span class="k">if</span> <span class="p">(</span><span class="n">__glibc_unlikely</span> <span class="p">(</span><span class="n">bck</span><span class="o">-&gt;</span><span class="n">fd</span> <span class="o">!=</span> <span class="n">victim</span><span class="p">))</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>            <span class="n">malloc_printerr</span> <span class="p">(</span><span class="s2">&quot;malloc(): corrupted unsorted chunks 3&quot;</span><span class="p">);</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>          <span class="n">unsorted_chunks</span> <span class="p">(</span><span class="n">av</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">bk</span> <span class="o">=</span> <span class="n">bck</span><span class="p">;</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>          <span class="n">bck</span><span class="o">-&gt;</span><span class="n">fd</span> <span class="o">=</span> <span class="n">unsorted_chunks</span> <span class="p">(</span><span class="n">av</span><span class="p">);</span>
-</code></pre></div>
-<p>也就是说，只要可以控制bk的值，就可以将<code class="language-scdoc highlight">unsorted_chunks(av)</code>写到任意地址</p>
-<p><img alt="unsorted_bin_attack_order.png" src="../../images/unsorted_bin_attack_order.png" />
-- <strong>初始状态时</strong>：ub的fd和bk均指向ub自身
-- <strong>执行free(p)</strong>：释放的chunk大小不属于fastbin，放入到ub中
-- <strong>修改<span class="arithmatex">\(p[1]\)</span></strong>：原本在ub中的p的bk指针指向target_addr-0x10处伪造的chunk，即target value处于伪造chunk的fd中
-- <strong>申请400大小的chunk</strong>：此时，所申请的chunk处于smallbin所在的范围，其对应的bin中暂时没有chunk，所以会去ub中找，发现ub不空，于是把ub中的最后一个chunk拿出来</p>
-<p>应用：
-- 修改循环次数
-- 修改heap中的global_max_fast来使得更大chunk可以被视为fastbin，可以打fastbin attack</p>
-<h2 id="tcache-attack">Tcache attack</h2>
-<h1 id="tcache_attack">tcache_attack</h1>
-<h3 id="_1">源码</h3>
-<p>tache中新增了两个结构体<code class="language-scdoc highlight">tache_entry</code>和<code class="language-scdoc highlight">tache_perthread_struct</code></p>
-<div class="language-c highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="cm">/* We overlay this structure on the user-data portion of a chunk when the chunk is stored in the per-thread cache.  */</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">tcache_entry</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">{</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">tcache_entry</span><span class="w"> </span><span class="o">*</span><span class="n">next</span><span class="p">;</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="p">}</span><span class="w"> </span><span class="n">tcache_entry</span><span class="p">;</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="cm">/* There is one of these for each thread, which contains the per-thread cache (hence &quot;tcache_perthread_struct&quot;).  Keeping overall size low is mildly important.  Note that COUNTS and ENTRIES are redundant (we could have just counted the linked list each time), this is for performance reasons.  */</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">tcache_perthread_struct</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="p">{</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">counts</span><span class="p">[</span><span class="n">TCACHE_MAX_BINS</span><span class="p">];</span>
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">  </span><span class="n">tcache_entry</span><span class="w"> </span><span class="o">*</span><span class="n">entries</span><span class="p">[</span><span class="n">TCACHE_MAX_BINS</span><span class="p">];</span>
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="p">}</span><span class="w"> </span><span class="n">tcache_perthread_struct</span><span class="p">;</span>
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>
-<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="k">static</span><span class="w"> </span><span class="n">__thread</span><span class="w"> </span><span class="n">tcache_perthread_struct</span><span class="w"> </span><span class="o">*</span><span class="n">tcache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
-</code></pre></div>
-<p>有两个重要函数<code class="language-scdoc highlight">tacche_get()</code>和<code class="language-scdoc highlight">tcache_put()</code></p>
-<div class="language-c highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">// 将一个 chunk 放入对应的 tcache bin 中</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nf">tcache_put</span><span class="w"> </span><span class="p">(</span><span class="n">mchunkptr</span><span class="w"> </span><span class="n">chunk</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">tc_idx</span><span class="p">)</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="p">{</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span><span class="c1">// 将 chunk 转换为用户数据区指针，再强制转为 tcache_entry 类型</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">  </span><span class="n">tcache_entry</span><span class="w"> </span><span class="o">*</span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">tcache_entry</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">chunk2mem</span><span class="w"> </span><span class="p">(</span><span class="n">chunk</span><span class="p">);</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">  </span><span class="c1">// 确认 tc_idx 在允许的范围内 (防止越界)</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">  </span><span class="n">assert</span><span class="w"> </span><span class="p">(</span><span class="n">tc_idx</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">TCACHE_MAX_BINS</span><span class="p">);</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">  </span><span class="c1">// 将当前 tcache bin 的头插法链表操作：新节点的 next 指向原来的头</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">  </span><span class="n">e</span><span class="o">-&gt;</span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tcache</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">[</span><span class="n">tc_idx</span><span class="p">];</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">  </span><span class="c1">// 更新该 bin 的头指针为新插入的 e</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">  </span><span class="n">tcache</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">[</span><span class="n">tc_idx</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="p">;</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">  </span><span class="c1">// 计数器加 1，表示该 bin 中 chunk 数量增加</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">  </span><span class="o">++</span><span class="p">(</span><span class="n">tcache</span><span class="o">-&gt;</span><span class="n">counts</span><span class="p">[</span><span class="n">tc_idx</span><span class="p">]);</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="p">}</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
-<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="c1">// 从指定 tcache bin 中取出一个 chunk</span>
-<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span>
-<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="nf">tcache_get</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">tc_idx</span><span class="p">)</span>
-<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="p">{</span>
-<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">  </span><span class="c1">// 获取该 bin 的链表头，即最近一次插入的 chunk</span>
-<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="w">  </span><span class="n">tcache_entry</span><span class="w"> </span><span class="o">*</span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tcache</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">[</span><span class="n">tc_idx</span><span class="p">];</span>
-<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="w">  </span><span class="c1">// 检查下标合法性</span>
-<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="w">  </span><span class="n">assert</span><span class="w"> </span><span class="p">(</span><span class="n">tc_idx</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">TCACHE_MAX_BINS</span><span class="p">);</span>
-<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="w">  </span><span class="c1">// 确保该 bin 不为空 (否则就是逻辑错误)</span>
-<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="w">  </span><span class="n">assert</span><span class="w"> </span><span class="p">(</span><span class="n">tcache</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">[</span><span class="n">tc_idx</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
-<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="w">  </span><span class="c1">// 更新链表头为下一个节点 (相当于弹出栈顶元素)</span>
-<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="w">  </span><span class="n">tcache</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">[</span><span class="n">tc_idx</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="w">  </span><span class="c1">// 计数器减 1，表示该 bin 中 chunk 数量减少</span>
-<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="w">  </span><span class="o">--</span><span class="p">(</span><span class="n">tcache</span><span class="o">-&gt;</span><span class="n">counts</span><span class="p">[</span><span class="n">tc_idx</span><span class="p">]);</span>
-<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a><span class="w">  </span><span class="c1">// 返回取出的节点地址 (即用户可用的内存区域)</span>
-<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">e</span><span class="p">;</span>
-<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="p">}</span>
-</code></pre></div>
-<p>这两个函数会在<code class="language-scdoc highlight">_int_free</code>和<code class="language-scdoc highlight">__libc_malloc</code>的开头被调用
-其中<code class="language-scdoc highlight">tcache_put</code>当所请求的分配大小不大于<span class="arithmatex">\(0x408\)</span>并且给定大小的<code class="language-text highlight">tcachebin</code>未满时调用
-**一个<code class="language-text highlight">tcachebin</code>中最大的块数<code class="language-scdoc highlight">mp_.tcache_count</code>是 7</p>
-<p>在<code class="language-scdoc highlight">tcache_get</code>中，仅仅检查了**tc_idx**
-此外，我们可以将tcache当作一个类似于fastbin的单独链表，只是它的check没有fastbin那么复杂，仅仅检查了<code class="language-tsql highlight"><span class="n">tcache</span><span class="o">-&gt;</span><span class="n">entries</span><span class="o">[</span><span class="n">tc_idx</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="o">-&gt;</span><span class="k">next</span></code></p>
+  <h1>珞珈</h1>
+
+<blockquote>
+<p>来源于24级同学 lui,已征得同意，收录进来</p>
+</blockquote>
+<p>兜兜转转又近一年端午，遥想去年，我还在吐槽自科论文怎么这么难写、数据结构怎么这么难背，骑着车沉浸在武大的灵蕴之中，幸福而不自知，纵有一年以后发配的压力，也浑然不觉愁苦。</p>
+<p>两年来，武大经历了无数风风雨雨，有些小文章不尽如人意，也有些性别议题推向风口浪尖，但是无论如何，过去的都过去了，该怎么样还是怎么样，我这两年的本科生活依旧是幸运且美好的。我从未想过，在现实之中，能够有一个风景如此优美，人文气息如此浓厚的学校，而且我还能有幸成为其中的一员。老师和同学之间大多是相敬如宾的，热心的同学也遇见了不少，哪怕是学校里的店家也是服务及其热情的。这个学期有一门跨专，那位老师也不因有些人只为了凑些学分才选这课而懊恼，甚至于对外院的同学在作业难度上有一定的照顾，我真是诚惶诚恐，又如沐春风。或许是得益于武大的家属楼如此多，武大在某种程度上更像是珞珈山社区，一个对我来说是第二故乡的地方，一个没有家人却胜似有的地方。</p>
+<p>大一的时候，我最爱做的事情，就是晚上骑着我的电动车在校园里闲逛，从竹园到桂园，再到公主教，又到凌波门，没有一处地方是我能轻易忘怀的，我总记得，凌波门外的晚风总是有一种湿漉漉的味道，珞珈山环山路上，又总是有一种郁郁葱葱的味道。如今，我是看一天，少一天了。</p>
+<p>东湖之畔容不下我，但是无论如何，我心里总是能容得下珞珈山。在不远的将来，我来到珞珈山下，却要归乡如客。不过区区二百几十人，却不能为5195亩地所容，而要左迁到泾河去，与一个充满了铜臭味的东西同席！还要因此被附近人扣上一个挂武大名的大专的帽子！但是，每每想到是武大的决定，我又觉得无所谓了，如此也罢，既然珞珈山已经赠予了我两年如梦如幻的本科生活，我想我也不能再奢求更多。</p>
+<p>珞珈山的夜色还是会落下来，东湖的太阳还是照常升起，只是很快我就无福消受了。再往后的人生中，像这样两年梦一般美好的日子，大概也不会再有了。</p>
+<p>6月14日凌晨于珞珈山下记</p>
 
 
 
@@ -5185,15 +4513,15 @@
   
     <nav class="post-nav" aria-label="文章分页导航">
       
-        <a class="post-nav__link post-nav__link--prev" href="../%E5%A0%86%E4%B8%AD%E7%9A%84off-by-one/">
+        <a class="post-nav__link post-nav__link--prev" href="../teacher/">
           <span class="post-nav__label">上一篇</span>
-          <span class="post-nav__title">Off-by-one</span>
+          <span class="post-nav__title">师者</span>
         </a>
       
       
-        <a class="post-nav__link post-nav__link--next" href="../%E4%BE%8B%E9%A2%98%E8%AE%B0%E5%BD%95/">
+        <a class="post-nav__link post-nav__link--next" href="../../sth/proj/">
           <span class="post-nav__label">下一篇</span>
-          <span class="post-nav__title">例题记录</span>
+          <span class="post-nav__title">proj</span>
         </a>
       
     </nav>
@@ -5285,18 +4613,18 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.titles", "navigation.tabs", "navigation.top"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.select", "content.code.annotate", "navigation.titles", "navigation.tabs", "navigation.top"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
-        <script src="../../../resources/js/mathjax-config.js"></script>
+        <script src="../../resources/js/mathjax-config.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
-        <script src="../../../resources/js/read-metrics.js"></script>
+        <script src="../../resources/js/read-metrics.js"></script>
       
-        <script src="../../../resources/js/sidebar-resize.js"></script>
+        <script src="../../resources/js/sidebar-resize.js"></script>
       
     
   </body>
