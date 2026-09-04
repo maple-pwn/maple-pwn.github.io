@@ -5,3 +5,4 @@ __pycache__/
 .omx/
 python313/
 python-3.13.12-amd64.zip
+.worktrees/
