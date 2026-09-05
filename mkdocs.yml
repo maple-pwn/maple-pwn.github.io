@@ -63,6 +63,16 @@ extra_javascript:
   - resources/js/sidebar-resize.js
 plugins: []
 nav:
+  - 新生篇:
+      - 栏目说明: freshman/index.md
+      - 01 不用代理也能上手的 AI IDE: freshman/01-ai-ide.md
+      - 02 网络工具：iKuuu + Clash Verge: freshman/02-network-clash-verge.md
+      - 03 开发环境:
+          - 总览: freshman/03-development/index.md
+          - Windows 下的 VS Code 生产环境: freshman/03-development/windows-vscode.md
+          - WSL + VS Code: freshman/03-development/wsl-vscode.md
+      - 04 账号与代码同步：Google、Git、GitHub、SSH: freshman/04-accounts-git-github.md
+      - 05 更强的 AI：GPT、Claude 与 AI IDE 协作: freshman/05-advanced-ai.md
   - OS篇:
       - 前言: mysys/pre/index.md
       - 实模式: mysys/01/index.md
